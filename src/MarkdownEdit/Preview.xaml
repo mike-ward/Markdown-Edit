@@ -1,16 +1,11 @@
-﻿<UserControl x:Class="MarkdownEdit.Editor"
+﻿<UserControl x:Class="MarkdownEdit.Preview"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" 
-             d:DesignWidth="300">
-  <Border>
-    <TextBox TextWrapping="NoWrap" 
-             AcceptsReturn="True" 
-             BorderThickness="0" 
-             FontSize="16"
-             Background="FloralWhite" />
-  </Border>
+             d:DesignHeight="300" d:DesignWidth="300">
+  <Grid>
+    <WebBrowser x:Name="Browser" HorizontalAlignment="Left" VerticalAlignment="Top" />
+  </Grid>
 </UserControl>

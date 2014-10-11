@@ -5,12 +5,15 @@
   xmlns:local="clr-namespace:MarkdownEdit"
   x:Class="MarkdownEdit.MainWindow"
   Title="Markdown Edit"
-  Height="600"
-  Width="600"
+  Width="1200"
+  Height="900"
   BorderBrush="{DynamicResource AccentColorBrush}"
-  BorderThickness="1"
+  BorderThickness="2"
   WindowStartupLocation="CenterScreen">
-  <Grid x:Name="Container">
-    <local:Editor HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+  <Grid>
+    <UniformGrid Columns="2">
+      <local:Editor />
+      <local:Preview />
+    </UniformGrid>
   </Grid>
 </Controls:MetroWindow>
