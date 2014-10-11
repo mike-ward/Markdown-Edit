@@ -5,6 +5,7 @@ namespace MarkdownEdit
     public partial class MainWindow
     {
         public static RoutedCommand UpdatePreviewCommand = new RoutedUICommand();
+        public static RoutedCommand WordWrapCommand = new RoutedUICommand();
 
         public MainWindow()
         {
@@ -21,6 +22,12 @@ namespace MarkdownEdit
         {
             ea.Handled = true;
             Editor.OpenFileHandler();
+        }
+
+        public void ExecuteWordWrap(object sender, ExecutedRoutedEventArgs ea)
+        {
+            ea.Handled = true;
+            Editor.WordWrapHandler();
         }
     }
 }

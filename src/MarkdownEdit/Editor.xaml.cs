@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 
@@ -23,6 +24,12 @@ namespace MarkdownEdit
             var result = dialog.ShowDialog();
             if (result != DialogResult.OK) return;
             using (var reader = new StreamReader(dialog.OpenFile())) EditorBox.Text = reader.ReadToEnd();
+        }
+
+        public void WordWrapHandler()
+        {
+            var wrap = EditorBox.TextWrapping;
+            EditorBox.TextWrapping = wrap == TextWrapping.Wrap ? TextWrapping.NoWrap : TextWrapping.Wrap;
         }
     }
 }

@@ -30,9 +30,11 @@ namespace MarkdownEdit
         public string RemoveYamlFrontMatter(string markdown)
         {
             const string yaml = "---\n";
-            if (!markdown.StartsWith(yaml)) return markdown;
-            var index = markdown.IndexOf(yaml, yaml.Length, System.StringComparison.Ordinal);
-            return (index == -1) ? markdown : markdown.Substring(index + yaml.Length);
+            const string yaml2 = "---\r\n";
+            const string yamlEnd = "\n---";
+            if (!markdown.StartsWith(yaml) && !markdown.StartsWith(yaml2)) return markdown;
+            var index = markdown.IndexOf(yamlEnd, yaml.Length, System.StringComparison.Ordinal);
+            return (index == -1) ? markdown : markdown.Substring(index + yaml2.Length);
         }
     }
 }

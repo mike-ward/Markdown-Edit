@@ -23,5 +23,13 @@
                     Executed="ExecuteUpdatePreview" />
     <CommandBinding Command="Open"
                     Executed="ExecuteOpenFile" />
+    <CommandBinding Command="{x:Static local:MainWindow.WordWrapCommand}"
+                    Executed="ExecuteWordWrap" />
   </Window.CommandBindings>
+  
+  <Window.InputBindings>
+    <KeyBinding Command="{x:Static local:MainWindow.WordWrapCommand}"
+                Key="W"
+                Modifiers="Control" />
+  </Window.InputBindings>
 </Controls:MetroWindow>
