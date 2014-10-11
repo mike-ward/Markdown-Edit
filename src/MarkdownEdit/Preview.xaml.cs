@@ -22,7 +22,8 @@ namespace MarkdownEdit
             if (markdown == null) Browser.NavigateToString(string.Empty);
             var md = new Markdown();
             var html = md.Transform(markdown);
-            Browser.NavigateToString(html);
+            var doc = Properties.Resources.GithubTemplateHtml.Replace("**content**", html);
+            Browser.NavigateToString(doc);
         }
     }
 }

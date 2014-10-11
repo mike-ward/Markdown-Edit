@@ -10,10 +10,18 @@
   BorderBrush="{DynamicResource AccentColorBrush}"
   BorderThickness="2"
   WindowStartupLocation="CenterScreen">
+ 
   <Grid>
     <UniformGrid Columns="2">
-      <local:Editor />
+      <local:Editor x:Name="Editor" />
       <local:Preview x:Name="Preview" />
     </UniformGrid>
   </Grid>
+  
+  <Window.CommandBindings>
+    <CommandBinding Command="{x:Static local:MainWindow.UpdatePreviewCommand}"
+                    Executed="ExecuteUpdatePreview" />
+    <CommandBinding Command="Open"
+                    Executed="ExecuteOpenFile" />
+  </Window.CommandBindings>
 </Controls:MetroWindow>

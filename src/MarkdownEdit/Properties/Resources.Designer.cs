@@ -59,5 +59,49 @@ namespace MarkdownEdit.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;html&gt;
+        ///
+        ///
+        ///body {
+        ///  font-family: Helvetica, arial, sans-serif;
+        ///  font-size: 14px;
+        ///  line-height: 1.6;
+        ///  padding-top: 10px;
+        ///  padding-bottom: 10px;
+        ///  background-color: white;
+        ///  padding: 30px;
+        ///  color: #333;
+        ///}
+        ///
+        ///body &gt; *:first-child {
+        ///  margin-top: 0 !important;
+        ///}
+        ///
+        ///body &gt; *:last-child {
+        ///  margin-bottom: 0 !important;
+        ///}
+        ///
+        ///a {
+        ///  color: #4183C4;
+        ///  text-decoration: none;
+        ///}
+        ///
+        ///a.absent {
+        ///  color: #cc0000;
+        ///}
+        ///
+        ///a.anchor {
+        ///  display: block;
+        ///  padding-left: 30px;
+        ///  margin-left: -30px;
+        ///  cur [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string GithubTemplateHtml {
+            get {
+                return ResourceManager.GetString("GithubTemplateHtml", resourceCulture);
+            }
+        }
     }
 }

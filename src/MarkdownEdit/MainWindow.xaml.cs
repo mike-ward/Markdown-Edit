@@ -1,16 +1,26 @@
 ﻿using System.Windows.Input;
-using MahApps.Metro.Controls;
-using MarkdownEdit.Commands;
 
 namespace MarkdownEdit
 {
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow
     {
+        public static RoutedCommand UpdatePreviewCommand = new RoutedUICommand();
+
         public MainWindow()
         {
             InitializeComponent();
+        }
 
-            CommandBindings.Add(new CommandBinding(UpdatePreviewCommand.Command, (s, a) => Preview.UpdatePreview(a.Parameter as string)));
+        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs ea)
+        {
+            ea.Handled = true;
+            Preview.UpdatePreview(ea.Parameter as string);
+        }
+
+        private void ExecuteOpenFile(object sender, ExecutedRoutedEventArgs ea)
+        {
+            ea.Handled = true;
+            Editor.OpenFileHandler();
         }
     }
 }
