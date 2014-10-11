@@ -13,7 +13,7 @@
   <Grid>
     <UniformGrid Columns="2">
       <local:Editor />
-      <local:Preview />
+      <local:Preview x:Name="Preview" />
     </UniformGrid>
   </Grid>
 </Controls:MetroWindow>

@@ -7,7 +7,8 @@
              d:DesignHeight="300" 
              d:DesignWidth="300">
   <Border>
-    <TextBox TextWrapping="NoWrap" 
+    <TextBox x:Name="EditorBox"
+             TextWrapping="Wrap" 
              AcceptsReturn="True" 
              BorderThickness="0" 
              FontSize="16"

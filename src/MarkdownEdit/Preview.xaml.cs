@@ -1,5 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
+using MarkdownDeep;
 
 namespace MarkdownEdit
 {
@@ -15,6 +15,14 @@ namespace MarkdownEdit
         {
             Browser.Width = ActualWidth - 2;
             Browser.Height = ActualHeight - 2;
+        }
+
+        public void UpdatePreview(string markdown)
+        {
+            if (markdown == null) Browser.NavigateToString(string.Empty);
+            var md = new Markdown();
+            var html = md.Transform(markdown);
+            Browser.NavigateToString(html);
         }
     }
 }
