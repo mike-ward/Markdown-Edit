@@ -1,0 +1,27 @@
+# Markdown Edit
+
+A Markdown editor with an emphasis on content and keyboard shortcuts.
+
+## Keyboard Shortcuts
+
+    F1 - Show this help
+
+    Ctrl+N - New file
+    Ctrl+O - Open file
+    Ctrl+S - Save file
+    Shift+Ctrl+S - Save file as
+
+    Ctrl+W - Toggle word wrap
+    Ctrl+Q - Toggle spellcheck
+    
+    Ctrl+B - Bold selection
+    Ctrl+E - Emphsize selection
+
+    Tab - Indent current line/selection 2 spaces
+    Shift+Tab - Out-dent current line/selection 2 spaces
+
+Copy, Paste, Cut, Select, etc. use the standard keyboard shortcuts.
+    
+[Markdown Syntax](http://daringfireball.net/projects/markdown/syntax)
+
+Press `F1` to close help.

@@ -27,11 +27,15 @@
                     Executed="ExecuteOpenFile" />
     <CommandBinding Command="{x:Static local:MainWindow.WordWrapCommand}"
                     Executed="ExecuteWordWrap" />
+    <CommandBinding Command="{x:Static local:MainWindow.ToggleHelpCommand}"
+                    Executed="ExecuteToggleHelp" />
   </Window.CommandBindings>
   
   <Window.InputBindings>
     <KeyBinding Command="{x:Static local:MainWindow.WordWrapCommand}"
                 Key="W"
                 Modifiers="Control" />
+    <KeyBinding Command="{x:Static local:MainWindow.ToggleHelpCommand}"
+                Key="F1" />
   </Window.InputBindings>
 </Controls:MetroWindow>

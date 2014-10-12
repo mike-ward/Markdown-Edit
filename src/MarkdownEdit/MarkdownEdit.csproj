@@ -133,6 +133,9 @@
   <ItemGroup>
     <Folder Include="Commands\" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Help.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

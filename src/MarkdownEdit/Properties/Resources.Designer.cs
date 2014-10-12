@@ -62,45 +62,67 @@ namespace MarkdownEdit.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;html&gt;
+        ///&lt;head&gt;
+        ///  &lt;title&gt;Markdown Edit Preview&lt;/title&gt;
+        ///  &lt;style type=&quot;text/css&quot;&gt;
+        ///    body {
+        ///      font-family: Helvetica, arial, sans-serif;
+        ///      font-size: 16px;
+        ///      line-height: 1.6;
+        ///      background-color: white;
+        ///      color: #333;
+        ///      padding: 0;
+        ///      margin-left: .5em;
+        ///    }
         ///
+        ///    a {
+        ///      color: #4183C4;
+        ///      text-decoration: none;
+        ///    }
         ///
-        ///body {
-        ///  font-family: Helvetica, arial, sans-serif;
-        ///  font-size: 14px;
-        ///  line-height: 1.6;
-        ///  padding-top: 10px;
-        ///  padding-bottom: 10px;
-        ///  background-color: white;
-        ///  padding: 30px;
-        ///  color: #333;
-        ///}
+        ///    a.absent {
+        ///      color: #cc0000;
+        ///    }
         ///
-        ///body &gt; *:first-child {
-        ///  margin-top: 0 !important;
-        ///}
-        ///
-        ///body &gt; *:last-child {
-        ///  margin-bottom: 0 !important;
-        ///}
-        ///
-        ///a {
-        ///  color: #4183C4;
-        ///  text-decoration: none;
-        ///}
-        ///
-        ///a.absent {
-        ///  color: #cc0000;
-        ///}
-        ///
-        ///a.anchor {
-        ///  display: block;
-        ///  padding-left: 30px;
-        ///  margin-left: -30px;
-        ///  cur [rest of string was truncated]&quot;;.
+        ///    a.anchor {
+        ///      display: block;
+        ///      padding-left: 30px;
+        ///      margin-left: -30px;
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GithubTemplateHtml {
             get {
                 return ResourceManager.GetString("GithubTemplateHtml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # Markdown Edit
+        ///
+        ///A Markdown editor with an emphasis on content and keyboard shortcuts.
+        ///
+        ///## Keyboard Shortcuts
+        ///
+        ///    F1 - Show this help
+        ///
+        ///    Ctrl+O - Open file
+        ///    Ctrl+S - Save file
+        ///    Shift+Ctrl+S - Save file as
+        ///
+        ///    Ctrl+W - Toggle word wrap
+        ///    Ctrl+Q - Toggle spellcheck
+        ///    
+        ///    Ctrl+B - Bold selection
+        ///    Ctrl+E - Emphsize selection
+        ///
+        ///    Tab - Indent current line/selection 2 spaces
+        ///    Shift+Tab - Out-dent current line/selection 2 spaces
+        ///
+        ///Copy, Paste, Cut, Select, etc. use the sta [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
             }
         }
     }

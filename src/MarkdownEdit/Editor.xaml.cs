@@ -8,6 +8,8 @@ namespace MarkdownEdit
 {
     public partial class Editor
     {
+        private string _textSwap { get; set; }
+
         public Editor()
         {
             InitializeComponent();
@@ -39,6 +41,22 @@ namespace MarkdownEdit
             if (string.IsNullOrWhiteSpace(file)) return;
             EditorBox.Text = File.ReadAllText(file);
             Settings.Default.LastOpenFile = file;
+        }
+
+        public void ToggleHelp()
+        {
+            if (_textSwap == null)
+            {
+                _textSwap = EditorBox.Text;
+                EditorBox.Text = Properties.Resources.Help;
+                EditorBox.IsReadOnly = true;
+            }
+            else
+            {
+                EditorBox.IsReadOnly = false;
+                EditorBox.Text = _textSwap;
+                _textSwap = null;
+            }
         }
 
         public void WordWrapHandler()

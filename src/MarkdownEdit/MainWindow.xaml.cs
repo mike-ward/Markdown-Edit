@@ -6,6 +6,7 @@ namespace MarkdownEdit
     {
         public static RoutedCommand UpdatePreviewCommand = new RoutedUICommand();
         public static RoutedCommand WordWrapCommand = new RoutedUICommand();
+        public static RoutedCommand ToggleHelpCommand = new RoutedUICommand();
 
         public MainWindow()
         {
@@ -28,6 +29,12 @@ namespace MarkdownEdit
         {
             ea.Handled = true;
             Editor.WordWrapHandler();
+        }
+
+        public void ExecuteToggleHelp(object sender, ExecutedRoutedEventArgs ea)
+        {
+            ea.Handled = true;
+            Editor.ToggleHelp();
         }
     }
 }
