@@ -7,8 +7,8 @@
   Title="Markdown Edit"
   Width="1200"
   Height="900"
-  BorderBrush="{DynamicResource AccentColorBrush}"
-  BorderThickness="2"
+  BorderBrush="{DynamicResource AccentColorBrush3}"
+  BorderThickness="3"
   WindowStartupLocation="CenterScreen">
  
   <Grid>

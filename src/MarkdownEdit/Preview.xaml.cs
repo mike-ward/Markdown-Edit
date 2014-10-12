@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using MarkdownDeep;
 
 namespace MarkdownEdit
@@ -9,22 +10,22 @@ namespace MarkdownEdit
         {
             InitializeComponent();
             SizeChanged += OnSizeChanged;
+            Browser.DocumentText = Properties.Resources.GithubTemplateHtml;
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
         {
-            Browser.Width = ActualWidth - 2;
-            Browser.Height = ActualHeight - 2;
+            BrowserHost.Width = ActualWidth - 3;
+            BrowserHost.Height = ActualHeight - 3;
         }
 
         public void UpdatePreview(string markdown)
         {
-            if (markdown == null) Browser.NavigateToString(string.Empty);
-            var md = new Markdown();
+            if (markdown == null) return;
             markdown = RemoveYamlFrontMatter(markdown);
+            var md = new Markdown();
             var html = md.Transform(markdown);
-            var doc = Properties.Resources.GithubTemplateHtml.Replace("**content**", html);
-            Browser.NavigateToString(doc);
+            Browser.Document.GetElementById("content").InnerHtml = html;
         }
 
         public string RemoveYamlFrontMatter(string markdown)
@@ -33,7 +34,7 @@ namespace MarkdownEdit
             const string yaml2 = "---\r\n";
             const string yamlEnd = "\n---";
             if (!markdown.StartsWith(yaml) && !markdown.StartsWith(yaml2)) return markdown;
-            var index = markdown.IndexOf(yamlEnd, yaml.Length, System.StringComparison.Ordinal);
+            var index = markdown.IndexOf(yamlEnd, yaml.Length, StringComparison.Ordinal);
             return (index == -1) ? markdown : markdown.Substring(index + yaml2.Length);
         }
     }

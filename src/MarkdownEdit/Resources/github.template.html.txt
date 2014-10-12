@@ -84,6 +84,16 @@
   </style>
 </head>
 <body>
-**content**
+<div id="content">
+</div>
+<script>
+  function getVerticalScrollPosition() {
+  return document.body.scrollTop.toString();
+  }
+
+  function setVerticalScrollPosition(position) {
+  document.body.scrollTop = position;
+  }
+</script>
 </body>
 </html>

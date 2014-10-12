@@ -3,9 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+             xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
   <Grid>
-    <WebBrowser x:Name="Browser" HorizontalAlignment="Left" VerticalAlignment="Top" />
+    <wfi:WindowsFormsHost x:Name="BrowserHost"
+                          Width ="10"
+                          Height="10"
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Top">
+      <wf:WebBrowser x:Name="Browser" />
+    </wfi:WindowsFormsHost>
   </Grid>
 </UserControl>
