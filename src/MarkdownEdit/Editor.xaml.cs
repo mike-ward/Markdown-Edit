@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
 {
@@ -10,7 +11,14 @@ namespace MarkdownEdit
         public Editor()
         {
             InitializeComponent();
+            EditorBox.Loaded += EditorBoxOnLoaded;
+        }
+
+        private void EditorBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            LoadFile(Settings.Default.LastOpenFile);
             EditorBox.TextChanged += EditorBoxOnTextChanged;
+            EditorBox.Dispatcher.InvokeAsync(() => EditorBoxOnTextChanged(this, null));
         }
 
         private void EditorBoxOnTextChanged(object sender, TextChangedEventArgs textChangedEventArgs)
@@ -23,7 +31,14 @@ namespace MarkdownEdit
             var dialog = new OpenFileDialog();
             var result = dialog.ShowDialog();
             if (result != DialogResult.OK) return;
-            using (var reader = new StreamReader(dialog.OpenFile())) EditorBox.Text = reader.ReadToEnd();
+            LoadFile(dialog.FileNames[0]);
+        }
+
+        public void LoadFile(string file)
+        {
+            if (string.IsNullOrWhiteSpace(file)) return;
+            EditorBox.Text = File.ReadAllText(file);
+            Settings.Default.LastOpenFile = file;
         }
 
         public void WordWrapHandler()
