@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    public partial class App
     {
+        private void ApplicationExit(object sender, ExitEventArgs e)
+        {
+            Settings.Default.Save();
+        }
     }
 }

@@ -11,7 +11,7 @@
              TextWrapping="Wrap" 
              AcceptsReturn="True" 
              BorderThickness="0" 
-             FontSize="16"
+             FontSize="14"
              Background="FloralWhite" />
   </Border>
 </UserControl>
