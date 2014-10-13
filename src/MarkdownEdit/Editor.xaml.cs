@@ -1,8 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media;
+using ICSharpCode.AvalonEdit.Highlighting;
 using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
@@ -22,6 +25,14 @@ namespace MarkdownEdit
             LoadFile(Settings.Default.LastOpenFile);
             EditorBox.TextChanged += EditorBoxOnTextChanged;
             EditorBox.Dispatcher.InvokeAsync(() => EditorBoxOnTextChanged(this, null));
+
+            var highlighter = HighlightingManager.Instance.GetDefinition("MarkDown");
+            var heading = highlighter.NamedHighlightingColors.First(n => n.Name == "Heading");
+            heading.FontWeight = FontWeights.Bold;
+            var code = highlighter.NamedHighlightingColors.First(n => n.Name == "Code");
+            code.Foreground = new SimpleHighlightingBrush(Color.FromRgb(40, 90, 40));
+            foreach (var span in highlighter.MainRuleSet.Spans) span.RuleSet = null;
+            EditorBox.SyntaxHighlighting = highlighter;
         }
 
         private void EditorBoxOnTextChanged(object sender, EventArgs eventArgs)
@@ -64,7 +75,7 @@ namespace MarkdownEdit
         {
             EditorBox.WordWrap = !EditorBox.WordWrap;
         }
-    
+
         private void ScrollViewerOnScrollChanged(object sender, ScrollChangedEventArgs scrollChangedEventArgs)
         {
             MainWindow.ScrollPreviewCommand.Execute(EditorBox.VerticalOffset, this);

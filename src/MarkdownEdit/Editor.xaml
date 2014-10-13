@@ -13,13 +13,13 @@
              AcceptsReturn="True" 
              BorderThickness="0" 
              FontSize="14"
-             ScrollViewer.ScrollChanged ="ScrollViewerOnScrollChanged"
              Background="FloralWhite" />-->
     <avalonedit:TextEditor 
       x:Name="EditorBox"
       BorderThickness="0"
       FontFamily="Segoe WP Semilight"
       FontSize="16"
+      ScrollViewer.ScrollChanged ="ScrollViewerOnScrollChanged"
       Background="FloralWhite"
       />
   </Border>

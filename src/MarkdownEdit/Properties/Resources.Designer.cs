@@ -69,7 +69,7 @@ namespace MarkdownEdit.Properties {
         ///      font-family: Helvetica, arial, sans-serif;
         ///      font-size: 16px;
         ///      line-height: 1.6;
-        ///      background-color: white;
+        ///      background-color: #fffffd;
         ///      color: #333;
         ///      padding: 0;
         ///      margin-left: .5em;
@@ -87,8 +87,7 @@ namespace MarkdownEdit.Properties {
         ///    a.anchor {
         ///      display: block;
         ///      padding-left: 30px;
-        ///      margin-left: -30px;
-        /// [rest of string was truncated]&quot;;.
+        ///      margin-left: -30px; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GithubTemplateHtml {
             get {
@@ -105,6 +104,7 @@ namespace MarkdownEdit.Properties {
         ///
         ///    F1 - Show this help
         ///
+        ///    Ctrl+N - New file
         ///    Ctrl+O - Open file
         ///    Ctrl+S - Save file
         ///    Shift+Ctrl+S - Save file as
@@ -118,7 +118,7 @@ namespace MarkdownEdit.Properties {
         ///    Tab - Indent current line/selection 2 spaces
         ///    Shift+Tab - Out-dent current line/selection 2 spaces
         ///
-        ///Copy, Paste, Cut, Select, etc. use the sta [rest of string was truncated]&quot;;.
+        ///Copy, Paste, Cut, S [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help {
             get {
