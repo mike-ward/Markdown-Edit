@@ -6,7 +6,7 @@
       font-family: Helvetica, arial, sans-serif;
       font-size: 16px;
       line-height: 1.6;
-      background-color: white;
+      background-color: #fffffd;
       color: #333;
       padding: 0;
       margin-left: .5em;

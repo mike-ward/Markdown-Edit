@@ -10,12 +10,12 @@
   Height="{Binding Source={x:Static p:Settings.Default}, Path=Height, Mode=TwoWay}"
   Top="{Binding Source={x:Static p:Settings.Default}, Path=Top, Mode=TwoWay}"
   Left="{Binding Source={x:Static p:Settings.Default}, Path=Left, Mode=TwoWay}"
-  BorderBrush="{DynamicResource AccentColorBrush3}"
+  BorderBrush="{DynamicResource AccentColorBrush}"
   BorderThickness="3">
  
   <Grid>
-    <UniformGrid Columns="2">
-      <local:Editor x:Name="Editor" />
+    <UniformGrid Columns="2" Margin="3 0 3 3">
+      <local:Editor x:Name="Editor" Padding="3 0 0 0" Background="FloralWhite" />
       <local:Preview x:Name="Preview" />
     </UniformGrid>
   </Grid>

@@ -24,7 +24,7 @@ namespace MarkdownEdit
             EditorBox.Dispatcher.InvokeAsync(() => EditorBoxOnTextChanged(this, null));
         }
 
-        private void EditorBoxOnTextChanged(object sender, TextChangedEventArgs textChangedEventArgs)
+        private void EditorBoxOnTextChanged(object sender, EventArgs eventArgs)
         {
             MainWindow.UpdatePreviewCommand.Execute(EditorBox.Text, this);
         }
@@ -62,8 +62,7 @@ namespace MarkdownEdit
 
         public void WordWrapHandler()
         {
-            var wrap = EditorBox.TextWrapping;
-            EditorBox.TextWrapping = wrap == TextWrapping.Wrap ? TextWrapping.NoWrap : TextWrapping.Wrap;
+            EditorBox.WordWrap = !EditorBox.WordWrap;
         }
     
         private void ScrollViewerOnScrollChanged(object sender, ScrollChangedEventArgs scrollChangedEventArgs)

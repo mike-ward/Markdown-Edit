@@ -15,8 +15,8 @@ namespace MarkdownEdit
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
         {
-            BrowserHost.Width = ActualWidth - 3;
-            BrowserHost.Height = ActualHeight - 3;
+            BrowserHost.Width = ActualWidth;
+            BrowserHost.Height = ActualHeight;
         }
 
         public void UpdatePreview(string markdown)
