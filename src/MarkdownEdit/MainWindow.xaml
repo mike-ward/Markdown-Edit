@@ -29,6 +29,8 @@
                     Executed="ExecuteWordWrap" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleHelpCommand}"
                     Executed="ExecuteToggleHelp" />
+    <CommandBinding Command="{x:Static local:MainWindow.ScrollPreviewCommand}"
+                    Executed="ExecuteScrollPreview" />
   </Window.CommandBindings>
   
   <Window.InputBindings>

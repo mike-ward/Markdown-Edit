@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
 namespace MarkdownEdit
 {
@@ -7,6 +8,7 @@ namespace MarkdownEdit
         public static RoutedCommand UpdatePreviewCommand = new RoutedUICommand();
         public static RoutedCommand WordWrapCommand = new RoutedUICommand();
         public static RoutedCommand ToggleHelpCommand = new RoutedUICommand();
+        public static RoutedCommand ScrollPreviewCommand = new RoutedUICommand();
 
         public MainWindow()
         {
@@ -35,6 +37,12 @@ namespace MarkdownEdit
         {
             ea.Handled = true;
             Editor.ToggleHelp();
+        }
+
+        public void ExecuteScrollPreview(object sender, ExecutedRoutedEventArgs ea)
+        {
+            ea.Handled = true;
+            Preview.SetScrollOffset(Convert.ToInt32(ea.Parameter));
         }
     }
 }

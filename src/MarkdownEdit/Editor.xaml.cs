@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -8,7 +9,7 @@ namespace MarkdownEdit
 {
     public partial class Editor
     {
-        private string _textSwap { get; set; }
+        private string TextSwap { get; set; }
 
         public Editor()
         {
@@ -36,7 +37,7 @@ namespace MarkdownEdit
             LoadFile(dialog.FileNames[0]);
         }
 
-        public void LoadFile(string file)
+        private void LoadFile(string file)
         {
             if (string.IsNullOrWhiteSpace(file)) return;
             EditorBox.Text = File.ReadAllText(file);
@@ -45,17 +46,17 @@ namespace MarkdownEdit
 
         public void ToggleHelp()
         {
-            if (_textSwap == null)
+            if (TextSwap == null)
             {
-                _textSwap = EditorBox.Text;
+                TextSwap = EditorBox.Text;
                 EditorBox.Text = Properties.Resources.Help;
                 EditorBox.IsReadOnly = true;
             }
             else
             {
                 EditorBox.IsReadOnly = false;
-                EditorBox.Text = _textSwap;
-                _textSwap = null;
+                EditorBox.Text = TextSwap;
+                TextSwap = null;
             }
         }
 
@@ -63,6 +64,11 @@ namespace MarkdownEdit
         {
             var wrap = EditorBox.TextWrapping;
             EditorBox.TextWrapping = wrap == TextWrapping.Wrap ? TextWrapping.NoWrap : TextWrapping.Wrap;
+        }
+    
+        private void ScrollViewerOnScrollChanged(object sender, ScrollChangedEventArgs scrollChangedEventArgs)
+        {
+            MainWindow.ScrollPreviewCommand.Execute(EditorBox.VerticalOffset, this);
         }
     }
 }

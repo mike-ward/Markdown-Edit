@@ -25,7 +25,12 @@ namespace MarkdownEdit
             markdown = RemoveYamlFrontMatter(markdown);
             var md = new Markdown();
             var html = md.Transform(markdown);
-            Browser.Document.GetElementById("content").InnerHtml = html;
+            var document = Browser.Document;
+            if (document != null)
+            {
+                var element = document.GetElementById("content");
+                if (element != null) element.InnerHtml = html;
+            }
         }
 
         public string RemoveYamlFrontMatter(string markdown)
@@ -36,6 +41,16 @@ namespace MarkdownEdit
             if (!markdown.StartsWith(yaml) && !markdown.StartsWith(yaml2)) return markdown;
             var index = markdown.IndexOf(yamlEnd, yaml.Length, StringComparison.Ordinal);
             return (index == -1) ? markdown : markdown.Substring(index + yaml2.Length);
+        }
+
+        public void SetScrollOffset(int offset)
+        {
+            var document = Browser.Document;
+            if (document != null)
+            {
+                var body = document.Body;
+                if (body != null) body.ScrollTop = offset;
+            }
         }
     }
 }
