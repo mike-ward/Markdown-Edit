@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Media;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using MarkdownEdit.Properties;
 
@@ -33,6 +34,10 @@ namespace MarkdownEdit
             code.Foreground = new SimpleHighlightingBrush(Color.FromRgb(40, 90, 40));
             foreach (var span in highlighter.MainRuleSet.Spans) span.RuleSet = null;
             EditorBox.SyntaxHighlighting = highlighter;
+
+            EditorBox.Options.IndentationSize = 2;
+            EditorBox.Options.ConvertTabsToSpaces = true;
+            EditorBox.Options.AllowScrollBelowDocument = true;
         }
 
         private void EditorBoxOnTextChanged(object sender, EventArgs eventArgs)
