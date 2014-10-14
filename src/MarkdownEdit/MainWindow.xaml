@@ -3,13 +3,10 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
   xmlns:local="clr-namespace:MarkdownEdit"
-  xmlns:p="clr-namespace:MarkdownEdit.Properties"
   x:Class="MarkdownEdit.MainWindow"
   Title="Markdown Edit"
-  Width="{Binding Source={x:Static p:Settings.Default}, Path=Width, Mode=TwoWay}"
-  Height="{Binding Source={x:Static p:Settings.Default}, Path=Height, Mode=TwoWay}"
-  Top="{Binding Source={x:Static p:Settings.Default}, Path=Top, Mode=TwoWay}"
-  Left="{Binding Source={x:Static p:Settings.Default}, Path=Left, Mode=TwoWay}"
+  SaveWindowPosition="True"
+  ResizeMode="CanResizeWithGrip"
   BorderBrush="{DynamicResource AccentColorBrush}"
   BorderThickness="3">
  
