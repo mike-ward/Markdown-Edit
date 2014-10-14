@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Media;
+using System.Xml;
 using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
@@ -26,17 +26,16 @@ namespace MarkdownEdit
             EditorBox.TextChanged += EditorBoxOnTextChanged;
             EditorBox.Dispatcher.InvokeAsync(() => EditorBoxOnTextChanged(this, null));
 
-            var highlighter = HighlightingManager.Instance.GetDefinition("MarkDown");
-            var heading = highlighter.NamedHighlightingColors.First(n => n.Name == "Heading");
-            heading.FontWeight = FontWeights.Bold;
-            var code = highlighter.NamedHighlightingColors.First(n => n.Name == "Code");
-            code.Foreground = new SimpleHighlightingBrush(Color.FromRgb(40, 90, 40));
-            foreach (var span in highlighter.MainRuleSet.Spans) span.RuleSet = null;
+            var reader = new XmlTextReader(new StringReader(Properties.Resources.markdown_xshd));
+            var xshd = HighlightingLoader.LoadXshd(reader);
+            var highlighter = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
             EditorBox.SyntaxHighlighting = highlighter;
+            reader.Close();
 
             EditorBox.Options.IndentationSize = 2;
             EditorBox.Options.ConvertTabsToSpaces = true;
             EditorBox.Options.AllowScrollBelowDocument = true;
+            EditorBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
         }
 
         private void EditorBoxOnTextChanged(object sender, EventArgs eventArgs)

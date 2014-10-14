@@ -19,6 +19,7 @@
       BorderThickness="0"
       FontFamily="Segoe WP Semilight"
       FontSize="14"
+      WordWrap="True"
       ScrollViewer.ScrollChanged ="ScrollViewerOnScrollChanged"
       Background="#FAFBF9"
       />
