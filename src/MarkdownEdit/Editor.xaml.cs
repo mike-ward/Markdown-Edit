@@ -37,6 +37,7 @@ namespace MarkdownEdit
             EditorBox.Options.IndentationSize = 2;
             EditorBox.Options.ConvertTabsToSpaces = true;
             EditorBox.Options.AllowScrollBelowDocument = true;
+            EditorBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
         }
 
         private void EditorBoxOnTextChanged(object sender, EventArgs eventArgs)
