@@ -18,9 +18,9 @@
       x:Name="EditorBox"
       BorderThickness="0"
       FontFamily="Segoe WP Semilight"
-      FontSize="16"
+      FontSize="14"
       ScrollViewer.ScrollChanged ="ScrollViewerOnScrollChanged"
-      Background="FloralWhite"
+      Background="#FAFBF9"
       />
   </Border>
 </UserControl>

@@ -3,13 +3,11 @@
   <title>Markdown Edit Preview</title>
   <style type="text/css">
     body {
-      font-family: Helvetica, arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      background-color: #fffffd;
-      color: #333;
-      padding: 0;
-      margin-left: .5em;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #444;
+      padding: 0.5pc;
     }
 
     a {
@@ -73,6 +71,8 @@
       font-size: 13px;
       line-height: 19px;
       overflow: auto;
+      overflow-y: hidden;
+      width: 100%;
       padding: 6px 10px;
       border-radius: 3px;
     }
