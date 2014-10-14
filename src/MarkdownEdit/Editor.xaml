@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" 
              d:DesignWidth="300">
@@ -17,7 +16,6 @@
       WordWrap="True"
       ScrollViewer.ScrollChanged ="ScrollViewerOnScrollChanged"
       Background="#FAFBF9"
-      controls:TextboxHelper.Watermark="Press F1 for Help"
       />
   </Border>
 </UserControl>

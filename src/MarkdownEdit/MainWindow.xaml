@@ -4,14 +4,15 @@
   xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
   xmlns:local="clr-namespace:MarkdownEdit"
   x:Class="MarkdownEdit.MainWindow"
-  Title="Markdown Edit"
+  Title="{Binding TitleFileName}"
   SaveWindowPosition="True"
   WindowTitleBrush="{DynamicResource GrayBrush2}"
   GlowBrush="{DynamicResource GrayBrush2}"
   ResizeMode="CanResizeWithGrip"
   IgnoreTaskbarOnMaximize="True"
+  DataContext="{Binding RelativeSource={RelativeSource Self}}"
   >
- 
+
   <Grid>
     <UniformGrid Columns="2">
       <local:Editor x:Name="Editor" Padding="5 0 0 0" />
@@ -30,6 +31,8 @@
                     Executed="ExecuteToggleHelp" />
     <CommandBinding Command="{x:Static local:MainWindow.ScrollPreviewCommand}"
                     Executed="ExecuteScrollPreview" />
+    <CommandBinding Command="{x:Static local:MainWindow.SetTitleFileNameCommand}"
+                    Executed="ExecuteSetTitleFileName" />
   </Window.CommandBindings>
   
   <Window.InputBindings>

@@ -55,7 +55,13 @@ namespace MarkdownEdit
         {
             if (string.IsNullOrWhiteSpace(file)) return;
             EditorBox.Text = File.ReadAllText(file);
+            FileLoaded(file);
+        }
+
+        private void FileLoaded(string file)
+        {
             Settings.Default.LastOpenFile = file;
+            MainWindow.SetTitleFileNameCommand.Execute(Path.GetFileName(file), this);            
         }
 
         public void ToggleHelp()
