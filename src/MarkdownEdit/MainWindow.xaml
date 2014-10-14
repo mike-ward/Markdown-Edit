@@ -6,13 +6,15 @@
   x:Class="MarkdownEdit.MainWindow"
   Title="Markdown Edit"
   SaveWindowPosition="True"
+  WindowTitleBrush="{DynamicResource GrayBrush2}"
+  GlowBrush="{DynamicResource GrayBrush2}"
   ResizeMode="CanResizeWithGrip"
-  BorderBrush="{DynamicResource AccentColorBrush}"
-  BorderThickness="3">
+  IgnoreTaskbarOnMaximize="True"
+  >
  
   <Grid>
-    <UniformGrid Columns="2" Margin="3 0 3 3">
-      <local:Editor x:Name="Editor" Padding="3 0 0 0" Background="FloralWhite" />
+    <UniformGrid Columns="2">
+      <local:Editor x:Name="Editor" Padding="5 0 0 0" />
       <local:Preview x:Name="Preview" />
     </UniformGrid>
   </Grid>
