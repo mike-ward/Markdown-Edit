@@ -7,7 +7,6 @@
 	<Color name="BlockQuote" foreground="DarkBlue" exampleText="&gt; This is a\r\n&gt; quote." />
 	<Color name="Link" foreground="Blue" exampleText="[text](http://example.com)" />
 	<Color name="Image" foreground="Green" exampleText="[text][http://example.com/test.png]" />
-	<Color name="LineBreak" background="LightGray" exampleText="end of line      \r\n2nd line   " />
 	
 	<RuleSet ignoreCase="true">
 		<Rule color="Heading">
@@ -48,9 +47,6 @@
 		</Rule>
 		<Rule color="Link">
 			\[.*?\]\[.*?\]
-		</Rule>
-		<Rule color="LineBreak">
-			[ ]{2}$
 		</Rule>
 	</RuleSet>
 </SyntaxDefinition>
