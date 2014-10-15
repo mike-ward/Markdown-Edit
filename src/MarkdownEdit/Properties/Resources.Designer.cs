@@ -66,13 +66,11 @@ namespace MarkdownEdit.Properties {
         ///  &lt;title&gt;Markdown Edit Preview&lt;/title&gt;
         ///  &lt;style type=&quot;text/css&quot;&gt;
         ///    body {
-        ///      font-family: Helvetica, arial, sans-serif;
-        ///      font-size: 16px;
-        ///      line-height: 1.6;
-        ///      background-color: #fffffd;
-        ///      color: #333;
-        ///      padding: 0;
-        ///      margin-left: .5em;
+        ///      font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;
+        ///      font-size: 14px;
+        ///      line-height: 1.5;
+        ///      color: #444;
+        ///      padding: 0.5pc;
         ///    }
         ///
         ///    a {
@@ -87,7 +85,9 @@ namespace MarkdownEdit.Properties {
         ///    a.anchor {
         ///      display: block;
         ///      padding-left: 30px;
-        ///      margin-left: -30px; [rest of string was truncated]&quot;;.
+        ///      margin-left: -30px;
+        ///      cursor: pointer;
+        ///      positi [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GithubTemplateHtml {
             get {
@@ -123,6 +123,22 @@ namespace MarkdownEdit.Properties {
         internal static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///&lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;SyntaxDefinition name=&quot;MarkDown&quot; extensions=&quot;.md&quot; xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot;&gt;
+        ///	&lt;Color name=&quot;Heading&quot; foreground=&quot;Maroon&quot; exampleText=&quot;# Title #&quot; /&gt;
+        ///	&lt;Color name=&quot;Emphasis&quot; fontStyle=&quot;italic&quot; exampleText=&quot;*this* is important!&quot; /&gt;
+        ///	&lt;Color name=&quot;StrongEmphasis&quot; fontWeight=&quot;bold&quot; exampleText=&quot;**this** is more important!&quot; /&gt;
+        ///	&lt;Color name=&quot;Code&quot; exampleText=&quot;this is `int.GetHashCode()`&quot; /&gt;
+        ///	&lt;Color name=&quot;BlockQuote&quot; foreground=&quot;DarkBlue&quot; example [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string markdown_xshd {
+            get {
+                return ResourceManager.GetString("markdown_xshd", resourceCulture);
             }
         }
     }

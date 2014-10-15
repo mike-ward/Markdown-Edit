@@ -8,17 +8,12 @@
              d:DesignHeight="300" 
              d:DesignWidth="300">
   <Border>
-    <!--<TextBox x:Name="EditorBox"
-             TextWrapping="Wrap" 
-             AcceptsReturn="True" 
-             BorderThickness="0" 
-             FontSize="14"
-             Background="FloralWhite" />-->
     <avalonedit:TextEditor 
       x:Name="EditorBox"
       BorderThickness="0"
       FontFamily="Segoe WP Semilight"
       FontSize="14"
+      WordWrap="True"
       ScrollViewer.ScrollChanged ="ScrollViewerOnScrollChanged"
       Background="#FAFBF9"
       />
