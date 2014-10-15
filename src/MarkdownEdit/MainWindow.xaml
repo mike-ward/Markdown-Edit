@@ -5,6 +5,7 @@
   xmlns:local="clr-namespace:MarkdownEdit"
   x:Class="MarkdownEdit.MainWindow"
   Title="{Binding TitleFileName}"
+  TitleCaps="False"
   Icon="logo.ico"
   SaveWindowPosition="True"
   WindowTitleBrush="{DynamicResource GrayBrush2}"

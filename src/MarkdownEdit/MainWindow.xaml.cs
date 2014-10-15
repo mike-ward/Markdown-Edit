@@ -58,7 +58,7 @@ namespace MarkdownEdit
 
         public string TitleFileName
         {
-            get { return "Markdown Edit - " + (_titleFileName ?? "Press F1 for Help"); }
+            get { return "MARKDOWN EDIT - " + (_titleFileName ?? "Press F1 for Help"); }
             set
             {
                 if (_titleFileName != value)
