@@ -16,11 +16,17 @@
 
   <Grid>
     <UniformGrid Columns="2">
-      <local:Editor x:Name="Editor" Padding="5 0 0 0" />
-      <local:Preview x:Name="Preview" />
+      <local:Editor 
+        x:Name="Editor" 
+        Padding="5 0 5 0" 
+        Background="#FAFBF9"
+        />
+      <local:Preview 
+        x:Name="Preview"
+        />
     </UniformGrid>
   </Grid>
-  
+
   <Window.CommandBindings>
     <CommandBinding Command="{x:Static local:MainWindow.UpdatePreviewCommand}"
                     Executed="ExecuteUpdatePreview" />
@@ -35,7 +41,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.SetTitleFileNameCommand}"
                     Executed="ExecuteSetTitleFileName" />
   </Window.CommandBindings>
-  
+
   <Window.InputBindings>
     <KeyBinding Command="{x:Static local:MainWindow.WordWrapCommand}"
                 Key="W"

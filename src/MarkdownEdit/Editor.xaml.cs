@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -36,6 +37,8 @@ namespace MarkdownEdit
             EditorBox.Options.ConvertTabsToSpaces = true;
             EditorBox.Options.AllowScrollBelowDocument = true;
             EditorBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+
+            Task.Delay(500).ContinueWith(_ => Dispatcher.Invoke(() => EditorBox.Focus()));
         }
 
         private void EditorBoxOnTextChanged(object sender, EventArgs eventArgs)
