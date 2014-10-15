@@ -6,14 +6,16 @@
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
              mc:Ignorable="d" 
              d:DesignHeight="300" 
-             d:DesignWidth="300">
+             d:DesignWidth="300"
+             DataContext="{Binding RelativeSource={RelativeSource self}}"
+             >
   <Border>
     <avalonedit:TextEditor 
       x:Name="EditorBox"
       BorderThickness="0"
       FontFamily="Segoe WP Semilight"
       FontSize="14"
-      WordWrap="True"
+      WordWrap="{Binding Path=WordWrap, Mode=TwoWay}"
       ScrollViewer.ScrollChanged ="ScrollViewerOnScrollChanged"
       Background="#FAFBF9"
       />

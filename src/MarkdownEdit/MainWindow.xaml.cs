@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -11,13 +12,21 @@ namespace MarkdownEdit
         public static RoutedCommand WordWrapCommand = new RoutedUICommand();
         public static RoutedCommand ToggleHelpCommand = new RoutedUICommand();
         public static RoutedCommand ScrollPreviewCommand = new RoutedUICommand();
-        public static RoutedCommand SetTitleFileNameCommand = new RoutedUICommand();
-
-        private string _titleFileName;
 
         public MainWindow()
         {
             InitializeComponent();
+            Editor.PropertyChanged += EditorOnPropertyChanged;
+        }
+
+        private void EditorOnPropertyChanged(object sender, PropertyChangedEventArgs ea)
+        {
+            switch (ea.PropertyName)
+            {
+                case "Filename":
+                    TitleName = null;
+                    break;
+            }
         }
 
         private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs ea)
@@ -35,7 +44,7 @@ namespace MarkdownEdit
         public void ExecuteWordWrap(object sender, ExecutedRoutedEventArgs ea)
         {
             ea.Handled = true;
-            Editor.WordWrapHandler();
+            Editor.WordWrap = !Editor.WordWrap;
         }
 
         public void ExecuteToggleHelp(object sender, ExecutedRoutedEventArgs ea)
@@ -50,23 +59,11 @@ namespace MarkdownEdit
             Preview.SetScrollOffset(Convert.ToInt32(ea.Parameter));
         }
 
-        public void ExecuteSetTitleFileName(object sender, ExecutedRoutedEventArgs ea)
+        public string TitleName
         {
-            ea.Handled = true;
-            TitleFileName = ea.Parameter as string;
-        }
-
-        public string TitleFileName
-        {
-            get { return "MARKDOWN EDIT - " + (_titleFileName ?? "Press F1 for Help"); }
-            set
-            {
-                if (_titleFileName != value)
-                {
-                    _titleFileName = value;
-                    OnPropertyChanged();                    
-                }
-            }
+            get { return string.Format("MARKDOWN EDIT - {0}", Path.GetFileName(Editor.Filename) ?? "Press F1 for Help"); }
+            // ReSharper disable once ValueParameterNotUsed
+            set { OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

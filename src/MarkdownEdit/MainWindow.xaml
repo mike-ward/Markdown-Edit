@@ -4,7 +4,7 @@
   xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
   xmlns:local="clr-namespace:MarkdownEdit"
   x:Class="MarkdownEdit.MainWindow"
-  Title="{Binding TitleFileName}"
+  Title="{Binding TitleName}"
   TitleCaps="False"
   Icon="logo.ico"
   SaveWindowPosition="True"
@@ -39,8 +39,6 @@
                     Executed="ExecuteToggleHelp" />
     <CommandBinding Command="{x:Static local:MainWindow.ScrollPreviewCommand}"
                     Executed="ExecuteScrollPreview" />
-    <CommandBinding Command="{x:Static local:MainWindow.SetTitleFileNameCommand}"
-                    Executed="ExecuteSetTitleFileName" />
   </Window.CommandBindings>
 
   <Window.InputBindings>

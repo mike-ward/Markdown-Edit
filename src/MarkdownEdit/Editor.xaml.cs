@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,9 +13,12 @@ using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
 {
-    public partial class Editor
+    public partial class Editor : INotifyPropertyChanged
     {
-        private string TextSwap { get; set; }
+        private string _filename;
+        private string _textSwap;
+        private bool _wordWrap = true;
+        private bool _isModified;
 
         public Editor()
         {
@@ -23,10 +28,6 @@ namespace MarkdownEdit
 
         private void EditorBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            LoadFile(Settings.Default.LastOpenFile);
-            EditorBox.TextChanged += EditorBoxOnTextChanged;
-            EditorBox.Dispatcher.InvokeAsync(() => EditorBoxOnTextChanged(this, null));
-
             var reader = new XmlTextReader(new StringReader(Properties.Resources.markdown_xshd));
             var xshd = HighlightingLoader.LoadXshd(reader);
             var highlighter = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
@@ -38,7 +39,12 @@ namespace MarkdownEdit
             EditorBox.Options.AllowScrollBelowDocument = true;
             EditorBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
 
-            Task.Delay(500).ContinueWith(_ => Dispatcher.Invoke(() => EditorBox.Focus()));
+            Dispatcher.InvokeAsync(() =>
+            {
+                EditorBox.TextChanged += EditorBoxOnTextChanged;
+                LoadFile(Settings.Default.LastOpenFile);
+                EditorBox.Focus();
+            });
         }
 
         private void EditorBoxOnTextChanged(object sender, EventArgs eventArgs)
@@ -64,33 +70,68 @@ namespace MarkdownEdit
         private void FileLoaded(string file)
         {
             Settings.Default.LastOpenFile = file;
-            MainWindow.SetTitleFileNameCommand.Execute(Path.GetFileName(file), this);            
+            Filename = file;
         }
 
         public void ToggleHelp()
         {
-            if (TextSwap == null)
+            if (_textSwap == null)
             {
-                TextSwap = EditorBox.Text;
+                _textSwap = EditorBox.Text;
                 EditorBox.Text = Properties.Resources.Help;
                 EditorBox.IsReadOnly = true;
             }
             else
             {
                 EditorBox.IsReadOnly = false;
-                EditorBox.Text = TextSwap;
-                TextSwap = null;
+                EditorBox.Text = _textSwap;
+                _textSwap = null;
             }
-        }
-
-        public void WordWrapHandler()
-        {
-            EditorBox.WordWrap = !EditorBox.WordWrap;
         }
 
         private void ScrollViewerOnScrollChanged(object sender, ScrollChangedEventArgs scrollChangedEventArgs)
         {
             MainWindow.ScrollPreviewCommand.Execute(EditorBox.VerticalOffset, this);
+        }
+
+        public string Filename
+        {
+            get { return _filename; }
+            set
+            {
+                if (_filename == value) return;
+                _filename = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool WordWrap
+        {
+            get { return _wordWrap; }
+            set
+            {
+                if (_wordWrap == value) return;
+                _wordWrap = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsModified
+        {
+            get { return _isModified; }
+            set
+            {
+                if (_isModified == value) return;
+                _isModified = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
