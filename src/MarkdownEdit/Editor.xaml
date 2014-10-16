@@ -1,24 +1,37 @@
 ﻿<UserControl x:Class="MarkdownEdit.Editor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" 
+             mc:Ignorable="d"
+             d:DesignHeight="300"
              d:DesignWidth="300"
-             DataContext="{Binding RelativeSource={RelativeSource self}}"
-             >
+             DataContext="{Binding RelativeSource={RelativeSource self}}">
   <Border>
-    <avalonedit:TextEditor 
+    <avalonedit:TextEditor
       x:Name="EditBox"
       BorderThickness="0"
       FontFamily="Segoe WP Semilight"
       FontSize="14"
       WordWrap="{Binding Path=WordWrap, Mode=TwoWay}"
       IsModified="{Binding Path=IsModified, Mode=TwoWay}"
-      ScrollViewer.ScrollChanged ="ScrollViewerOnScrollChanged"
-      Background="#FAFBF9"
-      />
+      ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"
+      Background="#FAFBF9">
+
+      <avalonedit:TextEditor.ContextMenu>
+        <ContextMenu>
+          <MenuItem Command="Cut" Header="Cut" />
+          <MenuItem Command="Copy" Header="Copy" />
+          <MenuItem Command="Paste" Header="Paste" />
+          <MenuItem Command="Delete" Header="Delete" />
+          <MenuItem Command="SelectAll" Header="Select All" />
+          <Separator />
+          <MenuItem Command="Undo" Header="Undo" />
+          <MenuItem Command="Redo" Header="Redo" />
+        </ContextMenu>
+      </avalonedit:TextEditor.ContextMenu>
+
+    </avalonedit:TextEditor>
   </Border>
 </UserControl>

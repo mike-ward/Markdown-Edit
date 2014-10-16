@@ -39,8 +39,8 @@ namespace MarkdownEdit
                 editor.IsModified = false;
                 editor.WordWrap = true;
                 editor.IsReadOnly = true;
-                IsSaved = true;
                 editor.CanExecute = false;
+                IsSaved = true;
             }
 
             public void Restore(Editor editor)
