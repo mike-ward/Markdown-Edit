@@ -19,36 +19,38 @@ namespace MarkdownEdit
         private string _displayName = string.Empty;
         private bool _wordWrap = true;
         private bool _isModified;
-        private HelpSwap _helpSwap = new HelpSwap();
+        private EditorState _editorState = new EditorState();
 
-        private struct HelpSwap
+        private struct EditorState
         {
-            public bool IsSet { get; private set; }
+            public bool IsSaved { get; private set; }
+            private string _text;
             private bool _isModified;
             private bool _wordWrap;
-            private string _text;
+            private bool _canExecute;
 
-            public void Set(Editor editor)
+            public void Save(Editor editor)
             {
                 _text = editor.Text;
                 _isModified = editor.IsModified;
                 _wordWrap = editor.WordWrap;
+                _canExecute = editor.CanExecute;
                 editor.IsModified = false;
                 editor.WordWrap = true;
                 editor.IsReadOnly = true;
-                IsSet = true;
+                IsSaved = true;
                 editor.CanExecute = false;
             }
 
-            public void Reset(Editor editor)
+            public void Restore(Editor editor)
             {
                 editor.Text = _text;
                 editor.IsModified = _isModified;
                 editor.WordWrap = _wordWrap;
                 editor.IsReadOnly = false;
+                editor.CanExecute = _canExecute;
                 editor.DisplayName = string.Empty;
-                IsSet = false;
-                editor.CanExecute = true;
+                IsSaved = false;
             }
         }
 
@@ -101,12 +103,12 @@ namespace MarkdownEdit
 
         public void ToggleHelp()
         {
-            if (_helpSwap.IsSet)
+            if (_editorState.IsSaved)
             {
-                _helpSwap.Reset(this);
+                _editorState.Restore(this);
                 return;
             }
-            _helpSwap.Set(this);
+            _editorState.Save(this);
             Text = Properties.Resources.Help;
             EditBox.IsModified = false;
             DisplayName = "Help";
