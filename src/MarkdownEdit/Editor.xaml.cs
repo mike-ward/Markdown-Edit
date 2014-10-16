@@ -92,6 +92,39 @@ namespace MarkdownEdit
             LoadFile(dialog.FileNames[0]);
         }
 
+        public void SaveFile()
+        {
+            if (string.IsNullOrWhiteSpace(FileName))
+            {
+                SaveAsFile();
+                return;
+            }
+            Save();
+        }
+
+        public void SaveAsFile()
+        {
+            var dialog = new SaveFileDialog
+            {
+                FilterIndex = 2, 
+                OverwritePrompt = true, 
+                RestoreDirectory = true,
+                Filter = "Markdown files (*.md|*.md|All files (*.*)|*.*"
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                FileName = dialog.FileNames[0];
+                Save();
+            }
+        }
+
+        private void Save()
+        {
+            File.WriteAllText(FileName, Text);
+            IsModified = false;
+        }
+
         private void LoadFile(string file)
         {
             if (string.IsNullOrWhiteSpace(file)) return;

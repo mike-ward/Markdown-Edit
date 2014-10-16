@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -8,13 +9,15 @@ namespace MarkdownEdit
     public partial class MainWindow : INotifyPropertyChanged
     {
         public static RoutedCommand WordWrapCommand = new RoutedUICommand();
+        
+        private string _titleName = string.Empty;
 
         public MainWindow()
         {
             InitializeComponent();
             Editor.PropertyChanged += EditorOnPropertyChanged;
-            Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(Convert.ToInt32(e.VerticalOffset));
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
+            Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(Convert.ToInt32(e.VerticalOffset));
         }
 
         private void EditorOnPropertyChanged(object sender, PropertyChangedEventArgs ea)
@@ -24,10 +27,12 @@ namespace MarkdownEdit
                 case "FileName":
                 case "DisplayName":
                 case "IsModified":
-                    TitleName = null;
+                    TitleName = string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "*" : "", Editor.DisplayName);;
                     break;
             }
         }
+
+        // Commands
 
         private void ExecuteOpenFile(object sender, ExecutedRoutedEventArgs ea)
         {
@@ -35,6 +40,16 @@ namespace MarkdownEdit
         }
 
         private void CanExecuteOpenFile(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = Editor.CanExecute;
+        }
+
+        public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea)
+        {
+            Editor.SaveFile();
+        }
+
+        private void CanExecuteSaveFile(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = Editor.CanExecute;
         }
@@ -49,11 +64,17 @@ namespace MarkdownEdit
             Editor.ToggleHelp();
         }
 
+        // Properites
+
         public string TitleName
         {
-            get { return string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "*" : "", Editor.DisplayName); }
-            // ReSharper disable once ValueParameterNotUsed
-            set { OnPropertyChanged(); }
+            get { return _titleName; }
+            set
+            {
+                if (_titleName == value) return;
+                _titleName = value;
+                OnPropertyChanged();
+            }
         }
 
         // INotifyPropertyChanged implementation
