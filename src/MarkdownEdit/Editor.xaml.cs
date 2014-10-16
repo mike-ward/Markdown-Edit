@@ -87,7 +87,7 @@ namespace MarkdownEdit
 
         public void NewFile()
         {
-            if (IsModified) return;
+            if (SaveIfModified() == false) return;
             Text = string.Empty;
             IsModified = false;
             FileName = string.Empty;
@@ -96,23 +96,36 @@ namespace MarkdownEdit
 
         public void OpenFile()
         {
+            if (SaveIfModified() == false) return;
             var dialog = new OpenFileDialog();
             var result = dialog.ShowDialog();
             if (result != DialogResult.OK) return;
             LoadFile(dialog.FileNames[0]);
         }
 
-        public void SaveFile()
+        public bool SaveIfModified()
         {
-            if (string.IsNullOrWhiteSpace(FileName))
-            {
-                SaveAsFile();
-                return;
-            }
-            Save();
+            if (IsModified == false) return true;
+
+            var result = MessageBox.Show(
+                string.Format(@"Save ""{0}""?", FileName),
+                @"File Modified",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            return (result == DialogResult.Yes) 
+                ? SaveFile() 
+                : result == DialogResult.No;
         }
 
-        public void SaveAsFile()
+        public bool SaveFile()
+        {
+            return string.IsNullOrWhiteSpace(FileName)
+                ? SaveAsFile()
+                : Save();
+        }
+
+        public bool SaveAsFile()
         {
             var dialog = new SaveFileDialog
             {
@@ -125,41 +138,45 @@ namespace MarkdownEdit
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 FileName = dialog.FileNames[0];
-                Save();
-                LoadFile(FileName);
+                return Save() && LoadFile(FileName);
             }
+            return false;
         }
 
-        private void LoadFile(string file)
+        private bool LoadFile(string file)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(file))
                 {
                     NewFile();
-                    return;
+                    return true;
                 }
                 EditBox.Text = File.ReadAllText(file);
                 Settings.Default.LastOpenFile = file;
                 IsModified = false;
                 FileName = file;
+                return true;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, @"Load File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
 
-        private void Save()
+        private bool Save()
         {
             try
             {
                 File.WriteAllText(FileName, Text);
                 IsModified = false;
+                return true;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, @"Save File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
 
