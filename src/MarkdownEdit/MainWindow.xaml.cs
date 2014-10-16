@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -24,6 +23,7 @@ namespace MarkdownEdit
             {
                 case "FileName":
                 case "DisplayName":
+                case "IsModified":
                     TitleName = null;
                     break;
             }
@@ -34,7 +34,7 @@ namespace MarkdownEdit
             Editor.OpenFile();
         }
 
-        private void OpenFileCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        private void CanExecuteOpenFile(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = !Editor.IsReadOnly;
         }
@@ -51,7 +51,7 @@ namespace MarkdownEdit
 
         public string TitleName
         {
-            get { return string.Format("MARKDOWN EDIT - {0}", Editor.DisplayName); }
+            get { return string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "*" : "", Editor.DisplayName); }
             // ReSharper disable once ValueParameterNotUsed
             set { OnPropertyChanged(); }
         }

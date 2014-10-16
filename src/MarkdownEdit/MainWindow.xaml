@@ -29,7 +29,7 @@
   </Grid>
 
   <Window.CommandBindings>
-    <CommandBinding Command="Open" Executed="ExecuteOpenFile" CanExecute="OpenFileCanExecute" />
+    <CommandBinding Command="Open" Executed="ExecuteOpenFile" CanExecute="CanExecuteOpenFile" />
     <CommandBinding Command="Help" Executed="ExecuteHelp" />
     <CommandBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Executed="ExecuteWordWrap" />
   </Window.CommandBindings>

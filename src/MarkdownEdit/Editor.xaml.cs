@@ -18,12 +18,14 @@ namespace MarkdownEdit
         {
             public bool IsSet { get; private set; }
             private bool _isModified;
+            private bool _wordWrap;
             private string _text;
 
             public void Set(Editor editor)
             {
                 _text = editor.Text;
                 _isModified = editor.IsModified;
+                _wordWrap = editor.WordWrap;
                 editor.IsReadOnly = true;
                 IsSet = true;
             }
@@ -32,6 +34,7 @@ namespace MarkdownEdit
             {
                 editor.Text = _text;
                 editor.IsModified = _isModified;
+                editor.WordWrap = _wordWrap;
                 editor.IsReadOnly = false;
                 editor.DisplayName = string.Empty;
                 IsSet = false;
