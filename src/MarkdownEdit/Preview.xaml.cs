@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using MarkdownDeep;
+using Point = System.Drawing.Point;
 
 namespace MarkdownEdit
 {
@@ -9,14 +10,7 @@ namespace MarkdownEdit
         public Preview()
         {
             InitializeComponent();
-            SizeChanged += OnSizeChanged;
             Browser.DocumentText = Properties.Resources.GithubTemplateHtml;
-        }
-
-        private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
-        {
-            BrowserHost.Width = ActualWidth;
-            BrowserHost.Height = ActualHeight;
         }
 
         public void UpdatePreview(string markdown)
@@ -48,8 +42,8 @@ namespace MarkdownEdit
             var document = Browser.Document;
             if (document != null)
             {
-                var body = document.Body;
-                if (body != null) body.ScrollTop = offset;
+                var window = document.Window;
+                if (window != null) window.ScrollTo(new Point(0, offset));
             }
         }
     }

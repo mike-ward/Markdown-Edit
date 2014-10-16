@@ -9,6 +9,7 @@
       line-height: 1.5;
       color: #444;
       padding: 0.5pc;
+      overflow-x:hidden;
     }
 
     a {
@@ -85,7 +86,7 @@
     }
 
     #content { 
-      width: 100%;
+      width: 98%;
    }
   </style>
 </head>

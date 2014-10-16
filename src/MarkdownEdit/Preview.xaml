@@ -8,11 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
   <Grid>
-    <wfi:WindowsFormsHost x:Name="BrowserHost"
-                          Width ="10"
-                          Height="10"
-                          HorizontalAlignment="Left" 
-                          VerticalAlignment="Top">
+    <wfi:WindowsFormsHost x:Name="BrowserHost">
       <wf:WebBrowser x:Name="Browser" />
     </wfi:WindowsFormsHost>
   </Grid>
