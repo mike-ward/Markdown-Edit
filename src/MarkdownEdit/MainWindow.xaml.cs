@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace MarkdownEdit
@@ -17,6 +18,32 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(Convert.ToInt32(e.VerticalOffset));
+            Closing += OnClosing;
+        }
+
+        private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
+        {
+            if (Editor.IsModified == false) return;
+
+            var result = MessageBox.Show(
+                string.Format(@"Save ""{0}""?", Editor.FileName), 
+                @"File Modified", 
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            switch (result)
+            {
+                case System.Windows.Forms.DialogResult.No:
+                    break;
+
+                case System.Windows.Forms.DialogResult.Yes:
+                    Editor.SaveFile();
+                    break;
+
+                case System.Windows.Forms.DialogResult.Cancel:
+                    cancelEventArgs.Cancel = true;
+                    break;
+            }
         }
 
         private void EditorOnPropertyChanged(object sender, PropertyChangedEventArgs ea)
