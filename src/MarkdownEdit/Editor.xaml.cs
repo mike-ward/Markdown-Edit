@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -15,10 +14,35 @@ namespace MarkdownEdit
 {
     public partial class Editor : INotifyPropertyChanged
     {
-        private string _filename;
-        private string _textSwap;
+        private struct TextSwap
+        {
+            public bool IsSet { get; private set; }
+            private bool _isModified;
+            private string _text;
+
+            public void Set(Editor editor)
+            {
+                _text = editor.Text;
+                _isModified = editor.IsModified;
+                editor.IsReadOnly = true;
+                IsSet = true;
+            }
+
+            public void Reset(Editor editor)
+            {
+                editor.Text = _text;
+                editor.IsModified = _isModified;
+                editor.IsReadOnly = false;
+                editor.DisplayName = string.Empty;
+                IsSet = false;
+            }
+        }
+
+        private string _fileName;
+        private string _displayName = string.Empty;
         private bool _wordWrap = true;
         private bool _isModified;
+        private TextSwap _textSwap = new TextSwap();
 
         public Editor()
         {
@@ -47,12 +71,9 @@ namespace MarkdownEdit
             });
         }
 
-        private void EditorBoxOnTextChanged(object sender, EventArgs eventArgs)
-        {
-            MainWindow.UpdatePreviewCommand.Execute(EditorBox.Text, this);
-        }
+        // Commands
 
-        public void OpenFileHandler()
+        public void OpenFile()
         {
             var dialog = new OpenFileDialog();
             var result = dialog.ShowDialog();
@@ -64,46 +85,82 @@ namespace MarkdownEdit
         {
             if (string.IsNullOrWhiteSpace(file)) return;
             EditorBox.Text = File.ReadAllText(file);
-            FileLoaded(file);
-        }
-
-        private void FileLoaded(string file)
-        {
             Settings.Default.LastOpenFile = file;
-            Filename = file;
+            IsModified = false;
+            FileName = file;
         }
 
         public void ToggleHelp()
         {
-            if (_textSwap == null)
+            if (_textSwap.IsSet)
             {
-                _textSwap = EditorBox.Text;
-                EditorBox.Text = Properties.Resources.Help;
-                EditorBox.IsReadOnly = true;
+                _textSwap.Reset(this);
+                return;
             }
-            else
-            {
-                EditorBox.IsReadOnly = false;
-                EditorBox.Text = _textSwap;
-                _textSwap = null;
-            }
+            _textSwap.Set(this);
+            Text = Properties.Resources.Help;
+            DisplayName = "Help";
         }
+
+        // Events
+
+        public EventHandler TextChanged;
+
+        private void EditorBoxOnTextChanged(object sender, EventArgs eventArgs)
+        {
+            var handler = TextChanged;
+            if (handler != null) TextChanged(this, eventArgs);
+        }
+
+        public event ScrollChangedEventHandler ScrollChanged;
 
         private void ScrollViewerOnScrollChanged(object sender, ScrollChangedEventArgs scrollChangedEventArgs)
         {
-            MainWindow.ScrollPreviewCommand.Execute(EditorBox.VerticalOffset, this);
+            var handler = ScrollChanged;
+            if (handler != null) handler(this, scrollChangedEventArgs);
         }
 
-        public string Filename
+        // Properties 
+
+        public string Text
         {
-            get { return _filename; }
+            get { return EditorBox.Text; }
+            set { EditorBox.Text = value; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return EditorBox.IsReadOnly; }
+            set { EditorBox.IsReadOnly = value; }
+        }
+
+        public string FileName
+        {
+            get { return _fileName; }
             set
             {
-                if (_filename == value) return;
-                _filename = value;
+                if (_fileName == value) return;
+                _fileName = value;
                 OnPropertyChanged();
             }
         }
+
+        public string DisplayName
+        {
+            get
+            {
+                return string.IsNullOrWhiteSpace(_displayName)
+                    ? Path.GetFileName(FileName)
+                    : _displayName;
+            }
+            set
+            {
+                if (_displayName == value) return;
+                _displayName = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool WordWrap
         {
             get { return _wordWrap; }
@@ -126,11 +183,13 @@ namespace MarkdownEdit
             }
         }
 
+        // INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
+            var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
