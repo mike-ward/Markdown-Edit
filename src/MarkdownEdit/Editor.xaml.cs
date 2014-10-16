@@ -91,6 +91,7 @@ namespace MarkdownEdit
             Text = string.Empty;
             IsModified = false;
             FileName = string.Empty;
+            Settings.Default.LastOpenFile = string.Empty;
         }
 
         public void OpenFile()
@@ -129,6 +130,26 @@ namespace MarkdownEdit
             }
         }
 
+        private void LoadFile(string file)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(file))
+                {
+                    NewFile();
+                    return;
+                }
+                EditBox.Text = File.ReadAllText(file);
+                Settings.Default.LastOpenFile = file;
+                IsModified = false;
+                FileName = file;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, @"Load File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void Save()
         {
             try
@@ -139,22 +160,6 @@ namespace MarkdownEdit
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, @"Save File", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void LoadFile(string file)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(file)) return;
-                EditBox.Text = File.ReadAllText(file);
-                Settings.Default.LastOpenFile = file;
-                IsModified = false;
-                FileName = file;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, @"Load File", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
