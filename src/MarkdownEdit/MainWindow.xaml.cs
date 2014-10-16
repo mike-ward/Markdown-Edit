@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -27,12 +26,22 @@ namespace MarkdownEdit
                 case "FileName":
                 case "DisplayName":
                 case "IsModified":
-                    TitleName = string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "*" : "", Editor.DisplayName);;
+                    TitleName = string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "*" : "", Editor.DisplayName);
                     break;
             }
         }
 
         // Commands
+
+        private void ExecuteNewFile(object sender, ExecutedRoutedEventArgs ea)
+        {
+            Editor.NewFile();
+        }
+
+        private void CanExecuteNewFile(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = Editor.CanExecute;
+        }
 
         private void ExecuteOpenFile(object sender, ExecutedRoutedEventArgs ea)
         {

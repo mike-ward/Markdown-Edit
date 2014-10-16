@@ -29,6 +29,7 @@
   </Grid>
 
   <Window.CommandBindings>
+    <CommandBinding Command="New"  Executed="ExecuteNewFile"  CanExecute="CanExecuteNewFile" />
     <CommandBinding Command="Open" Executed="ExecuteOpenFile" CanExecute="CanExecuteOpenFile" />
     <CommandBinding Command="Save" Executed="ExecuteSaveFile" CanExecute="CanExecuteSaveFile" />
     <CommandBinding Command="Help" Executed="ExecuteHelp" />

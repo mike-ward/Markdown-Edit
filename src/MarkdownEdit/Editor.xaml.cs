@@ -9,6 +9,7 @@ using System.Xml;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using MarkdownEdit.Properties;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace MarkdownEdit
 {
@@ -84,6 +85,14 @@ namespace MarkdownEdit
 
         // Commands
 
+        public void NewFile()
+        {
+            if (IsModified) return;
+            Text = string.Empty;
+            IsModified = false;
+            FileName = string.Empty;
+        }
+
         public void OpenFile()
         {
             var dialog = new OpenFileDialog();
@@ -106,32 +115,47 @@ namespace MarkdownEdit
         {
             var dialog = new SaveFileDialog
             {
-                FilterIndex = 2, 
-                OverwritePrompt = true, 
+                FilterIndex = 2,
+                OverwritePrompt = true,
                 RestoreDirectory = true,
-                Filter = "Markdown files (*.md|*.md|All files (*.*)|*.*"
+                Filter = @"Markdown files (*.md|*.md|All files (*.*)|*.*"
             };
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 FileName = dialog.FileNames[0];
                 Save();
+                LoadFile(FileName);
             }
         }
 
         private void Save()
         {
-            File.WriteAllText(FileName, Text);
-            IsModified = false;
+            try
+            {
+                File.WriteAllText(FileName, Text);
+                IsModified = false;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, @"Save File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadFile(string file)
         {
-            if (string.IsNullOrWhiteSpace(file)) return;
-            EditBox.Text = File.ReadAllText(file);
-            Settings.Default.LastOpenFile = file;
-            IsModified = false;
-            FileName = file;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(file)) return;
+                EditBox.Text = File.ReadAllText(file);
+                Settings.Default.LastOpenFile = file;
+                IsModified = false;
+                FileName = file;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, @"Load File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public void ToggleHelp()
@@ -194,9 +218,9 @@ namespace MarkdownEdit
         {
             get
             {
-                return string.IsNullOrWhiteSpace(_displayName)
-                    ? Path.GetFileName(FileName)
-                    : _displayName;
+                return (string.IsNullOrWhiteSpace(_displayName) == false)
+                    ? _displayName
+                    : string.IsNullOrWhiteSpace(FileName) ? "New Document" : Path.GetFileName(FileName);
             }
             set
             {
