@@ -56,27 +56,27 @@ namespace MarkdownEdit
         {
             InitializeComponent();
             CanExecute = true;
-            EditorBox.Loaded += EditorBoxOnLoaded;
+            EditBox.Loaded += EditBoxOnLoaded;
         }
 
-        private void EditorBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             var reader = new XmlTextReader(new StringReader(Properties.Resources.markdown_xshd));
             var xshd = HighlightingLoader.LoadXshd(reader);
             var highlighter = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
-            EditorBox.SyntaxHighlighting = highlighter;
+            EditBox.SyntaxHighlighting = highlighter;
             reader.Close();
 
-            EditorBox.Options.IndentationSize = 2;
-            EditorBox.Options.ConvertTabsToSpaces = true;
-            EditorBox.Options.AllowScrollBelowDocument = true;
-            EditorBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+            EditBox.Options.IndentationSize = 2;
+            EditBox.Options.ConvertTabsToSpaces = true;
+            EditBox.Options.AllowScrollBelowDocument = true;
+            EditBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
 
             Dispatcher.InvokeAsync(() =>
             {
-                EditorBox.TextChanged += EditorBoxOnTextChanged;
+                EditBox.TextChanged += EditBoxOnTextChanged;
                 LoadFile(Settings.Default.LastOpenFile);
-                EditorBox.Focus();
+                EditBox.Focus();
             });
         }
 
@@ -93,7 +93,7 @@ namespace MarkdownEdit
         private void LoadFile(string file)
         {
             if (string.IsNullOrWhiteSpace(file)) return;
-            EditorBox.Text = File.ReadAllText(file);
+            EditBox.Text = File.ReadAllText(file);
             Settings.Default.LastOpenFile = file;
             IsModified = false;
             FileName = file;
@@ -108,7 +108,7 @@ namespace MarkdownEdit
             }
             _helpSwap.Set(this);
             Text = Properties.Resources.Help;
-            EditorBox.IsModified = false;
+            EditBox.IsModified = false;
             DisplayName = "Help";
         }
 
@@ -116,7 +116,7 @@ namespace MarkdownEdit
 
         public EventHandler TextChanged;
 
-        private void EditorBoxOnTextChanged(object sender, EventArgs eventArgs)
+        private void EditBoxOnTextChanged(object sender, EventArgs eventArgs)
         {
             var handler = TextChanged;
             if (handler != null) TextChanged(this, eventArgs);
@@ -134,14 +134,14 @@ namespace MarkdownEdit
 
         public string Text
         {
-            get { return EditorBox.Text; }
-            set { EditorBox.Text = value; }
+            get { return EditBox.Text; }
+            set { EditBox.Text = value; }
         }
 
         public bool IsReadOnly
         {
-            get { return EditorBox.IsReadOnly; }
-            set { EditorBox.IsReadOnly = value; }
+            get { return EditBox.IsReadOnly; }
+            set { EditBox.IsReadOnly = value; }
         }
 
         public string FileName

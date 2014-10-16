@@ -11,7 +11,7 @@
              >
   <Border>
     <avalonedit:TextEditor 
-      x:Name="EditorBox"
+      x:Name="EditBox"
       BorderThickness="0"
       FontFamily="Segoe WP Semilight"
       FontSize="14"
