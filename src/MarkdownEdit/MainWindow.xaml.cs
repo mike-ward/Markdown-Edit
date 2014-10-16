@@ -15,10 +15,10 @@ namespace MarkdownEdit
         public MainWindow()
         {
             InitializeComponent();
+            Closing += OnClosing;
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(Convert.ToInt32(e.VerticalOffset));
-            Closing += OnClosing;
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -53,9 +53,14 @@ namespace MarkdownEdit
                 case "FileName":
                 case "DisplayName":
                 case "IsModified":
-                    TitleName = string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "*" : "", Editor.DisplayName);
+                    TitleName = BuildTitle();
                     break;
             }
+        }
+
+        private string BuildTitle()
+        {
+            return string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "*" : "", Editor.DisplayName);
         }
 
         // Commands
