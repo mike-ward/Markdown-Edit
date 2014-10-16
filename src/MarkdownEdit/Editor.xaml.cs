@@ -14,7 +14,14 @@ namespace MarkdownEdit
 {
     public partial class Editor : INotifyPropertyChanged
     {
-        private struct TextSwap
+        public bool CanExecute { get; private set; }
+        private string _fileName;
+        private string _displayName = string.Empty;
+        private bool _wordWrap = true;
+        private bool _isModified;
+        private HelpSwap _helpSwap = new HelpSwap();
+
+        private struct HelpSwap
         {
             public bool IsSet { get; private set; }
             private bool _isModified;
@@ -26,8 +33,11 @@ namespace MarkdownEdit
                 _text = editor.Text;
                 _isModified = editor.IsModified;
                 _wordWrap = editor.WordWrap;
+                editor.IsModified = false;
+                editor.WordWrap = true;
                 editor.IsReadOnly = true;
                 IsSet = true;
+                editor.CanExecute = false;
             }
 
             public void Reset(Editor editor)
@@ -38,18 +48,14 @@ namespace MarkdownEdit
                 editor.IsReadOnly = false;
                 editor.DisplayName = string.Empty;
                 IsSet = false;
+                editor.CanExecute = true;
             }
         }
-
-        private string _fileName;
-        private string _displayName = string.Empty;
-        private bool _wordWrap = true;
-        private bool _isModified;
-        private TextSwap _textSwap = new TextSwap();
 
         public Editor()
         {
             InitializeComponent();
+            CanExecute = true;
             EditorBox.Loaded += EditorBoxOnLoaded;
         }
 
@@ -95,13 +101,14 @@ namespace MarkdownEdit
 
         public void ToggleHelp()
         {
-            if (_textSwap.IsSet)
+            if (_helpSwap.IsSet)
             {
-                _textSwap.Reset(this);
+                _helpSwap.Reset(this);
                 return;
             }
-            _textSwap.Set(this);
+            _helpSwap.Set(this);
             Text = Properties.Resources.Help;
+            EditorBox.IsModified = false;
             DisplayName = "Help";
         }
 

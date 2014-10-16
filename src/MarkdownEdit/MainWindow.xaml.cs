@@ -36,7 +36,7 @@ namespace MarkdownEdit
 
         private void CanExecuteOpenFile(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = !Editor.IsReadOnly;
+            e.CanExecute = Editor.CanExecute;
         }
 
         public void ExecuteWordWrap(object sender, ExecutedRoutedEventArgs ea)
