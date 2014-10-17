@@ -98,7 +98,8 @@
 <body>
 <div id="content">
 </div>
-<div style="height: 50%">
+<div style="height: 300px">
+  &nbsp;
 </div>
 </body>
 </html>
