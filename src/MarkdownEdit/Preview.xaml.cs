@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Drawing;
+using System.Windows;
 using CommonMark;
+using Point = System.Drawing.Point;
 
 namespace MarkdownEdit
 {
@@ -15,8 +16,17 @@ namespace MarkdownEdit
         public void UpdatePreview(string markdown)
         {
             if (markdown == null) return;
+            string html;
             markdown = RemoveYamlFrontMatter(markdown);
-            var html = CommonMarkConverter.Convert(markdown);
+            try
+            {
+                html = CommonMarkConverter.Convert(markdown);
+            }
+            catch (CommonMarkException e)
+            {
+                MessageBox.Show(e.Message);
+                return;
+            }
             var document = Browser.Document;
             if (document != null)
             {
@@ -32,7 +42,7 @@ namespace MarkdownEdit
             const string yamlEnd = "\n---";
             if (!markdown.StartsWith(yaml) && !markdown.StartsWith(yaml2)) return markdown;
             var index = markdown.IndexOf(yamlEnd, yaml.Length, StringComparison.Ordinal);
-            return (index == -1) ? markdown : markdown.Substring(index + yaml2.Length);
+            return (index == -1) ? markdown : markdown.Substring(Math.Min(index + yaml2.Length, markdown.Length));
         }
 
         public void SetScrollOffset(int offset)
