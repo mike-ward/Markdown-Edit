@@ -84,6 +84,11 @@ namespace MarkdownEdit
             Editor.ToggleHelp();
         }
 
+        public void ExecuteClose(object sender, ExecutedRoutedEventArgs ea)
+        {
+            Close();
+        }
+
         // Properites
 
         public string TitleName

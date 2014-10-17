@@ -34,12 +34,12 @@
     <CommandBinding Command="Open" Executed="ExecuteOpenFile" CanExecute="CanExecuteOpenFile" />
     <CommandBinding Command="Save" Executed="ExecuteSaveFile" CanExecute="CanExecuteSaveFile" />
     <CommandBinding Command="Help" Executed="ExecuteHelp" />
+    <CommandBinding Command="Close" Executed="ExecuteClose" />
     <CommandBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Executed="ExecuteWordWrap" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
-    <KeyBinding Command="{x:Static local:MainWindow.WordWrapCommand}"
-                Key="W"
-                Modifiers="Control" />
+    <KeyBinding Command="Close" Gesture="Ctrl+Shift+Q" />
+    <KeyBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Gesture="Ctrl+W" />
   </Window.InputBindings>
 </Controls:MetroWindow>
