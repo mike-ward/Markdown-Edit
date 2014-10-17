@@ -89,6 +89,11 @@ namespace MarkdownEdit
             Close();
         }
 
+        private void ExecuteEditorReplace(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.Replace();
+        }
+
         // Properites
 
         public string TitleName

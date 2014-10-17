@@ -193,6 +193,11 @@ namespace MarkdownEdit
             DisplayName = "Help";
         }
 
+        public void Replace()
+        {
+            FindReplaceDialog.ShowForReplace(EditBox);
+        }
+
         // Events
 
         public EventHandler TextChanged;

@@ -35,6 +35,7 @@
     <CommandBinding Command="Save" Executed="ExecuteSaveFile" CanExecute="CanExecuteSaveFile" />
     <CommandBinding Command="Help" Executed="ExecuteHelp" />
     <CommandBinding Command="Close" Executed="ExecuteClose" />
+    <CommandBinding Command="Replace" Executed="ExecuteEditorReplace" />
     <CommandBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Executed="ExecuteWordWrap" />
   </Window.CommandBindings>
 
