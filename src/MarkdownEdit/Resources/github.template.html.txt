@@ -8,8 +8,13 @@
       font-size: 14px;
       line-height: 1.5;
       color: #444;
-      padding: 0.5pc;
-      overflow-x:hidden;
+      padding: 0.5pc 0;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+
+    p:first-child, h1:first-child, h2:first-child {
+      margin: 0;
     }
 
     a {
@@ -86,21 +91,14 @@
     }
 
     #content { 
-      width: 98%;
+      width: 97%;
    }
   </style>
 </head>
 <body>
 <div id="content">
 </div>
-<script>
-  function getVerticalScrollPosition() {
-  return document.body.scrollTop.toString();
-  }
-
-  function setVerticalScrollPosition(position) {
-  document.body.scrollTop = position;
-  }
-</script>
+<div style="height: 50%">
+</div>
 </body>
 </html>

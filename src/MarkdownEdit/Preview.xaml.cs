@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Windows;
-using MarkdownDeep;
-using Point = System.Drawing.Point;
+using System.Drawing;
+using CommonMark;
 
 namespace MarkdownEdit
 {
@@ -17,8 +16,7 @@ namespace MarkdownEdit
         {
             if (markdown == null) return;
             markdown = RemoveYamlFrontMatter(markdown);
-            var md = new Markdown();
-            var html = md.Transform(markdown);
+            var html = CommonMarkConverter.Convert(markdown);
             var document = Browser.Document;
             if (document != null)
             {
