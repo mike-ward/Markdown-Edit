@@ -45,8 +45,9 @@
     <StartupObject>MarkdownEdit.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonMark">
-      <HintPath>..\packages\CommonMark.NET.0.4.1\lib\net45\CommonMark.dll</HintPath>
+    <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CommonMark.NET.0.4.2\lib\net45\CommonMark.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.AvalonEdit">
       <HintPath>..\packages\AvalonEdit.5.0.1-pre\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
