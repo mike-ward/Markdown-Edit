@@ -60,6 +60,7 @@ namespace MarkdownEdit
             InitializeComponent();
             CanExecute = true;
             EditBox.Loaded += EditBoxOnLoaded;
+            EditBox.Unloaded += EditBoxOnUnloaded;
         }
 
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -81,6 +82,11 @@ namespace MarkdownEdit
                 LoadFile(Settings.Default.LastOpenFile);
                 EditBox.Focus();
             });
+        }
+
+        private static void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            FindReplaceDialog.CloseDialog();
         }
 
         // Commands
@@ -193,9 +199,14 @@ namespace MarkdownEdit
             DisplayName = "Help";
         }
 
-        public void Replace()
+        public void FindDialog()
         {
-            FindReplaceDialog.ShowForReplace(EditBox);
+            FindReplaceDialog.ShowFindDialog(EditBox);
+        }
+
+        public void ReplaceDialog()
+        {
+            FindReplaceDialog.ShowReplaceDialog(EditBox);
         }
 
         // Events

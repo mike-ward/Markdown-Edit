@@ -2,6 +2,7 @@
 using System.Media;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 
 namespace MarkdownEdit
@@ -67,21 +68,16 @@ namespace MarkdownEdit
 
         private void ReplaceAllClick(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to Replace All occurences of \"" +
-                                txtFind2.Text + "\" with \"" + txtReplace.Text + "\"?",
-                "Replace All", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
+            var regex = GetRegEx(txtFind2.Text, true);
+            var offset = 0;
+            _editor.BeginChange();
+            foreach (Match match in regex.Matches(_editor.Text))
             {
-                var regex = GetRegEx(txtFind2.Text, true);
-                var offset = 0;
-                _editor.BeginChange();
-                foreach (Match match in regex.Matches(_editor.Text))
-                {
-                    _editor.Document.Replace(offset + match.Index, match.Length, txtReplace.Text);
-                    offset += txtReplace.Text.Length - match.Length;
-                }
-                _editor.EndChange();
+                _editor.Document.Replace(offset + match.Index, match.Length, txtReplace.Text);
+                offset += txtReplace.Text.Length - match.Length;
             }
-        }
+            _editor.EndChange();
+    }
 
         private bool FindNext(string textToFind)
         {
@@ -89,8 +85,8 @@ namespace MarkdownEdit
             var start = regex.Options.HasFlag(RegexOptions.RightToLeft)
                 ? _editor.SelectionStart
                 : _editor.SelectionStart + _editor.SelectionLength;
+            
             var match = regex.Match(_editor.Text, start);
-
             if (!match.Success) // start again from beginning or end
             {
                 match = regex.Match(_editor.Text, regex.Options.HasFlag(RegexOptions.RightToLeft) ? _editor.Text.Length : 0);
@@ -118,11 +114,21 @@ namespace MarkdownEdit
             return new Regex(pattern, options);
         }
 
-        public static void ShowForReplace(TextEditor editor)
+        public static void ShowFindDialog(TextEditor editor)
+        {
+            ShowDialog(editor);
+        }
+
+        public static void ShowReplaceDialog(TextEditor editor)
+        {
+            ShowDialog(editor, 1);
+        }
+
+        private static void ShowDialog(TextEditor editor, int index = 0)
         {
             if (_dialog == null)
             {
-                _dialog = new FindReplaceDialog(editor) {tabMain = {SelectedIndex = 1}};
+                _dialog = new FindReplaceDialog(editor) {tabMain = {SelectedIndex = index}};
                 _dialog.Show();
                 _dialog.Activate();
             }
@@ -139,6 +145,18 @@ namespace MarkdownEdit
                 _dialog.txtFind2.SelectAll();
                 _dialog.txtFind2.Focus();
             }
+
+            _dialog.Dispatcher.InvokeAsync(() => _dialog.txtFind.Focus());
+        }
+
+        public static void CloseDialog()
+        {
+            if (_dialog != null) _dialog.Close();
+        }
+
+        private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
+        {
+            CloseDialog();
         }
     }
 }

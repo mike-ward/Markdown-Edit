@@ -89,9 +89,14 @@ namespace MarkdownEdit
             Close();
         }
 
+        private void ExecuteEditorFind(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.FindDialog();
+        }
+
         private void ExecuteEditorReplace(object sender, ExecutedRoutedEventArgs e)
         {
-            Editor.Replace();
+            Editor.ReplaceDialog();
         }
 
         // Properites
