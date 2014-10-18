@@ -36,11 +36,13 @@
     <CommandBinding Command="Close" Executed="ExecuteClose" />
     <CommandBinding Command="Find" Executed="ExecuteEditorFind" />
     <CommandBinding Command="Replace" Executed="ExecuteEditorReplace" />
+    <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
     <CommandBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Executed="ExecuteWordWrap" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
     <KeyBinding Command="Close" Gesture="Ctrl+Shift+Q" />
+    <KeyBinding Command="ToggleBold" Gesture="Ctrl+B" />
     <KeyBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Gesture="Ctrl+W" />
   </Window.InputBindings>
 </Controls:MetroWindow>

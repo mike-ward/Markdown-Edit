@@ -99,6 +99,11 @@ namespace MarkdownEdit
             Editor.ReplaceDialog();
         }
 
+        private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea)
+        {
+            Editor.Bold();    
+        }
+
         // Properites
 
         public string TitleName

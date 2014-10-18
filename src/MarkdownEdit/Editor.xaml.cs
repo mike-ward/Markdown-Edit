@@ -210,6 +210,22 @@ namespace MarkdownEdit
             FindReplaceDialog.ShowReplaceDialog(EditBox);
         }
 
+        public void Bold()
+        {
+            var selected = EditBox.SelectedText;
+
+            if (string.IsNullOrEmpty(selected))
+            {
+                EditBox.Document.Insert(EditBox.TextArea.Caret.Offset, "**");
+            }
+            else
+            {
+                EditBox.SelectedText = (selected.StartsWith("**") && selected.EndsWith("**"))
+                    ? selected.UnsurroundWith("**")
+                    : selected.SurroundWith("**");
+            }
+        }
+
         // Events
 
         public EventHandler TextChanged;

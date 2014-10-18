@@ -13,19 +13,19 @@
 			^\#.*
 		</Rule>
 		<Rule color="StrongEmphasis">
-			\*\*.*\*\*
+			\*\*.+?\*\*
 		</Rule>
 		<Rule color="StrongEmphasis">
-			__.*__
+			__.+?__
 		</Rule>
 		<Rule color="Emphasis">
-			\*(?![ ]).*\*
+			\*(?![ ]).+?\*
 		</Rule>
 		<Rule color="Emphasis">
-			_.*_
+			_.+?_
 		</Rule>
 		<Rule color="Code">
-			`.*`
+			`.+?`
 		</Rule>
 		<Span color="Code" multiline="true">
 			<Begin>^\t</Begin>
