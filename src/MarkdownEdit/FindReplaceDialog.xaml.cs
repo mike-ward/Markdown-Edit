@@ -77,7 +77,7 @@ namespace MarkdownEdit
                 offset += txtReplace.Text.Length - match.Length;
             }
             _editor.EndChange();
-    }
+        }
 
         private bool FindNext(string textToFind)
         {
@@ -85,7 +85,7 @@ namespace MarkdownEdit
             var start = regex.Options.HasFlag(RegexOptions.RightToLeft)
                 ? _editor.SelectionStart
                 : _editor.SelectionStart + _editor.SelectionLength;
-            
+
             var match = regex.Match(_editor.Text, start);
             if (!match.Success) // start again from beginning or end
             {
@@ -126,27 +126,21 @@ namespace MarkdownEdit
 
         private static void ShowDialog(TextEditor editor, int index = 0)
         {
-            if (_dialog == null)
-            {
-                _dialog = new FindReplaceDialog(editor) {tabMain = {SelectedIndex = index}};
-                _dialog.Show();
-                _dialog.Activate();
-            }
-            else
-            {
-                _dialog.tabMain.SelectedIndex = 1;
-                _dialog.Activate();
-            }
+            _dialog = _dialog ?? new FindReplaceDialog(editor);
+            _dialog.tabMain.SelectedIndex = index;
+            _dialog.Show();
+            _dialog.Activate();
 
             if (!editor.TextArea.Selection.IsMultiline)
             {
                 _dialog.txtFind.Text = _dialog.txtFind2.Text = editor.TextArea.Selection.GetText();
                 _dialog.txtFind.SelectAll();
                 _dialog.txtFind2.SelectAll();
-                _dialog.txtFind2.Focus();
             }
 
-            _dialog.Dispatcher.InvokeAsync(() => _dialog.txtFind.Focus());
+            _dialog.Dispatcher.InvokeAsync(() => editor.TextArea.Selection.IsMultiline 
+                ? _dialog.txtFind2.Focus() 
+                : _dialog.txtFind.Focus());
         }
 
         public static void CloseDialog()
