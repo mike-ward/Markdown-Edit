@@ -7,7 +7,6 @@ namespace MarkdownEdit
     {
         private void ApplicationExit(object sender, ExitEventArgs e)
         {
-            FindReplaceDialog.SaveSettings();
             Settings.Default.Save();
         }
     }

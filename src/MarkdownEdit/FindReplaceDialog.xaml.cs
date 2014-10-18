@@ -8,15 +8,23 @@ namespace MarkdownEdit
 {
     public partial class FindReplaceDialog
     {
+        public bool AllowClose { get; set; }
         private readonly TextEditor _editor;
-        private static FindReplaceDialog _dialog;
-        private static readonly FindReplaceSettings _findReplaceSettings = new FindReplaceSettings();
+        private readonly FindReplaceSettings _findReplaceSettings = new FindReplaceSettings();
 
         public FindReplaceDialog(TextEditor editor)
         {
             InitializeComponent();
-            DataContext = _findReplaceSettings;
             _editor = editor;
+            DataContext = _findReplaceSettings;
+            Closed += (s, e) => _findReplaceSettings.Save();
+
+            Closing += (s, e) =>
+            {
+                if (AllowClose) return;
+                Hide();
+                e.Cancel = true;
+            };
         }
 
         private void FindNextClick(object sender, RoutedEventArgs e)
@@ -95,48 +103,36 @@ namespace MarkdownEdit
             return new Regex(pattern, options);
         }
 
-        public static void ShowFindDialog(TextEditor editor)
+        public void ShowFindDialog()
         {
-            ShowDialog(editor);
+            ShowDialog();
         }
 
-        public static void ShowReplaceDialog(TextEditor editor)
+        public void ShowReplaceDialog()
         {
-            ShowDialog(editor, 1);
+            ShowDialog(1);
         }
 
-        private static void ShowDialog(TextEditor editor, int index = 0)
+        private void ShowDialog(int index = 0)
         {
-            _dialog = _dialog ?? new FindReplaceDialog(editor);
-            _dialog.tabMain.SelectedIndex = index;
-            _dialog.Show();
-            _dialog.Activate();
+            tabMain.SelectedIndex = index;
+            Owner = Application.Current.MainWindow;
+            Show();
 
-            if (!editor.TextArea.Selection.IsMultiline)
+            if (!_editor.TextArea.Selection.IsMultiline)
             {
-                _dialog.txtFind.Text = _dialog.txtFind2.Text = editor.TextArea.Selection.GetText();
-                _dialog.txtFind.SelectAll();
-                _dialog.txtFind2.SelectAll();
+                txtFind.Text = txtFind2.Text = _editor.TextArea.Selection.GetText();
+                txtFind.SelectAll();
+                txtFind2.SelectAll();
             }
 
-            _dialog.Dispatcher.InvokeAsync(() => editor.TextArea.Selection.IsMultiline
-                ? _dialog.txtFind2.Focus()
-                : _dialog.txtFind.Focus());
-        }
-
-        public static void CloseDialog()
-        {
-            if (_dialog != null) _dialog.Close();
+            if (index == 1) txtFind2.Focus();
+            else txtFind.Focus();
         }
 
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
         {
-            CloseDialog();
-        }
-
-        public static void SaveSettings()
-        {
-            _findReplaceSettings.Save();
+            Close();
         }
     }
 }

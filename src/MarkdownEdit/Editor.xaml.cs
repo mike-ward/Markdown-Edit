@@ -23,6 +23,7 @@ namespace MarkdownEdit
         private bool _wordWrap = true;
         private bool _isModified;
         private EditorState _editorState = new EditorState();
+        private readonly FindReplaceDialog _findReplaceDialog;
 
         private struct EditorState
         {
@@ -64,6 +65,7 @@ namespace MarkdownEdit
             CanExecute = true;
             EditBox.Loaded += EditBoxOnLoaded;
             EditBox.Unloaded += EditBoxOnUnloaded;
+            _findReplaceDialog = new FindReplaceDialog(EditBox);
         }
 
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -89,9 +91,10 @@ namespace MarkdownEdit
             });
         }
 
-        private static void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
+        private void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            FindReplaceDialog.CloseDialog();
+            _findReplaceDialog.AllowClose = true;
+            _findReplaceDialog.Close();
         }
 
         // Commands
@@ -206,12 +209,12 @@ namespace MarkdownEdit
 
         public void FindDialog()
         {
-            FindReplaceDialog.ShowFindDialog(EditBox);
+            _findReplaceDialog.ShowFindDialog();
         }
 
         public void ReplaceDialog()
         {
-            FindReplaceDialog.ShowReplaceDialog(EditBox);
+            _findReplaceDialog.ShowReplaceDialog();
         }
 
         public void Bold()
