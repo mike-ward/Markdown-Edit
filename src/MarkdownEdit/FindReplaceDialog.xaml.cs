@@ -10,8 +10,8 @@ namespace MarkdownEdit
     public partial class FindReplaceDialog
     {
         private static string _textToFind = string.Empty;
-        private static bool _caseSensitive = true;
-        private static bool _wholeWord = true;
+        private static bool _caseSensitive;
+        private static bool _wholeWord;
         private static bool _useRegex;
         private static bool _useWildcards;
         private static bool _searchUp;
