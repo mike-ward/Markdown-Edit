@@ -39,7 +39,7 @@
     <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
     <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
     <CommandBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Executed="ExecuteWordWrap" />
-    <CommandBinding Command="{x:Static local:MainWindow.HeaderCommand}" Executed="ExecuteHeader" />
+    <CommandBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Executed="ExecuteInsertHeader" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -47,11 +47,11 @@
     <KeyBinding Command="ToggleBold" Gesture="Ctrl+B" />
     <KeyBinding Command="ToggleItalic" Gesture="Ctrl+I" />
     <KeyBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Gesture="Ctrl+W" />
-    <KeyBinding Command="{x:Static local:MainWindow.HeaderCommand}" Gesture="Ctrl+1" CommandParameter="1" />
-    <KeyBinding Command="{x:Static local:MainWindow.HeaderCommand}" Gesture="Ctrl+2" CommandParameter="2" />
-    <KeyBinding Command="{x:Static local:MainWindow.HeaderCommand}" Gesture="Ctrl+3" CommandParameter="3" />
-    <KeyBinding Command="{x:Static local:MainWindow.HeaderCommand}" Gesture="Ctrl+4" CommandParameter="4" />
-    <KeyBinding Command="{x:Static local:MainWindow.HeaderCommand}" Gesture="Ctrl+5" CommandParameter="5" />
-    <KeyBinding Command="{x:Static local:MainWindow.HeaderCommand}" Gesture="Ctrl+6" CommandParameter="6" />
+    <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+1" CommandParameter="1" />
+    <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+2" CommandParameter="2" />
+    <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+3" CommandParameter="3" />
+    <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+4" CommandParameter="4" />
+    <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+5" CommandParameter="5" />
+    <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+6" CommandParameter="6" />
   </Window.InputBindings>
 </Controls:MetroWindow>

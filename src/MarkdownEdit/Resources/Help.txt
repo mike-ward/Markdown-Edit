@@ -4,7 +4,7 @@ A Markdown editor with an emphasis on content and keyboard shortcuts.
 
 ## Keyboard Shortcuts
 
-    F1 - Show this help
+    F1             Show this help
 
     Ctrl+N         New file
     Ctrl+O         Open file
@@ -14,13 +14,15 @@ A Markdown editor with an emphasis on content and keyboard shortcuts.
 
     Ctrl+W         Toggle word wrap
     
-    Ctrl+B         Bold
-    Ctrl+I         Italic
+    Ctrl+B         Bold selection / no selection insert **
+    Ctrl+I         Italic selection / no selection insert *
 
-    Ctrl+1         #
-    Ctrl+2         ##
-    Ctrl+3         ###
-    Ctrl+4         ####
+    Ctrl+1         Insert # as beginning of line
+    Ctrl+2         Insert ## as beginning of line
+    Ctrl+3         Insert ### as beginning of line
+    Ctrl+4         Insert #### as beginning of line
+    Ctrl+5         Insert ##### as beginning of line
+    Ctrl+6         Insert ###### as beginning of line
 
     Tab            Indent current line/selection 2 spaces
     Shift+Tab      Out-dent current line/selection 2 spaces
