@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Xml;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using MarkdownEdit.Properties;
@@ -76,7 +78,8 @@ namespace MarkdownEdit
             EditBox.Options.ConvertTabsToSpaces = true;
             EditBox.Options.AllowScrollBelowDocument = true;
             EditBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
-            EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Clear();
+            var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.First(cb => cb.Command == AvalonEditCommands.IndentSelection);
+            EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
 
             Dispatcher.InvokeAsync(() =>
             {
@@ -219,6 +222,16 @@ namespace MarkdownEdit
         public void Italic()
         {
             AddRemoveText("*");
+        }
+
+        public void Header(int num)
+        {
+            var line = EditBox.Document.GetLineByOffset(EditBox.CaretOffset);
+            if (line != null)
+            {
+                var header = new string('#', num) + " ";
+                EditBox.Document.Insert(line.Offset, header);
+            }
         }
 
         private void AddRemoveText(string quote)

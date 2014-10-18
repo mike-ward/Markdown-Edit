@@ -8,6 +8,7 @@ namespace MarkdownEdit
     public partial class MainWindow : INotifyPropertyChanged
     {
         public static RoutedCommand WordWrapCommand = new RoutedUICommand();
+        public static RoutedCommand HeaderCommand = new RoutedUICommand();
         
         private string _titleName = string.Empty;
 
@@ -107,7 +108,12 @@ namespace MarkdownEdit
         private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea)
         {
             Editor.Italic();
-        }       
+        }
+
+        private void ExecuteHeader(object sender, ExecutedRoutedEventArgs ea)
+        {
+            Editor.Header(Convert.ToInt32(ea.Parameter));
+        }
 
         // Properites
 
