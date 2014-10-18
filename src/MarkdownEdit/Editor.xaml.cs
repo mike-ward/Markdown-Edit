@@ -76,6 +76,7 @@ namespace MarkdownEdit
             EditBox.Options.ConvertTabsToSpaces = true;
             EditBox.Options.AllowScrollBelowDocument = true;
             EditBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
+            EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Clear();
 
             Dispatcher.InvokeAsync(() =>
             {
@@ -120,8 +121,8 @@ namespace MarkdownEdit
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Question);
 
-            return (result == DialogResult.Yes) 
-                ? SaveFile() 
+            return (result == DialogResult.Yes)
+                ? SaveFile()
                 : result == DialogResult.No;
         }
 
@@ -212,17 +213,27 @@ namespace MarkdownEdit
 
         public void Bold()
         {
+            AddRemoveText("**");
+        }
+
+        public void Italic()
+        {
+            AddRemoveText("*");
+        }
+
+        private void AddRemoveText(string quote)
+        {
             var selected = EditBox.SelectedText;
 
             if (string.IsNullOrEmpty(selected))
             {
-                EditBox.Document.Insert(EditBox.TextArea.Caret.Offset, "**");
+                EditBox.Document.Insert(EditBox.TextArea.Caret.Offset, quote);
             }
             else
             {
-                EditBox.SelectedText = (selected.StartsWith("**") && selected.EndsWith("**"))
-                    ? selected.UnsurroundWith("**")
-                    : selected.SurroundWith("**");
+                EditBox.SelectedText = (selected.StartsWith(quote) && selected.EndsWith(quote))
+                    ? selected.UnsurroundWith(quote)
+                    : selected.SurroundWith(quote);
             }
         }
 

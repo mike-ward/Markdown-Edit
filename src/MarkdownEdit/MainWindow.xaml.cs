@@ -104,6 +104,11 @@ namespace MarkdownEdit
             Editor.Bold();    
         }
 
+        private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea)
+        {
+            Editor.Italic();
+        }       
+
         // Properites
 
         public string TitleName
