@@ -24,7 +24,7 @@ namespace MarkdownEdit
 
         private struct EditorState
         {
-            public bool IsSaved { get; private set; }
+            public bool StateSaved { get; private set; }
             private string _text;
             private bool _isModified;
             private bool _wordWrap;
@@ -40,7 +40,7 @@ namespace MarkdownEdit
                 editor.WordWrap = true;
                 editor.IsReadOnly = true;
                 editor.CanExecute = false;
-                IsSaved = true;
+                StateSaved = true;
             }
 
             public void Restore(Editor editor)
@@ -51,7 +51,8 @@ namespace MarkdownEdit
                 editor.IsReadOnly = false;
                 editor.CanExecute = _canExecute;
                 editor.DisplayName = string.Empty;
-                IsSaved = false;
+                StateSaved = false;
+                editor.Dispatcher.InvokeAsync(() => editor.EditBox.Focus());
             }
         }
 
@@ -188,7 +189,7 @@ namespace MarkdownEdit
 
         public void ToggleHelp()
         {
-            if (_editorState.IsSaved)
+            if (_editorState.StateSaved)
             {
                 _editorState.Restore(this);
                 return;
@@ -258,7 +259,7 @@ namespace MarkdownEdit
             {
                 return (string.IsNullOrWhiteSpace(_displayName) == false)
                     ? _displayName
-                    : string.IsNullOrWhiteSpace(FileName) ? "New Document" : Path.GetFileName(FileName);
+                    : string.IsNullOrWhiteSpace(FileName) ? "New Document (F1 for Help)" : Path.GetFileName(FileName);
             }
             set
             {

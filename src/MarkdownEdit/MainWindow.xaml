@@ -6,7 +6,6 @@
   x:Class="MarkdownEdit.MainWindow"
   Title="{Binding TitleName}"
   TitleCaps="False"
-  Icon="logo.ico"
   SaveWindowPosition="True"
   WindowTitleBrush="{DynamicResource GrayBrush2}"
   GlowBrush="{DynamicResource GrayBrush2}"
