@@ -1,5 +1,4 @@
-﻿using System;
-using System.Media;
+﻿using System.Media;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -9,36 +8,15 @@ namespace MarkdownEdit
 {
     public partial class FindReplaceDialog
     {
-        private static string _textToFind = string.Empty;
-        private static bool _caseSensitive;
-        private static bool _wholeWord;
-        private static bool _useRegex;
-        private static bool _useWildcards;
-        private static bool _searchUp;
         private readonly TextEditor _editor;
         private static FindReplaceDialog _dialog;
+        private static readonly FindReplaceSettings _findReplaceSettings = new FindReplaceSettings();
 
         public FindReplaceDialog(TextEditor editor)
         {
             InitializeComponent();
+            DataContext = _findReplaceSettings;
             _editor = editor;
-            txtFind.Text = txtFind2.Text = _textToFind;
-            cbCaseSensitive.IsChecked = _caseSensitive;
-            cbWholeWord.IsChecked = _wholeWord;
-            cbRegex.IsChecked = _useRegex;
-            cbWildcards.IsChecked = _useWildcards;
-            cbSearchUp.IsChecked = _searchUp;
-        }
-
-        private void WindowClosed(object sender, EventArgs e)
-        {
-            _textToFind = txtFind2.Text;
-            _caseSensitive = (cbCaseSensitive.IsChecked == true);
-            _wholeWord = (cbWholeWord.IsChecked == true);
-            _useRegex = (cbRegex.IsChecked == true);
-            _useWildcards = (cbWildcards.IsChecked == true);
-            _searchUp = (cbSearchUp.IsChecked == true);
-            _dialog = null;
         }
 
         private void FindNextClick(object sender, RoutedEventArgs e)
@@ -89,7 +67,10 @@ namespace MarkdownEdit
             var match = regex.Match(_editor.Text, start);
             if (!match.Success) // start again from beginning or end
             {
-                match = regex.Match(_editor.Text, regex.Options.HasFlag(RegexOptions.RightToLeft) ? _editor.Text.Length : 0);
+                match = regex.Match(_editor.Text,
+                    regex.Options.HasFlag(RegexOptions.RightToLeft)
+                        ? _editor.Text.Length
+                        : 0);
             }
 
             if (match.Success)
@@ -138,8 +119,8 @@ namespace MarkdownEdit
                 _dialog.txtFind2.SelectAll();
             }
 
-            _dialog.Dispatcher.InvokeAsync(() => editor.TextArea.Selection.IsMultiline 
-                ? _dialog.txtFind2.Focus() 
+            _dialog.Dispatcher.InvokeAsync(() => editor.TextArea.Selection.IsMultiline
+                ? _dialog.txtFind2.Focus()
                 : _dialog.txtFind.Focus());
         }
 
@@ -151,6 +132,11 @@ namespace MarkdownEdit
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
         {
             CloseDialog();
+        }
+
+        public static void SaveSettings()
+        {
+            _findReplaceSettings.Save();
         }
     }
 }

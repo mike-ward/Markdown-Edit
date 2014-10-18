@@ -12,7 +12,6 @@
   ResizeMode="NoResize"
   WindowStyle="ToolWindow" 
   ShowInTaskbar="False" 
-  Closed="WindowClosed"
   >
 
   <Grid Margin="4 5 4 10">
@@ -52,15 +51,15 @@
       </TabItem>
     </TabControl>
 
-    <CheckBox Grid.Row="1" Grid.Column="0" Margin="10,2"
+    <CheckBox Grid.Row="1" Grid.Column="0" Margin="10,2" IsChecked="{Binding Path=CaseSensitive}"
               Name="cbCaseSensitive" Content="Match case" />
-    <CheckBox Grid.Row="2" Grid.Column="0" Margin="10,2"
+    <CheckBox Grid.Row="2" Grid.Column="0" Margin="10,2" IsChecked="{Binding Path=WholeWord}"
               Name="cbWholeWord" Content="Match whole word" />
-    <CheckBox Grid.Row="1" Grid.Column="1" Margin="10,2"
+    <CheckBox Grid.Row="1" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=UseRegex}"
               Name="cbRegex" Content="Regular Expression" />
-    <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,2"
+    <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=UseWildcards}"
               Name="cbWildcards" Content="Wildcards" />
-    <CheckBox Grid.Row="3" Grid.Column="1" Margin="10,2"
+    <CheckBox Grid.Row="3" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=SearchUp}"
               Name="cbSearchUp" Content="Search up" />
   </Grid>
   

@@ -34,5 +34,53 @@ namespace MarkdownEdit.Properties {
                 this["LastOpenFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FindReplaceCaseSensitive {
+            get {
+                return ((bool)(this["FindReplaceCaseSensitive"]));
+            }
+            set {
+                this["FindReplaceCaseSensitive"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FIndReplaceWholeWorkd {
+            get {
+                return ((bool)(this["FIndReplaceWholeWorkd"]));
+            }
+            set {
+                this["FIndReplaceWholeWorkd"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FindReplaceRegex {
+            get {
+                return ((bool)(this["FindReplaceRegex"]));
+            }
+            set {
+                this["FindReplaceRegex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FindReplaceWildcards {
+            get {
+                return ((bool)(this["FindReplaceWildcards"]));
+            }
+            set {
+                this["FindReplaceWildcards"] = value;
+            }
+        }
     }
 }
