@@ -225,6 +225,11 @@ namespace MarkdownEdit
             _findReplaceDialog.FindNext();    
         }
 
+        public void FindPrevious()
+        {
+            _findReplaceDialog.FindPrevious();
+        }
+
         public void Bold()
         {
             AddRemoveText("**");

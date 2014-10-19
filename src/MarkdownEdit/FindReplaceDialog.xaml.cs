@@ -30,17 +30,17 @@ namespace MarkdownEdit
 
         private void FindNextClick(object sender, RoutedEventArgs e)
         {
-            if (!FindNext(txtFind.Text)) SystemSounds.Beep.Play();
+            if (!Find(txtFind.Text)) SystemSounds.Beep.Play();
         }
 
         private void FindNext2Click(object sender, RoutedEventArgs e)
         {
-            if (!FindNext(txtFind2.Text)) SystemSounds.Beep.Play();
+            if (!Find(txtFind2.Text)) SystemSounds.Beep.Play();
         }
 
         private void ReplaceClick(object sender, RoutedEventArgs e)
         {
-            var regex = GetRegEx(txtFind2.Text);
+            var regex = GetRegEx(txtFind2.Text, false);
             var input = _editor.Text.Substring(_editor.SelectionStart, _editor.SelectionLength);
             var match = regex.Match(input);
             var replaced = false;
@@ -50,7 +50,7 @@ namespace MarkdownEdit
                 replaced = true;
             }
 
-            if (!FindNext(txtFind2.Text) && !replaced) SystemSounds.Beep.Play();
+            if (!Find(txtFind2.Text) && !replaced) SystemSounds.Beep.Play();
         }
 
         private void ReplaceAllClick(object sender, RoutedEventArgs e)
@@ -68,23 +68,28 @@ namespace MarkdownEdit
 
         public void FindNext()
         {
-            if (string.IsNullOrEmpty(_lastFind) == false) FindNext(_lastFind);
+            if (string.IsNullOrEmpty(_lastFind)) SystemSounds.Beep.Play();
+            Find(_lastFind);
         }
 
-        private bool FindNext(string textToFind)
+        public void FindPrevious()
         {
-            var regex = GetRegEx(textToFind);
-            var start = regex.Options.HasFlag(RegexOptions.RightToLeft)
+            if (string.IsNullOrEmpty(_lastFind)) SystemSounds.Beep.Play();
+            Find(_lastFind, true);
+        }
+
+        private bool Find(string textToFind, bool previous = false)
+        {
+            if (string.IsNullOrEmpty(textToFind)) return false;
+            var regex = GetRegEx(textToFind, previous);
+            var start = previous
                 ? _editor.SelectionStart
                 : _editor.SelectionStart + _editor.SelectionLength;
 
             var match = regex.Match(_editor.Text, start);
             if (!match.Success) // start again from beginning or end
             {
-                match = regex.Match(_editor.Text,
-                    regex.Options.HasFlag(RegexOptions.RightToLeft)
-                        ? _editor.Text.Length
-                        : 0);
+                match = regex.Match(_editor.Text, previous ? _editor.Text.Length : 0);
             }
 
             if (match.Success)
@@ -98,10 +103,10 @@ namespace MarkdownEdit
             return match.Success;
         }
 
-        private Regex GetRegEx(string textToFind, bool leftToRight = false)
+        private Regex GetRegEx(string textToFind, bool previous)
         {
             var options = RegexOptions.None;
-            if (cbSearchUp.IsChecked == true && !leftToRight) options |= RegexOptions.RightToLeft;
+            if (previous) options |= RegexOptions.RightToLeft;
             if (cbCaseSensitive.IsChecked == false) options |= RegexOptions.IgnoreCase;
             if (cbRegex.IsChecked == true) return new Regex(textToFind, options);
             var pattern = Regex.Escape(textToFind);

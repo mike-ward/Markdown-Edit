@@ -27,11 +27,14 @@ A Markdown editor with an emphasis on content and keyboard shortcuts.
     Tab            Indent current line/selection 2 spaces
     Shift+Tab      Out-dent current line/selection 2 spaces
 
+
     Ctrl+C         Copy
     Ctrl+V         Pate
     Ctrl+X         Cut
 
     Ctrl+F         Find
+    F3             Find Next
+    F4             Find Previous
     Ctrl+H         Find and Replace
 
     Ctrl+Plus      Increase font size
