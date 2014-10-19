@@ -10,6 +10,7 @@ namespace MarkdownEdit
     {
         public bool AllowClose { get; set; }
         private readonly TextEditor _editor;
+        private string _lastFind;
         private readonly FindReplaceSettings _findReplaceSettings = new FindReplaceSettings();
 
         public FindReplaceDialog(TextEditor editor)
@@ -65,6 +66,11 @@ namespace MarkdownEdit
             _editor.EndChange();
         }
 
+        public void FindNext()
+        {
+            if (string.IsNullOrEmpty(_lastFind) == false) FindNext(_lastFind);
+        }
+
         private bool FindNext(string textToFind)
         {
             var regex = GetRegEx(textToFind);
@@ -86,6 +92,7 @@ namespace MarkdownEdit
                 _editor.Select(match.Index, match.Length);
                 var loc = _editor.Document.GetLocation(match.Index);
                 _editor.ScrollTo(loc.Line, loc.Column);
+                _lastFind = match.Value;
             }
 
             return match.Success;

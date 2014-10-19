@@ -217,6 +217,11 @@ namespace MarkdownEdit
             _findReplaceDialog.ShowReplaceDialog();
         }
 
+        public void FindNext()
+        {
+            _findReplaceDialog.FindNext();    
+        }
+
         public void Bold()
         {
             AddRemoveText("**");
@@ -252,6 +257,7 @@ namespace MarkdownEdit
                     : selected.SurroundWith(quote);
             }
         }
+
 
         // Events
 

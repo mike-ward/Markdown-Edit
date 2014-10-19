@@ -9,6 +9,7 @@ namespace MarkdownEdit
     {
         public static RoutedCommand WordWrapCommand = new RoutedUICommand();
         public static RoutedCommand InsertHeaderCommand = new RoutedUICommand();
+        public static RoutedCommand FindNextCommand = new RoutedUICommand();
         
         private string _titleName = string.Empty;
 
@@ -113,6 +114,11 @@ namespace MarkdownEdit
         private void ExecuteInsertHeader(object sender, ExecutedRoutedEventArgs ea)
         {
             Editor.InsertHeader(Convert.ToInt32(ea.Parameter));
+        }
+
+        private void ExecuteFindNext(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.FindNext();
         }
 
         // Properites

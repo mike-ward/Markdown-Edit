@@ -35,6 +35,7 @@
     <CommandBinding Command="Help" Executed="ExecuteHelp" />
     <CommandBinding Command="Close" Executed="ExecuteClose" />
     <CommandBinding Command="Find" Executed="ExecuteEditorFind" />
+    <CommandBinding Command="{x:Static local:MainWindow.FindNextCommand}" Executed="ExecuteFindNext" />
     <CommandBinding Command="Replace" Executed="ExecuteEditorReplace" />
     <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
     <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
@@ -47,6 +48,7 @@
     <KeyBinding Command="ToggleBold" Gesture="Ctrl+B" />
     <KeyBinding Command="ToggleItalic" Gesture="Ctrl+I" />
     <KeyBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Gesture="Ctrl+W" />
+    <KeyBinding Command="{x:Static local:MainWindow.FindNextCommand}" Gesture="F3" />
     <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+1" CommandParameter="1" />
     <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+2" CommandParameter="2" />
     <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+3" CommandParameter="3" />
