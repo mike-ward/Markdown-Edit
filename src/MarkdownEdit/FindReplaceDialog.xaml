@@ -57,8 +57,6 @@
               Name="cbRegex" Content="Regular Expression" />
     <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=UseWildcards}"
               Name="cbWildcards" Content="Wildcards" />
-    <CheckBox Grid.Row="3" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=SearchUp}"
-              Name="cbSearchUp" Content="Search up" />
   </Grid>
   
   <Window.CommandBindings>
