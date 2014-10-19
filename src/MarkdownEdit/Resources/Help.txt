@@ -33,6 +33,10 @@ A Markdown editor with an emphasis on content and keyboard shortcuts.
 
     Ctrl+F         Find
     Ctrl+H         Find and Replace
+
+    Ctrl+Plus      Increase font size
+    Ctrl+Minus     Decrease font size
+    Ctrl+0         Restore font size
     
 [Markdown Syntax](http://daringfireball.net/projects/markdown/syntax)
 

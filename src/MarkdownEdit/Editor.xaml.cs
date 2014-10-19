@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Xml;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -22,6 +23,7 @@ namespace MarkdownEdit
         private string _displayName = string.Empty;
         private bool _wordWrap = true;
         private bool _isModified;
+        private readonly double _defaultFontSize;
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
 
@@ -65,6 +67,7 @@ namespace MarkdownEdit
             CanExecute = true;
             EditBox.Loaded += EditBoxOnLoaded;
             EditBox.Unloaded += EditBoxOnUnloaded;
+            _defaultFontSize = EditBox.FontSize;
             _findReplaceDialog = new FindReplaceDialog(EditBox);
         }
 
@@ -258,7 +261,21 @@ namespace MarkdownEdit
             }
         }
 
+        public void IncreaseFontSize()
+        {
+            EditBox.FontSize = EditBox.FontSize + 1;
+        }
 
+        public void DecreaseFontSize()
+        {
+            EditBox.FontSize = EditBox.FontSize > 5 ? EditBox.FontSize - 1 : EditBox.FontSize;
+        }
+
+        public void RestoreFontSize()
+        {
+            EditBox.FontSize = _defaultFontSize;
+        }
+        
         // Events
 
         public EventHandler TextChanged;

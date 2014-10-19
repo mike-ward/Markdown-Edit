@@ -41,6 +41,9 @@
     <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
     <CommandBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Executed="ExecuteWordWrap" />
     <CommandBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Executed="ExecuteInsertHeader" />
+    <CommandBinding Command="{x:Static local:MainWindow.IncreaseFontSizeCommand}" Executed="ExecuteIncreaseFontSize" />
+    <CommandBinding Command="{x:Static local:MainWindow.DecreaseFontSizeCommand}" Executed="ExecuteDecreaseFontSize" />
+    <CommandBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Executed="ExecuteRestoreFontSize" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -55,5 +58,8 @@
     <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+4" CommandParameter="4" />
     <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+5" CommandParameter="5" />
     <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+6" CommandParameter="6" />
+    <KeyBinding Command="{x:Static local:MainWindow.IncreaseFontSizeCommand}" Gesture="Ctrl+Plus" />
+    <KeyBinding Command="{x:Static local:MainWindow.DecreaseFontSizeCommand}" Gesture="Ctrl+Minus" />
+    <KeyBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+0" />
   </Window.InputBindings>
 </Controls:MetroWindow>

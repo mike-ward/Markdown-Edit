@@ -10,7 +10,10 @@ namespace MarkdownEdit
         public static RoutedCommand WordWrapCommand = new RoutedUICommand();
         public static RoutedCommand InsertHeaderCommand = new RoutedUICommand();
         public static RoutedCommand FindNextCommand = new RoutedUICommand();
-        
+        public static RoutedCommand IncreaseFontSizeCommand = new RoutedUICommand();
+        public static RoutedCommand DecreaseFontSizeCommand = new RoutedUICommand();
+        public static RoutedCommand RestoreFontSizeCommand = new RoutedUICommand();
+
         private string _titleName = string.Empty;
 
         public MainWindow()
@@ -119,6 +122,21 @@ namespace MarkdownEdit
         private void ExecuteFindNext(object sender, ExecutedRoutedEventArgs e)
         {
             Editor.FindNext();
+        }
+
+        private void ExecuteIncreaseFontSize(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.IncreaseFontSize();
+        }
+
+        private void ExecuteRestoreFontSize(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.RestoreFontSize();
+        }
+
+        private void ExecuteDecreaseFontSize(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.DecreaseFontSize();
         }
 
         // Properites
