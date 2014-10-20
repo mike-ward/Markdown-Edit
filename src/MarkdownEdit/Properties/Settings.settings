@@ -8,7 +8,7 @@
     <Setting Name="FindReplaceCaseSensitive" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="FIndReplaceWholeWorkd" Type="System.Boolean" Scope="User">
+    <Setting Name="FIndReplaceWholeWork" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="FindReplaceRegex" Type="System.Boolean" Scope="User">

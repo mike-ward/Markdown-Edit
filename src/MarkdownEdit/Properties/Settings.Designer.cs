@@ -50,12 +50,12 @@ namespace MarkdownEdit.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool FIndReplaceWholeWorkd {
+        public bool FIndReplaceWholeWork {
             get {
-                return ((bool)(this["FIndReplaceWholeWorkd"]));
+                return ((bool)(this["FIndReplaceWholeWork"]));
             }
             set {
-                this["FIndReplaceWholeWorkd"] = value;
+                this["FIndReplaceWholeWork"] = value;
             }
         }
         

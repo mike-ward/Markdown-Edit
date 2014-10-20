@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-             xmlns:local="clr-namespace:MarkdownEdit"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300"
@@ -13,12 +12,14 @@
     <avalonedit:TextEditor
       x:Name="EditBox"
       BorderThickness="0"
-      FontFamily="Segoe WP Semilight"
-      FontSize="14"
+      Foreground="{Binding Foreground}"
+      Background="{Binding Background}"
+      FontFamily="{Binding FontFamily}"
+      FontSize="{Binding FontSize}"
       WordWrap="{Binding Path=WordWrap, Mode=TwoWay}"
       IsModified="{Binding Path=IsModified, Mode=TwoWay}"
       ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"
-      Background="#FAFBF9">
+      >
 
       <avalonedit:TextEditor.ContextMenu>
         <ContextMenu>

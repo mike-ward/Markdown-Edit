@@ -1,9 +1,9 @@
 ﻿<Controls:MetroWindow
+  x:Class="MarkdownEdit.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
   xmlns:local="clr-namespace:MarkdownEdit"
-  x:Class="MarkdownEdit.MainWindow"
   Title="{Binding TitleName}"
   TitleCaps="False"
   SaveWindowPosition="True"
@@ -16,11 +16,13 @@
 
   <Grid>
     <UniformGrid Columns="2">
-      <local:Editor 
+      <local:Editor
         x:Name="Editor" 
-        Padding="5 0 5 0" 
-        Margin="0 10 0 10"
-        Background="#FAFBF9"
+        Padding="5 10" 
+        FontSize="{Binding Path=DataContext.UserSettings.EditorFontSize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+        FontFamily="{Binding Path=DataContext.UserSettings.EditorFontFamily, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+        Foreground="{Binding Path=DataContext.UserSettings.EditorForeground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+        Background="{Binding Path=DataContext.UserSettings.EditorBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         />
       <local:Preview 
         x:Name="Preview"

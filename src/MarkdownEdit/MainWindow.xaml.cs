@@ -16,6 +16,7 @@ namespace MarkdownEdit
         public static RoutedCommand RestoreFontSizeCommand = new RoutedUICommand();
 
         private string _titleName = string.Empty;
+        public UserSettings UserSettings { get; set; }
 
         public MainWindow()
         {
@@ -24,6 +25,7 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(Convert.ToInt32(e.VerticalOffset));
+            UserSettings = new UserSettings();
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
