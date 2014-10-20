@@ -36,7 +36,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeBuildCommandLine>C:\Program Files (x86)\Inno Setup 5\iscc.exe" Setup.iss</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine>"C:\Program Files (x86)\Inno Setup 5\iscc.exe" MarkdownEditSetup.iss</NMakeBuildCommandLine>
     <NMakeOutput>MarkdownEditSetup.exe</NMakeOutput>
     <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>

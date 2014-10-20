@@ -17,12 +17,12 @@ A Markdown editor with an emphasis on content and keyboard shortcuts.
     Ctrl+B         Bold selection / no selection insert **
     Ctrl+I         Italic selection / no selection insert *
 
-    Ctrl+1         Insert # as beginning of line
-    Ctrl+2         Insert ## as beginning of line
-    Ctrl+3         Insert ### as beginning of line
-    Ctrl+4         Insert #### as beginning of line
-    Ctrl+5         Insert ##### as beginning of line
-    Ctrl+6         Insert ###### as beginning of line
+    Ctrl+1         Insert # at beginning of line
+    Ctrl+2         Insert ## at beginning of line
+    Ctrl+3         Insert ### at beginning of line
+    Ctrl+4         Insert #### at beginning of line
+    Ctrl+5         Insert ##### at beginning of line
+    Ctrl+6         Insert ###### at beginning of line
 
     Tab            Indent current line/selection 2 spaces
     Shift+Tab      Out-dent current line/selection 2 spaces
