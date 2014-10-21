@@ -3,12 +3,15 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using CommonMark;
+using MarkdownEdit.Properties;
 using Point = System.Drawing.Point;
 
 namespace MarkdownEdit
 {
     public partial class Preview
     {
+        private readonly Func<string, string> _uriResolver = Utility.Memoize<string, string>(UriResolver);
+
         public Preview()
         {
             InitializeComponent();
@@ -22,7 +25,7 @@ namespace MarkdownEdit
             markdown = RemoveYamlFrontMatter(markdown);
             try
             {
-                html = CommonMarkConverter.Convert(markdown);//, new CommonMarkSettings { UriResolver = UriResolver});
+                html = CommonMarkConverter.Convert(markdown, new CommonMarkSettings {UriResolver = _uriResolver});
             }
             catch (CommonMarkException e)
             {
@@ -40,16 +43,16 @@ namespace MarkdownEdit
         private static string UriResolver(string s)
         {
             if (Regex.IsMatch(s, @"^\w+://")) return s;
-            var lastOpen = Properties.Settings.Default.LastOpenFile;
+            var lastOpen = Settings.Default.LastOpenFile;
             if (string.IsNullOrEmpty(lastOpen)) return s;
             var path = Path.GetDirectoryName(lastOpen);
             if (string.IsNullOrEmpty(path)) return s;
             var file = s.TrimStart('/');
             var asset = Path.Combine(path, file);
-            
-            for (var i = 0 ; i < 4; ++i)
+
+            for (var i = 0; i < 4; ++i)
             {
-                if (File.Exists(asset)) return "file://" + asset.Replace('\\', '/'); 
+                if (File.Exists(asset)) return "file://" + asset.Replace('\\', '/');
                 var parent = Directory.GetParent(path);
                 if (parent == null) break;
                 path = parent.FullName;
