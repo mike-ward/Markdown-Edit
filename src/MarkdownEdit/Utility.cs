@@ -12,13 +12,13 @@ namespace MarkdownEdit
             return key => cache.GetOrAdd(key, func);
         }
 
-        public static Action<T> Debounce<T>(this Action<T> func)
+        public static Action<T> Debounce<T>(this Action<T> func, int milliseconds = 350)
         {
             T last;
             return arg =>
             {
                 last = arg;
-                Task.Delay(450).ContinueWith(t =>
+                Task.Delay(milliseconds).ContinueWith(t =>
                 {
                     if (last.Equals(arg)) func(last);
                     t.Dispose();

@@ -20,7 +20,7 @@ namespace MarkdownEdit
             UpdatePreview = Utility.Debounce<string>(s => Dispatcher.Invoke(() => Update(s)));
         }
 
-        public void Update(string markdown)
+        private void Update(string markdown)
         {
             if (markdown == null) return;
             string html;
