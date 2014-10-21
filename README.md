@@ -5,6 +5,8 @@ Markdown Edit
 
 Markdown Edit is my idea of what a **desktop** Markdown editor should be. Straightforward, quiet and built to do one thing. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar or tabbed windows. (more like [Brackets.io](http://brackets.io)).
 
+![screen shot](screenshot.png)
+
 ## Features
 
 - Decent, syntax highlighting editor
@@ -31,4 +33,9 @@ There's a installer but I'm not ready to make this generally available just yet.
 
 ## Future
 
-There a many other features that could be included. I'll consider each one carefully. For instance, I'll likely not include GitHub syntax unless it (or portions of it) become part of CommonMark. Printing? Not sure. I rarely print documents. Multiple documents. Probably not. I've found tabs require too much, "management. Seems like I'm always having to close them. Grammar checking? That's really useful and I most certainly could use the help.
+There a many other features that could be included. I'll consider each one carefully. 
+
+- For instance, I'll likely not include GitHub syntax unless it (or portions of it) become part of CommonMark. 
+- Printing? Not sure. I rarely print documents. 
+- Multiple documents? Probably not. I've found tabs require too much, "management". Seems like I'm always having to close them. 
+- Grammar checking? That's useful (If I can find a free engine that is).
