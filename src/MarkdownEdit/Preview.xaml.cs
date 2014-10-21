@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows;
 using CommonMark;
 using Point = System.Drawing.Point;
@@ -20,7 +22,7 @@ namespace MarkdownEdit
             markdown = RemoveYamlFrontMatter(markdown);
             try
             {
-                html = CommonMarkConverter.Convert(markdown);
+                html = CommonMarkConverter.Convert(markdown);//, new CommonMarkSettings { UriResolver = UriResolver});
             }
             catch (CommonMarkException e)
             {
@@ -33,6 +35,27 @@ namespace MarkdownEdit
                 var element = document.GetElementById("content");
                 if (element != null) element.InnerHtml = html;
             }
+        }
+
+        private static string UriResolver(string s)
+        {
+            if (Regex.IsMatch(s, @"^\w+://")) return s;
+            var lastOpen = Properties.Settings.Default.LastOpenFile;
+            if (string.IsNullOrEmpty(lastOpen)) return s;
+            var path = Path.GetDirectoryName(lastOpen);
+            if (string.IsNullOrEmpty(path)) return s;
+            var file = s.TrimStart('/');
+            var asset = Path.Combine(path, file);
+            
+            for (var i = 0 ; i < 4; ++i)
+            {
+                if (File.Exists(asset)) return "file://" + asset.Replace('\\', '/'); 
+                var parent = Directory.GetParent(path);
+                if (parent == null) break;
+                path = parent.FullName;
+                asset = Path.Combine(path, file);
+            }
+            return s;
         }
 
         public string RemoveYamlFrontMatter(string markdown)
