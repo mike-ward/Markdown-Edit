@@ -159,3 +159,4 @@ $RECYCLE.BIN/
 # nuget
 # =========================
 packages/
+Output/

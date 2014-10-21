@@ -10,15 +10,17 @@ namespace MarkdownEdit
 {
     public partial class Preview
     {
+        public readonly Action<string> UpdatePreview;
         private readonly Func<string, string> _uriResolver = Utility.Memoize<string, string>(UriResolver);
 
         public Preview()
         {
             InitializeComponent();
             Browser.DocumentText = Properties.Resources.GithubTemplateHtml;
+            UpdatePreview = Utility.Debounce<string>(s => Dispatcher.Invoke(() => Update(s)));
         }
 
-        public void UpdatePreview(string markdown)
+        public void Update(string markdown)
         {
             if (markdown == null) return;
             string html;
