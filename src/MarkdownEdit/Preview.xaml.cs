@@ -2,8 +2,10 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using CommonMark;
 using MarkdownEdit.Properties;
+using mshtml;
 using Point = System.Drawing.Point;
 
 namespace MarkdownEdit
@@ -73,14 +75,23 @@ namespace MarkdownEdit
             return (index == -1) ? markdown : markdown.Substring(Math.Min(index + yaml2.Length, markdown.Length));
         }
 
-        public void SetScrollOffset(int offset)
+        public void SetScrollOffset(ScrollChangedEventArgs ea)
         {
             var document = Browser.Document;
-            if (document != null)
+            if (document != null && document.Window != null & document.Body != null)
             {
                 var window = document.Window;
-                if (window != null) window.ScrollTo(new Point(0, offset));
+                var percentToScroll = PercentScroll(ea);
+                var documentElement = ((IHTMLDocument3)document.DomDocument).documentElement;
+                var factor = document.Body.OffsetRectangle.Height - documentElement.offsetHeight;
+                window.ScrollTo(new Point(0, (int)Math.Round(percentToScroll * factor)));
             }
+        }
+
+        private static double PercentScroll(ScrollChangedEventArgs e)
+        {
+            var y = e.ExtentHeight - e.ViewportHeight;
+            return e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
         }
     }
 }

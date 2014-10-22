@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Xml;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -280,7 +281,7 @@ namespace MarkdownEdit
         {
             EditBox.FontSize = _defaultFontSize;
         }
-        
+
         // Events
 
         public EventHandler TextChanged;

@@ -24,7 +24,7 @@ namespace MarkdownEdit
             Closing += OnClosing;
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
-            Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(Convert.ToInt32(e.VerticalOffset));
+            Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
             UserSettings = new UserSettings();
         }
 
@@ -109,7 +109,7 @@ namespace MarkdownEdit
 
         private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea)
         {
-            Editor.Bold();    
+            Editor.Bold();
         }
 
         private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea)
