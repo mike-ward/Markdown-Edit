@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
-using System.Windows.Media;
 using MarkdownEdit.Properties;
+using Newtonsoft.Json;
 
 namespace MarkdownEdit
 {
@@ -27,7 +29,6 @@ namespace MarkdownEdit
             Settings.Default.FIndReplaceWholeWork = WholeWord;
             Settings.Default.FindReplaceWildcards = UseWildcards;
         }
-
 
         public bool CaseSensitive
         {
@@ -89,7 +90,6 @@ namespace MarkdownEdit
         private string _editorFontFamily = "Segoe UI";
         private double _editorFontSize = 14;
 
-        [TypeConverter(typeof(BrushConverter))]
         public string EditorBackground
         {
             get { return _editorBackground; }
@@ -101,7 +101,6 @@ namespace MarkdownEdit
             }
         }
 
-        [DefaultValue("#000000")]
         public string EditorForeground
         {
             get { return _editorForeground; }
@@ -113,7 +112,6 @@ namespace MarkdownEdit
             }
         }
 
-        [DefaultValue("Segoe WP Semilight")]
         public string EditorFontFamily
         {
             get { return _editorFontFamily; }
@@ -125,7 +123,6 @@ namespace MarkdownEdit
             }
         }
 
-        [DefaultValue(14)]
         public double EditorFontSize
         {
             get { return _editorFontSize; }
@@ -138,11 +135,38 @@ namespace MarkdownEdit
             }
         }
 
+        // Serialization
+
+        private static string SettingsFolder
+        {
+            get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Markdown Edit"); }
+        }
+
+        private static string SettingsFile
+        {
+            get { return Path.Combine(SettingsFolder, "user_settings.json"); }
+        }
+
+        public void Save()
+        {
+            Directory.CreateDirectory(SettingsFolder);
+            File.WriteAllText(SettingsFile, JsonConvert.SerializeObject(this, Formatting.Indented));
+        }
+
+        public static UserSettings Load()
+        {
+            if (File.Exists(SettingsFile)) return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
+            new UserSettings().Save();
+            return Load();
+        }
+
+        // INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
+            var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }

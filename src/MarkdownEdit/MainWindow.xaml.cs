@@ -25,7 +25,7 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
-            UserSettings = new UserSettings();
+            UserSettings = UserSettings.Load();
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
