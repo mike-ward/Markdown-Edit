@@ -77,7 +77,7 @@ namespace MarkdownEdit
         public void SetScrollOffset(ScrollChangedEventArgs ea)
         {
             var document = Browser.Document;
-            if (document != null && document.Window != null & document.Body != null)
+            if (document != null && document.Window != null && document.Body != null)
             {
                 var window = document.Window;
                 var percentToScroll = PercentScroll(ea);
