@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -85,12 +86,16 @@ namespace MarkdownEdit
             EditBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
             var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.First(cb => cb.Command == AvalonEditCommands.IndentSelection);
             EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
+            EditBox.TextChanged += EditBoxOnTextChanged;
 
-            Dispatcher.Invoke(() =>
+            Task.Delay(100).ContinueWith(t =>
             {
-                EditBox.TextChanged += EditBoxOnTextChanged;
-                LoadFile(Settings.Default.LastOpenFile);
-                EditBox.Focus();
+                Dispatcher.Invoke(() =>
+                {
+                    LoadFile(Settings.Default.LastOpenFile);
+                    EditBox.Focus();
+                });
+                t.Dispose();
             });
         }
 
@@ -223,7 +228,7 @@ namespace MarkdownEdit
 
         public void FindNext()
         {
-            _findReplaceDialog.FindNext();    
+            _findReplaceDialog.FindNext();
         }
 
         public void FindPrevious()
