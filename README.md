@@ -5,7 +5,7 @@ Markdown Edit
 
 Markdown Edit is my idea of what a **desktop** Markdown editor should be. Straightforward, quiet and built to do one thing. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar or tabbed windows. (more like [Brackets.io](http://brackets.io)).
 
-![screen shot](screenshot.png)
+![screen shot](ScreenShot.png)
 
 ## Features
 
