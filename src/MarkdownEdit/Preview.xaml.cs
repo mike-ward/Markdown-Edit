@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using CommonMark;
 using MarkdownEdit.Properties;
 using mshtml;
-using Point = System.Drawing.Point;
 
 namespace MarkdownEdit
 {
@@ -84,7 +83,7 @@ namespace MarkdownEdit
                 var percentToScroll = PercentScroll(ea);
                 var documentElement = ((IHTMLDocument3)document.DomDocument).documentElement;
                 var factor = document.Body.OffsetRectangle.Height - documentElement.offsetHeight;
-                window.ScrollTo(new Point(0, (int)Math.Round(percentToScroll * factor)));
+                window.ScrollTo(0, (int)Math.Round(percentToScroll * factor));
             }
         }
 
