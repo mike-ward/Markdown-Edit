@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using CommonMark;
 using MarkdownEdit.Properties;
 using mshtml;
+using MessageBox = System.Windows.MessageBox;
 
 namespace MarkdownEdit
 {
@@ -19,6 +21,7 @@ namespace MarkdownEdit
             InitializeComponent();
             Browser.DocumentText = Properties.Resources.GithubTemplateHtml;
             UpdatePreview = Utility.Debounce<string>(s => Dispatcher.Invoke(() => Update(s)));
+            Browser.Navigating += BrowserOnNavigating;
         }
 
         private void Update(string markdown)
@@ -62,6 +65,12 @@ namespace MarkdownEdit
                 asset = Path.Combine(path, file);
             }
             return s;
+        }
+
+        private void BrowserOnNavigating(object sender, WebBrowserNavigatingEventArgs ea)
+        {
+            ea.Cancel = true;
+            Process.Start(ea.Url.ToString());
         }
 
         public string RemoveYamlFrontMatter(string markdown)
