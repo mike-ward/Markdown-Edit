@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Media;
 using System.Xml;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -86,7 +85,7 @@ namespace MarkdownEdit
             var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.First(cb => cb.Command == AvalonEditCommands.IndentSelection);
             EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
 
-            Dispatcher.InvokeAsync(() =>
+            Dispatcher.Invoke(() =>
             {
                 EditBox.TextChanged += EditBoxOnTextChanged;
                 LoadFile(Settings.Default.LastOpenFile);
@@ -170,6 +169,7 @@ namespace MarkdownEdit
                     return true;
                 }
                 EditBox.Text = File.ReadAllText(file);
+                EditBox.ScrollToHome();
                 Settings.Default.LastOpenFile = file;
                 IsModified = false;
                 FileName = file;
