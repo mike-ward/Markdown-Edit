@@ -79,11 +79,10 @@ namespace MarkdownEdit
             var document = Browser.Document;
             if (document != null && document.Window != null && document.Body != null)
             {
-                var window = document.Window;
                 var percentToScroll = PercentScroll(ea);
                 var documentElement = ((IHTMLDocument3)document.DomDocument).documentElement;
                 var scrollHeight = document.Body.OffsetRectangle.Height - documentElement.offsetHeight;
-                window.ScrollTo(0, (int)Math.Round(percentToScroll * scrollHeight));
+                document.Window.ScrollTo(0, (int)Math.Round(percentToScroll * scrollHeight));
             }
         }
 
