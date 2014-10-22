@@ -29,7 +29,7 @@ Markdown Edit is my idea of what a **desktop** Markdown editor should be. Straig
 
 ## Installing
 
-There's a installer but I'm not ready to make this generally available just yet. Clone it and build it if you dare! And I am open to pull requests.
+There's an installer but I'm not ready to make it generally available just yet. Clone it and build it if you dare! I am open to pull requests.
 
 ## Future
 
