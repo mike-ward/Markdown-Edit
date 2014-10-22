@@ -36,7 +36,6 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "..\MarkdownEdit\bin\Release\mpe.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\mpe.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\CommonMark.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\MahApps.Metro.dll"; DestDir: "{app}"; Flags: ignoreversion
