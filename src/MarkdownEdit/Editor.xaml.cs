@@ -12,6 +12,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using MarkdownEdit.Properties;
+using MarkdownEdit.SpellCheck;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace MarkdownEdit
@@ -26,6 +27,7 @@ namespace MarkdownEdit
         private readonly double _defaultFontSize;
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
+        private readonly ISpellCheckProvider _spellCheckProvider;
 
         private struct EditorState
         {
@@ -69,6 +71,9 @@ namespace MarkdownEdit
             EditBox.Unloaded += EditBoxOnUnloaded;
             _defaultFontSize = EditBox.FontSize;
             _findReplaceDialog = new FindReplaceDialog(EditBox);
+            var spellingService = new SpellingService();
+            spellingService.SetLanguage(SpellingLanguages.UnitedStates);
+            _spellCheckProvider = new SpellCheckProvider(spellingService);
         }
 
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -93,6 +98,7 @@ namespace MarkdownEdit
                 {
                     LoadFile(Settings.Default.LastOpenFile);
                     EditBox.Focus();
+                    _spellCheckProvider.Initialize(this);
                 });
                 t.Dispose();
             });
@@ -101,6 +107,7 @@ namespace MarkdownEdit
         private void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
         {
             _findReplaceDialog.AllowClose = true;
+            _spellCheckProvider.Disconnect();
             _findReplaceDialog.Close();
         }
 

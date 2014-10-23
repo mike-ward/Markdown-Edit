@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using NHunspell;
 
@@ -9,7 +9,7 @@ namespace MarkdownEdit.SpellCheck
     public class SpellingService : ISpellingService
     {
         private static readonly Dictionary<SpellingLanguages, string> LangLookup;
-        private Hunspell speller;
+        private Hunspell _speller;
 
         static SpellingService()
         {
@@ -26,51 +26,36 @@ namespace MarkdownEdit.SpellCheck
 
         public bool Spell(string word)
         {
-            return speller == null || speller.Spell(word);
+            return _speller == null || _speller.Spell(word);
         }
 
         public IEnumerable<string> Suggestions(string word)
         {
-            return speller.Suggest(word);
+            return _speller.Suggest(word);
         }
 
         public void ClearLanguages()
         {
-            speller = null;
+            _speller = null;
         }
 
         public void SetLanguage(SpellingLanguages language)
         {
-            speller = new Hunspell();
-
+            _speller = new Hunspell();
             var languageKey = LangLookup[language];
+            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\'));
+            var path = Path.Combine(assemblyFolder, "SpellCheck\\Dictionaries");
 
-            var assembly = Assembly.GetExecutingAssembly();
+            var aff = Path.Combine(path, languageKey + ".aff");
+            var dic = Path.Combine(path, languageKey + ".dic");
 
-            var dictionaryFileStart = string.Format("{0}.Document.SpellCheck.Dictionaries.{1}", assembly.GetName().Name, languageKey);
-            var dictionaryFiles = assembly
-                .GetManifestResourceNames()
-                .Where(name => name.StartsWith(dictionaryFileStart))
-                .ToArray();
-
-            var affixes = dictionaryFiles.Where(name => name.EndsWith(".aff")).OrderBy(s => s);
-            var dictionaries = dictionaryFiles.Where(name => name.EndsWith(".dic")).OrderBy(s => s);
-
-            var dictionaryPairs = affixes.Zip(dictionaries, (aff, dic) => new {aff, dic});
-
-            foreach (var pair in dictionaryPairs)
+            if (File.Exists(aff) && File.Exists(dic))
             {
-                using (var affStream = assembly.GetManifestResourceStream(pair.aff))
-                using (var dicStream = assembly.GetManifestResourceStream(pair.dic))
-                {
-                    if (affStream != null && dicStream != null)
-                    {
-                        var affBytes = new BinaryReader(affStream).ReadBytes((int)affStream.Length);
-                        var dicBytes = new BinaryReader(dicStream).ReadBytes((int)dicStream.Length);
-
-                        speller.Load(affBytes, dicBytes);
-                    }
-                }
+                _speller.Load(aff, dic);
+            }
+            else
+            {
+                Debug.WriteLine("dictonaries not found");
             }
         }
     }
