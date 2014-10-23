@@ -19,7 +19,7 @@ namespace MarkdownEdit
         public Preview()
         {
             InitializeComponent();
-            Browser.DocumentText = Properties.Resources.GithubTemplateHtml;
+            Browser.DocumentText = UserTemplate.Load().Template;
             UpdatePreview = Utility.Debounce<string>(s => Dispatcher.Invoke(() => Update(s)));
             Browser.Navigating += BrowserOnNavigating;
         }
@@ -38,6 +38,11 @@ namespace MarkdownEdit
                 MessageBox.Show(e.Message);
                 return;
             }
+            UpdateContentsDiv(html);
+        }
+
+        private void UpdateContentsDiv(string html)
+        {
             var document = Browser.Document;
             if (document != null)
             {
@@ -70,7 +75,8 @@ namespace MarkdownEdit
         private void BrowserOnNavigating(object sender, WebBrowserNavigatingEventArgs ea)
         {
             ea.Cancel = true;
-            Process.Start(ea.Url.ToString());
+            var url = ea.Url.ToString();
+            if (url.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(ea.Url.ToString());
         }
 
         public string RemoveYamlFrontMatter(string markdown)

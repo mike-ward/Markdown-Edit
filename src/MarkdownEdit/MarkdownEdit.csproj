@@ -91,6 +91,7 @@
     <Compile Include="FindReplaceSettings.cs" />
     <Compile Include="UserSettings.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="UserTemplate.cs" />
     <Compile Include="Utility.cs" />
     <Page Include="Editor.xaml">
       <SubType>Designer</SubType>

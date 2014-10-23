@@ -16,7 +16,8 @@ namespace MarkdownEdit
         public static RoutedCommand IncreaseFontSizeCommand = new RoutedUICommand();
         public static RoutedCommand DecreaseFontSizeCommand = new RoutedUICommand();
         public static RoutedCommand RestoreFontSizeCommand = new RoutedUICommand();
-        public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand(); 
+        public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
+        public static RoutedCommand OpenUserTemplateCommand = new RoutedCommand();
 
         public UserSettings UserSettings { get; set; }
         private FileSystemWatcher _userSettingsWatcher;
@@ -38,7 +39,7 @@ namespace MarkdownEdit
             _userSettingsWatcher = new FileSystemWatcher
             {
                 Path = UserSettings.SettingsFolder,
-                Filter = "", //UserSettings.SettingsFile,
+                Filter = Path.GetFileName(UserSettings.SettingsFile),
                 NotifyFilter = NotifyFilters.LastWrite
             };
             _userSettingsWatcher.Changed += (sender, args) => UserSettings.Update();
@@ -170,9 +171,14 @@ namespace MarkdownEdit
             Editor.DecreaseFontSize();
         }
 
-        private void ExecuteOpenUserCommands(object sender, ExecutedRoutedEventArgs e)
+        private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Process.Start("Notepad.exe", UserSettings.SettingsFile);
+        }
+
+        private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            Process.Start("Notepad.exe", UserTemplate.TemplateFile);
         }
 
         // Properites
