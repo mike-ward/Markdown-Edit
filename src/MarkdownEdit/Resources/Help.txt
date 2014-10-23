@@ -37,6 +37,8 @@
     Ctrl+Minus     Decrease font size
     Ctrl+0         Restore font size
     
+    F9             Open settings in Notepad
+    
 [Markdown Syntax](http://daringfireball.net/projects/markdown/syntax)
 
 Press `F1` to close help.
@@ -47,6 +49,25 @@ Press `F1` to close help.
 
 Version 0.1.0  
 Copyright (c) Mike Ward, All rights reserved.
+
+## User Settings
+
+User settings are stored in a text file the the AppData folder. Placing settings in a plain file allows sharing of settings on different installations.
+
+Typically, this folder is located at `C:\Users\<USER>\AppData\Roaming\Markdown Edit\user_settings.json`. Pressing `F9` will open this file in the system's Notepad editor. It should look something like this:
+
+    {
+        "EditorBackground": "#F7F4EF",
+        "EditorForeground": "Black",
+        "EditorFontFamily": "Segoe UI",
+        "EditorFontSize": 14.0
+    }
+
+When you change settings and save this file, Markdown Edit will immediately update to reflect the changes.
+
+Colors can be defined as RBG values, like the `EditorBackground` setting, or using the predefined names, like the `EditorForground' setting. Acceptable predefined names are listed [here](http://msdn.microsoft.com/en-us/library/system.windows.media.colors(v=vs.110).aspx).
+
+If you delete this file, Markdown Edit will restore it.
 
 ## License
 
