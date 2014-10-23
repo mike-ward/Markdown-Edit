@@ -3,8 +3,9 @@ Markdown Edit
 
 *Still a work in progress, but usable.*
 
-Markdown Edit is my idea of what a **desktop** Markdown editor should be. Straightforward, quiet and built to do one thing. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar or tabbed windows. (more like [Brackets.io](http://brackets.io)).
+Markdown Edit is  a Windows **desktop** Markdown editor with an emphsis on content and keyboard shortcuts. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar, tabbed windows or other distractions..
 
+Gratuitous Screen Shot
 ![screen shot](ScreenShot.png)
 
 ## Features
@@ -12,13 +13,13 @@ Markdown Edit is my idea of what a **desktop** Markdown editor should be. Straig
 - Decent, syntax highlighting editor
 - Real time, side-by-side Markdown preview
 - CommonMark standard Markdown engine
-- User preferences stored in a text file *(planned)*
+- User preferences stored in a text file
 - Full screen covers taskbar
 - Keyboard shortcuts for bold, italic, headers, etc.
 - Modern UI look and feel
 - Not a Windows Store App
 - Synchronized scrolling
-- User settable fonts, colors, etc. *(planned)*
+- User settable fonts, colors, etc.
 - User defined style sheets *(planned)*
 - Spell checking *(planned)*
 
