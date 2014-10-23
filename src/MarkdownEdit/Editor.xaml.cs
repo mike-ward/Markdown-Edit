@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Xml;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using MarkdownEdit.Properties;
@@ -31,6 +32,8 @@ namespace MarkdownEdit
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
         private readonly ISpellCheckProvider _spellCheckProvider;
+
+        private static readonly RoutedCommand SpellCheckReplaceCommand = new RoutedUICommand();
 
         private struct EditorState
         {
@@ -72,6 +75,7 @@ namespace MarkdownEdit
             CanExecute = true;
             EditBox.Loaded += EditBoxOnLoaded;
             EditBox.Unloaded += EditBoxOnUnloaded;
+            CommandBindings.Add(new CommandBinding(SpellCheckReplaceCommand, ExecuteSpellCheckReplace));
             _defaultFontSize = EditBox.FontSize;
             _findReplaceDialog = new FindReplaceDialog(EditBox);
             var spellingService = new SpellingService();
@@ -117,12 +121,19 @@ namespace MarkdownEdit
         private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)
         {
             var contextMenu = new ContextMenu();
+            SpellCheckSuggestions(contextMenu);
 
+            contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+C"});
+            var element = (FrameworkElement)ea.Source;
+            element.ContextMenu = contextMenu;
+        }
+
+        private void SpellCheckSuggestions(ContextMenu contextMenu)
+        {
             if (_spellCheckProvider != null)
             {
                 var editorPosition = EditBox.GetPositionFromPoint(Mouse.GetPosition(EditBox));
                 if (!editorPosition.HasValue) return;
-
                 var offset = EditBox.Document.GetOffset(editorPosition.Value.Line, editorPosition.Value.Column);
                 var errorSegments = _spellCheckProvider.GetSpellCheckErrors();
                 var misspelledSegment = errorSegments.FirstOrDefault(segment => segment.StartOffset <= offset && segment.EndOffset >= offset);
@@ -135,14 +146,28 @@ namespace MarkdownEdit
                 if (offset == currentLine.Offset || offset == currentLine.EndOffset) return;
 
                 var suggestions = _spellCheckProvider.GetSpellcheckSuggestions(EditBox.Document.GetText(misspelledSegment));
-                foreach (var item in suggestions)
-                {
-                    contextMenu.Items.Add(new MenuItem {Header = item, FontWeight = FontWeights.Bold});
-                }
+                foreach (var item in suggestions) contextMenu.Items.Add(SpellSuggestMenuItem(item, misspelledSegment));
+                contextMenu.Items.Add(new Separator());
             }
-            contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut});
-            var element = (FrameworkElement)ea.Source;
-            element.ContextMenu = contextMenu;
+        }
+
+        private MenuItem SpellSuggestMenuItem(string header, TextSegment segment)
+        {
+            return new MenuItem
+            {
+                Header = header,
+                FontWeight = FontWeights.Bold,
+                Command = SpellCheckReplaceCommand,
+                CommandParameter = new Tuple<string, TextSegment>(header, segment)
+            };
+        }
+
+        private void ExecuteSpellCheckReplace(object sender, ExecutedRoutedEventArgs ea)
+        {
+            var parameters = ea.Parameter as Tuple<string, TextSegment>;
+            var word = parameters.Item1;
+            var segment = parameters.Item2;
+            EditBox.Document.Replace(segment, word);
         }
 
         // Commands
