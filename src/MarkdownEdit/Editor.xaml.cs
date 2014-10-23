@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Xml;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using MarkdownEdit.Properties;
 using MarkdownEdit.SpellCheck;
+using ContextMenu = System.Windows.Controls.ContextMenu;
+using MenuItem = System.Windows.Controls.MenuItem;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace MarkdownEdit
@@ -109,6 +112,37 @@ namespace MarkdownEdit
             _findReplaceDialog.AllowClose = true;
             _spellCheckProvider.Disconnect();
             _findReplaceDialog.Close();
+        }
+
+        private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)
+        {
+            var contextMenu = new ContextMenu();
+
+            if (_spellCheckProvider != null)
+            {
+                var editorPosition = EditBox.GetPositionFromPoint(Mouse.GetPosition(EditBox));
+                if (!editorPosition.HasValue) return;
+
+                var offset = EditBox.Document.GetOffset(editorPosition.Value.Line, editorPosition.Value.Column);
+                var errorSegments = _spellCheckProvider.GetSpellCheckErrors();
+                var misspelledSegment = errorSegments.FirstOrDefault(segment => segment.StartOffset <= offset && segment.EndOffset >= offset);
+                if (misspelledSegment == null) return;
+
+                // check if the clicked offset is the beginning or end of line to prevent snapping to it 
+                // (like in text selection) with GetPositionFromPoint
+                // in practice makes context menu not show when clicking on the first character of a line
+                var currentLine = EditBox.Document.GetLineByOffset(offset);
+                if (offset == currentLine.Offset || offset == currentLine.EndOffset) return;
+
+                var suggestions = _spellCheckProvider.GetSpellcheckSuggestions(EditBox.Document.GetText(misspelledSegment));
+                foreach (var item in suggestions)
+                {
+                    contextMenu.Items.Add(new MenuItem {Header = item, FontWeight = FontWeights.Bold});
+                }
+            }
+            contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut});
+            var element = (FrameworkElement)ea.Source;
+            element.ContextMenu = contextMenu;
         }
 
         // Commands
