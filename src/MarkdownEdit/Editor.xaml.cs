@@ -123,7 +123,15 @@ namespace MarkdownEdit
             var contextMenu = new ContextMenu();
             SpellCheckSuggestions(contextMenu);
 
-            contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+C"});
+            contextMenu.Items.Add(new MenuItem {Header = "Undo", Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z"});
+            contextMenu.Items.Add(new MenuItem {Header = "Redo", Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y"});
+            contextMenu.Items.Add(new Separator());
+            contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
+            contextMenu.Items.Add(new MenuItem {Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
+            contextMenu.Items.Add(new MenuItem {Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
+            contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
+            contextMenu.Items.Add(new Separator());
+            contextMenu.Items.Add(new MenuItem { Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A" });
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
         }
@@ -151,7 +159,7 @@ namespace MarkdownEdit
             }
         }
 
-        private MenuItem SpellSuggestMenuItem(string header, TextSegment segment)
+        private static MenuItem SpellSuggestMenuItem(string header, TextSegment segment)
         {
             return new MenuItem
             {
@@ -164,7 +172,7 @@ namespace MarkdownEdit
 
         private void ExecuteSpellCheckReplace(object sender, ExecutedRoutedEventArgs ea)
         {
-            var parameters = ea.Parameter as Tuple<string, TextSegment>;
+            var parameters = (Tuple<string, TextSegment>)ea.Parameter;
             var word = parameters.Item1;
             var segment = parameters.Item2;
             EditBox.Document.Replace(segment, word);
