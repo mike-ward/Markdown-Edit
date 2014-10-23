@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -15,8 +16,9 @@ namespace MarkdownEdit
         public static RoutedCommand DecreaseFontSizeCommand = new RoutedUICommand();
         public static RoutedCommand RestoreFontSizeCommand = new RoutedUICommand();
 
-        private string _titleName = string.Empty;
         public UserSettings UserSettings { get; set; }
+        private FileSystemWatcher _userSettingsWatcher;
+        private string _titleName = string.Empty;
 
         public MainWindow()
         {
@@ -25,12 +27,31 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
+            InitiailzeUserSettings();
+        }
+
+        private void InitiailzeUserSettings()
+        {
             UserSettings = UserSettings.Load();
+            _userSettingsWatcher = new FileSystemWatcher
+            {
+                Path = UserSettings.SettingsFolder,
+                Filter = "", //UserSettings.SettingsFile,
+                NotifyFilter = NotifyFilters.LastWrite
+            };
+            _userSettingsWatcher.Changed += (sender, args) => UserSettings.Update();
+            _userSettingsWatcher.EnableRaisingEvents = true;
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
             cancelEventArgs.Cancel = !Editor.SaveIfModified();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _userSettingsWatcher.Dispose();
+            base.OnClosed(e);
         }
 
         private void EditorOnPropertyChanged(object sender, PropertyChangedEventArgs ea)

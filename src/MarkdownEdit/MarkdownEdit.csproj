@@ -88,7 +88,8 @@
     <Compile Include="FindReplaceDialog.xaml.cs">
       <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs" />
+    <Compile Include="FindReplaceSettings.cs" />
+    <Compile Include="UserSettings.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="Utility.cs" />
     <Page Include="Editor.xaml">
