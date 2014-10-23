@@ -132,6 +132,7 @@ namespace MarkdownEdit
             contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
             contextMenu.Items.Add(new Separator());
             contextMenu.Items.Add(new MenuItem { Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A" });
+
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
         }
