@@ -37,6 +37,7 @@
     Ctrl+Minus     Decrease font size
     Ctrl+0         Restore font size
     
+    F8             Open html template in Notepad
     F9             Open settings in Notepad
     
 [Markdown Syntax](http://daringfireball.net/projects/markdown/syntax)
@@ -68,6 +69,12 @@ When you change settings and save this file, Markdown Edit will immediately upda
 Colors can be defined as RBG values, like the `EditorBackground` setting, or using the predefined names, like the `EditorForground' setting. Acceptable predefined names are listed [here](http://msdn.microsoft.com/en-us/library/system.windows.media.colors(v=vs.110).aspx).
 
 If you delete this file, Markdown Edit will restore it.
+
+## User Template
+
+You can change the appearnce of the preview view by changing the user template file. User templates work similar to user settings. The template file is stored in the AppData Folder by the name of `user_template.html`. Edit it has you see fit. Delete it and Markdown Edit will create a new one.
+
+**Changes do not take affect until you restart Markdown Edit**
 
 ## License
 

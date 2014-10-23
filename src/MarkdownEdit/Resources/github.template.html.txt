@@ -1,6 +1,7 @@
 <html>
 <head>
   <title>Markdown Edit Preview</title>
+  <!-- Don't delete this X-UA tag. The browser control behaves like IE8 otherwise -->
   <meta http-equiv="X-UA-Compatible" content="IE=9">
   <style type="text/css">
     body {
@@ -20,21 +21,6 @@
     a {
       color: #4183C4;
       text-decoration: none;
-    }
-
-    a.absent {
-      color: #cc0000;
-    }
-
-    a.anchor {
-      display: block;
-      padding-left: 30px;
-      margin-left: -30px;
-      cursor: pointer;
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
     }
 
     blockquote {
@@ -96,10 +82,9 @@
   </style>
 </head>
 <body>
-<div id="content">
-</div>
-<div style="height: 300px">
-  &nbsp;
-</div>
+<!-- Content goes here. The div must have an id of "content" -->
+<div id="content"></div>
+<!-- Adds some scroll space to the bottom of the doucment -->
+<div style="height: 300px">&nbsp;</div>
 </body>
 </html>
