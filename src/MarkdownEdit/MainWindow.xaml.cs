@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -15,6 +16,7 @@ namespace MarkdownEdit
         public static RoutedCommand IncreaseFontSizeCommand = new RoutedUICommand();
         public static RoutedCommand DecreaseFontSizeCommand = new RoutedUICommand();
         public static RoutedCommand RestoreFontSizeCommand = new RoutedUICommand();
+        public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand(); 
 
         public UserSettings UserSettings { get; set; }
         private FileSystemWatcher _userSettingsWatcher;
@@ -166,6 +168,11 @@ namespace MarkdownEdit
         private void ExecuteDecreaseFontSize(object sender, ExecutedRoutedEventArgs e)
         {
             Editor.DecreaseFontSize();
+        }
+
+        private void ExecuteOpenUserCommands(object sender, ExecutedRoutedEventArgs e)
+        {
+            Process.Start("Notepad.exe", UserSettings.SettingsFile);
         }
 
         // Properites

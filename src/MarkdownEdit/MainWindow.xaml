@@ -48,6 +48,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.IncreaseFontSizeCommand}" Executed="ExecuteIncreaseFontSize" />
     <CommandBinding Command="{x:Static local:MainWindow.DecreaseFontSizeCommand}" Executed="ExecuteDecreaseFontSize" />
     <CommandBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Executed="ExecuteRestoreFontSize" />
+    <CommandBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Executed="ExecuteOpenUserCommands" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -66,5 +67,6 @@
     <KeyBinding Command="{x:Static local:MainWindow.IncreaseFontSizeCommand}" Gesture="Ctrl+Plus" />
     <KeyBinding Command="{x:Static local:MainWindow.DecreaseFontSizeCommand}" Gesture="Ctrl+Minus" />
     <KeyBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+0" />
+    <KeyBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Gesture="F9" />
   </Window.InputBindings>
 </Controls:MetroWindow>
