@@ -11,6 +11,7 @@
   GlowBrush="{DynamicResource GrayBrush2}"
   ResizeMode="CanResizeWithGrip"
   IgnoreTaskbarOnMaximize="True"
+  WindowTransitionsEnabled="False"
   DataContext="{Binding RelativeSource={RelativeSource Self}}"
   >
 
