@@ -20,7 +20,7 @@ Gratuitous Screen Shot
 - Not a Windows Store App
 - Synchronized scrolling
 - User settable fonts, colors, etc.
-- User defined style sheets *(planned)*
+- User defined style sheets
 - Spell checking *(planned)*
 
 ## Requirements
