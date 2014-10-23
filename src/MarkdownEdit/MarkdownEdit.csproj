@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NHunspell">
+      <HintPath>..\packages\NHunspell.1.2.5359.26126\lib\net\NHunspell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -89,6 +92,12 @@
       <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="FindReplaceSettings.cs" />
+    <Compile Include="SpellCheck\ISpellCheckProvider.cs" />
+    <Compile Include="SpellCheck\ISpellingService.cs" />
+    <Compile Include="SpellCheck\SpellCheckBackgroundRenderer.cs" />
+    <Compile Include="SpellCheck\SpellCheckProvider.cs" />
+    <Compile Include="SpellCheck\SpellingLanguages.cs" />
+    <Compile Include="SpellCheck\SpellingService.cs" />
     <Compile Include="UserSettings.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="UserTemplate.cs" />
@@ -171,6 +180,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="logo.ico" />
+    <None Include="Hunspellx64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Hunspellx86.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Resources\markdown.xshd.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
