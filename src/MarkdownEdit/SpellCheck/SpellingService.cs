@@ -55,7 +55,7 @@ namespace MarkdownEdit.SpellCheck
             }
             else
             {
-                Debug.WriteLine("dictonaries not found");
+                Debug.WriteLine("dictionary not found");
             }
         }
     }

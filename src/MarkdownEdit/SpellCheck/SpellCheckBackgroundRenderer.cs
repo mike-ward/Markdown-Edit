@@ -17,7 +17,7 @@ namespace MarkdownEdit.SpellCheck
 
         public TextSegmentCollection<TextSegment> ErrorSegments { get; private set; }
 
-        private IEnumerable<Point> CreatePoints(Point start, double offset, int count)
+        private static IEnumerable<Point> CreatePoints(Point start, double offset, int count)
         {
             for (var i = 0; i < count; i++)
             {

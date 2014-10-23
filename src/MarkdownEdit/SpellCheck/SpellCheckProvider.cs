@@ -58,9 +58,7 @@ namespace MarkdownEdit.SpellCheck
                     currentLine.LastDocumentLine.EndOffset - currentLine.FirstDocumentLine.Offset);
 
                 originalText = Regex.Replace(originalText, "[\\u2018\\u2019\\u201A\\u201B\\u2032\\u2035]", "'");
-
                 var textWithoutUrls = _uriFinderRegex.Replace(originalText, "");
-
                 var query = _wordSeparatorRegex.Split(textWithoutUrls).Where(s => !string.IsNullOrEmpty(s));
 
                 foreach (var word in query)

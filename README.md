@@ -3,7 +3,7 @@ Markdown Edit
 
 *Still a work in progress, but usable.*
 
-Markdown Edit is  a Windows **desktop** Markdown editor with an emphsis on content and keyboard shortcuts. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar, tabbed windows or other distractions..
+Markdown Edit is  a Windows **desktop** Markdown editor with an emphasis on content and keyboard shortcuts. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar, tabbed windows or other distractions..
 
 Gratuitous Screen Shot
 ![screen shot](ScreenShot.png)
