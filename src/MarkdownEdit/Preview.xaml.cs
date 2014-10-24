@@ -65,8 +65,12 @@ namespace MarkdownEdit
             var path = Path.GetDirectoryName(lastOpen);
             if (string.IsNullOrEmpty(path)) return s;
             var file = s.TrimStart('/');
-            var asset = Path.Combine(path, file);
+            return FindAsset(path, file) ?? s;
+        }
 
+        private static string FindAsset(string path, string file)
+        {
+            var asset = Path.Combine(path, file);
             for (var i = 0; i < 4; ++i)
             {
                 if (File.Exists(asset)) return "file://" + asset.Replace('\\', '/');
@@ -75,7 +79,7 @@ namespace MarkdownEdit
                 path = parent.FullName;
                 asset = Path.Combine(path, file);
             }
-            return s;
+            return null;
         }
 
         private void BrowserOnNavigating(object sender, WebBrowserNavigatingEventArgs ea)

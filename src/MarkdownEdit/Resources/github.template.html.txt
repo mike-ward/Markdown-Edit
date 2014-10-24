@@ -38,10 +38,14 @@
     }
 
     img {
-      border-style: none;
+      border: 1px solid #ddd;
       max-width: 100%;
     }
-
+    
+    img[alt="noborder"] {
+      border: none;
+    }
+   
     code, tt {
       margin: 0 2px;
       padding: 0 5px;
@@ -85,6 +89,6 @@
 <!-- Content goes here. The div must have an id of "content" -->
 <div id="content"></div>
 <!-- Adds some scroll space to the bottom of the doucment -->
-<div style="height: 100px">&nbsp;</div>
+<div style="height: 300px">&nbsp;</div>
 </body>
 </html>
