@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Xml;
@@ -32,8 +33,6 @@ namespace MarkdownEdit
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
         private readonly ISpellCheckProvider _spellCheckProvider;
-
-        private static readonly RoutedCommand SpellCheckReplaceCommand = new RoutedUICommand();
 
         private struct EditorState
         {
@@ -75,7 +74,7 @@ namespace MarkdownEdit
             CanExecute = true;
             EditBox.Loaded += EditBoxOnLoaded;
             EditBox.Unloaded += EditBoxOnUnloaded;
-            CommandBindings.Add(new CommandBinding(SpellCheckReplaceCommand, ExecuteSpellCheckReplace));
+            CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             _defaultFontSize = EditBox.FontSize;
             _findReplaceDialog = new FindReplaceDialog(EditBox);
             var spellingService = new SpellingService();
@@ -166,7 +165,7 @@ namespace MarkdownEdit
             {
                 Header = header,
                 FontWeight = FontWeights.Bold,
-                Command = SpellCheckReplaceCommand,
+                Command = EditingCommands.CorrectSpellingError,
                 CommandParameter = new Tuple<string, TextSegment>(header, segment)
             };
         }
