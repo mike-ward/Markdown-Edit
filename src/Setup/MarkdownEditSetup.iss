@@ -39,8 +39,15 @@ Source: "..\MarkdownEdit\bin\Release\mpe.exe"; DestDir: "{app}"; Flags: ignoreve
 Source: "..\MarkdownEdit\bin\Release\CommonMark.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\MahApps.Metro.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\NHunspell.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Hunspellx64.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Hunspellx86.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\System.Windows.Interactivity.dll"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
