@@ -119,19 +119,28 @@ namespace MarkdownEdit
 
         private void BrowserPreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.Control)
+            switch (e.KeyCode)
             {
-                switch (e.KeyCode)
-                {
-                    case Keys.O:
-                        ApplicationCommands.Open.Execute(this, Application.Current.MainWindow);
-                        e.IsInputKey = true;
-                        break;
+                case Keys.O:
+                    if (e.Control == false) break;
+                    ApplicationCommands.Open.Execute(this, Application.Current.MainWindow);
+                    e.IsInputKey = true;
+                    break;
 
-                    case Keys.N:
-                        e.IsInputKey = true;
-                        break;
-                }
+                case Keys.N:
+                    if (e.Control == false) break;
+                    ApplicationCommands.New.Execute(this, Application.Current.MainWindow);
+                    e.IsInputKey = true;
+                    break;
+
+                case Keys.F1:
+                    ApplicationCommands.Help.Execute(this, Application.Current.MainWindow);
+                    e.IsInputKey = true;
+                    break;
+
+                case Keys.F5:
+                    e.IsInputKey = true;
+                    break;
             }
         }
     }

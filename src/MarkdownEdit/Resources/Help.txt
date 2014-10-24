@@ -40,6 +40,7 @@
     F7             Toggle Spell Checking
     F8             Open HTML template in Notepad
     F9             Open settings in Notepad
+    F11            Toggle Full Screen
     
 [Markdown Syntax](http://daringfireball.net/projects/markdown/syntax)
 

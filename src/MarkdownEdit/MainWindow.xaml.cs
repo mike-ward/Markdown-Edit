@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MarkdownEdit
@@ -13,12 +14,11 @@ namespace MarkdownEdit
         public static RoutedCommand InsertHeaderCommand = new RoutedUICommand();
         public static RoutedCommand FindNextCommand = new RoutedUICommand();
         public static RoutedCommand FindPreviousCommand = new RoutedUICommand();
-        public static RoutedCommand IncreaseFontSizeCommand = new RoutedUICommand();
-        public static RoutedCommand DecreaseFontSizeCommand = new RoutedUICommand();
         public static RoutedCommand RestoreFontSizeCommand = new RoutedUICommand();
-        public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
-        public static RoutedCommand OpenUserTemplateCommand = new RoutedCommand();
-        public static RoutedCommand ToggleSpellCheckCommand = new RoutedCommand();
+        public static RoutedCommand OpenUserSettingsCommand = new RoutedUICommand();
+        public static RoutedCommand OpenUserTemplateCommand = new RoutedUICommand();
+        public static RoutedCommand ToggleSpellCheckCommand = new RoutedUICommand();
+        public static RoutedCommand ToggleFullScreenCommand = new RoutedUICommand();
 
         public UserSettings UserSettings { get; set; }
         private FileSystemWatcher _userSettingsWatcher;
@@ -185,6 +185,11 @@ namespace MarkdownEdit
         private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e)
         {
             Editor.SpellCheck = !Editor.SpellCheck;
+        }
+
+        private void ExecuteToggleFullScreen(object sender, ExecutedRoutedEventArgs e)
+        {
+            WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
         }
 
         // Properites
