@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using CommonMark;
 using MarkdownEdit.Properties;
 using mshtml;
+using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
 
 namespace MarkdownEdit
@@ -22,6 +25,9 @@ namespace MarkdownEdit
             Browser.DocumentText = UserTemplate.Load().Template;
             UpdatePreview = Utility.Debounce<string>(s => Dispatcher.Invoke(() => Update(s)));
             Browser.Navigating += BrowserOnNavigating;
+            Browser.GetType().InvokeMember("DoubleBuffered",
+                BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                null, Browser, new object[] {true});
         }
 
         private void Update(string markdown)
@@ -105,6 +111,24 @@ namespace MarkdownEdit
         {
             var y = e.ExtentHeight - e.ViewportHeight;
             return e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
+        }
+
+        private void BrowserPreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.Control)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.O:
+                        ApplicationCommands.Open.Execute(this, Application.Current.MainWindow);
+                        e.IsInputKey = true;
+                        break;
+
+                    case Keys.N:
+                        e.IsInputKey = true;
+                        break;
+                }
+            }
         }
     }
 }

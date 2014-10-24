@@ -9,7 +9,11 @@
              d:DesignHeight="300" d:DesignWidth="300">
   <Grid>
     <wfi:WindowsFormsHost x:Name="BrowserHost">
-      <wf:WebBrowser x:Name="Browser" />
+      <wf:WebBrowser x:Name="Browser"
+                     AllowNavigation="False"
+                     AllowWebBrowserDrop="False"
+                     PreviewKeyDown="BrowserPreviewKeyDown"
+                     />
     </wfi:WindowsFormsHost>
   </Grid>
 </UserControl>
