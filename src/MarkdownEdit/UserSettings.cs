@@ -10,7 +10,7 @@ namespace MarkdownEdit
     {
         private string _editorBackground = "#F7F4EF";
         private string _editorForeground = "Black";
-        private string _editorFontFamily = "Segoe UI";
+        private string _editorFontFamily = "Consolas";
         private double _editorFontSize = 14;
 
         public void Update()
