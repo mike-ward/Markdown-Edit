@@ -34,14 +34,15 @@ namespace MarkdownEdit.SpellCheck
             return _speller.Suggest(word);
         }
 
-        public void ClearLanguages()
+        public void ClearLanguage()
         {
             _speller = null;
         }
 
         public void SetLanguage(SpellingLanguages language)
         {
-            _speller = new Hunspell();
+            ClearLanguage();
+            var speller = new Hunspell();
             var languageKey = LangLookup[language];
             var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\'));
             var path = Path.Combine(assemblyFolder, "SpellCheck\\Dictionaries");
@@ -51,7 +52,8 @@ namespace MarkdownEdit.SpellCheck
 
             if (File.Exists(aff) && File.Exists(dic))
             {
-                _speller.Load(aff, dic);
+                speller.Load(aff, dic);
+                _speller = speller;
             }
             else
             {

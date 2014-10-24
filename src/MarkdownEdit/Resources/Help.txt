@@ -37,6 +37,7 @@
     Ctrl+Minus     Decrease font size
     Ctrl+0         Restore font size
     
+    F7             Toggle Spell Checking
     F8             Open HTML template in Notepad
     F9             Open settings in Notepad
     

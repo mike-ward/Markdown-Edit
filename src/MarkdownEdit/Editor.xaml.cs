@@ -27,7 +27,8 @@ namespace MarkdownEdit
         public bool CanExecute { get; private set; }
         private string _fileName;
         private string _displayName = string.Empty;
-        private bool _wordWrap = true;
+        private bool _wordWrap;
+        private bool _spellCheck;
         private bool _isModified;
         private readonly double _defaultFontSize;
         private EditorState _editorState = new EditorState();
@@ -40,6 +41,7 @@ namespace MarkdownEdit
             private string _text;
             private bool _isModified;
             private bool _wordWrap;
+            private bool _spellCheck;
             private bool _canExecute;
 
             public void Save(Editor editor)
@@ -48,10 +50,12 @@ namespace MarkdownEdit
                 _isModified = editor.IsModified;
                 _wordWrap = editor.WordWrap;
                 _canExecute = editor.CanExecute;
+                _spellCheck = editor.SpellCheck;
                 editor.IsModified = false;
                 editor.WordWrap = true;
                 editor.IsReadOnly = true;
                 editor.CanExecute = false;
+                editor.SpellCheck = false;
                 StateSaved = true;
             }
 
@@ -62,9 +66,10 @@ namespace MarkdownEdit
                 editor.WordWrap = _wordWrap;
                 editor.IsReadOnly = false;
                 editor.CanExecute = _canExecute;
+                editor.SpellCheck = _spellCheck;
                 editor.DisplayName = string.Empty;
                 StateSaved = false;
-                editor.Dispatcher.InvokeAsync(() => editor.EditBox.Focus());
+                editor.Dispatcher.Invoke(() => editor.EditBox.Focus());
             }
         }
 
@@ -97,6 +102,7 @@ namespace MarkdownEdit
             var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.First(cb => cb.Command == AvalonEditCommands.IndentSelection);
             EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
             EditBox.TextChanged += EditBoxOnTextChanged;
+            PropertyChanged += OnSpellCheckChanged;
 
             Task.Delay(100).ContinueWith(t =>
             {
@@ -104,10 +110,20 @@ namespace MarkdownEdit
                 {
                     LoadFile(Settings.Default.LastOpenFile);
                     EditBox.Focus();
+                    EditBox.WordWrap = Settings.Default.WordWrapEnabled;
                     _spellCheckProvider.Initialize(this);
+                    SpellCheck = Settings.Default.SpellCheckEnabled;
                 });
                 t.Dispose();
             });
+        }
+
+        private void OnSpellCheckChanged(object o, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName != "SpellCheck") return;
+            _spellCheckProvider.Enabled = SpellCheck;
+            EditBox.Document.Insert(0, " ");
+            EditBox.Document.UndoStack.Undo();
         }
 
         private void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
@@ -115,6 +131,8 @@ namespace MarkdownEdit
             _findReplaceDialog.AllowClose = true;
             _spellCheckProvider.Disconnect();
             _findReplaceDialog.Close();
+            Settings.Default.WordWrapEnabled = EditBox.WordWrap;
+            Settings.Default.SpellCheckEnabled = SpellCheck;
         }
 
         private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)
@@ -426,6 +444,17 @@ namespace MarkdownEdit
             {
                 if (_wordWrap == value) return;
                 _wordWrap = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool SpellCheck
+        {
+            get { return _spellCheck; }
+            set
+            {
+                if (_spellCheck == value) return;
+                _spellCheck = value;
                 OnPropertyChanged();
             }
         }

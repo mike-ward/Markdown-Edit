@@ -9,7 +9,7 @@ namespace MarkdownEdit
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
-        public static RoutedCommand WordWrapCommand = new RoutedUICommand();
+        public static RoutedCommand ToggleWordWrapCommand = new RoutedUICommand();
         public static RoutedCommand InsertHeaderCommand = new RoutedUICommand();
         public static RoutedCommand FindNextCommand = new RoutedUICommand();
         public static RoutedCommand FindPreviousCommand = new RoutedUICommand();
@@ -18,6 +18,7 @@ namespace MarkdownEdit
         public static RoutedCommand RestoreFontSizeCommand = new RoutedUICommand();
         public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
         public static RoutedCommand OpenUserTemplateCommand = new RoutedCommand();
+        public static RoutedCommand ToggleSpellCheckCommand = new RoutedCommand();
 
         public UserSettings UserSettings { get; set; }
         private FileSystemWatcher _userSettingsWatcher;
@@ -106,7 +107,7 @@ namespace MarkdownEdit
             e.CanExecute = Editor.CanExecute;
         }
 
-        public void ExecuteWordWrap(object sender, ExecutedRoutedEventArgs ea)
+        public void ExecuteToggleWordWrap(object sender, ExecutedRoutedEventArgs ea)
         {
             Editor.WordWrap = !Editor.WordWrap;
         }
@@ -179,6 +180,11 @@ namespace MarkdownEdit
         private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Process.Start("Notepad.exe", UserTemplate.TemplateFile);
+        }
+
+        private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.SpellCheck = !Editor.SpellCheck;
         }
 
         // Properites

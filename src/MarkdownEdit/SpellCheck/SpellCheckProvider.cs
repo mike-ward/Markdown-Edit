@@ -15,6 +15,7 @@ namespace MarkdownEdit.SpellCheck
         private readonly ISpellingService _spellingService;
         private readonly SpellCheckBackgroundRenderer _spellCheckRenderer;
         private Editor _editor;
+        private bool _enabled;
 
         public SpellCheckProvider(ISpellingService spellingService)
         {
@@ -29,6 +30,16 @@ namespace MarkdownEdit.SpellCheck
             _editor.EditBox.TextArea.TextView.VisualLinesChanged += TextViewVisualLinesChanged;
         }
 
+        public bool Enabled
+        {
+            get { return _enabled; }
+            set
+            {
+                _enabled = value;
+                if (_enabled == false) ClearSpellCheckErrors();
+            }
+        }
+
         public void Disconnect()
         {
             if (_editor == null) return;
@@ -40,7 +51,7 @@ namespace MarkdownEdit.SpellCheck
 
         private void TextViewVisualLinesChanged(object sender, EventArgs e)
         {
-            DoSpellCheck();
+            if (Enabled) DoSpellCheck();
         }
 
         private void DoSpellCheck()

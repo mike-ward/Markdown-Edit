@@ -82,5 +82,29 @@ namespace MarkdownEdit.Properties {
                 this["FindReplaceWildcards"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SpellCheckEnabled {
+            get {
+                return ((bool)(this["SpellCheckEnabled"]));
+            }
+            set {
+                this["SpellCheckEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool WordWrapEnabled {
+            get {
+                return ((bool)(this["WordWrapEnabled"]));
+            }
+            set {
+                this["WordWrapEnabled"] = value;
+            }
+        }
     }
 }

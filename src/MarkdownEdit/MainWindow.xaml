@@ -43,20 +43,21 @@
     <CommandBinding Command="Replace" Executed="ExecuteEditorReplace" />
     <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
     <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
-    <CommandBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Executed="ExecuteWordWrap" />
+    <CommandBinding Command="{x:Static local:MainWindow.ToggleWordWrapCommand}" Executed="ExecuteToggleWordWrap" />
     <CommandBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Executed="ExecuteInsertHeader" />
     <CommandBinding Command="{x:Static local:MainWindow.IncreaseFontSizeCommand}" Executed="ExecuteIncreaseFontSize" />
     <CommandBinding Command="{x:Static local:MainWindow.DecreaseFontSizeCommand}" Executed="ExecuteDecreaseFontSize" />
     <CommandBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Executed="ExecuteRestoreFontSize" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Executed="ExecuteOpenUserSettingsCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Executed="ExecuteOpenUserTemplateCommand" />
+    <CommandBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Executed="ExecuteToggleSpellCheck" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
     <KeyBinding Command="Close" Gesture="Ctrl+Shift+Q" />
     <KeyBinding Command="ToggleBold" Gesture="Ctrl+B" />
     <KeyBinding Command="ToggleItalic" Gesture="Ctrl+I" />
-    <KeyBinding Command="{x:Static local:MainWindow.WordWrapCommand}" Gesture="Ctrl+W" />
+    <KeyBinding Command="{x:Static local:MainWindow.ToggleWordWrapCommand}" Gesture="Ctrl+W" />
     <KeyBinding Command="{x:Static local:MainWindow.FindNextCommand}" Gesture="F3" />
     <KeyBinding Command="{x:Static local:MainWindow.FindPreviousCommand}" Gesture="F4" />
     <KeyBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+1" CommandParameter="1" />
@@ -68,6 +69,7 @@
     <KeyBinding Command="{x:Static local:MainWindow.IncreaseFontSizeCommand}" Gesture="Ctrl+Plus" />
     <KeyBinding Command="{x:Static local:MainWindow.DecreaseFontSizeCommand}" Gesture="Ctrl+Minus" />
     <KeyBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+0" />
+    <KeyBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Gesture="F7" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Gesture="F8" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Gesture="F9" />
   </Window.InputBindings>
