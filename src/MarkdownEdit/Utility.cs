@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Media;
 using System.Threading.Tasks;
 
 namespace MarkdownEdit
@@ -12,7 +13,7 @@ namespace MarkdownEdit
             return key => cache.GetOrAdd(key, func);
         }
 
-        public static Action<T> Debounce<T>(this Action<T> func, int milliseconds = 350)
+        public static Action<T> Debounce<T>(this Action<T> func, int milliseconds = 300)
         {
             T last;
             return arg =>
@@ -24,6 +25,11 @@ namespace MarkdownEdit
                     t.Dispose();
                 });
             };
+        }
+
+        public static void Beep()
+        {
+            SystemSounds.Beep.Play();
         }
     }
 }

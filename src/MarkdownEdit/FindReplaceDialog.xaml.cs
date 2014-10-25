@@ -30,12 +30,12 @@ namespace MarkdownEdit
 
         private void FindNextClick(object sender, RoutedEventArgs e)
         {
-            if (!Find(txtFind.Text)) SystemSounds.Beep.Play();
+            if (!Find(txtFind.Text)) Utility.Beep();
         }
 
         private void FindNext2Click(object sender, RoutedEventArgs e)
         {
-            if (!Find(txtFind2.Text)) SystemSounds.Beep.Play();
+            if (!Find(txtFind2.Text)) Utility.Beep();
         }
 
         private void ReplaceClick(object sender, RoutedEventArgs e)
@@ -50,7 +50,7 @@ namespace MarkdownEdit
                 replaced = true;
             }
 
-            if (!Find(txtFind2.Text) && !replaced) SystemSounds.Beep.Play();
+            if (!Find(txtFind2.Text) && !replaced) Utility.Beep();
         }
 
         private void ReplaceAllClick(object sender, RoutedEventArgs e)
@@ -68,13 +68,13 @@ namespace MarkdownEdit
 
         public void FindNext()
         {
-            if (string.IsNullOrEmpty(_lastFind)) SystemSounds.Beep.Play();
+            if (string.IsNullOrEmpty(_lastFind)) Utility.Beep();
             Find(_lastFind);
         }
 
         public void FindPrevious()
         {
-            if (string.IsNullOrEmpty(_lastFind)) SystemSounds.Beep.Play();
+            if (string.IsNullOrEmpty(_lastFind)) Utility.Beep();
             Find(_lastFind, true);
         }
 

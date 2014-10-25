@@ -49,7 +49,8 @@ namespace MarkdownEdit
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
-            cancelEventArgs.Cancel = !Editor.SaveIfModified();
+            if (Editor.CanExecute == false) Utility.Beep();
+            cancelEventArgs.Cancel = !Editor.CanExecute || !Editor.SaveIfModified();
         }
 
         protected override void OnClosed(EventArgs e)

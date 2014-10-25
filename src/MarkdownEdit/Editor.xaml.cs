@@ -31,7 +31,6 @@ namespace MarkdownEdit
         private bool _wordWrap;
         private bool _spellCheck;
         private bool _isModified;
-        private readonly double _defaultFontSize;
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
         private readonly ISpellCheckProvider _spellCheckProvider;
@@ -81,7 +80,6 @@ namespace MarkdownEdit
             EditBox.Loaded += EditBoxOnLoaded;
             EditBox.Unloaded += EditBoxOnUnloaded;
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
-            _defaultFontSize = EditBox.FontSize;
             _findReplaceDialog = new FindReplaceDialog(EditBox);
             var spellingService = new SpellingService();
             spellingService.SetLanguage(SpellingLanguages.UnitedStates);
