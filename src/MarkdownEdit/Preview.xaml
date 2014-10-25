@@ -10,7 +10,6 @@
   <Grid>
     <wfi:WindowsFormsHost x:Name="BrowserHost">
       <wf:WebBrowser x:Name="Browser"
-                     AllowNavigation="False"
                      AllowWebBrowserDrop="False"
                      PreviewKeyDown="BrowserPreviewKeyDown"
                      />
