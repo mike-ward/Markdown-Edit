@@ -61,6 +61,7 @@ namespace MarkdownEdit
 
             public void Restore(Editor editor)
             {
+                if (StateSaved == false) return;
                 editor.Text = _text;
                 editor.IsModified = _isModified;
                 editor.WordWrap = _wordWrap;
@@ -304,6 +305,11 @@ namespace MarkdownEdit
             Text = Properties.Resources.Help;
             EditBox.IsModified = false;
             DisplayName = "Help";
+        }
+
+        public void CloseHelp()
+        {
+            _editorState.Restore(this);
         }
 
         public void FindDialog()

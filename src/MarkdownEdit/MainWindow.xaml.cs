@@ -49,6 +49,7 @@ namespace MarkdownEdit
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
+            Editor.CloseHelp();
             if (Editor.CanExecute == false) Utility.Beep();
             cancelEventArgs.Cancel = !Editor.CanExecute || !Editor.SaveIfModified();
         }
