@@ -50,8 +50,7 @@ namespace MarkdownEdit
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
             Editor.CloseHelp();
-            if (Editor.CanExecute == false) Utility.Beep();
-            cancelEventArgs.Cancel = !Editor.CanExecute || !Editor.SaveIfModified();
+            cancelEventArgs.Cancel = !Editor.SaveIfModified();
         }
 
         protected override void OnClosed(EventArgs e)
@@ -79,14 +78,14 @@ namespace MarkdownEdit
 
         // Commands
 
+        private void EditorCanExecute(object sender, CanExecuteRoutedEventArgs ea)
+        {
+            Editor.CanExecute(sender, ea);
+        }
+
         private void ExecuteNewFile(object sender, ExecutedRoutedEventArgs ea)
         {
             Editor.NewFile();
-        }
-
-        private void CanExecuteNewFile(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = Editor.CanExecute;
         }
 
         private void ExecuteOpenFile(object sender, ExecutedRoutedEventArgs ea)
@@ -94,19 +93,9 @@ namespace MarkdownEdit
             Editor.OpenFile();
         }
 
-        private void CanExecuteOpenFile(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = Editor.CanExecute;
-        }
-
         public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea)
         {
             Editor.SaveFile();
-        }
-
-        private void CanExecuteSaveFile(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = Editor.CanExecute;
         }
 
         public void ExecuteToggleWordWrap(object sender, ExecutedRoutedEventArgs ea)

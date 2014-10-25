@@ -19,13 +19,13 @@ using MarkdownEdit.SpellCheck;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MenuItem = System.Windows.Controls.MenuItem;
-using MessageBox = System.Windows.Forms.MessageBox;
+using MessageBox = System.Windows.MessageBox;
 
 namespace MarkdownEdit
 {
     public partial class Editor : INotifyPropertyChanged
     {
-        public bool CanExecute { get; private set; }
+        private bool _canExecute { get; set; }
         private string _fileName;
         private string _displayName = string.Empty;
         private bool _wordWrap;
@@ -34,6 +34,7 @@ namespace MarkdownEdit
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
         private readonly ISpellCheckProvider _spellCheckProvider;
+        private const string F1ForHelp = " (F1 for Help)";
 
         private struct EditorState
         {
@@ -49,12 +50,12 @@ namespace MarkdownEdit
                 _text = editor.Text;
                 _isModified = editor.IsModified;
                 _wordWrap = editor.WordWrap;
-                _canExecute = editor.CanExecute;
+                _canExecute = editor._canExecute;
                 _spellCheck = editor.SpellCheck;
                 editor.IsModified = false;
                 editor.WordWrap = true;
                 editor.IsReadOnly = true;
-                editor.CanExecute = false;
+                editor._canExecute = false;
                 editor.SpellCheck = false;
                 StateSaved = true;
             }
@@ -66,7 +67,7 @@ namespace MarkdownEdit
                 editor.IsModified = _isModified;
                 editor.WordWrap = _wordWrap;
                 editor.IsReadOnly = false;
-                editor.CanExecute = _canExecute;
+                editor._canExecute = _canExecute;
                 editor.SpellCheck = _spellCheck;
                 editor.DisplayName = string.Empty;
                 StateSaved = false;
@@ -77,7 +78,7 @@ namespace MarkdownEdit
         public Editor()
         {
             InitializeComponent();
-            CanExecute = true;
+            _canExecute = true;
             EditBox.Loaded += EditBoxOnLoaded;
             EditBox.Unloaded += EditBoxOnUnloaded;
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
@@ -207,6 +208,11 @@ namespace MarkdownEdit
             Settings.Default.LastOpenFile = string.Empty;
         }
 
+        public void CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = _canExecute;
+        }
+
         public void OpenFile()
         {
             if (SaveIfModified() == false) return;
@@ -221,14 +227,14 @@ namespace MarkdownEdit
             if (IsModified == false) return true;
 
             var result = MessageBox.Show(
-                string.Format(@"Save ""{0}""?", FileName),
+                string.Format(@"Save {0}?", DisplayName.Replace(F1ForHelp, "")),
                 @"File Modified",
-                MessageBoxButtons.YesNoCancel,
-                MessageBoxIcon.Question);
+                MessageBoxButton.YesNoCancel,
+                MessageBoxImage.Question);
 
-            return (result == DialogResult.Yes)
+            return (result == MessageBoxResult.Yes)
                 ? SaveFile()
-                : result == DialogResult.No;
+                : result == MessageBoxResult.No;
         }
 
         public bool SaveFile()
@@ -242,7 +248,7 @@ namespace MarkdownEdit
         {
             var dialog = new SaveFileDialog
             {
-                FilterIndex = 2,
+                FilterIndex = 1,
                 OverwritePrompt = true,
                 RestoreDirectory = true,
                 Filter = @"Markdown files (*.md|*.md|All files (*.*)|*.*"
@@ -274,7 +280,7 @@ namespace MarkdownEdit
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, @"Load File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(e.Message, @"Load File", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
@@ -289,7 +295,7 @@ namespace MarkdownEdit
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, @"Save File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(e.Message, @"Save File", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
@@ -432,7 +438,9 @@ namespace MarkdownEdit
             {
                 return (string.IsNullOrWhiteSpace(_displayName) == false)
                     ? _displayName
-                    : string.IsNullOrWhiteSpace(FileName) ? "New Document (F1 for Help)" : Path.GetFileName(FileName);
+                    : string.IsNullOrWhiteSpace(FileName)
+                        ? "New Document" + F1ForHelp
+                        : Path.GetFileName(FileName);
             }
             set
             {

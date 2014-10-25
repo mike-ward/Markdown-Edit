@@ -32,9 +32,9 @@
   </Grid>
 
   <Window.CommandBindings>
-    <CommandBinding Command="New"  Executed="ExecuteNewFile"  CanExecute="CanExecuteNewFile" />
-    <CommandBinding Command="Open" Executed="ExecuteOpenFile" CanExecute="CanExecuteOpenFile" />
-    <CommandBinding Command="Save" Executed="ExecuteSaveFile" CanExecute="CanExecuteSaveFile" />
+    <CommandBinding Command="New"  Executed="ExecuteNewFile" CanExecute="EditorCanExecute" />
+    <CommandBinding Command="Open" Executed="ExecuteOpenFile" CanExecute="EditorCanExecute" />
+    <CommandBinding Command="Save" Executed="ExecuteSaveFile" CanExecute="EditorCanExecute" />
     <CommandBinding Command="Help" Executed="ExecuteHelp" />
     <CommandBinding Command="Close" Executed="ExecuteClose" />
     <CommandBinding Command="Find" Executed="ExecuteEditorFind" />
