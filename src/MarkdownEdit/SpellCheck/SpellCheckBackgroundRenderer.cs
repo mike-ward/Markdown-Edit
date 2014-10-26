@@ -33,9 +33,9 @@ namespace MarkdownEdit.SpellCheck
                 {
                     var bottomLeft = current2.BottomLeft;
                     var bottomRight = current2.BottomRight;
-                    var pen = new Pen(new SolidColorBrush(Colors.Red), 1.0);
+                    var pen = new Pen(new SolidColorBrush(Colors.Red), 0.6);
                     pen.Freeze();
-                    const double num = 2.5;
+                    const double num = 2.0;
                     var count = Math.Max((int)((bottomRight.X - bottomLeft.X) / num) + 1, 4);
                     var streamGeometry = new StreamGeometry();
                     using (var streamGeometryContext = streamGeometry.Open())

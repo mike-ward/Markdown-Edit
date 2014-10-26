@@ -34,7 +34,7 @@ namespace MarkdownEdit
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
         private readonly ISpellCheckProvider _spellCheckProvider;
-        private const string F1ForHelp = " (F1 for Help)";
+        private const string F1ForHelp = " - F1 for Help";
 
         private struct EditorState
         {
@@ -227,8 +227,8 @@ namespace MarkdownEdit
             if (IsModified == false) return true;
 
             var result = MessageBox.Show(
-                string.Format(@"Save {0}?", DisplayName.Replace(F1ForHelp, "")),
-                @"File Modified",
+                @"Save your changes?",
+                @"Hey!",
                 MessageBoxButton.YesNoCancel,
                 MessageBoxImage.Question);
 
@@ -248,7 +248,7 @@ namespace MarkdownEdit
         {
             var dialog = new SaveFileDialog
             {
-                FilterIndex = 1,
+                FilterIndex = 0,
                 OverwritePrompt = true,
                 RestoreDirectory = true,
                 Filter = @"Markdown files (*.md|*.md|All files (*.*)|*.*"

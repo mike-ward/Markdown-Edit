@@ -46,13 +46,6 @@
 
 Press `F1` to close help.
 
-## About
-
-### Markdown Edit
-
-Version 0.1.0  
-Copyright (c) Mike Ward, All rights reserved.
-
 ## User Settings
 
 User settings are stored in a text file the the AppData folder. Placing settings in a plain file allows sharing of settings on different installations.
@@ -77,6 +70,15 @@ If you delete this file, Markdown Edit will restore it.
 You can change the appearance of the preview view by changing the user template file. User templates work similar to user settings. The template file is stored in the AppData Folder by the name of `user_template.html`. Edit it has you see fit. Delete it and Markdown Edit will create a new one.
 
 **Changes do not take affect until you restart Markdown Edit**
+
+---
+
+## About
+
+### Markdown Edit
+
+Version 0.1.0  
+Copyright (c) Mike Ward, All rights reserved.
 
 ## License
 
