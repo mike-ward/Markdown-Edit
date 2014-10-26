@@ -18,6 +18,7 @@ namespace MarkdownEdit
     {
         public readonly Action<string> UpdatePreview;
         private readonly Func<string, string> _uriResolver = Utility.Memoize<string, string>(UriResolver);
+        private readonly FileSystemWatcher _templateWatcher;
 
         public Preview()
         {
@@ -28,6 +29,17 @@ namespace MarkdownEdit
             Browser.GetType().InvokeMember("DoubleBuffered",
                 BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
                 null, Browser, new object[] {true});
+
+            _templateWatcher = new FileSystemWatcher
+            {
+                Path = UserSettings.SettingsFolder,
+                Filter = Path.GetFileName(UserTemplate.TemplateFile),
+                NotifyFilter = NotifyFilters.LastWrite
+            };
+            _templateWatcher.Changed += (sender, args) => Dispatcher.Invoke(UpdateTemplate);
+            _templateWatcher.EnableRaisingEvents = true;
+            Unloaded += (sender, args) => _templateWatcher.Dispose();
+
         }
 
         private void Update(string markdown)
@@ -55,6 +67,13 @@ namespace MarkdownEdit
                 var element = document.GetElementById("content");
                 if (element != null) element.InnerHtml = html;
             }
+        }
+
+        private void UpdateTemplate()
+        {
+            var content = Browser.Document.GetElementById("content").InnerHtml;
+            Browser.Document.Write(UserTemplate.Load().Template);
+            Browser.Document.GetElementById("content").InnerHtml = content;
         }
 
         private static string UriResolver(string s)

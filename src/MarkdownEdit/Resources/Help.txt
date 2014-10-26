@@ -67,10 +67,22 @@ If you delete this file, Markdown Edit will restore it.
 
 ## User Template
 
-You can change the appearance of the preview view by changing the user template file. User templates work similar to user settings. The template file is stored in the AppData Folder by the name of `user_template.html`. Edit it has you see fit. Delete it and Markdown Edit will create a new one.
+You can change the appearance of the preview view by changing the user template file. User templates work similar to user settings. The template file is stored in the AppData Folder as `user_template.html`. It can be quickly accessed by pressing `F8`. Edit it as you see fit. 
 
-**Changes do not take affect until you restart Markdown Edit**
+It is strongly recommended that you keep the IE9 meta tag in the `<head>` section.
 
+A `<div>` with an ID of `contents` is required. This is where the translated markup is inserted into the document.
+
+When you change settings and save this file, Markdown Edit will immediately update to reflect the changes.
+
+Delete it and Markdown Edit will create a new one.
+
+## Spell Checking
+
+Pressing `F7` will toggle spell checking. todo:
+
+---
+---
 ---
 
 ## About
