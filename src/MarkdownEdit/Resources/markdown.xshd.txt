@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <SyntaxDefinition name="MarkDown" extensions=".md" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
-	<Color name="Heading" foreground="Maroon" fontWeight="bold" exampleText="# Title #" />
-	<Color name="Emphasis" fontStyle="italic" fontWeight="bold" exampleText="*this* is important!" />
-	<Color name="StrongEmphasis" fontWeight="bold" exampleText="**this** is more important!" />
-	<Color name="Code" foreground="Brown" exampleText="this is `int.GetHashCode()`" />
-	<Color name="BlockQuote" foreground="DarkBlue" exampleText="&gt; This is a\r\n&gt; quote." />
-	<Color name="Link" foreground="Blue" exampleText="[text](http://example.com)" />
-	<Color name="Image" foreground="Green" exampleText="[text][http://example.com/test.png]" />
+	<Color name="Heading"         fontWeight="bold" />
+	<Color name="Emphasis"        fontStyle="italic" fontWeight="bold" />
+	<Color name="StrongEmphasis"  fontWeight="bold" />
+	<Color name="Code"            foreground="#654" />
+	<Color name="BlockQuote"      foreground="#654" />
+	<Color name="Link"            foreground="#654" />
+	<Color name="Image"           foreground="#654" />
 	
 	<RuleSet ignoreCase="true">
 		<Rule color="Heading">

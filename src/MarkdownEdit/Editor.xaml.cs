@@ -414,7 +414,7 @@ namespace MarkdownEdit
 
         public void WrapToColumn()
         {
-            EditBox.Text = Utility.WrapToColumn(EditBox.Text);
+            EditBox.Text = EditBox.Text.WrapToColumn();
         }
 
         // Events
