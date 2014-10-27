@@ -19,6 +19,7 @@ namespace MarkdownEdit
         public static RoutedCommand OpenUserTemplateCommand = new RoutedUICommand();
         public static RoutedCommand ToggleSpellCheckCommand = new RoutedUICommand();
         public static RoutedCommand ToggleFullScreenCommand = new RoutedUICommand();
+        public static RoutedCommand WrapToColumnCommand = new RoutedUICommand();
 
         public UserSettings UserSettings { get; set; }
         private FileSystemWatcher _userSettingsWatcher;
@@ -183,6 +184,10 @@ namespace MarkdownEdit
             WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
         }
 
+        private void ExecuteWrapToColumn(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.WrapToColumn();
+        }
         // Properites
 
         public string TitleName

@@ -410,6 +410,11 @@ namespace MarkdownEdit
             EditBox.FontSize = ((MainWindow)Application.Current.MainWindow).UserSettings.EditorFontSize;
         }
 
+        public void WrapToColumn()
+        {
+            EditBox.Text = Utility.WrapToColumn(EditBox.Text);
+        }
+
         // Events
 
         public EventHandler TextChanged;
