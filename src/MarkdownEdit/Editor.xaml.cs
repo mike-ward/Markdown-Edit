@@ -25,7 +25,7 @@ namespace MarkdownEdit
 {
     public partial class Editor : INotifyPropertyChanged
     {
-        private bool _canExecute { get; set; }
+        private bool _canExecute;
         private string _fileName;
         private string _displayName = string.Empty;
         private bool _wordWrap;
@@ -33,7 +33,7 @@ namespace MarkdownEdit
         private bool _isModified;
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
-        private readonly ISpellCheckProvider _spellCheckProvider;
+        private ISpellCheckProvider _spellCheckProvider;
         private const string F1ForHelp = " - F1 for Help";
 
         private struct EditorState
@@ -83,9 +83,7 @@ namespace MarkdownEdit
             EditBox.Unloaded += EditBoxOnUnloaded;
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             _findReplaceDialog = new FindReplaceDialog(EditBox);
-            var spellingService = new SpellingService();
-            spellingService.SetLanguage(SpellingLanguages.UnitedStates);
-            _spellCheckProvider = new SpellCheckProvider(spellingService);
+            InitializeSpellCheck();
         }
 
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -153,6 +151,15 @@ namespace MarkdownEdit
 
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
+        }
+
+        // Spell Check
+
+        private void InitializeSpellCheck()
+        {
+            var spellingService = new SpellingService();
+            spellingService.SetLanguage(SpellingLanguages.UnitedStates);
+            _spellCheckProvider = new SpellCheckProvider(spellingService);
         }
 
         private void SpellCheckSuggestions(ContextMenu contextMenu)
