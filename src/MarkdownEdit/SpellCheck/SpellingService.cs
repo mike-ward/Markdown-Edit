@@ -34,6 +34,13 @@ namespace MarkdownEdit.SpellCheck
             return _speller.Suggest(word);
         }
 
+        public void Add(string word)
+        {
+            if (_speller == null) return; 
+            _speller.Add(word);
+            UpdateCustomDictionary(word);
+        }
+
         public void ClearLanguage()
         {
             _speller = null;
@@ -53,12 +60,36 @@ namespace MarkdownEdit.SpellCheck
             if (File.Exists(aff) && File.Exists(dic))
             {
                 speller.Load(aff, dic);
+                LoadCustomDictonary(speller);
                 _speller = speller;
             }
             else
             {
                 Debug.WriteLine("dictionary not found");
             }
+        }
+
+        private static void LoadCustomDictonary(Hunspell speller)
+        {
+            var file = CustomDictionaryFile();
+            foreach (var word in File.ReadAllLines(file)) speller.Add(word);
+        }
+
+        private static string CustomDictionaryFile()
+        {
+            var file = Path.Combine(UserSettings.SettingsFolder, "custom_dictionary.txt");
+            if (File.Exists(file) == false)
+            {
+                Directory.CreateDirectory(UserSettings.SettingsFolder);
+                File.WriteAllText(file, string.Empty);
+            }
+            return file;
+        }
+
+        private static void UpdateCustomDictionary(string word)
+        {
+            var file = CustomDictionaryFile();
+            File.AppendAllLines(file, new [] { word });
         }
     }
 }

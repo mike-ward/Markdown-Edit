@@ -112,10 +112,16 @@ namespace MarkdownEdit.SpellCheck
             return _spellCheckRenderer.ErrorSegments;
         }
 
-        public IEnumerable<string> GetSpellcheckSuggestions(string word)
+        public IEnumerable<string> GetSpellCheckSuggestions(string word)
         {
             if (_spellCheckRenderer == null) return Enumerable.Empty<string>();
             return _spellingService.Suggestions(word);
+        }
+
+        public void Add(string word)
+        {
+            if (string.IsNullOrWhiteSpace(word) || _spellingService == null || !Enabled) return;
+            _spellingService.Add(word);
         }
     }
 }

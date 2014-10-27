@@ -82,6 +82,7 @@ namespace MarkdownEdit
             EditBox.Loaded += EditBoxOnLoaded;
             EditBox.Unloaded += EditBoxOnUnloaded;
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
+            CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
             _findReplaceDialog = new FindReplaceDialog(EditBox);
             InitializeSpellCheck();
         }
@@ -179,8 +180,15 @@ namespace MarkdownEdit
                 var currentLine = EditBox.Document.GetLineByOffset(offset);
                 if (offset == currentLine.Offset || offset == currentLine.EndOffset) return;
 
-                var suggestions = _spellCheckProvider.GetSpellcheckSuggestions(EditBox.Document.GetText(misspelledSegment));
+                var misspelledText = EditBox.Document.GetText(misspelledSegment);
+                var suggestions = _spellCheckProvider.GetSpellCheckSuggestions(misspelledText);
                 foreach (var item in suggestions) contextMenu.Items.Add(SpellSuggestMenuItem(item, misspelledSegment));
+                contextMenu.Items.Add(new MenuItem
+                {
+                    Header = "Add to Dictionary",
+                    Command = EditingCommands.IgnoreSpellingError,
+                    CommandParameter = misspelledText
+                });
                 contextMenu.Items.Add(new Separator());
             }
         }
@@ -202,6 +210,12 @@ namespace MarkdownEdit
             var word = parameters.Item1;
             var segment = parameters.Item2;
             EditBox.Document.Replace(segment, word);
+        }
+
+        private void ExecuteAddToDictionary(object sender, ExecutedRoutedEventArgs ea)
+        {
+            var word = (string)ea.Parameter;
+            _spellCheckProvider.Add(word);
         }
 
         // Commands

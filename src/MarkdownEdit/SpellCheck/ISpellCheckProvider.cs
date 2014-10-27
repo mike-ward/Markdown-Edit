@@ -8,7 +8,8 @@ namespace MarkdownEdit.SpellCheck
         void Initialize(Editor editor);
         bool Enabled { get; set; }
         IEnumerable<TextSegment> GetSpellCheckErrors();
-        IEnumerable<string> GetSpellcheckSuggestions(string word);
+        IEnumerable<string> GetSpellCheckSuggestions(string word);
+        void Add(string word);
         void Disconnect();
     }
 }
