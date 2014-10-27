@@ -184,10 +184,6 @@ namespace MarkdownEdit
             WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
         }
 
-        private void ExecuteWrapToColumn(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.WrapToColumn();
-        }
         // Properites
 
         public string TitleName

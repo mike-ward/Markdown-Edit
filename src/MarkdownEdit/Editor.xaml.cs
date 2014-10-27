@@ -216,6 +216,8 @@ namespace MarkdownEdit
         {
             var word = (string)ea.Parameter;
             _spellCheckProvider.Add(word);
+            SpellCheck = !SpellCheck;
+            SpellCheck = !SpellCheck;
         }
 
         // Commands
