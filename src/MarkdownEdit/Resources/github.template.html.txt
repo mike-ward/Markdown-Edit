@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Markdown Edit Preview</title>
-  <!-- Don't delete this X-UA tag. The browser control behaves like IE8 otherwise -->
+  <!-- Don't delete this X-UA tag. The browser control behaves like IE7 otherwise -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <style type="text/css">
     body {
@@ -81,7 +81,7 @@
     }
 
     #content { 
-      width: 97%;
+      width: 100%;
    }
   </style>
 </head>
