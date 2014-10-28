@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -64,6 +65,26 @@ namespace MarkdownEdit
                 _editorFontSize = value;
                 OnPropertyChanged();
             }
+        }
+
+        [JsonIgnore]
+        public StringCollection RecentFiles
+        {
+            get { return Properties.Settings.Default.RecentFiles ?? (Properties.Settings.Default.RecentFiles = new StringCollection()); }
+            set
+            {
+                if (Properties.Settings.Default.RecentFiles == value) return;
+                Properties.Settings.Default.RecentFiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void UpdateRecentFiles(string file)
+        {
+            var recent = RecentFiles;
+            recent.Remove(file);
+            recent.Add(file);
+            RecentFiles = recent;
         }
 
         // Serialization

@@ -304,6 +304,7 @@ namespace MarkdownEdit
                 EditBox.Text = File.ReadAllText(file);
                 EditBox.ScrollToHome();
                 Settings.Default.LastOpenFile = file;
+                ((MainWindow)Application.Current.MainWindow).UserSettings.UpdateRecentFiles(file);
                 IsModified = false;
                 FileName = file;
                 return true;
