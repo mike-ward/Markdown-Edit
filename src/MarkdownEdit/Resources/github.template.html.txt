@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Markdown Edit Preview</title>
-  <!-- Don't delete this X-UA tag. The browser control behaves like IE7 otherwise -->
+  <!-- Don't delete this X-UA tag. The browser control behaves like IE8 otherwise -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <style type="text/css">
     body {
@@ -27,14 +27,6 @@
       border-left: 4px solid #dddddd;
       padding: 0 15px;
       color: #777;
-    }
-
-    blockquote > :first-child {
-      margin-top: 0;
-    }
-
-    blockquote > :last-child {
-      margin-bottom: 0;
     }
 
     img {
@@ -70,7 +62,7 @@
       line-height: 19px;
       overflow: auto;
       overflow-y: hidden;
-      width: 100%;
+      width: 97%;
       padding: 6px 10px;
       border-radius: 3px;
     }
