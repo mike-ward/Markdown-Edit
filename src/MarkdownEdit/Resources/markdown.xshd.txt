@@ -12,6 +12,15 @@
 		<Rule color="Heading">
 			^\#.*
 		</Rule>
+		<Rule color="Image">
+			\!\[.*?\]\[.*?\]
+		</Rule>
+		<Rule color="Link">
+			\[.*?\]\(.*?\)
+		</Rule>
+		<Rule color="Link">
+			\[.*?\]\[.*?\]
+		</Rule>
 		<Rule color="StrongEmphasis">
 			\*\*.+?\*\*
 		</Rule>
@@ -39,14 +48,5 @@
 			<Begin>^&gt;</Begin>
 			<End>^(?!&gt;)</End>
 		</Span>
-		<Rule color="Image">
-			\!\[.*?\]\[.*?\]
-		</Rule>
-		<Rule color="Link">
-			\[.*?\]\(.*?\)
-		</Rule>
-		<Rule color="Link">
-			\[.*?\]\[.*?\]
-		</Rule>
 	</RuleSet>
 </SyntaxDefinition>
