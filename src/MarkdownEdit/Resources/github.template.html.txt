@@ -2,7 +2,8 @@
 <head>
   <title>Markdown Edit Preview</title>
   <!-- Don't delete this X-UA tag. The browser control behaves like IE8 otherwise -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=9">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <style type="text/css">
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;

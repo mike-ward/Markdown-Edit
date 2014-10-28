@@ -100,6 +100,11 @@ namespace MarkdownEdit
             Editor.SaveFile();
         }
 
+        public void ExecuteSaveFileAs(object sender, ExecutedRoutedEventArgs ea)
+        {
+            Editor.SaveFileAs();
+        }
+
         public void ExecuteToggleWordWrap(object sender, ExecutedRoutedEventArgs ea)
         {
             Editor.WordWrap = !Editor.WordWrap;

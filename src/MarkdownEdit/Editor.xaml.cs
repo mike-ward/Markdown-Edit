@@ -20,6 +20,7 @@ using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
 using MenuItem = System.Windows.Controls.MenuItem;
 using MessageBox = System.Windows.MessageBox;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace MarkdownEdit
 {
@@ -248,7 +249,7 @@ namespace MarkdownEdit
             if (SaveIfModified() == false) return;
             var dialog = new OpenFileDialog();
             var result = dialog.ShowDialog();
-            if (result != DialogResult.OK) return;
+            if (result == false) return;
             LoadFile(dialog.FileNames[0]);
         }
 
@@ -270,13 +271,13 @@ namespace MarkdownEdit
         public bool SaveFile()
         {
             return string.IsNullOrWhiteSpace(FileName)
-                ? SaveAsFile()
+                ? SaveFileAs()
                 : Save();
         }
 
-        public bool SaveAsFile()
+        public bool SaveFileAs()
         {
-            var dialog = new SaveFileDialog
+            var dialog = new Microsoft.Win32.SaveFileDialog
             {
                 FilterIndex = 0,
                 OverwritePrompt = true,
@@ -284,7 +285,7 @@ namespace MarkdownEdit
                 Filter = @"Markdown files (*.md|*.md|All files (*.*)|*.*"
             };
 
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog() == true)
             {
                 FileName = dialog.FileNames[0];
                 return Save() && LoadFile(FileName);
