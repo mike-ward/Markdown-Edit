@@ -89,11 +89,7 @@ namespace MarkdownEdit
 
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            var reader = new XmlTextReader(new StringReader(Properties.Resources.markdown_xshd));
-            var xshd = HighlightingLoader.LoadXshd(reader);
-            var highlighter = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
-            EditBox.SyntaxHighlighting = highlighter;
-            reader.Close();
+            InitializeSyntaxHighlighting();
 
             EditBox.Options.IndentationSize = 2;
             EditBox.Options.ConvertTabsToSpaces = true;
@@ -109,7 +105,8 @@ namespace MarkdownEdit
             {
                 Dispatcher.Invoke(() =>
                 {
-                    LoadFile(Settings.Default.LastOpenFile);
+                    var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault();
+                    LoadFile(fileToOpen ?? Settings.Default.LastOpenFile);
                     EditBox.Focus();
                     EditBox.WordWrap = Settings.Default.WordWrapEnabled;
                     _spellCheckProvider.Initialize(this);
@@ -117,6 +114,15 @@ namespace MarkdownEdit
                 });
                 t.Dispose();
             });
+        }
+
+        private void InitializeSyntaxHighlighting()
+        {
+            var reader = new XmlTextReader(new StringReader(Properties.Resources.markdown_xshd));
+            var xshd = HighlightingLoader.LoadXshd(reader);
+            var highlighter = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
+            EditBox.SyntaxHighlighting = highlighter;
+            reader.Close();
         }
 
         private void OnSpellCheckChanged(object o, PropertyChangedEventArgs args)
