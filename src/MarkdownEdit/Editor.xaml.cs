@@ -98,6 +98,7 @@ namespace MarkdownEdit
             EditBox.Options.IndentationSize = 2;
             EditBox.Options.ConvertTabsToSpaces = true;
             EditBox.Options.AllowScrollBelowDocument = true;
+            EditBox.Options.EnableHyperlinks = false;
             EditBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
             var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.First(cb => cb.Command == AvalonEditCommands.IndentSelection);
             EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
