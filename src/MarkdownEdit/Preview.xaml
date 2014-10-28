@@ -11,6 +11,7 @@
     <wfi:WindowsFormsHost x:Name="BrowserHost">
       <wf:WebBrowser x:Name="Browser"
                      AllowWebBrowserDrop="False"
+                     ScriptErrorsSuppressed="true"
                      PreviewKeyDown="BrowserPreviewKeyDown"
                      />
     </wfi:WindowsFormsHost>
