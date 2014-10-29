@@ -1,15 +1,37 @@
 ## Keyboard Shortcuts
 
-    F1             Show this help
+    F1             Show/Hide this help
 
     Ctrl+N         New file
     Ctrl+O         Open file
     Ctrl+S         Save file
-    Ctrl+Shift+S   Save file as
-    Ctrl+Shift+Q   Exit
+    Ctrl+Shift+S   Save file As
+    Ctrl+J         Recent files
+    Alt+F4         Exit
 
     Ctrl+W         Toggle word wrap
+    F7             Toggle spell checking
+    F11            Toggle full screen
     
+    Tab            Indent current line/selection 2 spaces
+    Shift+Tab      Out-dent current line/selection 2 spaces
+
+    Ctrl+C         Copy
+    Ctrl+V         Paste
+    Ctrl+X         Cut
+
+    Ctrl+F         Find
+    F3             Find next
+    Shift+F3       Find previous
+    Ctrl+H         Find and replace
+
+    Ctrl+Plus      Increase font size
+    Ctrl+Minus     Decrease font size
+    Ctrl+0         Restore font size
+    
+    F8             Open HTML template in Notepad
+    F9             Open settings in Notepad
+
     Ctrl+B         Bold selection / no selection insert **
     Ctrl+I         Italic selection / no selection insert *
 
@@ -19,32 +41,8 @@
     Ctrl+4         Insert #### at beginning of line
     Ctrl+5         Insert ##### at beginning of line
     Ctrl+6         Insert ###### at beginning of line
-
-    Tab            Indent current line/selection 2 spaces
-    Shift+Tab      Out-dent current line/selection 2 spaces
-
-
-    Ctrl+C         Copy
-    Ctrl+V         Pate
-    Ctrl+X         Cut
-
-    Ctrl+F         Find
-    F3             Find Next
-    F4             Find Previous
-    Ctrl+H         Find and Replace
-
-    Ctrl+Plus      Increase font size
-    Ctrl+Minus     Decrease font size
-    Ctrl+0         Restore font size
-    
-    F7             Toggle Spell Checking
-    F8             Open HTML template in Notepad
-    F9             Open settings in Notepad
-    F11            Toggle Full Screen
     
 [Markdown Syntax](http://daringfireball.net/projects/markdown/syntax)
-
-Press `F1` to close help.
 
 ## User Settings
 
