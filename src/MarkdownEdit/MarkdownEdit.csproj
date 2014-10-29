@@ -82,6 +82,9 @@
       <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="FindReplaceSettings.cs" />
+    <Compile Include="RecentFilesDialog.xaml.cs">
+      <DependentUpon>RecentFilesDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SpellCheck\ISpellCheckProvider.cs" />
     <Compile Include="SpellCheck\ISpellingService.cs" />
     <Compile Include="SpellCheck\SpellCheckBackgroundRenderer.cs" />
@@ -116,6 +119,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Preview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RecentFilesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -53,6 +53,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Executed="ExecuteOpenUserTemplateCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Executed="ExecuteToggleSpellCheck" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Executed="ExecuteToggleFullScreen" />
+    <CommandBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -76,5 +77,6 @@
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Gesture="F8" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Gesture="F9" />
     <KeyBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Gesture="F11" />
+    <KeyBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Gesture="Ctrl+J" />
   </Window.InputBindings>
 </Controls:MetroWindow>

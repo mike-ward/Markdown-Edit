@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -21,6 +20,7 @@ namespace MarkdownEdit
         public static RoutedCommand ToggleSpellCheckCommand = new RoutedUICommand();
         public static RoutedCommand ToggleFullScreenCommand = new RoutedUICommand();
         public static RoutedCommand WrapToColumnCommand = new RoutedUICommand();
+        public static RoutedCommand RecentFilesCommand = new RoutedUICommand();
 
         public UserSettings UserSettings { get; set; }
         private FileSystemWatcher _userSettingsWatcher;
@@ -92,7 +92,7 @@ namespace MarkdownEdit
 
         private void ExecuteOpenFile(object sender, ExecutedRoutedEventArgs ea)
         {
-            Editor.OpenFile();
+            Editor.OpenFile(ea.Parameter as string);
         }
 
         public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea)
@@ -188,6 +188,11 @@ namespace MarkdownEdit
         private void ExecuteToggleFullScreen(object sender, ExecutedRoutedEventArgs e)
         {
             WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
+        }
+
+        private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e)
+        {
+            RecentFilesDialog.Display(this);
         }
 
         // Properites

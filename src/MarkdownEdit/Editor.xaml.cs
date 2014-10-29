@@ -239,13 +239,17 @@ namespace MarkdownEdit
             e.CanExecute = _canExecute;
         }
 
-        public void OpenFile()
+        public void OpenFile(string file)
         {
             if (SaveIfModified() == false) return;
-            var dialog = new OpenFileDialog();
-            var result = dialog.ShowDialog();
-            if (result == false) return;
-            LoadFile(dialog.FileNames[0]);
+            if (string.IsNullOrWhiteSpace(file))
+            {
+                var dialog = new OpenFileDialog();
+                var result = dialog.ShowDialog();
+                if (result == false) return;
+                file = dialog.FileNames[0];
+            }
+            LoadFile(file);
         }
 
         public bool SaveIfModified()

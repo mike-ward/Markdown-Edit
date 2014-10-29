@@ -1,4 +1,4 @@
-﻿<Window
+﻿<controls:MetroWindow 
   x:Class="MarkdownEdit.FindReplaceDialog"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,8 +8,10 @@
   Width="300" 
   SizeToContent="Height" 
   ResizeMode="NoResize"
-  WindowStyle="ToolWindow" 
   ShowInTaskbar="False" 
+  WindowTitleBrush="{DynamicResource GrayBrush2}"
+  GlowBrush="{DynamicResource GrayBrush2}"
+  WindowTransitionsEnabled="False"
   >
 
   <Grid Margin="4 5 4 10">
@@ -66,4 +68,4 @@
   <Window.InputBindings>
     <KeyBinding Gesture="Esc" Command="Close" />
   </Window.InputBindings>
-</Window>
+</controls:MetroWindow>
