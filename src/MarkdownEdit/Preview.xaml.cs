@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Navigation;
 using CommonMark;
 using MarkdownEdit.Properties;
@@ -23,6 +24,7 @@ namespace MarkdownEdit
             Browser.NavigateToString(UserTemplate.Load().Template);
             UpdatePreview = Utility.Debounce<string>(s => Dispatcher.Invoke(() => Update(s)));
             Browser.Navigating += BrowserOnNavigating;
+            Browser.PreviewKeyDown += BrowserPreviewKeyDown;
             _templateWatcher = new FileSystemWatcher
             {
                 Path = UserSettings.SettingsFolder,
@@ -130,31 +132,35 @@ namespace MarkdownEdit
             return e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
         }
 
-        //private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
-        //{
-        //    switch (e.KeyCode)
-        //    {
-        //        case Key.O:
-        //            if (e.Control == false) break;
-        //            ApplicationCommands.Open.Execute(this, Application.Current.MainWindow);
-        //            e.IsInputKey = true;
-        //            break;
+        private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.O:
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                    {
+                        ApplicationCommands.Open.Execute(this, Application.Current.MainWindow);
+                        e.Handled = true;
+                    }
+                    break;
 
-        //        case Key.N:
-        //            if (e.Control == false) break;
-        //            ApplicationCommands.New.Execute(this, Application.Current.MainWindow);
-        //            e.IsInputKey = true;
-        //            break;
+                case Key.N:
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                    {
+                        ApplicationCommands.New.Execute(this, Application.Current.MainWindow);
+                        e.Handled = true;
+                    }
+                    break;
 
-        //        case Key.F1:
-        //            ApplicationCommands.Help.Execute(this, Application.Current.MainWindow);
-        //            e.IsInputKey = true;
-        //            break;
+                case Key.F1:
+                    ApplicationCommands.Help.Execute(this, Application.Current.MainWindow);
+                    e.Handled = true;
+                    break;
 
-        //        case Key.F5:
-        //            e.IsInputKey = true;
-        //            break;
-        //    }
-        //}
+                case Key.F5:
+                    e.Handled = true;
+                    break;
+            }
+        }
     }
 }
