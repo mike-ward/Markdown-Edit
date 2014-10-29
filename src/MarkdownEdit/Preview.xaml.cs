@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
-using System.Windows.Input;
+using System.Windows.Navigation;
 using CommonMark;
 using MarkdownEdit.Properties;
 using mshtml;
-using Application = System.Windows.Application;
-using MessageBox = System.Windows.MessageBox;
 
 namespace MarkdownEdit
 {
@@ -23,13 +20,9 @@ namespace MarkdownEdit
         public Preview()
         {
             InitializeComponent();
-            Browser.DocumentText = UserTemplate.Load().Template;
+            Browser.NavigateToString(UserTemplate.Load().Template);
             UpdatePreview = Utility.Debounce<string>(s => Dispatcher.Invoke(() => Update(s)));
             Browser.Navigating += BrowserOnNavigating;
-            Browser.GetType().InvokeMember("DoubleBuffered",
-                BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                null, Browser, new object[] {true});
-
             _templateWatcher = new FileSystemWatcher
             {
                 Path = UserSettings.SettingsFolder,
@@ -39,7 +32,6 @@ namespace MarkdownEdit
             _templateWatcher.Changed += (sender, args) => Dispatcher.Invoke(UpdateTemplate);
             _templateWatcher.EnableRaisingEvents = true;
             Unloaded += (sender, args) => _templateWatcher.Dispose();
-
         }
 
         private void Update(string markdown)
@@ -56,24 +48,25 @@ namespace MarkdownEdit
                 MessageBox.Show(e.Message);
                 return;
             }
-            UpdateContentsDiv(html);
+            GetContentsDiv().InnerHtml = html;
         }
 
-        private void UpdateContentsDiv(string html)
+        private dynamic GetContentsDiv()
         {
-            var document = Browser.Document;
+            dynamic document = Browser.Document;
             if (document != null)
             {
                 var element = document.GetElementById("content");
-                if (element != null) element.InnerHtml = html;
+                if (element != null) return element;
             }
+            return null;
         }
 
         private void UpdateTemplate()
         {
-            var content = Browser.Document.GetElementById("content").InnerHtml;
-            Browser.Document.Write(UserTemplate.Load().Template);
-            Browser.Document.GetElementById("content").InnerHtml = content;
+            var contents = GetContentsDiv().InnerHtml;
+            Browser.NavigateToString(UserTemplate.Load().Template);
+            GetContentsDiv().InnerHtml = contents;
         }
 
         private static string UriResolver(string s)
@@ -101,11 +94,11 @@ namespace MarkdownEdit
             return null;
         }
 
-        private void BrowserOnNavigating(object sender, WebBrowserNavigatingEventArgs ea)
+        private static void BrowserOnNavigating(object sender, NavigatingCancelEventArgs ea)
         {
             ea.Cancel = true;
-            var url = ea.Url.ToString();
-            if (url.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(ea.Url.ToString());
+            var url = ea.Uri.ToString();
+            if (url.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
         }
 
         public string RemoveYamlFrontMatter(string markdown)
@@ -120,13 +113,14 @@ namespace MarkdownEdit
 
         public void SetScrollOffset(ScrollChangedEventArgs ea)
         {
-            var document = Browser.Document;
-            if (document != null && document.Window != null && document.Body != null)
+            var document2 = (IHTMLDocument2)Browser.Document;
+            var document3 = (IHTMLDocument3)Browser.Document;
+            if (document3 != null)
             {
                 var percentToScroll = PercentScroll(ea);
-                var documentElement = ((IHTMLDocument3)document.DomDocument).documentElement;
-                var scrollHeight = document.Body.OffsetRectangle.Height - documentElement.offsetHeight;
-                document.Window.ScrollTo(0, (int)Math.Round(percentToScroll * scrollHeight));
+                var body = document3.getElementsByTagName("body").item(0);
+                var scrollHeight = ((IHTMLElement2)body).scrollHeight - document3.documentElement.offsetHeight;
+                document2.parentWindow.scrollTo(0, (int)Math.Round(percentToScroll * scrollHeight));
             }
         }
 
@@ -136,31 +130,31 @@ namespace MarkdownEdit
             return e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
         }
 
-        private void BrowserPreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.O:
-                    if (e.Control == false) break;
-                    ApplicationCommands.Open.Execute(this, Application.Current.MainWindow);
-                    e.IsInputKey = true;
-                    break;
+        //private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    switch (e.KeyCode)
+        //    {
+        //        case Key.O:
+        //            if (e.Control == false) break;
+        //            ApplicationCommands.Open.Execute(this, Application.Current.MainWindow);
+        //            e.IsInputKey = true;
+        //            break;
 
-                case Keys.N:
-                    if (e.Control == false) break;
-                    ApplicationCommands.New.Execute(this, Application.Current.MainWindow);
-                    e.IsInputKey = true;
-                    break;
+        //        case Key.N:
+        //            if (e.Control == false) break;
+        //            ApplicationCommands.New.Execute(this, Application.Current.MainWindow);
+        //            e.IsInputKey = true;
+        //            break;
 
-                case Keys.F1:
-                    ApplicationCommands.Help.Execute(this, Application.Current.MainWindow);
-                    e.IsInputKey = true;
-                    break;
+        //        case Key.F1:
+        //            ApplicationCommands.Help.Execute(this, Application.Current.MainWindow);
+        //            e.IsInputKey = true;
+        //            break;
 
-                case Keys.F5:
-                    e.IsInputKey = true;
-                    break;
-            }
-        }
+        //        case Key.F5:
+        //            e.IsInputKey = true;
+        //            break;
+        //    }
+        //}
     }
 }

@@ -82,6 +82,6 @@
 <!-- Content goes here. The div must have an id of "content" -->
 <div id="content"></div>
 <!-- Adds some scroll space to the bottom of the doucment -->
-<div style="height: 300px">&nbsp;</div>
+<div style="height: 1pc">&nbsp;</div>
 </body>
 </html>

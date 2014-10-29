@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Xml;
 using ICSharpCode.AvalonEdit;
@@ -16,11 +15,7 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using MarkdownEdit.Properties;
 using MarkdownEdit.SpellCheck;
-using Application = System.Windows.Application;
-using ContextMenu = System.Windows.Controls.ContextMenu;
-using MenuItem = System.Windows.Controls.MenuItem;
-using MessageBox = System.Windows.MessageBox;
-using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using Microsoft.Win32;
 
 namespace MarkdownEdit
 {
@@ -277,7 +272,7 @@ namespace MarkdownEdit
 
         public bool SaveFileAs()
         {
-            var dialog = new Microsoft.Win32.SaveFileDialog
+            var dialog = new SaveFileDialog
             {
                 FilterIndex = 0,
                 OverwritePrompt = true,
