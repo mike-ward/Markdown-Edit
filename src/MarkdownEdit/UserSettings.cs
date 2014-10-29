@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 
@@ -83,8 +84,10 @@ namespace MarkdownEdit
         {
             var recent = RecentFiles;
             recent.Remove(file);
-            recent.Add(file);
-            RecentFiles = recent;
+            recent.Insert(0, file);
+            var sc = new StringCollection(); // string collections suck
+            sc.AddRange(recent.Cast<string>().Take(20).ToArray());
+            RecentFiles = sc;
         }
 
         // Serialization

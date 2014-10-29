@@ -16,7 +16,7 @@ namespace MarkdownEdit
         public RecentFilesDialog()
         {
             InitializeComponent();
-            FilesListBox.ItemsSource = Settings.Default.RecentFiles.Cast<string>().Reverse().Skip(1);
+            FilesListBox.ItemsSource = Settings.Default.RecentFiles.Cast<string>().Skip(1);
             FilesListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
         }
 
