@@ -158,6 +158,7 @@ namespace MarkdownEdit
             contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
             contextMenu.Items.Add(new MenuItem {Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
             contextMenu.Items.Add(new MenuItem {Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
+            contextMenu.Items.Add(new MenuItem {Header = "Paste Special", Command = MainWindow.PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text" });
             contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
             contextMenu.Items.Add(new Separator());
             contextMenu.Items.Add(new MenuItem {Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
