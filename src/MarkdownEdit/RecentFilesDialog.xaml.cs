@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -51,6 +52,13 @@ namespace MarkdownEdit
             if (string.IsNullOrWhiteSpace(file)) return;
             ApplicationCommands.Open.Execute(file, Application.Current.MainWindow);
             ApplicationCommands.Close.Execute(null, this);
+        }
+
+        private void ClearOnClick(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.RecentFiles = new StringCollection();
+            FilesListBox.ItemsSource = new string[0];
+            Close();
         }
     }
 

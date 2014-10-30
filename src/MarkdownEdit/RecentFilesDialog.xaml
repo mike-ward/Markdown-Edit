@@ -17,18 +17,31 @@
   >
 
   <DockPanel>
-    <Button Click="OnOpen"
-            TabIndex="2"
-            Margin="10"
-            IsDefault="True"
-            DockPanel.Dock="Bottom"
-            Width="100">
-      Open
-    </Button>
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="10"
+                DockPanel.Dock="Bottom">
+      <Button Click="OnOpen"
+              TabIndex="2"
+              IsDefault="True"
+              BorderThickness="2"
+              Margin="20 0"
+              Width="100">
+        Open
+      </Button>
+      <Button TabIndex="3"
+              Margin="20 0"
+              Width="100"
+              Click="ClearOnClick">
+        Clear
+      </Button>
+    </StackPanel>
+
     <ListBox x:Name="FilesListBox"
              SelectionMode="Single"
              SelectedIndex="0"
              Margin="10"
+             MouseDoubleClick="OnOpen"
              TabIndex="1" />
   </DockPanel>
 
