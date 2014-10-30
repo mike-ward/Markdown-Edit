@@ -35,6 +35,7 @@
 
     Ctrl+B         Bold selection / no selection insert **
     Ctrl+I         Italic selection / no selection insert *
+    Ctrl+K         Code (wrap with \`\`) / no selection insert \`
 
     Ctrl+1         Insert # at beginning of line
     Ctrl+2         Insert ## at beginning of line

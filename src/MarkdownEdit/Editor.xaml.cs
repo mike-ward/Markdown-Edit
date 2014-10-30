@@ -407,6 +407,11 @@ namespace MarkdownEdit
             AddRemoveText("*");
         }
 
+        public void Code()
+        {
+            AddRemoveText("`");
+        }
+
         public void InsertHeader(int num)
         {
             var line = EditBox.Document.GetLineByOffset(EditBox.CaretOffset);

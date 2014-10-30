@@ -22,6 +22,7 @@ namespace MarkdownEdit
         public static RoutedCommand WrapToColumnCommand = new RoutedUICommand();
         public static RoutedCommand RecentFilesCommand = new RoutedUICommand();
         public static RoutedCommand PasteSpecialCommand = new RoutedUICommand();
+        public static RoutedCommand ToggleCodeCommand = new RoutedUICommand();
 
         public UserSettings UserSettings { get; set; }
         private FileSystemWatcher _userSettingsWatcher;
@@ -139,6 +140,11 @@ namespace MarkdownEdit
         private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea)
         {
             Editor.Italic();
+        }
+
+        private void ExecuteCode(object sender, ExecutedRoutedEventArgs ea)
+        {
+            Editor.Code();
         }
 
         private void ExecuteInsertHeader(object sender, ExecutedRoutedEventArgs ea)

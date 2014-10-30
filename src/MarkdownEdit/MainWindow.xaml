@@ -44,6 +44,7 @@
     <CommandBinding Command="Replace" Executed="ExecuteEditorReplace" />
     <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
     <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
+    <CommandBinding Command="{x:Static local:MainWindow.ToggleCodeCommand}" Executed="ExecuteCode" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleWordWrapCommand}" Executed="ExecuteToggleWordWrap" />
     <CommandBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Executed="ExecuteInsertHeader" />
     <CommandBinding Command="IncreaseFontSize" Executed="ExecuteIncreaseFontSize" />
@@ -60,6 +61,7 @@
   <Window.InputBindings>
     <KeyBinding Command="ToggleBold" Gesture="Ctrl+B" />
     <KeyBinding Command="ToggleItalic" Gesture="Ctrl+I" />
+    <KeyBinding Command="{x:Static local:MainWindow.ToggleCodeCommand}" Gesture="Ctrl+K" />
     <KeyBinding Command="SaveAs" Gesture="Ctrl+Shift+S" />
     <KeyBinding Command="{x:Static local:MainWindow.ToggleWordWrapCommand}" Gesture="Ctrl+W" />
     <KeyBinding Command="{x:Static local:MainWindow.FindNextCommand}" Gesture="F3" />
