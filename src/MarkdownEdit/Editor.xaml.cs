@@ -27,6 +27,7 @@ namespace MarkdownEdit
         private bool _wordWrap;
         private bool _spellCheck;
         private bool _isModified;
+        private bool _removeSpecialCharacters;
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
         private ISpellCheckProvider _spellCheckProvider;
@@ -84,6 +85,7 @@ namespace MarkdownEdit
             _canExecute = true;
             EditBox.Loaded += EditBoxOnLoaded;
             EditBox.Unloaded += EditBoxOnUnloaded;
+            DataObject.AddPastingHandler(EditBox, OnPaste);
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
             _findReplaceDialog = new FindReplaceDialog(EditBox);
@@ -162,6 +164,20 @@ namespace MarkdownEdit
 
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
+        }
+
+        private void OnPaste(object sender, DataObjectPastingEventArgs e)
+        {
+            if (_removeSpecialCharacters == false) return;
+            _removeSpecialCharacters = false;
+
+            var isText = e.SourceDataObject.GetDataPresent(DataFormats.Text, true);
+            if (!isText) return;
+
+            var text = e.SourceDataObject.GetData(DataFormats.Text) as string;
+            var dataObject = new DataObject();
+            dataObject.SetData(DataFormats.Text, text.ReplaceSmartChars());
+            e.DataObject = dataObject;
         }
 
         // Spell Check
@@ -430,6 +446,12 @@ namespace MarkdownEdit
         public void WrapToColumn()
         {
             EditBox.Text = EditBox.Text.WrapToColumn();
+        }
+
+        public void PasteSpecial()
+        {
+            _removeSpecialCharacters = true;
+            EditBox.Paste();
         }
 
         // Events

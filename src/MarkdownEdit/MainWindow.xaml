@@ -54,6 +54,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Executed="ExecuteToggleSpellCheck" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Executed="ExecuteToggleFullScreen" />
     <CommandBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" />
+    <CommandBinding Command="{x:Static local:MainWindow.PasteSpecialCommand}" Executed="ExecutePasteSpecial" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -77,5 +78,6 @@
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Gesture="F9" />
     <KeyBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Gesture="F11" />
     <KeyBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Gesture="Ctrl+J" />
+    <KeyBinding Command="{x:Static local:MainWindow.PasteSpecialCommand}" Gesture="Ctrl+Shift+V" />
   </Window.InputBindings>
 </Controls:MetroWindow>

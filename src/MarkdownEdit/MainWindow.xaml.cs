@@ -21,6 +21,7 @@ namespace MarkdownEdit
         public static RoutedCommand ToggleFullScreenCommand = new RoutedUICommand();
         public static RoutedCommand WrapToColumnCommand = new RoutedUICommand();
         public static RoutedCommand RecentFilesCommand = new RoutedUICommand();
+        public static RoutedCommand PasteSpecialCommand = new RoutedUICommand();
 
         public UserSettings UserSettings { get; set; }
         private FileSystemWatcher _userSettingsWatcher;
@@ -193,6 +194,11 @@ namespace MarkdownEdit
         private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e)
         {
             RecentFilesDialog.Display(this);
+        }
+
+        private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.PasteSpecial();
         }
 
         // Properites
