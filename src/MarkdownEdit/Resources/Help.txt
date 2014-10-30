@@ -19,6 +19,7 @@
     Ctrl+C         Copy
     Ctrl+V         Paste
     Ctrl+X         Cut
+    Ctrl+Shift+V   Paste Special - smart quotes and hypens as plain text
 
     Ctrl+F         Find
     F3             Find next

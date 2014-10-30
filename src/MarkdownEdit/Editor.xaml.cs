@@ -171,13 +171,17 @@ namespace MarkdownEdit
             if (_removeSpecialCharacters == false) return;
             _removeSpecialCharacters = false;
 
-            var isText = e.SourceDataObject.GetDataPresent(DataFormats.Text, true);
+            var isText = e.SourceDataObject.GetDataPresent(DataFormats.UnicodeText, true);
             if (!isText) return;
+            var text = (string)e.SourceDataObject.GetData(DataFormats.UnicodeText);
 
-            var text = e.SourceDataObject.GetData(DataFormats.Text) as string;
-            var dataObject = new DataObject();
-            dataObject.SetData(DataFormats.Text, text.ReplaceSmartChars());
-            e.DataObject = dataObject;
+            e.CancelCommand();
+            Clipboard.SetText(text.ReplaceSmartChars());
+            EditBox.Paste();
+
+            //var dataObject = new DataObject();
+            //dataObject.SetData(DataFormats.UnicodeText, text.ReplaceSmartChars());
+            //e.DataObject = dataObject;
         }
 
         // Spell Check

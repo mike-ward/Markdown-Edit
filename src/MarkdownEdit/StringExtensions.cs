@@ -19,9 +19,9 @@ namespace MarkdownEdit
             return text;
         }
 
-        public static string ReplaceSmartChars(this string text)
+        public static string ReplaceSmartChars(this string smart)
         {
-            return text
+            var dumb = smart
                 .Replace('\u2013', '-')
                 .Replace('\u2014', '-')
                 .Replace('\u2015', '-')
@@ -35,7 +35,10 @@ namespace MarkdownEdit
                 .Replace('\u201e', '\"')
                 .Replace("\u2026", "...")
                 .Replace('\u2032', '\'')
-                .Replace('\u2033', '\"');
+                .Replace('\u2033', '\"')
+                .Replace('“', '\"')
+                .Replace('”', '\"');
+            return dumb;
         }
 
         public static string WrapToColumn(this string text, int column = 90)
