@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -17,7 +16,7 @@ namespace MarkdownEdit
         public RecentFilesDialog()
         {
             InitializeComponent();
-            FilesListBox.ItemsSource = Settings.Default.RecentFiles.Cast<string>().Skip(1);
+            FilesListBox.ItemsSource = Settings.Default.RecentFiles;
             FilesListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
         }
 

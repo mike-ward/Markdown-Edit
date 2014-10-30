@@ -12,6 +12,7 @@
   ShowMinButton="False"
   ShowMaxRestoreButton="False"
   WindowTransitionsEnabled="False"
+  SaveWindowPosition="True"
   Height="300" 
   Width="700"
   >
