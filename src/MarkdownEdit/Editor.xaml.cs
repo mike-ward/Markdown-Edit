@@ -40,6 +40,7 @@ namespace MarkdownEdit
             private bool _wordWrap;
             private bool _spellCheck;
             private bool _canExecute;
+            private int _caretOffset;
             private double _verticalOffset;
 
             public void Save(Editor editor)
@@ -50,6 +51,7 @@ namespace MarkdownEdit
                 _canExecute = editor._canExecute;
                 _spellCheck = editor.SpellCheck;
                 _verticalOffset = editor.EditBox.VerticalOffset;
+                _caretOffset = editor.EditBox.CaretOffset;
                 editor.IsModified = false;
                 editor.WordWrap = true;
                 editor.IsReadOnly = true;
@@ -70,6 +72,7 @@ namespace MarkdownEdit
                 editor.SpellCheck = _spellCheck;
                 editor.DisplayName = string.Empty;
                 editor.EditBox.ScrollToVerticalOffset(_verticalOffset);
+                editor.EditBox.CaretOffset = _caretOffset;
                 StateSaved = false;
                 editor.Dispatcher.Invoke(() => editor.EditBox.Focus());
             }
