@@ -1,25 +1,28 @@
 Markdown Edit
 =============
 
-Markdown Edit is  a Windows **desktop** Markdown editor with an emphasis on content and keyboard shortcuts. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar, tabbed windows or other distractions..
+Markdown Edit is  a Windows **desktop** Markdown editor with an emphasis on content and keyboard shortcuts. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar, tabbed windows or other distractions.
 
 Gratuitous Screen Shot
 ![screen shot](ScreenShot.png)
 
 ## Features
 
-- Decent, syntax highlighting editor
+- Syntax highlighting editor
 - Real time, side-by-side Markdown preview
 - CommonMark standard Markdown engine
 - User preferences stored in a text file
-- Full screen covers taskbar
+- Full screen covers task-bar
 - Keyboard shortcuts for bold, italic, headers, etc.
 - Modern UI look and feel
-- Not a Windows Store App
+- **Not** a Windows Store App
 - Synchronized scrolling
 - User settable fonts, colors, etc.
 - User defined style sheets
-- Spell checking *(planned)*
+- Spell checking
+- **Smart Paste**&trade; replaces Microsoft Word's smart quotes/hyphens/etc. with plain text equivalents
+- Quickly open recent files
+- Open Source
 
 ## Requirements
 
