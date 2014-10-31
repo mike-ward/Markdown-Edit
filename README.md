@@ -24,6 +24,8 @@ Gratuitous Screen Shot
 - Quickly open recent files
 - Open Source
 
+[More](https://github.com/mike-ward/Markdown-Edit/wiki)
+
 ## Requirements
 
 - Windows 7+
