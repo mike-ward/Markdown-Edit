@@ -77,7 +77,7 @@
     <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Minus" />
     <KeyBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+0" />
     <KeyBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Gesture="F7" />
-    <KeyBinding Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Gesture="Shift+F7" />
+    <KeyBinding Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Gesture="Ctrl+F7" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Gesture="F8" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Gesture="F9" />
     <KeyBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Gesture="F11" />
