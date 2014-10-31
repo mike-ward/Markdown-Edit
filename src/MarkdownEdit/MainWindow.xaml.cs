@@ -220,8 +220,8 @@ namespace MarkdownEdit
 
         private Thickness CalculateEditorMargins()
         {
-            var width = Width / 4;
-            return (UniformGrid.Columns == 1) ? new Thickness(width, 0, width, 0) : new Thickness();
+            var margin = (UniformGrid.Columns == 1) ? Width / 4 : 0;
+            return new Thickness(margin, 0, margin, 0);
         }
 
         // Properites
