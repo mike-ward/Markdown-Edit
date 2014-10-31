@@ -21,7 +21,8 @@
     <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Center"
                 Margin="10"
-                DockPanel.Dock="Bottom">
+                DockPanel.Dock="Bottom"
+                >
       <Button Click="OnOpen"
               TabIndex="2"
               IsDefault="True"
@@ -43,7 +44,9 @@
              SelectedIndex="0"
              Margin="10"
              MouseDoubleClick="OnOpen"
-             TabIndex="1" />
+             TabIndex="1"
+             BorderThickness="1"
+             BorderBrush="{DynamicResource ControlBorderBrush}"/>
   </DockPanel>
 
   <Window.CommandBindings>
