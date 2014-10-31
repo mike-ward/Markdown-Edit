@@ -20,7 +20,7 @@ Gratuitous Screen Shot
 - User settable fonts, colors, etc.
 - User defined style sheets
 - Spell checking
-- **Smart Paste**&trade; replaces Microsoft Word's smart quotes/hyphens/etc. with plain text equivalents
+- **Paste Special** replaces Microsoft Word's smart quotes/hyphens/etc. with plain text equivalents
 - Quickly open recent files
 - Open Source
 
