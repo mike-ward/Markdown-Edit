@@ -117,5 +117,17 @@ namespace MarkdownEdit.Properties {
                 this["RecentFiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool HidePreview {
+            get {
+                return ((bool)(this["HidePreview"]));
+            }
+            set {
+                this["HidePreview"] = value;
+            }
+        }
     }
 }

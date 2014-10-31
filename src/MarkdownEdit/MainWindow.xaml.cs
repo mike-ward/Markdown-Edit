@@ -23,6 +23,7 @@ namespace MarkdownEdit
         public static RoutedCommand RecentFilesCommand = new RoutedUICommand();
         public static RoutedCommand PasteSpecialCommand = new RoutedUICommand();
         public static RoutedCommand ToggleCodeCommand = new RoutedUICommand();
+        public static RoutedCommand TogglePreviewCommand = new RoutedCommand();
 
         public UserSettings UserSettings { get; set; }
         private FileSystemWatcher _userSettingsWatcher;
@@ -35,6 +36,8 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
+            SizeChanged += (s, e) => CalculateEditorMargins();
+            Loaded += (s, e) => { if (Properties.Settings.Default.HidePreview) TogglePreviewCommand.Execute(null, this); };
             InitiailzeUserSettings();
         }
 
@@ -60,6 +63,7 @@ namespace MarkdownEdit
         protected override void OnClosed(EventArgs e)
         {
             _userSettingsWatcher.Dispose();
+            Properties.Settings.Default.HidePreview = UniformGrid.Columns == 1;
             base.OnClosed(e);
         }
 
@@ -207,6 +211,19 @@ namespace MarkdownEdit
             Editor.PasteSpecial();
         }
 
+        private void ExecuteTogglePreview(object sender, ExecutedRoutedEventArgs e)
+        {
+            UniformGrid.Columns = (UniformGrid.Columns == 2) ? 1 : 2;
+            Preview.Visibility = (UniformGrid.Columns == 1) ? Visibility.Collapsed : Visibility.Visible;
+            EditorMargins = CalculateEditorMargins();
+        }
+
+        private Thickness CalculateEditorMargins()
+        {
+            var width = Width / 4;
+            return (UniformGrid.Columns == 1) ? new Thickness(width, 0, width, 0) : new Thickness();
+        }
+
         // Properites
 
         public string TitleName
@@ -216,6 +233,19 @@ namespace MarkdownEdit
             {
                 if (_titleName == value) return;
                 _titleName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Thickness _editorMargins;
+
+        public Thickness EditorMargins
+        {
+            get {  return _editorMargins; }
+            set
+            {
+                if (_editorMargins == value) return;
+                _editorMargins = value; 
                 OnPropertyChanged();
             }
         }
