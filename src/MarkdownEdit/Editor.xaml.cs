@@ -21,7 +21,6 @@ namespace MarkdownEdit
 {
     public partial class Editor : INotifyPropertyChanged
     {
-        private bool _canExecute;
         private string _fileName;
         private string _displayName = string.Empty;
         private bool _wordWrap;
@@ -33,56 +32,9 @@ namespace MarkdownEdit
         private ISpellCheckProvider _spellCheckProvider;
         private const string F1ForHelp = " - F1 for Help";
 
-        private struct EditorState
-        {
-            public bool StateSaved { get; private set; }
-            private string _text;
-            private bool _isModified;
-            private bool _wordWrap;
-            private bool _spellCheck;
-            private bool _canExecute;
-            private int _caretOffset;
-            private double _verticalOffset;
-
-            public void Save(Editor editor)
-            {
-                _text = editor.Text;
-                _isModified = editor.IsModified;
-                _wordWrap = editor.WordWrap;
-                _canExecute = editor._canExecute;
-                _spellCheck = editor.SpellCheck;
-                _verticalOffset = editor.EditBox.VerticalOffset;
-                _caretOffset = editor.EditBox.CaretOffset;
-                editor.IsModified = false;
-                editor.WordWrap = true;
-                editor.IsReadOnly = true;
-                editor._canExecute = false;
-                editor.SpellCheck = false;
-                editor.EditBox.ScrollToHome();
-                StateSaved = true;
-            }
-
-            public void Restore(Editor editor)
-            {
-                if (StateSaved == false) return;
-                editor.Text = _text;
-                editor.IsModified = _isModified;
-                editor.WordWrap = _wordWrap;
-                editor.IsReadOnly = false;
-                editor._canExecute = _canExecute;
-                editor.SpellCheck = _spellCheck;
-                editor.DisplayName = string.Empty;
-                editor.EditBox.ScrollToVerticalOffset(_verticalOffset);
-                editor.EditBox.CaretOffset = _caretOffset;
-                StateSaved = false;
-                editor.Dispatcher.Invoke(() => editor.EditBox.Focus());
-            }
-        }
-
         public Editor()
         {
             InitializeComponent();
-            _canExecute = true;
             EditBox.Loaded += EditBoxOnLoaded;
             EditBox.Unloaded += EditBoxOnUnloaded;
             DataObject.AddPastingHandler(EditBox, OnPaste);
@@ -158,7 +110,7 @@ namespace MarkdownEdit
             contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
             contextMenu.Items.Add(new MenuItem {Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
             contextMenu.Items.Add(new MenuItem {Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
-            contextMenu.Items.Add(new MenuItem {Header = "Paste Special", Command = MainWindow.PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text" });
+            contextMenu.Items.Add(new MenuItem {Header = "Paste Special", Command = MainWindow.PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
             contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
             contextMenu.Items.Add(new Separator());
             contextMenu.Items.Add(new MenuItem {Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
@@ -255,69 +207,81 @@ namespace MarkdownEdit
 
         public void NewFile()
         {
-            if (SaveIfModified() == false) return;
-            Text = string.Empty;
-            IsModified = false;
-            FileName = string.Empty;
-            Settings.Default.LastOpenFile = string.Empty;
+            Execute(() =>
+            {
+                if (SaveIfModified() == false) return;
+                Text = string.Empty;
+                IsModified = false;
+                FileName = string.Empty;
+                Settings.Default.LastOpenFile = string.Empty;
+            });
         }
 
         public void CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = _canExecute;
+            e.CanExecute = !EditBox.IsReadOnly;
         }
 
         public void OpenFile(string file)
         {
-            if (SaveIfModified() == false) return;
-            if (string.IsNullOrWhiteSpace(file))
+            Execute(() =>
             {
-                var dialog = new OpenFileDialog();
-                var result = dialog.ShowDialog();
-                if (result == false) return;
-                file = dialog.FileNames[0];
-            }
-            LoadFile(file);
+                if (SaveIfModified() == false) return;
+                if (string.IsNullOrWhiteSpace(file))
+                {
+                    var dialog = new OpenFileDialog();
+                    var result = dialog.ShowDialog();
+                    if (result == false) return;
+                    file = dialog.FileNames[0];
+                }
+                LoadFile(file);
+            });
         }
 
         public bool SaveIfModified()
         {
-            if (IsModified == false) return true;
+            return Execute(() =>
+            {
+                if (IsModified == false) return true;
 
-            var result = MessageBox.Show(
-                @"Save your changes?",
-                @"Hey!",
-                MessageBoxButton.YesNoCancel,
-                MessageBoxImage.Question);
+                var result = MessageBox.Show(
+                    @"Save your changes?",
+                    @"Hey!",
+                    MessageBoxButton.YesNoCancel,
+                    MessageBoxImage.Question);
 
-            return (result == MessageBoxResult.Yes)
-                ? SaveFile()
-                : result == MessageBoxResult.No;
+                return (result == MessageBoxResult.Yes)
+                    ? SaveFile()
+                    : result == MessageBoxResult.No;
+            });
         }
 
         public bool SaveFile()
         {
-            return string.IsNullOrWhiteSpace(FileName)
+            return Execute(() => string.IsNullOrWhiteSpace(FileName)
                 ? SaveFileAs()
-                : Save();
+                : Save());
         }
 
         public bool SaveFileAs()
         {
-            var dialog = new SaveFileDialog
+            return Execute(() =>
             {
-                FilterIndex = 0,
-                OverwritePrompt = true,
-                RestoreDirectory = true,
-                Filter = @"Markdown files (*.md|*.md|All files (*.*)|*.*"
-            };
+                var dialog = new SaveFileDialog
+                {
+                    FilterIndex = 0,
+                    OverwritePrompt = true,
+                    RestoreDirectory = true,
+                    Filter = @"Markdown files (*.md|*.md|All files (*.*)|*.*"
+                };
 
-            if (dialog.ShowDialog() == true)
-            {
-                FileName = dialog.FileNames[0];
-                return Save() && LoadFile(FileName);
-            }
-            return false;
+                if (dialog.ShowDialog() == true)
+                {
+                    FileName = dialog.FileNames[0];
+                    return Save() && LoadFile(FileName);
+                }
+                return false;
+            });
         }
 
         private bool LoadFile(string file)
@@ -377,49 +341,63 @@ namespace MarkdownEdit
             _editorState.Restore(this);
         }
 
+        private void Execute(Action action)
+        {
+            if (EditBox.IsReadOnly) return;
+            action();
+        }
+
+        private bool Execute(Func<bool> action)
+        {
+            return !EditBox.IsReadOnly && action();
+        }
+
         public void FindDialog()
         {
-            _findReplaceDialog.ShowFindDialog();
+            Execute(() => _findReplaceDialog.ShowFindDialog());
         }
 
         public void ReplaceDialog()
         {
-            _findReplaceDialog.ShowReplaceDialog();
+            Execute(() => _findReplaceDialog.ShowReplaceDialog());
         }
 
         public void FindNext()
         {
-            _findReplaceDialog.FindNext();
+            Execute(() => _findReplaceDialog.FindNext());
         }
 
         public void FindPrevious()
         {
-            _findReplaceDialog.FindPrevious();
+            Execute(() => _findReplaceDialog.FindPrevious());
         }
 
         public void Bold()
         {
-            AddRemoveText("**");
+            Execute(() => AddRemoveText("**"));
         }
 
         public void Italic()
         {
-            AddRemoveText("*");
+            Execute(() => AddRemoveText("*"));
         }
 
         public void Code()
         {
-            AddRemoveText("`");
+            Execute(() => AddRemoveText("`"));
         }
 
         public void InsertHeader(int num)
         {
-            var line = EditBox.Document.GetLineByOffset(EditBox.CaretOffset);
-            if (line != null)
+            Execute(() =>
             {
-                var header = new string('#', num) + " ";
-                EditBox.Document.Insert(line.Offset, header);
-            }
+                var line = EditBox.Document.GetLineByOffset(EditBox.CaretOffset);
+                if (line != null)
+                {
+                    var header = new string('#', num) + " ";
+                    EditBox.Document.Insert(line.Offset, header);
+                }
+            });
         }
 
         private void AddRemoveText(string quote)
@@ -460,8 +438,11 @@ namespace MarkdownEdit
 
         public void PasteSpecial()
         {
-            _removeSpecialCharacters = true;
-            EditBox.Paste();
+            Execute(() =>
+            {
+                _removeSpecialCharacters = true;
+                EditBox.Paste();
+            });
         }
 
         // Events

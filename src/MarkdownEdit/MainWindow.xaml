@@ -1,8 +1,8 @@
-﻿<Controls:MetroWindow
+﻿<controls:MetroWindow
   x:Class="MarkdownEdit.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
   xmlns:local="clr-namespace:MarkdownEdit"
   Title="{Binding TitleName}"
   TitleCaps="False"
@@ -38,13 +38,13 @@
     <CommandBinding Command="SaveAs" Executed="ExecuteSaveFileAs" CanExecute="EditorCanExecute" />
     <CommandBinding Command="Help" Executed="ExecuteHelp" />
     <CommandBinding Command="Close" Executed="ExecuteClose" />
-    <CommandBinding Command="Find" Executed="ExecuteEditorFind" />
-    <CommandBinding Command="{x:Static local:MainWindow.FindNextCommand}" Executed="ExecuteFindNext" />
-    <CommandBinding Command="{x:Static local:MainWindow.FindPreviousCommand}" Executed="ExecuteFindPrevious" />
-    <CommandBinding Command="Replace" Executed="ExecuteEditorReplace" />
-    <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
-    <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
-    <CommandBinding Command="{x:Static local:MainWindow.ToggleCodeCommand}" Executed="ExecuteCode" />
+    <CommandBinding Command="Find" Executed="ExecuteEditorFind" CanExecute="EditorCanExecute" />
+    <CommandBinding Command="{x:Static local:MainWindow.FindNextCommand}" Executed="ExecuteFindNext" CanExecute="EditorCanExecute" />
+    <CommandBinding Command="{x:Static local:MainWindow.FindPreviousCommand}" Executed="ExecuteFindPrevious" CanExecute="EditorCanExecute" />
+    <CommandBinding Command="Replace" Executed="ExecuteEditorReplace"  CanExecute="EditorCanExecute" />
+    <CommandBinding Command="ToggleBold" Executed="ExecuteBold"  CanExecute="EditorCanExecute" />
+    <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic"  CanExecute="EditorCanExecute" />
+    <CommandBinding Command="{x:Static local:MainWindow.ToggleCodeCommand}" Executed="ExecuteCode" CanExecute="EditorCanExecute" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleWordWrapCommand}" Executed="ExecuteToggleWordWrap" />
     <CommandBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Executed="ExecuteInsertHeader" />
     <CommandBinding Command="IncreaseFontSize" Executed="ExecuteIncreaseFontSize" />
@@ -52,10 +52,10 @@
     <CommandBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Executed="ExecuteRestoreFontSize" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Executed="ExecuteOpenUserSettingsCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Executed="ExecuteOpenUserTemplateCommand" />
-    <CommandBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Executed="ExecuteToggleSpellCheck" />
+    <CommandBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Executed="ExecuteToggleSpellCheck" CanExecute="EditorCanExecute" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Executed="ExecuteToggleFullScreen" />
-    <CommandBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" />
-    <CommandBinding Command="{x:Static local:MainWindow.PasteSpecialCommand}" Executed="ExecutePasteSpecial" />
+    <CommandBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" CanExecute="EditorCanExecute" />
+    <CommandBinding Command="{x:Static local:MainWindow.PasteSpecialCommand}" Executed="ExecutePasteSpecial" CanExecute="EditorCanExecute" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -82,4 +82,4 @@
     <KeyBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Gesture="Ctrl+J" />
     <KeyBinding Command="{x:Static local:MainWindow.PasteSpecialCommand}" Gesture="Ctrl+Shift+V" />
   </Window.InputBindings>
-</Controls:MetroWindow>
+</controls:MetroWindow>

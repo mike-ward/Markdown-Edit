@@ -24,17 +24,4 @@
     </avalonedit:TextEditor>
   </Border>
 
-  <UserControl.ContextMenu>
-    <ContextMenu x:Name="EditorContextMenu">
-      <MenuItem Command="Cut" Header="Cut" />
-      <MenuItem Command="Copy" Header="Copy" />
-      <MenuItem Command="Paste" Header="Paste" />
-      <MenuItem Command="Delete" Header="Delete" />
-      <MenuItem Command="SelectAll" Header="Select All" />
-      <Separator />
-      <MenuItem Command="Undo" Header="Undo" />
-      <MenuItem Command="Redo" Header="Redo" />
-    </ContextMenu>
-  </UserControl.ContextMenu>
-
 </UserControl>
