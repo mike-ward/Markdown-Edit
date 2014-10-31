@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -17,6 +16,7 @@ namespace MarkdownEdit
         public static RoutedCommand RestoreFontSizeCommand = new RoutedUICommand();
         public static RoutedCommand OpenUserSettingsCommand = new RoutedUICommand();
         public static RoutedCommand OpenUserTemplateCommand = new RoutedUICommand();
+        public static RoutedCommand OpenUserDictionaryCommand = new RoutedUICommand();
         public static RoutedCommand ToggleSpellCheckCommand = new RoutedUICommand();
         public static RoutedCommand ToggleFullScreenCommand = new RoutedUICommand();
         public static RoutedCommand WrapToColumnCommand = new RoutedUICommand();
@@ -81,11 +81,6 @@ namespace MarkdownEdit
         }
 
         // Commands
-
-        private void EditorCanExecute(object sender, CanExecuteRoutedEventArgs ea)
-        {
-            Editor.CanExecute(sender, ea);
-        }
 
         private void ExecuteNewFile(object sender, ExecutedRoutedEventArgs ea)
         {
@@ -179,12 +174,17 @@ namespace MarkdownEdit
 
         private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            Process.Start("Notepad.exe", UserSettings.SettingsFile);
+            Utility.EditFile(UserSettings.SettingsFile);
         }
 
         private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            Process.Start("Notepad.exe", UserTemplate.TemplateFile);
+            Utility.EditFile(UserTemplate.TemplateFile);
+        }
+
+        private void ExecuteOpenUserDictionaryCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.OpenUserDictionary();
         }
 
         private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e)

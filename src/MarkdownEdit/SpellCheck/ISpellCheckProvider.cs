@@ -10,6 +10,7 @@ namespace MarkdownEdit.SpellCheck
         IEnumerable<TextSegment> GetSpellCheckErrors();
         IEnumerable<string> GetSpellCheckSuggestions(string word);
         void Add(string word);
+        string CustomDictionaryFile();
         void Disconnect();
     }
 }

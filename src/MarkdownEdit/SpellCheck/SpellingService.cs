@@ -69,13 +69,13 @@ namespace MarkdownEdit.SpellCheck
             }
         }
 
-        private static void LoadCustomDictonary(Hunspell speller)
+        private void LoadCustomDictonary(Hunspell speller)
         {
             var file = CustomDictionaryFile();
             foreach (var word in File.ReadAllLines(file)) speller.Add(word);
         }
 
-        private static string CustomDictionaryFile()
+        public string CustomDictionaryFile()
         {
             var file = Path.Combine(UserSettings.SettingsFolder, "custom_dictionary.txt");
             if (File.Exists(file) == false)
@@ -86,7 +86,7 @@ namespace MarkdownEdit.SpellCheck
             return file;
         }
 
-        private static void UpdateCustomDictionary(string word)
+        private void UpdateCustomDictionary(string word)
         {
             var file = CustomDictionaryFile();
             File.AppendAllLines(file, new [] { word });

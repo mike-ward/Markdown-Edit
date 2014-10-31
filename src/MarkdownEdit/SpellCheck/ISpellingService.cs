@@ -9,5 +9,6 @@ namespace MarkdownEdit.SpellCheck
         bool Spell(string word);
         IEnumerable<string> Suggestions(string word);
         void Add(string word);
+        string CustomDictionaryFile();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Media;
 using System.Threading.Tasks;
 
@@ -31,6 +32,11 @@ namespace MarkdownEdit
         public static void Beep()
         {
             SystemSounds.Beep.Play();
+        }
+
+        public static void EditFile(string file)
+        {
+            Process.Start("Notepad.exe", file);                
         }
     }
 }

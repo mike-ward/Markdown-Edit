@@ -205,6 +205,22 @@ namespace MarkdownEdit
 
         // Commands
 
+        private void Execute(Action action)
+        {
+            if (Execute(() => true)) action();
+        }
+
+        private bool Execute(Func<bool> action)
+        {
+            return EditBox.IsReadOnly ? Beep() : action();
+        }
+
+        private static bool Beep()
+        {
+            Utility.Beep();
+            return false;
+        }
+
         public void NewFile()
         {
             Execute(() =>
@@ -215,11 +231,6 @@ namespace MarkdownEdit
                 FileName = string.Empty;
                 Settings.Default.LastOpenFile = string.Empty;
             });
-        }
-
-        public void CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = !EditBox.IsReadOnly;
         }
 
         public void OpenFile(string file)
@@ -341,17 +352,6 @@ namespace MarkdownEdit
             _editorState.Restore(this);
         }
 
-        private void Execute(Action action)
-        {
-            if (EditBox.IsReadOnly) return;
-            action();
-        }
-
-        private bool Execute(Func<bool> action)
-        {
-            return !EditBox.IsReadOnly && action();
-        }
-
         public void FindDialog()
         {
             Execute(() => _findReplaceDialog.ShowFindDialog());
@@ -443,6 +443,11 @@ namespace MarkdownEdit
                 _removeSpecialCharacters = true;
                 EditBox.Paste();
             });
+        }
+
+        public void OpenUserDictionary()
+        {
+            Utility.EditFile(_spellCheckProvider.CustomDictionaryFile());
         }
 
         // Events

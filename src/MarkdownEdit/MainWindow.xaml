@@ -32,19 +32,19 @@
   </Grid>
 
   <Window.CommandBindings>
-    <CommandBinding Command="New"  Executed="ExecuteNewFile" CanExecute="EditorCanExecute" />
-    <CommandBinding Command="Open" Executed="ExecuteOpenFile" CanExecute="EditorCanExecute" />
-    <CommandBinding Command="Save" Executed="ExecuteSaveFile" CanExecute="EditorCanExecute" />
-    <CommandBinding Command="SaveAs" Executed="ExecuteSaveFileAs" CanExecute="EditorCanExecute" />
+    <CommandBinding Command="New"  Executed="ExecuteNewFile" />
+    <CommandBinding Command="Open" Executed="ExecuteOpenFile" />
+    <CommandBinding Command="Save" Executed="ExecuteSaveFile" />
+    <CommandBinding Command="SaveAs" Executed="ExecuteSaveFileAs" />
     <CommandBinding Command="Help" Executed="ExecuteHelp" />
     <CommandBinding Command="Close" Executed="ExecuteClose" />
-    <CommandBinding Command="Find" Executed="ExecuteEditorFind" CanExecute="EditorCanExecute" />
-    <CommandBinding Command="{x:Static local:MainWindow.FindNextCommand}" Executed="ExecuteFindNext" CanExecute="EditorCanExecute" />
-    <CommandBinding Command="{x:Static local:MainWindow.FindPreviousCommand}" Executed="ExecuteFindPrevious" CanExecute="EditorCanExecute" />
-    <CommandBinding Command="Replace" Executed="ExecuteEditorReplace"  CanExecute="EditorCanExecute" />
-    <CommandBinding Command="ToggleBold" Executed="ExecuteBold"  CanExecute="EditorCanExecute" />
-    <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic"  CanExecute="EditorCanExecute" />
-    <CommandBinding Command="{x:Static local:MainWindow.ToggleCodeCommand}" Executed="ExecuteCode" CanExecute="EditorCanExecute" />
+    <CommandBinding Command="Find" Executed="ExecuteEditorFind" />
+    <CommandBinding Command="{x:Static local:MainWindow.FindNextCommand}" Executed="ExecuteFindNext" />
+    <CommandBinding Command="{x:Static local:MainWindow.FindPreviousCommand}" Executed="ExecuteFindPrevious" />
+    <CommandBinding Command="Replace" Executed="ExecuteEditorReplace" />
+    <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
+    <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
+    <CommandBinding Command="{x:Static local:MainWindow.ToggleCodeCommand}" Executed="ExecuteCode" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleWordWrapCommand}" Executed="ExecuteToggleWordWrap" />
     <CommandBinding Command="{x:Static local:MainWindow.InsertHeaderCommand}" Executed="ExecuteInsertHeader" />
     <CommandBinding Command="IncreaseFontSize" Executed="ExecuteIncreaseFontSize" />
@@ -52,10 +52,11 @@
     <CommandBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Executed="ExecuteRestoreFontSize" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Executed="ExecuteOpenUserSettingsCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Executed="ExecuteOpenUserTemplateCommand" />
-    <CommandBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Executed="ExecuteToggleSpellCheck" CanExecute="EditorCanExecute" />
+    <CommandBinding Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Executed="ExecuteOpenUserDictionaryCommand" />
+    <CommandBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Executed="ExecuteToggleSpellCheck" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Executed="ExecuteToggleFullScreen" />
-    <CommandBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" CanExecute="EditorCanExecute" />
-    <CommandBinding Command="{x:Static local:MainWindow.PasteSpecialCommand}" Executed="ExecutePasteSpecial" CanExecute="EditorCanExecute" />
+    <CommandBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" />
+    <CommandBinding Command="{x:Static local:MainWindow.PasteSpecialCommand}" Executed="ExecutePasteSpecial" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -76,6 +77,7 @@
     <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Minus" />
     <KeyBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+0" />
     <KeyBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Gesture="F7" />
+    <KeyBinding Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Gesture="Shift+F7" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Gesture="F8" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Gesture="F9" />
     <KeyBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Gesture="F11" />

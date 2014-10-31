@@ -43,6 +43,11 @@ namespace MarkdownEdit.SpellCheck
             }
         }
 
+        public string CustomDictionaryFile()
+        {
+            return _spellingService.CustomDictionaryFile();
+        }
+
         public void Disconnect()
         {
             if (_editor == null) return;
