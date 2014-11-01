@@ -53,6 +53,7 @@ namespace MarkdownEdit
         {
             var userSettings = Load();
             Themes = userSettings.Themes;
+            SettingsOnPropertyChanged(this, new PropertyChangedEventArgs("ThemeName"));
         }
 
         [JsonIgnore]
@@ -100,14 +101,26 @@ namespace MarkdownEdit
             if (File.Exists(SettingsFile))
             {
                 var settings = JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
-                settings.PropertyChanged += (s, e) => { if (e.PropertyName == "ThemeName") settings.Theme = settings.Themes[settings.ThemeName]; };
-                settings.Theme = settings.Themes[settings.ThemeName];
+                settings.PropertyChanged += SettingsOnPropertyChanged;
+                SettingsOnPropertyChanged(settings, new PropertyChangedEventArgs("ThemeName"));
                 return settings;
             }
             var defaultSettings = new UserSettings {Themes = new ThemeCollection {new Theme()}};
             defaultSettings.ThemeName = defaultSettings.Themes[0].Name;
             defaultSettings.Save();
             return Load();
+        }
+
+        private static void SettingsOnPropertyChanged(object sender, PropertyChangedEventArgs ea)
+        {
+            if (ea.PropertyName == "ThemeName")
+            {
+                var settings = (UserSettings)sender;
+                if (settings.Themes.Contains(settings.ThemeName))
+                {
+                    settings.Theme = settings.Themes[settings.ThemeName];
+                }
+            };
         }
 
         // INotifyPropertyChanged
