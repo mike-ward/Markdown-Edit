@@ -8,7 +8,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Xml;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
@@ -58,7 +57,6 @@ namespace MarkdownEdit
             EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
             EditBox.TextChanged += EditBoxOnTextChanged;
             PropertyChanged += OnSpellCheckChanged;
-            PropertyChanged += OnThemeChanged;
 
             Task.Delay(100).ContinueWith(t =>
             {
@@ -547,24 +545,12 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof(Theme), typeof(Editor), new PropertyMetadata(default(Theme)));
+            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme)));
 
         public Theme Theme
         {
             get { return (Theme)GetValue(ThemeProperty); }
             set { SetValue(ThemeProperty, value); }
-        }
-
-        private void OnThemeChanged(object sender, PropertyChangedEventArgs ea)
-        {
-            if (ea.PropertyName != "Theme") return;
-            var theme = Theme;
-            var brushConverter = new BrushConverter();
-            EditBox.Background =  (Brush)brushConverter.ConvertFromString(theme.EditorBackground);
-            EditBox.Foreground =  (Brush)brushConverter.ConvertFromString(theme.EditorForeground);
-            var fontConverter = new FontFamilyConverter();
-            EditBox.FontFamily = (FontFamily)fontConverter.ConvertFromString(theme.EditorFontFamily);
-            EditBox.FontSize = theme.EditorFontSize;
         }
 
         // INotifyPropertyChanged

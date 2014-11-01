@@ -8,15 +8,16 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              ContextMenuOpening="EditorMenuOnContextMenuOpening"
-             DataContext="{Binding RelativeSource={RelativeSource self}}">
+             DataContext="{Binding RelativeSource={RelativeSource self}}"
+             >
   <Border>
     <avalonedit:TextEditor
       x:Name="EditBox"
       BorderThickness="0"
-      Foreground="{Binding Foreground}"
-      Background="{Binding Background}"
-      FontFamily="{Binding FontFamily}"
-      FontSize="{Binding FontSize}"
+      Foreground="{Binding Theme.EditorForeground}"
+      Background="{Binding Theme.EditorBackground}"
+      FontFamily="{Binding Theme.EditorFontFamily}"
+      FontSize="{Binding Theme.EditorFontSize}"
       WordWrap="{Binding Path=WordWrap, Mode=TwoWay}"
       IsModified="{Binding Path=IsModified, Mode=TwoWay}"
       ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"
