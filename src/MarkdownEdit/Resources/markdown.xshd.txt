@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <SyntaxDefinition name="MarkDown" extensions=".md" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 	<Color name="Heading"         fontWeight="bold" />
-	<Color name="Emphasis"        fontStyle="italic" fontWeight="bold" />
+	<Color name="Emphasis"        fontStyle="italic" />
 	<Color name="StrongEmphasis"  fontWeight="bold" />
 	<Color name="Code"            foreground="#654" />
 	<Color name="BlockQuote"      foreground="#654" />
