@@ -4,78 +4,65 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using MarkdownEdit.Properties;
 using Newtonsoft.Json;
 
 namespace MarkdownEdit
 {
     public class UserSettings : INotifyPropertyChanged
     {
-        private string _editorBackground = "#F7F4EF";
-        private string _editorForeground = "Black";
-        private string _editorFontFamily = "Consolas";
-        private double _editorFontSize = 14;
+        private string _themeName;
+        private Theme _theme;
+        private ThemeCollection _themes = new ThemeCollection();
 
-        public void Update()
+        public string ThemeName
         {
-            var userSettings = Load();
-            EditorBackground = userSettings.EditorBackground;
-            EditorForeground = userSettings.EditorForeground;
-            EditorFontFamily = userSettings.EditorFontFamily;
-            EditorFontSize = userSettings.EditorFontSize;
-        }
-
-        public string EditorBackground
-        {
-            get { return _editorBackground; }
+            get { return _themeName; }
             set
             {
-                if (_editorBackground == value) return;
-                _editorBackground = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string EditorForeground
-        {
-            get { return _editorForeground; }
-            set
-            {
-                if (_editorForeground == value) return;
-                _editorForeground = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string EditorFontFamily
-        {
-            get { return _editorFontFamily; }
-            set
-            {
-                if (_editorFontFamily == value) return;
-                _editorFontFamily = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public double EditorFontSize
-        {
-            get { return _editorFontSize; }
-            set
-            {
-                if (Math.Abs(_editorFontSize - value) < .000001) return;
-                _editorFontSize = value;
+                if (_themeName == value) return;
+                _themeName = value;
                 OnPropertyChanged();
             }
         }
 
         [JsonIgnore]
-        public StringCollection RecentFiles
+        public Theme Theme
         {
-            get { return Properties.Settings.Default.RecentFiles ?? (Properties.Settings.Default.RecentFiles = new StringCollection()); }
+            get { return _theme; }
             set
             {
-                if (Properties.Settings.Default.RecentFiles == value) return;
-                Properties.Settings.Default.RecentFiles = value;
+                if (_theme == value) return;
+                _theme = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ThemeCollection Themes
+        {
+            get { return _themes; }
+            set
+            {
+                if (_themes == value) return;
+                _themes = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public void Update()
+        {
+            var userSettings = Load();
+            Themes = userSettings.Themes;
+        }
+
+        [JsonIgnore]
+        public StringCollection RecentFiles
+        {
+            get { return Settings.Default.RecentFiles ?? (Settings.Default.RecentFiles = new StringCollection()); }
+            set
+            {
+                if (Settings.Default.RecentFiles == value) return;
+                Settings.Default.RecentFiles = value;
                 OnPropertyChanged();
             }
         }
@@ -110,8 +97,16 @@ namespace MarkdownEdit
 
         public static UserSettings Load()
         {
-            if (File.Exists(SettingsFile)) return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
-            new UserSettings().Save();
+            if (File.Exists(SettingsFile))
+            {
+                var settings = JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
+                settings.PropertyChanged += (s, e) => { if (e.PropertyName == "ThemeName") settings.Theme = settings.Themes[settings.ThemeName]; };
+                settings.Theme = settings.Themes[settings.ThemeName];
+                return settings;
+            }
+            var defaultSettings = new UserSettings {Themes = new ThemeCollection {new Theme()}};
+            defaultSettings.ThemeName = defaultSettings.Themes[0].Name;
+            defaultSettings.Save();
             return Load();
         }
 

@@ -428,7 +428,7 @@ namespace MarkdownEdit
 
         public void RestoreFontSize()
         {
-            EditBox.FontSize = ((MainWindow)Application.Current.MainWindow).UserSettings.EditorFontSize;
+            EditBox.FontSize = 14;
         }
 
         public void WrapToColumn()
