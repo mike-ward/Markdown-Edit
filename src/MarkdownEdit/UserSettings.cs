@@ -12,6 +12,31 @@ namespace MarkdownEdit
     public class UserSettings : INotifyPropertyChanged
     {
         private Theme _theme;
+        private string _editorFontFamily = "Segoe UI";
+        private double _editorFontSize = 14;
+
+        public string EditorFontFamily
+        {
+            get { return _editorFontFamily; }
+            set
+            {
+                if (_editorFontFamily == value) return;
+                _editorFontFamily = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double EditorFontSize
+        {
+            get { return _editorFontSize; }
+            set
+            {
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (_editorFontSize == value) return;
+                _editorFontSize = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Theme Theme
         {
@@ -27,6 +52,8 @@ namespace MarkdownEdit
         public void Update()
         {
             var userSettings = Load();
+            EditorFontFamily = userSettings.EditorFontFamily;
+            EditorFontSize = userSettings.EditorFontSize;
             Theme = userSettings.Theme;
         }
 

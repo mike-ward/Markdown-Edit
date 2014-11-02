@@ -23,6 +23,8 @@
         Padding="5 10 5 3" 
         Margin="{Binding Path=EditorMargins, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         Theme="{Binding Path=DataContext.UserSettings.Theme, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+        FontFamily="{Binding Path=DataContext.UserSettings.EditorFontFamily, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+        FontSize="{Binding Path=DataContext.UserSettings.EditorFontSize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         Background="{Binding Path=DataContext.UserSettings.Theme.EditorBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         />
       <local:Preview 
