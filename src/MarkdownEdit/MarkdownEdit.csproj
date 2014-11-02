@@ -162,10 +162,18 @@
     <None Include="SpellCheck\Dictionaries\en_US.dic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Themes\apple-crisp.json" />
-    <None Include="Themes\solarized-dark.json" />
-    <None Include="Themes\solarized-light.json" />
-    <None Include="Themes\zenburn.json" />
+    <None Include="Themes\apple-crisp.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Themes\solarized-dark.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Themes\solarized-light.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Themes\zenburn.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
