@@ -13,7 +13,6 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using MahApps.Metro;
 using MarkdownEdit.Properties;
 using MarkdownEdit.SpellCheck;
 using Microsoft.Win32;
@@ -561,8 +560,50 @@ namespace MarkdownEdit
             var theme = editor.Theme;
             var highlightDefinition = editor.EditBox.SyntaxHighlighting;
             if (highlightDefinition == null) return;
-            var hightlightingColor = highlightDefinition.GetNamedColor("Heading");
-            hightlightingColor.Foreground = new HighlightBrush(theme.HightlightHeading.Foreground);
+
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Heading"), theme.HightlightHeading);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Emphasis"), theme.HightlightEmphasis);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("StrongEmphasis"), theme.HightlightStrongEmphasis);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("InlineCode"), theme.HightlightInlineCode);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("BlockCode"), theme.HightlightBlockCode);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Link"), theme.HightlightLink);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Image"), theme.HightlightImage);
+        }
+
+        private static void UpdateHilightingColor(HighlightingColor highlightingColor, Highlight highlight)
+        {
+            highlightingColor.Foreground = new HighlightBrush(highlight.Foreground);
+            highlightingColor.Background = new HighlightBrush(highlight.Background);
+            highlightingColor.FontStyle = ConvertFontStyle(highlight.FontStyle);
+            highlightingColor.FontWeight = ConvertFontWeight(highlight.FontWeight);
+        }
+
+        private static FontStyle? ConvertFontStyle(string style)
+        {
+            try
+            {
+                return string.IsNullOrWhiteSpace(style)
+                    ? null
+                    : new FontStyleConverter().ConvertFromString(style) as FontStyle?;
+            }
+            catch (FormatException)
+            {
+                return null;
+            }
+        }
+
+        private static FontWeight? ConvertFontWeight(string weight)
+        {
+            try
+            {
+                return string.IsNullOrWhiteSpace(weight)
+                    ? null
+                    : new FontWeightConverter().ConvertFromString(weight) as FontWeight?;
+            }
+            catch (FormatException)
+            {
+                return null;
+            }
         }
 
         // INotifyPropertyChanged
