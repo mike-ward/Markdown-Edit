@@ -561,13 +561,17 @@ namespace MarkdownEdit
             var highlightDefinition = editor.EditBox.SyntaxHighlighting;
             if (highlightDefinition == null) return;
 
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("Heading"), theme.HightlightHeading);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("Emphasis"), theme.HightlightEmphasis);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("StrongEmphasis"), theme.HightlightStrongEmphasis);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("InlineCode"), theme.HightlightInlineCode);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("BlockCode"), theme.HightlightBlockCode);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("Link"), theme.HightlightLink);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("Image"), theme.HightlightImage);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Heading"), theme.HighlightHeading);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Emphasis"), theme.HighlightEmphasis);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("StrongEmphasis"), theme.HighlightStrongEmphasis);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("InlineCode"), theme.HighlightInlineCode);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("BlockCode"), theme.HighlightBlockCode);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("BlockQuote"), theme.HighlightBlockQuote);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Link"), theme.HighlightLink);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Image"), theme.HighlightImage);
+
+            editor.EditBox.SyntaxHighlighting = null;
+            editor.EditBox.SyntaxHighlighting = highlightDefinition;
         }
 
         private static void UpdateHilightingColor(HighlightingColor highlightingColor, Highlight highlight)

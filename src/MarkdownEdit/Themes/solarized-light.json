@@ -1,0 +1,63 @@
+﻿{
+  "Theme": {
+    "Name": "Solarized Light",
+    "EditorBackground": "#fdf6e3",
+    "EditorForeground": "#586e75",
+    "HighlightHeading": {
+      "Name": "Heading",
+      "Background": null,
+      "Foreground": "#6c71c4",
+      "FontWeight": "bold",
+      "FontStyle": null
+    },
+    "HighlightEmphasis": {
+      "Name": "Emphasis",
+      "Background": null,
+      "Foreground": "#cb4b16",
+      "FontWeight": null,
+      "FontStyle": "italic"
+    },
+    "HighlightStrongEmphasis": {
+      "Name": "StrongEmphasis",
+      "Background": null,
+      "Foreground": "#dc322f",
+      "FontWeight": "bold",
+      "FontStyle": null
+    },
+    "HighlightInlineCode": {
+      "Name": "InlineCode",
+      "Background": null,
+      "Foreground": "#859900 ",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightBlockCode": {
+      "Name": "BlockCode",
+      "Background": null,
+      "Foreground": "#859900",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightBlockQuote": {
+      "Name": "BlockQuote",
+      "Background": null,
+      "Foreground": "#d33682",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightLink": {
+      "Name": "Link",
+      "Background": null,
+      "Foreground": "#2aa198",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightImage": {
+      "Name": "Image",
+      "Background": null,
+      "Foreground": "#d33682",
+      "FontWeight": null,
+      "FontStyle": null
+    }
+  }
+}
