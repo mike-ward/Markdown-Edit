@@ -13,6 +13,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using MahApps.Metro;
 using MarkdownEdit.Properties;
 using MarkdownEdit.SpellCheck;
 using Microsoft.Win32;
@@ -47,6 +48,7 @@ namespace MarkdownEdit
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             InitializeSyntaxHighlighting();
+            ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
 
             EditBox.Options.IndentationSize = 2;
             EditBox.Options.ConvertTabsToSpaces = true;
@@ -545,12 +547,22 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme)));
+            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
 
         public Theme Theme
         {
             get { return (Theme)GetValue(ThemeProperty); }
             set { SetValue(ThemeProperty, value); }
+        }
+
+        private static void ThemeChangedCallback(DependencyObject source, DependencyPropertyChangedEventArgs ea)
+        {
+            var editor = (Editor)source;
+            var theme = editor.Theme;
+            var highlightDefinition = editor.EditBox.SyntaxHighlighting;
+            if (highlightDefinition == null) return;
+            var hightlightingColor = highlightDefinition.GetNamedColor("Heading");
+            hightlightingColor.Foreground = new HighlightBrush(theme.HightlightHeading.Foreground);
         }
 
         // INotifyPropertyChanged

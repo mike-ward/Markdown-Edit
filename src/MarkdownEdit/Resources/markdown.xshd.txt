@@ -3,7 +3,8 @@
 	<Color name="Heading"         fontWeight="bold" />
 	<Color name="Emphasis"        fontStyle="italic" />
 	<Color name="StrongEmphasis"  fontWeight="bold" />
-	<Color name="Code"            foreground="#654" />
+	<Color name="InlineCode"      foreground="#654" background="#e9e6e3" />
+	<Color name="BlockCode"       foreground="#654" />
 	<Color name="BlockQuote"      foreground="#654" />
 	<Color name="Link"            foreground="#654" />
 	<Color name="Image"           foreground="#654" />
@@ -33,14 +34,14 @@
 		<Rule color="Emphasis">
 			_.+?_
 		</Rule>
-		<Rule color="Code">
+		<Rule color="InlineCode">
 			`.+?`
 		</Rule>
-		<Span color="Code" multiline="true">
+		<Span color="BlockCode" multiline="true">
 			<Begin>^\t</Begin>
 			<End>^(?!\t)</End>
 		</Span>
-		<Span color="Code" multiline="true">
+		<Span color="BlockCode" multiline="true">
 			<Begin>^[ ]{4}</Begin>
 			<End>^(?![ ]{4})</End>
 		</Span>

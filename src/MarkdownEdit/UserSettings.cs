@@ -11,22 +11,8 @@ namespace MarkdownEdit
 {
     public class UserSettings : INotifyPropertyChanged
     {
-        private string _themeName;
         private Theme _theme;
-        private ThemeCollection _themes = new ThemeCollection();
 
-        public string ThemeName
-        {
-            get { return _themeName; }
-            set
-            {
-                if (_themeName == value) return;
-                _themeName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        [JsonIgnore]
         public Theme Theme
         {
             get { return _theme; }
@@ -38,22 +24,10 @@ namespace MarkdownEdit
             }
         }
 
-        public ThemeCollection Themes
-        {
-            get { return _themes; }
-            set
-            {
-                if (_themes == value) return;
-                _themes = value;
-                OnPropertyChanged();
-            }
-        }
-
         public void Update()
         {
             var userSettings = Load();
-            Themes = userSettings.Themes;
-            SettingsOnPropertyChanged(this, new PropertyChangedEventArgs("ThemeName"));
+            Theme = userSettings.Theme;
         }
 
         [JsonIgnore]
@@ -100,27 +74,11 @@ namespace MarkdownEdit
         {
             if (File.Exists(SettingsFile))
             {
-                var settings = JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
-                settings.PropertyChanged += SettingsOnPropertyChanged;
-                SettingsOnPropertyChanged(settings, new PropertyChangedEventArgs("ThemeName"));
-                return settings;
+                return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
             }
-            var defaultSettings = new UserSettings {Themes = new ThemeCollection {new Theme()}};
-            defaultSettings.ThemeName = defaultSettings.Themes[0].Name;
+            var defaultSettings = new UserSettings {Theme = new Theme()};
             defaultSettings.Save();
             return Load();
-        }
-
-        private static void SettingsOnPropertyChanged(object sender, PropertyChangedEventArgs ea)
-        {
-            if (ea.PropertyName == "ThemeName")
-            {
-                var settings = (UserSettings)sender;
-                if (settings.Themes.Contains(settings.ThemeName))
-                {
-                    settings.Theme = settings.Themes[settings.ThemeName];
-                }
-            };
         }
 
         // INotifyPropertyChanged

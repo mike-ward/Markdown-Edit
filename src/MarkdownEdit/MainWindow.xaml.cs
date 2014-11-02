@@ -32,13 +32,18 @@ namespace MarkdownEdit
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
             Closing += OnClosing;
             SizeChanged += (s, e) => CalculateEditorMargins();
-            Loaded += (s, e) => { if (Properties.Settings.Default.HidePreview) TogglePreviewCommand.Execute(null, this); };
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
             InitiailzeUserSettings();
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (Properties.Settings.Default.HidePreview) TogglePreviewCommand.Execute(null, this);
         }
 
         private void InitiailzeUserSettings()
