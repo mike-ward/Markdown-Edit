@@ -25,6 +25,7 @@ namespace MarkdownEdit
         public static RoutedCommand ToggleCodeCommand = new RoutedUICommand();
         public static RoutedCommand TogglePreviewCommand = new RoutedCommand();
         public static RoutedCommand LoadThemeCommand = new RoutedCommand();
+        public static RoutedCommand SaveThemeCommand = new RoutedCommand();
         public static RoutedCommand ShowThemeDialogCommand = new RoutedCommand();
 
         public UserSettings UserSettings { get; set; }
@@ -230,10 +231,14 @@ namespace MarkdownEdit
             UserSettings.Theme = e.Parameter as Theme;
         }
 
+        private void ExecuteSaveTheme(object sender, ExecutedRoutedEventArgs e)
+        {
+            UserSettings.Save();
+        }
+
         private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new ThemeDialog {Owner = this};
-            dialog.CurrentTheme = UserSettings.Theme;
+            var dialog = new ThemeDialog {Owner = this, CurrentTheme = UserSettings.Theme};
             dialog.ShowDialog();
         }
 

@@ -62,6 +62,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.TogglePreviewCommand}" Executed="ExecuteTogglePreview" />
     <CommandBinding Command="{x:Static local:MainWindow.ShowThemeDialogCommand}" Executed="ExecuteShowThemeDialog" />
     <CommandBinding Command="{x:Static local:MainWindow.LoadThemeCommand}" Executed="ExecuteLoadTheme" />
+    <CommandBinding Command="{x:Static local:MainWindow.SaveThemeCommand}" Executed="ExecuteSaveTheme" />
   </Window.CommandBindings>
 
   <Window.InputBindings>

@@ -21,6 +21,7 @@
             IsDefault="True"
             Margin="10"
             BorderThickness="2"
+            Click="Save"
             >
       Save
     </Button>

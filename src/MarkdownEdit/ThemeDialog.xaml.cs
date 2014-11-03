@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -12,12 +11,14 @@ namespace MarkdownEdit
 {
     public partial class ThemeDialog
     {
+        private bool _saved;
         public Theme CurrentTheme { get; set; }
 
         public ThemeDialog()
         {
             InitializeComponent();
             Loaded += OnLoaded;
+            Closed += OnClosed;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -27,11 +28,16 @@ namespace MarkdownEdit
             var files = Directory.EnumerateFiles(path, "*.json");
             ThemeListBox.ItemsSource = files
                 .Select(f => JsonConvert.DeserializeObject<Theme>(File.ReadAllText(f)))
-                .Select(t => new ListBoxItem { Tag = t, Content = t.Name });
+                .Select(t => new ListBoxItem {Tag = t, Content = t.Name});
 
             ThemeListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
             var theme = ThemeListBox.Items.Cast<ListBoxItem>().FirstOrDefault(li => ((Theme)li.Tag).Name == CurrentTheme.Name);
             if (theme != null) ThemeListBox.SelectedItem = theme;
+        }
+
+        private void OnClosed(object sender, EventArgs eventArgs)
+        {
+            if (_saved == false) MainWindow.LoadThemeCommand.Execute(CurrentTheme, Owner);
         }
 
         private void ItemContainerGeneratorOnStatusChanged(object sender, EventArgs eventArgs)
@@ -55,6 +61,14 @@ namespace MarkdownEdit
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
         {
             e.Handled = true;
+            Close();
+        }
+
+        private void Save(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            MainWindow.SaveThemeCommand.Execute(null, Owner);
+            _saved = true;
             Close();
         }
     }
