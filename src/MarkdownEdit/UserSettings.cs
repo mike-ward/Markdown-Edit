@@ -15,6 +15,7 @@ namespace MarkdownEdit
         private string _editorFontFamily = "Segoe UI";
         private double _editorFontSize = 14;
         private bool _editorOpenLastFile = true;
+        private bool _editorVerticalScrollBarVisible;
 
         public string EditorFontFamily
         {
@@ -50,6 +51,17 @@ namespace MarkdownEdit
             }
         }
 
+        public bool EditorVerticalScrollBarVisible
+        {
+            get { return _editorVerticalScrollBarVisible; }
+            set
+            {
+                if (_editorVerticalScrollBarVisible == value) return;
+                _editorVerticalScrollBarVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Theme Theme
         {
             get { return _theme; }
@@ -68,6 +80,7 @@ namespace MarkdownEdit
             EditorFontSize = userSettings.EditorFontSize;
             Theme = userSettings.Theme;
             EditorOpenLastFile = userSettings.EditorOpenLastFile;
+            EditorVerticalScrollBarVisible = userSettings.EditorVerticalScrollBarVisible;
         }
 
         [JsonIgnore]

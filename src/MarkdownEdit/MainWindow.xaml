@@ -16,6 +16,10 @@
   Background="{DynamicResource GrayBrush4}"
   >
 
+  <controls:MetroWindow.Resources>
+    <local:BooleanToScrollBarVisibilityConverter x:Key="VisibilityConverter" />
+  </controls:MetroWindow.Resources>
+    
   <Grid>
     <UniformGrid x:Name="UniformGrid" Columns="2">
       <local:Editor
@@ -26,6 +30,7 @@
         FontFamily="{Binding Path=DataContext.UserSettings.EditorFontFamily, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         FontSize="{Binding Path=DataContext.UserSettings.EditorFontSize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         Background="{Binding Path=DataContext.UserSettings.Theme.EditorBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+        VerticalScrollBarVisibility="{Binding Path=DataContext.UserSettings.EditorVerticalScrollBarVisible, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Converter={StaticResource VisibilityConverter}}"
         />
       <local:Preview 
         x:Name="Preview"

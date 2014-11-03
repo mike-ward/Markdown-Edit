@@ -18,6 +18,7 @@
       Background="{Binding Theme.EditorBackground}"
       FontFamily="{Binding FontFamily}"
       FontSize="{Binding FontSize}"
+      VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility}"
       WordWrap="{Binding Path=WordWrap, Mode=TwoWay}"
       IsModified="{Binding Path=IsModified, Mode=TwoWay}"
       ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"

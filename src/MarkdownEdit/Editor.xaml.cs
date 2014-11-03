@@ -53,7 +53,6 @@ namespace MarkdownEdit
             EditBox.Options.ConvertTabsToSpaces = true;
             EditBox.Options.AllowScrollBelowDocument = true;
             EditBox.Options.EnableHyperlinks = false;
-            EditBox.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
             var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.First(cb => cb.Command == AvalonEditCommands.IndentSelection);
             EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
             EditBox.TextChanged += EditBoxOnTextChanged;
@@ -611,6 +610,15 @@ namespace MarkdownEdit
             {
                 return null;
             }
+        }
+
+        public static readonly DependencyProperty VerticalScrollBarVisibilityProperty = DependencyProperty.Register(
+            "VerticalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(Editor), new PropertyMetadata(default(ScrollBarVisibility)));
+
+        public ScrollBarVisibility VerticalScrollBarVisibility
+        {
+            get { return (ScrollBarVisibility)GetValue(VerticalScrollBarVisibilityProperty); }
+            set { SetValue(VerticalScrollBarVisibilityProperty, value); }
         }
 
         // INotifyPropertyChanged
