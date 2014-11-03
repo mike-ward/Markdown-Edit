@@ -51,7 +51,7 @@ namespace MarkdownEdit.SpellCheck
             ClearLanguage();
             var speller = new Hunspell();
             var languageKey = LangLookup[language];
-            var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\'));
+            var assemblyFolder = Utility.AssemblyFolder();
             var path = Path.Combine(assemblyFolder, "SpellCheck\\Dictionaries");
 
             var aff = Path.Combine(path, languageKey + ".aff");

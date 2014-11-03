@@ -60,6 +60,8 @@
     <CommandBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" />
     <CommandBinding Command="{x:Static local:MainWindow.PasteSpecialCommand}" Executed="ExecutePasteSpecial" />
     <CommandBinding Command="{x:Static local:MainWindow.TogglePreviewCommand}" Executed="ExecuteTogglePreview" />
+    <CommandBinding Command="{x:Static local:MainWindow.ShowThemeDialogCommand}" Executed="ExecuteShowThemeDialog" />
+    <CommandBinding Command="{x:Static local:MainWindow.LoadThemeCommand}" Executed="ExecuteLoadTheme" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -87,5 +89,6 @@
     <KeyBinding Command="{x:Static local:MainWindow.TogglePreviewCommand}" Gesture="F12" />
     <KeyBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Gesture="Ctrl+J" />
     <KeyBinding Command="{x:Static local:MainWindow.PasteSpecialCommand}" Gesture="Ctrl+Shift+V" />
+    <KeyBinding Command="{x:Static local:MainWindow.ShowThemeDialogCommand}" Gesture="Ctrl+T" />
   </Window.InputBindings>
 </controls:MetroWindow>

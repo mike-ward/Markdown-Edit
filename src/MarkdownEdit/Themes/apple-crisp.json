@@ -1,63 +1,61 @@
 ﻿{
-  "Theme": {
     "Name": "Apple Crisp",
     "EditorBackground": "#F7F4EF",
     "EditorForeground": "Black",
     "HighlightHeading": {
-      "Name": "Heading",
-      "Background": null,
-      "Foreground": null,
-      "FontWeight": "bold",
-      "FontStyle": null
+        "Name": "Heading",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": "bold",
+        "FontStyle": null
     },
     "HighlightEmphasis": {
-      "Name": "Emphasis",
-      "Background": null,
-      "Foreground": null,
-      "FontWeight": null,
-      "FontStyle": "italic"
+        "Name": "Emphasis",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": null,
+        "FontStyle": "italic"
     },
     "HighlightStrongEmphasis": {
-      "Name": "StrongEmphasis",
-      "Background": null,
-      "Foreground": null,
-      "FontWeight": "bold",
-      "FontStyle": null
+        "Name": "StrongEmphasis",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": "bold",
+        "FontStyle": null
     },
     "HighlightInlineCode": {
-      "Name": "InlineCode",
-      "Background": "#ddd",
-      "Foreground": "#654",
-      "FontWeight": null,
-      "FontStyle": null
+        "Name": "InlineCode",
+        "Background": "#ddd",
+        "Foreground": "#654",
+        "FontWeight": null,
+        "FontStyle": null
     },
     "HighlightBlockCode": {
-      "Name": "BlockCode",
-      "Background": null,
-      "Foreground": "#654",
-      "FontWeight": null,
-      "FontStyle": null
+        "Name": "BlockCode",
+        "Background": null,
+        "Foreground": "#654",
+        "FontWeight": null,
+        "FontStyle": null
     },
     "HighlightBlockQuote": {
-      "Name": "BlockQuote",
-      "Background": null,
-      "Foreground": "#654",
-      "FontWeight": null,
-      "FontStyle": null
+        "Name": "BlockQuote",
+        "Background": null,
+        "Foreground": "#654",
+        "FontWeight": null,
+        "FontStyle": null
     },
     "HighlightLink": {
-      "Name": "Link",
-      "Background": null,
-      "Foreground": "#654",
-      "FontWeight": null,
-      "FontStyle": null
+        "Name": "Link",
+        "Background": null,
+        "Foreground": "#654",
+        "FontWeight": null,
+        "FontStyle": null
     },
     "HighlightImage": {
-      "Name": "Image",
-      "Background": null,
-      "Foreground": "#654",
-      "FontWeight": null,
-      "FontStyle": null
+        "Name": "Image",
+        "Background": null,
+        "Foreground": "#654",
+        "FontWeight": null,
+        "FontStyle": null
     }
-  }
 }

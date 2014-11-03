@@ -24,6 +24,8 @@ namespace MarkdownEdit
         public static RoutedCommand PasteSpecialCommand = new RoutedUICommand();
         public static RoutedCommand ToggleCodeCommand = new RoutedUICommand();
         public static RoutedCommand TogglePreviewCommand = new RoutedCommand();
+        public static RoutedCommand LoadThemeCommand = new RoutedCommand();
+        public static RoutedCommand ShowThemeDialogCommand = new RoutedCommand();
 
         public UserSettings UserSettings { get; set; }
         private FileSystemWatcher _userSettingsWatcher;
@@ -221,6 +223,17 @@ namespace MarkdownEdit
             UniformGrid.Columns = (UniformGrid.Columns == 2) ? 1 : 2;
             Preview.Visibility = (UniformGrid.Columns == 1) ? Visibility.Collapsed : Visibility.Visible;
             EditorMargins = CalculateEditorMargins();
+        }
+
+        private void ExecuteLoadTheme(object sender, ExecutedRoutedEventArgs e)
+        {
+            UserSettings.Theme = e.Parameter as Theme;
+        }
+
+        private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
+        {
+            var dialog = new ThemeDialog {Owner = this};
+            dialog.ShowDialog();
         }
 
         private Thickness CalculateEditorMargins()

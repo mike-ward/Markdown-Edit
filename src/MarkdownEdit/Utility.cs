@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.IO;
 using System.Media;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace MarkdownEdit
@@ -36,7 +38,13 @@ namespace MarkdownEdit
 
         public static void EditFile(string file)
         {
+
             Process.Start("Notepad.exe", file);                
+        }
+
+        public static string AssemblyFolder()
+        {
+            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\'));
         }
     }
 }
