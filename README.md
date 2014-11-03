@@ -9,7 +9,7 @@ Gratuitous Screen Shot
 ## Features
 
 - Syntax highlighting editor
-- Real time, side-by-side Markdown preview
+- Side-by-side Markdown preview
 - CommonMark standard Markdown engine
 - User preferences stored in a text file
 - Full screen covers task-bar
@@ -17,12 +17,13 @@ Gratuitous Screen Shot
 - Modern UI look and feel
 - **Not** a Windows Store App
 - Synchronized scrolling
-- User settable fonts, colors, etc.
+- User settable fonts, colors, themes
 - User defined style sheets
 - Spell checking
 - **Paste Special** replaces Microsoft Word's smart quotes/hyphens/etc. with plain text equivalents
 - Quickly open recent files
 - Open Source
+- MIT License
 
 [More](https://github.com/mike-ward/Markdown-Edit/wiki)
 
