@@ -15,15 +15,31 @@
   SaveWindowPosition="True"
   Height="300" 
   Width="300">
-  <Grid>
+  <DockPanel>
+    <Button Width="100"
+            DockPanel.Dock="Bottom"
+            IsDefault="True"
+            Margin="10"
+            BorderThickness="2"
+            >
+      Save
+    </Button>
     <ListBox x:Name="ThemeListBox"
              SelectionMode="Single"
-             SelectedIndex="0"
              Margin="10"
              TabIndex="1"
              BorderThickness="1"
              SelectionChanged="OnSelectionChanged"
              BorderBrush="{DynamicResource ControlBorderBrush}"
-             /> 
-  </Grid>
+             />
+  </DockPanel>
+  
+  <Window.CommandBindings>
+    <CommandBinding Command="Close" Executed="ExecuteClose" />
+  </Window.CommandBindings>
+
+  <Window.InputBindings>
+    <KeyBinding Gesture="Esc" Command="Close" />
+  </Window.InputBindings>
+
 </controls:MetroWindow>

@@ -233,6 +233,7 @@ namespace MarkdownEdit
         private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
         {
             var dialog = new ThemeDialog {Owner = this};
+            dialog.CurrentTheme = UserSettings.Theme;
             dialog.ShowDialog();
         }
 
