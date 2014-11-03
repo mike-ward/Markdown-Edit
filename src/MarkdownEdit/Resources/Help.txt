@@ -31,6 +31,7 @@
     Ctrl+Minus     Decrease font size
     Ctrl+0         Restore font size
     
+    Ctrl+T         Select editor theme
     F8             Open HTML template in Notepad
     F9             Open settings in Notepad
     Ctrl+F7        Open user dictionary in Notepad
