@@ -48,6 +48,11 @@ Source: "..\MarkdownEdit\bin\Release\System.Windows.Interactivity.dll"; DestDir:
 Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
 
+Source: "..\MarkdownEdit\bin\Release\Themes\apple-crisp.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Themes\solarized-dark.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Themes\solarized-dark.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Themes\zenburn.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
+
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
