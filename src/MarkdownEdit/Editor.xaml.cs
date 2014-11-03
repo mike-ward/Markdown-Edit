@@ -63,8 +63,11 @@ namespace MarkdownEdit
             {
                 Dispatcher.Invoke(() =>
                 {
-                    var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault();
-                    LoadFile(fileToOpen ?? Settings.Default.LastOpenFile);
+                    var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault() ??
+                                     (((MainWindow)Application.Current.MainWindow).UserSettings.EditorOpenLastFile
+                                         ? Settings.Default.LastOpenFile
+                                         : null);
+                    LoadFile(fileToOpen);
                     EditBox.Focus();
                     EditBox.WordWrap = Settings.Default.WordWrapEnabled;
                     _spellCheckProvider.Initialize(this);
@@ -546,7 +549,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
+            "Theme", typeof(Theme), typeof(Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
 
         public Theme Theme
         {

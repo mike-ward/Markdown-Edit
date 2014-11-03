@@ -14,6 +14,7 @@ namespace MarkdownEdit
         private Theme _theme;
         private string _editorFontFamily = "Segoe UI";
         private double _editorFontSize = 14;
+        private bool _editorOpenLastFile = true;
 
         public string EditorFontFamily
         {
@@ -38,6 +39,17 @@ namespace MarkdownEdit
             }
         }
 
+        public bool EditorOpenLastFile
+        {
+            get { return _editorOpenLastFile; }
+            set
+            {
+                if (_editorOpenLastFile == value) return;
+                _editorOpenLastFile = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Theme Theme
         {
             get { return _theme; }
@@ -55,6 +67,7 @@ namespace MarkdownEdit
             EditorFontFamily = userSettings.EditorFontFamily;
             EditorFontSize = userSettings.EditorFontSize;
             Theme = userSettings.Theme;
+            EditorOpenLastFile = userSettings.EditorOpenLastFile;
         }
 
         [JsonIgnore]
