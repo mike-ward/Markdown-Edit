@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using MarkdownEdit.Properties;
 using Newtonsoft.Json;
 
 namespace MarkdownEdit
@@ -132,7 +129,7 @@ namespace MarkdownEdit
         {
             if (File.Exists(SettingsFile) == false)
             {
-                var defaultSettings = new UserSettings { Theme = new Theme() };
+                var defaultSettings = new UserSettings {Theme = new Theme()};
                 defaultSettings.Save();
             }
             return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
@@ -142,7 +139,7 @@ namespace MarkdownEdit
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
@@ -152,7 +149,6 @@ namespace MarkdownEdit
         {
             if (EqualityComparer<T>.Default.Equals(property, value)) return;
             property = value;
-            // ReSharper disable once ExplicitCallerInfoArgument
             OnPropertyChanged(propertyName);
         }
     }

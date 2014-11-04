@@ -645,7 +645,7 @@ namespace MarkdownEdit
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
@@ -655,7 +655,6 @@ namespace MarkdownEdit
         {
             if (EqualityComparer<T>.Default.Equals(property, value)) return;
             property = value;
-            // ReSharper disable once ExplicitCallerInfoArgument
             OnPropertyChanged(propertyName);
         }
     }
