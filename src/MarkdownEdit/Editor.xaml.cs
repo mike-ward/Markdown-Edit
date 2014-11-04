@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -487,12 +488,7 @@ namespace MarkdownEdit
         public string FileName
         {
             get { return _fileName; }
-            set
-            {
-                if (_fileName == value) return;
-                _fileName = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _fileName, value); }
         }
 
         public string DisplayName
@@ -505,49 +501,29 @@ namespace MarkdownEdit
                         ? "New Document" + F1ForHelp
                         : Path.GetFileName(FileName);
             }
-            set
-            {
-                if (_displayName == value) return;
-                _displayName = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _displayName, value); }
         }
 
         public bool WordWrap
         {
             get { return _wordWrap; }
-            set
-            {
-                if (_wordWrap == value) return;
-                _wordWrap = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _wordWrap, value); }
         }
 
         public bool SpellCheck
         {
             get { return _spellCheck; }
-            set
-            {
-                if (_spellCheck == value) return;
-                _spellCheck = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _spellCheck, value); }
         }
 
         public bool IsModified
         {
             get { return _isModified; }
-            set
-            {
-                if (_isModified == value) return;
-                _isModified = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _isModified, value); }
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof(Theme), typeof(Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
+            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
 
         public Theme Theme
         {
@@ -612,7 +588,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty VerticalScrollBarVisibilityProperty = DependencyProperty.Register(
-            "VerticalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(Editor), new PropertyMetadata(default(ScrollBarVisibility)));
+            "VerticalScrollBarVisibility", typeof (ScrollBarVisibility), typeof (Editor), new PropertyMetadata(default(ScrollBarVisibility)));
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
@@ -656,7 +632,7 @@ namespace MarkdownEdit
         private static void ShowTabsChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
             var editor = (Editor)source;
-            editor.EditBox.Options.ShowTabs = editor.ShowTabs;            
+            editor.EditBox.Options.ShowTabs = editor.ShowTabs;
         }
 
         public bool ShowTabs
@@ -673,6 +649,14 @@ namespace MarkdownEdit
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            // ReSharper disable once ExplicitCallerInfoArgument
+            OnPropertyChanged(propertyName);
         }
     }
 }

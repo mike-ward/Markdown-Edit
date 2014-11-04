@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
@@ -19,94 +20,81 @@ namespace MarkdownEdit
         private bool _editorShowEndOfLine;
         private bool _editorShowSpaces;
         private bool _editorShowTabs;
+        private bool _spellCheckIgnoreCodeBlocks = true;
+        private bool _spellCheckIgnoreAllCaps = true;
+        private bool _spellCheckIgnoreMarkupTags = true;
+        private bool _spellCheckIgnoreWordsWithDigits = true;
 
         public string EditorFontFamily
         {
             get { return _editorFontFamily; }
-            set
-            {
-                if (_editorFontFamily == value) return;
-                _editorFontFamily = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _editorFontFamily, value); }
         }
 
         public double EditorFontSize
         {
             get { return _editorFontSize; }
-            set
-            {
-                // ReSharper disable once CompareOfFloatsByEqualityOperator
-                if (_editorFontSize == value) return;
-                _editorFontSize = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _editorFontSize, value); }
         }
 
         public bool EditorOpenLastFile
         {
             get { return _editorOpenLastFile; }
-            set
-            {
-                if (_editorOpenLastFile == value) return;
-                _editorOpenLastFile = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _editorOpenLastFile, value); }
         }
 
         public bool EditorVerticalScrollBarVisible
         {
             get { return _editorVerticalScrollBarVisible; }
-            set
-            {
-                if (_editorVerticalScrollBarVisible == value) return;
-                _editorVerticalScrollBarVisible = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _editorVerticalScrollBarVisible, value); }
         }
 
         public bool EditorShowEndOfLine
         {
             get { return _editorShowEndOfLine; }
-            set
-            {
-                if (_editorShowEndOfLine == value) return;
-                _editorShowEndOfLine = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _editorShowEndOfLine, value); }
         }
 
         public bool EditorShowSpaces
         {
             get { return _editorShowSpaces; }
-            set
-            {
-                if (_editorShowSpaces == value) return;
-                _editorShowSpaces = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _editorShowSpaces, value); }
         }
 
         public bool EditorShowTabs
         {
             get { return _editorShowTabs; }
-            set
-            {
-                if (_editorShowTabs == value) return;
-                _editorShowTabs = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _editorShowTabs, value); }
+        }
+
+        public bool SpellCheckIgnoreCodeBlocks
+        {
+            get { return _spellCheckIgnoreCodeBlocks; }
+            set { Set(ref _spellCheckIgnoreCodeBlocks, value); }
+        }
+
+        public bool SpellCheckIgnoreAllCaps
+        {
+            get { return _spellCheckIgnoreAllCaps; }
+            set { Set(ref _spellCheckIgnoreAllCaps, value); }
+        }
+
+        public bool SpellCheckIgnoreMarkupTags
+        {
+            get { return _spellCheckIgnoreMarkupTags; }
+            set { Set(ref _spellCheckIgnoreMarkupTags, value); }
+        }
+
+        public bool SpellCheckIgnoreWordsWithDigits
+        {
+            get { return _spellCheckIgnoreWordsWithDigits; }
+            set { Set(ref _spellCheckIgnoreWordsWithDigits, value); }
         }
 
         public Theme Theme
         {
             get { return _theme; }
-            set
-            {
-                if (_theme == value) return;
-                _theme = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _theme, value); }
         }
 
         public void Update()
@@ -181,6 +169,14 @@ namespace MarkdownEdit
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            // ReSharper disable once ExplicitCallerInfoArgument
+            OnPropertyChanged(propertyName);
         }
     }
 }
