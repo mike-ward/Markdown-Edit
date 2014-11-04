@@ -54,7 +54,7 @@
     "HighlightImage": {
         "Name": "Image",
         "Background": null,
-        "Foreground": "#d33682",
+        "Foreground": "#6F8F3F",
         "FontWeight": null,
         "FontStyle": null
     }
