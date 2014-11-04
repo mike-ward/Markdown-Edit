@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Markdown Edit"
-#define MyAppVersion "0.1"
+#define MyAppVersion "0.2"
 #define MyAppPublisher "Mike Ward"
 #define MyAppURL "http://mike-ward.net/MarkdownEdit"
-#define MyAppExeName "mpe.exe"
+#define MyAppExeName "mde.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -49,7 +49,7 @@ Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.aff"; DestDir
 Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
 
 Source: "..\MarkdownEdit\bin\Release\Themes\apple-crisp.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\Themes\solarized-dark.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Themes\solarized-light.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Themes\solarized-dark.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Themes\zenburn.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 
