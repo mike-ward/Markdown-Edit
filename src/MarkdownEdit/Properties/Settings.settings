@@ -18,10 +18,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SpellCheckEnabled" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="WordWrapEnabled" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="RecentFiles" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />

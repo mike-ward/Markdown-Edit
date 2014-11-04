@@ -6,7 +6,7 @@
     Ctrl+O         Open file
     Ctrl+S         Save file
     Ctrl+Shift+S   Save file As
-    Ctrl+J         Recent files
+    Ctrl+R         Recent files
     Alt+F4         Exit
 
     Ctrl+W         Toggle word wrap
@@ -51,7 +51,7 @@
 
 ## User Settings
 
-User settings are stored in a text file the the AppData folder. Placing settings in a plain file allows sharing of settings on different installations.
+User settings are stored in a text file the the `AppData` folder. Placing settings in a plain file allows sharing of settings on different installations.
 
 Typically, this folder is located at `C:\Users\<USER>\AppData\Roaming\Markdown Edit\user_settings.json`. Pressing `F9` will open this file in the system's Notepad editor. It should look something like this:
 
@@ -64,13 +64,13 @@ Typically, this folder is located at `C:\Users\<USER>\AppData\Roaming\Markdown E
 
 When you change settings and save this file, Markdown Edit will immediately update to reflect the changes.
 
-Colors can be defined as RBG values, like the `EditorBackground` setting, or using the predefined names, like the `EditorForground` setting. Acceptable predefined names are listed [here](http://msdn.microsoft.com/en-us/library/system.windows.media.colors(v=vs.110).aspx).
+Colors can be defined as RBG values, like the `EditorBackground` setting, or using the predefined names (like the `EditorForground` setting). Acceptable predefined names are listed [here](http://msdn.microsoft.com/en-us/library/system.windows.media.colors(v=vs.110).aspx).
 
 If you delete this file, Markdown Edit will restore it.
 
 ## User Template
 
-You can change the appearance of the preview view by changing the user template file. User templates work similar to user settings. The template file is stored in the AppData Folder as `user_template.html`. It can be quickly accessed by pressing `F8`. Edit it as you see fit. 
+You can change the appearance of the preview view by changing the user template file. User templates work similar to user settings. The template file is stored in the `AppData` Folder as `user_template.html`. It can be quickly accessed by pressing `F8`. Edit it as you see fit. 
 
 It is strongly recommended that you keep the IE9 meta tag in the `<head>` section.
 
@@ -82,18 +82,31 @@ Delete it and Markdown Edit will create a new one.
 
 ## Spell Checking
 
-Pressing `F7` will toggle spell checking. todo:
+Pressing `F7` will toggle spell checking. Spell checking is done as you type. Right-click on the word to get suggested spellings or to add to the dictionary.
 
----
----
+The custom dictionary is a simple text file. It stored in the same folder as the user settings and user templates. It can be accessed and edited  by pressing `Shift+F7`.
+
+Markdown Edit ships with dictionaries for many languages. Set the dictionary by pressing `F9`. The dictionaries are stored in the installation folder under `Spell Check\Dictionaries`.
+
+## Themes
+
+Markdown Edit has a rudimentary theme system. Themes, control the appearance of the editor and syntax highlighting. The UI  elements (i.e. dialogs) are not affected. 
+
+Out of the box, Markdown comes with several themes which can be accessed by pressing `Ctrl+T`. Selecting a theme updates your user settings. You can further edit the theme by opening your user settings (`F9`) and editing the theme section. This is the recommended way to create a new theme.
+
+Themes are located in the installation directory under `\Themes`.
+
+If you create an awesome theme, send it to me and I'll add it to the distribution. I'm a lousy artist. :)
+
 ---
 
 ## About
 
 ### Markdown Edit
 
-Version 0.1.0  
-Copyright (c) Mike Ward, All rights reserved.
+Version 0.2.0  
+Home Page: TBD  
+Source: <https://github.com/mike-ward/Markdown-Edit>
 
 ## License
 

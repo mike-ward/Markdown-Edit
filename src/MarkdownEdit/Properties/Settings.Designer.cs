@@ -85,7 +85,7 @@ namespace MarkdownEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool SpellCheckEnabled {
             get {
                 return ((bool)(this["SpellCheckEnabled"]));
@@ -97,7 +97,7 @@ namespace MarkdownEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool WordWrapEnabled {
             get {
                 return ((bool)(this["WordWrapEnabled"]));
