@@ -31,6 +31,9 @@
         FontSize="{Binding Path=DataContext.UserSettings.EditorFontSize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         Background="{Binding Path=DataContext.UserSettings.Theme.EditorBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         VerticalScrollBarVisibility="{Binding Path=DataContext.UserSettings.EditorVerticalScrollBarVisible, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Converter={StaticResource VisibilityConverter}}"
+        ShowEndOfLine="{Binding Path=DataContext.UserSettings.EditorShowEndOfLine, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+        ShowSpaces="{Binding Path=DataContext.UserSettings.EditorShowSpaces, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+        ShowTabs="{Binding Path=DataContext.UserSettings.EditorShowTabs, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         />
       <local:Preview 
         x:Name="Preview"

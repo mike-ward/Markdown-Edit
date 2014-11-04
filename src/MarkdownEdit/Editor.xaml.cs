@@ -57,7 +57,6 @@ namespace MarkdownEdit
             EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
             EditBox.TextChanged += EditBoxOnTextChanged;
             PropertyChanged += OnSpellCheckChanged;
-
             Task.Delay(100).ContinueWith(t =>
             {
                 Dispatcher.Invoke(() =>
@@ -619,6 +618,51 @@ namespace MarkdownEdit
         {
             get { return (ScrollBarVisibility)GetValue(VerticalScrollBarVisibilityProperty); }
             set { SetValue(VerticalScrollBarVisibilityProperty, value); }
+        }
+
+        public static readonly DependencyProperty ShowEndOfLineProperty = DependencyProperty.Register(
+            "ShowEndOfLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
+
+        private static void ShowEndOfLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
+        {
+            var editor = (Editor)source;
+            editor.EditBox.Options.ShowEndOfLine = editor.ShowEndOfLine;
+        }
+
+        public bool ShowEndOfLine
+        {
+            get { return (bool)GetValue(ShowEndOfLineProperty); }
+            set { SetValue(ShowEndOfLineProperty, value); }
+        }
+
+        public static readonly DependencyProperty ShowSpacesProperty = DependencyProperty.Register(
+            "ShowSpaces", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
+
+        private static void ShowSpacesChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
+        {
+            var editor = (Editor)source;
+            editor.EditBox.Options.ShowSpaces = editor.ShowSpaces;
+        }
+
+        public bool ShowSpaces
+        {
+            get { return (bool)GetValue(ShowSpacesProperty); }
+            set { SetValue(ShowSpacesProperty, value); }
+        }
+
+        public static readonly DependencyProperty ShowTabsProperty = DependencyProperty.Register(
+            "ShowTabs", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
+
+        private static void ShowTabsChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
+        {
+            var editor = (Editor)source;
+            editor.EditBox.Options.ShowTabs = editor.ShowTabs;            
+        }
+
+        public bool ShowTabs
+        {
+            get { return (bool)GetValue(ShowTabsProperty); }
+            set { SetValue(ShowTabsProperty, value); }
         }
 
         // INotifyPropertyChanged

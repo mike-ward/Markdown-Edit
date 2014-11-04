@@ -16,6 +16,9 @@ namespace MarkdownEdit
         private double _editorFontSize = 14;
         private bool _editorOpenLastFile = true;
         private bool _editorVerticalScrollBarVisible;
+        private bool _editorShowEndOfLine;
+        private bool _editorShowSpaces;
+        private bool _editorShowTabs;
 
         public string EditorFontFamily
         {
@@ -62,6 +65,39 @@ namespace MarkdownEdit
             }
         }
 
+        public bool EditorShowEndOfLine
+        {
+            get { return _editorShowEndOfLine; }
+            set
+            {
+                if (_editorShowEndOfLine == value) return;
+                _editorShowEndOfLine = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool EditorShowSpaces
+        {
+            get { return _editorShowSpaces; }
+            set
+            {
+                if (_editorShowSpaces == value) return;
+                _editorShowSpaces = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool EditorShowTabs
+        {
+            get { return _editorShowTabs; }
+            set
+            {
+                if (_editorShowTabs == value) return;
+                _editorShowTabs = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Theme Theme
         {
             get { return _theme; }
@@ -81,6 +117,9 @@ namespace MarkdownEdit
             Theme = userSettings.Theme;
             EditorOpenLastFile = userSettings.EditorOpenLastFile;
             EditorVerticalScrollBarVisible = userSettings.EditorVerticalScrollBarVisible;
+            EditorShowEndOfLine = userSettings.EditorShowEndOfLine;
+            EditorShowSpaces = userSettings.EditorShowSpaces;
+            EditorShowTabs = userSettings.EditorShowTabs;
         }
 
         [JsonIgnore]
