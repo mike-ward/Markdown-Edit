@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
 {
@@ -46,7 +48,7 @@ namespace MarkdownEdit
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (Properties.Settings.Default.HidePreview) TogglePreviewCommand.Execute(null, this);
+            if (Settings.Default.HidePreview) TogglePreviewCommand.Execute(null, this);
         }
 
         private void InitiailzeUserSettings()
@@ -71,7 +73,7 @@ namespace MarkdownEdit
         protected override void OnClosed(EventArgs e)
         {
             _userSettingsWatcher.Dispose();
-            Properties.Settings.Default.HidePreview = UniformGrid.Columns == 1;
+            Settings.Default.HidePreview = UniformGrid.Columns == 1;
             base.OnClosed(e);
         }
 
@@ -253,25 +255,15 @@ namespace MarkdownEdit
         public string TitleName
         {
             get { return _titleName; }
-            set
-            {
-                if (_titleName == value) return;
-                _titleName = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _titleName, value); }
         }
 
         private Thickness _editorMargins;
 
         public Thickness EditorMargins
         {
-            get {  return _editorMargins; }
-            set
-            {
-                if (_editorMargins == value) return;
-                _editorMargins = value; 
-                OnPropertyChanged();
-            }
+            get { return _editorMargins; }
+            set { Set(ref _editorMargins, value); }
         }
 
         // INotifyPropertyChanged implementation
@@ -282,6 +274,14 @@ namespace MarkdownEdit
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            // ReSharper disable once ExplicitCallerInfoArgument
+            OnPropertyChanged(propertyName);
         }
     }
 }

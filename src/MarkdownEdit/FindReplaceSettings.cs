@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using MarkdownEdit.Properties;
@@ -30,45 +31,25 @@ namespace MarkdownEdit
         public bool CaseSensitive
         {
             get { return _caseSensitive; }
-            set
-            {
-                if (_caseSensitive == value) return;
-                _caseSensitive = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _caseSensitive, value); }
         }
 
         public bool WholeWord
         {
             get { return _wholeWord; }
-            set
-            {
-                if (_wholeWord == value) return;
-                _wholeWord = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _wholeWord, value); }
         }
 
         public bool UseRegex
         {
             get { return _useRegex; }
-            set
-            {
-                if (_useRegex == value) return;
-                _useRegex = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _useRegex, value); }
         }
 
         public bool UseWildcards
         {
             get { return _useWildcards; }
-            set
-            {
-                if (_useWildcards == value) return;
-                _useWildcards = value;
-                OnPropertyChanged();
-            }
+            set { Set(ref _useWildcards, value); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -77,6 +58,14 @@ namespace MarkdownEdit
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            // ReSharper disable once ExplicitCallerInfoArgument
+            OnPropertyChanged(propertyName);
         }
     }
 }

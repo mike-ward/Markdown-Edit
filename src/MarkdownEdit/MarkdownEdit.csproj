@@ -84,6 +84,8 @@
       <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="FindReplaceSettings.cs" />
+    <Compile Include="Highlight.cs" />
+    <Compile Include="HighlightBrush.cs" />
     <Compile Include="RecentFilesDialog.xaml.cs">
       <DependentUpon>RecentFilesDialog.xaml</DependentUpon>
     </Compile>

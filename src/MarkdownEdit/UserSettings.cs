@@ -152,13 +152,12 @@ namespace MarkdownEdit
 
         public static UserSettings Load()
         {
-            if (File.Exists(SettingsFile))
+            if (File.Exists(SettingsFile) == false)
             {
-                return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
+                var defaultSettings = new UserSettings { Theme = new Theme() };
+                defaultSettings.Save();
             }
-            var defaultSettings = new UserSettings {Theme = new Theme()};
-            defaultSettings.Save();
-            return Load();
+            return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
         }
 
         // INotifyPropertyChanged
