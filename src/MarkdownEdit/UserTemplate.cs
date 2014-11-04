@@ -14,10 +14,12 @@ namespace MarkdownEdit
 
         public static UserTemplate Load()
         {
-            if (File.Exists(TemplateFile)) return new UserTemplate {Template = File.ReadAllText(TemplateFile)};
-            var userTemplate = new UserTemplate {Template = Resources.GithubTemplateHtml};
-            userTemplate.Save();
-            return Load();
+            if (File.Exists(TemplateFile) == false)
+            {
+                var userTemplate = new UserTemplate {Template = Resources.GithubTemplateHtml};
+                userTemplate.Save();
+            }
+            return new UserTemplate {Template = File.ReadAllText(TemplateFile)};
         }
 
         public void Save()

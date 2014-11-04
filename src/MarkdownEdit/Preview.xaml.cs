@@ -71,15 +71,15 @@ namespace MarkdownEdit
             GetContentsDiv().InnerHtml = contents;
         }
 
-        private static string UriResolver(string s)
+        private static string UriResolver(string text)
         {
-            if (Regex.IsMatch(s, @"^\w+://")) return s;
+            if (Regex.IsMatch(text, @"^\w+://")) return text;
             var lastOpen = Settings.Default.LastOpenFile;
-            if (string.IsNullOrEmpty(lastOpen)) return s;
+            if (string.IsNullOrEmpty(lastOpen)) return text;
             var path = Path.GetDirectoryName(lastOpen);
-            if (string.IsNullOrEmpty(path)) return s;
-            var file = s.TrimStart('/');
-            return FindAsset(path, file) ?? s;
+            if (string.IsNullOrEmpty(path)) return text;
+            var file = text.TrimStart('/');
+            return FindAsset(path, file) ?? text;
         }
 
         private static string FindAsset(string path, string file)
@@ -103,7 +103,7 @@ namespace MarkdownEdit
             if (url.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
         }
 
-        public string RemoveYamlFrontMatter(string markdown)
+        private static string RemoveYamlFrontMatter(string markdown)
         {
             const string yaml = "---\n";
             const string yaml2 = "---\r\n";

@@ -110,28 +110,6 @@ namespace MarkdownEdit
             EditorShowTabs = userSettings.EditorShowTabs;
         }
 
-        [JsonIgnore]
-        public StringCollection RecentFiles
-        {
-            get { return Settings.Default.RecentFiles ?? (Settings.Default.RecentFiles = new StringCollection()); }
-            set
-            {
-                if (Settings.Default.RecentFiles == value) return;
-                Settings.Default.RecentFiles = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public void UpdateRecentFiles(string file)
-        {
-            var recent = RecentFiles;
-            recent.Remove(file);
-            recent.Insert(0, file);
-            var sc = new StringCollection(); // string collections suck
-            sc.AddRange(recent.Cast<string>().Take(20).ToArray());
-            RecentFiles = sc;
-        }
-
         // Serialization
 
         public static string SettingsFolder

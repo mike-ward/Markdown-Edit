@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Markup;
 using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
@@ -59,28 +57,15 @@ namespace MarkdownEdit
             FilesListBox.ItemsSource = new string[0];
             Close();
         }
-    }
 
-    internal class ItemsControlContainerConverter : MarkupExtension, IValueConverter
-    {
-        #region IValueConverter Members
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public static void UpdateRecentFiles(string file)
         {
-            var items = (ItemsControl)value;
-            return items.ItemContainerGenerator.ContainerFromIndex(System.Convert.ToInt32(parameter));
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
+            var recent = Settings.Default.RecentFiles ?? new StringCollection();
+            recent.Remove(file);
+            recent.Insert(0, file);
+            var sc = new StringCollection(); // string collections suck
+            sc.AddRange(recent.Cast<string>().Take(20).ToArray());
+            Settings.Default.RecentFiles = sc;
         }
     }
 }

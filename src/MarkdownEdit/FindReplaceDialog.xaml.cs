@@ -1,5 +1,4 @@
-﻿using System.Media;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
