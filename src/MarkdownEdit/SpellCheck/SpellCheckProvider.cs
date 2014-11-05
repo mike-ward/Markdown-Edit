@@ -15,6 +15,7 @@ namespace MarkdownEdit.SpellCheck
         private readonly Regex _codeBlock = new Regex(@"^(\s{4,}|\t).*");
         private readonly Regex _wordSeparatorRegex = new Regex("-[^\\w]+|^'[^\\w]+|[^\\w]+'[^\\w]+|[^\\w]+-[^\\w]+|[^\\w]+'$|[^\\w]+-$|^-$|^'$|[^\\w'-]", RegexOptions.Compiled);
         private readonly Regex _uriFinderRegex = new Regex("(http|ftp|https|mailto):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?", RegexOptions.Compiled);
+        private readonly Regex _markupTag = new Regex("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>", RegexOptions.Compiled);
 
         private readonly ISpellingService _spellingService;
         private readonly SpellCheckBackgroundRenderer _spellCheckRenderer;
@@ -80,6 +81,7 @@ namespace MarkdownEdit.SpellCheck
 
                 originalText = Regex.Replace(originalText, "[\\u2018\\u2019\\u201A\\u201B\\u2032\\u2035]", "'");
                 var textWithout = userSettings.SpellCheckIgnoreCodeBlocks ? _codeBlock.Replace(originalText, "") : originalText;
+                if (userSettings.SpellCheckIgnoreMarkupTags) textWithout = _markupTag.Replace(textWithout, "");
                 textWithout = _uriFinderRegex.Replace(textWithout, "");
                 textWithout = _mardownUri.Replace(textWithout, "");
                 if (userSettings.SpellCheckIgnoreCodeBlocks) textWithout = _inlineCode.Replace(textWithout, "");
