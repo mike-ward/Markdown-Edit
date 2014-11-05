@@ -1,0 +1,61 @@
+﻿{
+    "Name": "Plain",
+    "EditorBackground": "#fff",
+    "EditorForeground": "#000",
+    "HighlightHeading": {
+        "Name": "Heading",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": null,
+        "FontStyle": null
+    },
+    "HighlightEmphasis": {
+        "Name": "Emphasis",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": null,
+        "FontStyle": "italic"
+    },
+    "HighlightStrongEmphasis": {
+        "Name": "StrongEmphasis",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": null,
+        "FontStyle": null
+    },
+    "HighlightInlineCode": {
+        "Name": "InlineCode",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": null,
+        "FontStyle": null
+    },
+    "HighlightBlockCode": {
+        "Name": "BlockCode",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": null,
+        "FontStyle": null
+    },
+    "HighlightBlockQuote": {
+        "Name": "BlockQuote",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": null,
+        "FontStyle": null
+    },
+    "HighlightLink": {
+        "Name": "Link",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": null,
+        "FontStyle": null
+    },
+    "HighlightImage": {
+        "Name": "Image",
+        "Background": null,
+        "Foreground": null,
+        "FontWeight": null,
+        "FontStyle": null
+    }
+}

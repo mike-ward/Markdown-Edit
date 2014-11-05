@@ -22,8 +22,7 @@
       WordWrap="{Binding Path=WordWrap, Mode=TwoWay}"
       IsModified="{Binding Path=IsModified, Mode=TwoWay}"
       ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"
-      >
-    </avalonedit:TextEditor>
+      />
   </Border>
 
 </UserControl>

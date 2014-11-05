@@ -48,7 +48,7 @@
     Ctrl+6         Insert ###### at beginning of line
     
 - [CommonMark](http://commonmark.org)
-- [Syntax Cheat Sheet (Tables not supported)](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+- [Syntax Cheat Sheet (Tables, strikethrough not supported)](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
 ## User Settings
 
