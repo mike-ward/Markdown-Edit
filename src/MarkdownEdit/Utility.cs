@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Media;
@@ -25,7 +26,7 @@ namespace MarkdownEdit
                 last = arg;
                 Task.Delay(milliseconds).ContinueWith(t =>
                 {
-                    if (last.Equals(arg)) func(last);
+                    if (EqualityComparer<T>.Default.Equals(last, arg)) func(last);
                     t.Dispose();
                 });
             };

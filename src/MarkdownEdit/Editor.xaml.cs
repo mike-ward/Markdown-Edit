@@ -434,11 +434,6 @@ namespace MarkdownEdit
             EditBox.FontSize = 14;
         }
 
-        public void WrapToColumn()
-        {
-            EditBox.Text = EditBox.Text.WrapToColumn();
-        }
-
         public void PasteSpecial()
         {
             Execute(() =>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-
-namespace MarkdownEdit
+﻿namespace MarkdownEdit
 {
     internal static class StringExtensions
     {
@@ -41,6 +36,7 @@ namespace MarkdownEdit
             return dumb;
         }
 
+#if false
         public static string WrapToColumn(this string text, int column = 90)
         {
             var allParagraphs = new List<string>();
@@ -71,5 +67,6 @@ namespace MarkdownEdit
             }
             return string.Join("\r\n\r\n", allParagraphs);
         }
+#endif
     }
 }
