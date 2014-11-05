@@ -85,6 +85,7 @@ namespace MarkdownEdit.SpellCheck
                 if (userSettings.SpellCheckIgnoreCodeBlocks) textWithout = _inlineCode.Replace(textWithout, "");
                 var words = _wordSeparatorRegex.Split(textWithout).Where(s => !string.IsNullOrEmpty(s));
                 if (userSettings.SpellCheckIgnoreAllCaps) words = words.Where(w => w != w.ToUpper()).ToArray();
+                if (userSettings.SpellCheckIgnoreWordsWithDigits) words = words.Where(w => !Regex.Match(w, "\\d").Success).ToArray();
 
                 foreach (var word in words)
                 {
