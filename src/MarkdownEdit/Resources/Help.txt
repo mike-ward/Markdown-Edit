@@ -47,7 +47,8 @@
     Ctrl+5         Insert ##### at beginning of line
     Ctrl+6         Insert ###### at beginning of line
     
-[Markdown Syntax](http://daringfireball.net/projects/markdown/syntax)
+- [CommonMark](http://commonmark.org)
+- [Syntax Cheat Sheet (Tables not supported)](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
 ## User Settings
 
@@ -98,6 +99,13 @@ Themes are located in the installation directory under `\Themes`.
 
 If you create an awesome theme, send it to me and I'll add it to the distribution. I'm a lousy artist. :)
 
+## Limitations
+
+- Only supports CommonMark (which does support code fences!)
+- Single document Interface
+- Syntax highlighting does not recognize multiple-line constructs. It uses regular expressions which don't understand the underlying Markdown constructs.  I'm hoping as CommonMark matures that a syntax parser (like PEG) will emerge.
+- I wrote it ;)
+
 ---
 
 ## About
@@ -106,6 +114,7 @@ If you create an awesome theme, send it to me and I'll add it to the distributio
 
 Version 0.2.0  
 Home Page: TBD  
+Twitter: `@mikeward_aa`  
 Source: <https://github.com/mike-ward/Markdown-Edit>
 
 ## License
