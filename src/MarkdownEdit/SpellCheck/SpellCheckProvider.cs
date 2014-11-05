@@ -79,7 +79,7 @@ namespace MarkdownEdit.SpellCheck
                     currentLine.LastDocumentLine.EndOffset - currentLine.FirstDocumentLine.Offset);
 
                 originalText = Regex.Replace(originalText, "[\\u2018\\u2019\\u201A\\u201B\\u2032\\u2035]", "'");
-                var textWithout = _codeBlock.Replace(originalText, "");
+                var textWithout = userSettings.SpellCheckIgnoreCodeBlocks ? _codeBlock.Replace(originalText, "") : originalText;
                 textWithout = _uriFinderRegex.Replace(textWithout, "");
                 textWithout = _mardownUri.Replace(textWithout, "");
                 if (userSettings.SpellCheckIgnoreCodeBlocks) textWithout = _inlineCode.Replace(textWithout, "");
