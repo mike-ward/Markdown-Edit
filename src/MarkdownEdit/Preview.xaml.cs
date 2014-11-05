@@ -47,7 +47,7 @@ namespace MarkdownEdit
             }
             catch (CommonMarkException e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.ToString());
                 return;
             }
             GetContentsDiv().InnerHtml = html;
@@ -84,14 +84,20 @@ namespace MarkdownEdit
 
         private static string FindAsset(string path, string file)
         {
-            var asset = Path.Combine(path, file);
-            for (var i = 0; i < 4; ++i)
+            try
             {
-                if (File.Exists(asset)) return "file://" + asset.Replace('\\', '/');
-                var parent = Directory.GetParent(path);
-                if (parent == null) break;
-                path = parent.FullName;
-                asset = Path.Combine(path, file);
+                var asset = Path.Combine(path, file);
+                for (var i = 0; i < 4; ++i)
+                {
+                    if (File.Exists(asset)) return "file://" + asset.Replace('\\', '/');
+                    var parent = Directory.GetParent(path);
+                    if (parent == null) break;
+                    path = parent.FullName;
+                    asset = Path.Combine(path, file);
+                }
+            }
+            catch (ArgumentException)
+            {
             }
             return null;
         }
@@ -105,12 +111,13 @@ namespace MarkdownEdit
 
         private static string RemoveYamlFrontMatter(string markdown)
         {
-            const string yaml = "---\n";
-            const string yaml2 = "---\r\n";
-            const string yamlEnd = "\n---";
-            if (!markdown.StartsWith(yaml) && !markdown.StartsWith(yaml2)) return markdown;
-            var index = markdown.IndexOf(yamlEnd, yaml.Length, StringComparison.Ordinal);
-            return (index == -1) ? markdown : markdown.Substring(Math.Min(index + yaml2.Length, markdown.Length));
+            if (markdown.StartsWith("---\n", StringComparison.Ordinal) ||
+                markdown.StartsWith("---\r\n", StringComparison.Ordinal))
+            {
+                var index = Regex.Match(markdown.Substring(3), @"^(---)|(\.\.\.)", RegexOptions.Multiline).Index;
+                if (index > 0) return markdown.Substring(index + 6);
+            }
+            return markdown;
         }
 
         public void SetScrollOffset(ScrollChangedEventArgs ea)
