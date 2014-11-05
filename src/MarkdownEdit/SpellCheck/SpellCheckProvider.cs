@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 
@@ -66,6 +67,7 @@ namespace MarkdownEdit.SpellCheck
         {
             if (_editor == null) return;
             if (!_editor.EditBox.TextArea.TextView.VisualLinesValid) return;
+            var userSettings = ((MainWindow)Application.Current.MainWindow).UserSettings;
             _spellCheckRenderer.ErrorSegments.Clear();
             IEnumerable<VisualLine> visualLines = _editor.EditBox.TextArea.TextView.VisualLines.AsParallel();
 
@@ -80,10 +82,11 @@ namespace MarkdownEdit.SpellCheck
                 var textWithout = _codeBlock.Replace(originalText, "");
                 textWithout = _uriFinderRegex.Replace(textWithout, "");
                 textWithout = _mardownUri.Replace(textWithout, "");
-                textWithout = _inlineCode.Replace(textWithout, "");
-                var query = _wordSeparatorRegex.Split(textWithout).Where(s => !string.IsNullOrEmpty(s));
+                if (userSettings.SpellCheckIgnoreCodeBlocks) textWithout = _inlineCode.Replace(textWithout, "");
+                var words = _wordSeparatorRegex.Split(textWithout).Where(s => !string.IsNullOrEmpty(s));
+                if (userSettings.SpellCheckIgnoreAllCaps) words = words.Where(w => w != w.ToUpper()).ToArray();
 
-                foreach (var word in query)
+                foreach (var word in words)
                 {
                     var trimmedWord = word.Trim('\'', '_', '-');
 

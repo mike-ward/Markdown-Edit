@@ -105,6 +105,10 @@ namespace MarkdownEdit
             EditorShowEndOfLine = userSettings.EditorShowEndOfLine;
             EditorShowSpaces = userSettings.EditorShowSpaces;
             EditorShowTabs = userSettings.EditorShowTabs;
+            SpellCheckIgnoreAllCaps = userSettings.SpellCheckIgnoreAllCaps;
+            SpellCheckIgnoreCodeBlocks = userSettings.SpellCheckIgnoreCodeBlocks;
+            SpellCheckIgnoreMarkupTags = userSettings.SpellCheckIgnoreMarkupTags;
+            SpellCheckIgnoreWordsWithDigits = userSettings.SpellCheckIgnoreWordsWithDigits;
         }
 
         // Serialization
