@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 
@@ -68,7 +67,7 @@ namespace MarkdownEdit.SpellCheck
         {
             if (_editor == null) return;
             if (!_editor.EditBox.TextArea.TextView.VisualLinesValid) return;
-            var userSettings = ((MainWindow)Application.Current.MainWindow).UserSettings;
+            var userSettings = App.UserSettings;
             _spellCheckRenderer.ErrorSegments.Clear();
             IEnumerable<VisualLine> visualLines = _editor.EditBox.TextArea.TextView.VisualLines.AsParallel();
 
@@ -98,7 +97,7 @@ namespace MarkdownEdit.SpellCheck
 
                     if (!_spellingService.Spell(trimmedWord))
                     {
-                        var textSegment = new TextSegment { StartOffset = num, Length = word.Length };
+                        var textSegment = new TextSegment {StartOffset = num, Length = word.Length};
                         _spellCheckRenderer.ErrorSegments.Add(textSegment);
                     }
 

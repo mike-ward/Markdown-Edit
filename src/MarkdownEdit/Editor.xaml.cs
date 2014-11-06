@@ -61,9 +61,8 @@ namespace MarkdownEdit
             {
                 Dispatcher.Invoke(() =>
                 {
-                    var userSettings = ((MainWindow)Application.Current.MainWindow).UserSettings;
                     var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault() ??
-                                     (userSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
+                                     (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
                     LoadFile(fileToOpen);
                     EditBox.Focus();
                     EditBox.WordWrap = Settings.Default.WordWrapEnabled;
@@ -143,12 +142,11 @@ namespace MarkdownEdit
         private void InitializeSpellCheck()
         {
             var spellingService = new SpellingService();
-            var userSettings = ((MainWindow)Application.Current.MainWindow).UserSettings;
-            userSettings.PropertyChanged += (s, e) =>
+            App.UserSettings.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == "SpellCheckDictonary") spellingService.SetLanguage(userSettings.SpellCheckDictionary);
+                if (e.PropertyName == "SpellCheckDictonary") spellingService.SetLanguage(App.UserSettings.SpellCheckDictionary);
             };
-            spellingService.SetLanguage(userSettings.SpellCheckDictionary);
+            spellingService.SetLanguage(App.UserSettings.SpellCheckDictionary);
             _spellCheckProvider = new SpellCheckProvider(spellingService);
             _spellCheckProvider.Initialize(this);
         }
@@ -435,7 +433,7 @@ namespace MarkdownEdit
 
         public void RestoreFontSize()
         {
-            EditBox.FontSize = 14;
+            EditBox.FontSize = App.UserSettings.EditorFontSize;
         }
 
         public void PasteSpecial()

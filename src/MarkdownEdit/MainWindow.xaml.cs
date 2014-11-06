@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -30,8 +29,6 @@ namespace MarkdownEdit
         public static RoutedCommand SaveThemeCommand = new RoutedCommand();
         public static RoutedCommand ShowThemeDialogCommand = new RoutedCommand();
 
-        public UserSettings UserSettings { get; set; }
-        private FileSystemWatcher _userSettingsWatcher;
         private string _titleName = string.Empty;
 
         public MainWindow()
@@ -43,25 +40,11 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
-            InitiailzeUserSettings();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             if (Settings.Default.HidePreview) TogglePreviewCommand.Execute(null, this);
-        }
-
-        private void InitiailzeUserSettings()
-        {
-            UserSettings = UserSettings.Load();
-            _userSettingsWatcher = new FileSystemWatcher
-            {
-                Path = UserSettings.SettingsFolder,
-                Filter = Path.GetFileName(UserSettings.SettingsFile),
-                NotifyFilter = NotifyFilters.LastWrite
-            };
-            _userSettingsWatcher.Changed += (sender, args) => UserSettings.Update();
-            _userSettingsWatcher.EnableRaisingEvents = true;
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -72,7 +55,6 @@ namespace MarkdownEdit
 
         protected override void OnClosed(EventArgs e)
         {
-            _userSettingsWatcher.Dispose();
             Settings.Default.HidePreview = UniformGrid.Columns == 1;
             base.OnClosed(e);
         }
@@ -230,17 +212,17 @@ namespace MarkdownEdit
 
         private void ExecuteLoadTheme(object sender, ExecutedRoutedEventArgs e)
         {
-            UserSettings.Theme = e.Parameter as Theme;
+            App.UserSettings.Theme = e.Parameter as Theme;
         }
 
         private void ExecuteSaveTheme(object sender, ExecutedRoutedEventArgs e)
         {
-            UserSettings.Save();
+            App.UserSettings.Save();
         }
 
         private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new ThemeDialog {Owner = this, CurrentTheme = UserSettings.Theme};
+            var dialog = new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme};
             dialog.ShowDialog();
         }
 

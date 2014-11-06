@@ -13,7 +13,7 @@ namespace MarkdownEdit
         private string _editorFontFamily = "Consolas";
         private double _editorFontSize = 15.0;
         private bool _editorOpenLastFile = true;
-        private bool _editorVerticalScrollBarVisible;
+        private bool _editorVerticalScrollBarVisible = true;
         private bool _editorShowEndOfLine;
         private bool _editorShowSpaces;
         private bool _editorShowTabs;
