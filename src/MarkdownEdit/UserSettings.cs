@@ -17,6 +17,7 @@ namespace MarkdownEdit
         private bool _editorShowEndOfLine;
         private bool _editorShowSpaces;
         private bool _editorShowTabs;
+        private string _spellCheckDictionary = "en_US";
         private bool _spellCheckIgnoreCodeBlocks = true;
         private bool _spellCheckIgnoreAllCaps = true;
         private bool _spellCheckIgnoreMarkupTags = true;
@@ -64,6 +65,12 @@ namespace MarkdownEdit
             set { Set(ref _editorShowTabs, value); }
         }
 
+        public string SpellCheckDictionary
+        {
+            get { return _spellCheckDictionary; }
+            set { Set(ref _spellCheckDictionary, value); }
+        }
+
         public bool SpellCheckIgnoreCodeBlocks
         {
             get { return _spellCheckIgnoreCodeBlocks; }
@@ -105,6 +112,7 @@ namespace MarkdownEdit
             EditorShowEndOfLine = userSettings.EditorShowEndOfLine;
             EditorShowSpaces = userSettings.EditorShowSpaces;
             EditorShowTabs = userSettings.EditorShowTabs;
+            SpellCheckDictionary = userSettings.SpellCheckDictionary;
             SpellCheckIgnoreAllCaps = userSettings.SpellCheckIgnoreAllCaps;
             SpellCheckIgnoreCodeBlocks = userSettings.SpellCheckIgnoreCodeBlocks;
             SpellCheckIgnoreMarkupTags = userSettings.SpellCheckIgnoreMarkupTags;

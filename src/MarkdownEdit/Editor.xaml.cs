@@ -42,7 +42,6 @@ namespace MarkdownEdit
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
             _findReplaceDialog = new FindReplaceDialog(EditBox);
-            InitializeSpellCheck();
         }
 
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -62,14 +61,13 @@ namespace MarkdownEdit
             {
                 Dispatcher.Invoke(() =>
                 {
+                    var userSettings = ((MainWindow)Application.Current.MainWindow).UserSettings;
                     var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault() ??
-                                     (((MainWindow)Application.Current.MainWindow).UserSettings.EditorOpenLastFile
-                                         ? Settings.Default.LastOpenFile
-                                         : null);
+                                     (userSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
                     LoadFile(fileToOpen);
                     EditBox.Focus();
                     EditBox.WordWrap = Settings.Default.WordWrapEnabled;
-                    _spellCheckProvider.Initialize(this);
+                    InitializeSpellCheck();
                     SpellCheck = Settings.Default.SpellCheckEnabled;
                 });
                 t.Dispose();
@@ -145,8 +143,14 @@ namespace MarkdownEdit
         private void InitializeSpellCheck()
         {
             var spellingService = new SpellingService();
-            spellingService.SetLanguage(SpellingLanguages.UnitedStates);
+            var userSettings = ((MainWindow)Application.Current.MainWindow).UserSettings;
+            userSettings.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == "SpellCheckDictonary") spellingService.SetLanguage(userSettings.SpellCheckDictionary);
+            };
             _spellCheckProvider = new SpellCheckProvider(spellingService);
+            spellingService.SetLanguage(userSettings.SpellCheckDictionary);
+            _spellCheckProvider.Initialize(this);
         }
 
         private void SpellCheckSuggestions(ContextMenu contextMenu)
