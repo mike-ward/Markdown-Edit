@@ -10,8 +10,8 @@ namespace MarkdownEdit
     public class UserSettings : INotifyPropertyChanged
     {
         private Theme _theme;
-        private string _editorFontFamily = "Segoe UI";
-        private double _editorFontSize = 14;
+        private string _editorFontFamily = "Consolas";
+        private double _editorFontSize = 15.0;
         private bool _editorOpenLastFile = true;
         private bool _editorVerticalScrollBarVisible;
         private bool _editorShowEndOfLine;

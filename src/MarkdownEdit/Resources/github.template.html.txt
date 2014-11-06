@@ -6,13 +6,14 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <style type="text/css">
     body {
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 14px;
+      font-family: "Century Gothic", Arial;
+      font-size: 16px;
       line-height: 1.5;
-      color: #444;
+      color: #555;
       padding: 0.5pc 0;
       overflow-x: hidden;
       overflow-y: scroll;
+      background-color: #fafafa;
     }
 
     p:first-child, h1:first-child, h2:first-child {
@@ -44,7 +45,8 @@
       padding: 0 5px;
       white-space: nowrap;
       border: 1px solid #eaeaea;
-      background-color: #f8f8f8;
+      color: #000;
+      background-color: #fefefe;
       border-radius: 3px;
     }
 
@@ -57,7 +59,7 @@
     }
 
     pre {
-      background-color: #f8f8f8;
+      background-color: #fefefe;
       border: 1px solid #cccccc;
       font-size: 13px;
       line-height: 19px;

@@ -1,7 +1,7 @@
 ﻿{
     "Name": "Apple Crisp",
-    "EditorBackground": "#F7F4EF",
-    "EditorForeground": "Black",
+    "EditorBackground": "#F9F6F1",
+    "EditorForeground": "#333",
     "HighlightHeading": {
         "Name": "Heading",
         "Background": null,

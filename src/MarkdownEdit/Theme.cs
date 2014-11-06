@@ -7,8 +7,8 @@ namespace MarkdownEdit
     public class Theme : INotifyPropertyChanged
     {
         private string _name = "Apple Crisp";
-        private string _editorBackground = "#F7F4EF";
-        private string _editorForeground = "Black";
+        private string _editorBackground = "#F9F6F1";
+        private string _editorForeground = "#333";
 
         private Highlight _highlightHeading = new Highlight {Name = "Heading", FontWeight = "bold"};
         private Highlight _highlightEmphasis = new Highlight {Name = "Emphasis", FontStyle = "italic"};
