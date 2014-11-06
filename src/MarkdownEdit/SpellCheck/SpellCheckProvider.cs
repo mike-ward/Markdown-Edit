@@ -98,11 +98,7 @@ namespace MarkdownEdit.SpellCheck
 
                     if (!_spellingService.Spell(trimmedWord))
                     {
-                        var textSegment = new TextSegment
-                        {
-                            StartOffset = num,
-                            Length = word.Length
-                        };
+                        var textSegment = new TextSegment { StartOffset = num, Length = word.Length };
                         _spellCheckRenderer.ErrorSegments.Add(textSegment);
                     }
 
