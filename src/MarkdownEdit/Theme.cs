@@ -13,7 +13,7 @@ namespace MarkdownEdit
         private Highlight _highlightHeading = new Highlight {Name = "Heading", FontWeight = "bold"};
         private Highlight _highlightEmphasis = new Highlight {Name = "Emphasis", FontStyle = "italic"};
         private Highlight _highlightStrongEmphasis = new Highlight {Name = "StrongEmphasis", FontWeight = "bold"};
-        private Highlight _highlightInlineCode = new Highlight {Name = "InlineCode", Foreground = "#654", Background = "#eed"};
+        private Highlight _highlightInlineCode = new Highlight {Name = "InlineCode", Foreground = "#333", Background = "#ebeff3"};
         private Highlight _highlightBlockCode = new Highlight {Name = "BlockCode", Foreground = "#654"};
         private Highlight _highlightBlockQuote = new Highlight {Name = "BlockQuote", Foreground = "#654"};
         private Highlight _highlightLink = new Highlight {Name = "Link", Foreground = "#654"};
