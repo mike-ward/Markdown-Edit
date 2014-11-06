@@ -148,8 +148,8 @@ namespace MarkdownEdit
             {
                 if (e.PropertyName == "SpellCheckDictonary") spellingService.SetLanguage(userSettings.SpellCheckDictionary);
             };
-            _spellCheckProvider = new SpellCheckProvider(spellingService);
             spellingService.SetLanguage(userSettings.SpellCheckDictionary);
+            _spellCheckProvider = new SpellCheckProvider(spellingService);
             _spellCheckProvider.Initialize(this);
         }
 
