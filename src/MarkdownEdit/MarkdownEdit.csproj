@@ -103,7 +103,6 @@
     <Compile Include="StringExtensions.cs" />
     <Compile Include="UserTemplate.cs" />
     <Compile Include="Utility.cs" />
-    <Compile Include="WindowSettings.cs" />
     <Page Include="Editor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
