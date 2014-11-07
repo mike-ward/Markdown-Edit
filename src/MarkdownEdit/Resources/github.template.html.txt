@@ -7,7 +7,7 @@
   <style type="text/css">
     body {
       font-family: "Century Gothic", Arial;
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.5;
       color: #555;
       padding: 0.5pc 0;
