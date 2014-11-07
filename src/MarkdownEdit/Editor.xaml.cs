@@ -82,14 +82,6 @@ namespace MarkdownEdit
             reader.Close();
         }
 
-        private void OnSpellCheckChanged(object o, PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName != "SpellCheck") return;
-            _spellCheckProvider.Enabled = SpellCheck;
-            EditBox.Document.Insert(0, " ");
-            EditBox.Document.UndoStack.Undo();
-        }
-
         private void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
         {
             _findReplaceDialog.AllowClose = true;
@@ -149,6 +141,14 @@ namespace MarkdownEdit
             spellingService.SetLanguage(App.UserSettings.SpellCheckDictionary);
             _spellCheckProvider = new SpellCheckProvider(spellingService);
             _spellCheckProvider.Initialize(this);
+        }
+
+        private void OnSpellCheckChanged(object o, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName != "SpellCheck") return;
+            _spellCheckProvider.Enabled = SpellCheck;
+            EditBox.Document.Insert(0, " ");
+            EditBox.Document.UndoStack.Undo();
         }
 
         private void SpellCheckSuggestions(ContextMenu contextMenu)
