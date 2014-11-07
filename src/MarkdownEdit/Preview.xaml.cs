@@ -122,6 +122,7 @@ namespace MarkdownEdit
 
         public void SetScrollOffset(ScrollChangedEventArgs ea)
         {
+            if (App.UserSettings.SynchronizeScrollPositions == false) return;
             var document2 = (IHTMLDocument2)Browser.Document;
             var document3 = (IHTMLDocument3)Browser.Document;
             if (document3 != null)
