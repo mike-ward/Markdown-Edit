@@ -11,13 +11,13 @@
 	
 	<RuleSet ignoreCase="true">
 		<Rule color="Heading">
-			^\#.*
+			^\#{1,6}[^\#].*
 		</Rule>
 		<Rule color="Image">
-			\!\[.*?\]\(.*?\)
+			\!\[([^\]]+)\]\(([^)"]+)(?: \"([^\"]+)\")?\)
 		</Rule>
 		<Rule color="Link">
-			\[.*?\]\(.*?\)
+			\[([^\]]+)\]\(([^)"]+)(?: \"([^\"]+)\")?\)
 		</Rule>
 		<Rule color="Link">
       &lt;(http|ftp|https|mailto):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?&gt;
