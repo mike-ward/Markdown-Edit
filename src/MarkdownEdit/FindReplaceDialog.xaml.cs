@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
@@ -79,27 +80,35 @@ namespace MarkdownEdit
 
         private bool Find(string textToFind, bool previous = false)
         {
-            if (string.IsNullOrEmpty(textToFind)) return false;
-            var regex = GetRegEx(textToFind, previous);
-            var start = previous
-                ? _editor.SelectionStart
-                : _editor.SelectionStart + _editor.SelectionLength;
-
-            var match = regex.Match(_editor.Text, start);
-            if (!match.Success) // start again from beginning or end
+            try
             {
-                match = regex.Match(_editor.Text, previous ? _editor.Text.Length : 0);
-            }
+                if (string.IsNullOrEmpty(textToFind)) return false;
+                var regex = GetRegEx(textToFind, previous);
+                var start = previous
+                    ? _editor.SelectionStart
+                    : _editor.SelectionStart + _editor.SelectionLength;
 
-            if (match.Success)
+                var match = regex.Match(_editor.Text, start);
+                if (!match.Success) // start again from beginning or end
+                {
+                    match = regex.Match(_editor.Text, previous ? _editor.Text.Length : 0);
+                }
+
+                if (match.Success)
+                {
+                    _editor.Select(match.Index, match.Length);
+                    var loc = _editor.Document.GetLocation(match.Index);
+                    _editor.ScrollTo(loc.Line, loc.Column);
+                    _lastFind = match.Value;
+                }
+
+                return match.Success;
+            }
+            catch (Exception e)
             {
-                _editor.Select(match.Index, match.Length);
-                var loc = _editor.Document.GetLocation(match.Index);
-                _editor.ScrollTo(loc.Line, loc.Column);
-                _lastFind = match.Value;
+                Console.WriteLine(e.ToString());
+                return false;
             }
-
-            return match.Success;
         }
 
         private Regex GetRegEx(string textToFind, bool previous)
