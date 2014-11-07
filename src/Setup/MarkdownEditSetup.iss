@@ -62,3 +62,28 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
+[Code]
+function IsDotNetDetected(): boolean;
+var
+    key: string;
+    release: cardinal;
+    success: boolean;
+begin
+    // installation key group for all .NET versions
+    key := 'SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\full';
+    success := RegQueryDWordValue(HKLM, key, 'Release', release);
+    success := success and (release >= 379893);
+    result := success;
+end;
+
+function InitializeSetup(): Boolean;
+begin
+    if not IsDotNetDetected() then begin
+        MsgBox('Tweetz Desktop requires Microsoft .NET 4.5.2'#13#13
+            'Download it at http://smallestdotnet.com'#13
+            , mbError, MB_OK);
+        result := false;
+    end else
+        result := true;
+end;
+
