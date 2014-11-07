@@ -18,6 +18,7 @@ namespace MarkdownEdit
         private bool _editorShowSpaces;
         private bool _editorShowTabs;
         private bool _synchronizeScrollPositions = true;
+        private bool _ignoreYAML;
         private string _spellCheckDictionary = "en_US";
         private bool _spellCheckIgnoreCodeBlocks = true;
         private bool _spellCheckIgnoreAllCaps = true;
@@ -72,6 +73,12 @@ namespace MarkdownEdit
             set { Set(ref _synchronizeScrollPositions, value); }
         }
 
+        public bool IgnoreYAML
+        {
+            get { return _ignoreYAML; }
+            set { Set(ref _ignoreYAML, value); }
+        }
+
         public string SpellCheckDictionary
         {
             get { return _spellCheckDictionary; }
@@ -120,6 +127,7 @@ namespace MarkdownEdit
             EditorShowSpaces = userSettings.EditorShowSpaces;
             EditorShowTabs = userSettings.EditorShowTabs;
             SynchronizeScrollPositions = userSettings.SynchronizeScrollPositions;
+            IgnoreYAML = userSettings.IgnoreYAML;
             SpellCheckDictionary = userSettings.SpellCheckDictionary;
             SpellCheckIgnoreAllCaps = userSettings.SpellCheckIgnoreAllCaps;
             SpellCheckIgnoreCodeBlocks = userSettings.SpellCheckIgnoreCodeBlocks;

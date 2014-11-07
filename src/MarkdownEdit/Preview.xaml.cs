@@ -111,12 +111,13 @@ namespace MarkdownEdit
 
         private static string RemoveYamlFrontMatter(string markdown)
         {
-            //if (markdown.StartsWith("---\n", StringComparison.Ordinal) ||
-            //    markdown.StartsWith("---\r\n", StringComparison.Ordinal))
-            //{
-            //    var index = Regex.Match(markdown.Substring(3), @"^(---)|(\.\.\.)", RegexOptions.Multiline).Index;
-            //    if (index > 0) return markdown.Substring(index + 6);
-            //}
+            if (App.UserSettings.IgnoreYAML == false) return markdown;
+            if (markdown.StartsWith("---\n", StringComparison.Ordinal) ||
+                markdown.StartsWith("---\r\n", StringComparison.Ordinal))
+            {
+                var index = Regex.Match(markdown.Substring(3), @"^(---)|(\.\.\.)", RegexOptions.Multiline).Index;
+                if (index > 0) return markdown.Substring(index + 6);
+            }
             return markdown;
         }
 
