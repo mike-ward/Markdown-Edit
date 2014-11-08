@@ -53,6 +53,11 @@ Source: "..\MarkdownEdit\bin\Release\Themes\solarized-light.json"; DestDir: "{ap
 Source: "..\MarkdownEdit\bin\Release\Themes\solarized-dark.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Themes\zenburn.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 
+Source: "Fonts\OpenSans-Regular.ttf"; DestDir: "{fonts}"; FontInstall: "Open Sans Regular"; Flags: onlyifdoesntexist uninsneveruninstall;
+Source: "Fonts\OpenSans-Bold.ttf"; DestDir: "{fonts}"; FontInstall: "Open Sans Bold"; Flags: onlyifdoesntexist uninsneveruninstall;
+Source: "Fonts\OpenSans-Italic.ttf"; DestDir: "{fonts}"; FontInstall: "Open Sans Italic"; Flags: onlyifdoesntexist uninsneveruninstall;
+Source: "Fonts\OpenSans-BoldItalic.ttf"; DestDir: "{fonts}"; FontInstall: "Open Sans Bold Italic"; Flags: onlyifdoesntexist uninsneveruninstall;
+
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
