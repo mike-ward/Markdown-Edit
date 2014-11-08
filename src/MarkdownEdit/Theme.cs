@@ -6,7 +6,7 @@ namespace MarkdownEdit
 {
     public class Theme : INotifyPropertyChanged
     {
-        private string _name = "Apple Crisp";
+        private string _name = "Milk Toast";
         private string _editorBackground = "#F9F6F1";
         private string _editorForeground = "#333";
 

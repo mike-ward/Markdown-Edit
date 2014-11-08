@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,6 +35,13 @@ namespace MarkdownEdit
             _templateWatcher.Changed += (sender, args) => Dispatcher.Invoke(UpdateTemplate);
             _templateWatcher.EnableRaisingEvents = true;
             Unloaded += (sender, args) => _templateWatcher.Dispose();
+
+            // kill popups
+            dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
+                    BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                    null, Browser, new object[] { });
+
+            activeX.Silent = true;
         }
 
         private void Update(string markdown)

@@ -52,7 +52,7 @@
 
 ## User Settings
 
-User settings are stored in a text file the the `AppData` folder. Placing settings in a plain file allows sharing of settings on different installations.
+User settings are stored in a text file in the `AppData` folder. Placing settings in a plain file allows sharing of settings on different installations.
 
 Typically, this folder is located at `C:\Users\<USER>\AppData\Roaming\Markdown Edit\user_settings.json`. Pressing `F9` will open this file in the system's Notepad editor. It should look something like this:
 
@@ -101,7 +101,7 @@ If you create an awesome theme, send it to me and I'll add it to the distributio
 
 ## Limitations
 
-- Only supports CommonMark (which does support code fences!)
+- Only supports CommonMark
 - Single document Interface
 - Syntax highlighting does not recognize multiple-line constructs. It uses regular expressions which don't understand the underlying Markdown constructs.  I'm hoping as CommonMark matures that a syntax parser (like PEG) will emerge.
 - I wrote it ;)

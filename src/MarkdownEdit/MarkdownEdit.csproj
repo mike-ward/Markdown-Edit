@@ -180,7 +180,7 @@
     <None Include="SpellCheck\Dictionaries\Italian.dic" />
     <None Include="SpellCheck\Dictionaries\Spanish.aff" />
     <None Include="SpellCheck\Dictionaries\Spanish.dic" />
-    <None Include="Themes\apple-crisp.json">
+    <None Include="Themes\milk-toast.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Themes\null.json">
