@@ -48,7 +48,19 @@ Source: "..\MarkdownEdit\bin\Release\System.Windows.Interactivity.dll"; DestDir:
 Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
 
-Source: "..\MarkdownEdit\bin\Release\Themes\apple-crisp.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\french.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\french.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\german.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\german.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\italian.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\italian.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\spanish.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\spanish.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\Themes\milk-toast.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Themes\solarized-light.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Themes\solarized-dark.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Themes\zenburn.json"; DestDir: "{app}\Themes"; Flags: ignoreversion

@@ -172,14 +172,30 @@
     <None Include="SpellCheck\Dictionaries\en_US.dic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SpellCheck\Dictionaries\French.aff" />
-    <None Include="SpellCheck\Dictionaries\French.dic" />
-    <None Include="SpellCheck\Dictionaries\German.aff" />
-    <None Include="SpellCheck\Dictionaries\German.dic" />
-    <None Include="SpellCheck\Dictionaries\Italian.aff" />
-    <None Include="SpellCheck\Dictionaries\Italian.dic" />
-    <None Include="SpellCheck\Dictionaries\Spanish.aff" />
-    <None Include="SpellCheck\Dictionaries\Spanish.dic" />
+    <None Include="SpellCheck\Dictionaries\French.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\French.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\German.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\German.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\Italian.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\Italian.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\Spanish.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\Spanish.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Themes\milk-toast.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
