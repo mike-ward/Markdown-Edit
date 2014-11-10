@@ -28,6 +28,7 @@ namespace MarkdownEdit
         public static RoutedCommand LoadThemeCommand = new RoutedCommand();
         public static RoutedCommand SaveThemeCommand = new RoutedCommand();
         public static RoutedCommand ShowThemeDialogCommand = new RoutedCommand();
+        public static RoutedCommand ExportHtmlCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
 
@@ -230,6 +231,11 @@ namespace MarkdownEdit
         {
             var margin = (UniformGrid.Columns == 1) ? Width / 4 : 0;
             return new Thickness(margin, 0, margin, 0);
+        }
+
+        private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e)
+        {
+            Utility.ExportHtmlToClipboard(Editor.Text);
         }
 
         // Properites

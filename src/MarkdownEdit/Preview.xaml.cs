@@ -47,18 +47,16 @@ namespace MarkdownEdit
         private void Update(string markdown)
         {
             if (markdown == null) return;
-            string html;
-            markdown = RemoveYamlFrontMatter(markdown);
             try
             {
-                html = CommonMarkConverter.Convert(markdown, new CommonMarkSettings {UriResolver = _uriResolver});
+                markdown = Utility.RemoveYamlFrontMatter(markdown);
+                var html = CommonMarkConverter.Convert(markdown, new CommonMarkSettings { UriResolver = _uriResolver });
+                GetContentsDiv().InnerHtml = html;
             }
             catch (CommonMarkException e)
             {
                 MessageBox.Show(e.ToString());
-                return;
             }
-            GetContentsDiv().InnerHtml = html;
         }
 
         private dynamic GetContentsDiv()
@@ -117,18 +115,7 @@ namespace MarkdownEdit
             if (url.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
         }
 
-        private static string RemoveYamlFrontMatter(string markdown)
-        {
-            if (App.UserSettings.IgnoreYAML == false) return markdown;
-            if (markdown.StartsWith("---\n", StringComparison.Ordinal) ||
-                markdown.StartsWith("---\r\n", StringComparison.Ordinal))
-            {
-                var index = Regex.Match(markdown.Substring(3), @"^(---)|(\.\.\.)", RegexOptions.Multiline).Index;
-                if (index > 0) return markdown.Substring(index + 6);
-            }
-            return markdown;
-        }
-
+        
         public void SetScrollOffset(ScrollChangedEventArgs ea)
         {
             if (App.UserSettings.SynchronizeScrollPositions == false) return;

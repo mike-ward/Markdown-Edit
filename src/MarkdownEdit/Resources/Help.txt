@@ -7,6 +7,7 @@
     Ctrl+S         Save file
     Ctrl+Shift+S   Save file As
     Ctrl+R         Recent files
+    Ctrl+E         Export HTML to clipboard
     Alt+F4         Exit
 
     Ctrl+W         Toggle word wrap
@@ -112,7 +113,7 @@ If you create an awesome theme, send it to me and I'll add it to the distributio
 
 ### Markdown Edit
 
-Version 0.2.0  
+Version 0.2.1  
 Home Page: TBD  
 Twitter: `@mikeward_aa`  
 Source: <https://github.com/mike-ward/Markdown-Edit>

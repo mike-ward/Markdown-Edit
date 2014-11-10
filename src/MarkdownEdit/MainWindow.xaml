@@ -71,6 +71,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.ShowThemeDialogCommand}" Executed="ExecuteShowThemeDialog" />
     <CommandBinding Command="{x:Static local:MainWindow.LoadThemeCommand}" Executed="ExecuteLoadTheme" />
     <CommandBinding Command="{x:Static local:MainWindow.SaveThemeCommand}" Executed="ExecuteSaveTheme" />
+    <CommandBinding Command="{x:Static local:MainWindow.ExportHtmlCommand}" Executed="ExecuteExportHtml" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -99,5 +100,6 @@
     <KeyBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Gesture="Ctrl+R" />
     <KeyBinding Command="{x:Static local:MainWindow.PasteSpecialCommand}" Gesture="Ctrl+Shift+V" />
     <KeyBinding Command="{x:Static local:MainWindow.ShowThemeDialogCommand}" Gesture="Ctrl+T" />
+    <KeyBinding Command="{x:Static local:MainWindow.ExportHtmlCommand}" Gesture="Ctrl+E" />
   </Window.InputBindings>
 </controls:MetroWindow>
