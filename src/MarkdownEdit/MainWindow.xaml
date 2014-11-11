@@ -25,18 +25,24 @@
   <controls:MetroWindow.RightWindowCommands>
     <controls:WindowCommands>
       <StackPanel Orientation="Horizontal"
-                  Margin="10 0"
+                  Margin="20 0"
                   VerticalAlignment="Center">
         <TextBlock ToolTip="Word Count"
                    Foreground="{StaticResource SemiTransparentWhiteBrush}"
                    Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" />
-        <TextBlock ToolTip="Spell Check Enabled"
+        <TextBlock ToolTip="Spell Check"
                    Margin="10 0 0 0"
                    Foreground="{StaticResource SemiTransparentWhiteBrush}"
                    Text="&#xfc;"
                    FontFamily="Wingdings"
                    VerticalAlignment="Bottom"
                    Visibility="{Binding Path=SpellCheck, ElementName=Editor, Converter={StaticResource VisibilityConverter}}" />
+        <TextBlock ToolTip="Word Wrap"
+                   Margin="10 0 0 0"
+                   Foreground="{StaticResource SemiTransparentWhiteBrush}"
+                   Text="¶"
+                   VerticalAlignment="Bottom"
+                   Visibility="{Binding Path=WordWrap, ElementName=Editor, Converter={StaticResource VisibilityConverter}}" />
       </StackPanel>
     </controls:WindowCommands>
   </controls:MetroWindow.RightWindowCommands>
