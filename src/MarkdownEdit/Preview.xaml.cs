@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,11 +16,12 @@ using mshtml;
 
 namespace MarkdownEdit
 {
-    public partial class Preview
+    public partial class Preview : INotifyPropertyChanged
     {
         public readonly Action<string> UpdatePreview;
         private readonly Func<string, string> _uriResolver = Utility.Memoize<string, string>(UriResolver);
         private readonly FileSystemWatcher _templateWatcher;
+        private int _wordCount;
 
         public Preview()
         {
@@ -38,8 +42,8 @@ namespace MarkdownEdit
 
             // kill popups
             dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
-                    BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                    null, Browser, new object[] { });
+                BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                null, Browser, new object[] {});
 
             activeX.Silent = true;
         }
@@ -50,8 +54,9 @@ namespace MarkdownEdit
             try
             {
                 markdown = Utility.RemoveYamlFrontMatter(markdown);
-                var html = CommonMarkConverter.Convert(markdown, new CommonMarkSettings { UriResolver = _uriResolver });
+                var html = CommonMarkConverter.Convert(markdown, new CommonMarkSettings {UriResolver = _uriResolver});
                 GetContentsDiv().InnerHtml = html;
+                WordCount = (GetContentsDiv().InnerText as string).WordCount();
             }
             catch (CommonMarkException e)
             {
@@ -115,7 +120,6 @@ namespace MarkdownEdit
             if (url.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
         }
 
-        
         public void SetScrollOffset(ScrollChangedEventArgs ea)
         {
             if (App.UserSettings.SynchronizeScrollPositions == false) return;
@@ -165,6 +169,31 @@ namespace MarkdownEdit
                     e.Handled = true;
                     break;
             }
+        }
+
+        // Properties
+
+        public int WordCount
+        {
+            get { return _wordCount; }
+            set { Set(ref _wordCount, value); }
+        }
+
+        // INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            OnPropertyChanged(propertyName);
         }
     }
 }

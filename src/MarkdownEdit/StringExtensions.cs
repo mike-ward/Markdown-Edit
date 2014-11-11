@@ -1,4 +1,6 @@
-﻿namespace MarkdownEdit
+﻿using System.Text.RegularExpressions;
+
+namespace MarkdownEdit
 {
     internal static class StringExtensions
     {
@@ -34,6 +36,11 @@
                 .Replace('“', '\"')
                 .Replace('”', '\"');
             return dumb;
+        }
+
+        public static int WordCount(this string text)
+        {
+            return (text == null) ? 0 : Regex.Matches(text, @"[\S]+").Count;
         }
 
 #if false

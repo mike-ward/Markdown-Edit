@@ -24,6 +24,7 @@ Gratuitous Screen Shot
 - Spell checking
 - **Paste Special** replaces Microsoft Word's smart quotes/hyphens/etc. with plain text equivalents
 - Quickly open recent files
+- Word Count
 - Open Source
 - MIT License
 

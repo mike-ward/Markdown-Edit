@@ -15,11 +15,24 @@
   DataContext="{Binding RelativeSource={RelativeSource Self}}"
   Background="{DynamicResource GrayBrush4}"
   >
-
+  
   <controls:MetroWindow.Resources>
     <local:BooleanToScrollBarVisibilityConverter x:Key="VisibilityConverter" />
+    <local:NumberFormatConverter x:Key="NumberFormatConverter" />
   </controls:MetroWindow.Resources>
-    
+
+  <controls:MetroWindow.RightWindowCommands>
+    <controls:WindowCommands>
+      <StackPanel Orientation="Horizontal"
+                  Margin="10 7"
+                  VerticalAlignment="Bottom">
+        <TextBlock ToolTip="Word Count"
+                   Foreground="{StaticResource SemiTransparentWhiteBrush}"
+                   Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" />
+      </StackPanel>
+    </controls:WindowCommands>
+  </controls:MetroWindow.RightWindowCommands>
+  
   <Grid>
     <UniformGrid x:Name="UniformGrid" Columns="2">
       <local:Editor

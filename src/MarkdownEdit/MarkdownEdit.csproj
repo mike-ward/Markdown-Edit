@@ -78,7 +78,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BooleanToScrollBarVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanToScrollBarVisibilityConverter.cs" />
+    <Compile Include="Converters\NumberFormatConverter.cs" />
     <Compile Include="EditorState.cs" />
     <Compile Include="FindReplaceDialog.xaml.cs">
       <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
