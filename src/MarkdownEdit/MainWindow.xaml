@@ -24,8 +24,8 @@
   <controls:MetroWindow.RightWindowCommands>
     <controls:WindowCommands>
       <StackPanel Orientation="Horizontal"
-                  Margin="10 7"
-                  VerticalAlignment="Bottom">
+                  Margin="10 0"
+                  VerticalAlignment="Center">
         <TextBlock ToolTip="Word Count"
                    Foreground="{StaticResource SemiTransparentWhiteBrush}"
                    Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" />
