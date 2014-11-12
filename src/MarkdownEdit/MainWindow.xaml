@@ -40,7 +40,8 @@
         <TextBlock ToolTip="Word Wrap"
                    Margin="10 0 0 0"
                    Foreground="{StaticResource SemiTransparentWhiteBrush}"
-                   Text="¶"
+                   FontFamily="Segoe UI Symbol"
+                   Text="&#x21A9;"
                    VerticalAlignment="Bottom"
                    Visibility="{Binding Path=WordWrap, ElementName=Editor, Converter={StaticResource VisibilityConverter}}" />
       </StackPanel>
