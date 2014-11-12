@@ -60,7 +60,7 @@ namespace MarkdownEdit
 
         public static string RemoveYamlFrontMatter(string markdown)
         {
-            if (App.UserSettings.IgnoreYAML == false) return markdown;
+            if (App.UserSettings.IgnoreYaml == false) return markdown;
             if (markdown.StartsWith("---\n", StringComparison.Ordinal) ||
                 markdown.StartsWith("---\r\n", StringComparison.Ordinal))
             {

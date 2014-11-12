@@ -134,10 +134,7 @@ namespace MarkdownEdit
         private void InitializeSpellCheck()
         {
             var spellingService = new SpellingService();
-            App.UserSettings.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == "SpellCheckDictonary") spellingService.SetLanguage(App.UserSettings.SpellCheckDictionary);
-            };
+            App.UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == "SpellCheckDictonary") spellingService.SetLanguage(App.UserSettings.SpellCheckDictionary); };
             spellingService.SetLanguage(App.UserSettings.SpellCheckDictionary);
             _spellCheckProvider = new SpellCheckProvider(spellingService);
             _spellCheckProvider.Initialize(this);
@@ -520,7 +517,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
+            "Theme", typeof(Theme), typeof(Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
 
         public Theme Theme
         {
@@ -585,7 +582,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty VerticalScrollBarVisibilityProperty = DependencyProperty.Register(
-            "VerticalScrollBarVisibility", typeof (ScrollBarVisibility), typeof (Editor), new PropertyMetadata(default(ScrollBarVisibility)));
+            "VerticalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(Editor), new PropertyMetadata(default(ScrollBarVisibility)));
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
@@ -594,7 +591,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowEndOfLineProperty = DependencyProperty.Register(
-            "ShowEndOfLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
+            "ShowEndOfLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
 
         private static void ShowEndOfLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -609,7 +606,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowSpacesProperty = DependencyProperty.Register(
-            "ShowSpaces", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
+            "ShowSpaces", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
 
         private static void ShowSpacesChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -623,8 +620,17 @@ namespace MarkdownEdit
             set { SetValue(ShowSpacesProperty, value); }
         }
 
+        public static readonly DependencyProperty ShowLineNumbersProperty = DependencyProperty.Register(
+            "ShowLineNumbers", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
+
+        public bool ShowLineNumbers
+        {
+            get { return (bool)GetValue(ShowLineNumbersProperty); }
+            set { SetValue(ShowLineNumbersProperty, value); }
+        }
+
         public static readonly DependencyProperty ShowTabsProperty = DependencyProperty.Register(
-            "ShowTabs", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
+            "ShowTabs", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
 
         private static void ShowTabsChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {

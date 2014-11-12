@@ -62,6 +62,7 @@
         ShowEndOfLine="{Binding Path=EditorShowEndOfLine, Source={x:Static local:App.UserSettings}}"
         ShowSpaces="{Binding Path=EditorShowSpaces, Source={x:Static local:App.UserSettings}}"
         ShowTabs="{Binding Path=EditorShowTabs, Source={x:Static local:App.UserSettings}}"
+        ShowLineNumbers="{Binding Path=EditorShowLineNumbers, Source={x:Static local:App.UserSettings}}"
         />
       <local:Preview 
         x:Name="Preview"

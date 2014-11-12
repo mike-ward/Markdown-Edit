@@ -20,6 +20,7 @@
       FontSize="{Binding FontSize}"
       VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility}"
       WordWrap="{Binding Path=WordWrap, Mode=TwoWay}"
+      ShowLineNumbers="{Binding Path=ShowLineNumbers, Mode=TwoWay}"
       IsModified="{Binding Path=IsModified, Mode=TwoWay}"
       ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"
       />

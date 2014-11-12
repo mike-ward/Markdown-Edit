@@ -17,8 +17,9 @@ namespace MarkdownEdit
         private bool _editorShowEndOfLine;
         private bool _editorShowSpaces;
         private bool _editorShowTabs;
+        private bool _editorShowLineNumbers;
         private bool _synchronizeScrollPositions = true;
-        private bool _ignoreYAML;
+        private bool _ignoreYaml;
         private string _spellCheckDictionary = "en_US";
         private bool _spellCheckIgnoreCodeBlocks = true;
         private bool _spellCheckIgnoreAllCaps = true;
@@ -67,16 +68,22 @@ namespace MarkdownEdit
             set { Set(ref _editorShowTabs, value); }
         }
 
+        public bool EditorShowLineNumbers
+        {
+            get { return _editorShowLineNumbers; }
+            set { Set(ref _editorShowLineNumbers, value); }
+        }
+
         public bool SynchronizeScrollPositions
         {
             get { return _synchronizeScrollPositions; }
             set { Set(ref _synchronizeScrollPositions, value); }
         }
 
-        public bool IgnoreYAML
+        public bool IgnoreYaml
         {
-            get { return _ignoreYAML; }
-            set { Set(ref _ignoreYAML, value); }
+            get { return _ignoreYaml; }
+            set { Set(ref _ignoreYaml, value); }
         }
 
         public string SpellCheckDictionary
@@ -126,8 +133,9 @@ namespace MarkdownEdit
             EditorShowEndOfLine = userSettings.EditorShowEndOfLine;
             EditorShowSpaces = userSettings.EditorShowSpaces;
             EditorShowTabs = userSettings.EditorShowTabs;
+            EditorShowLineNumbers = userSettings.EditorShowLineNumbers;
             SynchronizeScrollPositions = userSettings.SynchronizeScrollPositions;
-            IgnoreYAML = userSettings.IgnoreYAML;
+            IgnoreYaml = userSettings.IgnoreYaml;
             SpellCheckDictionary = userSettings.SpellCheckDictionary;
             SpellCheckIgnoreAllCaps = userSettings.SpellCheckIgnoreAllCaps;
             SpellCheckIgnoreCodeBlocks = userSettings.SpellCheckIgnoreCodeBlocks;
