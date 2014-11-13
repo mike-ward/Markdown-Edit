@@ -9,6 +9,7 @@ namespace MarkdownEdit
         public GotoLineDialog()
         {
             InitializeComponent();
+            Line.Focus();
             CommandBindings.Add(new CommandBinding(AcceptLineNumberCommand, ExecuteAcceptLineNumber));
         }
 
@@ -16,9 +17,18 @@ namespace MarkdownEdit
         {
             int number;
             if (int.TryParse(Line.Text, out number))
+            {
                 MainWindow.ScrollToLineCommand.Execute(number, Owner);
-            else
-                Utility.Beep();
+                Close();
+                return;
+            }
+            Utility.Beep();
+        }
+
+        private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
+        {
+            e.Handled = true;
+            Close();
         }
     }
 }

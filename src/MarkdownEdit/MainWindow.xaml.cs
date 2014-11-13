@@ -10,26 +10,27 @@ namespace MarkdownEdit
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
-        public static RoutedCommand ToggleWordWrapCommand = new RoutedUICommand();
-        public static RoutedCommand InsertHeaderCommand = new RoutedUICommand();
-        public static RoutedCommand FindNextCommand = new RoutedUICommand();
-        public static RoutedCommand FindPreviousCommand = new RoutedUICommand();
-        public static RoutedCommand RestoreFontSizeCommand = new RoutedUICommand();
-        public static RoutedCommand OpenUserSettingsCommand = new RoutedUICommand();
-        public static RoutedCommand OpenUserTemplateCommand = new RoutedUICommand();
-        public static RoutedCommand OpenUserDictionaryCommand = new RoutedUICommand();
-        public static RoutedCommand ToggleSpellCheckCommand = new RoutedUICommand();
-        public static RoutedCommand ToggleFullScreenCommand = new RoutedUICommand();
-        public static RoutedCommand WrapToColumnCommand = new RoutedUICommand();
-        public static RoutedCommand RecentFilesCommand = new RoutedUICommand();
-        public static RoutedCommand PasteSpecialCommand = new RoutedUICommand();
-        public static RoutedCommand ToggleCodeCommand = new RoutedUICommand();
-        public static RoutedCommand TogglePreviewCommand = new RoutedUICommand();
-        public static RoutedCommand LoadThemeCommand = new RoutedUICommand();
-        public static RoutedCommand SaveThemeCommand = new RoutedUICommand();
-        public static RoutedCommand ShowThemeDialogCommand = new RoutedUICommand();
-        public static RoutedCommand ExportHtmlCommand = new RoutedUICommand();
-        public static RoutedCommand ScrollToLineCommand = new RoutedUICommand();
+        public static RoutedCommand ToggleWordWrapCommand = new RoutedCommand();
+        public static RoutedCommand InsertHeaderCommand = new RoutedCommand();
+        public static RoutedCommand FindNextCommand = new RoutedCommand();
+        public static RoutedCommand FindPreviousCommand = new RoutedCommand();
+        public static RoutedCommand RestoreFontSizeCommand = new RoutedCommand();
+        public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
+        public static RoutedCommand OpenUserTemplateCommand = new RoutedCommand();
+        public static RoutedCommand OpenUserDictionaryCommand = new RoutedCommand();
+        public static RoutedCommand ToggleSpellCheckCommand = new RoutedCommand();
+        public static RoutedCommand ToggleFullScreenCommand = new RoutedCommand();
+        public static RoutedCommand WrapToColumnCommand = new RoutedCommand();
+        public static RoutedCommand RecentFilesCommand = new RoutedCommand();
+        public static RoutedCommand PasteSpecialCommand = new RoutedCommand();
+        public static RoutedCommand ToggleCodeCommand = new RoutedCommand();
+        public static RoutedCommand TogglePreviewCommand = new RoutedCommand();
+        public static RoutedCommand LoadThemeCommand = new RoutedCommand();
+        public static RoutedCommand SaveThemeCommand = new RoutedCommand();
+        public static RoutedCommand ShowThemeDialogCommand = new RoutedCommand();
+        public static RoutedCommand ExportHtmlCommand = new RoutedCommand();
+        public static RoutedCommand ScrollToLineCommand = new RoutedCommand();
+        public static RoutedCommand ShowGotoLineDialogCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
 
@@ -224,7 +225,7 @@ namespace MarkdownEdit
 
         private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme};
+            var dialog = new ThemeDialog { Owner = this, CurrentTheme = App.UserSettings.Theme };
             dialog.ShowDialog();
         }
 
@@ -237,6 +238,19 @@ namespace MarkdownEdit
         private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e)
         {
             Utility.ExportHtmlToClipboard(Editor.Text);
+        }
+
+        private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e)
+        {
+            var dialog = new GotoLineDialog();
+            dialog.Owner = this;
+            dialog.ShowDialog();
+        }
+
+        private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Parameter == null) return;
+            Editor.ScrollToLine((int)e.Parameter);
         }
 
         // Properites

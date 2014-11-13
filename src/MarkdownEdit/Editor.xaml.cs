@@ -449,7 +449,11 @@ namespace MarkdownEdit
 
         public void ScrollToLine(int line)
         {
+            var max = Math.Max(1, EditBox.Document.LineCount);
+            line = Math.Min(max, Math.Max(line, 1));
             EditBox.ScrollToLine(line);
+            var offset = EditBox.Document.GetOffset(line, 0);
+            EditBox.CaretOffset = offset;
         }
 
         // Events

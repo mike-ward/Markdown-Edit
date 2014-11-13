@@ -28,4 +28,13 @@
       </TextBox.InputBindings>
     </TextBox>
   </Grid>
+  
+  <Window.CommandBindings>
+    <CommandBinding Command="Close" Executed="ExecuteClose" />
+  </Window.CommandBindings>
+
+  <controls:MetroWindow.InputBindings>
+    <KeyBinding Gesture="Esc" Command="Close" />
+  </controls:MetroWindow.InputBindings>
+  
 </controls:MetroWindow>
