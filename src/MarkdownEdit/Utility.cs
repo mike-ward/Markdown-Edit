@@ -41,7 +41,7 @@ namespace MarkdownEdit
 
         public static void EditFile(string file)
         {
-            Process.Start("Notepad.exe", file);                
+            Process.Start("Notepad.exe", file);
         }
 
         public static string AssemblyFolder()
