@@ -27,6 +27,7 @@
     F3             Find next
     Shift+F3       Find previous
     Ctrl+H         Find and replace
+	  Ctrl+G         Goto line
 
     Ctrl+Plus      Increase font size
     Ctrl+Minus     Decrease font size
