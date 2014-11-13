@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Media;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using CommonMark;
@@ -22,14 +22,13 @@ namespace MarkdownEdit
 
         public static Action<T> Debounce<T>(this Action<T> func, int milliseconds = 300)
         {
-            // ReSharper disable once TooWideLocalVariableScope
-            T last;
+            int current = 0;
             return arg =>
             {
-                last = arg;
+                var last = Interlocked.Increment(ref current);
                 Task.Delay(milliseconds).ContinueWith(t =>
                 {
-                    if (EqualityComparer<T>.Default.Equals(last, arg)) func(last);
+                    if (last == current) func(arg);
                     t.Dispose();
                 });
             };
@@ -42,7 +41,6 @@ namespace MarkdownEdit
 
         public static void EditFile(string file)
         {
-
             Process.Start("Notepad.exe", file);                
         }
 
