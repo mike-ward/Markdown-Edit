@@ -529,6 +529,7 @@ namespace MarkdownEdit
         {
             var editor = (Editor)source;
             var theme = editor.Theme;
+            if (theme == null) return;
             var highlightDefinition = editor.EditBox.SyntaxHighlighting;
             if (highlightDefinition == null) return;
 
