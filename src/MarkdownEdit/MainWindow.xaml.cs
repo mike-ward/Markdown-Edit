@@ -24,11 +24,12 @@ namespace MarkdownEdit
         public static RoutedCommand RecentFilesCommand = new RoutedUICommand();
         public static RoutedCommand PasteSpecialCommand = new RoutedUICommand();
         public static RoutedCommand ToggleCodeCommand = new RoutedUICommand();
-        public static RoutedCommand TogglePreviewCommand = new RoutedCommand();
-        public static RoutedCommand LoadThemeCommand = new RoutedCommand();
-        public static RoutedCommand SaveThemeCommand = new RoutedCommand();
-        public static RoutedCommand ShowThemeDialogCommand = new RoutedCommand();
-        public static RoutedCommand ExportHtmlCommand = new RoutedCommand();
+        public static RoutedCommand TogglePreviewCommand = new RoutedUICommand();
+        public static RoutedCommand LoadThemeCommand = new RoutedUICommand();
+        public static RoutedCommand SaveThemeCommand = new RoutedUICommand();
+        public static RoutedCommand ShowThemeDialogCommand = new RoutedUICommand();
+        public static RoutedCommand ExportHtmlCommand = new RoutedUICommand();
+        public static RoutedCommand ScrollToLineCommand = new RoutedUICommand();
 
         private string _titleName = string.Empty;
 

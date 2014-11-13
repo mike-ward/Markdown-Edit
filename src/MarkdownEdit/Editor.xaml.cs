@@ -447,6 +447,11 @@ namespace MarkdownEdit
             Utility.EditFile(_spellCheckProvider.CustomDictionaryFile());
         }
 
+        public void ScrollToLine(int line)
+        {
+            EditBox.ScrollToLine(line);
+        }
+
         // Events
 
         public EventHandler TextChanged;
