@@ -22,13 +22,13 @@ namespace MarkdownEdit
 
         public static Action<T> Debounce<T>(this Action<T> func, int milliseconds = 300)
         {
-            int current = 0;
+            int last = 0;
             return arg =>
             {
-                var last = Interlocked.Increment(ref current);
+                var current = Interlocked.Increment(ref last);
                 Task.Delay(milliseconds).ContinueWith(t =>
                 {
-                    if (last == current) func(arg);
+                    if (current == last) func(arg);
                     t.Dispose();
                 });
             };
