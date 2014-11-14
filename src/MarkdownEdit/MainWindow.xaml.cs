@@ -225,7 +225,7 @@ namespace MarkdownEdit
 
         private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new ThemeDialog { Owner = this, CurrentTheme = App.UserSettings.Theme };
+            var dialog = new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme};
             dialog.ShowDialog();
         }
 
