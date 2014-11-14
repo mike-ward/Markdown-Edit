@@ -20,9 +20,11 @@ namespace MarkdownEdit
             {
                 MainWindow.ScrollToLineCommand.Execute(number, Owner);
                 Close();
-                return;
             }
-            Utility.Beep();
+            else
+            {
+                Utility.Beep();
+            }
         }
 
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
