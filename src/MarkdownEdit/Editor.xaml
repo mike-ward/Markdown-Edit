@@ -9,6 +9,7 @@
              d:DesignWidth="300"
              ContextMenuOpening="EditorMenuOnContextMenuOpening"
              DataContext="{Binding RelativeSource={RelativeSource self}}"
+             AllowDrop="True"
              >
   <Border>
     <avalonedit:TextEditor

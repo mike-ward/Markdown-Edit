@@ -670,5 +670,22 @@ namespace MarkdownEdit
             property = value;
             OnPropertyChanged(propertyName);
         }
+
+        // Drag and drop
+
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) == false) e.Effects = DragDropEffects.None;
+        }
+
+        protected override void OnDrop(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = e.Data.GetData(DataFormats.FileDrop) as string[];
+                if (files == null) return;
+                Dispatcher.InvokeAsync(() => OpenFile(files[0]));
+            }
+        }
     }
 }
