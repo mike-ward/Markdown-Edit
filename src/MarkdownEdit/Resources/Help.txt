@@ -114,8 +114,8 @@ If you create an awesome theme, send it to me and I'll add it to the distributio
 
 ### Markdown Edit
 
-Version 0.2.1  
-Home Page: TBD  
+Version 0.2.4  
+Home Page: <http://mike-ward.net/markdownedit>  
 Twitter: `@mikeward_aa`  
 Source: <https://github.com/mike-ward/Markdown-Edit>
 
