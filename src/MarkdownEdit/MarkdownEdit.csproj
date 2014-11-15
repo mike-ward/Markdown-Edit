@@ -81,16 +81,16 @@
     <Compile Include="Converters\BooleanToScrollBarVisibilityConverter.cs" />
     <Compile Include="Converters\NumberFormatConverter.cs" />
     <Compile Include="EditorState.cs" />
-    <Compile Include="FindReplaceDialog.xaml.cs">
+    <Compile Include="Controls\FindReplaceDialog.xaml.cs">
       <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="FindReplaceSettings.cs" />
-    <Compile Include="GotoLineDialog.xaml.cs">
+    <Compile Include="Controls\GotoLineDialog.xaml.cs">
       <DependentUpon>GotoLineDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Highlight.cs" />
     <Compile Include="HighlightBrush.cs" />
-    <Compile Include="RecentFilesDialog.xaml.cs">
+    <Compile Include="Controls\RecentFilesDialog.xaml.cs">
       <DependentUpon>RecentFilesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SpellCheck\ISpellCheckProvider.cs" />
@@ -100,26 +100,26 @@
     <Compile Include="SpellCheck\SpellingLanguages.cs" />
     <Compile Include="SpellCheck\SpellingService.cs" />
     <Compile Include="Theme.cs" />
-    <Compile Include="ThemeDialog.xaml.cs">
+    <Compile Include="Controls\ThemeDialog.xaml.cs">
       <DependentUpon>ThemeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserSettings.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="UserTemplate.cs" />
     <Compile Include="Utility.cs" />
-    <Page Include="Editor.xaml">
+    <Page Include="Controls\Editor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FindReplaceDialog.xaml">
+    <Page Include="Controls\FindReplaceDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GotoLineDialog.xaml">
+    <Page Include="Controls\GotoLineDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Controls\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -127,28 +127,28 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Editor.xaml.cs">
+    <Compile Include="Controls\Editor.xaml.cs">
       <DependentUpon>Editor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Controls\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Preview.xaml">
+    <Page Include="Controls\Preview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RecentFilesDialog.xaml">
+    <Page Include="Controls\RecentFilesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ThemeDialog.xaml">
+    <Page Include="Controls\ThemeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Preview.xaml.cs">
+    <Compile Include="Controls\Preview.xaml.cs">
       <DependentUpon>Preview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
