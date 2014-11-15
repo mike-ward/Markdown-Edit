@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -47,19 +48,13 @@ namespace MarkdownEdit
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (Settings.Default.HidePreview) TogglePreviewCommand.Execute(null, this);
+            UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
             Editor.CloseHelp();
             cancelEventArgs.Cancel = !Editor.SaveIfModified();
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            Settings.Default.HidePreview = UniformGrid.Columns == 1;
-            base.OnClosed(e);
         }
 
         private void EditorOnPropertyChanged(object sender, PropertyChangedEventArgs ea)
@@ -208,8 +203,33 @@ namespace MarkdownEdit
 
         private void ExecuteTogglePreview(object sender, ExecutedRoutedEventArgs e)
         {
-            UniformGrid.Columns = (UniformGrid.Columns == 2) ? 1 : 2;
-            Preview.Visibility = (UniformGrid.Columns == 1) ? Visibility.Collapsed : Visibility.Visible;
+            Settings.Default.EditPreviewHide = (Settings.Default.EditPreviewHide + 1) % 3;
+            UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
+        }
+
+        private void UpdateEditorPreviewVisibility(int state)
+        {
+            switch (state)
+            {
+                case 1:
+                    UniformGrid.Columns = 1;
+                    Preview.Visibility = Visibility.Collapsed;
+                    Editor.Visibility = Visibility.Visible;
+                    break;
+
+                case 2:
+                    UniformGrid.Columns = 1;
+                    Preview.Visibility = Visibility.Visible;
+                    Editor.Visibility = Visibility.Collapsed;
+                    break;
+
+                default:
+                    UniformGrid.Columns = 2;
+                    Preview.Visibility = Visibility.Visible;
+                    Editor.Visibility = Visibility.Visible;
+                    break;
+            }
+
             EditorMargins = CalculateEditorMargins();
         }
 

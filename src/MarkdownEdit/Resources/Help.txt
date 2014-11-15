@@ -13,7 +13,7 @@
     Ctrl+W         Toggle word wrap
     F7             Toggle spell checking
     F11            Toggle full screen
-    F12            Toggle preview
+    F12            Toggle preview/edit/both
     
     Tab            Indent current line/selection 2 spaces
     Shift+Tab      Out-dent current line/selection 2 spaces

@@ -120,18 +120,6 @@ namespace MarkdownEdit.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool HidePreview {
-            get {
-                return ((bool)(this["HidePreview"]));
-            }
-            set {
-                this["HidePreview"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool UpgradeSettings {
             get {
@@ -139,6 +127,18 @@ namespace MarkdownEdit.Properties {
             }
             set {
                 this["UpgradeSettings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int EditPreviewHide {
+            get {
+                return ((int)(this["EditPreviewHide"]));
+            }
+            set {
+                this["EditPreviewHide"] = value;
             }
         }
     }

@@ -66,6 +66,7 @@
         />
       <local:Preview 
         x:Name="Preview"
+        Margin="{Binding Path=EditorMargins, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         />
     </UniformGrid>
   </Grid>
