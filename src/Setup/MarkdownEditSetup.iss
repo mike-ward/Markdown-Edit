@@ -4,7 +4,7 @@
 #define MyAppName "Markdown Edit"
 #define MyAppVersion "0.2.4"
 #define MyAppPublisher "Mike Ward"
-#define MyAppURL "http://mike-ward.net/MarkdownEdit"
+#define MyAppURL "http://mike-ward.net/markdownedit"
 #define MyAppExeName "mde.exe"
 
 [Setup]
