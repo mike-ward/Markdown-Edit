@@ -6,7 +6,6 @@ namespace MarkdownEdit
     {
         Task<object> GetCredentialsAsync();
 
-
         Task<string> OpenFilePickerAsync();
 
         Task OpenFileAsync(string file);

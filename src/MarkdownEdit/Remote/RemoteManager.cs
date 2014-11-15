@@ -6,6 +6,14 @@ namespace MarkdownEdit
 {
     public class RemoteManager : IRemoteManager
     {
+        public IRemoteProvider[] Providers { get; private set; }
+         
+        public RemoteManager()
+        {
+            var googleDrive = new GoogleDriveRemoteProvider();
+            Providers = new[] { googleDrive };
+        }
+
         public IEnumerable<IRemoteProvider> LinkedRemoteProviders()
         {
             throw new NotImplementedException();

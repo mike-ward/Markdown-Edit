@@ -32,8 +32,10 @@ namespace MarkdownEdit
         public static RoutedCommand ExportHtmlCommand = new RoutedCommand();
         public static RoutedCommand ScrollToLineCommand = new RoutedCommand();
         public static RoutedCommand ShowGotoLineDialogCommand = new RoutedCommand();
+        public static RoutedCommand RemoteProvidersDialogCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
+        private IRemoteManager RemoteManager { get; set; } 
 
         public MainWindow()
         {
@@ -48,6 +50,7 @@ namespace MarkdownEdit
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
+            RemoteManager = new RemoteManager();
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
         }
 
