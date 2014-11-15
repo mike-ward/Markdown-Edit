@@ -104,9 +104,9 @@
       <DependentUpon>ThemeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\UserSettings.cs" />
-    <Compile Include="StringExtensions.cs" />
+    <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Models\UserTemplate.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="Models\Utility.cs" />
     <Page Include="Controls\Editor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
