@@ -45,6 +45,24 @@ Source: "..\MarkdownEdit\bin\Release\Hunspellx86.dll"; DestDir: "{app}"; Flags: 
 Source: "..\MarkdownEdit\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\System.Windows.Interactivity.dll"; DestDir: "{app}"; Flags: ignoreversion
 
+Source: "..\MarkdownEdit\bin\Release\Google.Apis.Auth.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Google.Apis.Auth.PlatformServices.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Google.Apis.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Google.Apis.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Google.Apis.Drive.v2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Google.Apis.PlatformServices.dll"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\log4net.dll"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\Microsoft.Threading.Tasks.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Microsoft.Threading.Tasks.Extensions.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Microsoft.Threading.Tasks.Extensions.Desktop.dll"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\System.Net.Http.Extensions.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\System.Net.Http.Primitives.dll"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\Zlib.Portable.dll"; DestDir: "{app}"; Flags: ignoreversion
+
 Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
 
@@ -86,7 +104,6 @@ var
     release: cardinal;
     success: boolean;
 begin
-    // installation key group for all .NET versions
     key := 'SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\full';
     success := RegQueryDWordValue(HKLM, key, 'Release', release);
     success := success and (release >= 379893);
@@ -96,11 +113,12 @@ end;
 function InitializeSetup(): Boolean;
 begin
     if not IsDotNetDetected() then begin
-        MsgBox('Tweetz Desktop requires Microsoft .NET 4.5.2'#13#13
-            'Download it at http://smallestdotnet.com'#13
-            , mbError, MB_OK);
+        MsgBox('Markdown Edit requires Microsoft .NET 4.5.2'#13#13
+               'Download it at http://smallestdotnet.com'#13
+               ,mbError, MB_OK);
         result := false;
-    end else
+    end 
+    else
         result := true;
 end;
 
