@@ -46,31 +46,42 @@ namespace MarkdownEdit
 
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            InitializeSyntaxHighlighting();
-            ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
-
             EditBox.Options.IndentationSize = 2;
+            EditBox.Options.EnableHyperlinks = false;
             EditBox.Options.ConvertTabsToSpaces = true;
             EditBox.Options.AllowScrollBelowDocument = true;
-            EditBox.Options.EnableHyperlinks = false;
-            var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.First(cb => cb.Command == AvalonEditCommands.IndentSelection);
-            EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
+            EditBox.WordWrap = Settings.Default.WordWrapEnabled;
             EditBox.TextChanged += EditBoxOnTextChanged;
             PropertyChanged += OnSpellCheckChanged;
-            Task.Delay(100).ContinueWith(t =>
+
+            var cmd = EditBox
+                .TextArea
+                .DefaultInputHandler
+                .Editing
+                .CommandBindings
+                .FirstOrDefault(cb => cb.Command == AvalonEditCommands.IndentSelection);
+            if (cmd != null) EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
+
+            Task.Delay(10).ContinueWith(t =>
             {
                 Dispatcher.Invoke(() =>
                 {
-                    var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault() ??
-                                     (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
-                    LoadFile(fileToOpen);
-                    EditBox.Focus();
-                    EditBox.WordWrap = Settings.Default.WordWrapEnabled;
+                    InitializeSyntaxHighlighting();
+                    ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
                     InitializeSpellCheck();
                     SpellCheck = Settings.Default.SpellCheckEnabled;
+                    LoadCommandineOrLastFile();
+                    EditBox.Focus();
                 });
                 t.Dispose();
             });
+        }
+
+        private void LoadCommandineOrLastFile()
+        {
+            var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
+                ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
+            LoadFile(fileToOpen);
         }
 
         private void InitializeSyntaxHighlighting()
@@ -96,16 +107,16 @@ namespace MarkdownEdit
             var contextMenu = new ContextMenu();
             SpellCheckSuggestions(contextMenu);
 
-            contextMenu.Items.Add(new MenuItem {Header = "Undo", Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z"});
-            contextMenu.Items.Add(new MenuItem {Header = "Redo", Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y"});
+            contextMenu.Items.Add(new MenuItem { Header = "Undo", Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z" });
+            contextMenu.Items.Add(new MenuItem { Header = "Redo", Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y" });
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
-            contextMenu.Items.Add(new MenuItem {Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
-            contextMenu.Items.Add(new MenuItem {Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
-            contextMenu.Items.Add(new MenuItem {Header = "Paste Special", Command = MainWindow.PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
-            contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
+            contextMenu.Items.Add(new MenuItem { Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X" });
+            contextMenu.Items.Add(new MenuItem { Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C" });
+            contextMenu.Items.Add(new MenuItem { Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V" });
+            contextMenu.Items.Add(new MenuItem { Header = "Paste Special", Command = MainWindow.PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text" });
+            contextMenu.Items.Add(new MenuItem { Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete" });
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem {Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
+            contextMenu.Items.Add(new MenuItem { Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A" });
 
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
