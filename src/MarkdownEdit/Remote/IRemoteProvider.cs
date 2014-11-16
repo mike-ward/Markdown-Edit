@@ -4,6 +4,8 @@ namespace MarkdownEdit
 {
     public interface IRemoteProvider
     {
+        string DisplayName { get; }
+
         Task<object> GetCredentialsAsync();
 
         Task<string> OpenFilePickerAsync();

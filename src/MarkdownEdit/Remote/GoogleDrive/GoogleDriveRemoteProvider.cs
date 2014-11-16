@@ -9,6 +9,11 @@ namespace MarkdownEdit
 {
     public class GoogleDriveRemoteProvider : IRemoteProvider
     {
+        public string DisplayName
+        {
+            get { return "Google Drive"; }
+        }
+
         public async Task<object> GetCredentialsAsync()
         {
             var credential = await GoogleWebAuthorizationBroker.AuthorizeAsync(
