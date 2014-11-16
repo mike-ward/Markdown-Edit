@@ -70,14 +70,14 @@ namespace MarkdownEdit
                     ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
                     InitializeSpellCheck();
                     SpellCheck = Settings.Default.SpellCheckEnabled;
-                    LoadCommandineOrLastFile();
+                    LoadCommandLineOrLastFile();
                     EditBox.Focus();
                 });
                 t.Dispose();
             });
         }
 
-        private void LoadCommandineOrLastFile()
+        private void LoadCommandLineOrLastFile()
         {
             var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
                 ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
