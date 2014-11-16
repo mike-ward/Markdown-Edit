@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -32,7 +31,6 @@ namespace MarkdownEdit
         public static RoutedCommand ExportHtmlCommand = new RoutedCommand();
         public static RoutedCommand ScrollToLineCommand = new RoutedCommand();
         public static RoutedCommand ShowGotoLineDialogCommand = new RoutedCommand();
-        public static RoutedCommand RemoteProvidersDialogCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
         private IRemoteManager RemoteManager { get; set; } 
