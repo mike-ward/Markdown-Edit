@@ -13,7 +13,6 @@ namespace MarkdownEdit
         private void OnStartup(object sender, StartupEventArgs ea)
         {
             InitializeSettings();
-            new RemoteManager();
         }
 
         private void InitializeSettings()
