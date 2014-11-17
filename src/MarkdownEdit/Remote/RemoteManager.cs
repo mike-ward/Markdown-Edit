@@ -10,8 +10,6 @@ namespace MarkdownEdit
          
         public RemoteManager()
         {
-            var googleDrive = new GoogleDriveRemoteProvider();
-            Providers = new[] { googleDrive };
         }
 
         public IEnumerable<IRemoteProvider> LinkedRemoteProviders()
