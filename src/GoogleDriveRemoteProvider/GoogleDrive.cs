@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
@@ -8,6 +9,7 @@ using MarkdownEdit;
 
 namespace GoogleDriveRemoteProvider
 {
+    [Export(typeof(IRemoteProvider))]
     public class GoogleDrive : IRemoteProvider
     {
         public string DisplayName
