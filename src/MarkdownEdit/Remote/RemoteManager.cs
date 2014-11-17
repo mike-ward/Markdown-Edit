@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace MarkdownEdit
 {
-    public class RemoteManager : IRemoteManager
+    public class RemoteManager : IRemoteManager, IDisposable
     {
+        private bool _disposed;
         private CompositionContainer _container;
 
         [Import(typeof(IRemoteProvider))]
@@ -54,6 +55,21 @@ namespace MarkdownEdit
         public Task UnlinkRemoteProvider(IRemoteProvider remote)
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _container.Dispose();
+            }
+            _disposed = true;
         }
     }
 }
