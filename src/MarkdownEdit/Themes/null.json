@@ -14,7 +14,7 @@
         "Background": null,
         "Foreground": null,
         "FontWeight": null,
-        "FontStyle": "italic"
+        "FontStyle": null
     },
     "HighlightStrongEmphasis": {
         "Name": "StrongEmphasis",
