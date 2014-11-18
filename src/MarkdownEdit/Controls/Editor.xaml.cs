@@ -68,20 +68,12 @@ namespace MarkdownEdit
                 {
                     InitializeSyntaxHighlighting();
                     ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
-                    InitializeSpellCheck();
+                    _spellCheckProvider = SpellCheckProvider.Factory(this);
                     SpellCheck = Settings.Default.SpellCheckEnabled;
-                    LoadCommandLineOrLastFile();
                     EditBox.Focus();
                 });
                 t.Dispose();
             });
-        }
-
-        private void LoadCommandLineOrLastFile()
-        {
-            var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
-                ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
-            LoadFile(fileToOpen);
         }
 
         private void InitializeSyntaxHighlighting()
@@ -141,15 +133,6 @@ namespace MarkdownEdit
         }
 
         // Spell Check
-
-        private void InitializeSpellCheck()
-        {
-            var spellingService = new SpellingService();
-            App.UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == "SpellCheckDictonary") spellingService.SetLanguage(App.UserSettings.SpellCheckDictionary); };
-            spellingService.SetLanguage(App.UserSettings.SpellCheckDictionary);
-            _spellCheckProvider = new SpellCheckProvider(spellingService);
-            _spellCheckProvider.Initialize(this);
-        }
 
         private void OnSpellCheckChanged(object o, PropertyChangedEventArgs args)
         {

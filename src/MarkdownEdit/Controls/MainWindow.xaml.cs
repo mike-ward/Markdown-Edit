@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -48,6 +49,14 @@ namespace MarkdownEdit
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
+            LoadCommandLineOrLastFile();
+        }
+
+        private void LoadCommandLineOrLastFile()
+        {
+            var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
+                ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
+            Editor.OpenFile(fileToOpen);  
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
