@@ -39,11 +39,13 @@
     <NMakeBuildCommandLine>"C:\Program Files (x86)\Inno Setup 5\iscc.exe" MarkdownEditSetup.iss</NMakeBuildCommandLine>
     <NMakeOutput>MarkdownEditSetup.exe</NMakeOutput>
     <NMakePreprocessorDefinitions>WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeReBuildCommandLine>"C:\Program Files (x86)\Inno Setup 5\iscc.exe" MarkdownEditSetup.iss</NMakeReBuildCommandLine>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <NMakeBuildCommandLine>"C:\Program Files (x86)\Inno Setup 5\iscc.exe" MarkdownEditSetup.iss</NMakeBuildCommandLine>
     <NMakeOutput>MarkdownEditSetup.exe</NMakeOutput>
     <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeReBuildCommandLine>"C:\Program Files (x86)\Inno Setup 5\iscc.exe" MarkdownEditSetup.iss</NMakeReBuildCommandLine>
   </PropertyGroup>
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>

@@ -45,27 +45,20 @@ Source: "..\MarkdownEdit\bin\Release\Hunspellx86.dll"; DestDir: "{app}"; Flags: 
 Source: "..\MarkdownEdit\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\System.Windows.Interactivity.dll"; DestDir: "{app}"; Flags: ignoreversion
 
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\GoogleDriveRemoteProvider.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\Google.Apis.Auth.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\Google.Apis.Auth.PlatformServices.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\Google.Apis.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\Google.Apis.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\Google.Apis.Drive.v2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\Google.Apis.PlatformServices.dll"; DestDir: "{app}"; Flags: ignoreversion
-
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\log4net.dll"; DestDir: "{app}"; Flags: ignoreversion
-
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\Microsoft.Threading.Tasks.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\Microsoft.Threading.Tasks.Extensions.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\Microsoft.Threading.Tasks.Extensions.Desktop.dll"; DestDir: "{app}"; Flags: ignoreversion
-
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\System.Net.Http.Extensions.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\System.Net.Http.Primitives.dll"; DestDir: "{app}"; Flags: ignoreversion
-
-Source: "..\MarkdownEdit\bin\Release\Extensions\GoogleDriveRemoteProvider\Zlib.Portable.dll"; DestDir: "{app}"; Flags: ignoreversion
-
 Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\en_us.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\German.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\German.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\French.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\French.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\Spanish.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\Spanish.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\Italian.aff"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\Italian.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
 
 Source: "..\MarkdownEdit\bin\Release\Themes\milk-toast.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Themes\solarized-light.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
