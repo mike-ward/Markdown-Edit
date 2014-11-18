@@ -43,7 +43,7 @@
              SelectionMode="Single"
              SelectedIndex="0"
              Margin="10"
-             MouseDoubleClick="OnOpen"
+             MouseLeftButtonUp="OnOpen"
              TabIndex="1"
              BorderThickness="1"
              BorderBrush="{DynamicResource ControlBorderBrush}"/>
