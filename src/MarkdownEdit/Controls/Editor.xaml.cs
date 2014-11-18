@@ -392,6 +392,11 @@ namespace MarkdownEdit
             });
         }
 
+        public void InsertTimeStamp()
+        {
+            EditBox.SelectedText = DateTime.UtcNow.ToLocalTime().ToString("g");
+        }
+
         private void AddRemoveText(string quote)
         {
             var selected = EditBox.SelectedText;

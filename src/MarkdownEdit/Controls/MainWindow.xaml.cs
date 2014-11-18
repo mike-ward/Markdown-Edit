@@ -32,6 +32,7 @@ namespace MarkdownEdit
         public static RoutedCommand ExportHtmlCommand = new RoutedCommand();
         public static RoutedCommand ScrollToLineCommand = new RoutedCommand();
         public static RoutedCommand ShowGotoLineDialogCommand = new RoutedCommand();
+        public static RoutedCommand InsertTimeStampCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
 
@@ -207,6 +208,11 @@ namespace MarkdownEdit
         private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e)
         {
             Editor.PasteSpecial();
+        }
+
+        private void ExecuteInsertTimeStamp(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.InsertTimeStamp();
         }
 
         private void ExecuteTogglePreview(object sender, ExecutedRoutedEventArgs e)

@@ -104,6 +104,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.ExportHtmlCommand}" Executed="ExecuteExportHtml" />
     <CommandBinding Command="{x:Static local:MainWindow.ShowGotoLineDialogCommand}" Executed="ExecuteShowGotoLineDialog" />
     <CommandBinding Command="{x:Static local:MainWindow.ScrollToLineCommand}" Executed="ExecuteScrollToLine" />
+    <CommandBinding Command="{x:Static local:MainWindow.InsertTimeStampCommand}" Executed="ExecuteInsertTimeStamp" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -134,5 +135,6 @@
     <KeyBinding Command="{x:Static local:MainWindow.ShowThemeDialogCommand}" Gesture="Ctrl+T" />
     <KeyBinding Command="{x:Static local:MainWindow.ExportHtmlCommand}" Gesture="Ctrl+E" />
     <KeyBinding Command="{x:Static local:MainWindow.ShowGotoLineDialogCommand}" Gesture="Ctrl+G" />
+    <KeyBinding Command="{x:Static local:MainWindow.InsertTimeStampCommand}" Gesture="F5" />
   </Window.InputBindings>
 </controls:MetroWindow>
