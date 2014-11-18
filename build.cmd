@@ -1,3 +1,3 @@
 cd src
-msbuild MarkdownEdit.sln /p:configuration=release
+msbuild MarkdownEdit.sln /t:rebuild /p:configuration=release
 cd ..
