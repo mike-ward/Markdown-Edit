@@ -56,7 +56,7 @@ namespace MarkdownEdit
         {
             var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
                 ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
-            Editor.OpenFile(fileToOpen);  
+            Editor.LoadFile(fileToOpen);  
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)

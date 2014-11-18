@@ -123,13 +123,9 @@ namespace MarkdownEdit
             if (!isText) return;
             var text = (string)e.SourceDataObject.GetData(DataFormats.UnicodeText);
 
-            e.CancelCommand();
-            Clipboard.SetText(text.ReplaceSmartChars());
-            EditBox.Paste();
-
-            //var dataObject = new DataObject();
-            //dataObject.SetData(DataFormats.UnicodeText, text.ReplaceSmartChars());
-            //e.DataObject = dataObject;
+            var dataObject = new DataObject();
+            dataObject.SetData(DataFormats.UnicodeText, text.ReplaceSmartChars());
+            e.DataObject = dataObject;
         }
 
         // Spell Check
@@ -291,7 +287,7 @@ namespace MarkdownEdit
             });
         }
 
-        private bool LoadFile(string file)
+        public bool LoadFile(string file)
         {
             try
             {
