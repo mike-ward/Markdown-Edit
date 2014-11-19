@@ -23,7 +23,7 @@
     <Style x:Key="StatusIndicatorStyle"
            TargetType="TextBlock">
       <Setter Property="Margin" Value="10 0 0 0" />
-      <Setter Property="Foreground" Value="{StaticResource SemiTransparentWhiteBrush}" />
+      <Setter Property="Foreground" Value="{DynamicResource GrayBrush10}" />
       <Setter Property="VerticalAlignment" Value="Bottom" />
       <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
       <Style.Triggers>
@@ -52,6 +52,11 @@
                    FontFamily="Segoe UI Symbol"
                    Style="{StaticResource StatusIndicatorStyle}"
                    IsEnabled="{Binding Path=WordWrap, ElementName=Editor}" />
+        <TextBlock Text="&#x3d;"
+                   ToolTip="Auto Save [Ctrl+0]"
+                   FontFamily="Wingdings"
+                   Style="{StaticResource StatusIndicatorStyle}"
+                   IsEnabled="{Binding Path=AutoSave, ElementName=Editor}" />
       </StackPanel>
     </controls:WindowCommands>
   </controls:MetroWindow.RightWindowCommands>
@@ -113,6 +118,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.ShowGotoLineDialogCommand}" Executed="ExecuteShowGotoLineDialog" />
     <CommandBinding Command="{x:Static local:MainWindow.ScrollToLineCommand}" Executed="ExecuteScrollToLine" />
     <CommandBinding Command="{x:Static local:MainWindow.InsertTimeStampCommand}" Executed="ExecuteInsertTimeStamp" />
+    <CommandBinding Command="{x:Static local:MainWindow.ToggleAutoSaveCommand}" Executed="ExecuteToggleAutoSave" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -144,5 +150,6 @@
     <KeyBinding Command="{x:Static local:MainWindow.ExportHtmlCommand}" Gesture="Ctrl+E" />
     <KeyBinding Command="{x:Static local:MainWindow.ShowGotoLineDialogCommand}" Gesture="Ctrl+G" />
     <KeyBinding Command="{x:Static local:MainWindow.InsertTimeStampCommand}" Gesture="F5" />
+    <KeyBinding Command="{x:Static local:MainWindow.ToggleAutoSaveCommand}" Gesture="Ctrl+0" />
   </Window.InputBindings>
 </controls:MetroWindow>

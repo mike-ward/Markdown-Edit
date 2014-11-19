@@ -33,6 +33,7 @@ namespace MarkdownEdit
         public static RoutedCommand ScrollToLineCommand = new RoutedCommand();
         public static RoutedCommand ShowGotoLineDialogCommand = new RoutedCommand();
         public static RoutedCommand InsertTimeStampCommand = new RoutedCommand();
+        public static RoutedCommand ToggleAutoSaveCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
 
@@ -213,6 +214,11 @@ namespace MarkdownEdit
         private void ExecuteInsertTimeStamp(object sender, ExecutedRoutedEventArgs e)
         {
             Editor.InsertTimeStamp();
+        }
+
+        private void ExecuteToggleAutoSave(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.AutoSave = !Editor.AutoSave;
         }
 
         private void ExecuteTogglePreview(object sender, ExecutedRoutedEventArgs e)

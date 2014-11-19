@@ -26,12 +26,14 @@ namespace MarkdownEdit
         private string _displayName = string.Empty;
         private bool _wordWrap;
         private bool _spellCheck;
+        private bool _autosave;
         private bool _isModified;
         private bool _removeSpecialCharacters;
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
         private ISpellCheckProvider _spellCheckProvider;
         private const string F1ForHelp = " - F1 for Help";
+        private readonly Action<string> ExecuteAutoSaveLater;
 
         public Editor()
         {
@@ -42,6 +44,7 @@ namespace MarkdownEdit
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
             _findReplaceDialog = new FindReplaceDialog(EditBox);
+            ExecuteAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(() => ExecuteAutoSave()), 4000);
         }
 
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -52,6 +55,8 @@ namespace MarkdownEdit
             EditBox.Options.AllowScrollBelowDocument = true;
             EditBox.WordWrap = Settings.Default.WordWrapEnabled;
             EditBox.TextChanged += EditBoxOnTextChanged;
+            EditBox.TextChanged += (s, e) => ExecuteAutoSaveLater(null);
+            AutoSave = Settings.Default.AutoSave;
             PropertyChanged += OnSpellCheckChanged;
 
             var cmd = EditBox
@@ -92,6 +97,7 @@ namespace MarkdownEdit
             _findReplaceDialog.Close();
             Settings.Default.WordWrapEnabled = EditBox.WordWrap;
             Settings.Default.SpellCheckEnabled = SpellCheck;
+            Settings.Default.AutoSave = AutoSave;
         }
 
         private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)
@@ -264,6 +270,15 @@ namespace MarkdownEdit
             return Execute(() => string.IsNullOrWhiteSpace(FileName)
                 ? SaveFileAs()
                 : Save());
+        }
+
+        public void ExecuteAutoSave()
+        {
+            Execute(() =>
+            {
+                if (AutoSave == false || IsModified == false || string.IsNullOrEmpty(FileName)) return;
+                SaveFile();
+            });
         }
 
         public bool SaveFileAs()
@@ -514,6 +529,12 @@ namespace MarkdownEdit
             set { Set(ref _spellCheck, value); }
         }
 
+        public bool AutoSave
+        {
+            get { return _autosave; }
+            set { Set(ref _autosave, value); }
+
+        }
         public bool IsModified
         {
             get { return _isModified; }

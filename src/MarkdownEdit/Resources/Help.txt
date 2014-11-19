@@ -14,6 +14,7 @@
     F7             Toggle spell checking
     F11            Toggle full screen
     F12            Toggle preview/edit/both
+    Ctrl+0         Toggle auto save
     
     Tab            Indent current line/selection 2 spaces
     Shift+Tab      Out-dent current line/selection 2 spaces
@@ -52,6 +53,10 @@
     
 - [CommonMark](http://commonmark.org)
 - [Syntax Cheat Sheet (Tables, strikethrough not supported)](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
+## Auto Save
+
+When Auto Save is enabled `Ctrl+0`, content is saved to the original file location 4 seconds after the last detected change. Unlike some auto-save features, this one will essentially save changes whenever typing is paused.
 
 ## User Settings
 
