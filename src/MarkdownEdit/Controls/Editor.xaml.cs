@@ -347,6 +347,7 @@ namespace MarkdownEdit
             if (_editorState.StateSaved)
             {
                 _editorState.Restore(this);
+                ExecuteAutoSave();
                 return;
             }
             _editorState.Save(this);
