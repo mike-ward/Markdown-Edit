@@ -274,6 +274,7 @@ namespace MarkdownEdit
 
         public void ExecuteAutoSave()
         {
+            if (AutoSave == false || IsModified == false || string.IsNullOrEmpty(FileName)) return;
             Execute(() =>
             {
                 if (AutoSave == false || IsModified == false || string.IsNullOrEmpty(FileName)) return;
@@ -290,7 +291,7 @@ namespace MarkdownEdit
                     FilterIndex = 0,
                     OverwritePrompt = true,
                     RestoreDirectory = true,
-                    Filter = @"Markdown files (*.md|*.md|All files (*.*)|*.*"
+                    Filter = @"Markdown files (*.md)|*.md|All files (*.*)|*.*"
                 };
 
                 if (dialog.ShowDialog() == true)
