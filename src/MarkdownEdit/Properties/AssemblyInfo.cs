@@ -17,6 +17,6 @@ using System.Windows;
     ResourceDictionaryLocation.SourceAssembly 
     )]
 
-[assembly: AssemblyVersion("0.2.5.0")]
-[assembly: AssemblyFileVersion("0.2.5.0")]
+[assembly: AssemblyVersion("0.2.6.0")]
+[assembly: AssemblyFileVersion("0.2.6.0")]
 [assembly: Guid("A9A0AE86-ED91-498F-A9F9-DB669C9879CE")]
