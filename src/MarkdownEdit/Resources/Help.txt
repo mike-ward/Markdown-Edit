@@ -14,7 +14,7 @@
     F7             Toggle spell checking
     F11            Toggle full screen
     F12            Toggle preview/edit/both
-    Ctrl+0         Toggle auto save
+    Alt+S          Toggle auto save
     
     Tab            Indent current line/selection 2 spaces
     Shift+Tab      Out-dent current line/selection 2 spaces
@@ -29,6 +29,8 @@
     Shift+F3       Find previous
     Ctrl+H         Find and replace
     Ctrl+G         Goto line
+    Ctrl+U         Select previous header
+    Ctrl+J         Select next header
 
     Ctrl+Plus      Increase font size
     Ctrl+Minus     Decrease font size

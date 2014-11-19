@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -466,6 +467,32 @@ namespace MarkdownEdit
             EditBox.ScrollToLine(line);
             var offset = EditBox.Document.GetOffset(line, 0);
             EditBox.CaretOffset = offset;
+        }
+
+        public void SelectPreviousHeader()
+        {
+            SelectHeader(false);
+        }
+
+        public void SelectNextHeader()
+        {
+            SelectHeader(true);
+        }
+
+        private void SelectHeader(bool next)
+        {
+            var start = EditBox.SelectionStart + (next ? EditBox.SelectionLength : 0);
+            var options = RegexOptions.Multiline | (next ? RegexOptions.None : RegexOptions.RightToLeft);
+            var regex = new Regex("^#{1,6}[^#].*", options);
+            var match = regex.Match(EditBox.Text, start);
+            if (!match.Success)
+            {
+                Utility.Beep();
+                return;
+            }
+            EditBox.Select(match.Index, match.Length);
+            var loc = EditBox.Document.GetLocation(match.Index);
+            EditBox.ScrollTo(loc.Line, loc.Column);
         }
 
         // Events

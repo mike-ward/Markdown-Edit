@@ -34,6 +34,8 @@ namespace MarkdownEdit
         public static RoutedCommand ShowGotoLineDialogCommand = new RoutedCommand();
         public static RoutedCommand InsertTimeStampCommand = new RoutedCommand();
         public static RoutedCommand ToggleAutoSaveCommand = new RoutedCommand();
+        public static RoutedCommand SelectPreviousHeaderCommand = new RoutedCommand();
+        public static RoutedCommand SelectNextHeaderCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
 
@@ -225,6 +227,16 @@ namespace MarkdownEdit
         {
             Settings.Default.EditPreviewHide = (Settings.Default.EditPreviewHide + 1) % 3;
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
+        }
+
+        private void ExecuteSelectPreviousHeader(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.SelectPreviousHeader();
+        }
+
+        private void ExecuteSelectNextHeader(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.SelectNextHeader();
         }
 
         private void UpdateEditorPreviewVisibility(int state)
