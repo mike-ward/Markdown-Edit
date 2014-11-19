@@ -53,7 +53,7 @@
                    Style="{StaticResource StatusIndicatorStyle}"
                    IsEnabled="{Binding Path=WordWrap, ElementName=Editor}" />
         <TextBlock Text="&#x3d;"
-                   ToolTip="Auto Save [Ctrl+0]"
+                   ToolTip="Auto Save [Alt+S]"
                    FontFamily="Wingdings"
                    Style="{StaticResource StatusIndicatorStyle}"
                    IsEnabled="{Binding Path=AutoSave, ElementName=Editor}" />
