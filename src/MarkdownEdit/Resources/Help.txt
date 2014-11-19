@@ -58,7 +58,7 @@
 
 ## Auto Save
 
-When Auto Save is enabled `Ctrl+0`, content is saved to the original file location 4 seconds after the last detected change. Unlike some auto-save features, this one will essentially save changes whenever typing is paused.
+When Auto Save is enabled `Alt+S`, content is saved to the original file location 4 seconds after the last detected change. Unlike some auto-save features, this one will essentially save changes whenever typing is paused.
 
 ## User Settings
 
