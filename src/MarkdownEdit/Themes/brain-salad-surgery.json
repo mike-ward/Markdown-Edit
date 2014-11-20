@@ -1,0 +1,61 @@
+﻿{
+    "Name": "Brain Salad Surgery",
+    "EditorBackground": "#2a2",
+    "EditorForeground": "#fff",
+    "HighlightHeading": {
+      "Name": "Heading",
+      "Background": null,
+      "Foreground": "#028",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightEmphasis": {
+      "Name": "Emphasis",
+      "Background": "#666",
+      "Foreground": null,
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightStrongEmphasis": {
+      "Name": "StrongEmphasis",
+      "Background": "#666",
+      "Foreground": null,
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightInlineCode": {
+      "Name": "InlineCode",
+      "Background": "#000",
+      "Foreground": null,
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightBlockCode": {
+      "Name": "BlockCode",
+      "Background": null,
+      "Foreground": "#000",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightBlockQuote": {
+      "Name": "BlockQuote",
+      "Background": null,
+      "Foreground": "#00f",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightLink": {
+      "Name": "Link",
+      "Background": "orange",
+      "Foreground": null,
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightImage": {
+      "Name": "Image",
+      "Background": "orange",
+      "Foreground": null,
+      "FontWeight": null,
+      "FontStyle": null
+    }
+  }
