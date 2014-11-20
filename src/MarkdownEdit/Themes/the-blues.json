@@ -1,0 +1,61 @@
+﻿ {
+    "Name": "The Blues",
+    "EditorBackground": "#4777B4",
+    "EditorForeground": "#eee",
+    "HighlightHeading": {
+      "Name": "Heading",
+      "Background": null,
+      "Foreground": "#cd5",
+      "FontWeight": "bold",
+      "FontStyle": null
+    },
+    "HighlightEmphasis": {
+      "Name": "Emphasis",
+      "Background": null,
+      "Foreground": "#00f",
+      "FontWeight": null,
+      "FontStyle": "italic"
+    },
+    "HighlightStrongEmphasis": {
+      "Name": "StrongEmphasis",
+      "Background": null,
+      "Foreground": "#529",
+      "FontWeight": "bold",
+      "FontStyle": null
+    },
+    "HighlightInlineCode": {
+      "Name": "InlineCode",
+      "Background": null,
+      "Foreground": "#2df",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightBlockCode": {
+      "Name": "BlockCode",
+      "Background": null,
+      "Foreground": "#2df",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightBlockQuote": {
+      "Name": "BlockQuote",
+      "Background": null,
+      "Foreground": "#8ACCCF",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightLink": {
+      "Name": "Link",
+      "Background": null,
+      "Foreground": "#bada55",
+      "FontWeight": null,
+      "FontStyle": null
+    },
+    "HighlightImage": {
+      "Name": "Image",
+      "Background": null,
+      "Foreground": "#bada55",
+      "FontWeight": null,
+      "FontStyle": null
+    }
+  }
