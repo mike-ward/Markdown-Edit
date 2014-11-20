@@ -25,7 +25,7 @@
     },
     "HighlightInlineCode": {
       "Name": "InlineCode",
-      "Background": null,
+      "Background": "#558",
       "Foreground": "#2df",
       "FontWeight": null,
       "FontStyle": null
