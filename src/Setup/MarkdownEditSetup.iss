@@ -61,6 +61,7 @@ Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\Italian.aff"; DestD
 Source: "..\MarkdownEdit\bin\Release\SpellCheck\Dictionaries\Italian.dic"; DestDir: "{app}\SpellCheck\Dictionaries"; Flags: ignoreversion
 
 Source: "..\MarkdownEdit\bin\Release\Themes\brain-salad-surgery.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
+Source: "..\MarkdownEdit\bin\Release\Themes\inflamed-wound.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Themes\milk-toast.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Themes\programmers-cant-design.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
 Source: "..\MarkdownEdit\bin\Release\Themes\solarized-light.json"; DestDir: "{app}\Themes"; Flags: ignoreversion
