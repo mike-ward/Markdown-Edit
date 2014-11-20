@@ -210,7 +210,7 @@
     <None Include="Themes\milk-toast.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Themes\null.json">
+    <None Include="Themes\programmers-cant-design.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Themes\solarized-dark.json">
