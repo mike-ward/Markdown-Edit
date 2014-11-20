@@ -294,8 +294,7 @@ namespace MarkdownEdit
 
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new GotoLineDialog();
-            dialog.Owner = this;
+            var dialog = new GotoLineDialog {Owner = this};
             dialog.ShowDialog();
         }
 
@@ -327,8 +326,7 @@ namespace MarkdownEdit
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)

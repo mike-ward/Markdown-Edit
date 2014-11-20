@@ -108,8 +108,7 @@ namespace MarkdownEdit.SpellCheck
 
         private void ClearSpellCheckErrors()
         {
-            if (_spellCheckRenderer == null) return;
-            _spellCheckRenderer.ErrorSegments.Clear();
+            _spellCheckRenderer?.ErrorSegments.Clear();
         }
 
         public IEnumerable<TextSegment> GetSpellCheckErrors()

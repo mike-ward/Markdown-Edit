@@ -28,9 +28,6 @@ namespace MarkdownEdit
             File.WriteAllText(TemplateFile, Template);
         }
 
-        public static string TemplateFile
-        {
-            get { return Path.Combine(UserSettings.SettingsFolder, "user_template.html"); }
-        }
+        public static string TemplateFile => Path.Combine(UserSettings.SettingsFolder, "user_template.html");
     }
 }

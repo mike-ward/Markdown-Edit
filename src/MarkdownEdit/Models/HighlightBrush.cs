@@ -21,7 +21,7 @@ namespace MarkdownEdit
             {
                 _brush = null;
             }
-            if (_brush != null) _brush.Freeze();
+            _brush?.Freeze();
         }
 
         public override Brush GetBrush(ITextRunConstructionContext context)

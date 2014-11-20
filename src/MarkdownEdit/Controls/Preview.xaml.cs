@@ -11,8 +11,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using CommonMark;
-using MarkdownEdit.Properties;
 using mshtml;
+using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
 {
@@ -185,8 +185,7 @@ namespace MarkdownEdit
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)

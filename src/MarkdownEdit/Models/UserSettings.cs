@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Environment;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
@@ -145,15 +145,9 @@ namespace MarkdownEdit
 
         // Serialization
 
-        public static string SettingsFolder
-        {
-            get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Markdown Edit"); }
-        }
+        public static string SettingsFolder => Path.Combine(GetFolderPath(SpecialFolder.ApplicationData), "Markdown Edit");
 
-        public static string SettingsFile
-        {
-            get { return Path.Combine(SettingsFolder, "user_settings.json"); }
-        }
+        public static string SettingsFile => Path.Combine(SettingsFolder, "user_settings.json");
 
         public void Save()
         {
@@ -178,7 +172,7 @@ namespace MarkdownEdit
         protected virtual void OnPropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)

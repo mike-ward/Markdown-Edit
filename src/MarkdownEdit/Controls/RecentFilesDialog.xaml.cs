@@ -26,7 +26,7 @@ namespace MarkdownEdit
                 if (index >= 0)
                 {
                     var item = FilesListBox.ItemContainerGenerator.ContainerFromIndex(index) as ListBoxItem;
-                    if (item != null) item.Focus();
+                    item?.Focus();
                 }
             }
         }

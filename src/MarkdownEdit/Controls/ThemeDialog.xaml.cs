@@ -48,7 +48,7 @@ namespace MarkdownEdit
                 if (index >= 0)
                 {
                     var item = ThemeListBox.ItemContainerGenerator.ContainerFromIndex(index) as ListBoxItem;
-                    if (item != null) item.Focus();
+                    item?.Focus();
                 }
             }
         }

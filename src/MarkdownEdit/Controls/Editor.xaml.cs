@@ -34,7 +34,7 @@ namespace MarkdownEdit
         private readonly FindReplaceDialog _findReplaceDialog;
         private ISpellCheckProvider _spellCheckProvider;
         private const string F1ForHelp = " - F1 for Help";
-        private readonly Action<string> ExecuteAutoSaveLater;
+        private readonly Action<string> _executeAutoSaveLater;
 
         public Editor()
         {
@@ -45,7 +45,7 @@ namespace MarkdownEdit
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
             _findReplaceDialog = new FindReplaceDialog(EditBox);
-            ExecuteAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(() => ExecuteAutoSave()), 4000);
+            _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
         }
 
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -56,7 +56,7 @@ namespace MarkdownEdit
             EditBox.Options.AllowScrollBelowDocument = true;
             EditBox.WordWrap = Settings.Default.WordWrapEnabled;
             EditBox.TextChanged += EditBoxOnTextChanged;
-            EditBox.TextChanged += (s, e) => ExecuteAutoSaveLater(null);
+            EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
             AutoSave = Settings.Default.AutoSave;
             PropertyChanged += OnSpellCheckChanged;
 
@@ -509,8 +509,7 @@ namespace MarkdownEdit
 
         private void ScrollViewerOnScrollChanged(object sender, ScrollChangedEventArgs scrollChangedEventArgs)
         {
-            var handler = ScrollChanged;
-            if (handler != null) handler(this, scrollChangedEventArgs);
+            ScrollChanged?.Invoke(this, scrollChangedEventArgs);
         }
 
         // Properties 
@@ -705,8 +704,7 @@ namespace MarkdownEdit
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)

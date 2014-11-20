@@ -15,7 +15,7 @@ namespace MarkdownEdit.SpellCheck
             ErrorSegments = new TextSegmentCollection<TextSegment>();
         }
 
-        public TextSegmentCollection<TextSegment> ErrorSegments { get; private set; }
+        public TextSegmentCollection<TextSegment> ErrorSegments { get; }
 
         private static IEnumerable<Point> CreatePoints(Point start, double offset, int count)
         {
@@ -49,9 +49,6 @@ namespace MarkdownEdit.SpellCheck
             }
         }
 
-        public KnownLayer Layer
-        {
-            get { return KnownLayer.Selection; }
-        }
+        public KnownLayer Layer => KnownLayer.Selection;
     }
 }
