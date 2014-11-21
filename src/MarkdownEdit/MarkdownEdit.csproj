@@ -257,6 +257,7 @@
     <None Include="Hunspellx86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="logo.png" />
     <Content Include="Resources\markdown.xshd.txt" />
   </ItemGroup>
   <ItemGroup>
