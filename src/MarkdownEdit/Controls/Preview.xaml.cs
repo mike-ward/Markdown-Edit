@@ -116,8 +116,8 @@ namespace MarkdownEdit
         private static void BrowserOnNavigating(object sender, NavigatingCancelEventArgs ea)
         {
             ea.Cancel = true;
-            var url = ea.Uri.ToString();
-            if (url.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
+            var url = ea.Uri?.ToString();
+            if (url?.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
         }
 
         public void SetScrollOffset(ScrollChangedEventArgs ea)

@@ -59,6 +59,8 @@ namespace MarkdownEdit
             EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
             AutoSave = Settings.Default.AutoSave;
             PropertyChanged += OnSpellCheckChanged;
+            var grid = EditBox.GetDescendantByType<Grid>();
+            grid.ColumnDefinitions[1].Width = new GridLength(5);
 
             var cmd = EditBox
                 .TextArea
