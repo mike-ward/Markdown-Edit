@@ -1,5 +1,6 @@
 Markdown Edit
 =============
+![logo](https://raw.githubusercontent.com/mike-ward/Markdown-Edit/master/src/MarkdownEdit/logo.png)  
 
 [Home Page](http://mike-ward.net/markdownedit)
 
