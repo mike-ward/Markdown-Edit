@@ -5,21 +5,18 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using CommonMark;
 using mshtml;
-using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
 {
     public partial class Preview : INotifyPropertyChanged
     {
         public readonly Action<string> UpdatePreview;
-        private readonly Func<string, string> _uriResolver = Utility.Memoize<string, string>(UriResolver);
         private readonly FileSystemWatcher _templateWatcher;
         private int _wordCount;
 
@@ -54,7 +51,7 @@ namespace MarkdownEdit
             try
             {
                 markdown = Utility.RemoveYamlFrontMatter(markdown);
-                var html = CommonMarkConverter.Convert(markdown, new CommonMarkSettings {UriResolver = _uriResolver});
+                var html = MarkdownConverter.ConvertToHtml(markdown);
                 GetContentsDiv().InnerHtml = html;
                 WordCount = (GetContentsDiv().InnerText as string).WordCount();
             }
@@ -82,37 +79,6 @@ namespace MarkdownEdit
             GetContentsDiv().InnerHtml = contents;
         }
 
-        private static string UriResolver(string text)
-        {
-            if (Regex.IsMatch(text, @"^\w+://")) return text;
-            var lastOpen = Settings.Default.LastOpenFile;
-            if (string.IsNullOrEmpty(lastOpen)) return text;
-            var path = Path.GetDirectoryName(lastOpen);
-            if (string.IsNullOrEmpty(path)) return text;
-            var file = text.TrimStart('/');
-            return FindAsset(path, file) ?? text;
-        }
-
-        private static string FindAsset(string path, string file)
-        {
-            try
-            {
-                var asset = Path.Combine(path, file);
-                for (var i = 0; i < 4; ++i)
-                {
-                    if (File.Exists(asset)) return "file://" + asset.Replace('\\', '/');
-                    var parent = Directory.GetParent(path);
-                    if (parent == null) break;
-                    path = parent.FullName;
-                    asset = Path.Combine(path, file);
-                }
-            }
-            catch (ArgumentException)
-            {
-            }
-            return null;
-        }
-
         private static void BrowserOnNavigating(object sender, NavigatingCancelEventArgs ea)
         {
             ea.Cancel = true;
@@ -125,7 +91,7 @@ namespace MarkdownEdit
             if (App.UserSettings.SynchronizeScrollPositions == false) return;
             var document2 = (IHTMLDocument2)Browser.Document;
             var document3 = (IHTMLDocument3)Browser.Document;
-            if (document3 != null)
+            if (document3 != null && document3.documentElement != null)
             {
                 var percentToScroll = PercentScroll(ea);
                 var body = document3.getElementsByTagName("body").item(0);
@@ -177,6 +143,15 @@ namespace MarkdownEdit
         {
             get { return _wordCount; }
             set { Set(ref _wordCount, value); }
+        }
+
+        public static readonly DependencyProperty MarkdownConverterProperty = DependencyProperty.Register(
+            "MarkdownConverter", typeof (IMarkdownConverter), typeof (Preview), new PropertyMetadata(default(IMarkdownConverter)));
+
+        public IMarkdownConverter MarkdownConverter
+        {
+            get { return (IMarkdownConverter)GetValue(MarkdownConverterProperty); }
+            set { SetValue(MarkdownConverterProperty, value); }
         }
 
         // INotifyPropertyChanged

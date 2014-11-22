@@ -38,9 +38,11 @@ namespace MarkdownEdit
         public static RoutedCommand SelectNextHeaderCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
+        private IMarkdownConverter _markdownConverter;
 
-        public MainWindow()
+        public MainWindow(IMarkdownConverter markdownConverter)
         {
+            MarkdownConverter = markdownConverter;
             InitializeComponent();
             Loaded += OnLoaded;
             Closing += OnClosing;
@@ -289,7 +291,7 @@ namespace MarkdownEdit
 
         private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e)
         {
-            Utility.ExportHtmlToClipboard(Editor.Text);
+            Utility.ExportHtmlToClipboard(Editor.Text, MarkdownConverter);
         }
 
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e)
@@ -318,6 +320,12 @@ namespace MarkdownEdit
         {
             get { return _editorMargins; }
             set { Set(ref _editorMargins, value); }
+        }
+
+        public IMarkdownConverter MarkdownConverter
+        {
+            get { return _markdownConverter; } 
+            set { Set(ref _markdownConverter, value); }   
         }
 
         // INotifyPropertyChanged implementation

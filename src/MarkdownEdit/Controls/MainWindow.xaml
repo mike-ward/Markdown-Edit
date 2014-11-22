@@ -79,6 +79,7 @@
         />
       <local:Preview 
         x:Name="Preview"
+        MarkdownConverter="{Binding MarkdownConverter}"
         Margin="{Binding Path=EditorMargins, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         />
     </UniformGrid>

@@ -13,6 +13,12 @@ namespace MarkdownEdit
         private void OnStartup(object sender, StartupEventArgs ea)
         {
             InitializeSettings();
+
+            var container = TinyIoC.TinyIoCContainer.Current;
+            container.Register<IMarkdownConverter, CommonMarkConverter>();
+
+            MainWindow = container.Resolve<MainWindow>();
+            MainWindow.Show();
         }
 
         private void InitializeSettings()

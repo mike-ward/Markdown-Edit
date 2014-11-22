@@ -50,10 +50,10 @@ namespace MarkdownEdit
             return Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\'));
         }
 
-        public static void ExportHtmlToClipboard(string markdown)
+        public static void ExportHtmlToClipboard(string markdown, IMarkdownConverter converter)
         {
             var text = RemoveYamlFrontMatter(markdown);
-            var html = CommonMarkConverter.Convert(text);
+            var html = converter.ConvertToHtml(text);
             Clipboard.SetText(html);
         }
 

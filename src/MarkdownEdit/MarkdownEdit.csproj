@@ -80,6 +80,8 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BooleanToScrollBarVisibilityConverter.cs" />
     <Compile Include="Converters\NumberFormatConverter.cs" />
+    <Compile Include="MarkdownConverters\CommonMarkConverter.cs" />
+    <Compile Include="MarkdownConverters\IMarkdownConverter.cs" />
     <Compile Include="Models\EditorState.cs" />
     <Compile Include="Controls\FindReplaceDialog.xaml.cs">
       <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
@@ -93,6 +95,7 @@
     <Compile Include="Controls\RecentFilesDialog.xaml.cs">
       <DependentUpon>RecentFilesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\TinyIoc.cs" />
     <Compile Include="SpellCheck\ISpellCheckProvider.cs" />
     <Compile Include="SpellCheck\ISpellingService.cs" />
     <Compile Include="SpellCheck\SpellCheckBackgroundRenderer.cs" />
@@ -260,9 +263,7 @@
     <None Include="logo.png" />
     <Content Include="Resources\markdown.xshd.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
