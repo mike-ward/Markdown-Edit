@@ -66,7 +66,7 @@
       <local:Editor
         x:Name="Editor" 
         Padding="5 10 5 3" 
-        Margin="{Binding Path=EditorMargins, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+        Margin="{Binding Path=EditorMargins, RelativeSource={RelativeSource AncestorType=Window}}"
         Theme="{Binding Path=Theme, Source={x:Static local:App.UserSettings}}"
         FontFamily="{Binding Path=EditorFontFamily, Source={x:Static local:App.UserSettings}}"
         FontSize="{Binding Path=EditorFontSize, Source={x:Static local:App.UserSettings}}"
@@ -76,11 +76,12 @@
         ShowSpaces="{Binding Path=EditorShowSpaces, Source={x:Static local:App.UserSettings}}"
         ShowTabs="{Binding Path=EditorShowTabs, Source={x:Static local:App.UserSettings}}"
         ShowLineNumbers="{Binding Path=EditorShowLineNumbers, Source={x:Static local:App.UserSettings}}"
+        SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}"
         />
       <local:Preview 
         x:Name="Preview"
+        Margin="{Binding EditorMargins}"
         MarkdownConverter="{Binding MarkdownConverter}"
-        Margin="{Binding Path=EditorMargins, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
         />
     </UniformGrid>
   </Grid>

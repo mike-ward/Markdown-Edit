@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Windows;
 using MarkdownEdit.Properties;
+using MarkdownEdit.SpellCheck;
+using TinyIoC;
 
 namespace MarkdownEdit
 {
@@ -14,8 +16,14 @@ namespace MarkdownEdit
         {
             InitializeSettings();
 
-            var container = TinyIoC.TinyIoCContainer.Current;
+            var container = TinyIoCContainer.Current;
             container.Register<IMarkdownConverter, CommonMarkConverter>();
+            container.Register<ISpellingService, SpellingService>();
+            container.Register<ISpellCheckProvider, SpellCheckProvider>();
+
+            var spellingService = container.Resolve<ISpellingService>();
+            spellingService.SetLanguage(UserSettings.SpellCheckDictionary);
+            UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == "SpellCheckDictonary") spellingService.SetLanguage(UserSettings.SpellCheckDictionary); };
 
             MainWindow = container.Resolve<MainWindow>();
             MainWindow.Show();

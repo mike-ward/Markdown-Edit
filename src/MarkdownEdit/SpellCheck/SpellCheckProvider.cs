@@ -58,6 +58,11 @@ namespace MarkdownEdit.SpellCheck
             _editor = null;
         }
 
+        public ISpellingService SpellingService()
+        {
+            return _spellingService;
+        }
+
         private void TextViewVisualLinesChanged(object sender, EventArgs e)
         {
             if (Enabled) DoSpellCheck();
@@ -127,20 +132,6 @@ namespace MarkdownEdit.SpellCheck
         {
             if (string.IsNullOrWhiteSpace(word) || _spellingService == null || !Enabled) return;
             _spellingService.Add(word);
-        }
-
-        public static ISpellCheckProvider Factory(Editor editor)
-        {
-            var spellingService = new SpellingService();
-            App.UserSettings.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == "SpellCheckDictonary")
-                    spellingService.SetLanguage(App.UserSettings.SpellCheckDictionary);
-            };
-            spellingService.SetLanguage(App.UserSettings.SpellCheckDictionary);
-            var spellCheckProvider = new SpellCheckProvider(spellingService);
-            spellCheckProvider.Initialize(editor);
-            return spellCheckProvider;
         }
     }
 }

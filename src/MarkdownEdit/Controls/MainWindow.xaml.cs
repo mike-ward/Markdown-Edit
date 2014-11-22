@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using MarkdownEdit.Properties;
+using MarkdownEdit.SpellCheck;
 
 namespace MarkdownEdit
 {
@@ -39,11 +40,13 @@ namespace MarkdownEdit
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _markdownConverter;
+        private ISpellCheckProvider _spellCheckProvider;
 
-        public MainWindow(IMarkdownConverter markdownConverter)
+        public MainWindow(IMarkdownConverter markdownConverter, ISpellCheckProvider spellCheckProvider)
         {
-            MarkdownConverter = markdownConverter;
             InitializeComponent();
+            MarkdownConverter = markdownConverter;
+            SpellCheckProvider = spellCheckProvider;
             Loaded += OnLoaded;
             Closing += OnClosing;
             SizeChanged += (s, e) => CalculateEditorMargins();
@@ -326,6 +329,12 @@ namespace MarkdownEdit
         {
             get { return _markdownConverter; } 
             set { Set(ref _markdownConverter, value); }   
+        }
+
+        public ISpellCheckProvider SpellCheckProvider
+        {
+            get { return _spellCheckProvider; }
+            set { Set(ref _spellCheckProvider, value); }
         }
 
         // INotifyPropertyChanged implementation

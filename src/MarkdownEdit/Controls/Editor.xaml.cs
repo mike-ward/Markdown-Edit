@@ -32,7 +32,6 @@ namespace MarkdownEdit
         private bool _removeSpecialCharacters;
         private EditorState _editorState = new EditorState();
         private readonly FindReplaceDialog _findReplaceDialog;
-        private ISpellCheckProvider _spellCheckProvider;
         private const string F1ForHelp = " - F1 for Help";
         private readonly Action<string> _executeAutoSaveLater;
 
@@ -41,15 +40,6 @@ namespace MarkdownEdit
             InitializeComponent();
             EditBox.Loaded += EditBoxOnLoaded;
             EditBox.Unloaded += EditBoxOnUnloaded;
-            DataObject.AddPastingHandler(EditBox, OnPaste);
-            CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
-            CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
-            _findReplaceDialog = new FindReplaceDialog(EditBox);
-            _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
-        }
-
-        private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
-        {
             EditBox.Options.IndentationSize = 2;
             EditBox.Options.EnableHyperlinks = false;
             EditBox.Options.ConvertTabsToSpaces = true;
@@ -59,9 +49,20 @@ namespace MarkdownEdit
             EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
             AutoSave = Settings.Default.AutoSave;
             PropertyChanged += OnSpellCheckChanged;
-            var grid = EditBox.GetDescendantByType<Grid>();
-            grid.ColumnDefinitions[1].Width = new GridLength(5);
+            DataObject.AddPastingHandler(EditBox, OnPaste);
+            CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
+            CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
+            _findReplaceDialog = new FindReplaceDialog(EditBox);
+            _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
+        }
 
+        private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            // make scroll bar narrower
+            var grid = EditBox.GetDescendantByType<Grid>();
+            grid.ColumnDefinitions[1].Width = new GridLength(8);
+
+            // remove indentation command in favor of ours
             var cmd = EditBox
                 .TextArea
                 .DefaultInputHandler
@@ -70,14 +71,13 @@ namespace MarkdownEdit
                 .FirstOrDefault(cb => cb.Command == AvalonEditCommands.IndentSelection);
             if (cmd != null) EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
 
+            // Speed up initial window display
             Task.Delay(10).ContinueWith(t =>
             {
                 Dispatcher.Invoke(() =>
                 {
                     InitializeSyntaxHighlighting();
                     ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
-                    _spellCheckProvider = SpellCheckProvider.Factory(this);
-                    SpellCheck = Settings.Default.SpellCheckEnabled;
                     EditBox.Focus();
                 });
                 t.Dispose();
@@ -96,7 +96,6 @@ namespace MarkdownEdit
         private void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
         {
             _findReplaceDialog.AllowClose = true;
-            _spellCheckProvider.Disconnect();
             _findReplaceDialog.Close();
             Settings.Default.WordWrapEnabled = EditBox.WordWrap;
             Settings.Default.SpellCheckEnabled = SpellCheck;
@@ -142,19 +141,19 @@ namespace MarkdownEdit
         private void OnSpellCheckChanged(object o, PropertyChangedEventArgs args)
         {
             if (args.PropertyName != "SpellCheck") return;
-            _spellCheckProvider.Enabled = SpellCheck;
+            SpellCheckProvider.Enabled = SpellCheck;
             EditBox.Document.Insert(0, " ");
             EditBox.Document.UndoStack.Undo();
         }
 
         private void SpellCheckSuggestions(ContextMenu contextMenu)
         {
-            if (_spellCheckProvider != null)
+            if (SpellCheckProvider != null)
             {
                 var editorPosition = EditBox.GetPositionFromPoint(Mouse.GetPosition(EditBox));
                 if (!editorPosition.HasValue) return;
                 var offset = EditBox.Document.GetOffset(editorPosition.Value.Line, editorPosition.Value.Column);
-                var errorSegments = _spellCheckProvider.GetSpellCheckErrors();
+                var errorSegments = SpellCheckProvider.GetSpellCheckErrors();
                 var misspelledSegment = errorSegments.FirstOrDefault(segment => segment.StartOffset <= offset && segment.EndOffset >= offset);
                 if (misspelledSegment == null) return;
 
@@ -165,7 +164,7 @@ namespace MarkdownEdit
                 if (offset == currentLine.Offset || offset == currentLine.EndOffset) return;
 
                 var misspelledText = EditBox.Document.GetText(misspelledSegment);
-                var suggestions = _spellCheckProvider.GetSpellCheckSuggestions(misspelledText);
+                var suggestions = SpellCheckProvider.GetSpellCheckSuggestions(misspelledText);
                 foreach (var item in suggestions) contextMenu.Items.Add(SpellSuggestMenuItem(item, misspelledSegment));
                 contextMenu.Items.Add(new MenuItem
                 {
@@ -199,7 +198,7 @@ namespace MarkdownEdit
         private void ExecuteAddToDictionary(object sender, ExecutedRoutedEventArgs ea)
         {
             var word = (string)ea.Parameter;
-            _spellCheckProvider.Add(word);
+            SpellCheckProvider.Add(word);
             SpellCheck = !SpellCheck;
             SpellCheck = !SpellCheck;
         }
@@ -459,7 +458,7 @@ namespace MarkdownEdit
 
         public void OpenUserDictionary()
         {
-            Utility.EditFile(_spellCheckProvider.CustomDictionaryFile());
+            Utility.EditFile(SpellCheckProvider.CustomDictionaryFile());
         }
 
         public void ScrollToLine(int line)
@@ -698,6 +697,22 @@ namespace MarkdownEdit
         {
             get { return (bool)GetValue(ShowTabsProperty); }
             set { SetValue(ShowTabsProperty, value); }
+        }
+
+        public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
+            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckChanged));
+
+        private static void SpellCheckChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            var editor = (Editor)source;
+            editor.SpellCheckProvider.Initialize(editor);
+            editor.SpellCheck = Settings.Default.SpellCheckEnabled;
+        }
+
+        public ISpellCheckProvider SpellCheckProvider
+        {
+            get { return (ISpellCheckProvider)GetValue(SpellCheckProviderProperty); }
+            set { SetValue(SpellCheckProviderProperty, value); }
         }
 
         // INotifyPropertyChanged
