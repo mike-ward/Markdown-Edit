@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using CommonMark;
 
 namespace MarkdownEdit
 {
@@ -53,7 +52,7 @@ namespace MarkdownEdit
         public static void ExportHtmlToClipboard(string markdown, IMarkdownConverter converter)
         {
             var text = RemoveYamlFrontMatter(markdown);
-            var html = converter.ConvertToHtml(text);
+            var html = converter.ConvertToHtml(text, false);
             Clipboard.SetText(html);
         }
 

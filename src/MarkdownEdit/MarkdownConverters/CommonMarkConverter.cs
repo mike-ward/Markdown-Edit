@@ -10,9 +10,11 @@ namespace MarkdownEdit
     {
         private readonly Func<string, string> _uriResolver = Utility.Memoize<string, string>(UriResolver);
 
-        public string ConvertToHtml(string markdown)
+        public string ConvertToHtml(string markdown, bool resolveUrls)
         {
-            return CommonMark.CommonMarkConverter.Convert(markdown, new CommonMarkSettings {UriResolver = _uriResolver});
+            return CommonMark.CommonMarkConverter.Convert(markdown, resolveUrls
+                ? new CommonMarkSettings {UriResolver = _uriResolver}
+                : null);
         }
 
         private static string UriResolver(string text)
