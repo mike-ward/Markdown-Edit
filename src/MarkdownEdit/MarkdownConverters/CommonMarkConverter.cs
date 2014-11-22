@@ -8,7 +8,7 @@ namespace MarkdownEdit
 {
     public class CommonMarkConverter : IMarkdownConverter
     {
-        private static readonly Func<string, string> _uriResolver = Utility.Memoize<string, string>(UriResolver);
+        private readonly Func<string, string> _uriResolver = Utility.Memoize<string, string>(UriResolver);
 
         public string ConvertToHtml(string markdown)
         {
