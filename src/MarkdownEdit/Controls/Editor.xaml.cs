@@ -811,7 +811,13 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty HighlightCurrentLineProperty = DependencyProperty.Register(
-            "HighlightCurrentLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+            "HighlightCurrentLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
+
+        private static void HighlightCurrentLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            var editor = (Editor)source;
+            editor.EditBox.Options.HighlightCurrentLine = editor.HighlightCurrentLine;
+        }
 
         public bool HighlightCurrentLine
         {
