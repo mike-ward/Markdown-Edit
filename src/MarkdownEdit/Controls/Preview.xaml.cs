@@ -24,7 +24,7 @@ namespace MarkdownEdit
         {
             InitializeComponent();
             Browser.NavigateToString(UserTemplate.Load().Template);
-            UpdatePreview = Utility.Debounce<string>(s => Dispatcher.Invoke(() => Update(s)));
+            UpdatePreview = Utility.Debounce<string>(s => Dispatcher.InvokeAsync(() => Update(s)));
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
             _templateWatcher = new FileSystemWatcher
@@ -50,9 +50,9 @@ namespace MarkdownEdit
             if (markdown == null) return;
             try
             {
-                var div = GetContentsDiv();
                 markdown = Utility.RemoveYamlFrontMatter(markdown);
                 var html = MarkdownConverter.ConvertToHtml(markdown);
+                var div = GetContentsDiv();
                 div.InnerHtml = html;
                 WordCount = (div.InnerText as string).WordCount();
             }

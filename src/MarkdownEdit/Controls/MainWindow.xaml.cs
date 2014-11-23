@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using MarkdownEdit.Properties;
@@ -37,16 +38,21 @@ namespace MarkdownEdit
         public static RoutedCommand ToggleAutoSaveCommand = new RoutedCommand();
         public static RoutedCommand SelectPreviousHeaderCommand = new RoutedCommand();
         public static RoutedCommand SelectNextHeaderCommand = new RoutedCommand();
+        public static RoutedCommand EditorFindCommand = new RoutedCommand();
+        public static RoutedCommand EditorReplaceCommand = new RoutedCommand();
+        public static RoutedCommand EditorReplaceAllCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _markdownConverter;
         private ISpellCheckProvider _spellCheckProvider;
+        private FindReplaceDialog _findReplaceDialog;
 
-        public MainWindow(IMarkdownConverter markdownConverter, ISpellCheckProvider spellCheckProvider)
+        public MainWindow(IMarkdownConverter markdownConverter, ISpellCheckProvider spellCheckProvider, FindReplaceDialog findReplaceDialog)
         {
             InitializeComponent();
             MarkdownConverter = markdownConverter;
             SpellCheckProvider = spellCheckProvider;
+            FindReplaceDialog = findReplaceDialog;
             Loaded += OnLoaded;
             Closing += OnClosing;
             SizeChanged += (s, e) => CalculateEditorMargins();
@@ -64,8 +70,8 @@ namespace MarkdownEdit
         private void LoadCommandLineOrLastFile()
         {
             var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
-                ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
-            Editor.LoadFile(fileToOpen);  
+                             ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
+            Editor.LoadFile(fileToOpen);
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -244,6 +250,23 @@ namespace MarkdownEdit
             Editor.SelectNextHeader();
         }
 
+        private void ExecuteEditorFindCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.Find(e.Parameter as Regex);
+        }
+
+        private void ExecuteEditorReplaceCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            var tuple = (Tuple<Regex, string>)e.Parameter;
+            Editor.Replace(tuple.Item1, tuple.Item2);
+        }
+
+        private void ExecuteEditorReplaceAllCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            var tuple = (Tuple<Regex, string>)e.Parameter;
+            Editor.ReplaceAll(tuple.Item1, tuple.Item2);
+        }
+
         private void UpdateEditorPreviewVisibility(int state)
         {
             switch (state)
@@ -327,14 +350,20 @@ namespace MarkdownEdit
 
         public IMarkdownConverter MarkdownConverter
         {
-            get { return _markdownConverter; } 
-            set { Set(ref _markdownConverter, value); }   
+            get { return _markdownConverter; }
+            set { Set(ref _markdownConverter, value); }
         }
 
         public ISpellCheckProvider SpellCheckProvider
         {
             get { return _spellCheckProvider; }
             set { Set(ref _spellCheckProvider, value); }
+        }
+
+        public FindReplaceDialog FindReplaceDialog
+        {
+            get { return _findReplaceDialog; }
+            set { Set(ref _findReplaceDialog, value); }
         }
 
         // INotifyPropertyChanged implementation

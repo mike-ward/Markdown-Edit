@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -31,7 +32,6 @@ namespace MarkdownEdit
         private bool _isModified;
         private bool _removeSpecialCharacters;
         private EditorState _editorState = new EditorState();
-        private readonly FindReplaceDialog _findReplaceDialog;
         private const string F1ForHelp = " - F1 for Help";
         private readonly Action<string> _executeAutoSaveLater;
 
@@ -52,7 +52,6 @@ namespace MarkdownEdit
             DataObject.AddPastingHandler(EditBox, OnPaste);
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
-            _findReplaceDialog = new FindReplaceDialog(EditBox);
             _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
         }
 
@@ -70,8 +69,6 @@ namespace MarkdownEdit
                 .CommandBindings
                 .FirstOrDefault(cb => cb.Command == AvalonEditCommands.IndentSelection);
             if (cmd != null) EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
-
-            _findReplaceDialog.Owner = Application.Current.MainWindow;
 
             // Speed up initial window display
             Task.Delay(10).ContinueWith(t =>
@@ -97,8 +94,6 @@ namespace MarkdownEdit
 
         private void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            _findReplaceDialog.AllowClose = true;
-            _findReplaceDialog.Close();
             Settings.Default.WordWrapEnabled = EditBox.WordWrap;
             Settings.Default.SpellCheckEnabled = SpellCheck;
             Settings.Default.AutoSave = AutoSave;
@@ -367,22 +362,22 @@ namespace MarkdownEdit
 
         public void FindDialog()
         {
-            Execute(() => _findReplaceDialog.ShowFindDialog());
+            Execute(() => FindReplaceDialog.ShowFindDialog());
         }
 
         public void ReplaceDialog()
         {
-            Execute(() => _findReplaceDialog.ShowReplaceDialog());
+            Execute(() => FindReplaceDialog.ShowReplaceDialog());
         }
 
         public void FindNext()
         {
-            Execute(() => _findReplaceDialog.FindNext());
+            //Execute(() => _findReplaceDialog.FindNext());
         }
 
         public void FindPrevious()
         {
-            Execute(() => _findReplaceDialog.FindPrevious());
+            //Execute(() => _findReplaceDialog.FindPrevious());
         }
 
         public void Bold()
@@ -496,6 +491,94 @@ namespace MarkdownEdit
             EditBox.Select(match.Index, match.Length);
             var loc = EditBox.Document.GetLocation(match.Index);
             EditBox.ScrollTo(loc.Line, loc.Column);
+        }
+
+        public bool Find(Regex regex)
+        {
+            return Execute(() =>
+            {
+                try
+                {
+                    var previous = regex.Options.HasFlag(RegexOptions.RightToLeft);
+
+                    var start = previous
+                        ? EditBox.SelectionStart
+                        : EditBox.SelectionStart + EditBox.SelectionLength;
+
+                    var match = regex.Match(EditBox.Text, start);
+                    if (!match.Success) // start again from beginning or end
+                    {
+                        match = regex.Match(EditBox.Text, previous ? EditBox.Text.Length : 0);
+                    }
+
+                    if (match.Success)
+                    {
+                        EditBox.Select(match.Index, match.Length);
+                        var loc = EditBox.Document.GetLocation(match.Index);
+                        EditBox.ScrollTo(loc.Line, loc.Column);
+                    }
+
+                    return match.Success;
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(e.ToString());
+                    return false;
+                }
+            });
+        }
+
+        public bool Replace(Regex find, string replace)
+        {
+            return Execute(() =>
+            {
+                try
+                {
+                    var input = EditBox.Text.Substring(EditBox.SelectionStart, EditBox.SelectionLength);
+                    var match = find.Match(input);
+                    var replaced = false;
+                    if (match.Success && match.Index == 0 && match.Length == input.Length)
+                    {
+                        var replaceWith = match.Result(replace);
+                        EditBox.Document.Replace(EditBox.SelectionStart, EditBox.SelectionLength, replaceWith);
+                        replaced = true;
+                    }
+
+                    if (!Find(find) && !replaced) Utility.Beep();
+                    return replaced;
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine(e.ToString());
+                    return false;
+                }
+            });
+        }
+
+        public void ReplaceAll(Regex find, string replace)
+        {
+            Execute(() =>
+            {
+                try
+                {
+                    var offset = 0;
+                    EditBox.BeginChange();
+                    foreach (Match match in find.Matches(EditBox.Text))
+                    {
+                        var replaceWith = match.Result(replace);
+                        EditBox.Document.Replace(offset + match.Index, match.Length, replaceWith);
+                        offset += replaceWith.Length - match.Length;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+                finally
+                {
+                    EditBox.EndChange();
+                }
+            });
         }
 
         // Events
@@ -715,6 +798,15 @@ namespace MarkdownEdit
         {
             get { return (ISpellCheckProvider)GetValue(SpellCheckProviderProperty); }
             set { SetValue(SpellCheckProviderProperty, value); }
+        }
+
+        public static readonly DependencyProperty FindReplaceDialogProperty = DependencyProperty.Register(
+            "FindReplaceDialog", typeof (FindReplaceDialog), typeof (Editor), new PropertyMetadata(default(FindReplaceDialog)));
+
+        public FindReplaceDialog FindReplaceDialog
+        {
+            get { return (FindReplaceDialog)GetValue(FindReplaceDialogProperty); }
+            set { SetValue(FindReplaceDialogProperty, value); }
         }
 
         // INotifyPropertyChanged

@@ -77,6 +77,7 @@
         ShowTabs="{Binding Path=EditorShowTabs, Source={x:Static local:App.UserSettings}}"
         ShowLineNumbers="{Binding Path=EditorShowLineNumbers, Source={x:Static local:App.UserSettings}}"
         SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}"
+        FindReplaceDialog="{Binding Path=FindReplaceDialog, RelativeSource={RelativeSource AncestorType=Window}}"
         />
       <local:Preview 
         x:Name="Preview"
@@ -123,6 +124,9 @@
     <CommandBinding Command="{x:Static local:MainWindow.ToggleAutoSaveCommand}" Executed="ExecuteToggleAutoSave" />
     <CommandBinding Command="{x:Static local:MainWindow.SelectPreviousHeaderCommand}" Executed="ExecuteSelectPreviousHeader" />
     <CommandBinding Command="{x:Static local:MainWindow.SelectNextHeaderCommand}" Executed="ExecuteSelectNextHeader" />
+    <CommandBinding Command="{x:Static local:MainWindow.EditorFindCommand}" Executed="ExecuteEditorFindCommand" />
+    <CommandBinding Command="{x:Static local:MainWindow.EditorReplaceCommand}" Executed="ExecuteEditorReplaceCommand" />
+    <CommandBinding Command="{x:Static local:MainWindow.EditorReplaceAllCommand}" Executed="ExecuteEditorReplaceAllCommand" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
