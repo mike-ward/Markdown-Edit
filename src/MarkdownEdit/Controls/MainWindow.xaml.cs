@@ -64,7 +64,7 @@ namespace MarkdownEdit
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
-            LoadCommandLineOrLastFile();
+            Dispatcher.InvokeAsync(LoadCommandLineOrLastFile);
         }
 
         private void LoadCommandLineOrLastFile()

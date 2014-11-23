@@ -70,16 +70,11 @@ namespace MarkdownEdit
                 .FirstOrDefault(cb => cb.Command == AvalonEditCommands.IndentSelection);
             if (cmd != null) EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
 
-            // Speed up initial window display
-            Task.Delay(10).ContinueWith(t =>
+            Dispatcher.InvokeAsync(() =>
             {
-                Dispatcher.Invoke(() =>
-                {
-                    InitializeSyntaxHighlighting();
-                    ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
-                    EditBox.Focus();
-                });
-                t.Dispose();
+                InitializeSyntaxHighlighting();
+                ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
+                EditBox.Focus();
             });
         }
 
