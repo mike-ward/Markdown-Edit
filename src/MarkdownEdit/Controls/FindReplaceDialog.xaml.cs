@@ -40,30 +40,49 @@ namespace MarkdownEdit
 
         private void ReplaceClick(object sender, RoutedEventArgs e)
         {
-            var regex = GetRegEx(txtFind2.Text, false);
-            var input = _editor.Text.Substring(_editor.SelectionStart, _editor.SelectionLength);
-            var match = regex.Match(input);
-            var replaced = false;
-            if (match.Success && match.Index == 0 && match.Length == input.Length)
+            try
             {
-                _editor.Document.Replace(_editor.SelectionStart, _editor.SelectionLength, txtReplace.Text);
-                replaced = true;
-            }
+                var regex = GetRegEx(txtFind2.Text, false);
+                var input = _editor.Text.Substring(_editor.SelectionStart, _editor.SelectionLength);
+                var match = regex.Match(input);
+                var replaced = false;
+                if (match.Success && match.Index == 0 && match.Length == input.Length)
+                {
+                    var replaceText = match.Result(txtReplace.Text);
+                    _editor.Document.Replace(_editor.SelectionStart, _editor.SelectionLength, replaceText);
+                    replaced = true;
+                }
 
-            if (!Find(txtFind2.Text) && !replaced) Utility.Beep();
+                if (!Find(txtFind2.Text) && !replaced) Utility.Beep();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         private void ReplaceAllClick(object sender, RoutedEventArgs e)
         {
-            var regex = GetRegEx(txtFind2.Text, true);
-            var offset = 0;
-            _editor.BeginChange();
-            foreach (Match match in regex.Matches(_editor.Text))
+            try
             {
-                _editor.Document.Replace(offset + match.Index, match.Length, txtReplace.Text);
-                offset += txtReplace.Text.Length - match.Length;
+                var regex = GetRegEx(txtFind2.Text, false);
+                var offset = 0;
+                _editor.BeginChange();
+                foreach (Match match in regex.Matches(_editor.Text))
+                {
+                    var replaceText = match.Result(txtReplace.Text);
+                    _editor.Document.Replace(offset + match.Index, match.Length, replaceText);
+                    offset += replaceText.Length - match.Length;
+                }
             }
-            _editor.EndChange();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                _editor.EndChange();
+            }
         }
 
         public void FindNext()

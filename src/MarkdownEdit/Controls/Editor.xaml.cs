@@ -71,6 +71,8 @@ namespace MarkdownEdit
                 .FirstOrDefault(cb => cb.Command == AvalonEditCommands.IndentSelection);
             if (cmd != null) EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
 
+            _findReplaceDialog.Owner = Application.Current.MainWindow;
+
             // Speed up initial window display
             Task.Delay(10).ContinueWith(t =>
             {

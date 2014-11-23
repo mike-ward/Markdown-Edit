@@ -50,10 +50,11 @@ namespace MarkdownEdit
             if (markdown == null) return;
             try
             {
+                var div = GetContentsDiv();
                 markdown = Utility.RemoveYamlFrontMatter(markdown);
                 var html = MarkdownConverter.ConvertToHtml(markdown);
-                GetContentsDiv().InnerHtml = html;
-                WordCount = (GetContentsDiv().InnerText as string).WordCount();
+                div.InnerHtml = html;
+                WordCount = (div.InnerText as string).WordCount();
             }
             catch (CommonMarkException e)
             {
@@ -91,7 +92,7 @@ namespace MarkdownEdit
             if (App.UserSettings.SynchronizeScrollPositions == false) return;
             var document2 = (IHTMLDocument2)Browser.Document;
             var document3 = (IHTMLDocument3)Browser.Document;
-            if (document3 != null && document3.documentElement != null)
+            if (document3?.documentElement != null)
             {
                 var percentToScroll = PercentScroll(ea);
                 var body = document3.getElementsByTagName("body").item(0);
