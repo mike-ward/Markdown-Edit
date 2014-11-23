@@ -6,26 +6,27 @@ using System.Windows.Input;
 
 namespace MarkdownEdit
 {
-    public partial class FindReplaceDialog
+    public partial class FindReplaceDialog : IDisposable
     {
-        public bool HideOnClose { get; set; }
+        private bool _disposed;
+        private bool _hideOnClose = true;
         private string _findText;
 
         public FindReplaceDialog(FindReplaceSettings findReplaceSettings)
         {
             InitializeComponent();
-            HideOnClose = true;
             DataContext = findReplaceSettings;
             Closed += (s, e) => findReplaceSettings.Save();
             Closing += (s, e) =>
             {
-                if (HideOnClose)
+                if (_hideOnClose)
                 {
                     Hide();
                     e.Cancel = true;
                 }
             };
         }
+
 
         private void FindNextClick(object sender, RoutedEventArgs e)
         {
@@ -136,6 +137,22 @@ namespace MarkdownEdit
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
         {
             Close();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _disposed = true;
+                _hideOnClose = false;
+                Close();
+            }
         }
     }
 }

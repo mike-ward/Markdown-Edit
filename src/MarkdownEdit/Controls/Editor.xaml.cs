@@ -94,10 +94,10 @@ namespace MarkdownEdit
 
         private void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (FindReplaceDialog != null) FindReplaceDialog.HideOnClose = false;
             Settings.Default.WordWrapEnabled = EditBox.WordWrap;
             Settings.Default.SpellCheckEnabled = SpellCheck;
             Settings.Default.AutoSave = AutoSave;
+            FindReplaceDialog.Dispose();
         }
 
         private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)
