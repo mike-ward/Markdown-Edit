@@ -8,18 +8,31 @@ namespace MarkdownEdit
 {
     public partial class FindReplaceDialog
     {
+        public bool HideOnClose { get; set; }
+        private string _findText;
+
         public FindReplaceDialog(FindReplaceSettings findReplaceSettings)
         {
             InitializeComponent();
+            HideOnClose = true;
             DataContext = findReplaceSettings;
             Closed += (s, e) => findReplaceSettings.Save();
+            Closing += (s, e) =>
+            {
+                if (HideOnClose)
+                {
+                    Hide();
+                    e.Cancel = true;
+                }
+            };
         }
 
         private void FindNextClick(object sender, RoutedEventArgs e)
         {
             try
             {
-                var find = GetRegEx(txtFind.Text, false);
+                _findText = txtFind.Text;
+                var find = GetRegEx(_findText, false);
                 MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
             }
             catch (Exception ex)
@@ -32,7 +45,8 @@ namespace MarkdownEdit
         {
             try
             {
-                var find = GetRegEx(txtFind2.Text, false);
+                _findText = txtFind2.Text;
+                var find = GetRegEx(_findText, false);
                 MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
             }
             catch (Exception ex)
@@ -45,7 +59,8 @@ namespace MarkdownEdit
         {
             try
             {
-                var find = GetRegEx(txtFind2.Text, false);
+                _findText = txtFind2.Text;
+                var find = GetRegEx(_findText, false);
                 var replace = txtReplace.Text;
                 var tuple = new Tuple<Regex, string>(find, replace);
                 MainWindow.EditorReplaceCommand.Execute(tuple, Application.Current.MainWindow);
@@ -60,7 +75,8 @@ namespace MarkdownEdit
         {
             try
             {
-                var find = GetRegEx(txtFind2.Text, false);
+                _findText = txtFind2.Text;
+                var find = GetRegEx(_findText, false);
                 var replace = txtReplace.Text;
                 var tuple = new Tuple<Regex, string>(find, replace);
                 MainWindow.EditorReplaceAllCommand.Execute(tuple, Application.Current.MainWindow);
@@ -101,6 +117,20 @@ namespace MarkdownEdit
 
             if (index == 1) txtFind2.Focus();
             else txtFind.Focus();
+        }
+
+        public void FindPrevious()
+        {
+            if (_findText == null) return;
+            var find = GetRegEx(_findText, true);
+            MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
+        }
+
+        public void FindNext()
+        {
+            if (_findText == null) return;
+            var find = GetRegEx(_findText, false);
+            MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
         }
 
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)

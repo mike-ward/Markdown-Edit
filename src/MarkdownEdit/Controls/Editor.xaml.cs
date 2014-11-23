@@ -94,6 +94,7 @@ namespace MarkdownEdit
 
         private void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
         {
+            if (FindReplaceDialog != null) FindReplaceDialog.HideOnClose = false;
             Settings.Default.WordWrapEnabled = EditBox.WordWrap;
             Settings.Default.SpellCheckEnabled = SpellCheck;
             Settings.Default.AutoSave = AutoSave;
@@ -372,12 +373,12 @@ namespace MarkdownEdit
 
         public void FindNext()
         {
-            //Execute(() => _findReplaceDialog.FindNext());
+            Execute(() => FindReplaceDialog.FindNext());
         }
 
         public void FindPrevious()
         {
-            //Execute(() => _findReplaceDialog.FindPrevious());
+            Execute(() => FindReplaceDialog.FindPrevious());
         }
 
         public void Bold()
@@ -493,22 +494,22 @@ namespace MarkdownEdit
             EditBox.ScrollTo(loc.Line, loc.Column);
         }
 
-        public bool Find(Regex regex)
+        public bool Find(Regex find)
         {
             return Execute(() =>
             {
                 try
                 {
-                    var previous = regex.Options.HasFlag(RegexOptions.RightToLeft);
+                    var previous = find.Options.HasFlag(RegexOptions.RightToLeft);
 
                     var start = previous
                         ? EditBox.SelectionStart
                         : EditBox.SelectionStart + EditBox.SelectionLength;
 
-                    var match = regex.Match(EditBox.Text, start);
+                    var match = find.Match(EditBox.Text, start);
                     if (!match.Success) // start again from beginning or end
                     {
-                        match = regex.Match(EditBox.Text, previous ? EditBox.Text.Length : 0);
+                        match = find.Match(EditBox.Text, previous ? EditBox.Text.Length : 0);
                     }
 
                     if (match.Success)
