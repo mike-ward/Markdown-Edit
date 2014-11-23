@@ -75,6 +75,7 @@
         ShowEndOfLine="{Binding Path=EditorShowEndOfLine, Source={x:Static local:App.UserSettings}}"
         ShowSpaces="{Binding Path=EditorShowSpaces, Source={x:Static local:App.UserSettings}}"
         ShowTabs="{Binding Path=EditorShowTabs, Source={x:Static local:App.UserSettings}}"
+        HighlightCurrentLine="{Binding Path=EditorHighlightCurrentLine, Source={x:Static local:App.UserSettings}}"
         ShowLineNumbers="{Binding Path=EditorShowLineNumbers, Source={x:Static local:App.UserSettings}}"
         SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}"
         FindReplaceDialog="{Binding Path=FindReplaceDialog, RelativeSource={RelativeSource AncestorType=Window}}"

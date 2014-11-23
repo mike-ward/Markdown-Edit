@@ -18,6 +18,7 @@ namespace MarkdownEdit
         private bool _editorShowSpaces;
         private bool _editorShowTabs;
         private bool _editorShowLineNumbers;
+        private bool _editorHighlightCurrentLine;
         private bool _synchronizeScrollPositions = true;
         private bool _ignoreYaml;
         private string _spellCheckDictionary = "en_US";
@@ -72,6 +73,12 @@ namespace MarkdownEdit
         {
             get { return _editorShowLineNumbers; }
             set { Set(ref _editorShowLineNumbers, value); }
+        }
+
+        public bool EditorHighlightCurrentLine
+        {
+            get { return _editorHighlightCurrentLine; }
+            set { Set(ref _editorHighlightCurrentLine, value); }
         }
 
         public bool SynchronizeScrollPositions
@@ -134,6 +141,7 @@ namespace MarkdownEdit
             EditorShowSpaces = userSettings.EditorShowSpaces;
             EditorShowTabs = userSettings.EditorShowTabs;
             EditorShowLineNumbers = userSettings.EditorShowLineNumbers;
+            EditorHighlightCurrentLine = userSettings.EditorHighlightCurrentLine;
             SynchronizeScrollPositions = userSettings.SynchronizeScrollPositions;
             IgnoreYaml = userSettings.IgnoreYaml;
             SpellCheckDictionary = userSettings.SpellCheckDictionary;

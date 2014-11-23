@@ -810,6 +810,15 @@ namespace MarkdownEdit
             set { SetValue(FindReplaceDialogProperty, value); }
         }
 
+        public static readonly DependencyProperty HighlightCurrentLineProperty = DependencyProperty.Register(
+            "HighlightCurrentLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+
+        public bool HighlightCurrentLine
+        {
+            get { return (bool)GetValue(HighlightCurrentLineProperty); }
+            set { SetValue(HighlightCurrentLineProperty, value); }
+        }
+
         // INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
