@@ -34,6 +34,8 @@ namespace MarkdownEdit
         private const string F1ForHelp = " - F1 for Help";
         private readonly Action<string> _executeAutoSaveLater;
 
+        public static RoutedCommand DeselectCommand = new RoutedCommand();
+
         public Editor()
         {
             InitializeComponent();
@@ -577,6 +579,11 @@ namespace MarkdownEdit
         }
 
         // Events
+
+        private void ExecuteDeselectCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            EditBox.SelectionLength = 0;
+        }
 
         public EventHandler TextChanged;
 

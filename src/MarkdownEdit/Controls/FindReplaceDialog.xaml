@@ -12,7 +12,6 @@
   WindowTitleBrush="{DynamicResource GrayBrush2}"
   GlowBrush="{DynamicResource GrayBrush2}"
   WindowTransitionsEnabled="False"
-  SaveWindowPosition="True"
   >
 
   <Grid Margin="4 5 4 10">
