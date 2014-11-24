@@ -46,7 +46,12 @@ namespace MarkdownEdit
 
         public static string AssemblyFolder()
         {
-            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\'));
+            return Path.GetDirectoryName(ExecutingAssembly());
+        }
+
+        public static string ExecutingAssembly()
+        {
+            return Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
         }
 
         public static void ExportHtmlToClipboard(string markdown, IMarkdownConverter converter)

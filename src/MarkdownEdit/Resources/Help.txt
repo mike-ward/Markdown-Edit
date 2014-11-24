@@ -3,6 +3,7 @@
     F1             Show/Hide this help
 
     Ctrl+N         New file
+    Ctrl+Shift+N   Open new instance
     Ctrl+O         Open file
     Ctrl+S         Save file
     Ctrl+Shift+S   Save file As

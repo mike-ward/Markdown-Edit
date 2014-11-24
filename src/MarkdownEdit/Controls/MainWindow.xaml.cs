@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -41,6 +42,7 @@ namespace MarkdownEdit
         public static RoutedCommand EditorFindCommand = new RoutedCommand();
         public static RoutedCommand EditorReplaceCommand = new RoutedCommand();
         public static RoutedCommand EditorReplaceAllCommand = new RoutedCommand();
+        public static RoutedCommand OpenNewInstanceCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _markdownConverter;
@@ -69,9 +71,9 @@ namespace MarkdownEdit
 
         private void LoadCommandLineOrLastFile()
         {
-            var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
-                             ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
-            Editor.LoadFile(fileToOpen);
+            var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault() ??
+                             (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
+            if (fileToOpen != "-n") Editor.LoadFile(fileToOpen);
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -265,6 +267,12 @@ namespace MarkdownEdit
         {
             var tuple = (Tuple<Regex, string>)e.Parameter;
             Editor.ReplaceAll(tuple.Item1, tuple.Item2);
+        }
+
+        private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e)
+        {
+            var process = new Process {StartInfo = {FileName = Utility.ExecutingAssembly(), Arguments = "-n"}};
+            process.Start();
         }
 
         private void UpdateEditorPreviewVisibility(int state)

@@ -128,6 +128,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.EditorFindCommand}" Executed="ExecuteEditorFindCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.EditorReplaceCommand}" Executed="ExecuteEditorReplaceCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.EditorReplaceAllCommand}" Executed="ExecuteEditorReplaceAllCommand" />
+    <CommandBinding Command="{x:Static local:MainWindow.OpenNewInstanceCommand}" Executed="ExecuteOpenNewInstance" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -162,5 +163,6 @@
     <KeyBinding Command="{x:Static local:MainWindow.ToggleAutoSaveCommand}" Gesture="Alt+S" />
     <KeyBinding Command="{x:Static local:MainWindow.SelectPreviousHeaderCommand}" Gesture="Ctrl+U" />
     <KeyBinding Command="{x:Static local:MainWindow.SelectNextHeaderCommand}" Gesture="Ctrl+J" />
+    <KeyBinding Command="{x:Static local:MainWindow.OpenNewInstanceCommand}" Gesture="Ctrl+Shift+N" />
   </Window.InputBindings>
 </controls:MetroWindow>
