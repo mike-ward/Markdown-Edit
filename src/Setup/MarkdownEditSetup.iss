@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Markdown Edit"
-#define MyAppVersion "0.2.6"
+#define MyAppVersion "0.2.7"
 #define MyAppPublisher "Mike Ward"
 #define MyAppURL "http://mike-ward.net/markdownedit"
 #define MyAppExeName "mde.exe"
