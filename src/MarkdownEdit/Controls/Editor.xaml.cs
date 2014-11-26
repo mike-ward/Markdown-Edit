@@ -144,9 +144,18 @@ namespace MarkdownEdit
         {
             if (SpellCheckProvider != null)
             {
-                var editorPosition = EditBox.GetPositionFromPoint(Mouse.GetPosition(EditBox));
-                if (!editorPosition.HasValue) return;
-                var offset = EditBox.Document.GetOffset(editorPosition.Value.Line, editorPosition.Value.Column);
+                int offset;
+                if (Keyboard.IsKeyDown(Key.F10) && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
+                {
+                    offset = EditBox.SelectionStart;
+                }
+                else
+                {
+                    var editorPosition = EditBox.GetPositionFromPoint(Mouse.GetPosition(EditBox));
+                    if (!editorPosition.HasValue) return;
+                    offset = EditBox.Document.GetOffset(editorPosition.Value.Line, editorPosition.Value.Column);
+                }
+
                 var errorSegments = SpellCheckProvider.GetSpellCheckErrors();
                 var misspelledSegment = errorSegments.FirstOrDefault(segment => segment.StartOffset <= offset && segment.EndOffset >= offset);
                 if (misspelledSegment == null) return;
