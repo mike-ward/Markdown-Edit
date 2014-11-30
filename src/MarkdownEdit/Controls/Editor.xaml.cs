@@ -78,6 +78,10 @@ namespace MarkdownEdit
                 InitializeSyntaxHighlighting();
                 ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
                 EditBox.Focus();
+               
+                // fixes context menu not showing on first click
+                ContextMenu = new ContextMenu();
+                ContextMenu.Items.Add(new MenuItem());
             });
         }
 
