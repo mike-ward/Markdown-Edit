@@ -129,6 +129,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.EditorReplaceCommand}" Executed="ExecuteEditorReplaceCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.EditorReplaceAllCommand}" Executed="ExecuteEditorReplaceAllCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenNewInstanceCommand}" Executed="ExecuteOpenNewInstance" />
+    <CommandBinding Command="{x:Static local:MainWindow.UpdatePreviewCommand}" Executed="ExecuteUpdatePreview" />
   </Window.CommandBindings>
 
   <Window.InputBindings>

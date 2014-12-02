@@ -23,10 +23,11 @@ namespace MarkdownEdit
         public Preview()
         {
             InitializeComponent();
-            Browser.NavigateToString(UserTemplate.Load().Template);
+            Browser.Navigate(UserTemplate.Load());
             UpdatePreview = Utility.Debounce<string>(s => Dispatcher.InvokeAsync(() => Update(s)));
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
+
             _templateWatcher = new FileSystemWatcher
             {
                 Path = UserSettings.SettingsFolder,
@@ -75,9 +76,8 @@ namespace MarkdownEdit
 
         private void UpdateTemplate()
         {
-            var contents = GetContentsDiv().InnerHtml;
-            Browser.NavigateToString(UserTemplate.Load().Template);
-            GetContentsDiv().InnerHtml = contents;
+            Browser.Refresh();
+            MainWindow.UpdatePreviewCommand.Execute(null, this);
         }
 
         private static void BrowserOnNavigating(object sender, NavigatingCancelEventArgs ea)

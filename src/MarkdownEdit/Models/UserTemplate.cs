@@ -3,29 +3,22 @@ using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
 {
-    public class UserTemplate
+    public static class UserTemplate
     {
-        public string Template { get; set; }
-
-        public UserTemplate()
-        {
-            Template = string.Empty;
-        }
-
-        public static UserTemplate Load()
+        public static string Load()
         {
             if (File.Exists(TemplateFile) == false)
             {
-                var userTemplate = new UserTemplate {Template = Resources.GithubTemplateHtml};
-                userTemplate.Save();
+                var userTemplate = Resources.GithubTemplateHtml;
+                Save(userTemplate);
             }
-            return new UserTemplate {Template = File.ReadAllText(TemplateFile)};
+            return TemplateFile;
         }
 
-        public void Save()
+        public static void Save(string template)
         {
             Directory.CreateDirectory(UserSettings.SettingsFolder);
-            File.WriteAllText(TemplateFile, Template);
+            File.WriteAllText(TemplateFile, template);
         }
 
         public static string TemplateFile => Path.Combine(UserSettings.SettingsFolder, "user_template.html");

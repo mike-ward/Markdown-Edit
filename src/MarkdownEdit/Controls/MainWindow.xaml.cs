@@ -43,6 +43,7 @@ namespace MarkdownEdit
         public static RoutedCommand EditorReplaceCommand = new RoutedCommand();
         public static RoutedCommand EditorReplaceAllCommand = new RoutedCommand();
         public static RoutedCommand OpenNewInstanceCommand = new RoutedCommand();
+        public static RoutedCommand UpdatePreviewCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _markdownConverter;
@@ -338,6 +339,11 @@ namespace MarkdownEdit
         {
             if (e.Parameter == null) return;
             Editor.ScrollToLine((int)e.Parameter);
+        }
+
+        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e)
+        {
+            Preview.UpdatePreview(Editor.Text);
         }
 
         // Properites
