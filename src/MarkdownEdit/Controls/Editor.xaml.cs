@@ -78,7 +78,7 @@ namespace MarkdownEdit
                 InitializeSyntaxHighlighting();
                 ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
                 EditBox.Focus();
-               
+
                 // fixes context menu not showing on first click
                 ContextMenu = new ContextMenu();
                 ContextMenu.Items.Add(new MenuItem());
@@ -677,7 +677,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
+            "Theme", typeof(Theme), typeof(Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
 
         public Theme Theme
         {
@@ -743,7 +743,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty VerticalScrollBarVisibilityProperty = DependencyProperty.Register(
-            "VerticalScrollBarVisibility", typeof (ScrollBarVisibility), typeof (Editor), new PropertyMetadata(default(ScrollBarVisibility)));
+            "VerticalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(Editor), new PropertyMetadata(default(ScrollBarVisibility)));
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
@@ -752,7 +752,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowEndOfLineProperty = DependencyProperty.Register(
-            "ShowEndOfLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
+            "ShowEndOfLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
 
         private static void ShowEndOfLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -767,7 +767,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowSpacesProperty = DependencyProperty.Register(
-            "ShowSpaces", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
+            "ShowSpaces", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
 
         private static void ShowSpacesChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -782,7 +782,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowLineNumbersProperty = DependencyProperty.Register(
-            "ShowLineNumbers", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+            "ShowLineNumbers", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
 
         public bool ShowLineNumbers
         {
@@ -791,7 +791,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowTabsProperty = DependencyProperty.Register(
-            "ShowTabs", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
+            "ShowTabs", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
 
         private static void ShowTabsChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -806,7 +806,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
-            "SpellCheckProvider", typeof (ISpellCheckProvider), typeof (Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckChanged));
+            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckChanged));
 
         private static void SpellCheckChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
@@ -822,7 +822,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty FindReplaceDialogProperty = DependencyProperty.Register(
-            "FindReplaceDialog", typeof (FindReplaceDialog), typeof (Editor), new PropertyMetadata(default(FindReplaceDialog)));
+            "FindReplaceDialog", typeof(FindReplaceDialog), typeof(Editor), new PropertyMetadata(default(FindReplaceDialog)));
 
         public FindReplaceDialog FindReplaceDialog
         {
@@ -831,7 +831,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty HighlightCurrentLineProperty = DependencyProperty.Register(
-            "HighlightCurrentLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
+            "HighlightCurrentLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
 
         private static void HighlightCurrentLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
@@ -865,17 +865,47 @@ namespace MarkdownEdit
 
         protected override void OnDragEnter(DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop) == false) e.Effects = DragDropEffects.None;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) == false)
+            {
+                e.Effects = DragDropEffects.None;
+            }
         }
 
         protected override void OnDrop(DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) == false) return;
+
+            var files = e.Data.GetData(DataFormats.FileDrop) as string[];
+            if (files == null) return;
+
+            var imageExtensions = new[] {".jpg", "jpeg", ".png", ".bmp", ".gif"};
+            if (imageExtensions.Any(ext => files[0].EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
             {
-                var files = e.Data.GetData(DataFormats.FileDrop) as string[];
-                if (files == null) return;
+                var file = Path.GetFileName(files[0]);
+                var path = files[0].Replace('\\', '/');
+                var position = e.GetPosition(EditBox);
+                var offset = GetOffsetFromMousePosition(position);
+                if (offset == -1) offset = EditBox.Document.TextLength;
+                EditBox.Document.Insert(offset, string.Format("![{0}]({1}) ", file, path));
+            }
+            else
+            {
                 Dispatcher.InvokeAsync(() => OpenFile(files[0]));
             }
+        }
+
+        private int GetOffsetFromMousePosition(Point positionRelativeToTextView)
+        {
+            var textView = EditBox.TextArea.TextView;
+            var pos = positionRelativeToTextView;
+            if (pos.Y < 0) pos.Y = 0;
+            if (pos.Y > textView.ActualHeight) pos.Y = textView.ActualHeight;
+            pos += textView.ScrollOffset;
+            if (pos.Y > textView.DocumentHeight) pos.Y = textView.DocumentHeight;
+            var line = textView.GetVisualLineFromVisualTop(pos.Y);
+            if (line == null) return -1;
+            var visualColumn = line.GetVisualColumn(pos);
+            return line.GetRelativeOffset(visualColumn) + line.FirstDocumentLine.Offset;
         }
     }
 }
