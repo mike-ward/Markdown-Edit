@@ -3,7 +3,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-  Title="ThemeDialog"
+  Title="Themes"
   WindowStartupLocation="CenterOwner"
   WindowTitleBrush="{DynamicResource GrayBrush2}"
   GlowBrush="{DynamicResource GrayBrush2}"

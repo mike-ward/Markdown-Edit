@@ -29,7 +29,7 @@
     <TabControl Name="tabMain" Height="Auto" Grid.ColumnSpan="2">
       <TabItem Header="Find">
         <StackPanel>
-          <TextBox Margin="3" Name="txtFind" controls:TextboxHelper.Watermark="Find" />
+          <TextBox Margin="3" Name="txtFind" controls:TextBoxHelper.Watermark="Find" />
           <Button Margin="5" HorizontalAlignment="Right"
                   Width="80" Content="Find Next" Click="FindNextClick" />
         </StackPanel>
@@ -37,8 +37,8 @@
       <TabItem Header="Replace">
         <StackPanel>
           <TextBlock Margin="3">Text to Find:</TextBlock>
-          <TextBox Margin="3" Name="txtFind2" controls:TextboxHelper.Watermark="Find" />
-          <TextBox Margin="3" Name="txtReplace"  controls:TextboxHelper.Watermark="Replace" />
+          <TextBox Margin="3" Name="txtFind2" controls:TextBoxHelper.Watermark="Find" />
+          <TextBox Margin="3" Name="txtReplace"  controls:TextBoxHelper.Watermark="Replace" />
           <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Margin="5" HorizontalAlignment="Right"
                     Width="80" Content="Find Next" Click="FindNext2Click" />

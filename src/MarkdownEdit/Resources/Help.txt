@@ -123,7 +123,7 @@ If you create an awesome theme, send it to me and I'll add it to the distributio
 
 ### Markdown Edit
 
-Version 1.0.0  
+Version 1.0.1  
 Home Page: <http://mike-ward.net/markdownedit>  
 Twitter: `@mikeward_aa`  
 Source: <https://github.com/mike-ward/Markdown-Edit>
