@@ -5,6 +5,7 @@
     Ctrl+N         New file
     Ctrl+Shift+N   Open new instance
     Ctrl+O         Open file
+    Ctrl+Shift+O   Insert file
     Ctrl+S         Save file
     Ctrl+Shift+S   Save file As
     Ctrl+R         Recent files

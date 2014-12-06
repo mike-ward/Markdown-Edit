@@ -44,6 +44,7 @@ namespace MarkdownEdit
         public static RoutedCommand EditorReplaceAllCommand = new RoutedCommand();
         public static RoutedCommand OpenNewInstanceCommand = new RoutedCommand();
         public static RoutedCommand UpdatePreviewCommand = new RoutedCommand();
+        public static RoutedCommand InsertFileCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _markdownConverter;
@@ -344,6 +345,11 @@ namespace MarkdownEdit
         private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e)
         {
             Preview.UpdatePreview(Editor.Text);
+        }
+
+        private void ExecuteInsertFile(object sender, ExecutedRoutedEventArgs e)
+        {
+            Editor.InsertFile(null);
         }
 
         // Properites

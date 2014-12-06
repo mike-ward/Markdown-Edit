@@ -262,6 +262,29 @@ namespace MarkdownEdit
             });
         }
 
+        public void InsertFile(string file)
+        {
+            Execute(() =>
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(file))
+                    {
+                        var dialog = new OpenFileDialog();
+                        var result = dialog.ShowDialog();
+                        if (result == false) return;
+                        file = dialog.FileNames[0];
+                    }
+                    var text = File.ReadAllText(file);
+                    EditBox.Document.Insert(EditBox.SelectionStart, text);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, @"InsertFile", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+        }
+
         public bool SaveIfModified()
         {
             return Execute(() =>
