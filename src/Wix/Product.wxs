@@ -1,8 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="Markdown Edit" Language="1033" Version="1.0.0.0" Manufacturer="Mike Ward" UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+<?xml
+  version="1.0"
+  encoding="UTF-8"?>
 
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" 
+           Name="Markdown Edit" 
+           Language="1033" 
+           Version="1.0.0.0" 
+           Manufacturer="Mike Ward" 
+           UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
+    
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
 
@@ -13,138 +21,124 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="MarkdownEdit">
-            <Component Id="CommonMark.dll" Guid="{785B177B-0D55-47EB-959D-270F0548A263}">
-                <File Id="CommonMark.dll" KeyPath="yes" Source="$(var.SourceFiles)\CommonMark.dll" />
-            </Component>
-            <Component Id="CommonMark.pdb" Guid="{DB47C82A-6E8E-4732-AE6C-EBEB9198DE80}">
-                <File Id="CommonMark.pdb" KeyPath="yes" Source="$(var.SourceFiles)\CommonMark.pdb" />
-            </Component>
-            <Component Id="CommonMark.xml" Guid="{6A033115-7237-4DFC-B7B3-03E13E5075C1}">
-                <File Id="CommonMark.xml" KeyPath="yes" Source="$(var.SourceFiles)\CommonMark.xml" />
-            </Component>
-            <Component Id="Hunspellx64.dll" Guid="{CF56E78F-5FE3-4CF6-983D-251A8FC4ECE5}">
-                <File Id="Hunspellx64.dll" KeyPath="yes" Source="$(var.SourceFiles)\Hunspellx64.dll" />
-            </Component>
-            <Component Id="Hunspellx86.dll" Guid="{D90B81E9-C4FA-4D88-961C-525A64684C3B}">
-                <File Id="Hunspellx86.dll" KeyPath="yes" Source="$(var.SourceFiles)\Hunspellx86.dll" />
-            </Component>
-            <Component Id="ICSharpCode.AvalonEdit.dll" Guid="{17E485FC-54CF-4923-9EC4-9F656845EE9B}">
-                <File Id="ICSharpCode.AvalonEdit.dll" KeyPath="yes" Source="$(var.SourceFiles)\ICSharpCode.AvalonEdit.dll" />
-            </Component>
-            <Component Id="ICSharpCode.AvalonEdit.xml" Guid="{CEC9C35F-3628-4C44-B933-B6519B264A68}">
-                <File Id="ICSharpCode.AvalonEdit.xml" KeyPath="yes" Source="$(var.SourceFiles)\ICSharpCode.AvalonEdit.xml" />
-            </Component>
-            <Component Id="MahApps.Metro.dll" Guid="{3531ECE6-17BD-4B85-810D-94384E7C77E9}">
-                <File Id="MahApps.Metro.dll" KeyPath="yes" Source="$(var.SourceFiles)\MahApps.Metro.dll" />
-            </Component>
-            <Component Id="MahApps.Metro.xml" Guid="{FC3B8C63-12BF-4A50-8119-7DBB81FE55BA}">
-                <File Id="MahApps.Metro.xml" KeyPath="yes" Source="$(var.SourceFiles)\MahApps.Metro.xml" />
-            </Component>
-            <Component Id="mde.exe" Guid="{D8745F9D-E4D6-4682-AF42-46F38A38B27B}">
-                <File Id="mde.exe" KeyPath="yes" Source="$(var.SourceFiles)\mde.exe" />
-            </Component>
-            <Component Id="mde.exe.config" Guid="{BF5FEE33-CC59-4B7B-82A5-3B3DF599919E}">
-                <File Id="mde.exe.config" KeyPath="yes" Source="$(var.SourceFiles)\mde.exe.config" />
-            </Component>
-            <Component Id="mde.pdb" Guid="{91B1E569-0CB8-45EA-9606-6F05605297F3}">
-                <File Id="mde.pdb" KeyPath="yes" Source="$(var.SourceFiles)\mde.pdb" />
-            </Component>
-            <Component Id="Newtonsoft.Json.dll" Guid="{4FD41B71-24DB-4745-86D9-B43F1566DE98}">
-                <File Id="Newtonsoft.Json.dll" KeyPath="yes" Source="$(var.SourceFiles)\Newtonsoft.Json.dll" />
-            </Component>
-            <Component Id="Newtonsoft.Json.xml" Guid="{C5702322-8F4F-486F-ABC1-46BFD46025BF}">
-                <File Id="Newtonsoft.Json.xml" KeyPath="yes" Source="$(var.SourceFiles)\Newtonsoft.Json.xml" />
-            </Component>
-            <Component Id="NHunspell.dll" Guid="{9F5FF222-8FC3-43A5-982D-74C3B961C611}">
-                <File Id="NHunspell.dll" KeyPath="yes" Source="$(var.SourceFiles)\NHunspell.dll" />
-            </Component>
-            <Component Id="NHunspell.pdb" Guid="{A3178F0D-94DD-4BCB-B312-3E79E6608BBB}">
-                <File Id="NHunspell.pdb" KeyPath="yes" Source="$(var.SourceFiles)\NHunspell.pdb" />
-            </Component>
-            <Component Id="System.Windows.Interactivity.dll" Guid="{2BD12827-BCD3-4902-AA48-FD55284BC403}">
-                <File Id="System.Windows.Interactivity.dll" KeyPath="yes" Source="$(var.SourceFiles)\System.Windows.Interactivity.dll" />
-            </Component>
-            <Directory Id="SpellCheck" Name="SpellCheck">
-                <Directory Id="Dictionaries" Name="Dictionaries">
-                    <Component Id="en_US.aff" Guid="{F31674FA-BA11-4A52-BE3C-F3AA46178F91}">
-                        <File Id="en_US.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\en_US.aff" />
-                    </Component>
-                    <Component Id="en_US.dic" Guid="{5E0746AB-84B4-49A5-B484-A102E434809B}">
-                        <File Id="en_US.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\en_US.dic" />
-                    </Component>
-                    <Component Id="French.aff" Guid="{B945C72B-D01C-4974-8405-D80E90FD38ED}">
-                        <File Id="French.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\French.aff" />
-                    </Component>
-                    <Component Id="French.dic" Guid="{4F14887A-A0DC-4EC3-8FBA-6FFE519C12FC}">
-                        <File Id="French.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\French.dic" />
-                    </Component>
-                    <Component Id="German.aff" Guid="{53698387-B291-4671-A669-FA00D5E362E6}">
-                        <File Id="German.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\German.aff" />
-                    </Component>
-                    <Component Id="German.dic" Guid="{263D30BB-CB0C-4514-9EDC-935BA32B946A}">
-                        <File Id="German.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\German.dic" />
-                    </Component>
-                    <Component Id="Italian.aff" Guid="{7F416313-CD5F-4B95-AFEE-187791999ABD}">
-                        <File Id="Italian.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Italian.aff" />
-                    </Component>
-                    <Component Id="Italian.dic" Guid="{3FDE1FEE-42B9-42F4-B3A5-F59FE1B82BDB}">
-                        <File Id="Italian.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Italian.dic" />
-                    </Component>
-                    <Component Id="Spanish.aff" Guid="{891357DF-6A8F-49D6-957C-83B825A1BD2E}">
-                        <File Id="Spanish.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Spanish.aff" />
-                    </Component>
-                    <Component Id="Spanish.dic" Guid="{5F05F937-13E6-491A-83A1-BBF413A59B0F}">
-                        <File Id="Spanish.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Spanish.dic" />
-                    </Component>
-                </Directory>
+          <Component Id="CommonMark.dll" Guid="{785B177B-0D55-47EB-959D-270F0548A263}">
+            <File Id="CommonMark.dll" KeyPath="yes" Source="$(var.SourceFiles)\CommonMark.dll" />
+          </Component>
+          <Component Id="Hunspellx64.dll" Guid="{CF56E78F-5FE3-4CF6-983D-251A8FC4ECE5}">
+            <File Id="Hunspellx64.dll" KeyPath="yes" Source="$(var.SourceFiles)\Hunspellx64.dll" />
+          </Component>
+          <Component Id="Hunspellx86.dll" Guid="{D90B81E9-C4FA-4D88-961C-525A64684C3B}">
+            <File Id="Hunspellx86.dll" KeyPath="yes" Source="$(var.SourceFiles)\Hunspellx86.dll" />
+          </Component>
+          <Component Id="ICSharpCode.AvalonEdit.dll" Guid="{17E485FC-54CF-4923-9EC4-9F656845EE9B}">
+            <File Id="ICSharpCode.AvalonEdit.dll" KeyPath="yes" Source="$(var.SourceFiles)\ICSharpCode.AvalonEdit.dll" />
+          </Component>
+          <Component Id="MahApps.Metro.dll" Guid="{3531ECE6-17BD-4B85-810D-94384E7C77E9}">
+            <File Id="MahApps.Metro.dll" KeyPath="yes" Source="$(var.SourceFiles)\MahApps.Metro.dll" />
+          </Component>
+          <Component Id="mde.exe" Guid="{D8745F9D-E4D6-4682-AF42-46F38A38B27B}">
+            <File Id="mde.exe" KeyPath="yes" Source="$(var.SourceFiles)\mde.exe" />
+          </Component>
+          <Component Id="mde.exe.config" Guid="{BF5FEE33-CC59-4B7B-82A5-3B3DF599919E}">
+            <File Id="mde.exe.config" KeyPath="yes" Source="$(var.SourceFiles)\mde.exe.config" />
+          </Component>
+          <Component Id="Newtonsoft.Json.dll" Guid="{4FD41B71-24DB-4745-86D9-B43F1566DE98}">
+            <File Id="Newtonsoft.Json.dll" KeyPath="yes" Source="$(var.SourceFiles)\Newtonsoft.Json.dll" />
+          </Component>
+          <Component Id="NHunspell.dll" Guid="{9F5FF222-8FC3-43A5-982D-74C3B961C611}">
+            <File Id="NHunspell.dll" KeyPath="yes" Source="$(var.SourceFiles)\NHunspell.dll" />
+          </Component>
+          <Component Id="System.Windows.Interactivity.dll" Guid="{2BD12827-BCD3-4902-AA48-FD55284BC403}">
+            <File Id="System.Windows.Interactivity.dll" KeyPath="yes" Source="$(var.SourceFiles)\System.Windows.Interactivity.dll" />
+          </Component>
+          <Directory Id="SpellCheck" Name="SpellCheck">
+            <Directory Id="Dictionaries" Name="Dictionaries">
+              <Component Id="en_US.aff" Guid="{F31674FA-BA11-4A52-BE3C-F3AA46178F91}">
+                <File Id="en_US.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\en_US.aff" />
+              </Component>
+              <Component Id="en_US.dic" Guid="{5E0746AB-84B4-49A5-B484-A102E434809B}">
+                <File Id="en_US.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\en_US.dic" />
+              </Component>
+              <Component Id="French.aff" Guid="{B945C72B-D01C-4974-8405-D80E90FD38ED}">
+                <File Id="French.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\French.aff" />
+              </Component>
+              <Component Id="French.dic" Guid="{4F14887A-A0DC-4EC3-8FBA-6FFE519C12FC}">
+                <File Id="French.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\French.dic" />
+              </Component>
+              <Component Id="German.aff" Guid="{53698387-B291-4671-A669-FA00D5E362E6}">
+                <File Id="German.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\German.aff" />
+              </Component>
+              <Component Id="German.dic" Guid="{263D30BB-CB0C-4514-9EDC-935BA32B946A}">
+                <File Id="German.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\German.dic" />
+              </Component>
+              <Component Id="Italian.aff" Guid="{7F416313-CD5F-4B95-AFEE-187791999ABD}">
+                <File Id="Italian.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Italian.aff" />
+              </Component>
+              <Component Id="Italian.dic" Guid="{3FDE1FEE-42B9-42F4-B3A5-F59FE1B82BDB}">
+                <File Id="Italian.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Italian.dic" />
+              </Component>
+              <Component Id="Spanish.aff" Guid="{891357DF-6A8F-49D6-957C-83B825A1BD2E}">
+                <File Id="Spanish.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Spanish.aff" />
+              </Component>
+              <Component Id="Spanish.dic" Guid="{5F05F937-13E6-491A-83A1-BBF413A59B0F}">
+                <File Id="Spanish.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Spanish.dic" />
+              </Component>
             </Directory>
-            <Directory Id="Themes" Name="Themes">
-                <Component Id="brain_salad_surgery.json" Guid="{04350101-44BF-43CA-B457-BBF7D668CFFB}">
-                    <File Id="brain_salad_surgery.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\brain-salad-surgery.json" />
-                </Component>
-                <Component Id="inflamed_wound.json" Guid="{81486CB8-AB8C-4702-BAB4-538F07A09CAC}">
-                    <File Id="inflamed_wound.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\inflamed-wound.json" />
-                </Component>
-                <Component Id="milk_toast.json" Guid="{FF44510C-8799-4AB7-B6A4-00BB6DCC0A50}">
-                    <File Id="milk_toast.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\milk-toast.json" />
-                </Component>
-                <Component Id="programmers_cant_design.json" Guid="{298494D5-94B1-46CE-B555-64812CB570D3}">
-                    <File Id="programmers_cant_design.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\programmers-cant-design.json" />
-                </Component>
-                <Component Id="solarized_dark.json" Guid="{3ED1F61E-29FD-4752-A390-1D80D8930D1F}">
-                    <File Id="solarized_dark.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\solarized-dark.json" />
-                </Component>
-                <Component Id="solarized_light.json" Guid="{C87FD30B-C90F-4804-8344-A416F9764DF9}">
-                    <File Id="solarized_light.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\solarized-light.json" />
-                </Component>
-                <Component Id="the_blues.json" Guid="{16C124A3-F681-413D-A557-EA1CD1351F13}">
-                    <File Id="the_blues.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\the-blues.json" />
-                </Component>
-                <Component Id="zenburn.json" Guid="{4A13D287-AC15-4A0E-8458-ABE45B96E488}">
-                    <File Id="zenburn.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\zenburn.json" />
-                </Component>
-            </Directory>
+          </Directory>
+          <Directory Id="Themes" Name="Themes">
+            <Component Id="brain_salad_surgery.json" Guid="{04350101-44BF-43CA-B457-BBF7D668CFFB}">
+              <File Id="brain_salad_surgery.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\brain-salad-surgery.json" />
+            </Component>
+            <Component Id="inflamed_wound.json" Guid="{81486CB8-AB8C-4702-BAB4-538F07A09CAC}">
+              <File Id="inflamed_wound.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\inflamed-wound.json" />
+            </Component>
+            <Component Id="milk_toast.json" Guid="{FF44510C-8799-4AB7-B6A4-00BB6DCC0A50}">
+              <File Id="milk_toast.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\milk-toast.json" />
+            </Component>
+            <Component Id="programmers_cant_design.json" Guid="{298494D5-94B1-46CE-B555-64812CB570D3}">
+              <File Id="programmers_cant_design.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\programmers-cant-design.json" />
+            </Component>
+            <Component Id="solarized_dark.json" Guid="{3ED1F61E-29FD-4752-A390-1D80D8930D1F}">
+              <File Id="solarized_dark.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\solarized-dark.json" />
+            </Component>
+            <Component Id="solarized_light.json" Guid="{C87FD30B-C90F-4804-8344-A416F9764DF9}">
+              <File Id="solarized_light.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\solarized-light.json" />
+            </Component>
+            <Component Id="the_blues.json" Guid="{16C124A3-F681-413D-A557-EA1CD1351F13}">
+              <File Id="the_blues.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\the-blues.json" />
+            </Component>
+            <Component Id="zenburn.json" Guid="{4A13D287-AC15-4A0E-8458-ABE45B96E488}">
+              <File Id="zenburn.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\zenburn.json" />
+            </Component>
+          </Directory>
+          <Directory Id="FontsFolder">
+            <Component Id="OpenSans_Regular.ttf" Guid="{D17B39B4-4D5E-44CC-BDDF-84EA5F0057A2}"  Permanent="yes">
+              <File Id="OpenSans_Regular.ttf" KeyPath="yes" Source="..\MarkdownEdit\Fonts\OpenSans\OpenSans-Regular.ttf" TrueType="yes" />
+            </Component>
+            <Component Id="OpenSans_Bold.ttf" Guid="{E8EFF7FB-E599-4EA6-9305-A3062BE4D366}" Permanent="yes">
+              <File Id="OpenSans_Bold.ttf" KeyPath="yes" Source="..\MarkdownEdit\Fonts\OpenSans\OpenSans-Bold.ttf" TrueType="yes" />
+            </Component>
+            <Component Id="OpenSans_Italic.ttf" Guid="{B532F53F-38DC-413A-A829-E3773BFFA1BF}" Permanent="yes">
+              <File Id="OpenSans_Italic.ttf" KeyPath="yes" Source="..\MarkdownEdit\Fonts\OpenSans\OpenSans-Italic.ttf" TrueType="yes" />
+            </Component>
+            <Component Id="OpenSans_BoldItalic.ttf" Guid="{6CF9260F-E67B-4C22-9F0F-0D945596FDE2}" Permanent="yes">
+              <File Id="OpenSans_BoldItalic.ttf" KeyPath="yes" Source="..\MarkdownEdit\Fonts\OpenSans\OpenSans-BoldItalic.ttf" TrueType="yes" />
+            </Component>
+          </Directory>
         </Directory>
       </Directory>
     </Directory>
-    
+
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <ComponentRef Id="CommonMark.dll" />
-      <ComponentRef Id="CommonMark.pdb" />
-      <ComponentRef Id="CommonMark.xml" />
       <ComponentRef Id="Hunspellx64.dll" />
       <ComponentRef Id="Hunspellx86.dll" />
       <ComponentRef Id="ICSharpCode.AvalonEdit.dll" />
-      <ComponentRef Id="ICSharpCode.AvalonEdit.xml" />
       <ComponentRef Id="MahApps.Metro.dll" />
-      <ComponentRef Id="MahApps.Metro.xml" />
       <ComponentRef Id="mde.exe" />
       <ComponentRef Id="mde.exe.config" />
-      <ComponentRef Id="mde.pdb" />
       <ComponentRef Id="Newtonsoft.Json.dll" />
-      <ComponentRef Id="Newtonsoft.Json.xml" />
       <ComponentRef Id="NHunspell.dll" />
-      <ComponentRef Id="NHunspell.pdb" />
       <ComponentRef Id="System.Windows.Interactivity.dll" />
       <ComponentRef Id="en_US.aff" />
       <ComponentRef Id="en_US.dic" />
@@ -164,6 +158,10 @@
       <ComponentRef Id="solarized_light.json" />
       <ComponentRef Id="the_blues.json" />
       <ComponentRef Id="zenburn.json" />
+      <ComponentRef Id="OpenSans_Regular.ttf" />
+      <ComponentRef Id="OpenSans_Bold.ttf" />
+      <ComponentRef Id="OpenSans_Italic.ttf" />
+      <ComponentRef Id="OpenSans_BoldItalic.ttf" />
     </ComponentGroup>
   </Product>
 </Wix>

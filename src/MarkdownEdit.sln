@@ -5,11 +5,6 @@ VisualStudioVersion = 14.0.22310.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownEdit", "MarkdownEdit\MarkdownEdit.csproj", "{DE1D15CE-DF4B-4BD8-8A15-2306C3896885}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setup", "Setup\Setup.vcxproj", "{42147F21-5845-4736-ACD8-BA17800C6D0B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DE1D15CE-DF4B-4BD8-8A15-2306C3896885} = {DE1D15CE-DF4B-4BD8-8A15-2306C3896885}
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9B81C9BB-9A90-41EB-9AFE-6401D6217D5B}"
 EndProject
 Global
