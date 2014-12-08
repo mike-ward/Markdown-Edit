@@ -145,6 +145,11 @@
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     <UIRef Id="WixUI_InstallDir" />
 
+    <PropertyRef Id="NETFRAMEWORK45"/>
+    <Condition Message="This application requires .NET Framework 4.5.2. Visit http://smallestdotnet.com or run &quot;choco install dotnet4.5.2&quot;">
+      <![CDATA[Installed OR (NETFRAMEWORK45 >= "#379893")]]>
+    </Condition>
+
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="CommonMark.dll" />
