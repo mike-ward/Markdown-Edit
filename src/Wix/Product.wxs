@@ -12,14 +12,22 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
 
-    <Feature Id="ProductFeature" Title="Markdown Edit" Level="1">
-      <ComponentGroupRef Id="ProductComponents" />
-    </Feature>
-
     <Directory Id="TARGETDIR" Name="SourceDir">
+      
       <Directory Id="ProgramMenuFolder">
-        <Directory Id="ApplicationProgramsFolder" Name="Markdown Edit"/>
-      </Directory>      
+        <Directory Id="ApplicationProgramsFolder" Name="Markdown Edit">
+          <Component Id="ApplicationShortcut" Guid="{C5E63254-5E65-42E9-A830-9D2D427FEF41}">
+            <Shortcut Id="ApplicationStartMenuShortcut"
+                      Name="Markdown Edit"
+                      Description="Desktop Editor for Markdown"
+                      Target="[INSTALLFOLDER]mde.exe"
+                      WorkingDirectory="INSTALLFOLDER"/>
+            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\Microsoft\Markdown Edit" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+          </Component>                   
+        </Directory>
+      </Directory>
+      
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="Markdown Edit">
           <Component Id="CommonMark.dll" Guid="{785B177B-0D55-47EB-959D-270F0548A263}">
@@ -130,25 +138,18 @@
       </Directory>
     </Directory>
 
-    <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="{C5E63254-5E65-42E9-A830-9D2D427FEF41}">
-        <Shortcut Id="ApplicationStartMenuShortcut"
-                  Name="Markdown Edit"
-                  Description="Desktop Editor for Markdown"
-                  Target="[INSTALLFOLDER]mde.exe"
-                  WorkingDirectory="INSTALLFOLDER"/>
-        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-        <RegistryValue Root="HKCU" Key="Software\Microsoft\Markdown Edit" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
-      </Component>
-    </DirectoryRef>
-
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     <UIRef Id="WixUI_InstallDir" />
 
+    <Property Id="SKIPFRAMEWORKCHECK" Value="0" />
     <PropertyRef Id="NETFRAMEWORK45"/>
-    <Condition Message="This application requires .NET Framework 4.5.2. Visit http://smallestdotnet.com or run &quot;choco install dotnet4.5.2&quot;">
-      <![CDATA[Installed OR (NETFRAMEWORK45 >= "#379893")]]>
+    <Condition Message="Markdown Edit requires .NET Framework 4.5.2. Visit http://smallestdotnet.com">
+      <![CDATA[Installed OR (SKIPFRAMEWORKCHECK <> 0) OR (NETFRAMEWORK45 >= "#379893")]]>
     </Condition>
+    
+    <Feature Id="ProductFeature" Title="Markdown Edit" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
 
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <ComponentRef Id="ApplicationShortcut" />
