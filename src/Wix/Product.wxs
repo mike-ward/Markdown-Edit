@@ -1,6 +1,4 @@
-<?xml
-  version="1.0"
-  encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Id="*" 
@@ -143,6 +141,9 @@
         <RegistryValue Root="HKCU" Key="Software\Microsoft\Markdown Edit" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
     </DirectoryRef>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_InstallDir" />
 
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <ComponentRef Id="ApplicationShortcut" />
