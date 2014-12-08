@@ -6,7 +6,7 @@
   <Product Id="*" 
            Name="Markdown Edit" 
            Language="1033" 
-           Version="1.0.0.0" 
+           Version="1.0.1.0" 
            Manufacturer="Mike Ward" 
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
     
@@ -19,8 +19,11 @@
     </Feature>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Markdown Edit"/>
+      </Directory>      
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="MarkdownEdit">
+        <Directory Id="INSTALLFOLDER" Name="Markdown Edit">
           <Component Id="CommonMark.dll" Guid="{785B177B-0D55-47EB-959D-270F0548A263}">
             <File Id="CommonMark.dll" KeyPath="yes" Source="$(var.SourceFiles)\CommonMark.dll" />
           </Component>
@@ -129,7 +132,20 @@
       </Directory>
     </Directory>
 
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="{C5E63254-5E65-42E9-A830-9D2D427FEF41}">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Markdown Edit"
+                  Description="Desktop Editor for Markdown"
+                  Target="[INSTALLFOLDER]mde.exe"
+                  WorkingDirectory="INSTALLFOLDER"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\Markdown Edit" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="CommonMark.dll" />
       <ComponentRef Id="Hunspellx64.dll" />
       <ComponentRef Id="Hunspellx86.dll" />
