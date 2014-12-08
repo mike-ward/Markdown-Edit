@@ -13,7 +13,6 @@
     <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="Markdown Edit">
           <Component Id="ApplicationShortcut" Guid="{C5E63254-5E65-42E9-A830-9D2D427FEF41}">
