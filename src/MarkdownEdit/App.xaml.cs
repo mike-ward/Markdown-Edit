@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using MarkdownEdit.Properties;
 using MarkdownEdit.SpellCheck;
@@ -40,7 +41,7 @@ namespace MarkdownEdit
 
             UserSettings = UserSettings.Load();
 
-            Dispatcher.InvokeAsync(() =>
+            Task.Factory.StartNew(() =>
             {
                 _userSettingsWatcher = new FileSystemWatcher
                 {

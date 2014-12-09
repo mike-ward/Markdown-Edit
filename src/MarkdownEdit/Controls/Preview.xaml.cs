@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -28,7 +29,7 @@ namespace MarkdownEdit
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
 
-            Dispatcher.InvokeAsync(() =>
+            Task.Factory.StartNew(() =>
             {
                 _templateWatcher = new FileSystemWatcher
                 {
@@ -39,7 +40,6 @@ namespace MarkdownEdit
 
                 _templateWatcher.Changed += (sender, args) => Dispatcher.Invoke(UpdateTemplate);
                 _templateWatcher.EnableRaisingEvents = true;
-                Unloaded += (sender, args) => _templateWatcher.Dispose();
 
             // kill popups
             dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
@@ -47,7 +47,7 @@ namespace MarkdownEdit
                 null, Browser, new object[] {});
 
             activeX.Silent = true;
-            });
+            }) ;
         }
 
         private void Update(string markdown)
