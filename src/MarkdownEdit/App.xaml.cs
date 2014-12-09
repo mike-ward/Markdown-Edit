@@ -40,14 +40,17 @@ namespace MarkdownEdit
 
             UserSettings = UserSettings.Load();
 
-            _userSettingsWatcher = new FileSystemWatcher
+            Dispatcher.InvokeAsync(() =>
             {
-                Path = UserSettings.SettingsFolder,
-                Filter = Path.GetFileName(UserSettings.SettingsFile),
-                NotifyFilter = NotifyFilters.LastWrite
-            };
-            _userSettingsWatcher.Changed += (s, e) => UserSettings.Update();
-            _userSettingsWatcher.EnableRaisingEvents = true;
+                _userSettingsWatcher = new FileSystemWatcher
+                {
+                    Path = UserSettings.SettingsFolder,
+                    Filter = Path.GetFileName(UserSettings.SettingsFile),
+                    NotifyFilter = NotifyFilters.LastWrite
+                };
+                _userSettingsWatcher.Changed += (s, e) => UserSettings.Update();
+                _userSettingsWatcher.EnableRaisingEvents = true;
+            });
         }
 
         private void ApplicationExit(object sender, ExitEventArgs e)

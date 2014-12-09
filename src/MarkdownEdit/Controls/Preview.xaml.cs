@@ -17,7 +17,7 @@ namespace MarkdownEdit
     public partial class Preview : INotifyPropertyChanged
     {
         public readonly Action<string> UpdatePreview;
-        private readonly FileSystemWatcher _templateWatcher;
+        private FileSystemWatcher _templateWatcher;
         private int _wordCount;
 
         public Preview()
@@ -28,15 +28,18 @@ namespace MarkdownEdit
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
 
-            _templateWatcher = new FileSystemWatcher
+            Dispatcher.InvokeAsync(() =>
             {
-                Path = UserSettings.SettingsFolder,
-                Filter = Path.GetFileName(UserTemplate.TemplateFile),
-                NotifyFilter = NotifyFilters.LastWrite
-            };
-            _templateWatcher.Changed += (sender, args) => Dispatcher.Invoke(UpdateTemplate);
-            _templateWatcher.EnableRaisingEvents = true;
-            Unloaded += (sender, args) => _templateWatcher.Dispose();
+                _templateWatcher = new FileSystemWatcher
+                {
+                    Path = UserSettings.SettingsFolder,
+                    Filter = Path.GetFileName(UserTemplate.TemplateFile),
+                    NotifyFilter = NotifyFilters.LastWrite
+                };
+
+                _templateWatcher.Changed += (sender, args) => Dispatcher.Invoke(UpdateTemplate);
+                _templateWatcher.EnableRaisingEvents = true;
+                Unloaded += (sender, args) => _templateWatcher.Dispose();
 
             // kill popups
             dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
@@ -44,6 +47,7 @@ namespace MarkdownEdit
                 null, Browser, new object[] {});
 
             activeX.Silent = true;
+            });
         }
 
         private void Update(string markdown)
