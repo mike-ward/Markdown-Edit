@@ -8,10 +8,8 @@
     <owners>Mike Ward</owners>
     <summary>Desktop CommonMark Editor for Windows</summary>
     <description>Markdown Edit is a Windows desktop CommonMark (a.k.a. Markdown) editor with an emphasis on content and keyboard shortcuts. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar, tabbed windows or other distractions.
-    If .NET 4.5.2 is not installed, you may have to restart your computer after .NET 4.5.2 installs and then install Markdown Edit.
     </description>
     <projectUrl>http://mike-ward.net/markdownedit</projectUrl>
-    <tags>#markdown #commonmark #windows</tags>
     <licenseUrl>https://cdn.rawgit.com/mike-ward/Markdown-Edit/master/LICENSE.txt</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://cdn.rawgit.com/mike-ward/Markdown-Edit/master/src/MarkdownEdit/logo.png</iconUrl>
