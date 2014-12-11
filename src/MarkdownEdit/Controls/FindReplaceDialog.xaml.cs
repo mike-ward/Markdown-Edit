@@ -90,7 +90,7 @@ namespace MarkdownEdit
 
         private Regex GetRegEx(string textToFind, bool previous)
         {
-            var options = RegexOptions.None;
+            var options = RegexOptions.Multiline;
             if (previous) options |= RegexOptions.RightToLeft;
             if (cbCaseSensitive.IsChecked == false) options |= RegexOptions.IgnoreCase;
             if (cbRegex.IsChecked == true) return new Regex(textToFind, options);
