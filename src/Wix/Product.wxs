@@ -56,6 +56,9 @@
           <Component Id="NHunspell.dll" Guid="{9F5FF222-8FC3-43A5-982D-74C3B961C611}">
             <File Id="NHunspell.dll" KeyPath="yes" Source="$(var.SourceFiles)\NHunspell.dll" />
           </Component>
+          <Component Id="System.Windows.Interactivity.dll" Guid="{D04B4B99-BBBA-4FC1-90F3-2797379617E4}">
+            <File Id="System.Windows.Interactivity.dll" KeyPath="yes" Source="$(var.SourceFiles)\System.Windows.Interactivity.dll" />
+          </Component>
           <Directory Id="SpellCheck" Name="SpellCheck">
             <Directory Id="Dictionaries" Name="Dictionaries">
               <Component Id="en_US.aff" Guid="{F31674FA-BA11-4A52-BE3C-F3AA46178F91}">
