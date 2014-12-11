@@ -1,2 +1,2 @@
-$u = "${Env:ProgramFiles(x86)}" + "\markdown edit\unins000.exe"
-Uninstall-ChocolateyPackage "markdown-edit" "exe" "/verysilent" "$u"
+$productcode = (gwmi win32_product | ? { $_.Name -Like "Markdown Edit*" } | % { $_.IdentifyingNumber } | Select-Object -First 1)
+Uninstall-ChocolateyPackage "markdown-edit" "msi" "$productcode /qb"

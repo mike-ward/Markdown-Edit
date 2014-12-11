@@ -1,1 +1,1 @@
-Install-ChocolateyPackage 'mardown-edit' 'exe' '/SILENT' 'http://mike-ward.net/cdn/downloads/MarkdownEditSetup.exe'
+Install-ChocolateyPackage 'markdown-edit' 'msi' '/qb SKIPFRAMEWORKCHECK="1"' 'http://mike-ward.net/cdn/downloads/MarkdownEditSetup.msi'
