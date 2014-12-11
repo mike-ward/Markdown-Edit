@@ -20,6 +20,9 @@
 			\[([^\]]+)\]\(([^)"]+)(?: \"([^\"]+)\")?\)
 		</Rule>
 		<Rule color="Link">
+			\[([^\]]+)\]\[([^)"]+)(?: \"([^\"]+)\")?\]
+		</Rule>
+		<Rule color="Link">
       &lt;(http|ftp|https|mailto):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?&gt;
 		</Rule>
 		<Rule color="StrongEmphasis">
