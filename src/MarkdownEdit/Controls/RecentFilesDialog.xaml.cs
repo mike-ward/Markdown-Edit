@@ -14,7 +14,8 @@ namespace MarkdownEdit
         public RecentFilesDialog()
         {
             InitializeComponent();
-            FilesListBox.ItemsSource = Settings.Default.RecentFiles;
+            var kb = new[] {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+            FilesListBox.ItemsSource = Settings.Default.RecentFiles.Cast<string>().Select((f, i) => string.Format("{0}: {1}", kb[i % kb.Length], f));
             FilesListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
         }
 
@@ -47,7 +48,7 @@ namespace MarkdownEdit
         {
             var file = FilesListBox.SelectedItem as string;
             if (string.IsNullOrWhiteSpace(file)) return;
-            ApplicationCommands.Open.Execute(file, Application.Current.MainWindow);
+            ApplicationCommands.Open.Execute(file.Substring(3), Application.Current.MainWindow);
             ApplicationCommands.Close.Execute(null, this);
         }
 
