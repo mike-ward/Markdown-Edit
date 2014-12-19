@@ -14,10 +14,10 @@
 			^\#{1,6}[^\#].*
 		</Rule>
 		<Rule color="Image">
-			\!\[([^\]]+)\]\(([^)"]+)(?: \"([^\"]+)\")?\)
+			\!\[([^\]]*)\]\(([^)"]+)(?: \"([^\"]+)\")?\)
 		</Rule>
 		<Rule color="Link">
-			\[([^\]]+)\]\(([^)"]+)(?: \"([^\"]+)\")?\)
+			\[([^\]]*)\]\(([^)"]+)(?: \"([^\"]+)\")?\)
 		</Rule>
 		<Rule color="Link">
 			\[([^\]]+)\]\[([^)"]+)(?: \"([^\"]+)\")?\]
@@ -47,6 +47,14 @@
 		<Span color="BlockCode" multiline="true">
 			<Begin>^[ ]{4}</Begin>
 			<End>^(?![ ]{4})</End>
+		</Span>
+		<Span color="BlockCode" multiline="true">
+			<Begin>^```</Begin>
+			<End>^```</End>
+		</Span>
+		<Span color="BlockCode" multiline="true">
+			<Begin>^~~~</Begin>
+			<End>^~~~</End>
 		</Span>
 		<Span color="BlockQuote" multiline="true">
 			<Begin>^&gt;</Begin>
