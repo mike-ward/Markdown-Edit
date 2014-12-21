@@ -18,6 +18,7 @@ namespace MarkdownEdit
     public partial class Preview : INotifyPropertyChanged
     {
         public readonly Action<string> UpdatePreview;
+        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private FileSystemWatcher _templateWatcher;
         private int _wordCount;
 

@@ -1,0 +1,1 @@
+cpack markdown-edit.nuspec

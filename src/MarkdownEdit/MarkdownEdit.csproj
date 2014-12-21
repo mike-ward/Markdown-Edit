@@ -223,6 +223,9 @@
     <None Include="Themes\milk-toast.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Themes\paper.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Themes\programmers-cant-design.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

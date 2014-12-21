@@ -1,0 +1,61 @@
+{
+  "Name": "Paper",
+  "EditorBackground": "#f0f0f1",
+  "EditorForeground": "#333",
+  "HighlightHeading": {
+    "Name": "Heading",
+    "Background": null,
+    "Foreground": "#6c71c4",
+    "FontWeight": "bold",
+    "FontStyle": null
+  },
+  "HighlightEmphasis": {
+    "Name": "Emphasis",
+    "Background": null,
+    "Foreground": "#cb4b16",
+    "FontWeight": null,
+    "FontStyle": "italic"
+  },
+  "HighlightStrongEmphasis": {
+    "Name": "StrongEmphasis",
+    "Background": null,
+    "Foreground": null,
+    "FontWeight": "bold",
+    "FontStyle": null
+  },
+  "HighlightInlineCode": {
+    "Name": "InlineCode",
+    "Background": null,
+    "Foreground": "#888",
+    "FontWeight": null,
+    "FontStyle": null
+  },
+  "HighlightBlockCode": {
+    "Name": "BlockCode",
+    "Background": null,
+    "Foreground": "#888",
+    "FontWeight": null,
+    "FontStyle": null
+  },
+  "HighlightBlockQuote": {
+    "Name": "BlockQuote",
+    "Background": null,
+    "Foreground": "#77a",
+    "FontWeight": null,
+    "FontStyle": null
+  },
+  "HighlightLink": {
+    "Name": "Link",
+    "Background": null,
+    "Foreground": "#559",
+    "FontWeight": "bold",
+    "FontStyle": null
+  },
+  "HighlightImage": {
+    "Name": "Image",
+    "Background": null,
+    "Foreground": "#789",
+    "FontWeight": "bold",
+    "FontStyle": null
+  }
+}

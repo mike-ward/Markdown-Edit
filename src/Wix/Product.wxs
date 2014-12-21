@@ -4,7 +4,7 @@
   <Product Id="*" 
            Name="Markdown Edit" 
            Language="1033" 
-           Version="1.0.2.0" 
+           Version="1.0.3.0" 
            Manufacturer="Mike Ward" 
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
     
@@ -103,6 +103,9 @@
             <Component Id="milk_toast.json" Guid="{FF44510C-8799-4AB7-B6A4-00BB6DCC0A50}">
               <File Id="milk_toast.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\milk-toast.json" />
             </Component>
+            <Component Id="paper.json" Guid="{62926AAA-4097-425C-8A18-9A35D8A36EF9}">
+              <File Id="paper.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\paper.json" />
+            </Component>
             <Component Id="programmers_cant_design.json" Guid="{298494D5-94B1-46CE-B555-64812CB570D3}">
               <File Id="programmers_cant_design.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\programmers-cant-design.json" />
             </Component>
@@ -175,6 +178,7 @@
       <ComponentRef Id="brain_salad_surgery.json" />
       <ComponentRef Id="inflamed_wound.json" />
       <ComponentRef Id="milk_toast.json" />
+      <ComponentRef Id="paper.json" />
       <ComponentRef Id="programmers_cant_design.json" />
       <ComponentRef Id="solarized_dark.json" />
       <ComponentRef Id="solarized_light.json" />
