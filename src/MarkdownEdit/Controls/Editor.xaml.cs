@@ -75,6 +75,7 @@ namespace MarkdownEdit
 
             Dispatcher.InvokeAsync(() =>
             {
+                SetupTabSnippetHandler();
                 InitializeSyntaxHighlighting();
                 ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
                 EditBox.Focus();
@@ -83,6 +84,14 @@ namespace MarkdownEdit
                 ContextMenu = new ContextMenu();
                 ContextMenu.Items.Add(new MenuItem());
             });
+        }
+        void SetupTabSnippetHandler()
+        {
+            var editingKeyBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
+            var tabBinding = editingKeyBindings.Single(b => b.Key == Key.Tab && b.Modifiers == ModifierKeys.None);
+            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(tabBinding);
+            var newTabBinding = new KeyBinding(new CustomTabCommand(EditBox, tabBinding.Command), tabBinding.Key, tabBinding.Modifiers);
+            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newTabBinding);
         }
 
         private void InitializeSyntaxHighlighting()
