@@ -85,13 +85,15 @@ namespace MarkdownEdit
                 ContextMenu.Items.Add(new MenuItem());
             });
         }
-        void SetupTabSnippetHandler()
+
+        private void SetupTabSnippetHandler()
         {
-            var editingKeyBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
+            var inputBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings;
+            var editingKeyBindings = inputBindings.OfType<KeyBinding>();
             var tabBinding = editingKeyBindings.Single(b => b.Key == Key.Tab && b.Modifiers == ModifierKeys.None);
-            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(tabBinding);
+            InputBindings.Remove(tabBinding);
             var newTabBinding = new KeyBinding(new CustomTabCommand(EditBox, tabBinding.Command), tabBinding.Key, tabBinding.Modifiers);
-            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newTabBinding);
+            InputBindings.Add(newTabBinding);
         }
 
         private void InitializeSyntaxHighlighting()
@@ -709,7 +711,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof(Theme), typeof(Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
+            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
 
         public Theme Theme
         {
@@ -775,7 +777,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty VerticalScrollBarVisibilityProperty = DependencyProperty.Register(
-            "VerticalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(Editor), new PropertyMetadata(default(ScrollBarVisibility)));
+            "VerticalScrollBarVisibility", typeof (ScrollBarVisibility), typeof (Editor), new PropertyMetadata(default(ScrollBarVisibility)));
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
@@ -784,7 +786,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowEndOfLineProperty = DependencyProperty.Register(
-            "ShowEndOfLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
+            "ShowEndOfLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
 
         private static void ShowEndOfLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -799,7 +801,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowSpacesProperty = DependencyProperty.Register(
-            "ShowSpaces", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
+            "ShowSpaces", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
 
         private static void ShowSpacesChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -814,7 +816,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowLineNumbersProperty = DependencyProperty.Register(
-            "ShowLineNumbers", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
+            "ShowLineNumbers", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
 
         public bool ShowLineNumbers
         {
@@ -823,7 +825,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowTabsProperty = DependencyProperty.Register(
-            "ShowTabs", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
+            "ShowTabs", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
 
         private static void ShowTabsChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -838,7 +840,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
-            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckChanged));
+            "SpellCheckProvider", typeof (ISpellCheckProvider), typeof (Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckChanged));
 
         private static void SpellCheckChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
@@ -854,7 +856,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty FindReplaceDialogProperty = DependencyProperty.Register(
-            "FindReplaceDialog", typeof(FindReplaceDialog), typeof(Editor), new PropertyMetadata(default(FindReplaceDialog)));
+            "FindReplaceDialog", typeof (FindReplaceDialog), typeof (Editor), new PropertyMetadata(default(FindReplaceDialog)));
 
         public FindReplaceDialog FindReplaceDialog
         {
@@ -863,7 +865,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty HighlightCurrentLineProperty = DependencyProperty.Register(
-            "HighlightCurrentLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
+            "HighlightCurrentLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
 
         private static void HighlightCurrentLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {

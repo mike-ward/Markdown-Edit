@@ -100,6 +100,8 @@
     </Compile>
     <Compile Include="Models\TinyIoc.cs" />
     <Compile Include="Snippets\CustomTabCommand.cs" />
+    <Compile Include="Snippets\ISnippetManager.cs" />
+    <Compile Include="Snippets\SnippetManager.cs" />
     <Compile Include="SpellCheck\ISpellCheckProvider.cs" />
     <Compile Include="SpellCheck\ISpellingService.cs" />
     <Compile Include="SpellCheck\SpellCheckBackgroundRenderer.cs" />
