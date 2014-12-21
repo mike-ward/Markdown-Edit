@@ -99,16 +99,17 @@ namespace MarkdownEdit
             if (document3?.documentElement != null)
             {
                 var percentToScroll = PercentScroll(ea);
+                if (percentToScroll > 0.99) percentToScroll = 1.1;  // deal with round off at end of scroll
                 var body = document3.getElementsByTagName("body").item(0);
                 var scrollHeight = ((IHTMLElement2)body).scrollHeight - document3.documentElement.offsetHeight;
-                document2.parentWindow.scrollTo(0, (int)Math.Round(percentToScroll * scrollHeight));
+                document2.parentWindow.scrollTo(0, (int)Math.Ceiling(percentToScroll * scrollHeight));
             }
         }
 
         private static double PercentScroll(ScrollChangedEventArgs e)
         {
             var y = e.ExtentHeight - e.ViewportHeight;
-            return e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
+            return  e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
         }
 
         private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
