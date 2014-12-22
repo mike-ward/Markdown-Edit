@@ -21,6 +21,7 @@ namespace MarkdownEdit
             container.Register<IMarkdownConverter, CommonMarkConverter>();
             container.Register<ISpellingService, SpellingService>();
             container.Register<ISpellCheckProvider, SpellCheckProvider>();
+            container.Register<ISnippetManager, SnippetManager>();
 
             var spellingService = container.Resolve<ISpellingService>();
             spellingService.SetLanguage(UserSettings.SpellCheckDictionary);

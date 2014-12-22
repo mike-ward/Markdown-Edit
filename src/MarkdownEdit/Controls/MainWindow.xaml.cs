@@ -50,13 +50,19 @@ namespace MarkdownEdit
         private IMarkdownConverter _markdownConverter;
         private ISpellCheckProvider _spellCheckProvider;
         private FindReplaceDialog _findReplaceDialog;
+        private ISnippetManager _snippetManager;
 
-        public MainWindow(IMarkdownConverter markdownConverter, ISpellCheckProvider spellCheckProvider, FindReplaceDialog findReplaceDialog)
+        public MainWindow(
+            IMarkdownConverter markdownConverter, 
+            ISpellCheckProvider spellCheckProvider, 
+            FindReplaceDialog findReplaceDialog,
+            ISnippetManager snippetManager)
         {
             InitializeComponent();
             MarkdownConverter = markdownConverter;
             SpellCheckProvider = spellCheckProvider;
             FindReplaceDialog = findReplaceDialog;
+            SnippetManager = snippetManager;
             Loaded += OnLoaded;
             Closing += OnClosing;
             SizeChanged += (s, e) => CalculateEditorMargins();
@@ -384,6 +390,12 @@ namespace MarkdownEdit
         {
             get { return _findReplaceDialog; }
             set { Set(ref _findReplaceDialog, value); }
+        }
+
+        public ISnippetManager SnippetManager
+        {
+            get { return _snippetManager; }
+            set { Set(ref _snippetManager, value); }    
         }
 
         // INotifyPropertyChanged implementation

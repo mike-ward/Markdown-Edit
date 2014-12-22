@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ICSharpCode.AvalonEdit.Snippets;
 
 namespace MarkdownEdit
 {
     public interface ISnippetManager
     {
         void Load();
-        void FindSnippet();
+        Snippet FindSnippet(string word);
     }
 }

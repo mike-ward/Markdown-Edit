@@ -92,7 +92,7 @@ namespace MarkdownEdit
             var editingKeyBindings = inputBindings.OfType<KeyBinding>();
             var tabBinding = editingKeyBindings.Single(b => b.Key == Key.Tab && b.Modifiers == ModifierKeys.None);
             InputBindings.Remove(tabBinding);
-            var newTabBinding = new KeyBinding(new CustomTabCommand(EditBox, tabBinding.Command), tabBinding.Key, tabBinding.Modifiers);
+            var newTabBinding = new KeyBinding(new CustomTabCommand(EditBox, tabBinding.Command, SnippetManager), tabBinding.Key, tabBinding.Modifiers);
             InputBindings.Add(newTabBinding);
         }
 
@@ -877,6 +877,15 @@ namespace MarkdownEdit
         {
             get { return (bool)GetValue(HighlightCurrentLineProperty); }
             set { SetValue(HighlightCurrentLineProperty, value); }
+        }
+
+        public static readonly DependencyProperty SnippetManagerProperty = DependencyProperty.Register(
+            "SnippetManager", typeof (ISnippetManager), typeof (Editor), new PropertyMetadata(default(ISnippetManager)));
+
+        public ISnippetManager SnippetManager
+        {
+            get { return (ISnippetManager)GetValue(SnippetManagerProperty); }
+            set { SetValue(SnippetManagerProperty, value); }
         }
 
         // INotifyPropertyChanged
