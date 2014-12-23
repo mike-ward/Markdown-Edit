@@ -43,6 +43,7 @@ namespace MarkdownEdit
                     {
                         _editor.Document.Remove(wordStart, _editor.CaretOffset - wordStart);
                         snippet.Insert(_editor.TextArea);
+                        return;
                     }
                 }
             }
