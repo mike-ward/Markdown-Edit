@@ -88,12 +88,11 @@ namespace MarkdownEdit
 
         private void SetupTabSnippetHandler()
         {
-            var inputBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings;
-            var editingKeyBindings = inputBindings.OfType<KeyBinding>();
+            var editingKeyBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
             var tabBinding = editingKeyBindings.Single(b => b.Key == Key.Tab && b.Modifiers == ModifierKeys.None);
-            InputBindings.Remove(tabBinding);
+            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(tabBinding);
             var newTabBinding = new KeyBinding(new CustomTabCommand(EditBox, tabBinding.Command, SnippetManager), tabBinding.Key, tabBinding.Modifiers);
-            InputBindings.Add(newTabBinding);
+            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newTabBinding);
         }
 
         private void InitializeSyntaxHighlighting()
