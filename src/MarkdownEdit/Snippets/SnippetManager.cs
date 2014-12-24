@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ICSharpCode.AvalonEdit.Snippets;
@@ -45,8 +46,17 @@ namespace MarkdownEdit
         {
             string snippetText;
             return _snippets.TryGetValue(word, out snippetText) 
-                ? new Snippet {Elements = {new SnippetTextElement {Text = snippetText}}} 
+                ? new Snippet {Elements = {new SnippetTextElement {Text = ParseSnippetText(snippetText)}}} 
                 : null;
+        }
+
+        private static string ParseSnippetText(string text)
+        {
+            return text
+                .Trim()
+                .Replace("\\r", "\r")
+                .Replace("\\n", "\n")
+                .Replace("\\t", "\t");
         }
     }
 }
