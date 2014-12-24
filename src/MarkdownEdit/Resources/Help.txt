@@ -56,14 +56,17 @@
     Ctrl+5         Insert ##### at beginning of line
     Ctrl+6         Insert ###### at beginning of line
     
-- [CommonMark](http://commonmark.org)
-- [Syntax Cheat Sheet (Tables, strikethrough not supported)](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+  - [Syntax Cheat Sheet (Tables, strikethrough not supported)](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+  
+  - [Markdown Tutorial](http://markdowntutorial.com/)
 
+  - [CommonMark](http://commonmark.org)
+  
 ## Auto Save
 
-When Auto Save is enabled `Alt+S`, content is saved to the original file location 4 seconds after the last detected change. Unlike some auto-save features, this one will essentially save changes whenever typing is paused.
+When Auto Save is enabled (`Alt+S`), content is saved whenever you pause typing for 4 or more seconds.
 
-## User Settings
+## Settings
 
 User settings are stored in a text file in the `AppData` folder. Placing settings in a plain file allows sharing of settings on different installations.
 
@@ -82,7 +85,46 @@ Colors can be defined as RBG values, like the `EditorBackground` setting, or usi
 
 If you delete this file, Markdown Edit will restore it.
 
-## User Template
+## Snippets
+
+Snippets (sometimes called *Replacements*) are character sequences that expand into a different, often larger text sequence. Snippets are stored in a text file that can be edited by pressing `F6`.
+
+Snippets are activated by typing the predefined character sequence and pressing `TAB`.
+
+The format of the snippets file is:
+
+  - each snippet consists of a single line
+  - starting with one or more non whitespace characters
+  - followed by one or more spaces or tabs
+  - followed by text
+
+Example
+
+    mde  [Markdown Edit](http://mike-ward.net/markdown)
+    
+With this snippet defined, open Markdown Edit and type
+
+    mde[TAB]
+
+Where `[TAB]` is the tab key.
+
+The `mde` portion is replaced by
+
+    [Markdown Edit](http://mike-ward.net/markdown)
+    
+### Snippet Variables
+
+  - $END$ - Positions the cursor after insertion. For instance
+
+        mde  [Markdown $END$ Edit](http://mike-ward.net/markdown)
+
+    positions the cursor between *Markdown* and *Edit*
+  
+  - $DATE$ - is replaced with the current date
+  
+  - Multiple output lines - use \n for a new line
+  
+## Templates
 
 You can change the appearance of the preview view by changing the user template file. User templates work similar to user settings. The template file is stored in the `AppData` Folder as `user_template.html`. It can be quickly accessed by pressing `F8`. Edit it as you see fit. 
 
@@ -114,12 +156,10 @@ If you create an awesome theme, send it to me and I'll add it to the distributio
 
 ## Limitations
 
-- Only supports CommonMark
-- Single document Interface
-- Syntax highlighting does not recognize multiple-line constructs. It uses regular expressions which don't understand the underlying Markdown constructs.  I'm hoping as CommonMark matures that a syntax parser (like PEG) will emerge.
-- I wrote it ;)
-
----
+  - Only supports CommonMark
+  - Single document Interface
+  - Syntax highlighting does not recognize multiple-line constructs. It uses regular expressions which don't understand the underlying Markdown constructs.  I'm hoping as CommonMark matures that a syntax parser (like PEG) will emerge.
+  - I wrote it ;)
 
 ## About
 
