@@ -76,7 +76,7 @@ namespace MarkdownEdit
             Dispatcher.InvokeAsync(() =>
             {
                 SetupTabSnippetHandler();
-                SnippetManager.Load();
+                SnippetManager.Initialize();
                 InitializeSyntaxHighlighting();
                 ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
                 EditBox.Focus();

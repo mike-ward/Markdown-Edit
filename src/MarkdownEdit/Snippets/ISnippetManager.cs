@@ -4,7 +4,7 @@ namespace MarkdownEdit
 {
     public interface ISnippetManager
     {
-        void Load();
+        void Initialize();
         Snippet FindSnippet(string word);
     }
 }

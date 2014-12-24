@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ICSharpCode.AvalonEdit.Snippets;
@@ -9,14 +8,11 @@ namespace MarkdownEdit
     public class SnippetManager : ISnippetManager
     {
         private Dictionary<string, string> _snippets;
+        private FileSystemWatcher _snippetFileWatcher;
 
         public SnippetManager()
         {
             _snippets = new Dictionary<string, string>();
-            //{
-            //    {"now", "later"},
-            //    {"post", "---\nlayout: post  \ntitle: ''\n---\n### Programming\n\n### Applications\n\n### Science and Technology\n\n### On the Web\n\n### Stuff I Just Like\n"}
-            //};
         }
 
         public static string SnippetFile()
@@ -24,7 +20,7 @@ namespace MarkdownEdit
             return Path.Combine(UserSettings.SettingsFolder, "snippets.txt");
         }
 
-        public void Load()
+        public void Initialize()
         {
             var file = SnippetFile();
 
@@ -32,21 +28,33 @@ namespace MarkdownEdit
             {
                 _snippets.Clear();
                 Directory.CreateDirectory(UserSettings.SettingsFolder);
-                File.WriteAllText(file, "mde  [Markdown Edit](http://mike-ward.net)");
+                File.WriteAllText(file, "mde  [Markdown Edit](http://mike-ward.net/markdownedit)");
             }
 
             _snippets = File.ReadAllLines(file)
-                .Where(line => !string.IsNullOrWhiteSpace(line))
+                .Where(line => string.IsNullOrWhiteSpace(line) == false)
                 .Select(line => line.Split(null, 2))
                 .Where(pair => pair.Length == 2)
                 .ToDictionary(pair => pair[0], pair => pair[1]);
+
+            if (_snippetFileWatcher == null)
+            {
+                _snippetFileWatcher = new FileSystemWatcher
+                {
+                    Path = Path.GetDirectoryName(file),
+                    Filter = Path.GetFileName(file),
+                    NotifyFilter = NotifyFilters.LastWrite
+                };
+                _snippetFileWatcher.Changed += (sender, args) => Initialize();
+                _snippetFileWatcher.EnableRaisingEvents = true;
+            }
         }
 
         public Snippet FindSnippet(string word)
         {
             string snippetText;
-            return _snippets.TryGetValue(word, out snippetText) 
-                ? new Snippet {Elements = {new SnippetTextElement {Text = ParseSnippetText(snippetText)}}} 
+            return _snippets.TryGetValue(word, out snippetText)
+                ? new Snippet {Elements = {new SnippetTextElement {Text = ParseSnippetText(snippetText)}}}
                 : null;
         }
 
