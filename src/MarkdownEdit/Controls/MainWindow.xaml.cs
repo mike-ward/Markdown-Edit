@@ -22,6 +22,7 @@ namespace MarkdownEdit
         public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
         public static RoutedCommand OpenUserTemplateCommand = new RoutedCommand();
         public static RoutedCommand OpenUserDictionaryCommand = new RoutedCommand();
+        public static RoutedCommand OpenUserSnippetsCommand = new RoutedCommand();
         public static RoutedCommand ToggleSpellCheckCommand = new RoutedCommand();
         public static RoutedCommand ToggleFullScreenCommand = new RoutedCommand();
         public static RoutedCommand WrapToColumnCommand = new RoutedCommand();
@@ -212,6 +213,11 @@ namespace MarkdownEdit
         private void ExecuteOpenUserDictionaryCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Editor.OpenUserDictionary();
+        }
+
+        private void ExecuteOpenUserSnippetsCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            Utility.EditFile(MarkdownEdit.SnippetManager.SnippetFile());
         }
 
         private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e)

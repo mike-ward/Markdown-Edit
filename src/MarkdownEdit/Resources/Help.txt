@@ -13,7 +13,7 @@
     Alt+F4         Exit
 
     Ctrl+W         Toggle word wrap
-    F7             Toggle spell checking
+    Ctrl+F7        Toggle spell checking
     F11            Toggle full screen
     F12            Toggle preview/edit/both
     Alt+S          Toggle auto save
@@ -39,9 +39,10 @@
     Ctrl+0         Restore font size
     
     Ctrl+T         Select editor theme
+    F6             Open user snippets in Notepad
+    F7             Open user dictionary in Notepad
     F8             Open HTML template in Notepad
     F9             Open settings in Notepad
-    Ctrl+F7        Open user dictionary in Notepad
 
     Ctrl+B         Bold selection / no selection insert **
     Ctrl+I         Italic selection / no selection insert *

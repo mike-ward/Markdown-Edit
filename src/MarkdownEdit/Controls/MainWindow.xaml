@@ -43,7 +43,7 @@
                    Foreground="{StaticResource SemiTransparentWhiteBrush}"
                    Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" />
         <TextBlock Text="&#xfc;"
-                   ToolTip="Spell Check - F7"
+                   ToolTip="Spell Check - Ctrl+F7"
                    FontFamily="Wingdings"
                    Style="{StaticResource StatusIndicatorStyle}"
                    IsEnabled="{Binding Path=SpellCheck, ElementName=Editor}" />
@@ -111,6 +111,7 @@
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Executed="ExecuteOpenUserSettingsCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Executed="ExecuteOpenUserTemplateCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Executed="ExecuteOpenUserDictionaryCommand" />
+    <CommandBinding Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}" Executed="ExecuteOpenUserSnippetsCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Executed="ExecuteToggleSpellCheck" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Executed="ExecuteToggleFullScreen" />
     <CommandBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" />
@@ -151,8 +152,9 @@
     <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Plus" />
     <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Minus" />
     <KeyBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+0" />
-    <KeyBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Gesture="F7" />
-    <KeyBinding Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Gesture="Ctrl+F7" />
+    <KeyBinding Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}" Gesture="F6" />
+    <KeyBinding Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Gesture="F7" />
+    <KeyBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Gesture="Ctrl+F7" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Gesture="F8" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Gesture="F9" />
     <KeyBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Gesture="F11" />
