@@ -65,7 +65,8 @@ namespace MarkdownEdit
                 .Trim()
                 .Replace("\\r", "\r")
                 .Replace("\\n", "\n")
-                .Replace("\\t", "\t");
+                .Replace("\\t", "\t")
+                .ReplaceDate();
 
             var cursor = expanded.IndexOf("$END$", StringComparison.Ordinal);
             Snippet snippet;
@@ -74,7 +75,7 @@ namespace MarkdownEdit
             {
                 snippet = new Snippet
                 {
-                    Elements = { new SnippetTextElement { Text = expanded } }
+                    Elements = {new SnippetTextElement {Text = expanded}}
                 };
             }
             else
@@ -90,7 +91,6 @@ namespace MarkdownEdit
                 };
             }
             return snippet;
-
         }
     }
 }

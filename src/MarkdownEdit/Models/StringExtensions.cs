@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace MarkdownEdit
 {
@@ -41,6 +42,12 @@ namespace MarkdownEdit
         public static int WordCount(this string text)
         {
             return (text == null) ? 0 : Regex.Matches(text, @"[\S]+").Count;
+        }
+
+        public static string ReplaceDate(this string text)
+        {
+            var datePattern = new Regex(@"\$DATE(?:\(""(.+)""\))?\$");
+            return datePattern.Replace(text, match => DateTime.UtcNow.ToString(match?.Groups[1].Value));
         }
 
 #if false
