@@ -166,7 +166,7 @@ If you create an awesome theme, send it to me and I'll add it to the distributio
 
 ### Markdown Edit
 
-Version 1.0.3  
+Version 1.1.0  
 Home Page: <http://mike-ward.net/markdownedit>  
 Twitter: `@mikeward_aa`  
 Source: <https://github.com/mike-ward/Markdown-Edit>
