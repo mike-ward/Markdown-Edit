@@ -85,6 +85,7 @@
     <Compile Include="MarkdownConverters\CommonMarkConverter.cs" />
     <Compile Include="MarkdownConverters\IMarkdownConverter.cs" />
     <Compile Include="MarkdownConverters\IToMarkdownConverter.cs" />
+    <Compile Include="Models\EditorUtilites.cs" />
     <Compile Include="Models\EditorState.cs" />
     <Compile Include="Controls\FindReplaceDialog.xaml.cs">
       <DependentUpon>FindReplaceDialog.xaml</DependentUpon>

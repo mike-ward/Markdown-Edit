@@ -76,8 +76,7 @@ namespace MarkdownEdit
             Dispatcher.InvokeAsync(() =>
             {
                 SetupTabSnippetHandler();
-                SnippetManager.Initialize();
-                InitializeSyntaxHighlighting();
+                SetupSyntaxHighlighting();
                 ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
                 EditBox.Focus();
 
@@ -94,9 +93,10 @@ namespace MarkdownEdit
             EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(tabBinding);
             var newTabBinding = new KeyBinding(new CustomTabCommand(EditBox, tabBinding.Command, SnippetManager), tabBinding.Key, tabBinding.Modifiers);
             EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newTabBinding);
+            SnippetManager.Initialize();
         }
 
-        private void InitializeSyntaxHighlighting()
+        private void SetupSyntaxHighlighting()
         {
             var reader = new XmlTextReader(new StringReader(Properties.Resources.markdown_xshd));
             var xshd = HighlightingLoader.LoadXshd(reader);
@@ -432,17 +432,17 @@ namespace MarkdownEdit
 
         public void Bold()
         {
-            Execute(() => AddRemoveText("**"));
+            Execute(() => EditBox.AddRemoveText("**"));
         }
 
         public void Italic()
         {
-            Execute(() => AddRemoveText("*"));
+            Execute(() => EditBox.AddRemoveText("*"));
         }
 
         public void Code()
         {
-            Execute(() => AddRemoveText("`"));
+            Execute(() => EditBox.AddRemoveText("`"));
         }
 
         public void InsertHeader(int num)
@@ -456,22 +456,6 @@ namespace MarkdownEdit
                     EditBox.Document.Insert(line.Offset, header);
                 }
             });
-        }
-
-        private void AddRemoveText(string quote)
-        {
-            var selected = EditBox.SelectedText;
-
-            if (string.IsNullOrEmpty(selected))
-            {
-                EditBox.Document.Insert(EditBox.TextArea.Caret.Offset, quote);
-            }
-            else
-            {
-                EditBox.SelectedText = (selected.StartsWith(quote) && selected.EndsWith(quote))
-                    ? selected.UnsurroundWith(quote)
-                    : selected.SurroundWith(quote);
-            }
         }
 
         public void IncreaseFontSize()
@@ -514,116 +498,27 @@ namespace MarkdownEdit
 
         public void SelectPreviousHeader()
         {
-            SelectHeader(false);
+            EditBox.SelectHeader(false);
         }
 
         public void SelectNextHeader()
         {
-            SelectHeader(true);
-        }
-
-        private void SelectHeader(bool next)
-        {
-            var start = EditBox.SelectionStart + (next ? EditBox.SelectionLength : 0);
-            var options = RegexOptions.Multiline | (next ? RegexOptions.None : RegexOptions.RightToLeft);
-            var regex = new Regex("^#{1,6}[^#].*", options);
-            var match = regex.Match(EditBox.Text, start);
-            if (!match.Success)
-            {
-                Utility.Beep();
-                return;
-            }
-            EditBox.Select(match.Index, match.Length);
-            var loc = EditBox.Document.GetLocation(match.Index);
-            EditBox.ScrollTo(loc.Line, loc.Column);
+            EditBox.SelectHeader(true);
         }
 
         public bool Find(Regex find)
         {
-            return Execute(() =>
-            {
-                try
-                {
-                    var previous = find.Options.HasFlag(RegexOptions.RightToLeft);
-
-                    var start = previous
-                        ? EditBox.SelectionStart
-                        : EditBox.SelectionStart + EditBox.SelectionLength;
-
-                    var match = find.Match(EditBox.Text, start);
-                    if (!match.Success) // start again from beginning or end
-                    {
-                        match = find.Match(EditBox.Text, previous ? EditBox.Text.Length : 0);
-                    }
-
-                    if (match.Success)
-                    {
-                        EditBox.Select(match.Index, match.Length);
-                        var loc = EditBox.Document.GetLocation(match.Index);
-                        EditBox.ScrollTo(loc.Line, loc.Column);
-                    }
-
-                    return match.Success;
-                }
-                catch (Exception e)
-                {
-                    Trace.WriteLine(e.ToString());
-                    return false;
-                }
-            });
+            return Execute(() => EditBox.Find(find));
         }
 
         public bool Replace(Regex find, string replace)
         {
-            return Execute(() =>
-            {
-                try
-                {
-                    var input = EditBox.Text.Substring(EditBox.SelectionStart, EditBox.SelectionLength);
-                    var match = find.Match(input);
-                    var replaced = false;
-                    if (match.Success && match.Index == 0 && match.Length == input.Length)
-                    {
-                        var replaceWith = match.Result(replace);
-                        EditBox.Document.Replace(EditBox.SelectionStart, EditBox.SelectionLength, replaceWith);
-                        replaced = true;
-                    }
-
-                    if (!Find(find) && !replaced) Utility.Beep();
-                    return replaced;
-                }
-                catch (Exception e)
-                {
-                    Trace.WriteLine(e.ToString());
-                    return false;
-                }
-            });
+            return Execute(() => EditBox.Replace(find, replace));
         }
 
         public void ReplaceAll(Regex find, string replace)
         {
-            Execute(() =>
-            {
-                try
-                {
-                    var offset = 0;
-                    EditBox.BeginChange();
-                    foreach (Match match in find.Matches(EditBox.Text))
-                    {
-                        var replaceWith = match.Result(replace);
-                        EditBox.Document.Replace(offset + match.Index, match.Length, replaceWith);
-                        offset += replaceWith.Length - match.Length;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-                finally
-                {
-                    EditBox.EndChange();
-                }
-            });
+            Execute(() => EditBox.ReplaceAll(find, replace));
         }
 
         // Events

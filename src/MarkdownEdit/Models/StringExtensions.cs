@@ -12,9 +12,7 @@ namespace MarkdownEdit
 
         public static string UnsurroundWith(this string text, string quote)
         {
-            if (text.StartsWith(quote)) text = text.Remove(0, quote.Length);
-            if (text.EndsWith(quote)) text = text.Remove(text.Length - quote.Length);
-            return text;
+            return text.Trim(quote.ToCharArray());
         }
 
         public static string ReplaceSmartChars(this string smart)
