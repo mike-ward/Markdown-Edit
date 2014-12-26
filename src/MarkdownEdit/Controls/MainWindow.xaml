@@ -123,7 +123,6 @@
     <CommandBinding Command="{x:Static local:MainWindow.ExportHtmlCommand}" Executed="ExecuteExportHtml" />
     <CommandBinding Command="{x:Static local:MainWindow.ShowGotoLineDialogCommand}" Executed="ExecuteShowGotoLineDialog" />
     <CommandBinding Command="{x:Static local:MainWindow.ScrollToLineCommand}" Executed="ExecuteScrollToLine" />
-    <CommandBinding Command="{x:Static local:MainWindow.InsertTimeStampCommand}" Executed="ExecuteInsertTimeStamp" />
     <CommandBinding Command="{x:Static local:MainWindow.ToggleAutoSaveCommand}" Executed="ExecuteToggleAutoSave" />
     <CommandBinding Command="{x:Static local:MainWindow.SelectPreviousHeaderCommand}" Executed="ExecuteSelectPreviousHeader" />
     <CommandBinding Command="{x:Static local:MainWindow.SelectNextHeaderCommand}" Executed="ExecuteSelectNextHeader" />
@@ -164,7 +163,6 @@
     <KeyBinding Command="{x:Static local:MainWindow.ShowThemeDialogCommand}" Gesture="Ctrl+T" />
     <KeyBinding Command="{x:Static local:MainWindow.ExportHtmlCommand}" Gesture="Ctrl+E" />
     <KeyBinding Command="{x:Static local:MainWindow.ShowGotoLineDialogCommand}" Gesture="Ctrl+G" />
-    <KeyBinding Command="{x:Static local:MainWindow.InsertTimeStampCommand}" Gesture="F5" />
     <KeyBinding Command="{x:Static local:MainWindow.ToggleAutoSaveCommand}" Gesture="Alt+S" />
     <KeyBinding Command="{x:Static local:MainWindow.SelectPreviousHeaderCommand}" Gesture="Ctrl+U" />
     <KeyBinding Command="{x:Static local:MainWindow.SelectNextHeaderCommand}" Gesture="Ctrl+J" />

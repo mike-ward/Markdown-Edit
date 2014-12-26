@@ -36,7 +36,6 @@ namespace MarkdownEdit
         public static RoutedCommand ExportHtmlCommand = new RoutedCommand();
         public static RoutedCommand ScrollToLineCommand = new RoutedCommand();
         public static RoutedCommand ShowGotoLineDialogCommand = new RoutedCommand();
-        public static RoutedCommand InsertTimeStampCommand = new RoutedCommand();
         public static RoutedCommand ToggleAutoSaveCommand = new RoutedCommand();
         public static RoutedCommand SelectPreviousHeaderCommand = new RoutedCommand();
         public static RoutedCommand SelectNextHeaderCommand = new RoutedCommand();
@@ -238,11 +237,6 @@ namespace MarkdownEdit
         private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e)
         {
             Editor.PasteSpecial();
-        }
-
-        private void ExecuteInsertTimeStamp(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.InsertTimeStamp();
         }
 
         private void ExecuteToggleAutoSave(object sender, ExecutedRoutedEventArgs e)

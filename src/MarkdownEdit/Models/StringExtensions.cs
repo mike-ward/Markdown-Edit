@@ -47,40 +47,7 @@ namespace MarkdownEdit
         public static string ReplaceDate(this string text)
         {
             var datePattern = new Regex(@"\$DATE(?:\(""(.+)""\))?\$");
-            return datePattern.Replace(text, match => DateTime.UtcNow.ToString(match?.Groups[1].Value));
+            return datePattern.Replace(text, match => DateTime.Now.ToString(match?.Groups[1].Value));
         }
-
-#if false
-        public static string WrapToColumn(this string text, int column = 90)
-        {
-            var allParagraphs = new List<string>();
-            var separators = new[] {"\n\n", "\r\r", "\r\n\r\n"};
-            var paragraphs = text.Split(separators, StringSplitOptions.RemoveEmptyEntries).Where(s => !string.IsNullOrEmpty(s)).ToArray();
-            foreach (var paragraph in paragraphs)
-            {
-                if (Regex.IsMatch(paragraph, @"^(\s{4,}|\t)"))
-                {
-                    allParagraphs.Add(paragraph);
-                    continue;
-                }
-                var lines = new List<string>();
-                var line = new List<string>();
-                var words = paragraph.Split(null);
-                foreach (var word in words)
-                {
-                    var ltext = string.Join(" ", line);
-                    if (ltext.Length + word.Length + 1 > column)
-                    {
-                        lines.Add(ltext);
-                        line.Clear();
-                    }
-                    line.Add(word);
-                }
-                if (line.Count > 0) lines.Add(string.Join(" ", line));
-                allParagraphs.Add(string.Join("\n", lines));
-            }
-            return string.Join("\r\n\r\n", allParagraphs);
-        }
-#endif
     }
 }
