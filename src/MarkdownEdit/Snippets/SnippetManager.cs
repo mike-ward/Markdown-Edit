@@ -38,17 +38,7 @@ namespace MarkdownEdit
                 .Where(pair => pair.Length == 2)
                 .ToDictionary(pair => pair[0], pair => pair[1]);
 
-            if (_snippetFileWatcher == null)
-            {
-                _snippetFileWatcher = new FileSystemWatcher
-                {
-                    Path = Path.GetDirectoryName(file),
-                    Filter = Path.GetFileName(file),
-                    NotifyFilter = NotifyFilters.LastWrite
-                };
-                _snippetFileWatcher.Changed += (sender, args) => Initialize();
-                _snippetFileWatcher.EnableRaisingEvents = true;
-            }
+            if (_snippetFileWatcher == null) _snippetFileWatcher = Utility.WatchFile(file, Initialize);
         }
 
         public Snippet FindSnippet(string word)

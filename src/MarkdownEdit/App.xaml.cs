@@ -41,18 +41,7 @@ namespace MarkdownEdit
             }
 
             UserSettings = UserSettings.Load();
-
-            Task.Factory.StartNew(() =>
-            {
-                _userSettingsWatcher = new FileSystemWatcher
-                {
-                    Path = UserSettings.SettingsFolder,
-                    Filter = Path.GetFileName(UserSettings.SettingsFile),
-                    NotifyFilter = NotifyFilters.LastWrite
-                };
-                _userSettingsWatcher.Changed += (s, e) => UserSettings.Update();
-                _userSettingsWatcher.EnableRaisingEvents = true;
-            });
+            Task.Factory.StartNew(() => _userSettingsWatcher = Utility.WatchFile(UserSettings.SettingsFile, UserSettings.Update));
         }
 
         private void ApplicationExit(object sender, ExitEventArgs e)

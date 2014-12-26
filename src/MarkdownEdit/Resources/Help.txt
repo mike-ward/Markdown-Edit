@@ -120,7 +120,9 @@ The `mde` portion is replaced by
 
     positions the cursor between *Markdown* and *Edit*
   
-  - $DATE$ - is replaced with the current date
+  - $DATE$ - is replaced with the current date and time
+  
+  - $DATE("format")$ - format is any valid .NET date format (<http://www.dotnetperls.com/datetime-format>)
   
   - Multiple output lines - use \n for a new line
   

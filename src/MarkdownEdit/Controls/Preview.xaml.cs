@@ -32,23 +32,15 @@ namespace MarkdownEdit
 
             Task.Factory.StartNew(() =>
             {
-                _templateWatcher = new FileSystemWatcher
-                {
-                    Path = UserSettings.SettingsFolder,
-                    Filter = Path.GetFileName(UserTemplate.TemplateFile),
-                    NotifyFilter = NotifyFilters.LastWrite
-                };
+                _templateWatcher = Utility.WatchFile(UserTemplate.TemplateFile, () => Dispatcher.Invoke(UpdateTemplate));
 
-                _templateWatcher.Changed += (sender, args) => Dispatcher.Invoke(UpdateTemplate);
-                _templateWatcher.EnableRaisingEvents = true;
+                // kill popups
+                dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
+                    BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                    null, Browser, new object[] {});
 
-            // kill popups
-            dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
-                BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                null, Browser, new object[] {});
-
-            activeX.Silent = true;
-            }) ;
+                activeX.Silent = true;
+            });
         }
 
         private void Update(string markdown)
@@ -100,7 +92,7 @@ namespace MarkdownEdit
             if (document3?.documentElement != null)
             {
                 var percentToScroll = PercentScroll(ea);
-                if (percentToScroll > 0.99) percentToScroll = 1.1;  // deal with round off at end of scroll
+                if (percentToScroll > 0.99) percentToScroll = 1.1; // deal with round off at end of scroll
                 var body = document3.getElementsByTagName("body").item(0);
                 var scrollHeight = ((IHTMLElement2)body).scrollHeight - document3.documentElement.offsetHeight;
                 document2.parentWindow.scrollTo(0, (int)Math.Ceiling(percentToScroll * scrollHeight));
@@ -110,7 +102,7 @@ namespace MarkdownEdit
         private static double PercentScroll(ScrollChangedEventArgs e)
         {
             var y = e.ExtentHeight - e.ViewportHeight;
-            return  e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
+            return e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
         }
 
         private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)

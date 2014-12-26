@@ -90,5 +90,18 @@ namespace MarkdownEdit
             }
             return foundElement;
         }
+
+        public static FileSystemWatcher WatchFile(string file, Action onChange)
+        {
+            var fileWatcher = new FileSystemWatcher
+            {
+                Path = Path.GetDirectoryName(file),
+                Filter = Path.GetFileName(file),
+                NotifyFilter = NotifyFilters.LastWrite
+            };
+            fileWatcher.Changed += (sender, args) => onChange();
+            fileWatcher.EnableRaisingEvents = true;
+            return fileWatcher;
+        }
     }
 }
