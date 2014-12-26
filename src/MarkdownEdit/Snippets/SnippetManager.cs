@@ -23,13 +23,19 @@ namespace MarkdownEdit
 
         public void Initialize()
         {
+            ReadSnippetFile();
+            _snippetFileWatcher = Utility.WatchFile(SnippetFile(), ReadSnippetFile);
+        }
+
+        private void ReadSnippetFile()
+        {
             var file = SnippetFile();
 
             if (File.Exists(file) == false)
             {
                 _snippets.Clear();
                 Directory.CreateDirectory(UserSettings.SettingsFolder);
-                File.WriteAllText(file, "mde  [Markdown Edit](http://mike-ward.net/markdownedit)");
+                File.WriteAllText(file, "date  $DATE(\"f\")$");
             }
 
             _snippets = File.ReadAllLines(file)
@@ -37,8 +43,6 @@ namespace MarkdownEdit
                 .Select(line => line.Split(null, 2))
                 .Where(pair => pair.Length == 2)
                 .ToDictionary(pair => pair[0], pair => pair[1]);
-
-            if (_snippetFileWatcher == null) _snippetFileWatcher = Utility.WatchFile(file, Initialize);
         }
 
         public Snippet FindSnippet(string word)
