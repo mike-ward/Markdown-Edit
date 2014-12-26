@@ -47,6 +47,7 @@ out/
 *.log
 *.scc
 *.ide
+*.msi
 
 # Visual C++ cache files
 ipch/

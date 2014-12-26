@@ -1,3 +1,5 @@
+del /Q *.msi
+del /Q *.nupkg
 cd src
 msbuild MarkdownEdit\markdownedit.csproj /tv:14.0 /t:Rebuild /p:configuration=release
 if ERRORLEVEL 1 goto END
