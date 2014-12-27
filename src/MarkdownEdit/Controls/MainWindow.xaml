@@ -14,6 +14,7 @@
   WindowTransitionsEnabled="False"
   DataContext="{Binding RelativeSource={RelativeSource Self}}"
   Background="{DynamicResource GrayBrush4}"
+  TextOptions.TextFormattingMode="Display"
   >
   
   <controls:MetroWindow.Resources>
