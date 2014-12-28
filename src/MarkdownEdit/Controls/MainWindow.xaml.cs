@@ -22,6 +22,7 @@ namespace MarkdownEdit
         public static RoutedCommand FindPreviousCommand = new RoutedCommand();
         public static RoutedCommand RestoreFontSizeCommand = new RoutedCommand();
         public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
+        public static RoutedCommand OpenKeybindingSettingsCommand = new RoutedCommand();
         public static RoutedCommand OpenUserTemplateCommand = new RoutedCommand();
         public static RoutedCommand OpenUserDictionaryCommand = new RoutedCommand();
         public static RoutedCommand OpenUserSnippetsCommand = new RoutedCommand();
@@ -210,6 +211,11 @@ namespace MarkdownEdit
         private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Utility.EditFile(UserSettings.SettingsFile);
+        }
+
+        private void ExecuteOpenKeybindingSettingsCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            Utility.EditFile(InputBindingSettings.KeyBindingFile);
         }
 
         private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e)

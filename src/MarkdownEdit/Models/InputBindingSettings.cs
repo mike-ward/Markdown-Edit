@@ -106,6 +106,7 @@ namespace MarkdownEdit
                 _collection.Add(new KeyBinding(MainWindow.ToggleSpellCheckCommand, (KeyGesture)new KeyGestureConverter().ConvertFromString(mergedBinding.ToggleSpellCheck)));
                 _collection.Add(new KeyBinding(MainWindow.OpenUserTemplateCommand, (KeyGesture)new KeyGestureConverter().ConvertFromString(mergedBinding.OpenUserTemplate)));
                 _collection.Add(new KeyBinding(MainWindow.OpenUserSettingsCommand, (KeyGesture)new KeyGestureConverter().ConvertFromString(mergedBinding.OpenUserSettings)));
+                _collection.Add(new KeyBinding(MainWindow.OpenKeybindingSettingsCommand, (KeyGesture)new KeyGestureConverter().ConvertFromString(mergedBinding.OpenKeybindingSettings)));
                 _collection.Add(new KeyBinding(MainWindow.ToggleFullScreenCommand, (KeyGesture)new KeyGestureConverter().ConvertFromString(mergedBinding.ToggleFullScreen)));
                 _collection.Add(new KeyBinding(MainWindow.TogglePreviewCommand, (KeyGesture)new KeyGestureConverter().ConvertFromString(mergedBinding.TogglePrevious)));
                 _collection.Add(new KeyBinding(MainWindow.RecentFilesCommand, (KeyGesture)new KeyGestureConverter().ConvertFromString(mergedBinding.RecentFiles)));
@@ -322,6 +323,13 @@ namespace MarkdownEdit
         {
             get { return _openusersettingscommand; }
             set { Set(ref _openusersettingscommand, value);}
+        }
+
+        public string _openkeybindingsettingscommand = "f10";
+        public string OpenKeybindingSettings
+        {
+            get { return _openkeybindingsettingscommand; }
+            set { Set(ref _openkeybindingsettingscommand, value);}
         }
 
         private string _togglefullscreencommand = "f11";
