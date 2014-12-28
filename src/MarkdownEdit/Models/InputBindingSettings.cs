@@ -62,6 +62,7 @@ namespace MarkdownEdit
             var mergedBinding = new InputBinding();
             mergedBinding.Merge(InputBindingSettings.Load());
 
+            Save(mergedBinding);
             _window.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (Action)delegate(){
                 var _collection = _window.InputBindings;
                 _collection.Clear();
@@ -123,6 +124,20 @@ namespace MarkdownEdit
 
     public class InputBinding : INotifyPropertyChanged
     {
+        /// <summary>
+        /// avoid key binding conflict
+        /// </summary>
+        private HashSet<string> keys;
+        public InputBinding()
+        {
+            keys = new HashSet<string>();
+            var property = this.GetType().GetProperties();
+            foreach (PropertyInfo pi in property)
+            {
+                keys.Add((string)pi.GetValue(this, null));
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -131,10 +146,24 @@ namespace MarkdownEdit
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        private void Set(ref string property, string value, [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(property, value) || value == null) return;
+            value = value.ToLower();
+            if (string.IsNullOrWhiteSpace(value) || keys.Contains(value)) return;
+            try
+            {
+                if (new KeyGestureConverter().ConvertFromString(value) == null) return;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                return;
+            }
+
+            keys.Remove(property);
+            keys.Add(value);
             property = value;
+
             OnPropertyChanged(propertyName);
         }
 
