@@ -15,7 +15,7 @@ namespace MarkdownEdit
         {
             InitializeComponent();
             var kb = new[] {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
-            FilesListBox.ItemsSource = Settings.Default.RecentFiles.Cast<string>().Select((f, i) => string.Format("{0}: {1}", kb[i % kb.Length], f));
+            FilesListBox.ItemsSource = Settings.Default.RecentFiles?.Cast<string>().Select((f, i) => string.Format("{0}: {1}", kb[i % kb.Length], f)) ?? new string[0];
             FilesListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
         }
 
