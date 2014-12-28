@@ -22,7 +22,7 @@ namespace MarkdownEdit
 
         public static Action<T> Debounce<T>(this Action<T> func, int milliseconds = 300)
         {
-            int last = 0;
+            var last = 0;
             return arg =>
             {
                 var current = Interlocked.Increment(ref last);

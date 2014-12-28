@@ -1,59 +1,35 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 namespace MarkdownEdit
 {
-    public class InputKeyBinding : INotifyPropertyChanged
+    public class InputKeyBindings
     {
-        /// <summary>
-        /// avoid key binding conflict
-        /// </summary>
-        private readonly HashSet<string> _keys;
-
-        public InputKeyBinding()
+        private static void Set(ref string property, string value)
         {
-            _keys = new HashSet<string>();
-            var property = GetType().GetProperties();
-            foreach (var pi in property) _keys.Add((string)pi.GetValue(this, null));
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void Set(ref string property, string value, [CallerMemberName] string propertyName = null)
-        {
-            value = value.ToLower();
-            if (string.IsNullOrWhiteSpace(value) || _keys.Contains(value) || property == value) return;
+            if (string.IsNullOrWhiteSpace(value) || property.Equals(value, StringComparison.OrdinalIgnoreCase)) return;
             try
             {
-                if (new KeyGestureConverter().ConvertFromString(value) == null) return;
+                if (new KeyGestureConverter().ConvertFromString(value) != null)
+                {
+                    property = value;
+                }
             }
-            catch (Exception ex)
+            catch (NotSupportedException ex)
             {
                 Console.WriteLine(ex);
-                return;
             }
-            _keys.Remove(property);
-            _keys.Add(value);
-            property = value;
-            OnPropertyChanged(propertyName);
         }
 
-        public void Merge(InputKeyBinding update)
+        public void Merge(InputKeyBindings updates)
         {
-            var destinationProperties = GetType().GetProperties();
-            foreach (var destinationPI in destinationProperties)
+            foreach (var property in GetType().GetProperties())
             {
-                var sourcePI = update.GetType().GetProperty(destinationPI.Name);
-                destinationPI.SetValue(this, sourcePI.GetValue(update, null), null);
+                var updatedProperty = updates.GetType().GetProperty(property.Name);
+                if (updatedProperty != null)
+                {
+                    property.SetValue(this, updatedProperty.GetValue(updates, null), null);
+                }
             }
         }
 
@@ -225,9 +201,9 @@ namespace MarkdownEdit
             set { Set(ref _openusersettingscommand, value); }
         }
 
-        public string _openkeybindingsettingscommand = "f10";
+        private string _openkeybindingsettingscommand = "f10";
 
-        public string OpenKeybindingSettings
+        public string OpenKeyBindingSettings
         {
             get { return _openkeybindingsettingscommand; }
             set { Set(ref _openkeybindingsettingscommand, value); }
@@ -243,7 +219,7 @@ namespace MarkdownEdit
 
         private string _togglepreviewcommand = "f12";
 
-        public string TogglePrevious
+        public string TogglePreview
         {
             get { return _togglepreviewcommand; }
             set { Set(ref _togglepreviewcommand, value); }
