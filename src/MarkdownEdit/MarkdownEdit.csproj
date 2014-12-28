@@ -99,7 +99,8 @@
     <Compile Include="Controls\RecentFilesDialog.xaml.cs">
       <DependentUpon>RecentFilesDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\InputBindingSettings.cs" />
+    <Compile Include="Models\InputKeyBinding.cs" />
+    <Compile Include="Models\InputKeyBindingSettings.cs" />
     <Compile Include="Models\TinyIoc.cs" />
     <Compile Include="Snippets\CustomTabCommand.cs" />
     <Compile Include="Snippets\ISnippetManager.cs" />

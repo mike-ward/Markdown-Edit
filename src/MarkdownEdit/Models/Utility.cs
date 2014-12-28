@@ -99,7 +99,19 @@ namespace MarkdownEdit
                 Filter = Path.GetFileName(file),
                 NotifyFilter = NotifyFilters.LastWrite
             };
-            fileWatcher.Changed += (sender, args) => onChange();
+            fileWatcher.Changed += (sender, args) =>
+            {
+                // Suggested method to "debounce" multiple notifications
+                try
+                {
+                    fileWatcher.EnableRaisingEvents = false;
+                    onChange();
+                }
+                finally
+                {
+                    fileWatcher.EnableRaisingEvents = true;
+                }
+            };
             fileWatcher.EnableRaisingEvents = true;
             return fileWatcher;
         }

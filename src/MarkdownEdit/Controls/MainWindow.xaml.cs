@@ -55,7 +55,7 @@ namespace MarkdownEdit
         private FindReplaceDialog _findReplaceDialog;
         private ISnippetManager _snippetManager;
 
-        private InputBindingSettings InputBindingSettings { get; set; }
+        private InputKeyBindingSettings InputKeyBindingSettings { get; set; }
         private FileSystemWatcher _keyBindingWatcher; 
 
         public MainWindow(
@@ -75,9 +75,9 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
-            InputBindingSettings.MainWindowProperty = this;
-            InputBindingSettings.Update();
-            Task.Factory.StartNew(() => _keyBindingWatcher = Utility.WatchFile(InputBindingSettings.KeyBindingFile, InputBindingSettings.Update));
+            InputKeyBindingSettings.MainWindowProperty = this;
+            InputKeyBindingSettings.Update();
+            Task.Factory.StartNew(() => _keyBindingWatcher = Utility.WatchFile(InputKeyBindingSettings.KeyBindingFile, InputKeyBindingSettings.Update));
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -215,7 +215,7 @@ namespace MarkdownEdit
 
         private void ExecuteOpenKeybindingSettingsCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            Utility.EditFile(InputBindingSettings.KeyBindingFile);
+            Utility.EditFile(InputKeyBindingSettings.KeyBindingFile);
         }
 
         private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e)
