@@ -55,6 +55,7 @@ namespace MarkdownEdit
         private ISnippetManager _snippetManager;
 
         private InputBindingSettings InputBindingSettings { get; set; }
+        private FileSystemWatcher _keyBindingWatcher; 
 
         public MainWindow(
             IMarkdownConverter markdownConverter, 
@@ -73,8 +74,9 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
-            InputBindingSettings = InputBindingSettings.Load(this);
+            InputBindingSettings.MainWindowProperty = this;
             InputBindingSettings.Update();
+            Task.Factory.StartNew(() => _keyBindingWatcher = Utility.WatchFile(InputBindingSettings.KeyBindingFile, InputBindingSettings.Update));
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
