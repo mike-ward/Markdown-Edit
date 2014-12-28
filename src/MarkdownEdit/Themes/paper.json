@@ -1,7 +1,7 @@
 {
   "Name": "Paper",
   "EditorBackground": "#f0f0f1",
-  "EditorForeground": "#333",
+  "EditorForeground": "#001822",
   "HighlightHeading": {
     "Name": "Heading",
     "Background": null,
@@ -25,8 +25,8 @@
   },
   "HighlightInlineCode": {
     "Name": "InlineCode",
-    "Background": null,
-    "Foreground": "#888",
+    "Background": "#e5e5e5",
+    "Foreground": null,
     "FontWeight": null,
     "FontStyle": null
   },

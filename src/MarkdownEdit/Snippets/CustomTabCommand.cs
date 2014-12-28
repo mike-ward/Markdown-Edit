@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Documents;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
@@ -52,7 +51,9 @@ namespace MarkdownEdit
 
         public static int FindPrevWordStart(ITextSource textSource, int offset)
         {
-            return TextUtilities.GetNextCaretPosition(textSource, offset, LogicalDirection.Backward, CaretPositioningMode.WordStart);
+            var startOffset = offset;
+            while (startOffset > 0 && char.IsWhiteSpace((textSource.GetCharAt(startOffset - 1))) == false) startOffset -= 1;
+            return startOffset;
         }
     }
 }
