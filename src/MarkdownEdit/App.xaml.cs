@@ -10,6 +10,7 @@ namespace MarkdownEdit
     public partial class App
     {
         private FileSystemWatcher _userSettingsWatcher;
+
         public static UserSettings UserSettings { get; private set; }
 
         private void OnStartup(object sender, StartupEventArgs ea)
