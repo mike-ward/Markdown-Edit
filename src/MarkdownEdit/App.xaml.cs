@@ -10,8 +10,9 @@ namespace MarkdownEdit
     public partial class App
     {
         private FileSystemWatcher _userSettingsWatcher;
-
+        private FileSystemWatcher _keyBindingWatcher; 
         public static UserSettings UserSettings { get; private set; }
+        public static InputBindingSettings InputBindingSettings{ get; private set; }
 
         private void OnStartup(object sender, StartupEventArgs ea)
         {
@@ -41,7 +42,9 @@ namespace MarkdownEdit
             }
 
             UserSettings = UserSettings.Load();
+            InputBindingSettings = InputBindingSettings.Load();
             Task.Factory.StartNew(() => _userSettingsWatcher = Utility.WatchFile(UserSettings.SettingsFile, UserSettings.Update));
+            Task.Factory.StartNew(() => _keyBindingWatcher = Utility.WatchFile(InputBindingSettings.KeyBindingFile, InputBindingSettings.Update));
         }
 
         private void ApplicationExit(object sender, ExitEventArgs e)

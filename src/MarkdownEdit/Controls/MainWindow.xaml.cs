@@ -9,6 +9,8 @@ using System.Windows;
 using System.Windows.Input;
 using MarkdownEdit.Properties;
 using MarkdownEdit.SpellCheck;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace MarkdownEdit
 {
@@ -52,6 +54,8 @@ namespace MarkdownEdit
         private FindReplaceDialog _findReplaceDialog;
         private ISnippetManager _snippetManager;
 
+        private InputBindingSettings InputBindingSettings { get; set; }
+
         public MainWindow(
             IMarkdownConverter markdownConverter, 
             ISpellCheckProvider spellCheckProvider, 
@@ -69,6 +73,8 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
+            InputBindingSettings = InputBindingSettings.Load(this);
+            InputBindingSettings.Update();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
