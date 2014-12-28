@@ -110,6 +110,7 @@
     <CommandBinding Command="DecreaseFontSize" Executed="ExecuteDecreaseFontSize" />
     <CommandBinding Command="{x:Static local:MainWindow.RestoreFontSizeCommand}" Executed="ExecuteRestoreFontSize" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Executed="ExecuteOpenUserSettingsCommand" />
+    <CommandBinding Command="{x:Static local:MainWindow.OpenKeybindingSettingsCommand}" Executed="ExecuteOpenKeybindingSettingsCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Executed="ExecuteOpenUserTemplateCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Executed="ExecuteOpenUserDictionaryCommand" />
     <CommandBinding Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}" Executed="ExecuteOpenUserSnippetsCommand" />
@@ -157,6 +158,7 @@
     <KeyBinding Command="{x:Static local:MainWindow.ToggleSpellCheckCommand}" Gesture="Ctrl+F7" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Gesture="F8" />
     <KeyBinding Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Gesture="F9" />
+    <KeyBinding Command="{x:Static local:MainWindow.OpenKeybindingSettingsCommand}" Gesture="F10" />
     <KeyBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" Gesture="F11" />
     <KeyBinding Command="{x:Static local:MainWindow.TogglePreviewCommand}" Gesture="F12" />
     <KeyBinding Command="{x:Static local:MainWindow.RecentFilesCommand}" Gesture="Ctrl+R" />

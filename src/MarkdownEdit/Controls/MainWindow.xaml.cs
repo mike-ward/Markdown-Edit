@@ -9,6 +9,8 @@ using System.Windows;
 using System.Windows.Input;
 using MarkdownEdit.Properties;
 using MarkdownEdit.SpellCheck;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace MarkdownEdit
 {
@@ -20,6 +22,7 @@ namespace MarkdownEdit
         public static RoutedCommand FindPreviousCommand = new RoutedCommand();
         public static RoutedCommand RestoreFontSizeCommand = new RoutedCommand();
         public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
+        public static RoutedCommand OpenKeybindingSettingsCommand = new RoutedCommand();
         public static RoutedCommand OpenUserTemplateCommand = new RoutedCommand();
         public static RoutedCommand OpenUserDictionaryCommand = new RoutedCommand();
         public static RoutedCommand OpenUserSnippetsCommand = new RoutedCommand();
@@ -52,6 +55,9 @@ namespace MarkdownEdit
         private FindReplaceDialog _findReplaceDialog;
         private ISnippetManager _snippetManager;
 
+        private InputBindingSettings InputBindingSettings { get; set; }
+        private FileSystemWatcher _keyBindingWatcher; 
+
         public MainWindow(
             IMarkdownConverter markdownConverter, 
             ISpellCheckProvider spellCheckProvider, 
@@ -69,6 +75,9 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
+            InputBindingSettings.MainWindowProperty = this;
+            InputBindingSettings.Update();
+            Task.Factory.StartNew(() => _keyBindingWatcher = Utility.WatchFile(InputBindingSettings.KeyBindingFile, InputBindingSettings.Update));
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -202,6 +211,11 @@ namespace MarkdownEdit
         private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Utility.EditFile(UserSettings.SettingsFile);
+        }
+
+        private void ExecuteOpenKeybindingSettingsCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            Utility.EditFile(InputBindingSettings.KeyBindingFile);
         }
 
         private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e)
