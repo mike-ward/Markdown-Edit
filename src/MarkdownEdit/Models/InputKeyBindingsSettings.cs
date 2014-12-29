@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace MarkdownEdit
 {
-    public static class InputKeyBindingSettings
+    public static class InputKeyBindingsSettings
     {
         private static FileSystemWatcher _keyBindingWatcher;
         public static string KeyBindingFile => Path.Combine(UserSettings.SettingsFolder, "key_bindings.json");

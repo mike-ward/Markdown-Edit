@@ -15,7 +15,7 @@ namespace MarkdownEdit
                     property = value;
                 }
             }
-            catch (NotSupportedException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }

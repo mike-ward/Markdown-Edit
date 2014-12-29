@@ -73,7 +73,7 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
-            InputKeyBindingSettings.Update();
+            InputKeyBindingsSettings.Update();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -211,7 +211,7 @@ namespace MarkdownEdit
 
         private void ExecuteOpenKeybindingSettingsCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            Utility.EditFile(InputKeyBindingSettings.KeyBindingFile);
+            Utility.EditFile(InputKeyBindingsSettings.KeyBindingFile);
         }
 
         private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e)
