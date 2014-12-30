@@ -49,13 +49,14 @@
         "Background": null,
         "Foreground": "#654",
         "FontWeight": null,
-        "FontStyle": null
+        "FontStyle": null,
+        "Underline":  "true"
     },
     "HighlightImage": {
         "Name": "Image",
         "Background": null,
         "Foreground": "#654",
-        "FontWeight": null,
+        "FontWeight": "bold",
         "FontStyle": null
     }
 }

@@ -16,8 +16,8 @@ namespace MarkdownEdit
         private Highlight _highlightInlineCode = new Highlight {Name = "InlineCode", Foreground = "#333", Background = "#ebeff3"};
         private Highlight _highlightBlockCode = new Highlight {Name = "BlockCode", Foreground = "#654"};
         private Highlight _highlightBlockQuote = new Highlight {Name = "BlockQuote", Foreground = "#654"};
-        private Highlight _highlightLink = new Highlight {Name = "Link", Foreground = "#654"};
-        private Highlight _highlightImage = new Highlight {Name = "Image", Foreground = "#654"};
+        private Highlight _highlightLink = new Highlight {Name = "Link", Foreground = "#654", Underline = true};
+        private Highlight _highlightImage = new Highlight {Name = "Image", Foreground = "#654", FontWeight = "bold"};
 
         public string Name
         {
