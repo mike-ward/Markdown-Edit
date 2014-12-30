@@ -62,9 +62,11 @@
 
   - [CommonMark](http://commonmark.org)
   
+
 ## Auto Save
 
 When Auto Save is enabled (`Alt+S`), content is saved whenever you pause typing for 4 or more seconds.
+
 
 ## Settings
 
@@ -83,7 +85,8 @@ When you change settings and save this file, Markdown Edit will immediately upda
 
 Colors can be defined as RBG values, like the `EditorBackground` setting, or using the predefined names (like the `EditorForground` setting). Acceptable predefined names are listed [here](http://msdn.microsoft.com/en-us/library/system.windows.media.colors(v=vs.110).aspx).
 
-If you delete this file, Markdown Edit will restore it.
+If you delete this file, Markdown Edit will restore it with the default settings.
+
 
 ## Snippets
 
@@ -125,6 +128,8 @@ Snippets can contain special keywords.
   
   - `\n` - insert a new line
   
+If you delete this file, Markdown Edit will restore it with the default snippets.
+
 ## Templates
 
 You can change the appearance of the preview view by changing the user template file. User templates work similar to user settings. The template file is stored in the `AppData` Folder as `user_template.html`. It can be quickly accessed by pressing `F8`. Edit it as you see fit. 
@@ -135,7 +140,8 @@ A `<div>` with an ID of `contents` is required. This is where the translated mar
 
 When you change settings and save this file, Markdown Edit will immediately update to reflect the changes.
 
-Delete it and Markdown Edit will create a new one.
+If you delete this file, Markdown Edit will restore the default template.
+
 
 ## Spell Checking
 
@@ -144,6 +150,7 @@ Pressing `F7` will toggle spell checking. Spell checking is done as you type. Ri
 The custom dictionary is a simple text file. It stored in the same folder as the user settings and user templates. It can be accessed and edited  by pressing `Shift+F7`.
 
 Markdown Edit ships with dictionaries for many languages. Set the dictionary by pressing `F9`. The dictionaries are stored in the installation folder under `Spell Check\Dictionaries`.
+
 
 ## Themes
 
@@ -155,6 +162,13 @@ Themes are located in the installation directory under `\Themes`.
 
 If you create an awesome theme, send it to me and I'll add it to the distribution. I'm a lousy artist. :)
 
+
+## Key Bindings
+
+You can change most of the key bindings. Press `F10', make your changes and save. The changes take effect immediately.
+
+If you delete this file, Markdown Edit will create a new one with default bindings.
+
 ## Limitations
 
   - Only supports CommonMark
@@ -162,9 +176,8 @@ If you create an awesome theme, send it to me and I'll add it to the distributio
   - Syntax highlighting does not recognize multiple-line constructs. It uses regular expressions which don't understand the underlying Markdown constructs.  I'm hoping as CommonMark matures that a syntax parser (like PEG) will emerge.
   - I wrote it ;)
 
-## About
 
-### Markdown Edit
+## About
 
 Version 1.1.0  
 Home Page: <http://mike-ward.net/markdownedit>  
