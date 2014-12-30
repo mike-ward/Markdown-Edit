@@ -1,6 +1,6 @@
 {
   "Name": "Paper",
-  "EditorBackground": "#f0f0f1",
+  "EditorBackground": "#eeeeee",
   "EditorForeground": "#001822",
   "HighlightHeading": {
     "Name": "Heading",
@@ -47,14 +47,15 @@
   "HighlightLink": {
     "Name": "Link",
     "Background": null,
-    "Foreground": "#559",
-    "FontWeight": "bold",
-    "FontStyle": null
+    "Foreground": "#777",
+    "FontWeight": null,
+    "FontStyle": null,
+    "Underline": "true"
   },
   "HighlightImage": {
     "Name": "Image",
     "Background": null,
-    "Foreground": "#789",
+    "Foreground": "#999",
     "FontWeight": "bold",
     "FontStyle": null
   }

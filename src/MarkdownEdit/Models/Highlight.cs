@@ -7,5 +7,6 @@ namespace MarkdownEdit
         public string Foreground { get; set; }
         public string FontWeight { get; set; }
         public string FontStyle { get; set; }
+        public bool Underline { get; set; }
     }
 }

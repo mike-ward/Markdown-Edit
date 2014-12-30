@@ -636,6 +636,7 @@ namespace MarkdownEdit
             highlightingColor.Background = new HighlightBrush(highlight.Background);
             highlightingColor.FontStyle = ConvertFontStyle(highlight.FontStyle);
             highlightingColor.FontWeight = ConvertFontWeight(highlight.FontWeight);
+            highlightingColor.Underline = highlight.Underline;
         }
 
         private static FontStyle? ConvertFontStyle(string style)
