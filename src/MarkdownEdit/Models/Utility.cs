@@ -115,5 +115,15 @@ namespace MarkdownEdit
             fileWatcher.EnableRaisingEvents = true;
             return fileWatcher;
         }
+
+        public static void ShowParseError(Exception ex, string file)
+        {
+            MessageBox.Show(
+                Application.Current.MainWindow,
+                string.Format("{0} in {1}", ex.Message, file),
+                "Markdown Edit",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
     }
 }

@@ -32,7 +32,16 @@ namespace MarkdownEdit
         public static void Update()
         {
             var mergedBindings = new InputKeyBindings();
-            mergedBindings.Merge(Load());
+
+            try
+            {
+                mergedBindings.Merge(Load());
+            }
+            catch (Exception ex)
+            {
+                Utility.ShowParseError(ex, KeyBindingFile);
+                return;
+            }
 
             var collection = Application.Current.MainWindow.InputBindings;
             collection.Clear();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Environment;
 using System.IO;
@@ -132,6 +133,7 @@ namespace MarkdownEdit
         public void Update()
         {
             var userSettings = Load();
+            if (userSettings == null) return;
             EditorFontFamily = userSettings.EditorFontFamily;
             EditorFontSize = userSettings.EditorFontSize;
             Theme = userSettings.Theme;
@@ -165,12 +167,20 @@ namespace MarkdownEdit
 
         public static UserSettings Load()
         {
-            if (File.Exists(SettingsFile) == false)
+            try
             {
-                var defaultSettings = new UserSettings {Theme = new Theme()};
-                defaultSettings.Save();
+                if (File.Exists(SettingsFile) == false)
+                {
+                    var defaultSettings = new UserSettings {Theme = new Theme()};
+                    defaultSettings.Save();
+                }
+                return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
             }
-            return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
+            catch (Exception ex)
+            {
+                Utility.ShowParseError(ex, SettingsFile);
+                return null;
+            }
         }
 
         // INotifyPropertyChanged

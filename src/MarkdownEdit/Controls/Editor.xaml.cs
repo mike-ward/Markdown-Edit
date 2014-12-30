@@ -304,7 +304,7 @@ namespace MarkdownEdit
 
                 var result = MessageBox.Show(
                     @"Save your changes?",
-                    @"Hey!",
+                    @"Markdown Edit",
                     MessageBoxButton.YesNoCancel,
                     MessageBoxImage.Question);
 

@@ -41,6 +41,7 @@ namespace MarkdownEdit
             }
 
             UserSettings = UserSettings.Load();
+            if (UserSettings == null) Shutdown();
             Task.Factory.StartNew(() => _userSettingsWatcher = Utility.WatchFile(UserSettings.SettingsFile, UserSettings.Update));
         }
 

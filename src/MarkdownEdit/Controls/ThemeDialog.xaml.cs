@@ -27,12 +27,25 @@ namespace MarkdownEdit
             var path = Path.Combine(assemblyFolder, "Themes");
             var files = Directory.EnumerateFiles(path, "*.json");
             ThemeListBox.ItemsSource = files
-                .Select(f => JsonConvert.DeserializeObject<Theme>(File.ReadAllText(f)))
-                .Select(t => new ListBoxItem {Tag = t, Content = t.Name});
+                .Select(LoadTheme)
+                .Select(t => new ListBoxItem {Tag = t, Content = t?.Name ?? "Not Loaded"});
 
             ThemeListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
             var theme = ThemeListBox.Items.Cast<ListBoxItem>().FirstOrDefault(li => ((Theme)li.Tag).Name == CurrentTheme.Name);
             if (theme != null) ThemeListBox.SelectedItem = theme;
+        }
+
+        private static Theme LoadTheme(string file)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<Theme>(File.ReadAllText(file));
+            }
+            catch (Exception ex)
+            {
+                Utility.ShowParseError(ex, file);
+                return null;
+            }
         }
 
         private void OnClosed(object sender, EventArgs eventArgs)
@@ -55,7 +68,8 @@ namespace MarkdownEdit
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MainWindow.LoadThemeCommand.Execute(((ListBoxItem)ThemeListBox.SelectedItem).Tag, Owner);
+            var theme = ((ListBoxItem)ThemeListBox.SelectedItem).Tag;
+            if (theme != null) MainWindow.LoadThemeCommand.Execute(theme, Owner);
         }
 
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
