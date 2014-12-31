@@ -12,21 +12,28 @@ Gratuitous Screen Shot
 ## Features
 
 - Syntax highlighting editor
-- Side-by-side Markdown preview
+- Side-by-side HTML preview
+- Quickly show/hide preview
 - [CommonMark](http://commonmark.org) standard Markdown engine
-- User preferences stored in a text file
+- User preferences stored in a text file for easy sharing
 - Full screen covers task-bar
 - Keyboard shortcuts for bold, italic, headers, etc.
+- User defined snippets improve the speed and proficiency of writing documents.
+- User defined key bindings
 - Modern UI look and feel
 - **Not** a Windows Store App
 - Synchronized scrolling
 - User settable fonts, colors, themes
 - User defined style sheets
-- Spell checking
+- As you type spell checking
 - **Paste Special** replaces Microsoft Word's smart quotes/hyphens/etc. with plain text equivalents
 - Quickly open recent files
+- Quickly change themes
 - Word Count
-- Open Source
+- Auto Save
+- Select previous/next header
+- Highlight current line
+- [Open Source](https://github.com/mike-ward/Markdown-Edit)
 - MIT License
 
 [More](https://github.com/mike-ward/Markdown-Edit/wiki)
