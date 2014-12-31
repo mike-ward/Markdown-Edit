@@ -5,13 +5,13 @@ using ICSharpCode.AvalonEdit.Document;
 
 namespace MarkdownEdit
 {
-    internal sealed class CustomTabCommand : ICommand
+    internal sealed class SnippetTabCommand : ICommand
     {
         private readonly TextEditor _editor;
         private readonly ICommand _baseCommand;
         private readonly ISnippetManager _snippetManager;
 
-        public CustomTabCommand(TextEditor editor, ICommand baseCommand, ISnippetManager snippetManager)
+        public SnippetTabCommand(TextEditor editor, ICommand baseCommand, ISnippetManager snippetManager)
         {
             _editor = editor;
             _baseCommand = baseCommand;
@@ -26,7 +26,7 @@ namespace MarkdownEdit
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return _editor.TextArea != null && _editor.TextArea.IsKeyboardFocused;
         }
 
         public void Execute(object parameter)
@@ -49,7 +49,7 @@ namespace MarkdownEdit
             _baseCommand.Execute(parameter);
         }
 
-        public static int FindPrevWordStart(ITextSource textSource, int offset)
+        private static int FindPrevWordStart(ITextSource textSource, int offset)
         {
             var startOffset = offset;
             while (startOffset > 0 && char.IsWhiteSpace((textSource.GetCharAt(startOffset - 1))) == false) startOffset -= 1;

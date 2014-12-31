@@ -61,7 +61,7 @@
 			<End>^(?!&gt;)</End>
 		</Span>
 		<Rule color="StrongEmphasis">
-			^[ ]{0,3}\d+\.(?=[ ]{1,3}\S)
+			^[ ]{0,3}\d+[\.\)](?=[ ]{1,3}\S)
 		</Rule>
 		<Rule color="StrongEmphasis">
 			^[ ]{0,3}[-\*\+](?=[ ]{1,3}\S)

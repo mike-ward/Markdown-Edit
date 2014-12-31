@@ -9,12 +9,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Xml;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using MarkdownEdit.Commands;
 using MarkdownEdit.Properties;
 using MarkdownEdit.SpellCheck;
 using Microsoft.Win32;
@@ -76,6 +76,7 @@ namespace MarkdownEdit
             Dispatcher.InvokeAsync(() =>
             {
                 SetupTabSnippetHandler();
+                SetupLineContinuationEnterCommandHandler();
                 SetupSyntaxHighlighting();
                 ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
                 EditBox.Focus();
@@ -91,9 +92,18 @@ namespace MarkdownEdit
             var editingKeyBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
             var tabBinding = editingKeyBindings.Single(b => b.Key == Key.Tab && b.Modifiers == ModifierKeys.None);
             EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(tabBinding);
-            var newTabBinding = new KeyBinding(new CustomTabCommand(EditBox, tabBinding.Command, SnippetManager), tabBinding.Key, tabBinding.Modifiers);
+            var newTabBinding = new KeyBinding(new SnippetTabCommand(EditBox, tabBinding.Command, SnippetManager), tabBinding.Key, tabBinding.Modifiers);
             EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newTabBinding);
             SnippetManager.Initialize();
+        }
+
+        private void SetupLineContinuationEnterCommandHandler()
+        {
+            var editingKeyBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
+            var enterBinding = editingKeyBindings.Single(b => b.Key == Key.Enter && b.Modifiers == ModifierKeys.None);
+            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(enterBinding);
+            var newEnterBinding = new KeyBinding(new LineContinuationEnterCommand(EditBox, enterBinding.Command), enterBinding.Key, enterBinding.Modifiers);
+            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newEnterBinding);
         }
 
         private void SetupSyntaxHighlighting()

@@ -80,6 +80,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\LineContinuationEnterCommand.cs" />
     <Compile Include="Converters\BooleanToScrollBarVisibilityConverter.cs" />
     <Compile Include="Converters\NumberFormatConverter.cs" />
     <Compile Include="MarkdownConverters\CommonMarkConverter.cs" />
@@ -102,7 +103,7 @@
     <Compile Include="Models\InputKeyBindings.cs" />
     <Compile Include="Models\InputKeyBindingsSettings.cs" />
     <Compile Include="Models\TinyIoc.cs" />
-    <Compile Include="Snippets\CustomTabCommand.cs" />
+    <Compile Include="Commands\SnippetTabCommand.cs" />
     <Compile Include="Snippets\ISnippetManager.cs" />
     <Compile Include="Snippets\SnippetManager.cs" />
     <Compile Include="SpellCheck\ISpellCheckProvider.cs" />
