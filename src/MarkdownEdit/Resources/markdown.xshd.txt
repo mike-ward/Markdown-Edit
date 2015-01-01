@@ -57,7 +57,7 @@
 			<End>^~~~</End>
 		</Span>
 		<Span color="BlockQuote" multiline="true">
-			<Begin>^&gt;</Begin>
+			<Begin>^([ ]{0,4}&gt;)+[ ]{0,4}</Begin>
 			<End>^(?!&gt;)</End>
 		</Span>
 		<Rule color="StrongEmphasis">

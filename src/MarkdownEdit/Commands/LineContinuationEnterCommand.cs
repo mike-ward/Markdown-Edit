@@ -10,8 +10,11 @@ namespace MarkdownEdit.Commands
         private readonly TextEditor _editor;
         private readonly ICommand _baseCommand;
         private readonly Regex _orderedListPattern = new Regex("^[ ]{0,3}(\\d+)([\\.\\)])(?=[ ]{1,3}\\S)", RegexOptions.Compiled);
+        private readonly Regex _orderedListEndPattern = new Regex("^[ ]{0,3}(\\d+)([\\.\\)])(?=[ ]{1,3}\\s*)", RegexOptions.Compiled);
         private readonly Regex _unorderedListPattern = new Regex("^[ ]{0,3}[-\\*\\+](?=[ ]{1,3}\\S)", RegexOptions.Compiled);
-        private readonly Regex _unorderedListTailPattern = new Regex("^[ ]{0,3}[-\\*\\+](?=[ ]{1,3}\\s*)", RegexOptions.Compiled);
+        private readonly Regex _unorderedListEndPattern = new Regex("^[ ]{0,3}[-\\*\\+](?=[ ]{1,3}\\s*)", RegexOptions.Compiled);
+        private readonly Regex _blockQuotePattern = new Regex("^([ ]{0,4}>)+[ ]{0,4}.+", RegexOptions.Compiled);
+        private readonly Regex _blockQuoteEndPattern = new Regex("^([ ]{0,4}>)+[ ]{0,4}\\s*$", RegexOptions.Compiled);
 
         public LineContinuationEnterCommand(TextEditor editor, ICommand baseCommand)
         {
@@ -39,20 +42,33 @@ namespace MarkdownEdit.Commands
 
             if (_unorderedListPattern.Match(text).Success)
             {
-                _editor.Document.Insert(_editor.SelectionStart, "- ");
+                var match = _unorderedListPattern.Match(text);
+                _editor.Document.Insert(_editor.SelectionStart, match.Groups[0].Value + " ");
             }
-            else if (_unorderedListTailPattern.Match(text).Success)
+            else if (_unorderedListEndPattern.Match(text).Success)
             {
                 if (line != null) _editor.Document.Remove(line);
             }
             else if (_orderedListPattern.Match(text).Success)
             {
-                var match = _orderedListPattern.Match(text);
                 int number;
+                var match = _orderedListPattern.Match(text);
                 if (int.TryParse(match.Groups[1].Value, out number))
                 {
                     _editor.Document.Insert(_editor.SelectionStart, string.Format("{0}{1} ", ++number, match.Groups[2].Value));
                 }
+            }
+            else if (_orderedListEndPattern.Match(text).Success)
+            {
+                if (line != null) _editor.Document.Remove(line);
+            }
+            else if (_blockQuotePattern.Match(text).Success)
+            {
+                _editor.Document.Insert(_editor.SelectionStart, ">");
+            }
+            else if (_blockQuoteEndPattern.Match(text).Success)
+            {
+                if (line != null) _editor.Document.Remove(line);
             }
         }
     }
