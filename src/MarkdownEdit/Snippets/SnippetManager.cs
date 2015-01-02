@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using ICSharpCode.AvalonEdit.Snippets;
 
 namespace MarkdownEdit
@@ -63,28 +63,15 @@ namespace MarkdownEdit
                 .Replace("\\t", "\t")
                 .ReplaceDate();
 
-            var cursor = expanded.IndexOf("$END$", StringComparison.Ordinal);
-            Snippet snippet;
+            var snippet = new Snippet();
+            var matches = Regex.Split(expanded, @"(\$\w+\$)");
+            foreach (var match in matches)
+            {
+                if (match == "$END$") snippet.Elements.Add(new SnippetCaretElement());
+                else if (Regex.IsMatch(match, @"(\$\w+\$)")) snippet.Elements.Add(new SnippetReplaceableTextElement {Text = match.Trim('$')});
+                else snippet.Elements.Add(new SnippetTextElement {Text = match});
+            }
 
-            if (cursor == -1)
-            {
-                snippet = new Snippet
-                {
-                    Elements = {new SnippetTextElement {Text = expanded}}
-                };
-            }
-            else
-            {
-                snippet = new Snippet
-                {
-                    Elements =
-                    {
-                        new SnippetTextElement {Text = expanded.Substring(0, cursor)},
-                        new SnippetCaretElement(),
-                        new SnippetTextElement {Text = expanded.Substring(cursor + 5)}
-                    }
-                };
-            }
             return snippet;
         }
     }
