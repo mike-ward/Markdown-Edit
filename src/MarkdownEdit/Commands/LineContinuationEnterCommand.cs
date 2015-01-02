@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 
 namespace MarkdownEdit.Commands
 {
@@ -13,8 +14,8 @@ namespace MarkdownEdit.Commands
         private readonly Regex _orderedListEndPattern = new Regex("^[ ]{0,3}(\\d+)([\\.\\)])(?=[ ]{1,3}\\s*)", RegexOptions.Compiled);
         private readonly Regex _unorderedListPattern = new Regex("^[ ]{0,3}[-\\*\\+](?=[ ]{1,3}\\S)", RegexOptions.Compiled);
         private readonly Regex _unorderedListEndPattern = new Regex("^[ ]{0,3}[-\\*\\+](?=[ ]{1,3}\\s*)", RegexOptions.Compiled);
-        private readonly Regex _blockQuotePattern = new Regex("^([ ]{0,4}>)+[ ]{0,4}.+", RegexOptions.Compiled);
-        private readonly Regex _blockQuoteEndPattern = new Regex("^([ ]{0,4}>)+[ ]{0,4}\\s*$", RegexOptions.Compiled);
+        private readonly Regex _blockQuotePattern = new Regex("^(([ ]{0,4}>)+)[ ]{0,4}.{2}", RegexOptions.Compiled);
+        private readonly Regex _blockQuoteEndPattern = new Regex("^([ ]{0,4}>)+[ ]{0,4}\\s*", RegexOptions.Compiled);
 
         public LineContinuationEnterCommand(TextEditor editor, ICommand baseCommand)
         {
@@ -43,7 +44,8 @@ namespace MarkdownEdit.Commands
             if (_unorderedListPattern.Match(text).Success)
             {
                 var match = _unorderedListPattern.Match(text);
-                _editor.Document.Insert(_editor.SelectionStart, match.Groups[0].Value + " ");
+                _editor.Document.Insert(_editor.SelectionStart, match.Groups[0].Value.Trim());
+                TrimLine(line?.NextLine);
             }
             else if (_unorderedListEndPattern.Match(text).Success)
             {
@@ -55,7 +57,8 @@ namespace MarkdownEdit.Commands
                 var match = _orderedListPattern.Match(text);
                 if (int.TryParse(match.Groups[1].Value, out number))
                 {
-                    _editor.Document.Insert(_editor.SelectionStart, string.Format("{0}{1} ", ++number, match.Groups[2].Value));
+                    _editor.Document.Insert(_editor.SelectionStart, string.Format("{0}{1} ", ++number, match.Groups[2].Value.Trim()));
+                    TrimLine(line?.NextLine);
                 }
             }
             else if (_orderedListEndPattern.Match(text).Success)
@@ -64,12 +67,18 @@ namespace MarkdownEdit.Commands
             }
             else if (_blockQuotePattern.Match(text).Success)
             {
-                _editor.Document.Insert(_editor.SelectionStart, ">");
+                var match = _blockQuotePattern.Match(text);
+                _editor.Document.Insert(_editor.SelectionStart, match.Groups[1].Value.TrimStart());
             }
             else if (_blockQuoteEndPattern.Match(text).Success)
             {
                 if (line != null) _editor.Document.Remove(line);
             }
+        }
+
+        private void TrimLine(DocumentLine line)
+        {
+            if (line != null) _editor.Document.Replace(line, _editor.Document.GetText(line).TrimEnd() + " ");
         }
     }
 }
