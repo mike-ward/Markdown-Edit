@@ -2,7 +2,6 @@
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Document;
 
 namespace MarkdownEdit
 {
@@ -36,20 +35,20 @@ namespace MarkdownEdit
 
         public void Execute(object parameter)
         {
-            var line = _editor.Document.GetLineByOffset(_editor.SelectionStart);
-            var text = (line != null) ? _editor.Document.GetText(line.Offset, line.Length) : "";
-
             _baseCommand.Execute(parameter);
+
+            var line = _editor.Document.GetLineByOffset(_editor.SelectionStart)?.PreviousLine;
+            if (line == null) return;
+            var text = _editor.Document.GetText(line.Offset, line.Length);
 
             if (_unorderedListPattern.Match(text).Success)
             {
                 var match = _unorderedListPattern.Match(text);
-                _editor.Document.Insert(_editor.SelectionStart, match.Groups[0].Value.Trim());
-                TrimLine(line?.NextLine);
+                _editor.Document.Insert(_editor.SelectionStart, match.Groups[0].Value.Trim() + " ");
             }
             else if (_unorderedListEndPattern.Match(text).Success)
             {
-                if (line != null) _editor.Document.Remove(line);
+                _editor.Document.Remove(line);
             }
             else if (_orderedListPattern.Match(text).Success)
             {
@@ -58,12 +57,11 @@ namespace MarkdownEdit
                 if (int.TryParse(match.Groups[1].Value, out number))
                 {
                     _editor.Document.Insert(_editor.SelectionStart, string.Format("{0}{1} ", ++number, match.Groups[2].Value.Trim()));
-                    TrimLine(line?.NextLine);
                 }
             }
             else if (_orderedListEndPattern.Match(text).Success)
             {
-                if (line != null) _editor.Document.Remove(line);
+                _editor.Document.Remove(line);
             }
             else if (_blockQuotePattern.Match(text).Success)
             {
@@ -72,13 +70,8 @@ namespace MarkdownEdit
             }
             else if (_blockQuoteEndPattern.Match(text).Success)
             {
-                if (line != null) _editor.Document.Remove(line);
+                _editor.Document.Remove(line);
             }
-        }
-
-        private void TrimLine(DocumentLine line)
-        {
-            if (line != null) _editor.Document.Replace(line, _editor.Document.GetText(line).TrimEnd() + " ");
         }
     }
 }
