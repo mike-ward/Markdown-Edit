@@ -63,12 +63,12 @@ namespace MarkdownEdit
                 .ReplaceDate();
 
             var snippet = new Snippet();
-            var matches = Regex.Split(expanded, @"(\$\w+\$)");
-            foreach (var match in matches)
+            var replaceable = new Regex(@"(\$\w+\$)");
+            foreach (var token in replaceable.Split(expanded))
             {
-                if (match == "$END$") snippet.Elements.Add(new SnippetCaretElement());
-                else if (Regex.IsMatch(match, @"(\$\w+\$)")) snippet.Elements.Add(new SnippetReplaceableTextElement {Text = match.Trim('$')});
-                else snippet.Elements.Add(new SnippetTextElement {Text = match});
+                if (token == "$END$") snippet.Elements.Add(new SnippetCaretElement());
+                else if (replaceable.IsMatch(token)) snippet.Elements.Add(new SnippetReplaceableTextElement {Text = token.Trim('$')});
+                else snippet.Elements.Add(new SnippetTextElement {Text = token});
             }
 
             return snippet;
