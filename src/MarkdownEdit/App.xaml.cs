@@ -9,6 +9,7 @@ namespace MarkdownEdit
 {
     public partial class App
     {
+        // ReSharper disable once NotAccessedField.Local
         private FileSystemWatcher _userSettingsWatcher;
 
         public static UserSettings UserSettings { get; private set; }
@@ -38,6 +39,9 @@ namespace MarkdownEdit
                 Settings.Default.Upgrade();
                 Settings.Default.UpgradeSettings = false;
                 Settings.Default.Save();
+
+                // Adds new settings from this version
+                UserSettings.Load()?.Save();
             }
 
             UserSettings = UserSettings.Load();
