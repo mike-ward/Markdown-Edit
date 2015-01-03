@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
@@ -41,37 +42,30 @@ namespace MarkdownEdit
             if (line == null) return;
             var text = _editor.Document.GetText(line.Offset, line.Length);
 
-            if (_unorderedListPattern.Match(text).Success)
+            Func<Regex, Action<Match>, Action> matcher = (pattern, action) =>
             {
-                var match = _unorderedListPattern.Match(text);
-                _editor.Document.Insert(_editor.SelectionStart, match.Groups[0].Value.Trim() + " ");
-            }
-            else if (_unorderedListEndPattern.Match(text).Success)
+                var match = pattern.Match(text);
+                return match.Success ? () => action(match) : (Action)null;
+            };
+
+            var patterns = new[]
             {
-                _editor.Document.Remove(line);
-            }
-            else if (_orderedListPattern.Match(text).Success)
-            {
-                int number;
-                var match = _orderedListPattern.Match(text);
-                if (int.TryParse(match.Groups[1].Value, out number))
+                matcher(_unorderedListPattern, m => _editor.Document.Insert(_editor.SelectionStart, m.Groups[0].Value.Trim() + " ")),
+                matcher(_unorderedListEndPattern, m => _editor.Document.Remove(line)),
+                matcher(_orderedListPattern, m =>
                 {
-                    _editor.Document.Insert(_editor.SelectionStart, string.Format("{0}{1} ", ++number, match.Groups[2].Value.Trim()));
-                }
-            }
-            else if (_orderedListEndPattern.Match(text).Success)
-            {
-                _editor.Document.Remove(line);
-            }
-            else if (_blockQuotePattern.Match(text).Success)
-            {
-                var match = _blockQuotePattern.Match(text);
-                _editor.Document.Insert(_editor.SelectionStart, match.Groups[1].Value.TrimStart());
-            }
-            else if (_blockQuoteEndPattern.Match(text).Success)
-            {
-                _editor.Document.Remove(line);
-            }
+                    int number;
+                    if (int.TryParse(m.Groups[1].Value, out number))
+                    {
+                        _editor.Document.Insert(_editor.SelectionStart, string.Format("{0}{1} ", ++number, m.Groups[2].Value.Trim()));
+                    }
+                }),
+                matcher(_orderedListEndPattern, m => _editor.Document.Remove(line)),
+                matcher(_blockQuotePattern, m => _editor.Document.Insert(_editor.SelectionStart, m.Groups[1].Value.TrimStart())),
+                matcher(_blockQuoteEndPattern, m => _editor.Document.Remove(line))
+            };
+
+            patterns.FirstOrDefault(action => action != null)?.Invoke();
         }
     }
 }
