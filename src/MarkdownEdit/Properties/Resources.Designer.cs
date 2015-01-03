@@ -90,7 +90,9 @@ namespace MarkdownEdit.Properties {
         ///    F1             Show/Hide this help
         ///
         ///    Ctrl+N         New file
+        ///    Ctrl+Shift+N   Open new instance
         ///    Ctrl+O         Open file
+        ///    Ctrl+Shift+O   Insert file
         ///    Ctrl+S         Save file
         ///    Ctrl+Shift+S   Save file As
         ///    Ctrl+R         Recent files
@@ -98,12 +100,9 @@ namespace MarkdownEdit.Properties {
         ///    Alt+F4         Exit
         ///
         ///    Ctrl+W         Toggle word wrap
-        ///    F7             Toggle spell checking
+        ///    Ctrl+F7        Toggle spell checking
         ///    F11            Toggle full screen
-        ///    F12            Toggle preview
-        ///    
-        ///    Tab            Indent current line/selection 2 spaces
-        /// [rest of string was truncated]&quot;;.
+        ///    F12            Toggle prev [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help {
             get {
@@ -125,6 +124,15 @@ namespace MarkdownEdit.Properties {
         internal static string markdown_xshd {
             get {
                 return ResourceManager.GetString("markdown_xshd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Snippets {
+            get {
+                return ResourceManager.GetString("Snippets", resourceCulture);
             }
         }
     }

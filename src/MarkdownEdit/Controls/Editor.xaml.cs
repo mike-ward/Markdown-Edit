@@ -14,7 +14,6 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using MarkdownEdit.Commands;
 using MarkdownEdit.Properties;
 using MarkdownEdit.SpellCheck;
 using Microsoft.Win32;

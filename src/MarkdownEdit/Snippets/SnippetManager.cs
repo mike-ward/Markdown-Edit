@@ -34,9 +34,8 @@ namespace MarkdownEdit
 
             if (File.Exists(file) == false)
             {
-                _snippets.Clear();
                 Directory.CreateDirectory(UserSettings.SettingsFolder);
-                File.WriteAllText(file, "date  $DATE(\"f\")$");
+                File.WriteAllText(file, Properties.Resources.Snippets);
             }
 
             _snippets = File.ReadAllLines(file)

@@ -270,6 +270,7 @@
     <EmbeddedResource Include="Resources\Help.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Snippets.txt" />
     <Resource Include="logo.ico" />
     <None Include="Hunspellx64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

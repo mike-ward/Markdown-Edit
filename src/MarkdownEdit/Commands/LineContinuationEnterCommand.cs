@@ -4,7 +4,7 @@ using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 
-namespace MarkdownEdit.Commands
+namespace MarkdownEdit
 {
     public class LineContinuationEnterCommand : ICommand
     {
