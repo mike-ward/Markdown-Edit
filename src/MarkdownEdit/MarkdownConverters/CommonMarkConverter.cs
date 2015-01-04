@@ -20,7 +20,7 @@ namespace MarkdownEdit
         private static string UriResolver(string text)
         {
             if (Regex.IsMatch(text, @"^\w+://")) return text;
-            var lastOpen = Settings.Default.LastOpenFile;
+            var lastOpen = Settings.Default.LastOpenFile.StripOffsetFromFileName();
             if (string.IsNullOrEmpty(lastOpen)) return text;
             var path = Path.GetDirectoryName(lastOpen);
             if (string.IsNullOrEmpty(path)) return text;

@@ -47,5 +47,17 @@ namespace MarkdownEdit
             var datePattern = new Regex(@"\$DATE(?:\(""(.+)""\))?\$");
             return datePattern.Replace(text, match => DateTime.Now.ToString(match?.Groups[1].Value));
         }
+
+        public static string AddOffsetToFileName(this string file, int offset)
+        {
+            return string.Format("{0}|{1}", file.StripOffsetFromFileName(), offset); 
+        }
+
+        public static string StripOffsetFromFileName(this string file)
+        {
+            if (string.IsNullOrWhiteSpace(file)) return file;
+            var index = file.IndexOf('|');
+            return (index >= 0) ? file.Substring(0, index) : file;
+        }
     }
 }

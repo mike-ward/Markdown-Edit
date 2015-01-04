@@ -59,13 +59,18 @@ namespace MarkdownEdit
             Close();
         }
 
-        public static void UpdateRecentFiles(string file)
+        public static void UpdateRecentFiles(string file, int offset = 0)
         {
+            if (string.IsNullOrWhiteSpace(file)) return;
             var recent = Settings.Default.RecentFiles ?? new StringCollection();
-            recent.Remove(file);
-            recent.Insert(0, file);
+
+            var files = recent
+                .Cast<string>()
+                .Where(f => f.StripOffsetFromFileName() != file);
+
             var sc = new StringCollection(); // string collections suck
-            sc.AddRange(recent.Cast<string>().Take(20).ToArray());
+            sc.AddRange(files.Take(19).ToArray());
+            sc.Insert(0, file.AddOffsetToFileName(offset));
             Settings.Default.RecentFiles = sc;
         }
     }

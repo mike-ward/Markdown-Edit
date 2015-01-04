@@ -14,6 +14,7 @@ namespace MarkdownEdit
         private string _editorFontFamily = "Consolas";
         private double _editorFontSize = 15.0;
         private bool _editorOpenLastFile = true;
+        private bool _editorOpenLastCursorPosition = true;
         private bool _editorVerticalScrollBarVisible = true;
         private bool _editorShowEndOfLine;
         private bool _editorShowSpaces;
@@ -44,6 +45,12 @@ namespace MarkdownEdit
         {
             get { return _editorOpenLastFile; }
             set { Set(ref _editorOpenLastFile, value); }
+        }
+
+        public bool EditorOpenLastCursorPosition
+        {
+            get { return _editorOpenLastCursorPosition; }
+            set { Set(ref _editorOpenLastCursorPosition, value); }
         }
 
         public bool EditorVerticalScrollBarVisible

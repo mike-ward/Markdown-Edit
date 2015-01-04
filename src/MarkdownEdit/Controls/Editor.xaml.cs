@@ -370,12 +370,25 @@ namespace MarkdownEdit
                     NewFile();
                     return true;
                 }
-                EditBox.Text = File.ReadAllText(file);
-                EditBox.ScrollToHome();
+                var parts = file.Split(new[] { '|' }, 2);
+                var filename = parts[0];
+                var offset = ConvertToOffset(parts.Length == 2 ? parts[1] : "0");
+                EditBox.Text = File.ReadAllText(filename);
+
+                if (App.UserSettings.EditorOpenLastCursorPosition)
+                {
+                    EditBox.ScrollToLine(EditBox.Document.GetLineByOffset(offset)?.LineNumber ?? 0);
+                    EditBox.SelectionStart = offset;
+                }
+                else
+                {
+                    EditBox.ScrollToHome();
+                }
+
                 Settings.Default.LastOpenFile = file;
-                RecentFilesDialog.UpdateRecentFiles(file);
+                RecentFilesDialog.UpdateRecentFiles(filename, offset);
                 IsModified = false;
-                FileName = file;
+                FileName = filename;
                 return true;
             }
             catch (Exception e)
@@ -385,11 +398,19 @@ namespace MarkdownEdit
             }
         }
 
+        private static int ConvertToOffset(string number)
+        {
+            int offset;
+            return (int.TryParse(number, out offset)) ? offset : 0;
+        }
+
         private bool Save()
         {
             try
             {
                 File.WriteAllText(FileName, Text);
+                RecentFilesDialog.UpdateRecentFiles(FileName, EditBox.SelectionStart);
+                Settings.Default.LastOpenFile = FileName.AddOffsetToFileName(EditBox.SelectionStart);
                 IsModified = false;
                 return true;
             }
