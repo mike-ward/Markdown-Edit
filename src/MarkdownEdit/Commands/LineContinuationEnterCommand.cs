@@ -43,7 +43,7 @@ namespace MarkdownEdit
             if (line == null) return;
             var text = document.GetText(line.Offset, line.Length);
 
-            Func<Regex, Action<Match>, Action> matcher = (pattern, action) =>
+            Func<Regex, Action<Match>, Action> matchDo = (pattern, action) =>
             {
                 var match = pattern.Match(text);
                 return match.Success ? () => action(match) : (Action)null;
@@ -51,12 +51,12 @@ namespace MarkdownEdit
 
             var patterns = new[]
             {
-                matcher(_unorderedListPattern, m => document.Insert(_editor.SelectionStart, m.Groups[0].Value.TrimStart() + " ")),
-                matcher(_unorderedListEndPattern, m => document.Remove(line)),
-                matcher(_orderedListPattern, m => document.Insert(_editor.SelectionStart, (int.Parse(m.Groups[1].Value) + 1) + ". ")),
-                matcher(_orderedListEndPattern, m => document.Remove(line)),
-                matcher(_blockQuotePattern, m => document.Insert(_editor.SelectionStart, m.Groups[1].Value.TrimStart())),
-                matcher(_blockQuoteEndPattern, m => document.Remove(line))
+                matchDo(_unorderedListPattern, m => document.Insert(_editor.SelectionStart, m.Groups[0].Value.TrimStart() + " ")),
+                matchDo(_unorderedListEndPattern, m => document.Remove(line)),
+                matchDo(_orderedListPattern, m => document.Insert(_editor.SelectionStart, (int.Parse(m.Groups[1].Value) + 1) + ". ")),
+                matchDo(_orderedListEndPattern, m => document.Remove(line)),
+                matchDo(_blockQuotePattern, m => document.Insert(_editor.SelectionStart, m.Groups[1].Value.TrimStart())),
+                matchDo(_blockQuoteEndPattern, m => document.Remove(line))
             };
 
             patterns.FirstOrDefault(action => action != null)?.Invoke();
