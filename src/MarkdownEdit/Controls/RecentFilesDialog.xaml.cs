@@ -9,14 +9,31 @@ using MarkdownEdit.Properties;
 
 namespace MarkdownEdit
 {
+    public class RecentFile
+    {
+        public string FileName { get; set; }
+        public string DisplayName { get; set; }
+
+        public override string ToString()
+        {
+            return DisplayName;
+        }
+    }
+
     public partial class RecentFilesDialog
     {
         public RecentFilesDialog()
         {
             InitializeComponent();
-            var kb = new[] {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
-            FilesListBox.ItemsSource = Settings.Default.RecentFiles?.Cast<string>().Select((f, i) => string.Format("{0}: {1}", kb[i % kb.Length], f)) ?? new string[0];
             FilesListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
+
+            var kb = new[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j' };
+            FilesListBox.ItemsSource = Settings.Default.RecentFiles?.Cast<string>()
+                .Select((f, i) => new RecentFile
+                {
+                    FileName = f,
+                    DisplayName = string.Format("{0}: {1}", kb[i % kb.Length], f.StripOffsetFromFileName())
+                }) ?? new RecentFile[0];
         }
 
         private void ItemContainerGeneratorOnStatusChanged(object sender, EventArgs eventArgs)
@@ -34,7 +51,7 @@ namespace MarkdownEdit
 
         public static void Display(Window owner)
         {
-            var dialog = new RecentFilesDialog {Owner = owner};
+            var dialog = new RecentFilesDialog { Owner = owner };
             dialog.ShowDialog();
         }
 
@@ -46,16 +63,16 @@ namespace MarkdownEdit
 
         private void OnOpen(object sender, RoutedEventArgs e)
         {
-            var file = FilesListBox.SelectedItem as string;
-            if (string.IsNullOrWhiteSpace(file)) return;
-            ApplicationCommands.Open.Execute(file.Substring(3), Application.Current.MainWindow);
+            var file = FilesListBox.SelectedItem as RecentFile;
+            if (file == null) return;
+            ApplicationCommands.Open.Execute(file.FileName, Application.Current.MainWindow);
             ApplicationCommands.Close.Execute(null, this);
         }
 
         private void ClearOnClick(object sender, RoutedEventArgs e)
         {
             Settings.Default.RecentFiles = new StringCollection();
-            FilesListBox.ItemsSource = new string[0];
+            FilesListBox.ItemsSource = new RecentFile[0];
             Close();
         }
 
