@@ -80,6 +80,7 @@ namespace MarkdownEdit
             keyBinding(MainWindow.PasteSpecialCommand, mergedBindings.PasteSpecial);
             keyBinding(MainWindow.ShowThemeDialogCommand, mergedBindings.ShowThemeDialog);
             keyBinding(MainWindow.ExportHtmlCommand, mergedBindings.ExportHtml);
+            keyBinding(MainWindow.ExportHtmlTemplateCommand, mergedBindings.ExportHtmlTemplate);
             keyBinding(MainWindow.ShowGotoLineDialogCommand, mergedBindings.ShowGotoLineDialog);
             keyBinding(MainWindow.ToggleAutoSaveCommand, mergedBindings.ToggleAutoSave);
             keyBinding(MainWindow.SelectPreviousHeaderCommand, mergedBindings.SelectPreviousHeader);
