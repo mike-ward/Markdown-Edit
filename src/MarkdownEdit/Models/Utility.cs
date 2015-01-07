@@ -58,6 +58,7 @@ namespace MarkdownEdit
         {
             var text = RemoveYamlFrontMatter(markdown);
             var html = converter.ConvertToHtml(text, false);
+            html = UserTemplate.InsertContent(html);
             Clipboard.SetText(html);
         }
 
