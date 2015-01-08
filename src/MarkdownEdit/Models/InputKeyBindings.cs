@@ -250,11 +250,17 @@ namespace MarkdownEdit
         }
 
         private string _exporthtmlcommand = "ctrl+e";
-
         public string ExportHtml
         {
             get { return _exporthtmlcommand; }
             set { Set(ref _exporthtmlcommand, value); }
+        }
+
+        private string _exporthtmltemplatecommand = "ctrl+shift+e";
+        public string ExportHtmlTemplate
+        {
+            get { return _exporthtmltemplatecommand; }
+            set { Set(ref _exporthtmltemplatecommand, value); }
         }
 
         private string _showgotolinedialogcommand = "ctrl+g";

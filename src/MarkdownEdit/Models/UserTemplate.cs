@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Windows;
 using MarkdownEdit.Properties;
+using HtmlAgilityPack;
 
 namespace MarkdownEdit
 {
@@ -22,5 +25,30 @@ namespace MarkdownEdit
         }
 
         public static string TemplateFile => Path.Combine(UserSettings.SettingsFolder, "user_template.html");
+
+        public static string InsertContent(string content)
+        {
+            try
+            {
+                var template = new HtmlDocument();
+                template.Load(UserTemplate.TemplateFile);
+                var contenthtml = new HtmlDocument();
+                contenthtml.LoadHtml(content);
+
+                template.GetElementbyId("content").AppendChildren(contenthtml.DocumentNode.ChildNodes);
+
+                using (var stream = new MemoryStream())
+                {
+                    template.Save(stream);
+                    stream.Position = 0;
+                    return new StreamReader(stream).ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Application.Current.MainWindow, ex.Message, @"ExportHtml", MessageBoxButton.OK);
+                return content;
+            }
+        }
     }
 }

@@ -37,6 +37,7 @@ namespace MarkdownEdit
         public static RoutedCommand SaveThemeCommand = new RoutedCommand();
         public static RoutedCommand ShowThemeDialogCommand = new RoutedCommand();
         public static RoutedCommand ExportHtmlCommand = new RoutedCommand();
+        public static RoutedCommand ExportHtmlTemplateCommand = new RoutedCommand();
         public static RoutedCommand ScrollToLineCommand = new RoutedCommand();
         public static RoutedCommand ShowGotoLineDialogCommand = new RoutedCommand();
         public static RoutedCommand ToggleAutoSaveCommand = new RoutedCommand();
@@ -344,6 +345,11 @@ namespace MarkdownEdit
         private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e)
         {
             Utility.ExportHtmlToClipboard(Editor.Text, MarkdownConverter);
+        }
+
+        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e)
+        {
+            Utility.ExportHtmlTemplateToClipboard(Editor.Text, MarkdownConverter);
         }
 
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e)

@@ -61,6 +61,13 @@ namespace MarkdownEdit
             Clipboard.SetText(html);
         }
 
+        public static void ExportHtmlTemplateToClipboard(string markdown, IMarkdownConverter converter)
+        {
+            var text = RemoveYamlFrontMatter(markdown);
+            var html = converter.ConvertToHtml(text, false);
+            html = UserTemplate.InsertContent(html);
+            Clipboard.SetText(html);
+        }
         public static string RemoveYamlFrontMatter(string markdown)
         {
             if (App.UserSettings.IgnoreYaml == false) return markdown;
