@@ -32,6 +32,9 @@
           <Component Id="CommonMark.dll" Guid="{785B177B-0D55-47EB-959D-270F0548A263}">
             <File Id="CommonMark.dll" KeyPath="yes" Source="$(var.SourceFiles)\CommonMark.dll" />
           </Component>
+          <Component Id="HtmlAgilityPack.dll" Guid="{697D078D-0C77-49F5-92BD-0683C9C55A94}">
+            <File Id="HtmlAgilityPack.dll" KeyPath="yes" Source="$(var.SourceFiles)\HtmlAgilityPack.dll" />
+          </Component>
           <Component Id="Hunspellx64.dll" Guid="{CF56E78F-5FE3-4CF6-983D-251A8FC4ECE5}">
             <File Id="Hunspellx64.dll" KeyPath="yes" Source="$(var.SourceFiles)\Hunspellx64.dll" />
           </Component>
@@ -156,6 +159,7 @@
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="CommonMark.dll" />
+      <ComponentRef Id="HtmlAgilityPack.dll" />
       <ComponentRef Id="Hunspellx64.dll" />
       <ComponentRef Id="Hunspellx86.dll" />
       <ComponentRef Id="ICSharpCode.AvalonEdit.dll" />
