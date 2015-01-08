@@ -300,7 +300,7 @@ namespace MarkdownEdit
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, @"InsertFile", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(ex.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
         }
@@ -313,7 +313,7 @@ namespace MarkdownEdit
 
                 var result = MessageBox.Show(
                     @"Save your changes?",
-                    @"Markdown Edit",
+                    App.Title,
                     MessageBoxButton.YesNoCancel,
                     MessageBoxImage.Question);
 
@@ -393,7 +393,7 @@ namespace MarkdownEdit
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, @"Load File", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(e.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
@@ -416,7 +416,7 @@ namespace MarkdownEdit
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, @"Save File", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(e.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }

@@ -56,7 +56,7 @@ namespace MarkdownEdit
             }
             catch (CommonMarkException e)
             {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show(e.ToString(), App.Title);
             }
         }
 

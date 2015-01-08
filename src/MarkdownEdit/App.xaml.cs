@@ -9,6 +9,8 @@ namespace MarkdownEdit
 {
     public partial class App
     {
+        public const string Title = "MARKDOWN EDIT";
+
         // ReSharper disable once NotAccessedField.Local
         private FileSystemWatcher _userSettingsWatcher;
 

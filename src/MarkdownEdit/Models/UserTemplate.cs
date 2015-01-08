@@ -46,7 +46,7 @@ namespace MarkdownEdit
             }
             catch (Exception ex)
             {
-                MessageBox.Show(Application.Current.MainWindow, ex.Message, @"ExportHtml", MessageBoxButton.OK);
+                MessageBox.Show(Application.Current.MainWindow, ex.Message, App.Title, MessageBoxButton.OK);
                 return content;
             }
         }

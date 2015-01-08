@@ -128,7 +128,7 @@ namespace MarkdownEdit
             MessageBox.Show(
                 Application.Current.MainWindow,
                 string.Format("{0} in {1}", ex.Message, file),
-                "Markdown Edit",
+                App.Title,
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
         }
