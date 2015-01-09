@@ -418,16 +418,13 @@ namespace MarkdownEdit
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(property, value)) return;
-            property = value;
-            OnPropertyChanged(propertyName);
+            if (EqualityComparer<T>.Default.Equals(property, value) == false)
+            {
+                property = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }
