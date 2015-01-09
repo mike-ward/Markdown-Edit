@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Windows;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Highlighting;
 
 namespace MarkdownEdit
 {
-    public static class EditorUtilites
+    public static class EditorUtilities
     {
         public static void SelectWordAt(this TextEditor editor, int offset)
         {
@@ -141,6 +143,70 @@ namespace MarkdownEdit
             {
                 editor.EndChange();
             }
+        }
+
+        public static void ThemeChangedCallback(DependencyObject source, DependencyPropertyChangedEventArgs ea)
+        {
+            var editor = (Editor)source;
+            var theme = editor.Theme;
+            if (theme == null) return;
+            var highlightDefinition = editor.EditBox.SyntaxHighlighting;
+            if (highlightDefinition == null) return;
+
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Heading"), theme.HighlightHeading);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Emphasis"), theme.HighlightEmphasis);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("StrongEmphasis"), theme.HighlightStrongEmphasis);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("InlineCode"), theme.HighlightInlineCode);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("BlockCode"), theme.HighlightBlockCode);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("BlockQuote"), theme.HighlightBlockQuote);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Link"), theme.HighlightLink);
+            UpdateHilightingColor(highlightDefinition.GetNamedColor("Image"), theme.HighlightImage);
+
+            editor.EditBox.SyntaxHighlighting = null;
+            editor.EditBox.SyntaxHighlighting = highlightDefinition;
+        }
+
+        private static void UpdateHilightingColor(HighlightingColor highlightingColor, Highlight highlight)
+        {
+            highlightingColor.Foreground = new HighlightBrush(highlight.Foreground);
+            highlightingColor.Background = new HighlightBrush(highlight.Background);
+            highlightingColor.FontStyle = ConvertFontStyle(highlight.FontStyle);
+            highlightingColor.FontWeight = ConvertFontWeight(highlight.FontWeight);
+            highlightingColor.Underline = highlight.Underline;
+        }
+
+        private static FontStyle? ConvertFontStyle(string style)
+        {
+            try
+            {
+                return string.IsNullOrWhiteSpace(style)
+                    ? null
+                    : new FontStyleConverter().ConvertFromString(style) as FontStyle?;
+            }
+            catch (FormatException)
+            {
+                return null;
+            }
+        }
+
+        private static FontWeight? ConvertFontWeight(string weight)
+        {
+            try
+            {
+                return string.IsNullOrWhiteSpace(weight)
+                    ? null
+                    : new FontWeightConverter().ConvertFromString(weight) as FontWeight?;
+            }
+            catch (FormatException)
+            {
+                return null;
+            }
+        }
+
+        public static bool Beep()
+        {
+            Utility.Beep();
+            return false;
         }
     }
 }

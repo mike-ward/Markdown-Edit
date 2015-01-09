@@ -63,7 +63,23 @@ namespace MarkdownEdit
             var grid = EditBox.GetDescendantByType<Grid>();
             grid.ColumnDefinitions[1].Width = new GridLength(8);
 
-            // remove indentation command in favor of ours
+            Dispatcher.InvokeAsync(() =>
+            {
+                SetupIndentationCommandBinding();
+                SetupTabSnippetHandler();
+                SetupLineContinuationEnterCommandHandler();
+                SetupSyntaxHighlighting();
+                EditorUtilities.ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
+                EditBox.Focus();
+
+                // fixes context menu not showing on first click
+                ContextMenu = new ContextMenu();
+                ContextMenu.Items.Add(new MenuItem());
+            });
+        }
+
+        private void SetupIndentationCommandBinding()
+        {
             var cmd = EditBox
                 .TextArea
                 .DefaultInputHandler
@@ -71,19 +87,6 @@ namespace MarkdownEdit
                 .CommandBindings
                 .FirstOrDefault(cb => cb.Command == AvalonEditCommands.IndentSelection);
             if (cmd != null) EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
-
-            Dispatcher.InvokeAsync(() =>
-            {
-                SetupTabSnippetHandler();
-                SetupLineContinuationEnterCommandHandler();
-                SetupSyntaxHighlighting();
-                ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
-                EditBox.Focus();
-
-                // fixes context menu not showing on first click
-                ContextMenu = new ContextMenu();
-                ContextMenu.Items.Add(new MenuItem());
-            });
         }
 
         private void SetupTabSnippetHandler()
@@ -127,16 +130,16 @@ namespace MarkdownEdit
             var contextMenu = new ContextMenu();
             SpellCheckSuggestions(contextMenu);
 
-            contextMenu.Items.Add(new MenuItem {Header = "Undo", Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z"});
-            contextMenu.Items.Add(new MenuItem {Header = "Redo", Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y"});
+            contextMenu.Items.Add(new MenuItem { Header = "Undo", Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z" });
+            contextMenu.Items.Add(new MenuItem { Header = "Redo", Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y" });
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
-            contextMenu.Items.Add(new MenuItem {Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
-            contextMenu.Items.Add(new MenuItem {Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
-            contextMenu.Items.Add(new MenuItem {Header = "Paste Special", Command = MainWindow.PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
-            contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
+            contextMenu.Items.Add(new MenuItem { Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X" });
+            contextMenu.Items.Add(new MenuItem { Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C" });
+            contextMenu.Items.Add(new MenuItem { Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V" });
+            contextMenu.Items.Add(new MenuItem { Header = "Paste Special", Command = MainWindow.PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text" });
+            contextMenu.Items.Add(new MenuItem { Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete" });
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem {Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
+            contextMenu.Items.Add(new MenuItem { Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A" });
 
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
@@ -160,7 +163,7 @@ namespace MarkdownEdit
 
         private void OnSpellCheckChanged(object o, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName != "SpellCheck") return;
+            if (args.PropertyName != nameof(SpellCheck)) return;
             SpellCheckProvider.Enabled = SpellCheck;
             EditBox.Document.Insert(0, " ");
             EditBox.Document.UndoStack.Undo();
@@ -245,13 +248,7 @@ namespace MarkdownEdit
 
         private bool Execute(Func<bool> action)
         {
-            return EditBox.IsReadOnly ? Beep() : action();
-        }
-
-        private static bool Beep()
-        {
-            Utility.Beep();
-            return false;
+            return EditBox.IsReadOnly ?  EditorUtilities.Beep() : action();
         }
 
         public void NewFile()
@@ -440,40 +437,19 @@ namespace MarkdownEdit
             _editorState.Restore(this);
         }
 
-        public void FindDialog()
-        {
-            Execute(() => FindReplaceDialog.ShowFindDialog());
-        }
+        public void FindDialog() => Execute(() => FindReplaceDialog.ShowFindDialog());
 
-        public void ReplaceDialog()
-        {
-            Execute(() => FindReplaceDialog.ShowReplaceDialog());
-        }
+        public void ReplaceDialog() => Execute(() => FindReplaceDialog.ShowReplaceDialog());
 
-        public void FindNext()
-        {
-            Execute(() => FindReplaceDialog.FindNext());
-        }
+        public void FindNext() => Execute(() => FindReplaceDialog.FindNext());
 
-        public void FindPrevious()
-        {
-            Execute(() => FindReplaceDialog.FindPrevious());
-        }
+        public void FindPrevious() => Execute(() => FindReplaceDialog.FindPrevious());
 
-        public void Bold()
-        {
-            Execute(() => EditBox.AddRemoveText("**"));
-        }
+        public void Bold() => Execute(() => EditBox.AddRemoveText("**"));
 
-        public void Italic()
-        {
-            Execute(() => EditBox.AddRemoveText("*"));
-        }
+        public void Italic() => Execute(() => EditBox.AddRemoveText("*"));
 
-        public void Code()
-        {
-            Execute(() => EditBox.AddRemoveText("`"));
-        }
+        public void Code() => Execute(() => EditBox.AddRemoveText("`"));
 
         public void InsertHeader(int num)
         {
@@ -488,20 +464,11 @@ namespace MarkdownEdit
             });
         }
 
-        public void IncreaseFontSize()
-        {
-            EditBox.FontSize = EditBox.FontSize + 1;
-        }
+        public void IncreaseFontSize() => EditBox.FontSize = EditBox.FontSize + 1;
 
-        public void DecreaseFontSize()
-        {
-            EditBox.FontSize = EditBox.FontSize > 5 ? EditBox.FontSize - 1 : EditBox.FontSize;
-        }
+        public void DecreaseFontSize() => EditBox.FontSize = EditBox.FontSize > 5 ? EditBox.FontSize - 1 : EditBox.FontSize;
 
-        public void RestoreFontSize()
-        {
-            EditBox.FontSize = App.UserSettings.EditorFontSize;
-        }
+        public void RestoreFontSize() => EditBox.FontSize = App.UserSettings.EditorFontSize;
 
         public void PasteSpecial()
         {
@@ -512,10 +479,7 @@ namespace MarkdownEdit
             });
         }
 
-        public void OpenUserDictionary()
-        {
-            Utility.EditFile(SpellCheckProvider.CustomDictionaryFile());
-        }
+        public void OpenUserDictionary() => Utility.EditFile(SpellCheckProvider.CustomDictionaryFile());
 
         public void ScrollToLine(int line)
         {
@@ -526,37 +490,19 @@ namespace MarkdownEdit
             EditBox.CaretOffset = offset;
         }
 
-        public void SelectPreviousHeader()
-        {
-            EditBox.SelectHeader(false);
-        }
+        public void SelectPreviousHeader() => EditBox.SelectHeader(false);
 
-        public void SelectNextHeader()
-        {
-            EditBox.SelectHeader(true);
-        }
+        public void SelectNextHeader() => EditBox.SelectHeader(true);
 
-        public bool Find(Regex find)
-        {
-            return Execute(() => EditBox.Find(find));
-        }
+        public bool Find(Regex find) => Execute(() => EditBox.Find(find));
 
-        public bool Replace(Regex find, string replace)
-        {
-            return Execute(() => EditBox.Replace(find, replace));
-        }
+        public bool Replace(Regex find, string replace) => Execute(() => EditBox.Replace(find, replace));
 
-        public void ReplaceAll(Regex find, string replace)
-        {
-            Execute(() => EditBox.ReplaceAll(find, replace));
-        }
+        public void ReplaceAll(Regex find, string replace) => Execute(() => EditBox.ReplaceAll(find, replace));
 
         // Events
 
-        private void ExecuteDeselectCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            EditBox.SelectionLength = 0;
-        }
+        private void ExecuteDeselectCommand(object sender, ExecutedRoutedEventArgs e) => EditBox.SelectionLength = 0;
 
         public EventHandler TextChanged;
 
@@ -631,7 +577,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
+            "Theme", typeof(Theme), typeof(Editor), new PropertyMetadata(default(Theme), EditorUtilities.ThemeChangedCallback));
 
         public Theme Theme
         {
@@ -639,66 +585,8 @@ namespace MarkdownEdit
             set { SetValue(ThemeProperty, value); }
         }
 
-        private static void ThemeChangedCallback(DependencyObject source, DependencyPropertyChangedEventArgs ea)
-        {
-            var editor = (Editor)source;
-            var theme = editor.Theme;
-            if (theme == null) return;
-            var highlightDefinition = editor.EditBox.SyntaxHighlighting;
-            if (highlightDefinition == null) return;
-
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("Heading"), theme.HighlightHeading);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("Emphasis"), theme.HighlightEmphasis);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("StrongEmphasis"), theme.HighlightStrongEmphasis);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("InlineCode"), theme.HighlightInlineCode);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("BlockCode"), theme.HighlightBlockCode);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("BlockQuote"), theme.HighlightBlockQuote);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("Link"), theme.HighlightLink);
-            UpdateHilightingColor(highlightDefinition.GetNamedColor("Image"), theme.HighlightImage);
-
-            editor.EditBox.SyntaxHighlighting = null;
-            editor.EditBox.SyntaxHighlighting = highlightDefinition;
-        }
-
-        private static void UpdateHilightingColor(HighlightingColor highlightingColor, Highlight highlight)
-        {
-            highlightingColor.Foreground = new HighlightBrush(highlight.Foreground);
-            highlightingColor.Background = new HighlightBrush(highlight.Background);
-            highlightingColor.FontStyle = ConvertFontStyle(highlight.FontStyle);
-            highlightingColor.FontWeight = ConvertFontWeight(highlight.FontWeight);
-            highlightingColor.Underline = highlight.Underline;
-        }
-
-        private static FontStyle? ConvertFontStyle(string style)
-        {
-            try
-            {
-                return string.IsNullOrWhiteSpace(style)
-                    ? null
-                    : new FontStyleConverter().ConvertFromString(style) as FontStyle?;
-            }
-            catch (FormatException)
-            {
-                return null;
-            }
-        }
-
-        private static FontWeight? ConvertFontWeight(string weight)
-        {
-            try
-            {
-                return string.IsNullOrWhiteSpace(weight)
-                    ? null
-                    : new FontWeightConverter().ConvertFromString(weight) as FontWeight?;
-            }
-            catch (FormatException)
-            {
-                return null;
-            }
-        }
-
         public static readonly DependencyProperty VerticalScrollBarVisibilityProperty = DependencyProperty.Register(
-            "VerticalScrollBarVisibility", typeof (ScrollBarVisibility), typeof (Editor), new PropertyMetadata(default(ScrollBarVisibility)));
+            "VerticalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(Editor), new PropertyMetadata(default(ScrollBarVisibility)));
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
@@ -707,7 +595,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowEndOfLineProperty = DependencyProperty.Register(
-            "ShowEndOfLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
+            "ShowEndOfLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
 
         private static void ShowEndOfLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -722,7 +610,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowSpacesProperty = DependencyProperty.Register(
-            "ShowSpaces", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
+            "ShowSpaces", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
 
         private static void ShowSpacesChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -737,7 +625,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowLineNumbersProperty = DependencyProperty.Register(
-            "ShowLineNumbers", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+            "ShowLineNumbers", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
 
         public bool ShowLineNumbers
         {
@@ -746,7 +634,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty ShowTabsProperty = DependencyProperty.Register(
-            "ShowTabs", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
+            "ShowTabs", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
 
         private static void ShowTabsChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -761,7 +649,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
-            "SpellCheckProvider", typeof (ISpellCheckProvider), typeof (Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckChanged));
+            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckChanged));
 
         private static void SpellCheckChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
@@ -777,7 +665,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty FindReplaceDialogProperty = DependencyProperty.Register(
-            "FindReplaceDialog", typeof (FindReplaceDialog), typeof (Editor), new PropertyMetadata(default(FindReplaceDialog)));
+            "FindReplaceDialog", typeof(FindReplaceDialog), typeof(Editor), new PropertyMetadata(default(FindReplaceDialog)));
 
         public FindReplaceDialog FindReplaceDialog
         {
@@ -786,7 +674,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty HighlightCurrentLineProperty = DependencyProperty.Register(
-            "HighlightCurrentLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
+            "HighlightCurrentLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
 
         private static void HighlightCurrentLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
@@ -801,7 +689,7 @@ namespace MarkdownEdit
         }
 
         public static readonly DependencyProperty SnippetManagerProperty = DependencyProperty.Register(
-            "SnippetManager", typeof (ISnippetManager), typeof (Editor), new PropertyMetadata(default(ISnippetManager)));
+            "SnippetManager", typeof(ISnippetManager), typeof(Editor), new PropertyMetadata(default(ISnippetManager)));
 
         public ISnippetManager SnippetManager
         {
@@ -839,7 +727,7 @@ namespace MarkdownEdit
             var files = e.Data.GetData(DataFormats.FileDrop) as string[];
             if (files == null) return;
 
-            var imageExtensions = new[] {".jpg", "jpeg", ".png", ".bmp", ".gif"};
+            var imageExtensions = new[] { ".jpg", "jpeg", ".png", ".bmp", ".gif" };
             if (imageExtensions.Any(ext => files[0].EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
             {
                 var file = Path.GetFileName(files[0]);
