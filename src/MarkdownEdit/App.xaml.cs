@@ -10,8 +10,6 @@ namespace MarkdownEdit
     public partial class App
     {
         public const string Title = "MARKDOWN EDIT";
-
-        // ReSharper disable once NotAccessedField.Local
         private FileSystemWatcher _userSettingsWatcher;
 
         public static UserSettings UserSettings { get; private set; }
@@ -28,7 +26,10 @@ namespace MarkdownEdit
 
             var spellingService = container.Resolve<ISpellingService>();
             spellingService.SetLanguage(UserSettings.SpellCheckDictionary);
-            UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == "SpellCheckDictonary") spellingService.SetLanguage(UserSettings.SpellCheckDictionary); };
+            UserSettings.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary)) spellingService.SetLanguage(UserSettings.SpellCheckDictionary);
+            };
 
             MainWindow = container.Resolve<MainWindow>();
             MainWindow.Show();

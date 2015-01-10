@@ -31,9 +31,7 @@ namespace MarkdownEdit
                 .Replace('\u201e', '\"')
                 .Replace("\u2026", "...")
                 .Replace('\u2032', '\'')
-                .Replace('\u2033', '\"')
-                .Replace('“', '\"')
-                .Replace('”', '\"');
+                .Replace('\u2033', '\"');
             return dumb;
         }
 

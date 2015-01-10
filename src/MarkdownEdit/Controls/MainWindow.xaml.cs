@@ -58,8 +58,8 @@ namespace MarkdownEdit
 
 
         public MainWindow(
-            IMarkdownConverter markdownConverter, 
-            ISpellCheckProvider spellCheckProvider, 
+            IMarkdownConverter markdownConverter,
+            ISpellCheckProvider spellCheckProvider,
             FindReplaceDialog findReplaceDialog,
             ISnippetManager snippetManager)
         {
@@ -74,13 +74,16 @@ namespace MarkdownEdit
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
-            InputKeyBindingsSettings.Update();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
-            Dispatcher.InvokeAsync(LoadCommandLineOrLastFile);
+            Dispatcher.InvokeAsync(() =>
+            {
+                InputKeyBindingsSettings.Update();
+                LoadCommandLineOrLastFile();
+            });
         }
 
         private void LoadCommandLineOrLastFile()
@@ -100,160 +103,73 @@ namespace MarkdownEdit
         {
             switch (ea.PropertyName)
             {
-                case "FileName":
-                case "DisplayName":
-                case "IsModified":
+                case nameof(Editor.FileName):
+                case nameof(Editor.DisplayName):
+                case nameof(Editor.IsModified):
                     TitleName = BuildTitle();
                     break;
             }
         }
 
-        private string BuildTitle()
-        {
-            return string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "*" : "", Editor.DisplayName);
-        }
+        private string BuildTitle() => string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "* " : "", Editor.DisplayName);
 
         // Commands
 
-        private void ExecuteNewFile(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Editor.NewFile();
-        }
+        private void ExecuteNewFile(object sender, ExecutedRoutedEventArgs ea) => Editor.NewFile();
 
-        private void ExecuteOpenFile(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Editor.OpenFile(ea.Parameter as string);
-        }
+        private void ExecuteOpenFile(object sender, ExecutedRoutedEventArgs ea) => Editor.OpenFile(ea.Parameter as string);
 
-        public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Editor.SaveFile();
-        }
+        public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea) => Editor.SaveFile();
 
-        public void ExecuteSaveFileAs(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Editor.SaveFileAs();
-        }
+        public void ExecuteSaveFileAs(object sender, ExecutedRoutedEventArgs ea) => Editor.SaveFileAs();
 
-        public void ExecuteToggleWordWrap(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Editor.WordWrap = !Editor.WordWrap;
-        }
+        public void ExecuteToggleWordWrap(object sender, ExecutedRoutedEventArgs ea) => Editor.WordWrap = !Editor.WordWrap;
 
-        public void ExecuteHelp(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Editor.ToggleHelp();
-        }
+        public void ExecuteHelp(object sender, ExecutedRoutedEventArgs ea) => Editor.ToggleHelp();
 
-        public void ExecuteClose(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Close();
-        }
+        public void ExecuteClose(object sender, ExecutedRoutedEventArgs ea) => Close();
 
-        private void ExecuteEditorFind(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.FindDialog();
-        }
+        private void ExecuteEditorFind(object sender, ExecutedRoutedEventArgs e) => Editor.FindDialog();
 
-        private void ExecuteEditorReplace(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.ReplaceDialog();
-        }
+        private void ExecuteEditorReplace(object sender, ExecutedRoutedEventArgs e) => Editor.ReplaceDialog();
 
-        private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Editor.Bold();
-        }
+        private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea) => Editor.Bold();
 
-        private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Editor.Italic();
-        }
+        private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea) => Editor.Italic();
 
-        private void ExecuteCode(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Editor.Code();
-        }
+        private void ExecuteCode(object sender, ExecutedRoutedEventArgs ea) => Editor.Code();
 
-        private void ExecuteInsertHeader(object sender, ExecutedRoutedEventArgs ea)
-        {
-            Editor.InsertHeader(Convert.ToInt32(ea.Parameter));
-        }
+        private void ExecuteInsertHeader(object sender, ExecutedRoutedEventArgs ea) => Editor.InsertHeader(Convert.ToInt32(ea.Parameter));
 
-        private void ExecuteFindNext(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.FindNext();
-        }
+        private void ExecuteFindNext(object sender, ExecutedRoutedEventArgs e) => Editor.FindNext();
 
-        private void ExecuteFindPrevious(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.FindPrevious();
-        }
+        private void ExecuteFindPrevious(object sender, ExecutedRoutedEventArgs e) => Editor.FindPrevious();
 
-        private void ExecuteIncreaseFontSize(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.IncreaseFontSize();
-        }
+        private void ExecuteIncreaseFontSize(object sender, ExecutedRoutedEventArgs e) => Editor.IncreaseFontSize();
 
-        private void ExecuteRestoreFontSize(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.RestoreFontSize();
-        }
+        private void ExecuteRestoreFontSize(object sender, ExecutedRoutedEventArgs e) => Editor.RestoreFontSize();
 
-        private void ExecuteDecreaseFontSize(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.DecreaseFontSize();
-        }
+        private void ExecuteDecreaseFontSize(object sender, ExecutedRoutedEventArgs e) => Editor.DecreaseFontSize();
 
-        private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            Utility.EditFile(UserSettings.SettingsFile);
-        }
+        private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(UserSettings.SettingsFile);
 
-        private void ExecuteOpenKeybindingSettingsCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            Utility.EditFile(InputKeyBindingsSettings.KeyBindingFile);
-        }
+        private void ExecuteOpenKeybindingSettingsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(InputKeyBindingsSettings.KeyBindingFile);
 
-        private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            Utility.EditFile(UserTemplate.TemplateFile);
-        }
+        private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(UserTemplate.TemplateFile);
 
-        private void ExecuteOpenUserDictionaryCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.OpenUserDictionary();
-        }
+        private void ExecuteOpenUserDictionaryCommand(object sender, ExecutedRoutedEventArgs e) => Editor.OpenUserDictionary();
 
-        private void ExecuteOpenUserSnippetsCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            Utility.EditFile(MarkdownEdit.SnippetManager.SnippetFile());
-        }
+        private void ExecuteOpenUserSnippetsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(MarkdownEdit.SnippetManager.SnippetFile());
 
-        private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.SpellCheck = !Editor.SpellCheck;
-        }
+        private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e) => Editor.SpellCheck = !Editor.SpellCheck;
 
-        private void ExecuteToggleFullScreen(object sender, ExecutedRoutedEventArgs e)
-        {
-            WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
-        }
+        private void ExecuteToggleFullScreen(object sender, ExecutedRoutedEventArgs e) => WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
 
-        private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e)
-        {
-            RecentFilesDialog.Display(this);
-        }
+        private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e) => RecentFilesDialog.Display(this);
 
-        private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.PasteSpecial();
-        }
+        private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e) => Editor.PasteSpecial();
 
-        private void ExecuteToggleAutoSave(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.AutoSave = !Editor.AutoSave;
-        }
+        private void ExecuteToggleAutoSave(object sender, ExecutedRoutedEventArgs e) => Editor.AutoSave = !Editor.AutoSave;
 
         private void ExecuteTogglePreview(object sender, ExecutedRoutedEventArgs e)
         {
@@ -261,20 +177,11 @@ namespace MarkdownEdit
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
         }
 
-        private void ExecuteSelectPreviousHeader(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.SelectPreviousHeader();
-        }
+        private void ExecuteSelectPreviousHeader(object sender, ExecutedRoutedEventArgs e) => Editor.SelectPreviousHeader();
 
-        private void ExecuteSelectNextHeader(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.SelectNextHeader();
-        }
+        private void ExecuteSelectNextHeader(object sender, ExecutedRoutedEventArgs e) => Editor.SelectNextHeader();
 
-        private void ExecuteEditorFindCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.Find(e.Parameter as Regex);
-        }
+        private void ExecuteEditorFindCommand(object sender, ExecutedRoutedEventArgs e) => Editor.Find(e.Parameter as Regex);
 
         private void ExecuteEditorReplaceCommand(object sender, ExecutedRoutedEventArgs e)
         {
@@ -290,7 +197,7 @@ namespace MarkdownEdit
 
         private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e)
         {
-            var process = new Process {StartInfo = {FileName = Utility.ExecutingAssembly(), Arguments = "-n"}};
+            var process = new Process { StartInfo = { FileName = Utility.ExecutingAssembly(), Arguments = "-n" } };
             process.Start();
         }
 
@@ -320,19 +227,13 @@ namespace MarkdownEdit
             EditorMargins = CalculateEditorMargins();
         }
 
-        private void ExecuteLoadTheme(object sender, ExecutedRoutedEventArgs e)
-        {
-            App.UserSettings.Theme = e.Parameter as Theme;
-        }
+        private void ExecuteLoadTheme(object sender, ExecutedRoutedEventArgs e) => App.UserSettings.Theme = e.Parameter as Theme;
 
-        private void ExecuteSaveTheme(object sender, ExecutedRoutedEventArgs e)
-        {
-            App.UserSettings.Save();
-        }
+        private void ExecuteSaveTheme(object sender, ExecutedRoutedEventArgs e) => App.UserSettings.Save();
 
         private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme};
+            var dialog = new ThemeDialog { Owner = this, CurrentTheme = App.UserSettings.Theme };
             dialog.ShowDialog();
         }
 
@@ -342,37 +243,24 @@ namespace MarkdownEdit
             return new Thickness(margin, 0, margin, 0);
         }
 
-        private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e)
-        {
-            Utility.ExportHtmlToClipboard(Editor.Text, MarkdownConverter);
-        }
+        private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text, MarkdownConverter);
 
-        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e)
-        {
-            Utility.ExportHtmlTemplateToClipboard(Editor.Text, MarkdownConverter);
-        }
+        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlTemplateToClipboard(Editor.Text, MarkdownConverter);
 
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new GotoLineDialog {Owner = this};
+            var dialog = new GotoLineDialog { Owner = this };
             dialog.ShowDialog();
         }
 
         private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
         {
-            if (e.Parameter == null) return;
-            Editor.ScrollToLine((int)e.Parameter);
+            if (e.Parameter != null) Editor.ScrollToLine((int)e.Parameter);
         }
 
-        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e)
-        {
-            Preview.UpdatePreview(Editor.Text);
-        }
+        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) => Preview.UpdatePreview(Editor.Text);
 
-        private void ExecuteInsertFile(object sender, ExecutedRoutedEventArgs e)
-        {
-            Editor.InsertFile(null);
-        }
+        private void ExecuteInsertFile(object sender, ExecutedRoutedEventArgs e) => Editor.InsertFile(null);
 
         // Properites
 
@@ -411,7 +299,7 @@ namespace MarkdownEdit
         public ISnippetManager SnippetManager
         {
             get { return _snippetManager; }
-            set { Set(ref _snippetManager, value); }    
+            set { Set(ref _snippetManager, value); }
         }
 
         // INotifyPropertyChanged implementation

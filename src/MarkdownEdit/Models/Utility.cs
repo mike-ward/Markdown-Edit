@@ -34,25 +34,13 @@ namespace MarkdownEdit
             };
         }
 
-        public static void Beep()
-        {
-            SystemSounds.Beep.Play();
-        }
+        public static void Beep() => SystemSounds.Beep.Play();
 
-        public static void EditFile(string file)
-        {
-            Process.Start("Notepad.exe", file);
-        }
+        public static void EditFile(string file) => Process.Start("Notepad.exe", file);
 
-        public static string AssemblyFolder()
-        {
-            return Path.GetDirectoryName(ExecutingAssembly());
-        }
+        public static string AssemblyFolder() => Path.GetDirectoryName(ExecutingAssembly());
 
-        public static string ExecutingAssembly()
-        {
-            return Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
-        }
+        public static string ExecutingAssembly() => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
 
         public static void ExportHtmlToClipboard(string markdown, IMarkdownConverter converter)
         {
@@ -83,7 +71,7 @@ namespace MarkdownEdit
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
             if (element == null) return default(T);
-            if (element.GetType() == typeof (T)) return element as T;
+            if (element.GetType() == typeof(T)) return element as T;
             T foundElement = null;
             (element as FrameworkElement)?.ApplyTemplate();
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)

@@ -102,7 +102,7 @@ namespace MarkdownEdit.SpellCheck
 
                     if (!_spellingService.Spell(trimmedWord))
                     {
-                        var textSegment = new TextSegment {StartOffset = num, Length = word.Length};
+                        var textSegment = new TextSegment { StartOffset = num, Length = word.Length };
                         _spellCheckRenderer.ErrorSegments.Add(textSegment);
                     }
 
@@ -111,22 +111,13 @@ namespace MarkdownEdit.SpellCheck
             }
         }
 
-        private void ClearSpellCheckErrors()
-        {
-            _spellCheckRenderer?.ErrorSegments.Clear();
-        }
+        private void ClearSpellCheckErrors() => _spellCheckRenderer?.ErrorSegments.Clear();
 
-        public IEnumerable<TextSegment> GetSpellCheckErrors()
-        {
-            if (_spellCheckRenderer == null) return Enumerable.Empty<TextSegment>();
-            return _spellCheckRenderer.ErrorSegments;
-        }
+        public IEnumerable<TextSegment> GetSpellCheckErrors() =>
+            (_spellCheckRenderer == null) ? Enumerable.Empty<TextSegment>() : _spellCheckRenderer.ErrorSegments;
 
-        public IEnumerable<string> GetSpellCheckSuggestions(string word)
-        {
-            if (_spellCheckRenderer == null) return Enumerable.Empty<string>();
-            return _spellingService.Suggestions(word);
-        }
+        public IEnumerable<string> GetSpellCheckSuggestions(string word) =>
+            (_spellCheckRenderer == null) ? Enumerable.Empty<string>() : _spellingService.Suggestions(word);
 
         public void Add(string word)
         {
