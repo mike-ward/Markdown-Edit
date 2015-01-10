@@ -117,25 +117,25 @@ The `mde` text is replaced by
     
 ### Snippet Substitution Parameters
 
-  - $END$ - Positions the cursor after insertion. For instance
+- $END$ - Positions the cursor after insertion. For instance
 
-        mde  [Markdown $END$ Edit](http://mike-ward.net/markdown)
+      mde  [Markdown $END$ Edit](http://mike-ward.net/markdown)
 
-    positions the cursor between *Markdown* and *Edit*
-  
-  - $DATE$ - is replaced with the current date and time
-  
-  - $DATE("format")$ - format is any valid .NET date format (<http://www.dotnetperls.com/datetime-format>)
-  
-  - $NAME$ - Where `NAME` can be any word including underscores. When the snippet is triggered, the parameter will be highlighted waiting for input. There can be multiple substitution parameters in a snippet. Here's how the *link* snippet is defined:
+  positions the cursor between *Markdown* and *Edit*
 
-        link  [$link_text$]($link_url$) $END$
-    
-    When triggered, the snippet will expand as `[link_text](link_url)`, with `link_text`, highlighted. Type the link text and press `Tab`. Now the `link_url` text is highlighted. Enter the link text and press `Enter`. The cursor moves to one space past the of the close paraenthesis. 
-    
-    The description sounds more complicated than it is. Try it and you'll see that it's an easy and natural workflow.
+- $DATE$ - is replaced with the current date and time
+
+- $DATE("format")$ - format is any valid .NET date format (<http://www.dotnetperls.com/datetime-format>)
+
+- $NAME$ - Where `NAME` can be any word including underscores. When the snippet is triggered, the parameter will be highlighted waiting for input. There can be multiple substitution parameters in a snippet. Here's how the *link* snippet is defined:
+
+      link  [$link_text$]($link_url$) $END$
   
-  - `\n` - insert a new line
+  When triggered, the snippet will expand as `[link_text](link_url)`, with `link_text`, highlighted. Type the link text and press `TAB`. Now the `link_url` text is highlighted. Enter the link URL and press `Enter`. The cursor moves one space past the closing parenthesis. 
+  
+  The description sounds more complicated than it is. Try it and you'll see that it's an easy and natural workflow.
+
+- `\n` - insert a new line
   
 If you delete this file, Markdown Edit will restore it with the default snippets.
 
