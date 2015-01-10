@@ -10,6 +10,7 @@
     Ctrl+Shift+S   Save file As
     Ctrl+R         Recent files
     Ctrl+E         Export HTML to clipboard
+    Ctrl+Shift+E   Export HTML and template to clipboard
     Alt+F4         Exit
 
     Ctrl+W         Toggle word wrap
@@ -65,7 +66,7 @@
 
 ## Auto Save
 
-When Auto Save is enabled (`Alt+S`), content is saved whenever you pause typing for 4 or more seconds.
+When Auto Save is enabled (`Alt+S`), content is saved whenever you pause typing for longer than 4 seconds.
 
 
 ## Settings
@@ -114,7 +115,7 @@ The `mde` text is replaced by
 
     [Markdown Edit](http://mike-ward.net/markdown)
     
-Snippets can contain special keywords.
+### Snippet Substitution Parameters
 
   - $END$ - Positions the cursor after insertion. For instance
 
@@ -126,9 +127,18 @@ Snippets can contain special keywords.
   
   - $DATE("format")$ - format is any valid .NET date format (<http://www.dotnetperls.com/datetime-format>)
   
+  - $NAME$ - Where `NAME` can be any word including underscores. When the snippet is triggered, the parameter will be highlighted waiting for input. There can be multiple substitution parameters in a snippet. Here's how the *link* snippet is defined:
+
+        link  [$link_text$]($link_url$) $END$
+    
+    When triggered, the snippet will expand as `[link_text](link_url)`, with `link_text`, highlighted. Type the link text and press `Tab`. Now the `link_url` text is highlighted. Enter the link text and press `Enter`. The cursor moves to one space past the of the close paraenthesis. 
+    
+    The description sounds more complicated than it is. Try it and you'll see that it's an easy and natural workflow.
+  
   - `\n` - insert a new line
   
 If you delete this file, Markdown Edit will restore it with the default snippets.
+
 
 ## Templates
 
@@ -169,11 +179,19 @@ You can change most of the key bindings. Press `F10', make your changes and save
 
 If you delete this file, Markdown Edit will create a new one with default bindings.
 
+
+## Etc.
+
+  - Line numbers can be enabled/disabled in the settings file
+  - List continuations - When editing lists, pressing enter will add the next list marker. Works with numbered lists as well.
+  - When opening recent documents, Markdown Edit will scroll to the last saved position. This can be disabled in the setting if not desired.
+
+
 ## Limitations
 
   - Only supports CommonMark
   - Single document Interface
-  - Syntax highlighting does not recognize multiple-line constructs. It uses regular expressions which don't understand the underlying Markdown constructs.  I'm hoping as CommonMark matures that a syntax parser (like PEG) will emerge.
+  - Syntax highlighting does not recognize multiple-line constructs. It uses regular expressions which don't understand the underlying Markdown constructs.  I'm hoping that as CommonMark matures a syntax parser (like PEG) will emerge.
   - I wrote it ;)
 
 
@@ -183,6 +201,7 @@ Version 1.2.0
 Home Page: <http://mike-ward.net/markdownedit>  
 Twitter: `@mikeward_aa`  
 Source: <https://github.com/mike-ward/Markdown-Edit>
+
 
 ## License
 
