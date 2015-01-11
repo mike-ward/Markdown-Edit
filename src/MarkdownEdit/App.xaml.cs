@@ -28,7 +28,8 @@ namespace MarkdownEdit
             spellingService.SetLanguage(UserSettings.SpellCheckDictionary);
             UserSettings.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary)) spellingService.SetLanguage(UserSettings.SpellCheckDictionary);
+                if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary))
+                    spellingService.SetLanguage(UserSettings.SpellCheckDictionary);
             };
 
             MainWindow = container.Resolve<MainWindow>();
