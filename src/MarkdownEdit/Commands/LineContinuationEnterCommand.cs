@@ -10,12 +10,13 @@ namespace MarkdownEdit
     {
         private readonly TextEditor _editor;
         private readonly ICommand _baseCommand;
-        private readonly Regex _orderedListPattern = new Regex(@"^[ ]{0,3}(\d+)\.(?=[ ]{1,3}\S)", RegexOptions.Compiled);
-        private readonly Regex _orderedListEndPattern = new Regex(@"^[ ]{0,3}(\d+)\.(?=[ ]{1,3}\s*)", RegexOptions.Compiled);
-        private readonly Regex _unorderedListPattern = new Regex(@"^[ ]{0,3}[-\*\+](?=[ ]{1,3}\S)", RegexOptions.Compiled);
-        private readonly Regex _unorderedListEndPattern = new Regex(@"^[ ]{0,3}[-\*\+](?=[ ]{1,3}\s*)", RegexOptions.Compiled);
-        private readonly Regex _blockQuotePattern = new Regex(@"^(([ ]{0,4}>)+)[ ]{0,4}.{2}", RegexOptions.Compiled);
-        private readonly Regex _blockQuoteEndPattern = new Regex(@"^([ ]{0,4}>)+[ ]{0,4}\s*", RegexOptions.Compiled);
+
+        public static readonly Regex OrderedListPattern = new Regex(@"^[ ]{0,3}(\d+)\.(?=[ ]{1,3}\S)", RegexOptions.Compiled);
+        public static readonly Regex OrderedListEndPattern = new Regex(@"^[ ]{0,3}(\d+)\.(?=[ ]{1,3}\s*)", RegexOptions.Compiled);
+        public static readonly Regex UnorderedListPattern = new Regex(@"^[ ]{0,3}[-\*\+](?=[ ]{1,3}\S)", RegexOptions.Compiled);
+        public static readonly Regex UnorderedListEndPattern = new Regex(@"^[ ]{0,3}[-\*\+](?=[ ]{1,3}\s*)", RegexOptions.Compiled);
+        public static readonly Regex BlockQuotePattern = new Regex(@"^(([ ]{0,4}>)+)[ ]{0,4}.{2}", RegexOptions.Compiled);
+        public static readonly Regex BlockQuoteEndPattern = new Regex(@"^([ ]{0,4}>)+[ ]{0,4}\s*", RegexOptions.Compiled);
 
         public LineContinuationEnterCommand(TextEditor editor, ICommand baseCommand)
         {
@@ -51,17 +52,17 @@ namespace MarkdownEdit
 
             var patterns = new[]
             {
-                matchDo(_unorderedListPattern, m => document.Insert(_editor.SelectionStart, m.Groups[0].Value.TrimStart() + " ")),
-                matchDo(_unorderedListEndPattern, m => document.Remove(line)),
-                matchDo(_orderedListPattern, m =>
+                matchDo(UnorderedListPattern, m => document.Insert(_editor.SelectionStart, m.Groups[0].Value.TrimStart() + " ")),
+                matchDo(UnorderedListEndPattern, m => document.Remove(line)),
+                matchDo(OrderedListPattern, m =>
                 {
                     var number = int.Parse(m.Groups[1].Value) + 1;
                     document.Insert(_editor.SelectionStart, number + ". ");
-                    RenumberOrderedList(document, line.NextLine, text, number);
+                    RenumberOrderedList(document, line.NextLine, number);
                 }),
-                matchDo(_orderedListEndPattern, m => document.Remove(line)),
-                matchDo(_blockQuotePattern, m => document.Insert(_editor.SelectionStart, m.Groups[1].Value.TrimStart())),
-                matchDo(_blockQuoteEndPattern, m => document.Remove(line))
+                matchDo(OrderedListEndPattern, m => document.Remove(line)),
+                matchDo(BlockQuotePattern, m => document.Insert(_editor.SelectionStart, m.Groups[1].Value.TrimStart())),
+                matchDo(BlockQuoteEndPattern, m => document.Remove(line))
             };
 
             patterns.FirstOrDefault(action => action != null)?.Invoke();
@@ -70,18 +71,17 @@ namespace MarkdownEdit
         private void RenumberOrderedList(
             ICSharpCode.AvalonEdit.Document.TextDocument document, 
             ICSharpCode.AvalonEdit.Document.DocumentLine line, 
-            string text, 
             int number)
         {
             while ((line = line.NextLine) != null)
             {
                 number += 1;
-                text = document.GetText(line.Offset, line.Length);
-                var match = _orderedListPattern.Match(text);
+                var text = document.GetText(line.Offset, line.Length);
+                var match = OrderedListPattern.Match(text);
                 if (match.Success == false) break;
                 var group = match.Groups[1];
-                var num = int.Parse(group.Value);
-                if (num != number) document.Replace(line.Offset + group.Index, group.Length, number.ToString());
+                var currentNumber = int.Parse(group.Value);
+                if (currentNumber != number) document.Replace(line.Offset + group.Index, group.Length, number.ToString());
             }
         }
     }
