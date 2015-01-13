@@ -9,9 +9,10 @@ namespace UnitTests
         [TestMethod]
         public void OrderedListRegExTests()
         {
-            var test = "1";
-            test.Should().Be("1");
-            //MarkdownEdit.LineContinuationEnterCommand.OrderedListPattern.Match("3. Bla").Success.Should().BeTrue();
+            MarkdownEdit.LineContinuationEnterCommand.OrderedListPattern.Match("3. Bla").Success.Should().BeTrue();
+            MarkdownEdit.LineContinuationEnterCommand.OrderedListPattern.Match("3.Bla").Success.Should().BeFalse();
+            MarkdownEdit.LineContinuationEnterCommand.OrderedListPattern.Match("3.   Bla").Success.Should().BeTrue();
+            MarkdownEdit.LineContinuationEnterCommand.OrderedListPattern.Match("3.    Bla").Success.Should().BeFalse();
         }
     }
 }
