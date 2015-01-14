@@ -8,7 +8,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MarkdownEdit")]
-[assembly: AssemblyCopyright("Copyright ©  2014, Mike Ward")]
+[assembly: AssemblyCopyright("Copyright ©  2015, Mike Ward")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
