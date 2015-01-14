@@ -31,7 +31,7 @@ namespace MarkdownEdit
             try
             {
                 var template = new HtmlDocument();
-                template.Load(UserTemplate.TemplateFile);
+                template.Load(TemplateFile);
                 var contenthtml = new HtmlDocument();
                 contenthtml.LoadHtml(content);
 

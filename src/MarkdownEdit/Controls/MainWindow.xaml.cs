@@ -9,8 +9,6 @@ using System.Windows;
 using System.Windows.Input;
 using MarkdownEdit.Properties;
 using MarkdownEdit.SpellCheck;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace MarkdownEdit
 {

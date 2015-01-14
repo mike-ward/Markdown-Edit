@@ -56,6 +56,7 @@ namespace MarkdownEdit
         private void ApplicationExit(object sender, ExitEventArgs e)
         {
             Settings.Default.Save();
+            _userSettingsWatcher?.Dispose();
         }
     }
 }

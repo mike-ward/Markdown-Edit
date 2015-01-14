@@ -9,7 +9,6 @@ namespace MarkdownEdit
     public class SnippetManager : ISnippetManager
     {
         private Dictionary<string, string> _snippets;
-        // ReSharper disable once NotAccessedField.Local
         private FileSystemWatcher _snippetFileWatcher;
 
         public SnippetManager()
@@ -25,7 +24,7 @@ namespace MarkdownEdit
         public void Initialize()
         {
             ReadSnippetFile();
-            _snippetFileWatcher = Utility.WatchFile(SnippetFile(), ReadSnippetFile);
+            if (_snippetFileWatcher == null) _snippetFileWatcher = Utility.WatchFile(SnippetFile(), ReadSnippetFile);
         }
 
         private void ReadSnippetFile()
