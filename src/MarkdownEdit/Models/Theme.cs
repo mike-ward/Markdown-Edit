@@ -85,19 +85,17 @@ namespace MarkdownEdit
             set { Set(ref _highlightImage, value); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        // INotifyPropertyChanged
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(property, value)) return;
-            property = value;
-            OnPropertyChanged(propertyName);
+            if (EqualityComparer<T>.Default.Equals(property, value) == false)
+            {
+                property = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }
