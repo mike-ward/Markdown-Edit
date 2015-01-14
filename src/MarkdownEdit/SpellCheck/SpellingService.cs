@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
+using System.Windows;
 using NHunspell;
 
 namespace MarkdownEdit.SpellCheck
@@ -49,7 +49,7 @@ namespace MarkdownEdit.SpellCheck
             }
             else
             {
-                Debug.WriteLine("dictionary not found");
+                MessageBox.Show(Application.Current.MainWindow, language + " dictionary not found", App.Title, MessageBoxButton.OK);
             }
         }
 
