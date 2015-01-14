@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ICSharpCode.AvalonEdit.Document;
+using MarkdownEdit.Controls;
 
 namespace MarkdownEdit.SpellCheck
 {

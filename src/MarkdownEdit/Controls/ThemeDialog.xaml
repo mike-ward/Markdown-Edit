@@ -1,5 +1,5 @@
 ﻿<controls:MetroWindow 
-  x:Class="MarkdownEdit.ThemeDialog"
+  x:Class="MarkdownEdit.Controls.ThemeDialog"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"

@@ -1,6 +1,7 @@
 using System;
+using MarkdownEdit.Controls;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Models
 {
     internal struct EditorState
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
-using MarkdownEdit.Properties;
 using HtmlAgilityPack;
+using MarkdownEdit.Properties;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Models
 {
     public static class UserTemplate
     {

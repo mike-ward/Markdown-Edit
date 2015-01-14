@@ -3,8 +3,9 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using MarkdownEdit.Models;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Controls
 {
     public partial class FindReplaceDialog : IDisposable
     {

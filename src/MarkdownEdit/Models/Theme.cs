@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Models
 {
     public class Theme : INotifyPropertyChanged
     {

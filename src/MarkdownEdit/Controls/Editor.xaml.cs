@@ -14,11 +14,14 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using MarkdownEdit.Commands;
+using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
+using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
 using Microsoft.Win32;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Controls
 {
     public partial class Editor : INotifyPropertyChanged
     {

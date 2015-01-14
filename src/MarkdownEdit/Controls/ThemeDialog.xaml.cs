@@ -5,9 +5,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using MarkdownEdit.Models;
 using Newtonsoft.Json;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Controls
 {
     public partial class ThemeDialog
     {

@@ -2,8 +2,9 @@
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
+using MarkdownEdit.Snippets;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Commands
 {
     internal sealed class SnippetTabCommand : ICommand
     {

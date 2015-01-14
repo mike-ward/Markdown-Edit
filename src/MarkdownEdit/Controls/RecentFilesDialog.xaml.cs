@@ -5,9 +5,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Controls
 {
     public class RecentFile
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Models
 {
     internal static class StringExtensions
     {

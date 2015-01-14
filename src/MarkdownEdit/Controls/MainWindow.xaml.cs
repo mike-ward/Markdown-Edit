@@ -7,10 +7,13 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using MarkdownEdit.MarkdownConverters;
+using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
+using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Controls
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
@@ -157,7 +160,7 @@ namespace MarkdownEdit
 
         private void ExecuteOpenUserDictionaryCommand(object sender, ExecutedRoutedEventArgs e) => Editor.OpenUserDictionary();
 
-        private void ExecuteOpenUserSnippetsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(MarkdownEdit.SnippetManager.SnippetFile());
+        private void ExecuteOpenUserSnippetsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(Snippets.SnippetManager.SnippetFile());
 
         private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e) => Editor.SpellCheck = !Editor.SpellCheck;
 

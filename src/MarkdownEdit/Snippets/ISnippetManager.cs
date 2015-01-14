@@ -1,6 +1,6 @@
 ﻿using ICSharpCode.AvalonEdit.Snippets;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Snippets
 {
     public interface ISnippetManager
     {

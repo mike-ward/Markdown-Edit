@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using MarkdownEdit.Models;
 using NHunspell;
 
 namespace MarkdownEdit.SpellCheck

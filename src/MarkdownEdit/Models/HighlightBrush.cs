@@ -3,7 +3,7 @@ using System.Windows.Media;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Rendering;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Models
 {
     internal sealed class HighlightBrush : HighlightingBrush
     {

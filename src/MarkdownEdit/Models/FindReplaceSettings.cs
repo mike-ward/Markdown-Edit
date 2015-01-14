@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using MarkdownEdit.Properties;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Models
 {
     public class FindReplaceSettings : INotifyPropertyChanged
     {

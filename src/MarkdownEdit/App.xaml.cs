@@ -1,7 +1,11 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using MarkdownEdit.Controls;
+using MarkdownEdit.MarkdownConverters;
+using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
+using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
 using TinyIoC;
 

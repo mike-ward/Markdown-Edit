@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
+using MarkdownEdit.Controls;
 using Newtonsoft.Json;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Models
 {
     public static class InputKeyBindingsSettings
     {

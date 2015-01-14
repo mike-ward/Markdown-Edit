@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Models
 {
     public class InputKeyBindings
     {

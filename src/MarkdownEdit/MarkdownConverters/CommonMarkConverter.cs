@@ -2,9 +2,10 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using CommonMark;
+using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.MarkdownConverters
 {
     public class CommonMarkConverter : IMarkdownConverter
     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
+using MarkdownEdit.Controls;
 
 namespace MarkdownEdit.SpellCheck
 {

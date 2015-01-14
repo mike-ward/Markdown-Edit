@@ -1,4 +1,4 @@
-namespace MarkdownEdit
+namespace MarkdownEdit.Models
 {
     public class Highlight
     {

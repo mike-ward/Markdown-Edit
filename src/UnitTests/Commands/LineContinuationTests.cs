@@ -1,7 +1,8 @@
 ﻿using FluentAssertions;
+using MarkdownEdit.Commands;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace UnitTests.Commands
 {
     [TestClass]
     public class LineContinuationTests
@@ -9,10 +10,10 @@ namespace UnitTests
         [TestMethod]
         public void OrderedListRegExTests()
         {
-            MarkdownEdit.LineContinuationEnterCommand.OrderedListPattern.Match("3. Bla").Success.Should().BeTrue();
-            MarkdownEdit.LineContinuationEnterCommand.OrderedListPattern.Match("3.Bla").Success.Should().BeFalse();
-            MarkdownEdit.LineContinuationEnterCommand.OrderedListPattern.Match("3.   Bla").Success.Should().BeTrue();
-            MarkdownEdit.LineContinuationEnterCommand.OrderedListPattern.Match("3.    Bla").Success.Should().BeFalse();
+            LineContinuationEnterCommand.OrderedListPattern.Match("3. Bla").Success.Should().BeTrue();
+            LineContinuationEnterCommand.OrderedListPattern.Match("3.Bla").Success.Should().BeFalse();
+            LineContinuationEnterCommand.OrderedListPattern.Match("3.   Bla").Success.Should().BeTrue();
+            LineContinuationEnterCommand.OrderedListPattern.Match("3.    Bla").Success.Should().BeFalse();
         }
     }
 }

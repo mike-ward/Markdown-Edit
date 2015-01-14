@@ -1,4 +1,4 @@
-﻿namespace MarkdownEdit
+﻿namespace MarkdownEdit.MarkdownConverters
 {
     public interface IToMarkdownConverter
     {

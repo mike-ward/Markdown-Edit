@@ -4,8 +4,9 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
+using MarkdownEdit.Controls;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Models
 {
     public static class EditorUtilities
     {

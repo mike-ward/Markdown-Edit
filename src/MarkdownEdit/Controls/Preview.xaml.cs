@@ -12,8 +12,10 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using CommonMark;
 using mshtml;
+using MarkdownEdit.MarkdownConverters;
+using MarkdownEdit.Models;
 
-namespace MarkdownEdit
+namespace MarkdownEdit.Controls
 {
     public partial class Preview : INotifyPropertyChanged
     {
