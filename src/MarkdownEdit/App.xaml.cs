@@ -28,16 +28,16 @@ namespace MarkdownEdit
             container.Register<ISpellCheckProvider, SpellCheckProvider>();
             container.Register<ISnippetManager, SnippetManager>();
 
-            var spellingService = container.Resolve<ISpellingService>();
-            spellingService.SetLanguage(UserSettings.SpellCheckDictionary);
-            UserSettings.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary))
-                    spellingService.SetLanguage(UserSettings.SpellCheckDictionary);
-            };
-
             MainWindow = container.Resolve<MainWindow>();
             MainWindow.Show();
+
+            Task.Factory.StartNew(() =>
+            {
+                var spellingService = container.Resolve<ISpellingService>();
+                spellingService.SetLanguage(UserSettings.SpellCheckDictionary);
+                UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary)) spellingService.SetLanguage(UserSettings.SpellCheckDictionary); };
+                _userSettingsWatcher = Utility.WatchFile(UserSettings.SettingsFile, UserSettings.Update);
+            });
         }
 
         private void InitializeSettings()
@@ -54,7 +54,6 @@ namespace MarkdownEdit
 
             UserSettings = UserSettings.Load();
             if (UserSettings == null) Shutdown();
-            Task.Factory.StartNew(() => _userSettingsWatcher = Utility.WatchFile(UserSettings.SettingsFile, UserSettings.Update));
         }
 
         private void ApplicationExit(object sender, ExitEventArgs e)
