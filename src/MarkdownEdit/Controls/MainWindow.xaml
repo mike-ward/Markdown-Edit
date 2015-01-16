@@ -17,11 +17,11 @@
   Background="{DynamicResource GrayBrush4}"
   TextOptions.TextFormattingMode="Display"
   >
-  
+
   <controls:MetroWindow.Resources>
     <local:NumberFormatConverter x:Key="NumberFormatConverter" />
     <local:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
-    
+
     <Style x:Key="StatusIndicatorStyle"
            TargetType="TextBlock">
       <Setter Property="Margin" Value="10 0 0 0" />
@@ -34,6 +34,7 @@
         </Trigger>
       </Style.Triggers>
     </Style>
+    
   </controls:MetroWindow.Resources>
 
   <controls:MetroWindow.RightWindowCommands>
@@ -41,6 +42,14 @@
       <StackPanel Orientation="Horizontal"
                   Margin="20 0"
                   VerticalAlignment="Center">
+        <Button Content="&#xe115;" 
+                ToolTip="Settings"
+                FontFamily="Segoe UI Symbol"
+                Foreground="{StaticResource SemiTransparentWhiteBrush}"
+                />
+        <TextBlock Text="|" 
+                   Foreground="{StaticResource SemiTransparentWhiteBrush}"
+                   Margin="9 0"/>
         <TextBlock ToolTip="Word Count"
                    Foreground="{StaticResource SemiTransparentWhiteBrush}"
                    Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" />
@@ -54,14 +63,22 @@
                    FontFamily="Segoe UI Symbol"
                    Style="{StaticResource StatusIndicatorStyle}"
                    IsEnabled="{Binding Path=WordWrap, ElementName=Editor}" />
-        <TextBlock Text="&#x3d;"
+        <TextBlock Text="&#xe105;"
                    ToolTip="Auto Save - Alt+S"
-                   FontFamily="Wingdings"
+                   FontFamily="Segoe UI Symbol"
                    Style="{StaticResource StatusIndicatorStyle}"
                    IsEnabled="{Binding Path=AutoSave, ElementName=Editor}" />
       </StackPanel>
     </controls:WindowCommands>
   </controls:MetroWindow.RightWindowCommands>
+
+  <controls:MetroWindow.Flyouts>
+    <controls:FlyoutsControl>
+      <controls:Flyout Header="Settings" Position="Right" Width="300">
+        <!-- Your custom content here -->
+      </controls:Flyout>
+    </controls:FlyoutsControl>
+  </controls:MetroWindow.Flyouts>
   
   <Grid>
     <UniformGrid x:Name="UniformGrid" Columns="2">
