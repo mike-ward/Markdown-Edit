@@ -42,14 +42,13 @@
       <StackPanel Orientation="Horizontal"
                   Margin="20 0"
                   VerticalAlignment="Center">
-        <Button Content="&#xe115;" 
+        <Button Content="&#xe115;"
+                Margin="0 0 10 0"
                 ToolTip="Settings"
+                Click="ToggleSettings"
                 FontFamily="Segoe UI Symbol"
                 Foreground="{StaticResource SemiTransparentWhiteBrush}"
                 />
-        <TextBlock Text="|" 
-                   Foreground="{StaticResource SemiTransparentWhiteBrush}"
-                   Margin="9 0"/>
         <TextBlock ToolTip="Word Count"
                    Foreground="{StaticResource SemiTransparentWhiteBrush}"
                    Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" />
@@ -74,8 +73,10 @@
 
   <controls:MetroWindow.Flyouts>
     <controls:FlyoutsControl>
-      <controls:Flyout Header="Settings" Position="Right" Width="300">
-        <!-- Your custom content here -->
+      <controls:Flyout Header="Settings" Position="Right" Theme="Accent" Foreground="White" Width="300">
+        <StackPanel>
+          <TextBlock>Stuff</TextBlock>
+        </StackPanel>
       </controls:Flyout>
     </controls:FlyoutsControl>
   </controls:MetroWindow.Flyouts>

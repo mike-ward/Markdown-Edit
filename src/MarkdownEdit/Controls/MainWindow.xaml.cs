@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using MahApps.Metro.Controls;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
@@ -314,6 +315,12 @@ namespace MarkdownEdit.Controls
                 property = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        private void ToggleSettings(object sender, RoutedEventArgs e)
+        {
+            var settings = Flyouts.Items[0] as Flyout;
+            settings.IsOpen = !settings.IsOpen;
         }
     }
 }
