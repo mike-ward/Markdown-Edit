@@ -58,6 +58,9 @@ namespace MarkdownEdit.Controls
         private FindReplaceDialog _findReplaceDialog;
         private ISnippetManager _snippetManager;
 
+        public MainWindow()
+        {
+        }
 
         public MainWindow(
             IMarkdownConverter markdownConverter,
