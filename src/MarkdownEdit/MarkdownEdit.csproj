@@ -104,6 +104,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\LineContinuationEnterCommand.cs" />
+    <Compile Include="Controls\DisplaySettings.xaml.cs">
+      <DependentUpon>DisplaySettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FontComboBox.xaml.cs">
+      <DependentUpon>FontComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToScrollBarVisibilityConverter.cs" />
     <Compile Include="Converters\NumberFormatConverter.cs" />
     <Compile Include="MarkdownConverters\CommonMarkConverter.cs" />
@@ -143,12 +149,18 @@
     <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Models\UserTemplate.cs" />
     <Compile Include="Models\Utility.cs" />
+    <Page Include="Controls\DisplaySettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Editor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\FindReplaceDialog.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FontComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\GotoLineDialog.xaml">

@@ -74,9 +74,7 @@
   <controls:MetroWindow.Flyouts>
     <controls:FlyoutsControl>
       <controls:Flyout Header="Settings" Position="Right" Theme="Accent" AnimateOpacity="True" Width="400">
-        <StackPanel Margin="10">
-          <TextBlock>Stuff</TextBlock>
-        </StackPanel>
+          <controls1:DisplaySettings Margin="10" />
       </controls:Flyout>
     </controls:FlyoutsControl>
   </controls:MetroWindow.Flyouts>
