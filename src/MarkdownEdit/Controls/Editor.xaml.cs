@@ -43,7 +43,6 @@ namespace MarkdownEdit.Controls
         {
             InitializeComponent();
             EditBox.Loaded += EditBoxOnLoaded;
-            EditBox.Unloaded += EditBoxOnUnloaded;
             EditBox.Options.IndentationSize = 2;
             EditBox.Options.EnableHyperlinks = false;
             EditBox.Options.ConvertTabsToSpaces = true;
@@ -118,14 +117,6 @@ namespace MarkdownEdit.Controls
             var highlighter = HighlightingLoader.Load(xshd, HighlightingManager.Instance);
             EditBox.SyntaxHighlighting = highlighter;
             reader.Close();
-        }
-
-        private void EditBoxOnUnloaded(object sender, RoutedEventArgs routedEventArgs)
-        {
-            Settings.Default.WordWrapEnabled = EditBox.WordWrap;
-            Settings.Default.SpellCheckEnabled = SpellCheck;
-            Settings.Default.AutoSave = AutoSave;
-            FindReplaceDialog.Dispose();
         }
 
         private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)

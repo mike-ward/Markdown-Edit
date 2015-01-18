@@ -75,6 +75,7 @@ namespace MarkdownEdit.Controls
             SnippetManager = snippetManager;
             Loaded += OnLoaded;
             Closing += OnClosing;
+            Closed += OnClosed;
             SizeChanged += (s, e) => CalculateEditorMargins();
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
@@ -102,6 +103,14 @@ namespace MarkdownEdit.Controls
         {
             Editor.CloseHelp();
             cancelEventArgs.Cancel = !Editor.SaveIfModified();
+        }
+
+        private void OnClosed(object sender, EventArgs ea)
+        {
+            Settings.Default.WordWrapEnabled = Editor.WordWrap;
+            Settings.Default.SpellCheckEnabled = Editor.SpellCheck;
+            Settings.Default.AutoSave = Editor.AutoSave;
+            FindReplaceDialog?.Dispose();
         }
 
         private void EditorOnPropertyChanged(object sender, PropertyChangedEventArgs ea)
