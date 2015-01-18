@@ -138,6 +138,12 @@ namespace MarkdownEdit.Controls
             }
         }
 
+        public void DisplayBrowser(bool display)
+        {
+            if (display) Task.Factory.StartNew(() => Task.Delay(350).ContinueWith(t => Dispatcher.Invoke(() => Browser.Visibility = Visibility.Visible)));
+            else Browser.Visibility = Visibility.Hidden;
+        }
+
         // Properties
 
         public int WordCount

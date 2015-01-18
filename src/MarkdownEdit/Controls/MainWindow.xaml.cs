@@ -307,6 +307,13 @@ namespace MarkdownEdit.Controls
             set { Set(ref _snippetManager, value); }
         }
 
+        private void ToggleSettings(object sender, RoutedEventArgs e)
+        {
+            var settings = (Flyout)Flyouts.Items[0];
+            settings.IsOpen = !settings.IsOpen;
+            Preview.DisplayBrowser(!settings.IsOpen);
+        }
+
         // INotifyPropertyChanged implementation
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -318,12 +325,6 @@ namespace MarkdownEdit.Controls
                 property = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
-        }
-
-        private void ToggleSettings(object sender, RoutedEventArgs e)
-        {
-            var settings = Flyouts.Items[0] as Flyout;
-            settings.IsOpen = !settings.IsOpen;
         }
     }
 }

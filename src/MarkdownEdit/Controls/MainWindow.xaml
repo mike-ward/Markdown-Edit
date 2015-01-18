@@ -73,8 +73,8 @@
 
   <controls:MetroWindow.Flyouts>
     <controls:FlyoutsControl>
-      <controls:Flyout Header="Settings" Position="Right" Theme="Accent" Foreground="White" Width="300">
-        <StackPanel>
+      <controls:Flyout Header="Settings" Position="Right" Theme="Accent" AnimateOpacity="True" Width="400">
+        <StackPanel Margin="10">
           <TextBlock>Stuff</TextBlock>
         </StackPanel>
       </controls:Flyout>
