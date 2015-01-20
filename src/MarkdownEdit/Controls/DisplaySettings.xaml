@@ -3,10 +3,62 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:MarkdownEdit.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel>
-        <local:FontComboBox Margin="10" />
+             d:DesignHeight="1000" d:DesignWidth="400">
+    
+    <UserControl.Resources>
+        <Style x:Key="ToggleSwitchStyle"
+               TargetType="controls:ToggleSwitch">
+            <Setter Property="Foreground" Value="WhiteSmoke" />
+        </Style>
+
+        <Style x:Key="SectionHeader"
+               TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+        </Style>
+        
+        <Style x:Key="SeparatorStyle"
+               TargetType="Separator">
+            <Setter Property="Margin" Value="0 3 0 5" />
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Margin="10 0 10 10">
+        <TextBlock Style="{StaticResource SectionHeader}">Editor</TextBlock>
+        <Separator Style="{StaticResource SeparatorStyle}"/>
+        <StackPanel Margin="30 5">
+            <local:FontComboBox  Margin="0 0 0 3" />
+            <controls:ToggleSwitch OffLabel="Open Last File" OnLabel="Open Last File"  Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Remember Cursor Postion" OnLabel="Remember Cursor Postion" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Highlight Current Line" OnLabel="Highlight Current Line" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Show Vertical Scroll Bar" OnLabel="Show Vertical Scroll Bar" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Show Tabs" OnLabel="Show Tabs" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Show Show Spaces" OnLabel="Show Spaces" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Show End of Line" OnLabel="Show End of Line" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Synchronize Scroll Positions" OnLabel="Synchronize Scroll Positions" Style="{StaticResource ToggleSwitchStyle}"/>
+        </StackPanel>
+        
+        <TextBlock Style="{StaticResource SectionHeader}">Spell Checking</TextBlock>
+        <Separator Style="{StaticResource SeparatorStyle}"/>
+        <StackPanel Margin="30 5">
+            <controls:ToggleSwitch OffLabel="Ignore All Caps" OnLabel="Ignore All Caps"  Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Ignore Code Blocks" OnLabel="Ignore Code Blocks"  Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Ignore Markup Tags" OnLabel="Ignore Markup Tags"  Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Ignore Words with Digits" OnLabel="Ignore Words with Digits"  Style="{StaticResource ToggleSwitchStyle}"/>
+        </StackPanel>
+
+        <TextBlock Style="{StaticResource SectionHeader}">Advanced</TextBlock>
+        <Separator Style="{StaticResource SeparatorStyle}"/>
+        <UniformGrid Margin="30 5"
+                     Columns="2">
+            <Button Margin="3 2">Settings (F9)</Button>
+            <Button Margin="3 2">HTML Template (F8)</Button>
+            <Button Margin="3 2">User Dictionary (F7)</Button>
+            <Button Margin="3 2">Snippets  (F6)</Button>
+            <Button Margin="3 2">Key Bindings  (F10)</Button>
+        </UniformGrid>
     </StackPanel>
 </UserControl>

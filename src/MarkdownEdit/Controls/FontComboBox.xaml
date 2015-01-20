@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
-            <TextBlock Padding="5 0 0 0">Font</TextBlock>
+            <!--<TextBlock Padding="5 0 0 0">Font</TextBlock>-->
             <controls:SplitButton
             ItemTemplate="{DynamicResource FontTemplate}">
                 <controls:SplitButton.Resources>
@@ -44,7 +44,7 @@
             </controls:SplitButton>
         </StackPanel>
         <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-            <TextBlock Padding="5 0 0 0">Size</TextBlock>
+            <!--<TextBlock Padding="5 0 0 0">Size</TextBlock>-->
             <controls:NumericUpDown Width="80"
                  FontWeight="Bold"
                  HorizontalAlignment="Right" />
