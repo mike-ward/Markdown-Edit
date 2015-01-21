@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MarkdownEdit.Controls
 {
-    /// <summary>
-    /// Interaction logic for FontComboBox.xaml
-    /// </summary>
-    public partial class FontComboBox : UserControl
+    public partial class FontComboBox
     {
         public FontComboBox()
         {
             InitializeComponent();
+        }
+
+        public static readonly DependencyProperty SelectedFontFamilyProperty = DependencyProperty.Register(
+            "SelectedFontFamily", typeof (FontFamily), typeof (FontComboBox), new PropertyMetadata(default(FontFamily)));
+
+        public FontFamily SelectedFontFamily
+        {
+            get { return (FontFamily)GetValue(SelectedFontFamilyProperty); }
+            set { SetValue(SelectedFontFamilyProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedFontSizeProperty = DependencyProperty.Register(
+            "SelectedFontSize", typeof (double), typeof (FontComboBox), new PropertyMetadata(default(double)));
+
+        public double SelectedFontSize
+        {
+            get { return (double)GetValue(SelectedFontSizeProperty); }
+            set { SetValue(SelectedFontSizeProperty, value); }
         }
     }
 }

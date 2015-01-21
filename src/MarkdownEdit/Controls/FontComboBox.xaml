@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="300">
     <Grid>
@@ -13,11 +14,11 @@
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0">
-            <!--<TextBlock Padding="5 0 0 0">Font</TextBlock>-->
-            <controls:SplitButton
-            ItemTemplate="{DynamicResource FontTemplate}">
-                <controls:SplitButton.Resources>
+        <Border Grid.Column="0">
+            <ComboBox
+                SelectedItem="{Binding SelectedFontFamily}"
+                ItemTemplate="{DynamicResource FontTemplate}">
+                <ComboBox.Resources>
                     <CollectionViewSource x:Key="myFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
                         <CollectionViewSource.SortDescriptions>
                             <componentModel:SortDescription PropertyName="Source" />
@@ -36,18 +37,19 @@
                            ToolTip="{Binding Source}" />
                         </StackPanel>
                     </DataTemplate>
-                </controls:SplitButton.Resources>
+                </ComboBox.Resources>
 
-                <controls:SplitButton.ItemsSource>
+                <ComboBox.ItemsSource>
                     <Binding Source="{StaticResource myFonts}" />
-                </controls:SplitButton.ItemsSource>
-            </controls:SplitButton>
-        </StackPanel>
-        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-            <!--<TextBlock Padding="5 0 0 0">Size</TextBlock>-->
-            <controls:NumericUpDown Width="80"
-                 FontWeight="Bold"
-                 HorizontalAlignment="Right" />
-        </StackPanel>
+                </ComboBox.ItemsSource>
+            </ComboBox>
+        </Border>
+        <Border Grid.Column="1" HorizontalAlignment="Right">
+            <controls:NumericUpDown
+                Value="{Binding SelectedFontSize}"
+                Width="80"
+                FontWeight="Bold"
+                HorizontalAlignment="Right" />
+        </Border>
     </Grid>
 </UserControl>

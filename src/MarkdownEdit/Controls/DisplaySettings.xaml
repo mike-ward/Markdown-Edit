@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="MarkdownEdit.Controls.DisplaySettings"
+             x:Name="DisplaySettingsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -22,23 +23,25 @@
         
         <Style x:Key="SeparatorStyle"
                TargetType="Separator">
-            <Setter Property="Margin" Value="0 3 0 5" />
+            <Setter Property="Margin" Value="0 3 0 5" /> 
         </Style>
     </UserControl.Resources>
-
+    
     <StackPanel Margin="10 0 10 10">
         <TextBlock Style="{StaticResource SectionHeader}">Editor</TextBlock>
         <Separator Style="{StaticResource SeparatorStyle}"/>
         <StackPanel Margin="30 5">
-            <local:FontComboBox  Margin="0 0 0 3" />
-            <controls:ToggleSwitch OffLabel="Open Last File" OnLabel="Open Last File"  Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Remember Cursor Postion" OnLabel="Remember Cursor Postion" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Highlight Current Line" OnLabel="Highlight Current Line" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Show Vertical Scroll Bar" OnLabel="Show Vertical Scroll Bar" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Show Tabs" OnLabel="Show Tabs" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Show Show Spaces" OnLabel="Show Spaces" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Show End of Line" OnLabel="Show End of Line" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Synchronize Scroll Positions" OnLabel="Synchronize Scroll Positions" Style="{StaticResource ToggleSwitchStyle}"/>
+            <local:FontComboBox  x:Name="FontCombo"
+                                 Margin="0 0 0 3" 
+                                 />
+            <controls:ToggleSwitch OffLabel="Open Last File" OnLabel="Open Last File" IsChecked="{Binding EditorOpenLastFile}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Remember Cursor Postion" OnLabel="Remember Cursor Postion" IsChecked="{Binding EditorOpenLastCursorPosition}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Highlight Current Line" OnLabel="Highlight Current Line" IsChecked="{Binding EditorHighlightCurrentLine}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Show Vertical Scroll Bar" OnLabel="Show Vertical Scroll Bar" IsChecked="{Binding EditorVerticalScrollBarVisible}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Show Tabs" OnLabel="Show Tabs" IsChecked="{Binding EditorShowTabs}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Show Show Spaces" OnLabel="Show Spaces" IsChecked="{Binding EditorShowSpaces}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Show End of Line" OnLabel="Show End of Line" IsChecked="{Binding EditorShowEndOfLine}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Synchronize Scroll Positions" OnLabel="Synchronize Scroll Positions" IsChecked="{Binding SynchronizeScrollPositions}" Style="{StaticResource ToggleSwitchStyle}"/>
         </StackPanel>
         
         <TextBlock Style="{StaticResource SectionHeader}">Spell Checking</TextBlock>
