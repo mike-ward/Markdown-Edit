@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using static System.Environment;
@@ -141,23 +142,15 @@ namespace MarkdownEdit.Models
         {
             var userSettings = Load();
             if (userSettings == null) return;
-            EditorFontFamily = userSettings.EditorFontFamily;
-            EditorFontSize = userSettings.EditorFontSize;
-            Theme = userSettings.Theme;
-            EditorOpenLastFile = userSettings.EditorOpenLastFile;
-            EditorVerticalScrollBarVisible = userSettings.EditorVerticalScrollBarVisible;
-            EditorShowEndOfLine = userSettings.EditorShowEndOfLine;
-            EditorShowSpaces = userSettings.EditorShowSpaces;
-            EditorShowTabs = userSettings.EditorShowTabs;
-            EditorShowLineNumbers = userSettings.EditorShowLineNumbers;
-            EditorHighlightCurrentLine = userSettings.EditorHighlightCurrentLine;
-            SynchronizeScrollPositions = userSettings.SynchronizeScrollPositions;
-            IgnoreYaml = userSettings.IgnoreYaml;
-            SpellCheckDictionary = userSettings.SpellCheckDictionary;
-            SpellCheckIgnoreAllCaps = userSettings.SpellCheckIgnoreAllCaps;
-            SpellCheckIgnoreCodeBlocks = userSettings.SpellCheckIgnoreCodeBlocks;
-            SpellCheckIgnoreMarkupTags = userSettings.SpellCheckIgnoreMarkupTags;
-            SpellCheckIgnoreWordsWithDigits = userSettings.SpellCheckIgnoreWordsWithDigits;
+ 
+            foreach (var property in GetType().GetProperties())
+            {
+                var updatedProperty = userSettings.GetType().GetProperty(property.Name);
+                if (updatedProperty != null && updatedProperty.CanWrite)
+                {
+                    property.SetValue(this, updatedProperty.GetValue(userSettings, null), null);
+                }
+            }
         }
 
         // Serialization

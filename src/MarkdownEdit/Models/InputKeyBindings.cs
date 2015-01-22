@@ -26,7 +26,7 @@ namespace MarkdownEdit.Models
             foreach (var property in GetType().GetProperties())
             {
                 var updatedProperty = updates.GetType().GetProperty(property.Name);
-                if (updatedProperty != null)
+                if (updatedProperty != null && updatedProperty.CanWrite)
                 {
                     property.SetValue(this, updatedProperty.GetValue(updates, null), null);
                 }

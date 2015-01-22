@@ -1,9 +1,8 @@
-﻿using System.Windows.Controls;
-using System.Windows.Data;
+﻿using System.Windows.Data;
 
 namespace MarkdownEdit.Controls
 {
-    public partial class DisplaySettings : UserControl
+    public partial class DisplaySettings
     {
         public DisplaySettings()
         {
@@ -15,6 +14,6 @@ namespace MarkdownEdit.Controls
 
             var fontSizeBinding = new Binding("EditorFontSize") { Source = DataContext, Mode = BindingMode.TwoWay };
             FontCombo.SetBinding(FontComboBox.SelectedFontSizeProperty, fontSizeBinding);
-        }
+        }                                                           
     }
 }
