@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
-using static System.Environment;
+using
+
+
+static
+
+System.Environment;
 
 namespace MarkdownEdit.Models
 {
-    public class UserSettings : INotifyPropertyChanged
+    public class UserSettings : INotifyPropertyChanged, ICloneable
     {
         private Theme _theme;
         private string _editorFontFamily = "Consolas";
@@ -142,7 +146,7 @@ namespace MarkdownEdit.Models
         {
             var userSettings = Load();
             if (userSettings == null) return;
- 
+
             foreach (var property in GetType().GetProperties())
             {
                 var updatedProperty = userSettings.GetType().GetProperty(property.Name);
@@ -194,6 +198,12 @@ namespace MarkdownEdit.Models
                 property = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        // ICloneable
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }

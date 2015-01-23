@@ -73,8 +73,13 @@
 
   <controls:MetroWindow.Flyouts>
     <controls:FlyoutsControl>
-      <controls:Flyout Header="Settings" Position="Right" Theme="Accent" AnimateOpacity="True" Width="400">
-          <controls1:DisplaySettings Margin="10" />
+      <controls:Flyout Header="Settings" 
+                       Position="Right" 
+                       Theme="Accent" 
+                       AnimateOpacity="True" 
+                       Width="400" 
+                       ClosingFinished="SettingsClosingFinished">
+          <controls1:DisplaySettings x:Name="DisplaySettings" Margin="10" />
       </controls:Flyout>
     </controls:FlyoutsControl>
   </controls:MetroWindow.Flyouts>

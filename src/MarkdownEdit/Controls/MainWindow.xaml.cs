@@ -125,6 +125,8 @@ namespace MarkdownEdit.Controls
             }
         }
 
+        private void SettingsClosingFinished(object sender, RoutedEventArgs e) => DisplaySettings.SaveIfModified();
+
         private string BuildTitle() => string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "* " : "", Editor.DisplayName);
 
         // Commands
@@ -321,6 +323,7 @@ namespace MarkdownEdit.Controls
             var settings = (Flyout)Flyouts.Items[0];
             settings.IsOpen = !settings.IsOpen;
             Preview.DisplayBrowser(!settings.IsOpen);
+            if (settings.IsOpen) DisplaySettings.SaveState();
         }
 
         // INotifyPropertyChanged implementation
