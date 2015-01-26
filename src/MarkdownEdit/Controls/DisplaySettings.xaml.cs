@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Windows.Data;
+﻿using System.Windows.Data;
 using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
@@ -28,15 +27,7 @@ namespace MarkdownEdit.Controls
         public void SaveIfModified()
         {
             var appSettings = (UserSettings)DataContext;
-
-            var modified = appSettings.GetType().GetProperties()
-                .Select(property => new {appProperty = property, clonedProperty = _clonedSettings?.GetType().GetProperty(property.Name)})
-                .Where(pair => pair.appProperty != null && pair.appProperty.CanWrite)
-                .Where(pair => pair.appProperty.GetValue(appSettings).Equals(pair.clonedProperty.GetValue(_clonedSettings)) == false)
-                .Select(pair => pair.appProperty)
-                .Any();
-
-            if (modified)
+            if (appSettings != _clonedSettings)
             {
                 appSettings.Save();
             }

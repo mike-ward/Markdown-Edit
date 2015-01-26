@@ -4,16 +4,11 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
-using
-
-
-static
-
-System.Environment;
+using static System.Environment;
 
 namespace MarkdownEdit.Models
 {
-    public class UserSettings : INotifyPropertyChanged, ICloneable
+    public class UserSettings : INotifyPropertyChanged, ICloneable, IEquatable<UserSettings>
     {
         private Theme _theme;
         private string _editorFontFamily = "Consolas";
@@ -204,6 +199,50 @@ namespace MarkdownEdit.Models
         public object Clone()
         {
             return MemberwiseClone();
+        }
+
+        // IEquatable
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as UserSettings);
+        }
+
+        public bool Equals(UserSettings other)
+        {
+            return other != null && GetHashCode() == other.GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            return 17
+                   ^ EditorFontFamily.GetHashCode()
+                   ^ EditorFontSize.GetHashCode()
+                   ^ EditorHighlightCurrentLine.GetHashCode()
+                   ^ EditorOpenLastCursorPosition.GetHashCode()
+                   ^ EditorOpenLastFile.GetHashCode()
+                   ^ EditorShowEndOfLine.GetHashCode()
+                   ^ EditorShowLineNumbers.GetHashCode()
+                   ^ EditorShowSpaces.GetHashCode()
+                   ^ EditorShowTabs.GetHashCode()
+                   ^ EditorVerticalScrollBarVisible.GetHashCode()
+                   ^ SynchronizeScrollPositions.GetHashCode()
+                   ^ SpellCheckDictionary.GetHashCode()
+                   ^ SpellCheckIgnoreCodeBlocks.GetHashCode()
+                   ^ SpellCheckIgnoreMarkupTags.GetHashCode()
+                   ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
+                   ^ IgnoreYaml.GetHashCode()
+                   ^ Theme.GetHashCode();
+        }
+
+        public static bool operator ==(UserSettings left, UserSettings right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(UserSettings left, UserSettings right)
+        {
+            return !Equals(left, right);
         }
     }
 }
