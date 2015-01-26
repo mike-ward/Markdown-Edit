@@ -74,7 +74,8 @@
 
   <controls:MetroWindow.Flyouts>
     <controls:FlyoutsControl>
-      <controls:Flyout Header="Settings" 
+      <controls:Flyout x:Name="SettingsFlyout"
+                       Header="Settings" 
                        Position="Right" 
                        Theme="Accent" 
                        AnimateOpacity="True" 
@@ -109,6 +110,7 @@
         x:Name="Preview"
         Margin="{Binding EditorMargins}"
         MarkdownConverter="{Binding MarkdownConverter}"
+        HidePreview="{Binding ElementName=SettingsFlyout, Path=IsOpen}"
         />
     </UniformGrid>
   </Grid>

@@ -138,12 +138,6 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        public void DisplayBrowser(bool display)
-        {
-            if (display) Task.Factory.StartNew(() => Task.Delay(350).ContinueWith(t => Dispatcher.Invoke(() => Browser.Visibility = Visibility.Visible)));
-            else Browser.Visibility = Visibility.Hidden;
-        }
-
         // Properties
 
         public int WordCount
@@ -159,6 +153,30 @@ namespace MarkdownEdit.Controls
         {
             get { return (IMarkdownConverter)GetValue(MarkdownConverterProperty); }
             set { SetValue(MarkdownConverterProperty, value); }
+        }
+
+        public static readonly DependencyProperty HidePreviewProperty = DependencyProperty.Register(
+            "HidePreview", typeof (bool), typeof (Preview), new PropertyMetadata(default(bool), HidePreviewPropertyChanged));
+
+        private static void HidePreviewPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var preview = (Preview)dependencyObject;
+            if (preview.HidePreview == false)
+            {
+                Task.Factory.StartNew(() => Task
+                    .Delay(350)
+                    .ContinueWith(t => preview.Dispatcher.Invoke(() => preview.Browser.Visibility = Visibility.Visible)));
+            }
+            else
+            {
+                preview.Browser.Visibility = Visibility.Hidden;
+            }
+        }
+
+        public bool HidePreview
+        {
+            get { return (bool)GetValue(HidePreviewProperty); }
+            set { SetValue(HidePreviewProperty, value); }
         }
 
         // INotifyPropertyChanged

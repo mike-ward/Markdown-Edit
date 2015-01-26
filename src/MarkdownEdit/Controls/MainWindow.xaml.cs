@@ -320,10 +320,9 @@ namespace MarkdownEdit.Controls
 
         private void ToggleSettings(object sender, RoutedEventArgs e)
         {
-            var settings = (Flyout)Flyouts.Items[0];
-            settings.IsOpen = !settings.IsOpen;
-            Preview.DisplayBrowser(!settings.IsOpen);
-            if (settings.IsOpen) DisplaySettings.SaveState();
+            var settingsFlyout = (Flyout)Flyouts.Items[0];
+            settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
+            if (settingsFlyout.IsOpen) DisplaySettings.SaveState();
         }
 
         // INotifyPropertyChanged implementation
