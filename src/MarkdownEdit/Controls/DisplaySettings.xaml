@@ -13,6 +13,7 @@
         <Style x:Key="ToggleSwitchStyle"
                TargetType="controls:ToggleSwitch">
             <Setter Property="Foreground" Value="WhiteSmoke" />
+            <Setter Property="Height" Value="30" />
         </Style>
 
         <Style x:Key="SectionHeader"
@@ -27,7 +28,7 @@
         </Style>
     </UserControl.Resources>
     
-    <StackPanel Margin="10 0 10 10">
+    <StackPanel Margin="10 0">
         <TextBlock Style="{StaticResource SectionHeader}">Editor</TextBlock>
         <Separator Style="{StaticResource SeparatorStyle}"/>
         <StackPanel Margin="30 5">
@@ -45,10 +46,11 @@
         <TextBlock Style="{StaticResource SectionHeader}">Spell Checking</TextBlock>
         <Separator Style="{StaticResource SeparatorStyle}"/>
         <StackPanel Margin="30 5">
-            <controls:ToggleSwitch OffLabel="Ignore All Caps" OnLabel="Ignore All Caps"  Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Ignore Code Blocks" OnLabel="Ignore Code Blocks"  Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Ignore Markup Tags" OnLabel="Ignore Markup Tags"  Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Ignore Words with Digits" OnLabel="Ignore Words with Digits"  Style="{StaticResource ToggleSwitchStyle}"/>
+            <ComboBox Width="200" HorizontalAlignment="Left" Margin="0 0 0 3" />
+            <controls:ToggleSwitch OffLabel="Ignore All Caps" OnLabel="Ignore All Caps" IsChecked="{Binding SpellCheckIgnoreAllCaps}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Ignore Code Blocks" OnLabel="Ignore Code Blocks" IsChecked="{Binding SpellCheckIgnoreCodeBlocks}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Ignore Markup Tags" OnLabel="Ignore Markup Tags" IsChecked="{Binding SpellCheckIgnoreMarkupTags}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Ignore Words with Digits" OnLabel="Ignore Words with Digits" IsChecked="{Binding SpellCheckIgnoreWordsWithDigits}" Style="{StaticResource ToggleSwitchStyle}"/>
         </StackPanel>
 
         <TextBlock Style="{StaticResource SectionHeader}">Advanced</TextBlock>
