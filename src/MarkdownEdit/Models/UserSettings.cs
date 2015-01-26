@@ -203,11 +203,6 @@ namespace MarkdownEdit.Models
 
         // IEquatable
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as UserSettings);
-        }
-
         public bool Equals(UserSettings other)
         {
             return other != null && GetHashCode() == other.GetHashCode();
@@ -233,16 +228,6 @@ namespace MarkdownEdit.Models
                    ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
                    ^ IgnoreYaml.GetHashCode()
                    ^ Theme.GetHashCode();
-        }
-
-        public static bool operator ==(UserSettings left, UserSettings right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(UserSettings left, UserSettings right)
-        {
-            return !Equals(left, right);
         }
     }
 }

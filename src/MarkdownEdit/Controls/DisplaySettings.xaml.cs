@@ -27,7 +27,7 @@ namespace MarkdownEdit.Controls
         public void SaveIfModified()
         {
             var appSettings = (UserSettings)DataContext;
-            if (appSettings != _clonedSettings)
+            if (appSettings.Equals(_clonedSettings) == false)
             {
                 appSettings.Save();
             }
