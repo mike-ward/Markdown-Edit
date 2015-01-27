@@ -35,8 +35,8 @@
         <Separator Style="{StaticResource SeparatorStyle}"/>
         <StackPanel Margin="30 5">
             <local:FontComboBox  x:Name="FontCombo" Margin="0 0 0 3" />
-            <controls:ToggleSwitch OffLabel="Word Wrap" OnLabel="Word Wrap" IsChecked="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Auto Save" OnLabel="Auto Save" IsChecked="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Word Wrap" OnLabel="Word Wrap" ToolTip="Ctrl+W" IsChecked="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Auto Save" OnLabel="Auto Save" ToolTip="Alt+S" IsChecked="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Open Last File" OnLabel="Open Last File" IsChecked="{Binding EditorOpenLastFile}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Remember Cursor Postion" OnLabel="Remember Cursor Postion" IsChecked="{Binding EditorOpenLastCursorPosition}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Highlight Current Line" OnLabel="Highlight Current Line" IsChecked="{Binding EditorHighlightCurrentLine}" Style="{StaticResource ToggleSwitchStyle}"/>
@@ -51,7 +51,7 @@
         <Separator Style="{StaticResource SeparatorStyle}"/>
         <StackPanel Margin="30 5">
             <ComboBox Width="200" HorizontalAlignment="Left" Margin="0 0 0 3" />
-            <controls:ToggleSwitch OffLabel="Spell Checking" OnLabel="Spell Checking" IsChecked="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Spell Checking" OnLabel="Spell Checking" ToolTip="Ctrl+F7" IsChecked="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Ignore All Caps" OnLabel="Ignore All Caps" IsChecked="{Binding SpellCheckIgnoreAllCaps}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Ignore Code Blocks" OnLabel="Ignore Code Blocks" IsChecked="{Binding SpellCheckIgnoreCodeBlocks}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Ignore Markup Tags" OnLabel="Ignore Markup Tags" IsChecked="{Binding SpellCheckIgnoreMarkupTags}" Style="{StaticResource ToggleSwitchStyle}"/>
@@ -62,11 +62,11 @@
         <Separator Style="{StaticResource SeparatorStyle}"/>
         <UniformGrid Margin="30 5"
                      Columns="2">
-            <Button Margin="3 2">Settings (F9)</Button>
-            <Button Margin="3 2">HTML Template (F8)</Button>
-            <Button Margin="3 2">User Dictionary (F7)</Button>
-            <Button Margin="3 2">Snippets  (F6)</Button>
-            <Button Margin="3 2">Key Bindings  (F10)</Button>
+            <Button Margin="3 2" ToolTip="F9">Settings</Button>
+            <Button Margin="3 2" ToolTip="F8">HTML Template</Button>
+            <Button Margin="3 2" ToolTip="F7">User Dictionary</Button>
+            <Button Margin="3 2" ToolTip="F6">Snippets</Button>
+            <Button Margin="3 2" ToolTip="F10">Key Bindings</Button>
         </UniformGrid>
     </StackPanel>
 </UserControl>

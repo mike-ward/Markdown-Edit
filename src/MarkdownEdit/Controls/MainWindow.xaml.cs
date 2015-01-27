@@ -107,9 +107,6 @@ namespace MarkdownEdit.Controls
 
         private void OnClosed(object sender, EventArgs ea)
         {
-            Settings.Default.WordWrapEnabled = Editor.WordWrap;
-            Settings.Default.SpellCheckEnabled = Editor.SpellCheck;
-            Settings.Default.AutoSave = Editor.AutoSave;
             FindReplaceDialog?.Dispose();
         }
 
@@ -139,7 +136,7 @@ namespace MarkdownEdit.Controls
 
         public void ExecuteSaveFileAs(object sender, ExecutedRoutedEventArgs ea) => Editor.SaveFileAs();
 
-        public void ExecuteToggleWordWrap(object sender, ExecutedRoutedEventArgs ea) => Editor.WordWrap = !Editor.WordWrap;
+        public void ExecuteToggleWordWrap(object sender, ExecutedRoutedEventArgs ea) => Settings.Default.WordWrapEnabled = !Settings.Default.WordWrapEnabled;
 
         public void ExecuteHelp(object sender, ExecutedRoutedEventArgs ea) => Editor.ToggleHelp();
 
@@ -177,7 +174,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteOpenUserSnippetsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(Snippets.SnippetManager.SnippetFile());
 
-        private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e) => Editor.SpellCheck = !Editor.SpellCheck;
+        private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e) => Settings.Default.SpellCheckEnabled = !Settings.Default.SpellCheckEnabled;
 
         private void ExecuteToggleFullScreen(object sender, ExecutedRoutedEventArgs e) => WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
 
@@ -185,7 +182,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e) => Editor.PasteSpecial();
 
-        private void ExecuteToggleAutoSave(object sender, ExecutedRoutedEventArgs e) => Editor.AutoSave = !Editor.AutoSave;
+        private void ExecuteToggleAutoSave(object sender, ExecutedRoutedEventArgs e) => Settings.Default.AutoSave = !Settings.Default.AutoSave;
 
         private void ExecuteTogglePreview(object sender, ExecutedRoutedEventArgs e)
         {
