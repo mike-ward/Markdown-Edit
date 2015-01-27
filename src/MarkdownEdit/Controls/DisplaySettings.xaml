@@ -62,11 +62,11 @@
         <Separator Style="{StaticResource SeparatorStyle}"/>
         <UniformGrid Margin="30 5"
                      Columns="2">
-            <Button Margin="3 2" ToolTip="F9">Settings</Button>
-            <Button Margin="3 2" ToolTip="F8">HTML Template</Button>
-            <Button Margin="3 2" ToolTip="F7">User Dictionary</Button>
-            <Button Margin="3 2" ToolTip="F6">Snippets</Button>
-            <Button Margin="3 2" ToolTip="F10">Key Bindings</Button>
+            <Button Margin="3 2" ToolTip="F9" Command="{x:Static local:MainWindow.OpenUserSettingsCommand}">Settings</Button>
+            <Button Margin="3 2" ToolTip="F8" Command="{x:Static local:MainWindow.OpenUserTemplateCommand}">HTML Template</Button>
+            <Button Margin="3 2" ToolTip="F7" Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}">User Dictionary</Button>
+            <Button Margin="3 2" ToolTip="F6" Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}">Snippets</Button>
+            <Button Margin="3 2" ToolTip="F10" Command="{x:Static local:MainWindow.OpenKeybindingSettingsCommand}">Key Bindings</Button>
         </UniformGrid>
     </StackPanel>
 </UserControl>
