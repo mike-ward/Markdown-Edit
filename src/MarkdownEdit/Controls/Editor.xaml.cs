@@ -27,7 +27,6 @@ namespace MarkdownEdit.Controls
     {
         private string _fileName;
         private string _displayName = string.Empty;
-        private bool _autosave;
         private bool _isModified;
         private bool _removeSpecialCharacters;
         private bool _appsKeyDown;
@@ -48,7 +47,6 @@ namespace MarkdownEdit.Controls
             EditBox.TextChanged += EditBoxOnTextChanged;
             EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
             EditBox.PreviewKeyDown += (s, e) => _appsKeyDown = e.Key == Key.Apps && e.IsDown;
-            AutoSave = Settings.Default.AutoSave;
             DataObject.AddPastingHandler(EditBox, OnPaste);
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
@@ -534,16 +532,19 @@ namespace MarkdownEdit.Controls
             set { Set(ref _displayName, value); }
         }
 
-        public bool AutoSave
-        {
-            get { return _autosave; }
-            set { Set(ref _autosave, value); }
-        }
-
         public bool IsModified
         {
             get { return _isModified; }
             set { Set(ref _isModified, value); }
+        }
+
+        public static readonly DependencyProperty AutoSaveProperty = DependencyProperty.Register(
+            "AutoSave", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+
+        public bool AutoSave
+        {
+            get { return (bool)GetValue(AutoSaveProperty); }
+            set { SetValue(AutoSaveProperty, value); }
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(

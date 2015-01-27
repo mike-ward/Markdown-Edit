@@ -93,6 +93,7 @@
         x:Name="Editor" 
         Padding="5 10 5 3" 
         Margin="{Binding Path=EditorMargins, RelativeSource={RelativeSource AncestorType=Window}}"
+        AutoSave="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}"
         Theme="{Binding Path=Theme, Source={x:Static local:App.UserSettings}}"
         FontFamily="{Binding Path=EditorFontFamily, Source={x:Static local:App.UserSettings}}"
         FontSize="{Binding Path=EditorFontSize, Source={x:Static local:App.UserSettings}}"

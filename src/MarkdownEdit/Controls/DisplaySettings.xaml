@@ -36,6 +36,7 @@
         <StackPanel Margin="30 5">
             <local:FontComboBox  x:Name="FontCombo" Margin="0 0 0 3" />
             <controls:ToggleSwitch OffLabel="Word Wrap" OnLabel="Word Wrap" IsChecked="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
+            <controls:ToggleSwitch OffLabel="Auto Save" OnLabel="Auto Save" IsChecked="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Open Last File" OnLabel="Open Last File" IsChecked="{Binding EditorOpenLastFile}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Remember Cursor Postion" OnLabel="Remember Cursor Postion" IsChecked="{Binding EditorOpenLastCursorPosition}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Highlight Current Line" OnLabel="Highlight Current Line" IsChecked="{Binding EditorHighlightCurrentLine}" Style="{StaticResource ToggleSwitchStyle}"/>
