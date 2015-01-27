@@ -164,7 +164,7 @@ namespace MarkdownEdit.Controls
             if (preview.HidePreview == false)
             {
                 Task.Factory.StartNew(() => Task
-                    .Delay(350)
+                    .Delay(300)
                     .ContinueWith(t => preview.Dispatcher.Invoke(() => preview.Browser.Visibility = Visibility.Visible)));
             }
             else

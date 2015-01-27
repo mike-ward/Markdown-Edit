@@ -5,6 +5,7 @@
   xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
   xmlns:local="clr-namespace:MarkdownEdit"
   xmlns:controls1="clr-namespace:MarkdownEdit.Controls"
+  xmlns:p="clr-namespace:MarkdownEdit.Properties"
   Title="{Binding TitleName}"
   TitleCaps="False"
   SaveWindowPosition="True"
@@ -103,8 +104,10 @@
         HighlightCurrentLine="{Binding Path=EditorHighlightCurrentLine, Source={x:Static local:App.UserSettings}}"
         ShowLineNumbers="{Binding Path=EditorShowLineNumbers, Source={x:Static local:App.UserSettings}}"
         SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}"
+        SpellCheck="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}"
         FindReplaceDialog="{Binding Path=FindReplaceDialog, RelativeSource={RelativeSource AncestorType=Window}}"
         SnippetManager="{Binding Path=SnippetManager, RelativeSource={RelativeSource AncestorType=Window}}"
+        WordWrap="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}"
         />
       <controls1:Preview 
         x:Name="Preview"

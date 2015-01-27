@@ -27,8 +27,6 @@ namespace MarkdownEdit.Controls
     {
         private string _fileName;
         private string _displayName = string.Empty;
-        private bool _wordWrap;
-        private bool _spellCheck;
         private bool _autosave;
         private bool _isModified;
         private bool _removeSpecialCharacters;
@@ -47,12 +45,10 @@ namespace MarkdownEdit.Controls
             EditBox.Options.EnableHyperlinks = false;
             EditBox.Options.ConvertTabsToSpaces = true;
             EditBox.Options.AllowScrollBelowDocument = true;
-            EditBox.WordWrap = Settings.Default.WordWrapEnabled;
             EditBox.TextChanged += EditBoxOnTextChanged;
             EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
             EditBox.PreviewKeyDown += (s, e) => _appsKeyDown = e.Key == Key.Apps && e.IsDown;
             AutoSave = Settings.Default.AutoSave;
-            PropertyChanged += OnSpellCheckChanged;
             DataObject.AddPastingHandler(EditBox, OnPaste);
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
@@ -154,14 +150,6 @@ namespace MarkdownEdit.Controls
         }
 
         // Spell Check
-
-        private void OnSpellCheckChanged(object o, PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName != nameof(SpellCheck)) return;
-            SpellCheckProvider.Enabled = SpellCheck;
-            EditBox.Document.Insert(0, " ");
-            EditBox.Document.UndoStack.Undo();
-        }
 
         private void SpellCheckSuggestions(ContextMenu contextMenu)
         {
@@ -546,18 +534,6 @@ namespace MarkdownEdit.Controls
             set { Set(ref _displayName, value); }
         }
 
-        public bool WordWrap
-        {
-            get { return _wordWrap; }
-            set { Set(ref _wordWrap, value); }
-        }
-
-        public bool SpellCheck
-        {
-            get { return _spellCheck; }
-            set { Set(ref _spellCheck, value); }
-        }
-
         public bool AutoSave
         {
             get { return _autosave; }
@@ -643,13 +619,13 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
-            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckChanged));
+            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckProviderPropertyChanged));
 
-        private static void SpellCheckChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        private static void SpellCheckProviderPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
             var editor = (Editor)source;
             editor.SpellCheckProvider.Initialize(editor);
-            editor.SpellCheck = Settings.Default.SpellCheckEnabled;
+            editor.SpellCheckProvider.Enabled = editor.SpellCheck;
         }
 
         public ISpellCheckProvider SpellCheckProvider
@@ -689,6 +665,33 @@ namespace MarkdownEdit.Controls
         {
             get { return (ISnippetManager)GetValue(SnippetManagerProperty); }
             set { SetValue(SnippetManagerProperty, value); }
+        }
+
+        public static readonly DependencyProperty WordWrapProperty = DependencyProperty.Register(
+            "WordWrap", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+
+        public bool WordWrap
+        {
+            get { return (bool)GetValue(WordWrapProperty); }
+            set { SetValue(WordWrapProperty, value); }
+        }
+
+        public static readonly DependencyProperty SpellCheckProperty = DependencyProperty.Register(
+            "SpellCheck", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), SpellCheckPropertyChanged));
+
+        private static void SpellCheckPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs ea)
+        {
+            var editor = (Editor)dependencyObject;
+            if (editor.SpellCheckProvider == null) return;
+            editor.SpellCheckProvider.Enabled = (bool)ea.NewValue;
+            editor.EditBox.Document.Insert(0, " ");
+            editor.EditBox.Document.UndoStack.Undo();
+        }
+
+        public bool SpellCheck
+        {
+            get { return (bool)GetValue(SpellCheckProperty); }
+            set { SetValue(SpellCheckProperty, value); }
         }
 
         // INotifyPropertyChanged

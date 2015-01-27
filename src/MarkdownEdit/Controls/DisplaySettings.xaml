@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:MarkdownEdit.Controls"
+             xmlns:p="clr-namespace:MarkdownEdit.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="1000" d:DesignWidth="400">
     
@@ -26,6 +27,7 @@
                TargetType="Separator">
             <Setter Property="Margin" Value="0 3 0 5" /> 
         </Style>
+        
     </UserControl.Resources>
     
     <StackPanel Margin="10 0">
@@ -33,6 +35,7 @@
         <Separator Style="{StaticResource SeparatorStyle}"/>
         <StackPanel Margin="30 5">
             <local:FontComboBox  x:Name="FontCombo" Margin="0 0 0 3" />
+            <controls:ToggleSwitch OffLabel="Word Wrap" OnLabel="Word Wrap" IsChecked="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Open Last File" OnLabel="Open Last File" IsChecked="{Binding EditorOpenLastFile}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Remember Cursor Postion" OnLabel="Remember Cursor Postion" IsChecked="{Binding EditorOpenLastCursorPosition}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Highlight Current Line" OnLabel="Highlight Current Line" IsChecked="{Binding EditorHighlightCurrentLine}" Style="{StaticResource ToggleSwitchStyle}"/>
@@ -47,6 +50,7 @@
         <Separator Style="{StaticResource SeparatorStyle}"/>
         <StackPanel Margin="30 5">
             <ComboBox Width="200" HorizontalAlignment="Left" Margin="0 0 0 3" />
+            <controls:ToggleSwitch OffLabel="Spell Checking" OnLabel="Spell Checking" IsChecked="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Ignore All Caps" OnLabel="Ignore All Caps" IsChecked="{Binding SpellCheckIgnoreAllCaps}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Ignore Code Blocks" OnLabel="Ignore Code Blocks" IsChecked="{Binding SpellCheckIgnoreCodeBlocks}" Style="{StaticResource ToggleSwitchStyle}"/>
             <controls:ToggleSwitch OffLabel="Ignore Markup Tags" OnLabel="Ignore Markup Tags" IsChecked="{Binding SpellCheckIgnoreMarkupTags}" Style="{StaticResource ToggleSwitchStyle}"/>
