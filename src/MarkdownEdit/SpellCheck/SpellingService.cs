@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using MarkdownEdit.Models;
 using NHunspell;
@@ -32,12 +33,13 @@ namespace MarkdownEdit.SpellCheck
             _speller = null;
         }
 
+        private static string SpellCheckFolder() => Path.Combine(Utility.AssemblyFolder(), "SpellCheck\\Dictionaries");
+
         public void SetLanguage(string language)
         {
             ClearLanguage();
             var speller = new Hunspell();
-            var assemblyFolder = Utility.AssemblyFolder();
-            var path = Path.Combine(assemblyFolder, "SpellCheck\\Dictionaries");
+            var path = SpellCheckFolder();
 
             var aff = Path.Combine(path, language + ".aff");
             var dic = Path.Combine(path, language + ".dic");
@@ -69,6 +71,14 @@ namespace MarkdownEdit.SpellCheck
                 File.WriteAllText(file, string.Empty);
             }
             return file;
+        }
+
+        public string[] Languages()
+        {
+            return Directory
+                .GetFiles(SpellCheckFolder(), "*.dic")
+                .Select(Path.GetFileNameWithoutExtension)
+                .ToArray();
         }
 
         private void UpdateCustomDictionary(string word)

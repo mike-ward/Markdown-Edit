@@ -82,7 +82,9 @@
                        AnimateOpacity="True" 
                        Width="400" 
                        ClosingFinished="SettingsClosingFinished">
-          <controls1:DisplaySettings x:Name="DisplaySettings" Margin="10" />
+          <controls1:DisplaySettings x:Name="DisplaySettings" 
+                                     Margin="10" 
+                                     SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}" />
       </controls:Flyout>
     </controls:FlyoutsControl>
   </controls:MetroWindow.Flyouts>

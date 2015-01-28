@@ -1,5 +1,7 @@
-﻿using System.Windows.Data;
+﻿using System.Windows;
+using System.Windows.Data;
 using MarkdownEdit.Models;
+using MarkdownEdit.SpellCheck;
 
 namespace MarkdownEdit.Controls
 {
@@ -31,6 +33,15 @@ namespace MarkdownEdit.Controls
             {
                 appSettings.Save();
             }
+        }
+
+        public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
+            "SpellCheckProvider", typeof (ISpellCheckProvider), typeof (DisplaySettings), new PropertyMetadata(default(ISpellCheckProvider)));
+
+        public ISpellCheckProvider SpellCheckProvider
+        {
+            get { return (ISpellCheckProvider)GetValue(SpellCheckProviderProperty); }
+            set { SetValue(SpellCheckProviderProperty, value); }
         }
     }
 }

@@ -13,6 +13,7 @@ namespace MarkdownEdit.SpellCheck
         void Add(string word);
         string CustomDictionaryFile();
         void Disconnect();
+        string[] Languages();
         ISpellingService SpellingService();
     }
 }

@@ -59,6 +59,11 @@ namespace MarkdownEdit.SpellCheck
             _editor = null;
         }
 
+        public string[] Languages()
+        {
+            return _spellingService?.Languages() ?? new string[0];
+        }
+
         public ISpellingService SpellingService()
         {
             return _spellingService;

@@ -10,5 +10,6 @@ namespace MarkdownEdit.SpellCheck
         IEnumerable<string> Suggestions(string word);
         void Add(string word);
         string CustomDictionaryFile();
+        string[] Languages();
     }
 }

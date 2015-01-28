@@ -110,6 +110,9 @@
     <Compile Include="Controls\FontComboBox.xaml.cs">
       <DependentUpon>FontComboBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SpellingDictionaryComboBox.xaml.cs">
+      <DependentUpon>SpellingDictionaryComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToScrollBarVisibilityConverter.cs" />
     <Compile Include="Converters\NumberFormatConverter.cs" />
     <Compile Include="MarkdownConverters\CommonMarkConverter.cs" />
@@ -188,6 +191,9 @@
     </Page>
     <Page Include="Controls\RecentFilesDialog.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SpellingDictionaryComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ThemeDialog.xaml">
