@@ -10,6 +10,7 @@ namespace MarkdownEdit.SpellCheck
     public class SpellingService : ISpellingService
     {
         private Hunspell _speller;
+        private string _language;
 
         public bool Spell(string word)
         {
@@ -35,7 +36,12 @@ namespace MarkdownEdit.SpellCheck
 
         private static string SpellCheckFolder() => Path.Combine(Utility.AssemblyFolder(), "SpellCheck\\Dictionaries");
 
-        public void SetLanguage(string language)
+        public string Language
+        {
+            get { return _language; }
+            set { SetLanguage(value);}
+        }
+        private void SetLanguage(string language)
         {
             ClearLanguage();
             var speller = new Hunspell();
@@ -49,6 +55,7 @@ namespace MarkdownEdit.SpellCheck
                 speller.Load(aff, dic);
                 LoadCustomDictonary(speller);
                 _speller = speller;
+                _language = language;
             }
             else
             {

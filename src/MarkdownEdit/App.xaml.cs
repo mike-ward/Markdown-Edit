@@ -34,8 +34,12 @@ namespace MarkdownEdit
             Task.Factory.StartNew(() =>
             {
                 var spellingService = container.Resolve<ISpellingService>();
-                spellingService.SetLanguage(UserSettings.SpellCheckDictionary);
-                UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary)) spellingService.SetLanguage(UserSettings.SpellCheckDictionary); };
+                spellingService.Language = UserSettings.SpellCheckDictionary;
+                UserSettings.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary))
+                        spellingService.Language = UserSettings.SpellCheckDictionary;
+                };
                 _userSettingsWatcher = Utility.WatchFile(UserSettings.SettingsFile, UserSettings.Update);
             });
         }

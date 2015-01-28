@@ -15,7 +15,7 @@ namespace MarkdownEdit.Controls
                 (o, args) =>
                 {
                     var scb = (SpellingDictionaryComboBox)o;
-                    scb.Languages.ItemsSource = scb.SpellCheckProvider.Languages();
+                    scb.Dispatcher.InvokeAsync(() => scb.Languages.ItemsSource = scb.SpellCheckProvider?.Languages());
                 }));
 
         public ISpellCheckProvider SpellCheckProvider
