@@ -417,6 +417,10 @@ namespace MarkdownEdit.Controls
             _editorState.Restore(this);
         }
 
+        private FindReplaceDialog _findReplaceDialog;
+
+        private FindReplaceDialog FindReplaceDialog => _findReplaceDialog ?? (_findReplaceDialog = new FindReplaceDialog(new FindReplaceSettings()));
+
         public void FindDialog() => Execute(() => FindReplaceDialog.ShowFindDialog());
 
         public void ReplaceDialog() => Execute(() => FindReplaceDialog.ShowReplaceDialog());
@@ -633,15 +637,6 @@ namespace MarkdownEdit.Controls
         {
             get { return (ISpellCheckProvider)GetValue(SpellCheckProviderProperty); }
             set { SetValue(SpellCheckProviderProperty, value); }
-        }
-
-        public static readonly DependencyProperty FindReplaceDialogProperty = DependencyProperty.Register(
-            "FindReplaceDialog", typeof(FindReplaceDialog), typeof(Editor), new PropertyMetadata(default(FindReplaceDialog)));
-
-        public FindReplaceDialog FindReplaceDialog
-        {
-            get { return (FindReplaceDialog)GetValue(FindReplaceDialogProperty); }
-            set { SetValue(FindReplaceDialogProperty, value); }
         }
 
         public static readonly DependencyProperty HighlightCurrentLineProperty = DependencyProperty.Register(

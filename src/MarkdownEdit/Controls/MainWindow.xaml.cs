@@ -65,17 +65,14 @@ namespace MarkdownEdit.Controls
         public MainWindow(
             IMarkdownConverter markdownConverter,
             ISpellCheckProvider spellCheckProvider,
-            FindReplaceDialog findReplaceDialog,
             ISnippetManager snippetManager)
         {
             InitializeComponent();
             MarkdownConverter = markdownConverter;
             SpellCheckProvider = spellCheckProvider;
-            FindReplaceDialog = findReplaceDialog;
             SnippetManager = snippetManager;
             Loaded += OnLoaded;
             Closing += OnClosing;
-            Closed += OnClosed;
             SizeChanged += (s, e) => CalculateEditorMargins();
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
@@ -103,11 +100,6 @@ namespace MarkdownEdit.Controls
         {
             Editor.CloseHelp();
             cancelEventArgs.Cancel = !Editor.SaveIfModified();
-        }
-
-        private void OnClosed(object sender, EventArgs ea)
-        {
-            FindReplaceDialog?.Dispose();
         }
 
         private void EditorOnPropertyChanged(object sender, PropertyChangedEventArgs ea)

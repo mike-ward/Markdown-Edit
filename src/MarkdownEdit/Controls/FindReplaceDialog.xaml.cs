@@ -7,10 +7,8 @@ using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
 {
-    public partial class FindReplaceDialog : IDisposable
+    public partial class FindReplaceDialog
     {
-        private bool _disposed;
-        private bool _hideOnClose = true;
         private string _findText;
 
         public FindReplaceDialog(FindReplaceSettings findReplaceSettings)
@@ -18,16 +16,8 @@ namespace MarkdownEdit.Controls
             InitializeComponent();
             DataContext = findReplaceSettings;
             Closed += (s, e) => findReplaceSettings.Save();
-            Closing += (s, e) =>
-            {
-                if (_hideOnClose)
-                {
-                    Hide();
-                    e.Cancel = true;
-                }
-            };
+            Closing += (s, e) => { e.Cancel = true; Hide(); };
         }
-
 
         private void FindNextClick(object sender, RoutedEventArgs e)
         {
@@ -137,23 +127,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
         {
-            Close();
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_disposed && disposing)
-            {
-                _disposed = true;
-                _hideOnClose = false;
-                Close();
-            }
+            Hide();
         }
     }
 }
