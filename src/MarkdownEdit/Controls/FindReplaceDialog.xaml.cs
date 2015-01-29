@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using MarkdownEdit.Models;
 
@@ -128,6 +129,11 @@ namespace MarkdownEdit.Controls
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
         {
             Hide();
+        }
+
+        private void TxtFindOnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) FindNextButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
         }
     }
 }
