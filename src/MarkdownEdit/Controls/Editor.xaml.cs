@@ -228,7 +228,7 @@ namespace MarkdownEdit.Controls
 
         private bool Execute(Func<bool> action)
         {
-            return EditBox.IsReadOnly ?  EditorUtilities.Beep() : action();
+            return EditBox.IsReadOnly ?  EditorUtilities.ErrorBeep() : action();
         }
 
         public void NewFile()
@@ -412,10 +412,7 @@ namespace MarkdownEdit.Controls
             DisplayName = "Help";
         }
 
-        public void CloseHelp()
-        {
-            _editorState.Restore(this);
-        }
+        public void CloseHelp() => _editorState.Restore(this);
 
         private FindReplaceDialog _findReplaceDialog;
 
@@ -435,18 +432,15 @@ namespace MarkdownEdit.Controls
 
         public void Code() => Execute(() => EditBox.AddRemoveText("`"));
 
-        public void InsertHeader(int num)
+        public void InsertHeader(int num) => Execute(() =>
         {
-            Execute(() =>
+            var line = EditBox.Document.GetLineByOffset(EditBox.CaretOffset);
+            if (line != null)
             {
-                var line = EditBox.Document.GetLineByOffset(EditBox.CaretOffset);
-                if (line != null)
-                {
-                    var header = new string('#', num) + " ";
-                    EditBox.Document.Insert(line.Offset, header);
-                }
-            });
-        }
+                var header = new string('#', num) + " ";
+                EditBox.Document.Insert(line.Offset, header);
+            }
+        });
 
         public void IncreaseFontSize() => EditBox.FontSize = EditBox.FontSize + 1;
 
@@ -454,14 +448,11 @@ namespace MarkdownEdit.Controls
 
         public void RestoreFontSize() => EditBox.FontSize = App.UserSettings.EditorFontSize;
 
-        public void PasteSpecial()
+        public void PasteSpecial() => Execute(() =>
         {
-            Execute(() =>
-            {
-                _removeSpecialCharacters = true;
-                EditBox.Paste();
-            });
-        }
+            _removeSpecialCharacters = true;
+            EditBox.Paste();
+        });
 
         public void OpenUserDictionary() => Utility.EditFile(SpellCheckProvider.CustomDictionaryFile());
 
@@ -498,9 +489,9 @@ namespace MarkdownEdit.Controls
 
         public event ScrollChangedEventHandler ScrollChanged;
 
-        private void ScrollViewerOnScrollChanged(object sender, ScrollChangedEventArgs scrollChangedEventArgs)
+        private void ScrollViewerOnScrollChanged(object sender, ScrollChangedEventArgs ea)
         {
-            ScrollChanged?.Invoke(this, scrollChangedEventArgs);
+            ScrollChanged?.Invoke(this, ea);
         }
 
         // Properties 

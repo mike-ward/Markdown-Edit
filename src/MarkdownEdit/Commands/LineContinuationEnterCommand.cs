@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 
 namespace MarkdownEdit.Commands
 {
@@ -68,9 +69,9 @@ namespace MarkdownEdit.Commands
             patterns.FirstOrDefault(action => action != null)?.Invoke();
         }
 
-        private void RenumberOrderedList(
-            ICSharpCode.AvalonEdit.Document.TextDocument document, 
-            ICSharpCode.AvalonEdit.Document.DocumentLine line, 
+        private static void RenumberOrderedList(
+            IDocument document, 
+            DocumentLine line, 
             int number)
         {
             while ((line = line.NextLine) != null)

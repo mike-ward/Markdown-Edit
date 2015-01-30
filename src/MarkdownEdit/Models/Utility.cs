@@ -27,10 +27,10 @@ namespace MarkdownEdit.Models
             return arg =>
             {
                 var current = Interlocked.Increment(ref last);
-                Task.Delay(milliseconds).ContinueWith(t =>
+                Task.Delay(milliseconds).ContinueWith(task =>
                 {
                     if (current == last) func(arg);
-                    t.Dispose();
+                    task.Dispose();
                 });
             };
         }
@@ -93,7 +93,7 @@ namespace MarkdownEdit.Models
             {
                 Path = Path.GetDirectoryName(file),
                 Filter = Path.GetFileName(file),
-                NotifyFilter = NotifyFilters.LastWrite
+                NotifyFilter = NotifyFilters.LastWrite,
             };
             fileWatcher.Changed += (sender, args) =>
             {

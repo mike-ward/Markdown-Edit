@@ -204,7 +204,7 @@ namespace MarkdownEdit.Models
             }
         }
 
-        public static bool Beep()
+        public static bool ErrorBeep()
         {
             Utility.Beep();
             return false;
