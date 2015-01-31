@@ -60,6 +60,7 @@ namespace MarkdownEdit.Controls
 
         public MainWindow()
         {
+            // for designer
         }
 
         public MainWindow(
@@ -81,6 +82,7 @@ namespace MarkdownEdit.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
+            Activate();
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
             Dispatcher.InvokeAsync(() =>
             {

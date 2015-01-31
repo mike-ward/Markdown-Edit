@@ -18,7 +18,9 @@
 	DataContext="{Binding RelativeSource={RelativeSource Self}}"
 	Background="{DynamicResource GrayBrush4}"
 	TextOptions.TextFormattingMode="Display"
+  FocusManager.FocusedElement="{Binding ElementName=Editor}"
 	WindowButtonCommandsOverlayBehavior="Never">
+    
 	<controls:MetroWindow.Resources>
 		<local:NumberFormatConverter x:Key="NumberFormatConverter" />
 		<local:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
