@@ -47,6 +47,12 @@
           <Component Id="MahApps.Metro.dll" Guid="{3531ECE6-17BD-4B85-810D-94384E7C77E9}">
             <File Id="MahApps.Metro.dll" KeyPath="yes" Source="$(var.SourceFiles)\MahApps.Metro.dll" />
           </Component>
+          <Component Id="Microsoft.DwayneNeed.dll" Guid="{AD38859F-6AE9-44D8-B611-E7770F5D67E6}">
+            <File Id="Microsoft.DwayneNeed.dll" KeyPath="yes" Source="$(var.SourceFiles)\Microsoft.DwayneNeed.dll" />
+          </Component>
+          <Component Id="Microsoft.DwayneNeed.Win32.dll" Guid="{44EE5C55-BA64-4387-ABA2-4DBE2DD735B8}">
+            <File Id="Microsoft.DwayneNeed.Win32.dll" KeyPath="yes" Source="$(var.SourceFiles)\Microsoft.DwayneNeed.Win32.dll" />
+          </Component>
           <Component Id="mde.exe" Guid="{D8745F9D-E4D6-4682-AF42-46F38A38B27B}">
             <File Id="mde.exe" KeyPath="yes" Source="$(var.SourceFiles)\mde.exe" />
           </Component>
@@ -164,6 +170,8 @@
       <ComponentRef Id="Hunspellx86.dll" />
       <ComponentRef Id="ICSharpCode.AvalonEdit.dll" />
       <ComponentRef Id="MahApps.Metro.dll" />
+      <ComponentRef Id="Microsoft.DwayneNeed.dll" />
+      <ComponentRef Id="Microsoft.DwayneNeed.Win32.dll" />
       <ComponentRef Id="mde.exe" />
       <ComponentRef Id="mde.exe.config" />
       <ComponentRef Id="Newtonsoft.Json.dll" />
