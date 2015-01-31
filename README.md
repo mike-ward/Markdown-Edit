@@ -6,7 +6,7 @@ Markdown Edit
 
 Markdown Edit is  a Windows **desktop** Markdown editor with an emphasis on content and keyboard shortcuts. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar, tabbed windows or other distractions.
 
-[Mission Statement, Roadmap and Contributor Guidelines](https://github.com/mike-ward/Markdown-Edit/wiki/Mission-Statement,-Roadmap,-Contributor-Guidelines)
+[Mission Statement](MISSION_STATEMENT.md), [Roadmap](ROADMAP.md) and [Contributor Guidelines](CONTRIBUTING.md)
 
 Gratuitous Screen Shot
 ![screen shot](ScreenShot.png)
