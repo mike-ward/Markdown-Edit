@@ -26,11 +26,11 @@ namespace MarkdownEdit.Controls
         public Preview()
         {
             InitializeComponent();
-            Unloaded += (sender, args) => _templateWatcher?.Dispose();
             Browser.Navigate(UserTemplate.Load());
-            UpdatePreview = Utility.Debounce<string>(s => Dispatcher.InvokeAsync(() => Update(s)));
+            Unloaded += (sender, args) => _templateWatcher?.Dispose();
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
+            UpdatePreview = Utility.Debounce<string>(s => Dispatcher.InvokeAsync(() => Update(s)));
 
             Task.Factory.StartNew(() =>
             {
