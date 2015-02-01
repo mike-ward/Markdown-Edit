@@ -103,6 +103,7 @@ namespace MarkdownEdit.Controls
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
         {
             Editor.CloseHelp();
+            DisplaySettings.SaveIfModified();
             cancelEventArgs.Cancel = !Editor.SaveIfModified();
         }
 
