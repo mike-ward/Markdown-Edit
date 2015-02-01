@@ -111,7 +111,7 @@
 			                  WordWrap="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" />
 			<interop:AirspaceDecorator x:Name="PreviewAirspaceDecorator"
                                  AirspaceMode="Redirect"
-			                           Background="White"
+			                           Background="{DynamicResource GrayBrush4}"
 			                           IsInputRedirectionEnabled="True"
 			                           IsOutputRedirectionEnabled="True">
 				<controls1:Preview x:Name="Preview"

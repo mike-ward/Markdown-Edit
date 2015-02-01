@@ -227,30 +227,10 @@ namespace MarkdownEdit.Controls
 
         private void UpdateEditorPreviewVisibility(int state)
         {
-            switch (state)
-            {
-                case 1:
-                    UniformGrid.Columns = 1;
-                    PreviewAirspaceDecorator.Visibility = Visibility.Collapsed;
-                    Editor.Visibility = Visibility.Visible;
-                    SetFocus(Editor.EditBox);
-                    break;
-
-                case 2:
-                    UniformGrid.Columns = 1;
-                    PreviewAirspaceDecorator.Visibility = Visibility.Visible;
-                    Editor.Visibility = Visibility.Collapsed;
-                    SetFocus(Preview.Browser);
-                    break;
-
-                default:
-                    UniformGrid.Columns = 2;
-                    PreviewAirspaceDecorator.Visibility = Visibility.Visible;
-                    Editor.Visibility = Visibility.Visible;
-                    SetFocus(Editor.EditBox);
-                    break;
-            }
-
+            UniformGrid.Columns = state == 0 ? 2 : 1;
+            Editor.Visibility = state == 2 ? Visibility.Collapsed : Visibility.Visible;
+            PreviewAirspaceDecorator.Visibility = state == 1 ? Visibility.Collapsed : Visibility.Visible;
+            SetFocus(state == 2 ? Preview.Browser as IInputElement : Editor.EditBox);
             EditorMargins = CalculateEditorMargins();
         }
 
