@@ -109,7 +109,8 @@
 			                  SpellCheck="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}"
 			                  SnippetManager="{Binding Path=SnippetManager, RelativeSource={RelativeSource AncestorType=Window}}"
 			                  WordWrap="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" />
-			<interop:AirspaceDecorator AirspaceMode="Redirect"
+			<interop:AirspaceDecorator x:Name="PreviewAirspaceDecorator"
+                                 AirspaceMode="Redirect"
 			                           Background="White"
 			                           IsInputRedirectionEnabled="True"
 			                           IsOutputRedirectionEnabled="True">

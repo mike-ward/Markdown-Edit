@@ -6,7 +6,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
@@ -208,26 +210,38 @@ namespace MarkdownEdit.Controls
             process.Start();
         }
 
+        private void SetFocus(IInputElement control)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
+            {
+                control.Focus();
+                Keyboard.Focus(control);
+            }));
+        }
+
         private void UpdateEditorPreviewVisibility(int state)
         {
             switch (state)
             {
                 case 1:
                     UniformGrid.Columns = 1;
-                    Preview.Visibility = Visibility.Collapsed;
+                    PreviewAirspaceDecorator.Visibility = Visibility.Collapsed;
                     Editor.Visibility = Visibility.Visible;
+                    SetFocus(Editor.EditBox);
                     break;
 
                 case 2:
                     UniformGrid.Columns = 1;
-                    Preview.Visibility = Visibility.Visible;
+                    PreviewAirspaceDecorator.Visibility = Visibility.Visible;
                     Editor.Visibility = Visibility.Collapsed;
+                    SetFocus(Preview.Browser);
                     break;
 
                 default:
                     UniformGrid.Columns = 2;
-                    Preview.Visibility = Visibility.Visible;
+                    PreviewAirspaceDecorator.Visibility = Visibility.Visible;
                     Editor.Visibility = Visibility.Visible;
+                    SetFocus(Editor.EditBox);
                     break;
             }
 
