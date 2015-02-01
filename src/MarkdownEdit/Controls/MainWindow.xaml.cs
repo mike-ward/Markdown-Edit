@@ -172,7 +172,12 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e) => Settings.Default.SpellCheckEnabled = !Settings.Default.SpellCheckEnabled;
 
-        private void ExecuteToggleFullScreen(object sender, ExecutedRoutedEventArgs e) => WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
+        private void ExecuteToggleFullScreen(object sender, ExecutedRoutedEventArgs e)
+        {
+            var control = Keyboard.FocusedElement;
+            WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
+            SetFocus(control);
+        }
 
         private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e) => RecentFilesDialog.Display(this);
 
