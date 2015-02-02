@@ -71,7 +71,7 @@ When Auto Save is enabled (`Alt+S`), content is saved whenever you pause typing 
 
 ## Settings
 
-User settings are stored in a text file in the `AppData` folder. Placing settings in a plain file allows sharing of settings on different installations.
+User settings are stored in a text file in the `AppData` folder. Placing settings in a plain file allows sharing of settings on different installations. You can also access some, but not all of settings by clicking on the, `Gear` icon in the title bar.
 
 Typically, this folder is located at `C:\Users\<USER>\AppData\Roaming\Markdown Edit\user_settings.json`. Pressing `F9` will open this file in the system's Notepad editor. It should look something like this:
 

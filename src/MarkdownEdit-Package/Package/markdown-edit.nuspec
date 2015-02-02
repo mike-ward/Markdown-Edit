@@ -13,7 +13,7 @@
     <licenseUrl>https://cdn.rawgit.com/mike-ward/Markdown-Edit/master/LICENSE.txt</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://cdn.rawgit.com/mike-ward/Markdown-Edit/master/src/MarkdownEdit/logo.png</iconUrl>
-    <releaseNotes>Add line continuation feature</releaseNotes>
+    <releaseNotes>Add settings dialog</releaseNotes>
     <dependencies>
       <dependency id="DotNet4.5.2" />
     </dependencies>
