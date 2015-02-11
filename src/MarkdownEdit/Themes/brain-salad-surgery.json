@@ -2,11 +2,13 @@
     "Name": "Brain Salad Surgery",
     "EditorBackground": "#2a2",
     "EditorForeground": "#fff",
+	"Header1Height": 1.3,
+	"Header2Height": 1.2,
     "HighlightHeading": {
       "Name": "Heading",
       "Background": null,
       "Foreground": "#028",
-      "FontWeight": null,
+      "FontWeight": "bold",
       "FontStyle": null
     },
     "HighlightEmphasis": {
@@ -18,9 +20,9 @@
     },
     "HighlightStrongEmphasis": {
       "Name": "StrongEmphasis",
-      "Background": "#666",
+      "Background": null,
       "Foreground": null,
-      "FontWeight": null,
+      "FontWeight": "bold",
       "FontStyle": null
     },
     "HighlightInlineCode": {

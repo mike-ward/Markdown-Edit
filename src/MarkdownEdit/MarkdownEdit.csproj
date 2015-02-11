@@ -67,7 +67,7 @@
   <ItemGroup>
     <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CommonMark.NET.0.6.0\lib\net45\CommonMark.dll</HintPath>
+      <HintPath>..\packages\CommonMark.NET.0.8.3\lib\net45\CommonMark.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -91,7 +91,7 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHunspell">
       <HintPath>..\packages\NHunspell.1.2.5359.26126\lib\net\NHunspell.dll</HintPath>
@@ -125,7 +125,6 @@
     <Compile Include="Converters\NumberFormatConverter.cs" />
     <Compile Include="MarkdownConverters\CommonMarkConverter.cs" />
     <Compile Include="MarkdownConverters\IMarkdownConverter.cs" />
-    <Compile Include="MarkdownConverters\IToMarkdownConverter.cs" />
     <Compile Include="Models\EditorUtilities.cs" />
     <Compile Include="Models\EditorState.cs" />
     <Compile Include="Controls\FindReplaceDialog.xaml.cs">
@@ -142,6 +141,7 @@
     </Compile>
     <Compile Include="Models\InputKeyBindings.cs" />
     <Compile Include="Models\InputKeyBindingsSettings.cs" />
+    <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
     <Compile Include="Models\TinyIoc.cs" />
     <Compile Include="Commands\SnippetTabCommand.cs" />
     <Compile Include="Snippets\ISnippetManager.cs" />
@@ -233,6 +233,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -330,7 +331,6 @@
     <None Include="logo.png" />
     <None Include="Lib\Microsoft.DwayneNeed.dll" />
     <None Include="Lib\Microsoft.DwayneNeed.Win32.dll" />
-    <Content Include="Resources\markdown.xshd.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

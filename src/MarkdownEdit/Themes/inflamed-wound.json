@@ -2,6 +2,8 @@
     "Name": "Inflamed Wound",
     "EditorBackground": "orange",
     "EditorForeground": "#900",
+	"Header1Height": 1.3,
+	"Header2Height": 1.2,
     "HighlightHeading": {
       "Name": "Heading",
       "Background": null,

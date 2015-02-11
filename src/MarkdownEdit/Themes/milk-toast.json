@@ -2,6 +2,8 @@
     "Name": "Milk Toast",
     "EditorBackground": "#F9F6F1",
     "EditorForeground": "#333",
+	"Header1Height": 1.3,
+	"Header2Height": 1.2,
     "HighlightHeading": {
         "Name": "Heading",
         "Background": null,

@@ -1,61 +1,71 @@
 ﻿{
-    "Name": "Programmers can't Design",
-    "EditorBackground": "#fff",
-    "EditorForeground": "#000",
-    "HighlightHeading": {
-        "Name": "Heading",
-        "Background": null,
-        "Foreground": null,
-        "FontWeight": null,
-        "FontStyle": null
-    },
-    "HighlightEmphasis": {
-        "Name": "Emphasis",
-        "Background": null,
-        "Foreground": null,
-        "FontWeight": null,
-        "FontStyle": null
-    },
-    "HighlightStrongEmphasis": {
-        "Name": "StrongEmphasis",
-        "Background": null,
-        "Foreground": null,
-        "FontWeight": null,
-        "FontStyle": null
-    },
-    "HighlightInlineCode": {
-        "Name": "InlineCode",
-        "Background": null,
-        "Foreground": null,
-        "FontWeight": null,
-        "FontStyle": null
-    },
-    "HighlightBlockCode": {
-        "Name": "BlockCode",
-        "Background": null,
-        "Foreground": null,
-        "FontWeight": null,
-        "FontStyle": null
-    },
-    "HighlightBlockQuote": {
-        "Name": "BlockQuote",
-        "Background": null,
-        "Foreground": null,
-        "FontWeight": null,
-        "FontStyle": null
-    },
-    "HighlightLink": {
-        "Name": "Link",
-        "Background": null,
-        "Foreground": null,
-        "FontWeight": null,
-        "FontStyle": null
-    },
-    "HighlightImage": {
-        "Name": "Image",
-        "Background": null,
-        "Foreground": null,
-        "FontWeight": null,
-        "FontStyle": null
-    }
+	"Name": "Programmers can't Design",
+	"EditorBackground": "#fffffd",
+	"EditorForeground": "#000",
+	"Header1Height": 1.3,
+	"Header2Height": 1.2,
+	"HighlightHeading": {
+		"Name": "Heading",
+		"Background": null,
+		"Foreground": null,
+		"FontWeight": "bold",
+		"FontStyle": null,
+		"Underline": false
+	},
+	"HighlightEmphasis": {
+		"Name": "Emphasis",
+		"Background": null,
+		"Foreground": null,
+		"FontWeight": null,
+		"FontStyle": "italic",
+		"Underline": false
+	},
+	"HighlightStrongEmphasis": {
+		"Name": "StrongEmphasis",
+		"Background": null,
+		"Foreground": null,
+		"FontWeight": "bold",
+		"FontStyle": null,
+		"Underline": false
+	},
+	"HighlightInlineCode": {
+		"Name": "InlineCode",
+		"Background": "#eee",
+		"Foreground": null,
+		"FontWeight": null,
+		"FontStyle": null,
+		"Underline": false
+	},
+	"HighlightBlockCode": {
+		"Name": "BlockCode",
+		"Background": null,
+		"Foreground": "#911",
+		"FontWeight": null,
+		"FontStyle": null,
+		"Underline": false
+	},
+	"HighlightBlockQuote": {
+		"Name": "BlockQuote",
+		"Background": null,
+		"Foreground": "#119",
+		"FontWeight": null,
+		"FontStyle": null,
+		"Underline": false
+	},
+	"HighlightLink": {
+		"Name": "Link",
+		"Background": null,
+		"Foreground": null,
+		"FontWeight": null,
+		"FontStyle": null,
+		"Underline": true
+	},
+	"HighlightImage": {
+		"Name": "Image",
+		"Background": null,
+		"Foreground": "#191",
+		"FontWeight": null,
+		"FontStyle": null,
+		"Underline": false
+	}
 }

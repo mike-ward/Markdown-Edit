@@ -2,6 +2,8 @@
     "Name": "Solarized Dark",
     "EditorBackground": "#002b36",
     "EditorForeground": "#93a1a1",
+	"Header1Height": 1.3,
+	"Header2Height": 1.2,
     "HighlightHeading": {
         "Name": "Heading",
         "Background": null,

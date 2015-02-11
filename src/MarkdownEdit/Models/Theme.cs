@@ -9,6 +9,8 @@ namespace MarkdownEdit.Models
         private string _name = "Milk Toast";
         private string _editorBackground = "#F9F6F1";
         private string _editorForeground = "#333";
+        private double _header1Height = 1.0;
+        private double _header2Height = 1.0;
 
         private Highlight _highlightHeading = new Highlight {Name = "Heading", FontWeight = "bold"};
         private Highlight _highlightEmphasis = new Highlight {Name = "Emphasis", FontStyle = "italic"};
@@ -35,6 +37,18 @@ namespace MarkdownEdit.Models
         {
             get { return _editorForeground; }
             set { Set(ref _editorForeground, value); }
+        }
+
+        public double Header1Height
+        {
+            get { return _header1Height; }
+            set { Set(ref _header1Height, value); }
+        }
+
+        public double Header2Height
+        {
+            get { return _header2Height; }
+            set { Set(ref _header2Height, value); }
         }
 
         public Highlight HighlightHeading

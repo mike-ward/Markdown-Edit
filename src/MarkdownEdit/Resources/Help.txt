@@ -197,7 +197,7 @@ If you delete this file, Markdown Edit will create a new one with default bindin
 
 ## About
 
-Version 1.3.0  
+Version 1.3.1  
 Home Page: <http://mike-ward.net/markdownedit>  
 Twitter: `@mikeward_aa`  
 Source: <https://github.com/mike-ward/Markdown-Edit>

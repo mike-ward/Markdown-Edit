@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Media;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using MarkdownEdit.MarkdownConverters;
 
 namespace MarkdownEdit.Models
 {
-    internal static class Utility
+    public static class Utility
     {
         public static Func<TKey, TResult> Memoize<TKey, TResult>(this Func<TKey, TResult> func)
         {
@@ -120,6 +121,11 @@ namespace MarkdownEdit.Models
                 App.Title,
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
+        }
+
+        public static void RequireNotNull<T>(this T arg, [CallerMemberName] string name = null)
+        {
+            if (arg == null) throw new ArgumentNullException(name);
         }
     }
 }

@@ -97,12 +97,12 @@ namespace MarkdownEdit.Properties {
         ///    Ctrl+Shift+S   Save file As
         ///    Ctrl+R         Recent files
         ///    Ctrl+E         Export HTML to clipboard
+        ///    Ctrl+Shift+E   Export HTML and template to clipboard
         ///    Alt+F4         Exit
         ///
         ///    Ctrl+W         Toggle word wrap
         ///    Ctrl+F7        Toggle spell checking
-        ///    F11            Toggle full screen
-        ///    F12            Toggle prev [rest of string was truncated]&quot;;.
+        ///    F11     [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help {
             get {
@@ -111,24 +111,17 @@ namespace MarkdownEdit.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
-        ///&lt;SyntaxDefinition name=&quot;MarkDown&quot; extensions=&quot;.md&quot; xmlns=&quot;http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008&quot;&gt;
-        ///	&lt;Color name=&quot;Heading&quot;         fontWeight=&quot;bold&quot; /&gt;
-        ///	&lt;Color name=&quot;Emphasis&quot;        fontStyle=&quot;italic&quot; /&gt;
-        ///	&lt;Color name=&quot;StrongEmphasis&quot;  fontWeight=&quot;bold&quot; /&gt;
-        ///	&lt;Color name=&quot;InlineCode&quot;      foreground=&quot;#654&quot; background=&quot;#e9e6e3&quot; /&gt;
-        ///	&lt;Color name=&quot;BlockCode&quot;       foreground=&quot;#654&quot; /&gt;
-        ///	&lt;Color name=&quot;BlockQuote&quot;      foreground=&quot;#654&quot; /&gt;
-        ///	&lt;Color name=&quot;Link&quot;            [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string markdown_xshd {
-            get {
-                return ResourceManager.GetString("markdown_xshd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to now       $DATE(&quot;f&quot;)$ $END$
+        ///date      $DATE(&quot;d&quot;)$ $END$
+        ///time      $DATE(&quot;t&quot;)$ $END$
+        ///
+        ///img       ![$alt_text$]($image_url$) $END$
+        ///link      [$link_text$]($link_url$) $END$
+        ///
+        ///tm        &amp;trade;
+        ///cp        &amp;copy;
+        ///reg       &amp;reg;
+        ///.
         /// </summary>
         internal static string Snippets {
             get {

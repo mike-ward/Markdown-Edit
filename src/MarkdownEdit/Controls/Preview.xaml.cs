@@ -19,7 +19,7 @@ namespace MarkdownEdit.Controls
 {
     public partial class Preview : INotifyPropertyChanged
     {
-        public readonly Action<string> UpdatePreview;
+        public readonly Action<Editor> UpdatePreview;
         private FileSystemWatcher _templateWatcher;
         private int _wordCount;
 
@@ -30,7 +30,7 @@ namespace MarkdownEdit.Controls
             Unloaded += (sender, args) => _templateWatcher?.Dispose();
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
-            UpdatePreview = Utility.Debounce<string>(s => Dispatcher.InvokeAsync(() => Update(s)));
+            UpdatePreview = Utility.Debounce<Editor>(editor => Dispatcher.InvokeAsync(() => Update(editor.Text)));
 
             Task.Factory.StartNew(() =>
             {
@@ -53,8 +53,8 @@ namespace MarkdownEdit.Controls
                 markdown = Utility.RemoveYamlFrontMatter(markdown);
                 var html = MarkdownConverter.ConvertToHtml(markdown);
                 var div = GetContentsDiv();
-                div.InnerHtml = html;
-                WordCount = (div.InnerText as string).WordCount();
+                div.innerHTML = html;
+                WordCount = div.innerText.WordCount();
             }
             catch (CommonMarkException e)
             {
@@ -62,15 +62,11 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private dynamic GetContentsDiv()
+        private IHTMLElement GetContentsDiv()
         {
-            dynamic document = Browser.Document;
-            if (document != null)
-            {
-                var element = document.GetElementById("content");
-                if (element != null) return element;
-            }
-            return null;
+            var document = (IHTMLDocument3)Browser.Document;
+            var element = document?.getElementById("content");
+            return element;
         }
 
         private void UpdateTemplate()
@@ -95,9 +91,9 @@ namespace MarkdownEdit.Controls
             {
                 var percentToScroll = PercentScroll(ea);
                 if (percentToScroll > 0.99) percentToScroll = 1.1; // deal with round off at end of scroll
-                var body = document3.getElementsByTagName("body").item(0);
+                var body = document2.body; //document3.getElementsByTagName("body").item(0);
                 var scrollHeight = ((IHTMLElement2)body).scrollHeight - document3.documentElement.offsetHeight;
-                document2.parentWindow.scrollTo(0, (int)Math.Ceiling(percentToScroll * scrollHeight));
+                document2.parentWindow.scroll(0, (int)Math.Ceiling(percentToScroll * scrollHeight));
             }
         }
 

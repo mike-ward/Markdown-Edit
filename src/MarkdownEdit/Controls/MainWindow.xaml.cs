@@ -78,7 +78,7 @@ namespace MarkdownEdit.Controls
             Closing += OnClosing;
             SizeChanged += (s, e) => CalculateEditorMargins();
             Editor.PropertyChanged += EditorOnPropertyChanged;
-            Editor.TextChanged += (s, e) => Preview.UpdatePreview(Editor.Text);
+            Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor)s));
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
         }
 
@@ -265,7 +265,7 @@ namespace MarkdownEdit.Controls
             if (e.Parameter != null) Editor.ScrollToLine((int)e.Parameter);
         }
 
-        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) => Preview.UpdatePreview(Editor.Text);
+        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) => Preview.UpdatePreview(Editor);
 
         private void ExecuteInsertFile(object sender, ExecutedRoutedEventArgs e) => Editor.InsertFile(null);
 
