@@ -91,21 +91,29 @@ namespace MarkdownEdit.Models
 
         private static IEnumerable<Block> EnumerateBlocks(Block block)
         {
-            while (block != null)
+            if (block == null) yield break;
+            var stack = new Stack<Block>();
+            stack.Push(block);
+            while (stack.Any())
             {
-                yield return block;
-                foreach (var child in EnumerateBlocks(block.FirstChild)) yield return child;
-                block = block.NextSibling;
+                var next = stack.Pop();
+                yield return next;
+                if (next.FirstChild != null) stack.Push(next.FirstChild);
+                if (next.NextSibling != null) stack.Push(next.NextSibling);
             }
         }
 
         private static IEnumerable<Inline> EnumerateInlines(Inline inline)
         {
-            while (inline != null)
+            if (inline == null) yield break;
+            var stack = new Stack<Inline>();
+            stack.Push(inline);
+            while (stack.Any())
             {
-                yield return inline;
-                foreach (var child in EnumerateInlines(inline.FirstChild)) yield return child;
-                inline = inline.NextSibling;
+                var next = stack.Pop();
+                yield return next;
+                if (next.FirstChild != null) stack.Push(next.FirstChild);
+                if (next.NextSibling != null) stack.Push(next.NextSibling);
             }
         }
 
