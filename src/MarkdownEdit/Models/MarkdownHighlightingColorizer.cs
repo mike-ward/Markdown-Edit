@@ -98,8 +98,8 @@ namespace MarkdownEdit.Models
             {
                 var next = stack.Pop();
                 yield return next;
-                if (next.FirstChild != null) stack.Push(next.FirstChild);
                 if (next.NextSibling != null) stack.Push(next.NextSibling);
+                if (next.FirstChild != null) stack.Push(next.FirstChild);
             }
         }
 
@@ -112,8 +112,8 @@ namespace MarkdownEdit.Models
             {
                 var next = stack.Pop();
                 yield return next;
-                if (next.FirstChild != null) stack.Push(next.FirstChild);
                 if (next.NextSibling != null) stack.Push(next.NextSibling);
+                if (next.FirstChild != null) stack.Push(next.FirstChild);
             }
         }
 
