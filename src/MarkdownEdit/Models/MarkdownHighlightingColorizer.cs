@@ -35,45 +35,48 @@ namespace MarkdownEdit.Models
 
             var start = line.Offset;
             var end = line.EndOffset;
-            var length = line.Length;
 
-            var blocks = EnumerateSpanningBlocks(ast, start, end);
-
-            foreach (var block in blocks)
+            foreach (var block in EnumerateSpanningBlocks(ast, start, end))
             {
                 switch (block.Tag)
                 {
                     case BlockTag.AtxHeader:
                     case BlockTag.SETextHeader:
-                        var magnify = block.HeaderLevel == 1
-                            ? theme.Header1Height
-                            : block.HeaderLevel == 2 ? theme.Header2Height : 1.0;
-                        ApplyLinePart(theme.HighlightHeading, block.SourcePosition, block.SourceLength, start, end, length, magnify);
+                        var magnify = block.HeaderLevel == 1 ? theme.Header1Height : block.HeaderLevel == 2 ? theme.Header2Height : 1.0;
+                        ApplyLinePart(theme.HighlightHeading, block.SourcePosition, block.SourceLength, start, end, magnify);
                         break;
 
                     case BlockTag.BlockQuote:
-                        ApplyLinePart(theme.HighlightBlockQuote, block.SourcePosition, block.SourceLength, start, end, length);
+                        ApplyLinePart(theme.HighlightBlockQuote, block.SourcePosition, block.SourceLength, start, end, 1.0);
                         break;
 
                     case BlockTag.ListItem:
-                        ApplyLinePart(theme.HighlightStrongEmphasis, block.SourcePosition, block.SourceLength, start, end, block.ListData.Padding);
+                        var length = Math.Min(block.SourceLength, block.ListData.Padding);
+                        ApplyLinePart(theme.HighlightStrongEmphasis, block.SourcePosition, length, start, end, 1.0);
                         break;
 
                     case BlockTag.FencedCode:
                     case BlockTag.IndentedCode:
-                        ApplyLinePart(theme.HighlightBlockCode, block.SourcePosition, block.SourceLength, start, end, length);
+                        ApplyLinePart(theme.HighlightBlockCode, block.SourcePosition, block.SourceLength, start, end, 1.0);
                         break;
                 }
 
-                foreach (var inline in EnumerateInlines(block.InlineContent).Where(il => il.SourcePosition >= start && il.SourcePosition < end))
+                foreach (var inline in EnumerateInlines(block.InlineContent).TakeWhile(il => il.SourcePosition < end))
                 {
                     Func<Theme, Highlight> highlight;
                     if (InlineHighlight.TryGetValue(inline.Tag, out highlight))
                     {
-                        ApplyLinePart(highlight(theme), inline.SourcePosition, inline.SourceLength, start, end, inline.SourceLength);
+                        ApplyLinePart(highlight(theme), inline.SourcePosition, inline.SourceLength, start, end, 1.0);
                     }
                 }
             }
+        }
+
+        private void ApplyLinePart(Highlight highlight, int sourceStart, int sourceLength, int lineStart, int lineEnd, double magnify)
+        {
+            var start = Math.Max(sourceStart, lineStart);
+            var end = Math.Min(lineEnd, sourceStart + sourceLength);
+            if (start < end) ChangeLinePart(start, end, element => ApplyHighlight(element, highlight, magnify));
         }
 
         private static IEnumerable<Block> EnumerateSpanningBlocks(Block ast, int startOffset, int endOffset)
@@ -89,10 +92,7 @@ namespace MarkdownEdit.Models
             while (block != null)
             {
                 yield return block;
-                foreach (var child in EnumerateBlocks(block.FirstChild))
-                {
-                    yield return child;
-                }   
+                foreach (var child in EnumerateBlocks(block.FirstChild)) yield return child;
                 block = block.NextSibling;
             }
         }
@@ -102,19 +102,9 @@ namespace MarkdownEdit.Models
             while (inline != null)
             {
                 yield return inline;
-                foreach (var child in EnumerateInlines(inline.FirstChild))
-                {
-                    yield return child;
-                }
+                foreach (var child in EnumerateInlines(inline.FirstChild)) yield return child;
                 inline = inline.NextSibling;
             }
-        }
-
-        private void ApplyLinePart(Highlight highlight, int sourceStart, int sourceLength, int lineStart, int lineEnd, int maxLength, double magnify = 1)
-        {
-            var start = Math.Max(sourceStart, lineStart);
-            var end = Math.Min(lineEnd, start + Math.Min(sourceLength, maxLength));
-            ChangeLinePart(start, end, element => ApplyHighlight(element, highlight, magnify));
         }
 
         private static void ApplyHighlight(VisualLineElement element, Highlight highlight, double magnify)
