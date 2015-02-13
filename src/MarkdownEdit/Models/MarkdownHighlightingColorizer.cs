@@ -74,7 +74,9 @@ namespace MarkdownEdit.Models
 
         private void ApplyLinePart(Highlight highlight, int sourceStart, int sourceLength, int lineStart, int lineEnd, double magnify)
         {
-            var start = Math.Max(sourceStart, lineStart);
+            var text = CurrentContext.GetText(lineStart, lineEnd - lineStart);
+            var leadingSpaces = text.Text.Length - text.Text.TrimStart().Length;
+            var start = Math.Max(sourceStart, lineStart + leadingSpaces);
             var end = Math.Min(lineEnd, sourceStart + sourceLength);
             if (start < end) ChangeLinePart(start, end, element => ApplyHighlight(element, highlight, magnify));
         }
