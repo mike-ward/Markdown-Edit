@@ -16,14 +16,26 @@ namespace MarkdownEdit.Models
         private Block _abstractSyntaxTree;
         private Theme _theme;
 
-        private static readonly Dictionary<InlineTag, Func<Theme, Highlight>> InlineHighlight = new Dictionary<InlineTag, Func<Theme, Highlight>>
+        private static readonly Dictionary<BlockTag, Func<Theme, Highlight>> BlockHiighlighter = new Dictionary<BlockTag, Func<Theme, Highlight>>
+        {
+            {BlockTag.AtxHeader, t => t.HighlightHeading},
+            {BlockTag.SETextHeader, t => t.HighlightHeading},
+            {BlockTag.BlockQuote, t => t.HighlightBlockQuote},
+            {BlockTag.ListItem, t => t.HighlightStrongEmphasis},
+            {BlockTag.FencedCode, t => t.HighlightBlockCode},
+            {BlockTag.IndentedCode, t => t.HighlightBlockCode},
+            {BlockTag.HtmlBlock, t => t.HighlightBlockCode},
+            {BlockTag.ReferenceDefinition, t => t.HighlightLink}
+        };  
+
+        private static readonly Dictionary<InlineTag, Func<Theme, Highlight>> InlineHighlighter = new Dictionary<InlineTag, Func<Theme, Highlight>>
         {
             {InlineTag.Code, t => t.HighlightInlineCode},
             {InlineTag.Emphasis, t => t.HighlightEmphasis},
             {InlineTag.Strong, t => t.HighlightStrongEmphasis},
             {InlineTag.Link, t => t.HighlightLink},
             {InlineTag.Image, t => t.HighlightImage},
-            {InlineTag.RawHtml, t => t.HighlightInlineCode}
+            {InlineTag.RawHtml, t => t.HighlightBlockCode}
         };
 
         protected override void ColorizeLine(DocumentLine line)
@@ -37,53 +49,27 @@ namespace MarkdownEdit.Models
             var start = line.Offset;
             var end = line.EndOffset;
             var leadingSpaces = CurrentContext.GetText(start, end - start).Text.TakeWhile(char.IsWhiteSpace).Count();
+            Func<Theme, Highlight> highlighter;
 
             foreach (var block in EnumerateSpanningBlocks(ast, start, end))
             {
-                var magnify = 1.0;
-                var sourceLength = block.SourceLength;
-                var highlight = default(Highlight);
-
-                switch (block.Tag)
+                if (BlockHiighlighter.TryGetValue(block.Tag, out highlighter))
                 {
-                    case BlockTag.AtxHeader:
-                    case BlockTag.SETextHeader:
-                        highlight = theme.HighlightHeading;
-                        magnify = block.HeaderLevel == 1 ? theme.Header1Height : block.HeaderLevel == 2 ? theme.Header2Height : 1.0;
-                        break;
+                    var magnify = 1.0;
+                    var length = block.SourceLength;
 
-                    case BlockTag.BlockQuote: 
-                        highlight = theme.HighlightBlockQuote;
-                        break;
+                    if (block.HeaderLevel == 1) magnify = theme.Header1Height;
+                    if (block.HeaderLevel == 2) magnify = theme.Header2Height;
+                    if (block.Tag == BlockTag.ListItem) length = Math.Min(block.SourceLength, block.ListData.Padding);
 
-                    case BlockTag.ListItem:
-                        highlight = theme.HighlightStrongEmphasis;
-                        sourceLength = Math.Min(block.SourceLength, block.ListData.Padding);
-                        break;
-
-                    case BlockTag.FencedCode:
-                    case BlockTag.IndentedCode:
-                    case BlockTag.HtmlBlock:
-                        highlight = theme.HighlightBlockCode;
-                        break;
-
-                    case BlockTag.ReferenceDefinition:
-                        highlight = theme.HighlightLink;
-                        break;
+                    ApplyLinePart(highlighter(theme), block.SourcePosition, length, start, end, leadingSpaces, magnify);
                 }
 
-                if (highlight != null)
+                foreach (var inline in EnumerateInlines(block.InlineContent)
+                    .TakeWhile(il => il.SourcePosition < end)
+                    .Where(inline => InlineHighlighter.TryGetValue(inline.Tag, out highlighter)))
                 {
-                    ApplyLinePart(highlight, block.SourcePosition, sourceLength, start, end, leadingSpaces, magnify);
-                }
-
-                foreach (var inline in EnumerateInlines(block.InlineContent).TakeWhile(il => il.SourcePosition < end))
-                {
-                    Func<Theme, Highlight> highlighter;
-                    if (InlineHighlight.TryGetValue(inline.Tag, out highlighter))
-                    {
-                        ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, 1.0);
-                    }
+                    ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, 1.0);
                 }
             }
         }
@@ -159,7 +145,9 @@ namespace MarkdownEdit.Models
             if (string.IsNullOrWhiteSpace(color)) return null;
             try
             {
-                return new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                brush.Freeze();
+                return brush;
             }
             catch (FormatException)
             {

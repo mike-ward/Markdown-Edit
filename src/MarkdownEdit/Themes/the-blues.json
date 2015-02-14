@@ -21,7 +21,7 @@
     "HighlightStrongEmphasis": {
       "Name": "StrongEmphasis",
       "Background": null,
-      "Foreground": "#529",
+      "Foreground": "#eee",
       "FontWeight": "bold",
       "FontStyle": null
     },

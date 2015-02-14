@@ -135,7 +135,6 @@
       <DependentUpon>GotoLineDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Highlight.cs" />
-    <Compile Include="Models\HighlightBrush.cs" />
     <Compile Include="Controls\RecentFilesDialog.xaml.cs">
       <DependentUpon>RecentFilesDialog.xaml</DependentUpon>
     </Compile>
