@@ -23,7 +23,8 @@ namespace MarkdownEdit.Models
             {InlineTag.Emphasis, t => t.HighlightEmphasis},
             {InlineTag.Strong, t => t.HighlightStrongEmphasis},
             {InlineTag.Link, t => t.HighlightLink},
-            {InlineTag.Image, t => t.HighlightImage}
+            {InlineTag.Image, t => t.HighlightImage},
+            {InlineTag.RawHtml, t => t.HighlightInlineCode}
         };
 
         protected override void ColorizeLine(DocumentLine line)
@@ -63,6 +64,7 @@ namespace MarkdownEdit.Models
 
                     case BlockTag.FencedCode:
                     case BlockTag.IndentedCode:
+                    case BlockTag.HtmlBlock:
                         highlight = theme.HighlightBlockCode;
                         break;
 
