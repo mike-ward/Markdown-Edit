@@ -8,7 +8,6 @@ using CommonMark;
 using CommonMark.Syntax;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
-using NHunspell;
 
 namespace MarkdownEdit.Models
 {
@@ -230,9 +229,7 @@ namespace MarkdownEdit.Models
 
         private static string Normalize(string value)
         {
-            value = value.Replace('→', '\t');
-            value = value.Replace('␣', ' ');
-            return value;
+            return value.Replace('→', '\t').Replace('␣', ' ');
         }
     }
 }
