@@ -35,47 +35,55 @@ namespace MarkdownEdit.Models
 
             var start = line.Offset;
             var end = line.EndOffset;
+            var leadingSpaces = CurrentContext.GetText(start, end - start).Text.TakeWhile(char.IsWhiteSpace).Count();
 
             foreach (var block in EnumerateSpanningBlocks(ast, start, end))
             {
+                var magnify = 1.0;
+                var sourceLength = block.SourceLength;
+                var highlight = default(Highlight);
+
                 switch (block.Tag)
                 {
                     case BlockTag.AtxHeader:
                     case BlockTag.SETextHeader:
-                        var magnify = block.HeaderLevel == 1 ? theme.Header1Height : block.HeaderLevel == 2 ? theme.Header2Height : 1.0;
-                        ApplyLinePart(theme.HighlightHeading, block.SourcePosition, block.SourceLength, start, end, magnify);
+                        highlight = theme.HighlightHeading;
+                        magnify = block.HeaderLevel == 1 ? theme.Header1Height : block.HeaderLevel == 2 ? theme.Header2Height : 1.0;
                         break;
 
                     case BlockTag.BlockQuote:
-                        ApplyLinePart(theme.HighlightBlockQuote, block.SourcePosition, block.SourceLength, start, end, 1.0);
+                        highlight = theme.HighlightBlockQuote;
                         break;
 
                     case BlockTag.ListItem:
-                        var length = Math.Min(block.SourceLength, block.ListData.Padding);
-                        ApplyLinePart(theme.HighlightStrongEmphasis, block.SourcePosition, length, start, end, 1.0);
+                        highlight = theme.HighlightStrongEmphasis;
+                        sourceLength = Math.Min(block.SourceLength, block.ListData.Padding);
                         break;
 
                     case BlockTag.FencedCode:
                     case BlockTag.IndentedCode:
-                        ApplyLinePart(theme.HighlightBlockCode, block.SourcePosition, block.SourceLength, start, end, 1.0);
+                        highlight = theme.HighlightBlockCode;
                         break;
+                }
+
+                if (highlight != null)
+                {
+                    ApplyLinePart(highlight, block.SourcePosition, sourceLength, start, end, leadingSpaces, magnify);
                 }
 
                 foreach (var inline in EnumerateInlines(block.InlineContent).TakeWhile(il => il.SourcePosition < end))
                 {
-                    Func<Theme, Highlight> highlight;
-                    if (InlineHighlight.TryGetValue(inline.Tag, out highlight))
+                    Func<Theme, Highlight> highlighter;
+                    if (InlineHighlight.TryGetValue(inline.Tag, out highlighter))
                     {
-                        ApplyLinePart(highlight(theme), inline.SourcePosition, inline.SourceLength, start, end, 1.0);
+                        ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, 1.0);
                     }
                 }
             }
         }
 
-        private void ApplyLinePart(Highlight highlight, int sourceStart, int sourceLength, int lineStart, int lineEnd, double magnify)
+        private void ApplyLinePart(Highlight highlight, int sourceStart, int sourceLength, int lineStart, int lineEnd, int leadingSpaces, double magnify)
         {
-            var text = CurrentContext.GetText(lineStart, lineEnd - lineStart);
-            var leadingSpaces = text.Text.TakeWhile(char.IsWhiteSpace).Count();
             var start = Math.Max(sourceStart, lineStart + leadingSpaces);
             var end = Math.Min(lineEnd, sourceStart + sourceLength);
             if (start < end) ChangeLinePart(start, end, element => ApplyHighlight(element, highlight, magnify));
