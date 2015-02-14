@@ -52,7 +52,7 @@ namespace MarkdownEdit.Models
                         magnify = block.HeaderLevel == 1 ? theme.Header1Height : block.HeaderLevel == 2 ? theme.Header2Height : 1.0;
                         break;
 
-                    case BlockTag.BlockQuote:
+                    case BlockTag.BlockQuote: 
                         highlight = theme.HighlightBlockQuote;
                         break;
 
