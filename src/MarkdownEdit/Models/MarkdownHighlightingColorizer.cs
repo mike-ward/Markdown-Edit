@@ -8,6 +8,7 @@ using CommonMark;
 using CommonMark.Syntax;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
+using NHunspell;
 
 namespace MarkdownEdit.Models
 {
@@ -63,6 +64,10 @@ namespace MarkdownEdit.Models
                     case BlockTag.FencedCode:
                     case BlockTag.IndentedCode:
                         highlight = theme.HighlightBlockCode;
+                        break;
+
+                    case BlockTag.ReferenceDefinition:
+                        highlight = theme.HighlightLink;
                         break;
                 }
 
@@ -144,7 +149,8 @@ namespace MarkdownEdit.Models
             }
 
             if (highlight.Underline) trp.SetTextDecorations(TextDecorations.Underline);
-            if (Math.Abs(magnify - 1.0) > .000001) trp.SetFontRenderingEmSize(trp.FontRenderingEmSize * magnify);
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (magnify != 1.0) trp.SetFontRenderingEmSize(trp.FontRenderingEmSize * magnify);
         }
 
         private static Brush ColorBrush(string color)
