@@ -17,5 +17,6 @@
     <dependencies>
       <dependency id="DotNet4.5.2" />
     </dependencies>
+    <tags>markdown commonmark editor windows desktop text</tags>
   </metadata>
 </package>
