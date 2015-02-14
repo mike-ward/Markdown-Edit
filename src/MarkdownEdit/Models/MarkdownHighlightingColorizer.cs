@@ -16,7 +16,7 @@ namespace MarkdownEdit.Models
         private Block _abstractSyntaxTree;
         private Theme _theme;
 
-        private static readonly Dictionary<BlockTag, Func<Theme, Highlight>> BlockHiighlighter = new Dictionary<BlockTag, Func<Theme, Highlight>>
+        private static readonly Dictionary<BlockTag, Func<Theme, Highlight>> BlockHighlighter = new Dictionary<BlockTag, Func<Theme, Highlight>>
         {
             {BlockTag.AtxHeader, t => t.HighlightHeading},
             {BlockTag.SETextHeader, t => t.HighlightHeading},
@@ -26,7 +26,7 @@ namespace MarkdownEdit.Models
             {BlockTag.IndentedCode, t => t.HighlightBlockCode},
             {BlockTag.HtmlBlock, t => t.HighlightBlockCode},
             {BlockTag.ReferenceDefinition, t => t.HighlightLink}
-        };  
+        };
 
         private static readonly Dictionary<InlineTag, Func<Theme, Highlight>> InlineHighlighter = new Dictionary<InlineTag, Func<Theme, Highlight>>
         {
@@ -53,32 +53,26 @@ namespace MarkdownEdit.Models
 
             foreach (var block in EnumerateSpanningBlocks(ast, start, end))
             {
-                if (BlockHiighlighter.TryGetValue(block.Tag, out highlighter))
+                if (BlockHighlighter.TryGetValue(block.Tag, out highlighter))
                 {
-                    var magnify = 1.0;
-                    var length = block.SourceLength;
-
+                    var magnify = double.NaN;
                     if (block.HeaderLevel == 1) magnify = theme.Header1Height;
                     if (block.HeaderLevel == 2) magnify = theme.Header2Height;
-                    if (block.Tag == BlockTag.ListItem) length = Math.Min(block.SourceLength, block.ListData.Padding);
+
+                    var length = (block.Tag == BlockTag.ListItem)
+                        ? Math.Min(block.SourceLength, block.ListData.Padding)
+                        : block.SourceLength;
 
                     ApplyLinePart(highlighter(theme), block.SourcePosition, length, start, end, leadingSpaces, magnify);
                 }
 
                 foreach (var inline in EnumerateInlines(block.InlineContent)
                     .TakeWhile(il => il.SourcePosition < end)
-                    .Where(inline => InlineHighlighter.TryGetValue(inline.Tag, out highlighter)))
+                    .Where(il => InlineHighlighter.TryGetValue(il.Tag, out highlighter)))
                 {
-                    ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, 1.0);
+                    ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, double.NaN);
                 }
             }
-        }
-
-        private void ApplyLinePart(Highlight highlight, int sourceStart, int sourceLength, int lineStart, int lineEnd, int leadingSpaces, double magnify)
-        {
-            var start = Math.Max(sourceStart, lineStart + leadingSpaces);
-            var end = Math.Min(lineEnd, sourceStart + sourceLength);
-            if (start < end) ChangeLinePart(start, end, element => ApplyHighlight(element, highlight, magnify));
         }
 
         private static IEnumerable<Block> EnumerateSpanningBlocks(Block ast, int startOffset, int endOffset)
@@ -116,6 +110,13 @@ namespace MarkdownEdit.Models
             }
         }
 
+        private void ApplyLinePart(Highlight highlight, int sourceStart, int sourceLength, int lineStart, int lineEnd, int leadingSpaces, double magnify)
+        {
+            var start = Math.Max(sourceStart, lineStart + leadingSpaces);
+            var end = Math.Min(lineEnd, sourceStart + sourceLength);
+            if (start < end) ChangeLinePart(start, end, element => ApplyHighlight(element, highlight, magnify));
+        }
+
         private static void ApplyHighlight(VisualLineElement element, Highlight highlight, double magnify)
         {
             var trp = element.TextRunProperties;
@@ -136,8 +137,7 @@ namespace MarkdownEdit.Models
             }
 
             if (highlight.Underline) trp.SetTextDecorations(TextDecorations.Underline);
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (magnify != 1.0) trp.SetFontRenderingEmSize(trp.FontRenderingEmSize * magnify);
+            if (double.IsNaN(magnify) == false) trp.SetFontRenderingEmSize(trp.FontRenderingEmSize * magnify);
         }
 
         private static Brush ColorBrush(string color)
