@@ -11,8 +11,8 @@ Markdown Edit is  a Windows **desktop** Markdown editor with an emphasis on cont
 [Contributor Guidelines](CONTRIBUTING.md)
 
 Gratuitous Screen Shot
-![screen shot](ScreenShot.png)
 
+<a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank">![markdown-edit-screenshot.png](http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png "Gratuitous Screen Shot")</a> 
 ## Features
 
   - Syntax highlighting editor
