@@ -1,13 +1,5 @@
 ## Roadmap
 
-### Version 1.3
-
-- Settings dialog (Implemented)
-  + Single modal dialog (in-frame?)
-  + Activated from icon on the toolbar
-- Review mode (could just be keyboard shortcuts to open next/previous file in folder) (deferred)
-- Hanging indent for word wrapped lists and block-quotes only (not sure this is possible in Avalon Edit) (deferred)
-
 ### Version 1.4
 
 - Multiple Document Interface
@@ -20,5 +12,7 @@
 ### Version 1.5
 
 - File manager
-- Better syntax highlighting
-- Provide for localization
+
+### Version 1.6
+
+- Localization
