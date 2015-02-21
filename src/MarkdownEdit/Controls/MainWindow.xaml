@@ -11,8 +11,8 @@
   Title="{Binding TitleName}"
   TitleCaps="False"
   SaveWindowPosition="True"
-  WindowTitleBrush="{DynamicResource GrayBrush2}"
-  GlowBrush="{DynamicResource GrayBrush2}"
+  WindowTitleBrush="{StaticResource GrayBrush2}"
+  GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="CanResizeWithGrip"
   IgnoreTaskbarOnMaximize="True"
   WindowTransitionsEnabled="False"
@@ -29,12 +29,12 @@
     <Style x:Key="StatusIndicatorStyle"
            TargetType="TextBlock">
       <Setter Property="Margin" Value="10 0 0 0" />
-      <Setter Property="Foreground" Value="{DynamicResource GrayBrush10}" />
+      <Setter Property="Foreground" Value="{StaticResource GrayBrush10}" />
       <Setter Property="VerticalAlignment" Value="Bottom" />
       <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
       <Style.Triggers>
         <Trigger Property="IsEnabled" Value="False">
-          <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+          <Setter Property="Foreground" Value="{StaticResource GrayBrush3}" />
         </Trigger>
       </Style.Triggers>
     </Style>

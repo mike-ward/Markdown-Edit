@@ -5,8 +5,8 @@
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
   Title="Themes"
   WindowStartupLocation="CenterOwner"
-  WindowTitleBrush="{DynamicResource GrayBrush2}"
-  GlowBrush="{DynamicResource GrayBrush2}"
+  WindowTitleBrush="{StaticResource GrayBrush2}"
+  GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="CanResizeWithGrip"
   ShowInTaskbar="False"
   ShowMinButton="False"
@@ -31,7 +31,7 @@
              TabIndex="1"
              BorderThickness="1"
              SelectionChanged="OnSelectionChanged"
-             BorderBrush="{DynamicResource ControlBorderBrush}"
+             BorderBrush="{StaticResource ControlBorderBrush}"
              />
   </DockPanel>
   

@@ -9,8 +9,8 @@
 	SizeToContent="Height"
 	ResizeMode="NoResize"
 	ShowInTaskbar="False"
-	WindowTitleBrush="{DynamicResource GrayBrush2}"
-	GlowBrush="{DynamicResource GrayBrush2}"
+	WindowTitleBrush="{StaticResource GrayBrush2}"
+	GlowBrush="{StaticResource GrayBrush2}"
 	WindowTransitionsEnabled="False">
 
 	<Grid Margin="4 5 4 10">

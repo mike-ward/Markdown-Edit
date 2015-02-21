@@ -6,8 +6,8 @@
   xmlns:local="clr-namespace:MarkdownEdit"
   Title="Recent Files"
   WindowStartupLocation="CenterOwner"
-  WindowTitleBrush="{DynamicResource GrayBrush2}"
-  GlowBrush="{DynamicResource GrayBrush2}"
+  WindowTitleBrush="{StaticResource GrayBrush2}"
+  GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="CanResizeWithGrip"
   ShowInTaskbar="False"
   ShowMinButton="False"
@@ -47,7 +47,7 @@
              MouseLeftButtonUp="OnOpen"
              TabIndex="1"
              BorderThickness="1"
-             BorderBrush="{DynamicResource ControlBorderBrush}">
+             BorderBrush="{StaticResource ControlBorderBrush}">
     </ListBox>
   </DockPanel>
 
