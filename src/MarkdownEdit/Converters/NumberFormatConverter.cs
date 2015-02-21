@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 // ReSharper disable once CheckNamespace
 
-namespace MarkdownEdit.Conveters
+namespace MarkdownEdit.Converters
 {
     internal class NumberFormatConverter : IValueConverter
     {

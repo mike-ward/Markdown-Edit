@@ -56,6 +56,7 @@ namespace MarkdownEdit.Controls
             // make scroll bar narrower
             var grid = EditBox.GetDescendantByType<Grid>();
             grid.ColumnDefinitions[1].Width = new GridLength(8);
+            grid.RowDefinitions[1].Height = new GridLength(8);
 
             Dispatcher.InvokeAsync(() =>
             {

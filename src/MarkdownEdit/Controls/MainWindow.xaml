@@ -7,7 +7,7 @@
   xmlns:controls1="clr-namespace:MarkdownEdit.Controls"
   xmlns:p="clr-namespace:MarkdownEdit.Properties"
   xmlns:interop="clr-namespace:Microsoft.DwayneNeed.Interop;assembly=Microsoft.DwayneNeed"
-  xmlns:conveters="clr-namespace:MarkdownEdit.Conveters"
+  xmlns:converters="clr-namespace:MarkdownEdit.Converters"
   Title="{Binding TitleName}"
   TitleCaps="False"
   SaveWindowPosition="True"
@@ -23,8 +23,8 @@
   WindowButtonCommandsOverlayBehavior="Never">
 
   <controls:MetroWindow.Resources>
-    <conveters:NumberFormatConverter x:Key="NumberFormatConverter" />
-    <conveters:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
+    <converters:NumberFormatConverter x:Key="NumberFormatConverter" />
+    <converters:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
 
     <Style x:Key="StatusIndicatorStyle"
            TargetType="TextBlock">
