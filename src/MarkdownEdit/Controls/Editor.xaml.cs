@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,6 +42,8 @@ namespace MarkdownEdit.Controls
             EditBox.Options.EnableHyperlinks = false;
             EditBox.Options.ConvertTabsToSpaces = true;
             EditBox.Options.AllowScrollBelowDocument = true;
+            EditBox.Options.EnableHyperlinks = false;
+            EditBox.Options.EnableEmailHyperlinks = false;
             EditBox.TextChanged += EditBoxOnTextChanged;
             EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
             EditBox.PreviewKeyDown += (s, e) => _appsKeyDown = e.Key == Key.Apps && e.IsDown;
