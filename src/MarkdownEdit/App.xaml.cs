@@ -28,7 +28,17 @@ namespace MarkdownEdit
             container.Register<ISpellCheckProvider, SpellCheckProvider>();
             container.Register<ISnippetManager, SnippetManager>();
 
-            MainWindow = container.Resolve<MainWindow>();
+            var mainWindow = container.Resolve<MainWindow>();
+            var windowPlacementSettings = mainWindow.GetWindowPlacementSettings();
+
+            if (windowPlacementSettings.UpgradeSettings)
+            {
+                windowPlacementSettings.Upgrade();
+                windowPlacementSettings.UpgradeSettings = false;
+                windowPlacementSettings.Save();
+            }
+
+            MainWindow = mainWindow;
             MainWindow.Show();
 
             Task.Factory.StartNew(() =>
