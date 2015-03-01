@@ -20,7 +20,6 @@ namespace MarkdownEdit
 
         private void OnStartup(object sender, StartupEventArgs ea)
         {
-            var upgradeSettings = Settings.Default.UpgradeSettings; 
             InitializeSettings();
 
             var container = TinyIoCContainer.Current;
@@ -31,10 +30,12 @@ namespace MarkdownEdit
 
             var mainWindow = container.Resolve<MainWindow>();
 
-            if (upgradeSettings)
+            var windowPlacementSettings = mainWindow.GetWindowPlacementSettings();
+
+            if (windowPlacementSettings.UpgradeSettings)
             {
-                var windowPlacementSettings = mainWindow.GetWindowPlacementSettings();
                 windowPlacementSettings.Upgrade();
+                windowPlacementSettings.UpgradeSettings = false;
                 windowPlacementSettings.Save();
             }
 
