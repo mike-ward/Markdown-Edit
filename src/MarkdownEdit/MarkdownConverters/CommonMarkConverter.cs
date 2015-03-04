@@ -13,9 +13,9 @@ namespace MarkdownEdit.MarkdownConverters
 
         public string ConvertToHtml(string markdown, bool resolveUrls)
         {
-            return CommonMark.CommonMarkConverter.Convert(markdown, resolveUrls
-                ? new CommonMarkSettings {UriResolver = _uriResolver}
-                : null);
+            var settings = CommonMarkSettings.Default.Clone();
+            if (resolveUrls) settings.UriResolver = _uriResolver;
+            return CommonMark.CommonMarkConverter.Convert(markdown, settings);
         }
 
         private static string UriResolver(string text)

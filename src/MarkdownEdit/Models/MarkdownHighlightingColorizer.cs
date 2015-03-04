@@ -208,7 +208,8 @@ namespace MarkdownEdit.Models
         {
             using (var reader = new StringReader(Normalize(text)))
             {
-                var settings = new CommonMarkSettings {TrackSourcePosition = true};
+                var settings = CommonMarkSettings.Default.Clone();
+                settings.TrackSourcePosition = true;
                 var ast = CommonMarkConverter.ProcessStage1(reader, settings);
                 CommonMarkConverter.ProcessStage2(ast, settings);
                 return ast;
