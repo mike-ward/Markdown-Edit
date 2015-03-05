@@ -13,8 +13,15 @@ namespace MarkdownEdit.Models
 {
     public class MarkdownHighlightingColorizer : DocumentColorizingTransformer
     {
+        private readonly CommonMarkSettings _commonMarkSettings;
         private Block _abstractSyntaxTree;
         private Theme _theme;
+
+        public MarkdownHighlightingColorizer()
+        {
+            _commonMarkSettings = CommonMarkSettings.Default.Clone();
+            _commonMarkSettings.TrackSourcePosition = true;
+        }
 
         private static readonly Dictionary<BlockTag, Func<Theme, Highlight>> BlockHighlighter = new Dictionary<BlockTag, Func<Theme, Highlight>>
         {
@@ -68,10 +75,7 @@ namespace MarkdownEdit.Models
 
                 foreach (var inline in EnumerateInlines(block.InlineContent)
                     .TakeWhile(il => il.SourcePosition < end)
-                    .Where(il => InlineHighlighter.TryGetValue(il.Tag, out highlighter)))
-                {
-                    ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, double.NaN);
-                }
+                    .Where(il => InlineHighlighter.TryGetValue(il.Tag, out highlighter))) ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, double.NaN);
             }
         }
 
@@ -204,14 +208,12 @@ namespace MarkdownEdit.Models
             _theme = theme;
         }
 
-        private static Block ParseDocument(string text)
+        private Block ParseDocument(string text)
         {
             using (var reader = new StringReader(Normalize(text)))
             {
-                var settings = CommonMarkSettings.Default.Clone();
-                settings.TrackSourcePosition = true;
-                var ast = CommonMarkConverter.ProcessStage1(reader, settings);
-                CommonMarkConverter.ProcessStage2(ast, settings);
+                var ast = CommonMarkConverter.ProcessStage1(reader, _commonMarkSettings);
+                CommonMarkConverter.ProcessStage2(ast, _commonMarkSettings);
                 return ast;
             }
         }

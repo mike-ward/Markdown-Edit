@@ -9,13 +9,19 @@ namespace MarkdownEdit.MarkdownConverters
 {
     public class CommonMarkConverter : IMarkdownConverter
     {
-        private readonly Func<string, string> _uriResolver = Utility.Memoize<string, string>(UriResolver);
+        private readonly CommonMarkSettings _commonMarkSettings;
+        private readonly Func<string, string> _uriResolver;
+
+        public CommonMarkConverter()
+        {
+            _commonMarkSettings = CommonMarkSettings.Default.Clone();
+            _commonMarkSettings.UriResolver = _uriResolver;
+            _uriResolver = Utility.Memoize<string, string>(UriResolver);
+        }
 
         public string ConvertToHtml(string markdown, bool resolveUrls)
         {
-            var settings = CommonMarkSettings.Default.Clone();
-            if (resolveUrls) settings.UriResolver = _uriResolver;
-            return CommonMark.CommonMarkConverter.Convert(markdown, settings);
+            return CommonMark.CommonMarkConverter.Convert(markdown, _commonMarkSettings);
         }
 
         private static string UriResolver(string text)
