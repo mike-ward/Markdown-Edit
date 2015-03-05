@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using CommonMark;
+using HtmlAgilityPack;
 using mshtml;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
@@ -53,13 +54,57 @@ namespace MarkdownEdit.Controls
                 markdown = Utility.RemoveYamlFrontMatter(markdown);
                 var html = MarkdownConverter.ConvertToHtml(markdown);
                 var div = GetContentsDiv();
-                div.innerHTML = html;
+                div.innerHTML = ScrubHtml(html);
                 WordCount = div.innerText.WordCount();
             }
             catch (CommonMarkException e)
             {
                 MessageBox.Show(e.ToString(), App.Title);
             }
+        }
+
+        private static string ScrubHtml(string html)
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            Action<HtmlNodeCollection, Action<HtmlNode>> each = (nodes, action) =>
+            {
+                if (nodes == null) return;
+                foreach (var node in nodes) action.Invoke(node);
+            };            
+            
+            // Remove potentially harmful elements
+            var nc = doc.DocumentNode.SelectNodes("//script|//link|//iframe|//frameset|//frame|//applet|//object|//embed");
+            each(nc, node => node.ParentNode.RemoveChild(node, false));
+
+            // Remove hrefs to java/j/vbscript URLs
+            nc = doc.DocumentNode.SelectNodes("//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
+            each(nc, node => node.SetAttributeValue("href", "#"));
+
+            // Remove img with refs to java/j/vbscript URLs
+            nc = doc.DocumentNode.SelectNodes("//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
+            each(nc, node => node.SetAttributeValue("src", "#"));
+
+            // Remove on<Event> handlers from all tags
+            nc = doc.DocumentNode.SelectNodes("//*[@onclick or @onmouseover or @onfocus or @onblur or @onmouseout or @ondoubleclick or @onload or @onunload]");
+            each(nc, node =>
+            {
+                node.Attributes.Remove("onFocus");
+                node.Attributes.Remove("onBlur");
+                node.Attributes.Remove("onClick");
+                node.Attributes.Remove("onMouseOver");
+                node.Attributes.Remove("onMouseOut");
+                node.Attributes.Remove("onDoubleClick");
+                node.Attributes.Remove("onLoad");
+                node.Attributes.Remove("onUnload");
+            });
+
+            // remove any style attributes that contain the word expression (IE evaluates this as script)
+            nc = doc.DocumentNode.SelectNodes("//*[contains(translate(@style, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'expression')]");
+            each(nc, node => node.Attributes.Remove("style"));
+
+            return doc.DocumentNode.WriteTo();
         }
 
         private IHTMLElement GetContentsDiv()
