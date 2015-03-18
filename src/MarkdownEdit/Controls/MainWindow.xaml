@@ -42,7 +42,7 @@
     <Style x:Key="CommandWindowButtonStyle"
             TargetType="Button"
             BasedOn="{StaticResource MetroBaseWindowButtonStyle}">
-      <Setter Property="Margin" Value="10 0 0 0" />
+      <Setter Property="Margin" Value="7 0 0 0" />
       <Style.Triggers>
         <Trigger Property="IsMouseOver" Value="True">
           <Setter Property="Background" Value="{StaticResource TransparentWhiteBrush}" />
