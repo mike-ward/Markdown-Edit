@@ -38,6 +38,17 @@
         </Trigger>
       </Style.Triggers>
     </Style>
+      
+    <Style x:Key="CommandWindowButtonStyle"
+            TargetType="Button"
+            BasedOn="{StaticResource MetroBaseWindowButtonStyle}">
+      <Setter Property="Margin" Value="10 0 0 0" />
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" Value="{StaticResource TransparentWhiteBrush}" />
+        </Trigger>
+      </Style.Triggers>
+    </Style>
 
   </controls:MetroWindow.Resources>
 
@@ -46,6 +57,26 @@
       <StackPanel Orientation="Horizontal"
                   Margin="20 0"
                   VerticalAlignment="Center">
+        <Button Content="&#xe160;"
+                ToolTip="New - Ctrl+N"
+                Command="New"
+                FontFamily="Segoe UI Symbol"
+                Style="{StaticResource CommandWindowButtonStyle}" />
+        <Button Content="&#xe1A5;"
+                ToolTip="Open - Ctrl+O"
+                Command="Open"
+                FontFamily="Segoe UI Symbol"
+                Style="{StaticResource CommandWindowButtonStyle}" />
+        <Button Content="&#xe105;"
+                ToolTip="Save - Ctrl+S"
+                Command="Save"
+                FontFamily="Segoe UI Symbol"
+                Style="{StaticResource CommandWindowButtonStyle}" />
+        <Button Content="&#xe28F;"
+                ToolTip="Save as - Ctrl+Shift+S"
+                Command="SaveAs"
+                FontFamily="Segoe UI Symbol"
+                Style="{StaticResource CommandWindowButtonStyle}" />
         <Button Content="&#xe115;"
                 Margin="0 0 10 0"
                 ToolTip="Settings"
