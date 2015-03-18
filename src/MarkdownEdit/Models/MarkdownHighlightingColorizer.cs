@@ -75,7 +75,11 @@ namespace MarkdownEdit.Models
 
                 foreach (var inline in EnumerateInlines(block.InlineContent)
                     .TakeWhile(il => il.SourcePosition < end)
-                    .Where(il => InlineHighlighter.TryGetValue(il.Tag, out highlighter))) ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, double.NaN);
+                    .Where(il => InlineHighlighter.TryGetValue(il.Tag, out highlighter)))
+                {
+                    // inlines don't magnify
+                    ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, double.NaN);
+                }
             }
         }
 

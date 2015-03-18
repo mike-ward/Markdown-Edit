@@ -72,8 +72,8 @@ namespace MarkdownEdit.Controls
             {
                 if (nodes == null) return;
                 foreach (var node in nodes) action.Invoke(node);
-            };            
-            
+            };
+
             // Remove potentially harmful elements
             var nc = doc.DocumentNode.SelectNodes("//script|//link|//iframe|//frameset|//frame|//applet|//object|//embed");
             each(nc, node => node.ParentNode.RemoveChild(node, false));
@@ -136,7 +136,7 @@ namespace MarkdownEdit.Controls
             {
                 var percentToScroll = PercentScroll(ea);
                 if (percentToScroll > 0.99) percentToScroll = 1.1; // deal with round off at end of scroll
-                var body = document2.body; //document3.getElementsByTagName("body").item(0);
+                var body = document2.body;
                 var scrollHeight = ((IHTMLElement2)body).scrollHeight - document3.documentElement.offsetHeight;
                 document2.parentWindow.scroll(0, (int)Math.Ceiling(percentToScroll * scrollHeight));
             }
@@ -202,11 +202,9 @@ namespace MarkdownEdit.Controls
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(property, value) == false)
-            {
-                property = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
