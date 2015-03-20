@@ -49,7 +49,7 @@
         </Trigger>
       </Style.Triggers>
     </Style>
-
+    
   </controls:MetroWindow.Resources>
 
   <controls:MetroWindow.RightWindowCommands>
