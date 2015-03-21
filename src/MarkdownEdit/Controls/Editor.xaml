@@ -10,8 +10,8 @@
              d:DesignWidth="300"
              ContextMenuOpening="EditorMenuOnContextMenuOpening"
              DataContext="{Binding RelativeSource={RelativeSource self}}"
-             AllowDrop="True"
-             >
+             AllowDrop="True">
+  
   <Border>
     <avalonedit:TextEditor
       x:Name="EditBox"
@@ -24,14 +24,20 @@
       WordWrap="{Binding Path=WordWrap, Mode=TwoWay}"
       ShowLineNumbers="{Binding Path=ShowLineNumbers, Mode=TwoWay}"
       IsModified="{Binding Path=IsModified, Mode=TwoWay}"
-      ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"
-      />
+      ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged" />
   </Border>
+
+  <UserControl.Resources>
+    <Style x:Key="{x:Type Thumb}"
+           TargetType="{x:Type Thumb}">
+      <Setter Property="Opacity" Value="0.1" />
+    </Style>
+  </UserControl.Resources>
 
   <UserControl.CommandBindings>
     <CommandBinding Command="{x:Static controls:Editor.DeselectCommand}" Executed="ExecuteDeselectCommand" />
   </UserControl.CommandBindings>
-  
+
   <UserControl.InputBindings>
     <KeyBinding Command="{x:Static controls:Editor.DeselectCommand}" Gesture="Esc" />
   </UserControl.InputBindings>

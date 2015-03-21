@@ -78,21 +78,6 @@ namespace MarkdownEdit.Controls
             var grid = EditBox.GetDescendantByType<Grid>();
             grid.ColumnDefinitions[1].Width = new GridLength(8);
             grid.RowDefinitions[1].Height = new GridLength(8);
-
-            //// change color of scrollbar
-            //const string template =
-            //    "<ControlTemplate xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation' TargetType =\"Thumb\">" +
-            //    "<Border Background=\"#33cccccc\" CornerRadius=\"2\">" +
-            //    "" +
-            //    "</Border>" +
-            //    "</ControlTemplate>";
-            //var controlTemplate = (ControlTemplate)XamlReader.Parse(template);
-
-            //var scrollViewer = (ScrollViewer)EditBox.Template.FindName("PART_ScrollViewer", EditBox);
-            //var verticalScrollBar = (ScrollBar)scrollViewer.Template.FindName("PART_VerticalScrollBar", scrollViewer);
-            //if (verticalScrollBar != null) verticalScrollBar.Track.Thumb.Template = controlTemplate;
-            //var horizontalScrollBar = (ScrollBar)scrollViewer.Template.FindName("PART_HorizontalScrollBar", scrollViewer);
-            //if (horizontalScrollBar != null) horizontalScrollBar.Track.Thumb.Template = controlTemplate;
         }
 
         private void SetupIndentationCommandBinding()
