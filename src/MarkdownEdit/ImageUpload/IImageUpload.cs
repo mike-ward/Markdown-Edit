@@ -6,6 +6,6 @@ namespace MarkdownEdit.ImageUpload
 {
     public interface IImageUpload
     {
-        Task<string> UploadFileAsync(string path);
+        Task<string> UploadBytesAsync(byte[] imageBytes);
     }
 }

@@ -10,12 +10,7 @@ namespace MarkdownEdit.ImageUpload
 {
     public class ImageUploadImgur : IImageUpload
     {
-        public async Task<string> UploadFileAsync(string path)
-        {
-            return await UploadBytes(File.ReadAllBytes(path));
-        }
-
-        private static async Task<string> UploadBytes(byte[] bytes)
+        public async Task<string> UploadBytesAsync(byte[] imageBytes)
         {
             using (var w = new WebClient())
             {
@@ -23,7 +18,7 @@ namespace MarkdownEdit.ImageUpload
                 w.Headers.Add("Authorization", "Client-ID " + clientId);
                 var values = new NameValueCollection
                 {
-                    {"image", Convert.ToBase64String(bytes)}
+                    {"image", Convert.ToBase64String(imageBytes)}
                 };
 
                 var response = await w.UploadValuesTaskAsync("https://api.imgur.com/3/upload.json", values);
