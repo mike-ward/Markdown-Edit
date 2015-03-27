@@ -7,10 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using MarkdownEdit.Commands;
@@ -729,16 +727,18 @@ namespace MarkdownEdit.Controls
 
             var files = e.Data.GetData(DataFormats.FileDrop) as string[];
             if (files == null) return;
-
             var imageExtensions = new[] { ".jpg", "jpeg", ".png", ".bmp", ".gif" };
+
             if (imageExtensions.Any(ext => files[0].EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
             {
-                var file = Path.GetFileName(files[0]);
-                var path = files[0].Replace('\\', '/');
-                var position = e.GetPosition(EditBox);
-                var offset = GetOffsetFromMousePosition(position);
-                if (offset == -1) offset = EditBox.Document.TextLength;
-                EditBox.Document.Insert(offset, string.Format("![{0}]({1}) ", file, path));
+                var dialog = new ImageDropDialog
+                {
+                    Owner = Application.Current.MainWindow,
+                    TextEditor = EditBox,
+                    DragEventArgs = e
+
+                };
+                dialog.ShowDialog();
             }
             else
             {
@@ -746,18 +746,5 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private int GetOffsetFromMousePosition(Point positionRelativeToTextView)
-        {
-            var textView = EditBox.TextArea.TextView;
-            var pos = positionRelativeToTextView;
-            if (pos.Y < 0) pos.Y = 0;
-            if (pos.Y > textView.ActualHeight) pos.Y = textView.ActualHeight;
-            pos += textView.ScrollOffset;
-            if (pos.Y > textView.DocumentHeight) pos.Y = textView.DocumentHeight;
-            var line = textView.GetVisualLineFromVisualTop(pos.Y);
-            if (line == null) return -1;
-            var visualColumn = line.GetVisualColumn(pos);
-            return line.GetRelativeOffset(visualColumn) + line.FirstDocumentLine.Offset;
-        }
     }
 }

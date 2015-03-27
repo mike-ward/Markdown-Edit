@@ -1,0 +1,25 @@
+﻿<Window x:Class="MarkdownEdit.Controls.ImageDropDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        ShowInTaskbar="False"
+        WindowStyle="None"
+        SizeToContent="WidthAndHeight"
+        >
+
+  <Border>
+    <Menu Margin="2">
+      <Menu.ItemsPanel>
+        <ItemsPanelTemplate>
+          <VirtualizingStackPanel Orientation="Vertical"/>
+        </ItemsPanelTemplate>
+      </Menu.ItemsPanel>
+
+      <MenuItem Header="Insert Path" Click="OnInsertPath" />
+      <MenuItem Header="Upload to Imgur" Click="OnUploadToImgur" />
+      <MenuItem Header="Cancel" Click="OnCancel" />
+    </Menu>
+  </Border>
+</Window>
