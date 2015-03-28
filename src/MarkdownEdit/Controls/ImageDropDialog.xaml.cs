@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Windows;
 using ICSharpCode.AvalonEdit;
 using MarkdownEdit.ImageUpload;
@@ -29,26 +30,10 @@ namespace MarkdownEdit.Controls
         {
             var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
             if (files == null) return;
-            var file = Path.GetFileName(files[0]);
+            var file = Path.GetFileNameWithoutExtension(files[0]);
             var path = files[0].Replace('\\', '/');
-            var position = DragEventArgs.GetPosition(TextEditor);
-            var offset = GetOffsetFromMousePosition(TextEditor, position);
-            if (offset == -1) offset = TextEditor.Document.TextLength;
-            TextEditor.Document.Insert(offset, string.Format("![{0}]({1}) ", file, path));
-        }
-
-        private static int GetOffsetFromMousePosition(TextEditor textEditor, Point positionRelativeToTextView)
-        {
-            var textView = textEditor.TextArea.TextView;
-            var pos = positionRelativeToTextView;
-            if (pos.Y < 0) pos.Y = 0;
-            if (pos.Y > textView.ActualHeight) pos.Y = textView.ActualHeight;
-            pos += textView.ScrollOffset;
-            if (pos.Y > textView.DocumentHeight) pos.Y = textView.DocumentHeight;
-            var line = textView.GetVisualLineFromVisualTop(pos.Y);
-            if (line == null) return -1;
-            var visualColumn = line.GetVisualColumn(pos);
-            return line.GetRelativeOffset(visualColumn) + line.FirstDocumentLine.Offset;
+            TextEditor.Document.Insert(TextEditor.CaretOffset, $"![{file}]({path}\n)");
+            Close();
         }
 
         private void OnUploadToImgur(object sender, RoutedEventArgs e)
@@ -56,13 +41,19 @@ namespace MarkdownEdit.Controls
             var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
             if (files == null) return;
             var path = files[0];
+            var name = Path.GetFileNameWithoutExtension(path);
 
-            var loader = new ImageUploadImgur();
-            loader
-                .UploadBytesAsync(File.ReadAllBytes(path))
-                .ContinueWith(task => TextEditor.Dispatcher.InvokeAsync(
-                    () => TextEditor.Document.Insert(TextEditor.CaretOffset,
-                        string.Format("![{1}]({0})", task.Result, Path.GetFileName(path)))));
+            Func<long, long, int> percentSent = (s, t) => (int)(((double)s / t) * 100);
+
+            UploadProgressChangedEventHandler progress = (o, args) => TextEditor.Dispatcher.InvokeAsync(() =>
+                ImgurMenuItem.Header = $"{percentSent(args.BytesSent, args.TotalBytesToSend)}%");
+
+            UploadValuesCompletedEventHandler completed = (o, args) => TextEditor.Dispatcher.InvokeAsync(Close);
+
+            new ImageUploadImgur()
+                .UploadBytesAsync(File.ReadAllBytes(path), progress, completed)
+                .ContinueWith(task => TextEditor.Dispatcher.InvokeAsync(() =>
+                    TextEditor.Document.Insert(TextEditor.CaretOffset, string.Format("![{1}]({0})\n", task.Result, name))));
         }
 
         private void OnCancel(object sender, RoutedEventArgs e)

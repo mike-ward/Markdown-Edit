@@ -22,7 +22,7 @@
         </MenuItem.Icon>
       </MenuItem>
       
-      <MenuItem Header="Upload to Imgur" Click="OnUploadToImgur">
+      <MenuItem x:Name="ImgurMenuItem" Header="Upload to Imgur" Click="OnUploadToImgur">
         <MenuItem.Icon>
           <Image Source="/Resources/imgur.png" Width="19" Height="19" />
         </MenuItem.Icon>
