@@ -117,7 +117,7 @@ namespace MarkdownEdit.Models
         {
             MessageBox.Show(
                 Application.Current.MainWindow,
-                string.Format("{0} in {1}", ex.Message, file),
+                $"{ex.Message} in {file}",
                 App.Title,
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);

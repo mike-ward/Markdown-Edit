@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Security.Policy;
 using System.Windows;
 using ICSharpCode.AvalonEdit;
 using MarkdownEdit.ImageUpload;
@@ -12,6 +11,7 @@ namespace MarkdownEdit.Controls
     {
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
+        private bool _canceled;
 
         public ImageDropDialog()
         {
@@ -34,7 +34,7 @@ namespace MarkdownEdit.Controls
             var file = Path.GetFileNameWithoutExtension(files[0]);
             var path = Uri.EscapeUriString(files[0].Replace('\\', '/'));
             if (path.Contains(":")) path = "file:" + path;
-            TextEditor.Document.Insert(GetInsertOffset(), $"![{file}]({path})\n");
+            InsertImageLink(path, file);
             Close();
         }
 
@@ -45,22 +45,45 @@ namespace MarkdownEdit.Controls
             var path = files[0];
             var name = Path.GetFileNameWithoutExtension(path);
 
-            Func<long, long, int> percentSent = (s, t) => (int)(((double)s / t) * 100);
-
             UploadProgressChangedEventHandler progress = (o, args) => TextEditor.Dispatcher.InvokeAsync(() =>
-                ImgurMenuItem.Header = $"{percentSent(args.BytesSent, args.TotalBytesToSend)}%");
+            {
+                if (_canceled)
+                {
+                    var webClient = (WebClient)o;
+                    webClient.CancelAsync();
+                    return;
+                }
+                var progressPercentage = (int)((args.BytesSent / (double)args.TotalBytesToSend) * 100);
+                ImgurMenuItem.Header = (progressPercentage == 100) ? "Processing" : $"{progressPercentage}%";
+            });
 
-            UploadValuesCompletedEventHandler completed = (o, args) => TextEditor.Dispatcher.InvokeAsync(Close);
+            Action<string, string> processResult = (link, description) =>
+            {
+                if (Uri.IsWellFormedUriString(link, UriKind.Absolute))
+                {
+                    InsertImageLink(link, description);
+                }
+                else
+                {
+                    MessageBox.Show(link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            };
 
             new ImageUploadImgur()
-                .UploadBytesAsync(File.ReadAllBytes(path), progress, completed)
-                .ContinueWith(task => TextEditor.Dispatcher.InvokeAsync(() =>
-                    TextEditor.Document.Insert(GetInsertOffset(), string.Format("![{1}]({0})\n", task.Result, name))));
+                .UploadBytesAsync(File.ReadAllBytes(path), progress)
+                .ContinueWith(task => TextEditor.Dispatcher.InvokeAsync(() => processResult(task.Result, name)))
+                .ContinueWith(task => Dispatcher.InvokeAsync(Close));
         }
 
         private void OnCancel(object sender, RoutedEventArgs e)
         {
+            _canceled = true;
             Close();
+        }
+
+        private void InsertImageLink(string link, string description)
+        {
+            TextEditor.Document.Insert(GetInsertOffset(), $"![{description}]({link})\n");
         }
 
         private int GetInsertOffset()
