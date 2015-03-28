@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Security.Policy;
 using System.Windows;
 using ICSharpCode.AvalonEdit;
 using MarkdownEdit.ImageUpload;
@@ -31,8 +32,9 @@ namespace MarkdownEdit.Controls
             var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
             if (files == null) return;
             var file = Path.GetFileNameWithoutExtension(files[0]);
-            var path = files[0].Replace('\\', '/');
-            TextEditor.Document.Insert(TextEditor.CaretOffset, $"![{file}]({path}\n)");
+            var path = Uri.EscapeUriString(files[0].Replace('\\', '/'));
+            if (path.Contains(":")) path = "file:" + path;
+            TextEditor.Document.Insert(GetInsertOffset(), $"![{file}]({path})\n");
             Close();
         }
 
@@ -53,12 +55,34 @@ namespace MarkdownEdit.Controls
             new ImageUploadImgur()
                 .UploadBytesAsync(File.ReadAllBytes(path), progress, completed)
                 .ContinueWith(task => TextEditor.Dispatcher.InvokeAsync(() =>
-                    TextEditor.Document.Insert(TextEditor.CaretOffset, string.Format("![{1}]({0})\n", task.Result, name))));
+                    TextEditor.Document.Insert(GetInsertOffset(), string.Format("![{1}]({0})\n", task.Result, name))));
         }
 
         private void OnCancel(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private int GetInsertOffset()
+        {
+            var position = DragEventArgs.GetPosition(TextEditor);
+            var offset = GetOffsetFromMousePosition(TextEditor, position);
+            if (offset == -1) offset = TextEditor.Document.TextLength;
+            return offset;
+        }
+
+        private static int GetOffsetFromMousePosition(TextEditor textEditor, Point positionRelativeToTextView)
+        {
+            var textView = textEditor.TextArea.TextView;
+            var pos = positionRelativeToTextView;
+            if (pos.Y < 0) pos.Y = 0;
+            if (pos.Y > textView.ActualHeight) pos.Y = textView.ActualHeight;
+            pos += textView.ScrollOffset;
+            if (pos.Y > textView.DocumentHeight) pos.Y = textView.DocumentHeight;
+            var line = textView.GetVisualLineFromVisualTop(pos.Y);
+            if (line == null) return -1;
+            var visualColumn = line.GetVisualColumn(pos);
+            return line.GetRelativeOffset(visualColumn) + line.FirstDocumentLine.Offset;
         }
     }
 }

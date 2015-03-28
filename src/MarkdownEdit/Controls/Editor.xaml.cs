@@ -49,11 +49,6 @@ namespace MarkdownEdit.Controls
             DataObject.AddPastingHandler(EditBox, OnPaste);
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
-
-            var imageUploadKeyBinding = new KeyBinding(new UploadImageCommand(EditBox, new ImageUpload.ImageUploadImgur()), 
-                Key.V, ModifierKeys.Control | ModifierKeys.Alt);
-
-            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(imageUploadKeyBinding);
             _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
             SetupSyntaxHighlighting();
         }
