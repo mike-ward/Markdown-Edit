@@ -6,20 +6,33 @@
         mc:Ignorable="d"
         ShowInTaskbar="False"
         WindowStyle="None"
-        SizeToContent="WidthAndHeight"
-        >
-
+        SizeToContent="WidthAndHeight">
+  
   <Border>
     <Menu Margin="2">
       <Menu.ItemsPanel>
         <ItemsPanelTemplate>
-          <VirtualizingStackPanel Orientation="Vertical"/>
+          <VirtualizingStackPanel Orientation="Vertical" />
         </ItemsPanelTemplate>
       </Menu.ItemsPanel>
 
-      <MenuItem Header="Insert Path" Click="OnInsertPath" />
-      <MenuItem Header="Upload to Imgur" Click="OnUploadToImgur" />
-      <MenuItem Header="Cancel" Click="OnCancel" />
+      <MenuItem Header="Insert Path" Click="OnInsertPath">
+        <MenuItem.Icon>
+          <Image Source="/Resources/add.png" Width="19" Height="19" />
+        </MenuItem.Icon>
+      </MenuItem>
+      
+      <MenuItem Header="Upload to Imgur" Click="OnUploadToImgur">
+        <MenuItem.Icon>
+          <Image Source="/Resources/imgur.png" Width="19" Height="19" />
+        </MenuItem.Icon>
+      </MenuItem>
+      
+      <MenuItem Header="Cancel" Click="OnCancel">
+        <MenuItem.Icon>
+          <Image Source="/Resources/error.png" Width="19" Height="19" />
+        </MenuItem.Icon>
+      </MenuItem>
     </Menu>
   </Border>
 </Window>
