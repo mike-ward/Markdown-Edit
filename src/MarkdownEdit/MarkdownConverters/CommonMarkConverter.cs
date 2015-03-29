@@ -34,9 +34,9 @@ namespace MarkdownEdit.MarkdownConverters
             try
             {
                 var asset = Path.Combine(path, file);
-                for (var i = 0; i < 4; ++i)
+                for (var i = 0; i < 20; ++i)
                 {
-                    if (File.Exists(asset)) return "file://" + asset.Replace('\\', '/');
+                    if (File.Exists(asset)) return "file:///" + asset.Replace('\\', '/');
                     var parent = Directory.GetParent(path);
                     if (parent == null) break;
                     path = parent.FullName;

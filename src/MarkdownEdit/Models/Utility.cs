@@ -58,6 +58,7 @@ namespace MarkdownEdit.Models
             html = UserTemplate.InsertContent(html);
             Clipboard.SetText(html);
         }
+
         public static string RemoveYamlFrontMatter(string markdown)
         {
             if (App.UserSettings.IgnoreYaml == false) return markdown;
@@ -73,7 +74,7 @@ namespace MarkdownEdit.Models
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
             if (element == null) return default(T);
-            if (element.GetType() == typeof(T)) return element as T;
+            if (element.GetType() == typeof (T)) return element as T;
             T foundElement = null;
             (element as FrameworkElement)?.ApplyTemplate();
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
@@ -86,31 +87,6 @@ namespace MarkdownEdit.Models
                 }
             }
             return foundElement;
-        }
-
-        public static FileSystemWatcher WatchFile(string file, Action onChange)
-        {
-            var fileWatcher = new FileSystemWatcher
-            {
-                Path = Path.GetDirectoryName(file),
-                Filter = Path.GetFileName(file),
-                NotifyFilter = NotifyFilters.LastWrite,
-            };
-            fileWatcher.Changed += (sender, args) =>
-            {
-                // Suggested method to "debounce" multiple notifications
-                try
-                {
-                    fileWatcher.EnableRaisingEvents = false;
-                    onChange();
-                }
-                finally
-                {
-                    fileWatcher.EnableRaisingEvents = true;
-                }
-            };
-            fileWatcher.EnableRaisingEvents = true;
-            return fileWatcher;
         }
 
         public static void ShowParseError(Exception ex, string file)

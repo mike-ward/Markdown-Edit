@@ -4,11 +4,13 @@ using System.Net;
 using System.Windows;
 using ICSharpCode.AvalonEdit;
 using MarkdownEdit.ImageUpload;
+using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
 {
     public partial class ImageDropDialog
     {
+        public string FileName { get; set; }
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
         private bool _canceled;
@@ -31,11 +33,11 @@ namespace MarkdownEdit.Controls
         {
             var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
             if (files == null) return;
-            var file = Path.GetFileNameWithoutExtension(files[0]);
-            var path = files[0].Replace('\\', '/');
-            if (path.Contains(":")) path = $"file:{path}";
+            var path = files[0];
+            var file = Path.GetFileNameWithoutExtension(path);
+            path = path.Replace('\\', '/');
             if (path.Contains(" ")) path = $"<{path}>";
-            InsertImageLink(path, file);
+            InsertImageTag(path, file);
             Close();
         }
 
@@ -59,7 +61,7 @@ namespace MarkdownEdit.Controls
             {
                 if (Uri.IsWellFormedUriString(link, UriKind.Absolute))
                 {
-                    InsertImageLink(link, description);
+                    InsertImageTag(link, description);
                 }
                 else
                 {
@@ -79,7 +81,7 @@ namespace MarkdownEdit.Controls
             Close();
         }
 
-        private void InsertImageLink(string link, string description)
+        private void InsertImageTag(string link, string description)
         {
             TextEditor.Document.Insert(GetInsertOffset(), $"![{description}]({link})\n");
         }

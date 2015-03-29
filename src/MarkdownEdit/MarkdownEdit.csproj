@@ -139,6 +139,7 @@
     <Compile Include="Controls\FindReplaceDialog.xaml.cs">
       <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\FileExtensions.cs" />
     <Compile Include="Models\FindReplaceSettings.cs" />
     <Compile Include="Controls\GotoLineDialog.xaml.cs">
       <DependentUpon>GotoLineDialog.xaml</DependentUpon>

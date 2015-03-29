@@ -51,7 +51,7 @@ namespace MarkdownEdit
                     if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary))
                         spellingService.Language = UserSettings.SpellCheckDictionary;
                 };
-                _userSettingsWatcher = Utility.WatchFile(UserSettings.SettingsFile, UserSettings.Update);
+                _userSettingsWatcher = UserSettings.SettingsFile.WatchFile(UserSettings.Update);
             });
         }
 

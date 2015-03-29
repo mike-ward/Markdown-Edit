@@ -25,7 +25,7 @@ namespace MarkdownEdit.Snippets
         public void Initialize()
         {
             ReadSnippetFile();
-            if (_snippetFileWatcher == null) _snippetFileWatcher = Utility.WatchFile(SnippetFile(), ReadSnippetFile);
+            if (_snippetFileWatcher == null) _snippetFileWatcher = SnippetFile().WatchFile(ReadSnippetFile);
         }
 
         private void ReadSnippetFile()

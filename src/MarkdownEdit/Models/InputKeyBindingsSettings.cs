@@ -19,8 +19,7 @@ namespace MarkdownEdit.Models
             if (File.Exists(KeyBindingFile) == false) Save(new InputKeyBindings());
             if (_keyBindingWatcher == null)
             {
-                Task.Factory.StartNew(() => _keyBindingWatcher = Utility.WatchFile(KeyBindingFile,
-                    () => Application.Current.Dispatcher.Invoke(Update)));
+                Task.Factory.StartNew(() => _keyBindingWatcher = KeyBindingFile.WatchFile(() => Application.Current.Dispatcher.Invoke(Update)));
             }
             return JsonConvert.DeserializeObject<InputKeyBindings>(File.ReadAllText(KeyBindingFile));
         }

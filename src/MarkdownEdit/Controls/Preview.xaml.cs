@@ -35,7 +35,7 @@ namespace MarkdownEdit.Controls
 
             Task.Factory.StartNew(() =>
             {
-                _templateWatcher = Utility.WatchFile(UserTemplate.TemplateFile, () => Dispatcher.Invoke(UpdateTemplate));
+                _templateWatcher = UserTemplate.TemplateFile.WatchFile(() => Dispatcher.Invoke(UpdateTemplate));
 
                 // kill popups
                 dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",

@@ -729,6 +729,7 @@ namespace MarkdownEdit.Controls
                 var dialog = new ImageDropDialog
                 {
                     Owner = Application.Current.MainWindow,
+                    FileName = FileName,
                     TextEditor = EditBox,
                     DragEventArgs = e
 
