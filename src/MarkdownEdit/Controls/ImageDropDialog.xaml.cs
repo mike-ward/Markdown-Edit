@@ -22,7 +22,7 @@ namespace MarkdownEdit.Controls
         private void OnActivated(object sender, EventArgs eventArgs)
         {
             var position = DragEventArgs.GetPosition(TextEditor);
-            var screen = new Point(position.X, position.Y);
+            var screen = TextEditor.PointToScreen(new Point(position.X, position.Y));
             Left = screen.X;
             Top = screen.Y;
         }
