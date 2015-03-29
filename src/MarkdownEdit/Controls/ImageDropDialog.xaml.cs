@@ -47,15 +47,12 @@ namespace MarkdownEdit.Controls
 
             UploadProgressChangedEventHandler progress = (o, args) => TextEditor.Dispatcher.InvokeAsync(() =>
             {
-                if (_canceled)
-                {
-                    var webClient = (WebClient)o;
-                    webClient.CancelAsync();
-                    return;
-                }
+                if (_canceled) ((WebClient)o).CancelAsync();
                 var progressPercentage = (int)((args.BytesSent / (double)args.TotalBytesToSend) * 100);
                 ImgurMenuItem.Header = (progressPercentage == 100) ? "Processing" : $"{progressPercentage}%";
             });
+
+            UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
 
             Action<string, string> processResult = (link, description) =>
             {
@@ -70,7 +67,7 @@ namespace MarkdownEdit.Controls
             };
 
             new ImageUploadImgur()
-                .UploadBytesAsync(File.ReadAllBytes(path), progress)
+                .UploadBytesAsync(File.ReadAllBytes(path), progress, completed)
                 .ContinueWith(task => TextEditor.Dispatcher.InvokeAsync(() => processResult(task.Result, name)))
                 .ContinueWith(task => Dispatcher.InvokeAsync(Close));
         }
