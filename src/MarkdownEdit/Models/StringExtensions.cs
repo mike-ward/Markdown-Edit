@@ -7,7 +7,7 @@ namespace MarkdownEdit.Models
     {
         public static string SurroundWith(this string text, string quote)
         {
-            return string.Format("{1}{0}{1}", text, quote);
+            return $"{quote}{text}{quote}";
         }
 
         public static string UnsurroundWith(this string text, string quote)

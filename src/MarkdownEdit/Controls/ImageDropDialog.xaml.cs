@@ -32,8 +32,9 @@ namespace MarkdownEdit.Controls
             var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
             if (files == null) return;
             var file = Path.GetFileNameWithoutExtension(files[0]);
-            var path = Uri.EscapeUriString(files[0].Replace('\\', '/'));
-            if (path.Contains(":")) path = "file:" + path;
+            var path = files[0].Replace('\\', '/');
+            if (path.Contains(":")) path = $"file:{path}";
+            if (path.Contains(" ")) path = $"<{path}>";
             InsertImageLink(path, file);
             Close();
         }
