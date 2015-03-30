@@ -4,13 +4,11 @@ using System.Net;
 using System.Windows;
 using ICSharpCode.AvalonEdit;
 using MarkdownEdit.ImageUpload;
-using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
 {
     public partial class ImageDropDialog
     {
-        public string FileName { get; set; }
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
         private bool _canceled;
@@ -59,14 +57,8 @@ namespace MarkdownEdit.Controls
 
             Action<string, string> processResult = (link, description) =>
             {
-                if (Uri.IsWellFormedUriString(link, UriKind.Absolute))
-                {
-                    InsertImageTag(link, description);
-                }
-                else
-                {
-                    MessageBox.Show(link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(link, description);
+                else MessageBox.Show(link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
             };
 
             new ImageUploadImgur()

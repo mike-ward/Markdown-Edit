@@ -1,4 +1,3 @@
-using System;
 using MarkdownEdit.Controls;
 
 namespace MarkdownEdit.Models
@@ -37,7 +36,7 @@ namespace MarkdownEdit.Models
             editor.WordWrap = _wordWrap;
             editor.IsReadOnly = false;
             editor.SpellCheck = _spellCheck;
-            editor.DisplayName = String.Empty;
+            editor.DisplayName = string.Empty;
             editor.EditBox.ScrollToVerticalOffset(_verticalOffset);
             editor.EditBox.CaretOffset = _caretOffset;
             StateSaved = false;
