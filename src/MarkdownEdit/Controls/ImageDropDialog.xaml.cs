@@ -35,7 +35,7 @@ namespace MarkdownEdit.Controls
             var file = Path.GetFileNameWithoutExtension(path);
             path = path.Replace('\\', '/');
             if (path.Contains(" ")) path = $"<{path}>";
-            InsertImageTag(path, file);
+            InsertImageTag(TextEditor, DragEventArgs, path, file);
             Close();
         }
 
@@ -55,9 +55,9 @@ namespace MarkdownEdit.Controls
 
             UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
 
-            Action<string, string> processResult = (link, description) =>
+            Action<string, string> processResult = (link, title) =>
             {
-                if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(link, description);
+                if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, title);
                 else MessageBox.Show(link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
             };
 
@@ -73,16 +73,17 @@ namespace MarkdownEdit.Controls
             Close();
         }
 
-        private void InsertImageTag(string link, string description)
+        public static void InsertImageTag(TextEditor textEditor, DragEventArgs dragEventArgs, string link, string title)
         {
-            TextEditor.Document.Insert(GetInsertOffset(), $"![{description}]({link})\n");
+            textEditor.Document.Insert(GetInsertOffset(textEditor, dragEventArgs), $"![{title}]({link})\n");
         }
 
-        private int GetInsertOffset()
+        private static int GetInsertOffset(TextEditor textEditor, DragEventArgs dragEventArgs)
         {
-            var position = DragEventArgs.GetPosition(TextEditor);
-            var offset = GetOffsetFromMousePosition(TextEditor, position);
-            if (offset == -1) offset = TextEditor.Document.TextLength;
+            if (dragEventArgs == null) return textEditor.CaretOffset;
+            var position = dragEventArgs.GetPosition(textEditor);
+            var offset = GetOffsetFromMousePosition(textEditor, position);
+            if (offset == -1) offset = textEditor.Document.TextLength;
             return offset;
         }
 

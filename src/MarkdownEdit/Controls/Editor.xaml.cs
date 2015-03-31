@@ -12,6 +12,7 @@ using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using MarkdownEdit.Commands;
+using MarkdownEdit.ImageUpload;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 using MarkdownEdit.Snippets;
@@ -55,10 +56,10 @@ namespace MarkdownEdit.Controls
 
         private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-
             Dispatcher.InvokeAsync(() =>
             {
                 StyleScrollBar();
+                BitmapPasteShim();
                 SetupIndentationCommandBinding();
                 SetupTabSnippetHandler();
                 SetupLineContinuationEnterCommandHandler();
@@ -77,6 +78,47 @@ namespace MarkdownEdit.Controls
             var grid = EditBox.GetDescendantByType<Grid>();
             grid.ColumnDefinitions[1].Width = new GridLength(8);
             grid.RowDefinitions[1].Height = new GridLength(8);
+        }
+
+        public void BitmapPasteShim()
+        {
+            var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.FirstOrDefault(cb => cb.Command == ApplicationCommands.Paste);
+            if (cmd == null) return;
+
+            CanExecuteRoutedEventHandler canExecute = (sender, args) =>
+                args.CanExecute = EditBox.TextArea?.Document != null &&
+                                  EditBox.TextArea.ReadOnlySectionProvider.CanInsert(EditBox.TextArea.Caret.Offset);
+
+            ExecutedRoutedEventHandler execute = null;
+            execute = (sender, args) =>
+            {
+                if (Clipboard.ContainsImage())
+                {
+                    var bytes = Clipboard.GetImage().ToArray();
+
+                    Action<string, string> processResult = (link, description) =>
+                    {
+                        if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) ImageDropDialog.InsertImageTag(EditBox, null, link, description);
+                        else MessageBox.Show(link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    };
+
+                    var uploader = new ImageUploadImgur();
+                    uploader.UploadBytesAsync(bytes).ContinueWith(task => Dispatcher.InvokeAsync(() => processResult(task.Result, "clipboard")));
+                    args.Handled = true;
+                }
+                else if (Clipboard.ContainsText())
+                {
+                    // WPF won't continue routing the command if there's PreviewExecuted handler.
+                    // So, remove it, call Execute and reinstall the handler.
+                    // Hack, hack hack...
+                    cmd.PreviewExecuted -= execute;
+                    cmd.Command.Execute(args.Parameter);
+                    cmd.PreviewExecuted += execute;
+                }
+            };
+
+            cmd.CanExecute += canExecute;
+            cmd.PreviewExecuted += execute;
         }
 
         private void SetupIndentationCommandBinding()
@@ -122,16 +164,16 @@ namespace MarkdownEdit.Controls
             var contextMenu = new ContextMenu();
             SpellCheckSuggestions(contextMenu);
 
-            contextMenu.Items.Add(new MenuItem { Header = "Undo", Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z" });
-            contextMenu.Items.Add(new MenuItem { Header = "Redo", Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y" });
+            contextMenu.Items.Add(new MenuItem {Header = "Undo", Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z"});
+            contextMenu.Items.Add(new MenuItem {Header = "Redo", Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y"});
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem { Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X" });
-            contextMenu.Items.Add(new MenuItem { Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C" });
-            contextMenu.Items.Add(new MenuItem { Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V" });
-            contextMenu.Items.Add(new MenuItem { Header = "Paste Special", Command = MainWindow.PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text" });
-            contextMenu.Items.Add(new MenuItem { Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete" });
+            contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
+            contextMenu.Items.Add(new MenuItem {Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
+            contextMenu.Items.Add(new MenuItem {Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
+            contextMenu.Items.Add(new MenuItem {Header = "Paste Special", Command = MainWindow.PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
+            contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem { Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A" });
+            contextMenu.Items.Add(new MenuItem {Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
 
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
@@ -351,7 +393,7 @@ namespace MarkdownEdit.Controls
                     NewFile();
                     return true;
                 }
-                var parts = file.Split(new[] { '|' }, 2);
+                var parts = file.Split(new[] {'|'}, 2);
                 var filename = parts[0];
                 var offset = ConvertToOffset(parts.Length == 2 ? parts[1] : "0");
                 EditBox.Text = File.ReadAllText(filename);
@@ -540,7 +582,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty AutoSaveProperty = DependencyProperty.Register(
-            "AutoSave", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
+            "AutoSave", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
 
         public bool AutoSave
         {
@@ -549,7 +591,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof(Theme), typeof(Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
+            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
 
         public Theme Theme
         {
@@ -560,11 +602,11 @@ namespace MarkdownEdit.Controls
         public static void ThemeChangedCallback(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
             var editor = (Editor)source;
-            editor.OnThemeChanged(new ThemeChangedEventArgs { Theme = editor.Theme });
+            editor.OnThemeChanged(new ThemeChangedEventArgs {Theme = editor.Theme});
         }
 
         public static readonly DependencyProperty VerticalScrollBarVisibilityProperty = DependencyProperty.Register(
-            "VerticalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(Editor), new PropertyMetadata(default(ScrollBarVisibility)));
+            "VerticalScrollBarVisibility", typeof (ScrollBarVisibility), typeof (Editor), new PropertyMetadata(default(ScrollBarVisibility)));
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
@@ -573,7 +615,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty ShowEndOfLineProperty = DependencyProperty.Register(
-            "ShowEndOfLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
+            "ShowEndOfLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
 
         private static void ShowEndOfLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -588,7 +630,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty ShowSpacesProperty = DependencyProperty.Register(
-            "ShowSpaces", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
+            "ShowSpaces", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
 
         private static void ShowSpacesChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -603,7 +645,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty ShowLineNumbersProperty = DependencyProperty.Register(
-            "ShowLineNumbers", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
+            "ShowLineNumbers", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
 
         public bool ShowLineNumbers
         {
@@ -612,7 +654,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty ShowTabsProperty = DependencyProperty.Register(
-            "ShowTabs", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
+            "ShowTabs", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
 
         private static void ShowTabsChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -627,7 +669,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
-            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckProviderPropertyChanged));
+            "SpellCheckProvider", typeof (ISpellCheckProvider), typeof (Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckProviderPropertyChanged));
 
         private static void SpellCheckProviderPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
@@ -643,7 +685,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty HighlightCurrentLineProperty = DependencyProperty.Register(
-            "HighlightCurrentLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
+            "HighlightCurrentLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
 
         private static void HighlightCurrentLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
@@ -658,7 +700,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SnippetManagerProperty = DependencyProperty.Register(
-            "SnippetManager", typeof(ISnippetManager), typeof(Editor), new PropertyMetadata(default(ISnippetManager)));
+            "SnippetManager", typeof (ISnippetManager), typeof (Editor), new PropertyMetadata(default(ISnippetManager)));
 
         public ISnippetManager SnippetManager
         {
@@ -667,7 +709,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty WordWrapProperty = DependencyProperty.Register(
-            "WordWrap", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
+            "WordWrap", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
 
         public bool WordWrap
         {
@@ -676,7 +718,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SpellCheckProperty = DependencyProperty.Register(
-            "SpellCheck", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), SpellCheckPropertyChanged));
+            "SpellCheck", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), SpellCheckPropertyChanged));
 
         private static void SpellCheckPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs ea)
         {
@@ -718,27 +760,27 @@ namespace MarkdownEdit.Controls
 
         protected override void OnDrop(DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop) == false) return;
-
-            var files = e.Data.GetData(DataFormats.FileDrop) as string[];
-            if (files == null) return;
-            var imageExtensions = new[] { ".jpg", "jpeg", ".png", ".bmp", ".gif" };
-
-            if (imageExtensions.Any(ext => files[0].EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                var dialog = new ImageDropDialog
+                var files = e.Data.GetData(DataFormats.FileDrop) as string[];
+                if (files == null) return;
+                var imageExtensions = new[] {".jpg", "jpeg", ".png", ".bmp", ".gif"};
+
+                if (imageExtensions.Any(ext => files[0].EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
                 {
-                    Owner = Application.Current.MainWindow,
-                    TextEditor = EditBox,
-                    DragEventArgs = e
-                };
-                dialog.ShowDialog();
-            }
-            else
-            {
-                Dispatcher.InvokeAsync(() => OpenFile(files[0]));
+                    var dialog = new ImageDropDialog
+                    {
+                        Owner = Application.Current.MainWindow,
+                        TextEditor = EditBox,
+                        DragEventArgs = e
+                    };
+                    dialog.ShowDialog();
+                }
+                else
+                {
+                    Dispatcher.InvokeAsync(() => OpenFile(files[0]));
+                }
             }
         }
-
     }
 }
