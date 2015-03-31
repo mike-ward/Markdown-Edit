@@ -1,27 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Rendering;
 using MarkdownEdit.ImageUpload;
 
 namespace MarkdownEdit.Controls
 {
-    public partial class ImageDropDialog
+    public partial class ImageDropDialog : INotifyPropertyChanged
     {
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
         private bool _canceled;
+        private byte[] _image;
 
         public ImageDropDialog()
         {
             InitializeComponent();
-            Activated += OnActivated;
+            Loaded += OnLoaded;
         }
 
-        private void OnActivated(object sender, EventArgs eventArgs)
+        public byte[] Image
         {
-            var position = DragEventArgs.GetPosition(TextEditor);
+            get { return _image; }
+            set { Set(ref _image, value); }
+        }
+
+        private void OnLoaded(object sender, EventArgs eventArgs)
+        {
+            Point position;
+            if (Image == null)
+            {
+                position = DragEventArgs.GetPosition(TextEditor);
+            }
+            else
+            {
+                position = TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom);
+                var clickEvent = new RoutedEventArgs(MenuItem.ClickEvent);
+                ImgurMenuItem.RaiseEvent(clickEvent);
+            }
             var screen = TextEditor.PointToScreen(new Point(position.X, position.Y));
             Left = screen.X;
             Top = screen.Y;
@@ -41,16 +65,23 @@ namespace MarkdownEdit.Controls
 
         private void OnUploadToImgur(object sender, RoutedEventArgs e)
         {
-            var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
-            if (files == null) return;
-            var path = files[0];
-            var name = Path.GetFileNameWithoutExtension(path);
+            var name = "Clipboard";
+
+            if (Image == null)
+            {
+                var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
+                if (files == null) return;
+                var path = files[0];
+                name = Path.GetFileNameWithoutExtension(path);
+                Image = File.ReadAllBytes(path);
+            }
 
             UploadProgressChangedEventHandler progress = (o, args) => TextEditor.Dispatcher.InvokeAsync(() =>
             {
                 if (_canceled) ((WebClient)o).CancelAsync();
                 var progressPercentage = (int)((args.BytesSent / (double)args.TotalBytesToSend) * 100);
-                ImgurMenuItem.Header = (progressPercentage == 100) ? "Processing" : $"{progressPercentage}%";
+                ProgressBar.Value = progressPercentage;
+                if (progressPercentage == 100) ProgressBar.IsIndeterminate = true;
             });
 
             UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
@@ -61,8 +92,9 @@ namespace MarkdownEdit.Controls
                 else MessageBox.Show(link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
             };
 
+
             new ImageUploadImgur()
-                .UploadBytesAsync(File.ReadAllBytes(path), progress, completed)
+                .UploadBytesAsync(Image, progress, completed)
                 .ContinueWith(task => TextEditor.Dispatcher.InvokeAsync(() => processResult(task.Result, name)))
                 .ContinueWith(task => Dispatcher.InvokeAsync(Close));
         }
@@ -99,6 +131,45 @@ namespace MarkdownEdit.Controls
             if (line == null) return -1;
             var visualColumn = line.GetVisualColumn(pos);
             return line.GetRelativeOffset(visualColumn) + line.FirstDocumentLine.Offset;
+        }
+        
+        // INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(property, value) == false)
+            {
+                property = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+
+    public sealed class NullToVisibleConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (value == null) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (!(value is Visibility) || (Visibility)value != Visibility.Visible);
+        }
+    }
+
+    public sealed class NotNullToVisibleConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (value != null) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (value is Visibility && (Visibility)value == Visibility.Visible);
         }
     }
 }

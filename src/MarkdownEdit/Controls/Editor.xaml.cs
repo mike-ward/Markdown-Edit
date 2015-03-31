@@ -95,15 +95,13 @@ namespace MarkdownEdit.Controls
                 if (Clipboard.ContainsImage())
                 {
                     var bytes = Clipboard.GetImage().ToArray();
-
-                    Action<string, string> processResult = (link, description) =>
+                    var dialog = new ImageDropDialog
                     {
-                        if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) ImageDropDialog.InsertImageTag(EditBox, null, link, description);
-                        else MessageBox.Show(link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                        Owner = Application.Current.MainWindow,
+                        TextEditor = EditBox,
+                        Image = bytes
                     };
-
-                    var uploader = new ImageUploadImgur();
-                    uploader.UploadBytesAsync(bytes).ContinueWith(task => Dispatcher.InvokeAsync(() => processResult(task.Result, "clipboard")));
+                    dialog.ShowDialog();
                     args.Handled = true;
                 }
                 else if (Clipboard.ContainsText())
@@ -111,9 +109,15 @@ namespace MarkdownEdit.Controls
                     // WPF won't continue routing the command if there's PreviewExecuted handler.
                     // So, remove it, call Execute and reinstall the handler.
                     // Hack, hack hack...
-                    cmd.PreviewExecuted -= execute;
-                    cmd.Command.Execute(args.Parameter);
-                    cmd.PreviewExecuted += execute;
+                    try
+                    {
+                        cmd.PreviewExecuted -= execute;
+                        cmd.Command.Execute(args.Parameter);
+                    }
+                    finally
+                    {
+                        cmd.PreviewExecuted += execute;
+                    }
                 }
             };
 
