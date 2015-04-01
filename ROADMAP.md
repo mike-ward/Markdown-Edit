@@ -1,6 +1,6 @@
 ## Roadmap
 
-### Version 1.4
+### Version 1.5
 
 - Multiple Document Interface
   * No tabs
@@ -9,10 +9,10 @@
   * Opt-in. Ctrl+Shift+N to open new slot
   * Remember open documents in this mode
 
-### Version 1.5
+### Version 1.6
 
 - File manager
 
-### Version 1.6
+### Version 1.7
 
 - Localization
