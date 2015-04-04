@@ -12,7 +12,6 @@ using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using MarkdownEdit.Commands;
-using MarkdownEdit.ImageUpload;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 using MarkdownEdit.Snippets;
@@ -59,7 +58,7 @@ namespace MarkdownEdit.Controls
             Dispatcher.InvokeAsync(() =>
             {
                 StyleScrollBar();
-                BitmapPasteShim();
+                AllowImagePaste();
                 SetupIndentationCommandBinding();
                 SetupTabSnippetHandler();
                 SetupLineContinuationEnterCommandHandler();
@@ -80,8 +79,103 @@ namespace MarkdownEdit.Controls
             grid.RowDefinitions[1].Height = new GridLength(8);
         }
 
-        public void BitmapPasteShim()
+        private void SetupIndentationCommandBinding()
         {
+            var cmd = EditBox
+                .TextArea
+                .DefaultInputHandler
+                .Editing
+                .CommandBindings
+                .FirstOrDefault(cb => cb.Command == AvalonEditCommands.IndentSelection);
+            if (cmd != null) EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
+        }
+
+        private void SetupTabSnippetHandler()
+        {
+            var editingKeyBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
+            var tabBinding = editingKeyBindings.Single(b => b.Key == Key.Tab && b.Modifiers == ModifierKeys.None);
+            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(tabBinding);
+            var newTabBinding = new KeyBinding(new SnippetTabCommand(EditBox, tabBinding.Command, SnippetManager), tabBinding.Key, tabBinding.Modifiers);
+            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newTabBinding);
+            SnippetManager.Initialize();
+        }
+
+        private void SetupLineContinuationEnterCommandHandler()
+        {
+            var editingKeyBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
+            var enterBinding = editingKeyBindings.Single(b => b.Key == Key.Enter && b.Modifiers == ModifierKeys.None);
+            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(enterBinding);
+            var newEnterBinding = new KeyBinding(new LineContinuationEnterCommand(EditBox, enterBinding.Command), enterBinding.Key, enterBinding.Modifiers);
+            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newEnterBinding);
+        }
+
+        private void SetupSyntaxHighlighting()
+        {
+            var colorizer = new MarkdownHighlightingColorizer();
+            TextChanged += (s, e) => colorizer.OnTextChanged(Text);
+            ThemeChanged += (s, e) => colorizer.OnThemeChanged(e.Theme);
+            EditBox.TextArea.TextView.LineTransformers.Add(colorizer);
+        }
+
+        public void PasteSpecial() => Execute(() =>
+        {
+            _removeSpecialCharacters = true;
+            EditBox.Paste();
+        });
+
+        private void OnPaste(object sender, DataObjectPastingEventArgs pasteEventArgs)
+        {
+            var text = (string)pasteEventArgs.SourceDataObject.GetData(DataFormats.UnicodeText, true);
+            if (text == null) return;
+
+            var modifiedText = _removeSpecialCharacters
+                ? text.ReplaceSmartChars()
+                : Uri.IsWellFormedUriString(text, UriKind.Absolute) ? $"<{text}>" : text;
+
+            if (text == modifiedText) return;
+
+            // AvalongEdit won't use new dataobject. Submitted bug 18 about this.
+            pasteEventArgs.CancelCommand();
+            Clipboard.SetText(modifiedText);
+            EditBox.Paste();
+        }
+
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) == false)
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        protected override void OnDrop(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = e.Data.GetData(DataFormats.FileDrop) as string[];
+                if (files == null) return;
+                var imageExtensions = new[] { ".jpg", "jpeg", ".png", ".gif" };
+
+                if (imageExtensions.Any(ext => files[0].EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
+                {
+                    var dialog = new ImageDropDialog
+                    {
+                        Owner = Application.Current.MainWindow,
+                        TextEditor = EditBox,
+                        DragEventArgs = e
+                    };
+                    dialog.ShowDialog();
+                }
+                else
+                {
+                    Dispatcher.InvokeAsync(() => OpenFile(files[0]));
+                }
+            }
+        }
+
+        public void AllowImagePaste()
+        {
+            // AvalonEdit only allows text paste. Hack the command to allow otherwise.
             var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.FirstOrDefault(cb => cb.Command == ApplicationCommands.Paste);
             if (cmd == null) return;
 
@@ -125,44 +219,6 @@ namespace MarkdownEdit.Controls
             cmd.PreviewExecuted += execute;
         }
 
-        private void SetupIndentationCommandBinding()
-        {
-            var cmd = EditBox
-                .TextArea
-                .DefaultInputHandler
-                .Editing
-                .CommandBindings
-                .FirstOrDefault(cb => cb.Command == AvalonEditCommands.IndentSelection);
-            if (cmd != null) EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.Remove(cmd);
-        }
-
-        private void SetupTabSnippetHandler()
-        {
-            var editingKeyBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
-            var tabBinding = editingKeyBindings.Single(b => b.Key == Key.Tab && b.Modifiers == ModifierKeys.None);
-            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(tabBinding);
-            var newTabBinding = new KeyBinding(new SnippetTabCommand(EditBox, tabBinding.Command, SnippetManager), tabBinding.Key, tabBinding.Modifiers);
-            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newTabBinding);
-            SnippetManager.Initialize();
-        }
-
-        private void SetupLineContinuationEnterCommandHandler()
-        {
-            var editingKeyBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
-            var enterBinding = editingKeyBindings.Single(b => b.Key == Key.Enter && b.Modifiers == ModifierKeys.None);
-            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(enterBinding);
-            var newEnterBinding = new KeyBinding(new LineContinuationEnterCommand(EditBox, enterBinding.Command), enterBinding.Key, enterBinding.Modifiers);
-            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newEnterBinding);
-        }
-
-        private void SetupSyntaxHighlighting()
-        {
-            var colorizer = new MarkdownHighlightingColorizer();
-            TextChanged += (s, e) => colorizer.OnTextChanged(Text);
-            ThemeChanged += (s, e) => colorizer.OnThemeChanged(e.Theme);
-            EditBox.TextArea.TextView.LineTransformers.Add(colorizer);
-        }
-
         private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)
         {
             var contextMenu = new ContextMenu();
@@ -181,20 +237,6 @@ namespace MarkdownEdit.Controls
 
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
-        }
-
-        private void OnPaste(object sender, DataObjectPastingEventArgs e)
-        {
-            if (_removeSpecialCharacters == false) return;
-            _removeSpecialCharacters = false;
-
-            var isText = e.SourceDataObject.GetDataPresent(DataFormats.UnicodeText, true);
-            if (!isText) return;
-            var text = (string)e.SourceDataObject.GetData(DataFormats.UnicodeText);
-
-            var dataObject = new DataObject();
-            dataObject.SetData(DataFormats.UnicodeText, text.ReplaceSmartChars());
-            e.DataObject = dataObject;
         }
 
         // Spell Check
@@ -498,12 +540,6 @@ namespace MarkdownEdit.Controls
 
         public void RestoreFontSize() => EditBox.FontSize = App.UserSettings.EditorFontSize;
 
-        public void PasteSpecial() => Execute(() =>
-        {
-            _removeSpecialCharacters = true;
-            EditBox.Paste();
-        });
-
         public void OpenUserDictionary() => Utility.EditFile(SpellCheckProvider.CustomDictionaryFile());
 
         public void ScrollToLine(int line)
@@ -749,41 +785,6 @@ namespace MarkdownEdit.Controls
             {
                 property = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        // Drag and drop
-
-        protected override void OnDragEnter(DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop) == false)
-            {
-                e.Effects = DragDropEffects.None;
-            }
-        }
-
-        protected override void OnDrop(DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                var files = e.Data.GetData(DataFormats.FileDrop) as string[];
-                if (files == null) return;
-                var imageExtensions = new[] {".jpg", "jpeg", ".png", ".bmp", ".gif"};
-
-                if (imageExtensions.Any(ext => files[0].EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
-                {
-                    var dialog = new ImageDropDialog
-                    {
-                        Owner = Application.Current.MainWindow,
-                        TextEditor = EditBox,
-                        DragEventArgs = e
-                    };
-                    dialog.ShowDialog();
-                }
-                else
-                {
-                    Dispatcher.InvokeAsync(() => OpenFile(files[0]));
-                }
             }
         }
     }
