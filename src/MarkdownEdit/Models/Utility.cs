@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using MarkdownEdit.MarkdownConverters;
 
 namespace MarkdownEdit.Models
@@ -103,18 +102,6 @@ namespace MarkdownEdit.Models
         public static void RequireNotNull<T>(this T arg, [CallerMemberName] string name = null)
         {
             if (arg == null) throw new ArgumentNullException(name);
-        }
-
-        public static byte[] ToArray(this BitmapSource bitmapsource)
-        {
-            using (var outStream = new MemoryStream())
-            {
-                BitmapEncoder enc = new PngBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmapsource));
-                enc.Save(outStream);
-                outStream.Flush();
-                return outStream.ToArray();
-            }
         }
     }
 }

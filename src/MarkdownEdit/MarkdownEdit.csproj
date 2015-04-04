@@ -148,6 +148,7 @@
     <Compile Include="Controls\RecentFilesDialog.xaml.cs">
       <DependentUpon>RecentFilesDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Images.cs" />
     <Compile Include="Models\InputKeyBindings.cs" />
     <Compile Include="Models\InputKeyBindingsSettings.cs" />
     <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
