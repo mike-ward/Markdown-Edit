@@ -12,10 +12,10 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
   <Window.Resources>
-    <local:NullToVisibleConverter x:Key="NullToVisibleConverter" />  
-    <local:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />  
+    <local:NullToVisibleConverter x:Key="NullToVisibleConverter" />
+    <local:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />
   </Window.Resources>
-  
+
   <Grid>
     <StackPanel x:Name="ProgressPanel"
                 Orientation="Horizontal"
@@ -24,11 +24,13 @@
                                  Width="75"
                                  Height="10"
                                  Margin="4 0 4 0" />
-      <Button Click="OnCancel">Cancel</Button>
+      <Button Click="OnCancel">
+        Cancel
+      </Button>
     </StackPanel>
-    <Menu x:Name="Menu" 
+    <Menu x:Name="Menu"
           Margin="2"
-           Visibility="{Binding Path=Image, Converter={StaticResource NullToVisibleConverter}}">
+          Visibility="{Binding Path=Image, Converter={StaticResource NullToVisibleConverter}}">
       <Menu.ItemsPanel>
         <ItemsPanelTemplate>
           <VirtualizingStackPanel Orientation="Vertical" />

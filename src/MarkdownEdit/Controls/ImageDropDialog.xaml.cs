@@ -86,17 +86,18 @@ namespace MarkdownEdit.Controls
 
             UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
 
-            Action<string, string> processResult = (link, title) =>
-            {
-                if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, title);
-                else MessageBox.Show(link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
-            };
-
-
             new ImageUploadImgur()
                 .UploadBytesAsync(Image, progress, completed)
-                .ContinueWith(task => TextEditor.Dispatcher.InvokeAsync(() => processResult(task.Result, name)))
-                .ContinueWith(task => Dispatcher.InvokeAsync(Close));
+                .ContinueWith(task =>
+                {
+                    Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        Close();
+                        var link = task.Result;
+                        if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
+                        else MessageBox.Show(Application.Current.MainWindow, link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    });
+                });
         }
 
         private void OnCancel(object sender, RoutedEventArgs e)
@@ -132,7 +133,7 @@ namespace MarkdownEdit.Controls
             var visualColumn = line.GetVisualColumn(pos);
             return line.GetRelativeOffset(visualColumn) + line.FirstDocumentLine.Offset;
         }
-        
+
         // INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
