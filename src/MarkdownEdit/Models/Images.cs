@@ -15,36 +15,31 @@ namespace MarkdownEdit.Models
         public static BitmapSource ImageFromClipboardDib()
         {
             var ms = Clipboard.GetData("DeviceIndependentBitmap") as MemoryStream;
-            if (ms != null)
+            if (ms == null) return null;
+
+            var dibBuffer = new byte[ms.Length];
+            ms.Read(dibBuffer, 0, dibBuffer.Length);
+
+            var infoHeader = BinaryStructConverter.FromByteArray<BITMAPINFOHEADER>(dibBuffer);
+            var fileHeaderSize = Marshal.SizeOf(typeof (BITMAPFILEHEADER));
+            var infoHeaderSize = infoHeader.biSize;
+            var fileSize = fileHeaderSize + infoHeader.biSize + infoHeader.biSizeImage;
+
+            var fileHeader = new BITMAPFILEHEADER
             {
-                var dibBuffer = new byte[ms.Length];
-                ms.Read(dibBuffer, 0, dibBuffer.Length);
+                bfType = BITMAPFILEHEADER.BM,
+                bfSize = fileSize,
+                bfReserved1 = 0,
+                bfReserved2 = 0,
+                bfOffBits = fileHeaderSize + infoHeaderSize + infoHeader.biClrUsed * 4
+            };
 
-                var infoHeader = BinaryStructConverter.FromByteArray<BITMAPINFOHEADER>(dibBuffer);
-
-                var fileHeaderSize = Marshal.SizeOf(typeof (BITMAPFILEHEADER));
-                var infoHeaderSize = infoHeader.biSize;
-                var fileSize = fileHeaderSize + infoHeader.biSize + infoHeader.biSizeImage;
-
-                var fileHeader = new BITMAPFILEHEADER
-                {
-                    bfType = BITMAPFILEHEADER.BM,
-                    bfSize = fileSize,
-                    bfReserved1 = 0,
-                    bfReserved2 = 0,
-                    bfOffBits = fileHeaderSize + infoHeaderSize + infoHeader.biClrUsed * 4
-                };
-
-                var fileHeaderBytes = BinaryStructConverter.ToByteArray(fileHeader);
-
-                var msBitmap = new MemoryStream();
-                msBitmap.Write(fileHeaderBytes, 0, fileHeaderSize);
-                msBitmap.Write(dibBuffer, 0, dibBuffer.Length);
-                msBitmap.Seek(0, SeekOrigin.Begin);
-
-                return BitmapFrame.Create(msBitmap);
-            }
-            return null;
+            var fileHeaderBytes = BinaryStructConverter.ToByteArray(fileHeader);
+            var msBitmap = new MemoryStream();
+            msBitmap.Write(fileHeaderBytes, 0, fileHeaderSize);
+            msBitmap.Write(dibBuffer, 0, dibBuffer.Length);
+            msBitmap.Seek(0, SeekOrigin.Begin);
+            return BitmapFrame.Create(msBitmap);
         }
 
         public static byte[] ToPngArray(this BitmapSource bitmapsource)
@@ -63,7 +58,6 @@ namespace MarkdownEdit.Models
         private struct BITMAPFILEHEADER
         {
             public static readonly short BM = 0x4d42; // BM
-
             public short bfType;
             public int bfSize;
             public short bfReserved1;

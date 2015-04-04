@@ -188,12 +188,11 @@ namespace MarkdownEdit.Controls
             {
                 if (Clipboard.ContainsImage())
                 {
-                    var bytes = Images.ImageFromClipboardDib().ToPngArray();
                     var dialog = new ImageDropDialog
                     {
                         Owner = Application.Current.MainWindow,
                         TextEditor = EditBox,
-                        Image = bytes
+                        Image = Images.ImageFromClipboardDib().ToPngArray()
                     };
                     dialog.ShowDialog();
                     args.Handled = true;
