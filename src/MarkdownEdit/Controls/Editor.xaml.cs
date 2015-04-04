@@ -130,7 +130,11 @@ namespace MarkdownEdit.Controls
 
             var modifiedText = _removeSpecialCharacters
                 ? text.ReplaceSmartChars()
-                : Uri.IsWellFormedUriString(text, UriKind.Absolute) ? $"<{text}>" : text;
+                : Uri.IsWellFormedUriString(text, UriKind.Absolute)
+                    ? Images.IsImageUrl(text)
+                        ? $"![]({text})\n"
+                        : $"<{text}>"
+                    : text;
 
             if (text == modifiedText) return;
 
@@ -154,7 +158,7 @@ namespace MarkdownEdit.Controls
             {
                 var files = e.Data.GetData(DataFormats.FileDrop) as string[];
                 if (files == null) return;
-                var imageExtensions = new[] { ".jpg", "jpeg", ".png", ".gif" };
+                var imageExtensions = new[] {".jpg", "jpeg", ".png", ".gif"};
 
                 if (imageExtensions.Any(ext => files[0].EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
                 {

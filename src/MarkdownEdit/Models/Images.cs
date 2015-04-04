@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -51,6 +52,21 @@ namespace MarkdownEdit.Models
                 enc.Save(outStream);
                 outStream.Flush();
                 return outStream.ToArray();
+            }
+        }
+
+        public static bool IsImageUrl(string url)
+        {
+            try
+            {
+                var request = WebRequest.Create(url);
+                request.Method = "HEAD";
+                request.Timeout = 2000;
+                using (var response = request.GetResponse()) return response.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase);
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
