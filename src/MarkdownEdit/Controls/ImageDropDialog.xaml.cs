@@ -63,7 +63,7 @@ namespace MarkdownEdit.Controls
             Close();
         }
 
-        private void OnUploadToImgur(object sender, RoutedEventArgs e)
+        private async void OnUploadToImgur(object sender, RoutedEventArgs e)
         {
             var name = "Clipboard";
 
@@ -86,18 +86,11 @@ namespace MarkdownEdit.Controls
 
             UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
 
-            new ImageUploadImgur()
-                .UploadBytesAsync(Image, progress, completed)
-                .ContinueWith(task =>
-                {
-                    Application.Current.Dispatcher.InvokeAsync(() =>
-                    {
-                        Close();
-                        var link = task.Result;
-                        if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
-                        else MessageBox.Show(Application.Current.MainWindow, link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
-                    });
-                });
+            var link = await new ImageUploadImgur().UploadBytesAsync(Image, progress, completed);
+
+            Close();
+            if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
+            else MessageBox.Show(Application.Current.MainWindow, link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void OnCancel(object sender, RoutedEventArgs e)

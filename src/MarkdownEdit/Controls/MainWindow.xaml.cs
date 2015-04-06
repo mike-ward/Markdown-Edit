@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
@@ -121,7 +120,7 @@ namespace MarkdownEdit.Controls
 
         private void SettingsClosingFinished(object sender, RoutedEventArgs e) => DisplaySettings.SaveIfModified();
 
-        private string BuildTitle() => string.Format("MARKDOWN EDIT - {0}{1}", Editor.IsModified ? "* " : "", Editor.DisplayName);
+        private string BuildTitle() => $"MARKDOWN EDIT - {(Editor.IsModified ? "* " : "")}{Editor.DisplayName}";
 
         // Commands
 
@@ -212,7 +211,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e)
         {
-            var process = new Process { StartInfo = { FileName = Utility.ExecutingAssembly(), Arguments = "-n" } };
+            var process = new Process {StartInfo = {FileName = Utility.ExecutingAssembly(), Arguments = "-n"}};
             process.Start();
         }
 
@@ -240,7 +239,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new ThemeDialog { Owner = this, CurrentTheme = App.UserSettings.Theme };
+            var dialog = new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme};
             dialog.ShowDialog();
         }
 
@@ -256,7 +255,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e)
         {
-            var dialog = new GotoLineDialog { Owner = this };
+            var dialog = new GotoLineDialog {Owner = this};
             dialog.ShowDialog();
         }
 

@@ -178,7 +178,7 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        public void AllowImagePaste()
+        private void AllowImagePaste()
         {
             // AvalonEdit only allows text paste. Hack the command to allow otherwise.
             var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.FirstOrDefault(cb => cb.Command == ApplicationCommands.Paste);
