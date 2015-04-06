@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -142,7 +141,7 @@ namespace MarkdownEdit.Controls
             // AvalongEdit won't use new dataobject. Submitted bug 18 about this.
             pasteEventArgs.CancelCommand();
             Clipboard.SetText(modifiedText);
-            Task.Run(() => Task.Delay(300).ContinueWith(task => Dispatcher.InvokeAsync(() => EditBox.Paste()))).ContinueWith(task => task.Dispose());
+            EditBox.Paste();
         }
 
         protected override void OnDragEnter(DragEventArgs e)
