@@ -141,6 +141,7 @@ namespace MarkdownEdit.Controls
             // AvalongEdit won't use new dataobject. Submitted bug 18 about this.
             pasteEventArgs.CancelCommand();
             Clipboard.SetText(modifiedText);
+            EditBox.Focus();
             EditBox.Paste();
         }
 
