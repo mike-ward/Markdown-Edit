@@ -28,11 +28,11 @@ namespace MarkdownEdit.Models
             return arg =>
             {
                 var current = Interlocked.Increment(ref last);
-                Task.Delay(milliseconds).ContinueWith(task =>
+                Task.Run(() => Task.Delay(milliseconds).ContinueWith(task =>
                 {
                     if (current == last) func(arg);
                     task.Dispose();
-                });
+                })).ContinueWith(task => task.Dispose());
             };
         }
 
@@ -74,7 +74,7 @@ namespace MarkdownEdit.Models
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
             if (element == null) return default(T);
-            if (element.GetType() == typeof (T)) return element as T;
+            if (element.GetType() == typeof(T)) return element as T;
             T foundElement = null;
             (element as FrameworkElement)?.ApplyTemplate();
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
