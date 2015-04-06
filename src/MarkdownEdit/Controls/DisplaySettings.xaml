@@ -30,47 +30,49 @@
         
     </UserControl.Resources>
     
-    <StackPanel Margin="10 0">
-        <TextBlock Style="{StaticResource SectionHeader}">Editor</TextBlock>
-        <Separator Style="{StaticResource SeparatorStyle}"/>
-        <StackPanel Margin="30 5">
-            <local:FontComboBox  x:Name="FontCombo" Margin="0 0 0 3" />
-            <controls:ToggleSwitch OffLabel="Word Wrap" OnLabel="Word Wrap" ToolTip="Ctrl+W" IsChecked="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Auto Save" OnLabel="Auto Save" ToolTip="Alt+S" IsChecked="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Line Numbers" OnLabel="Line Numbers" IsChecked="{Binding EditorShowLineNumbers}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Open Last File" OnLabel="Open Last File" IsChecked="{Binding EditorOpenLastFile}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Remember Cursor Postion" OnLabel="Remember Cursor Postion" IsChecked="{Binding EditorOpenLastCursorPosition}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Highlight Current Line" OnLabel="Highlight Current Line" IsChecked="{Binding EditorHighlightCurrentLine}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Show Vertical Scroll Bar" OnLabel="Show Vertical Scroll Bar" IsChecked="{Binding EditorVerticalScrollBarVisible}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Show Tabs" OnLabel="Show Tabs" IsChecked="{Binding EditorShowTabs}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Show Show Spaces" OnLabel="Show Spaces" IsChecked="{Binding EditorShowSpaces}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Show End of Line" OnLabel="Show End of Line" IsChecked="{Binding EditorShowEndOfLine}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Synchronize Scroll Positions" OnLabel="Synchronize Scroll Positions" IsChecked="{Binding SynchronizeScrollPositions}" Style="{StaticResource ToggleSwitchStyle}"/>
-        </StackPanel>
+    <ScrollViewer>
+      <StackPanel Margin="10 0">
+          <TextBlock Style="{StaticResource SectionHeader}">Editor</TextBlock>
+          <Separator Style="{StaticResource SeparatorStyle}"/>
+          <StackPanel Margin="30 5">
+              <local:FontComboBox  x:Name="FontCombo" Margin="0 0 0 3" />
+              <controls:ToggleSwitch OffLabel="Word Wrap" OnLabel="Word Wrap" ToolTip="Ctrl+W" IsChecked="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Auto Save" OnLabel="Auto Save" ToolTip="Alt+S" IsChecked="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Line Numbers" OnLabel="Line Numbers" IsChecked="{Binding EditorShowLineNumbers}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Open Last File" OnLabel="Open Last File" IsChecked="{Binding EditorOpenLastFile}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Remember Cursor Postion" OnLabel="Remember Cursor Postion" IsChecked="{Binding EditorOpenLastCursorPosition}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Highlight Current Line" OnLabel="Highlight Current Line" IsChecked="{Binding EditorHighlightCurrentLine}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Show Vertical Scroll Bar" OnLabel="Show Vertical Scroll Bar" IsChecked="{Binding EditorVerticalScrollBarVisible}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Show Tabs" OnLabel="Show Tabs" IsChecked="{Binding EditorShowTabs}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Show Show Spaces" OnLabel="Show Spaces" IsChecked="{Binding EditorShowSpaces}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Show End of Line" OnLabel="Show End of Line" IsChecked="{Binding EditorShowEndOfLine}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Synchronize Scroll Positions" OnLabel="Synchronize Scroll Positions" IsChecked="{Binding SynchronizeScrollPositions}" Style="{StaticResource ToggleSwitchStyle}"/>
+          </StackPanel>
         
-        <TextBlock Style="{StaticResource SectionHeader}">Spell Checking</TextBlock>
-        <Separator Style="{StaticResource SeparatorStyle}"/>
-        <StackPanel Margin="30 5">
-            <local:SpellingDictionaryComboBox Width="200" 
-                                              HorizontalAlignment="Left" 
-                                              SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                              Margin="0 0 0 3" />
-            <controls:ToggleSwitch OffLabel="Spell Checking" OnLabel="Spell Checking" ToolTip="Ctrl+F7" IsChecked="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Ignore All Caps" OnLabel="Ignore All Caps" IsChecked="{Binding SpellCheckIgnoreAllCaps}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Ignore Code Blocks" OnLabel="Ignore Code Blocks" IsChecked="{Binding SpellCheckIgnoreCodeBlocks}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Ignore Markup Tags" OnLabel="Ignore Markup Tags" IsChecked="{Binding SpellCheckIgnoreMarkupTags}" Style="{StaticResource ToggleSwitchStyle}"/>
-            <controls:ToggleSwitch OffLabel="Ignore Words with Digits" OnLabel="Ignore Words with Digits" IsChecked="{Binding SpellCheckIgnoreWordsWithDigits}" Style="{StaticResource ToggleSwitchStyle}"/>
-        </StackPanel>
+          <TextBlock Style="{StaticResource SectionHeader}">Spell Checking</TextBlock>
+          <Separator Style="{StaticResource SeparatorStyle}"/>
+          <StackPanel Margin="30 5">
+              <local:SpellingDictionaryComboBox Width="200" 
+                                                HorizontalAlignment="Left" 
+                                                SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                Margin="0 0 0 3" />
+              <controls:ToggleSwitch OffLabel="Spell Checking" OnLabel="Spell Checking" ToolTip="Ctrl+F7" IsChecked="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Ignore All Caps" OnLabel="Ignore All Caps" IsChecked="{Binding SpellCheckIgnoreAllCaps}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Ignore Code Blocks" OnLabel="Ignore Code Blocks" IsChecked="{Binding SpellCheckIgnoreCodeBlocks}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Ignore Markup Tags" OnLabel="Ignore Markup Tags" IsChecked="{Binding SpellCheckIgnoreMarkupTags}" Style="{StaticResource ToggleSwitchStyle}"/>
+              <controls:ToggleSwitch OffLabel="Ignore Words with Digits" OnLabel="Ignore Words with Digits" IsChecked="{Binding SpellCheckIgnoreWordsWithDigits}" Style="{StaticResource ToggleSwitchStyle}"/>
+          </StackPanel>
 
-        <TextBlock Style="{StaticResource SectionHeader}">Advanced</TextBlock>
-        <Separator Style="{StaticResource SeparatorStyle}"/>
-        <UniformGrid Margin="30 5"
-                     Columns="2">
-            <Button Margin="3 2" ToolTip="F9" Command="{x:Static local:MainWindow.OpenUserSettingsCommand}">Settings</Button>
-            <Button Margin="3 2" ToolTip="F8" Command="{x:Static local:MainWindow.OpenUserTemplateCommand}">HTML Template</Button>
-            <Button Margin="3 2" ToolTip="F7" Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}">User Dictionary</Button>
-            <Button Margin="3 2" ToolTip="F6" Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}">Snippets</Button>
-            <Button Margin="3 2" ToolTip="F10" Command="{x:Static local:MainWindow.OpenKeybindingSettingsCommand}">Key Bindings</Button>
-        </UniformGrid>
-    </StackPanel>
+          <TextBlock Style="{StaticResource SectionHeader}">Advanced</TextBlock>
+          <Separator Style="{StaticResource SeparatorStyle}"/>
+          <UniformGrid Margin="30 5"
+                       Columns="2">
+              <Button Margin="3 2" ToolTip="F9" Command="{x:Static local:MainWindow.OpenUserSettingsCommand}">Settings</Button>
+              <Button Margin="3 2" ToolTip="F8" Command="{x:Static local:MainWindow.OpenUserTemplateCommand}">HTML Template</Button>
+              <Button Margin="3 2" ToolTip="F7" Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}">User Dictionary</Button>
+              <Button Margin="3 2" ToolTip="F6" Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}">Snippets</Button>
+              <Button Margin="3 2" ToolTip="F10" Command="{x:Static local:MainWindow.OpenKeybindingSettingsCommand}">Key Bindings</Button>
+          </UniformGrid>
+      </StackPanel>
+    </ScrollViewer>
 </UserControl>
