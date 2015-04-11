@@ -144,6 +144,7 @@
     <Compile Include="Controls\GotoLineDialog.xaml.cs">
       <DependentUpon>GotoLineDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\FormatText.cs" />
     <Compile Include="Models\Highlight.cs" />
     <Compile Include="Controls\RecentFilesDialog.xaml.cs">
       <DependentUpon>RecentFilesDialog.xaml</DependentUpon>
@@ -350,6 +351,11 @@
     <None Include="Hunspellx86.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="pandoc.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

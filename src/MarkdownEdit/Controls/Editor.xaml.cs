@@ -32,6 +32,8 @@ namespace MarkdownEdit.Controls
         private readonly Action<string> _executeAutoSaveLater;
 
         public static RoutedCommand DeselectCommand = new RoutedCommand();
+        public static RoutedCommand FormatCommand = new RoutedCommand();
+        public static RoutedCommand UnformatCommand = new RoutedCommand();
 
         public Editor()
         {
@@ -49,6 +51,8 @@ namespace MarkdownEdit.Controls
             DataObject.AddPastingHandler(EditBox, OnPaste);
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
+            CommandBindings.Add(new CommandBinding(FormatCommand, (sender, args) => Execute(() => EditBox.Text = FormatText.Prettify(EditBox.Text))));
+            CommandBindings.Add(new CommandBinding(UnformatCommand, (sender, args) => Execute(() => EditBox.Text = FormatText.Uglify(EditBox.Text))));
             _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
             SetupSyntaxHighlighting();
         }
@@ -238,6 +242,8 @@ namespace MarkdownEdit.Controls
             contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
             contextMenu.Items.Add(new Separator());
             contextMenu.Items.Add(new MenuItem {Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
+            contextMenu.Items.Add(new MenuItem {Header = "Format", Command = FormatCommand, InputGestureText = "Alt+F"});
+            contextMenu.Items.Add(new MenuItem {Header = "UnFormat", Command = UnformatCommand, InputGestureText = "Alt+Shift+F"});
 
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
@@ -314,8 +320,6 @@ namespace MarkdownEdit.Controls
             SpellCheck = !SpellCheck;
             SpellCheck = !SpellCheck;
         }
-
-        // Commands
 
         private void Execute(Action action)
         {

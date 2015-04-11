@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using FluentAssertions;
+using MarkdownEdit.ImageUpload;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.ImageUpload
@@ -12,7 +12,7 @@ namespace UnitTests.ImageUpload
         [TestMethod]
         public async Task ImgurAnonymousUploadTestShouldReturnLink()
         {
-            var service = new MarkdownEdit.ImageUpload.ImageUploadImgur();
+            var service = new ImageUploadImgur();
             var imageBytes = File.ReadAllBytes(@"..\..\..\MarkdownEdit\logo.png");
             var link = await service.UploadBytesAsync(imageBytes);
             link.Should().StartWith("http://i.imgur.com/");
