@@ -36,9 +36,13 @@
 
   <UserControl.CommandBindings>
     <CommandBinding Command="{x:Static controls:Editor.DeselectCommand}" Executed="ExecuteDeselectCommand" />
+    <CommandBinding Command="{x:Static controls:Editor.FormatCommand}" Executed="ExecuteFormatText" />
+    <CommandBinding Command="{x:Static controls:Editor.UnformatCommand}" Executed="ExecuteUnformatText" />
   </UserControl.CommandBindings>
 
   <UserControl.InputBindings>
     <KeyBinding Command="{x:Static controls:Editor.DeselectCommand}" Gesture="Esc" />
+    <KeyBinding Command="{x:Static controls:Editor.FormatCommand}" Gesture="Alt+F" />
+    <KeyBinding Command="{x:Static controls:Editor.UnformatCommand}" Gesture="Alt+Shift+F" />
   </UserControl.InputBindings>
 </UserControl>

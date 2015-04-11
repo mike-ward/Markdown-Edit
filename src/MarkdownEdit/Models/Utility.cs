@@ -62,13 +62,22 @@ namespace MarkdownEdit.Models
         public static string RemoveYamlFrontMatter(string markdown)
         {
             if (App.UserSettings.IgnoreYaml == false) return markdown;
-            if (markdown.StartsWith("---\n", StringComparison.Ordinal) ||
-                markdown.StartsWith("---\r\n", StringComparison.Ordinal))
+            var tuple = SeperateFrontMatter(markdown);
+            return tuple.Item2;
+        }
+
+        public static Tuple<string, string> SeperateFrontMatter(string text)
+        {
+            if (Regex.IsMatch(text, @"^---\s*$", RegexOptions.Multiline))
             {
-                var index = Regex.Match(markdown.Substring(3), @"^(---)|(\.\.\.)", RegexOptions.Multiline).Index;
-                if (index > 0) return markdown.Substring(index + 6);
+                var matches = Regex.Matches(text, @"^(?:---)|(?:\.\.\.)\s*$", RegexOptions.Multiline);
+                if (matches.Count < 2) return Tuple.Create(string.Empty, text);
+                var match = matches[1];
+                var index = match.Index + match.Groups[0].Value.Length + 1;
+                while (index < text.Length && char.IsWhiteSpace(text[index])) index += 1;
+                return Tuple.Create(text.Substring(0, index), text.Substring(index));
             }
-            return markdown;
+            return Tuple.Create(string.Empty, text);
         }
 
         public static T GetDescendantByType<T>(this Visual element) where T : class

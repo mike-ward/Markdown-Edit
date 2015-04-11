@@ -51,8 +51,8 @@ namespace MarkdownEdit.Controls
             DataObject.AddPastingHandler(EditBox, OnPaste);
             CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
             CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
-            CommandBindings.Add(new CommandBinding(FormatCommand, (sender, args) => Execute(() => EditBox.Text = FormatText.Prettify(EditBox.Text))));
-            CommandBindings.Add(new CommandBinding(UnformatCommand, (sender, args) => Execute(() => EditBox.Text = FormatText.Uglify(EditBox.Text))));
+            CommandBindings.Add(new CommandBinding(FormatCommand, ExecuteFormatText));
+            CommandBindings.Add(new CommandBinding(UnformatCommand, ExecuteUnformatText));
             _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
             SetupSyntaxHighlighting();
         }
@@ -321,33 +321,44 @@ namespace MarkdownEdit.Controls
             SpellCheck = !SpellCheck;
         }
 
-        private void Execute(Action action)
+        private void Execute(Action action) => Execute(() =>
         {
-            if (Execute(() => true)) action();
-        }
+            action();
+            return true;
+        });
 
-        private bool Execute(Func<bool> action)
-        {
-            return EditBox.IsReadOnly ? EditorUtilities.ErrorBeep() : action();
-        }
+        private bool Execute(Func<bool> action) => EditBox.IsReadOnly ? EditorUtilities.ErrorBeep() : action();
 
-        public void NewFile()
+        private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => EditBox.Document.Text = FormatText.Uglify(EditBox.Text));
+
+        private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => EditBox.Document.Text = FormatText.Prettify(EditBox.Text));
+
+        public void NewFile() => Execute(() =>
         {
-            Execute(() =>
+            if (SaveIfModified() == false) return;
+            Text = string.Empty;
+            IsModified = false;
+            FileName = string.Empty;
+            Settings.Default.LastOpenFile = string.Empty;
+        });
+
+        public void OpenFile(string file) => Execute(() =>
+        {
+            if (SaveIfModified() == false) return;
+            if (string.IsNullOrWhiteSpace(file))
             {
-                if (SaveIfModified() == false) return;
-                Text = string.Empty;
-                IsModified = false;
-                FileName = string.Empty;
-                Settings.Default.LastOpenFile = string.Empty;
-            });
-        }
+                var dialog = new OpenFileDialog();
+                var result = dialog.ShowDialog();
+                if (result == false) return;
+                file = dialog.FileNames[0];
+            }
+            LoadFile(file);
+        });
 
-        public void OpenFile(string file)
+        public void InsertFile(string file) => Execute(() =>
         {
-            Execute(() =>
+            try
             {
-                if (SaveIfModified() == false) return;
                 if (string.IsNullOrWhiteSpace(file))
                 {
                     var dialog = new OpenFileDialog();
@@ -355,57 +366,33 @@ namespace MarkdownEdit.Controls
                     if (result == false) return;
                     file = dialog.FileNames[0];
                 }
-                LoadFile(file);
-            });
-        }
-
-        public void InsertFile(string file)
-        {
-            Execute(() =>
+                var text = File.ReadAllText(file);
+                EditBox.Document.Insert(EditBox.SelectionStart, text);
+            }
+            catch (Exception ex)
             {
-                try
-                {
-                    if (string.IsNullOrWhiteSpace(file))
-                    {
-                        var dialog = new OpenFileDialog();
-                        var result = dialog.ShowDialog();
-                        if (result == false) return;
-                        file = dialog.FileNames[0];
-                    }
-                    var text = File.ReadAllText(file);
-                    EditBox.Document.Insert(EditBox.SelectionStart, text);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            });
-        }
+                MessageBox.Show(ex.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        });
 
-        public bool SaveIfModified()
+        public bool SaveIfModified() => Execute(() =>
         {
-            return Execute(() =>
-            {
-                if (IsModified == false) return true;
+            if (IsModified == false) return true;
 
-                var result = MessageBox.Show(
-                    @"Save your changes?",
-                    App.Title,
-                    MessageBoxButton.YesNoCancel,
-                    MessageBoxImage.Question);
+            var result = MessageBox.Show(
+                @"Save your changes?",
+                App.Title,
+                MessageBoxButton.YesNoCancel,
+                MessageBoxImage.Question);
 
-                return (result == MessageBoxResult.Yes)
-                    ? SaveFile()
-                    : result == MessageBoxResult.No;
-            });
-        }
+            return (result == MessageBoxResult.Yes)
+                ? SaveFile()
+                : result == MessageBoxResult.No;
+        });
 
-        public bool SaveFile()
-        {
-            return Execute(() => string.IsNullOrWhiteSpace(FileName)
-                ? SaveFileAs()
-                : Save());
-        }
+        public bool SaveFile() => Execute(() => string.IsNullOrWhiteSpace(FileName)
+            ? SaveFileAs()
+            : Save());
 
         public void ExecuteAutoSave()
         {
@@ -417,26 +404,23 @@ namespace MarkdownEdit.Controls
             });
         }
 
-        public bool SaveFileAs()
+        public bool SaveFileAs() => Execute(() =>
         {
-            return Execute(() =>
+            var dialog = new SaveFileDialog
             {
-                var dialog = new SaveFileDialog
-                {
-                    FilterIndex = 0,
-                    OverwritePrompt = true,
-                    RestoreDirectory = true,
-                    Filter = @"Markdown files (*.md)|*.md|All files (*.*)|*.*"
-                };
+                FilterIndex = 0,
+                OverwritePrompt = true,
+                RestoreDirectory = true,
+                Filter = @"Markdown files (*.md)|*.md|All files (*.*)|*.*"
+            };
 
-                if (dialog.ShowDialog() == true)
-                {
-                    FileName = dialog.FileNames[0];
-                    return Save() && LoadFile(FileName);
-                }
-                return false;
-            });
-        }
+            if (dialog.ShowDialog() == true)
+            {
+                FileName = dialog.FileNames[0];
+                return Save() && LoadFile(FileName);
+            }
+            return false;
+        });
 
         public bool LoadFile(string file)
         {
