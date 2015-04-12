@@ -28,19 +28,22 @@
   </Border>
 
   <UserControl.Resources>
-    <Style x:Key="{x:Type Thumb}"
-           TargetType="{x:Type Thumb}">
+    <Style TargetType="{x:Type Thumb}">
       <Setter Property="Opacity" Value="0.1" />
     </Style>
   </UserControl.Resources>
 
   <UserControl.CommandBindings>
+    <CommandBinding Command="{x:Static controls:Editor.PasteSpecialCommand}" Executed="ExecutePasteSpecial" CanExecute="CanExecute" />
+    <CommandBinding Command="CorrectSpellingError" Executed="ExecuteSpellCheckReplace" CanExecute="CanExecute" />
+    <CommandBinding Command="IgnoreSpellingError" Executed="ExecuteAddToDictionary" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.DeselectCommand}" Executed="ExecuteDeselectCommand" />
-    <CommandBinding Command="{x:Static controls:Editor.FormatCommand}" Executed="ExecuteFormatText" />
-    <CommandBinding Command="{x:Static controls:Editor.UnformatCommand}" Executed="ExecuteUnformatText" />
+    <CommandBinding Command="{x:Static controls:Editor.FormatCommand}" Executed="ExecuteFormatText" CanExecute="CanExecute" />
+    <CommandBinding Command="{x:Static controls:Editor.UnformatCommand}" Executed="ExecuteUnformatText" CanExecute="CanExecute" />
   </UserControl.CommandBindings>
 
   <UserControl.InputBindings>
+    <KeyBinding Command="{x:Static controls:Editor.PasteSpecialCommand}" Gesture="Ctrl+Shift+V" />
     <KeyBinding Command="{x:Static controls:Editor.DeselectCommand}" Gesture="Esc" />
     <KeyBinding Command="{x:Static controls:Editor.FormatCommand}" Gesture="Alt+F" />
     <KeyBinding Command="{x:Static controls:Editor.UnformatCommand}" Gesture="Alt+Shift+F" />

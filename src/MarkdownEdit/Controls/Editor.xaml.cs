@@ -34,6 +34,7 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand DeselectCommand = new RoutedCommand();
         public static RoutedCommand FormatCommand = new RoutedCommand();
         public static RoutedCommand UnformatCommand = new RoutedCommand();
+        public static RoutedCommand PasteSpecialCommand = new RoutedCommand();
 
         public Editor()
         {
@@ -49,10 +50,6 @@ namespace MarkdownEdit.Controls
             EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
             EditBox.PreviewKeyDown += (s, e) => _appsKeyDown = e.Key == Key.Apps && e.IsDown;
             DataObject.AddPastingHandler(EditBox, OnPaste);
-            CommandBindings.Add(new CommandBinding(EditingCommands.CorrectSpellingError, ExecuteSpellCheckReplace));
-            CommandBindings.Add(new CommandBinding(EditingCommands.IgnoreSpellingError, ExecuteAddToDictionary));
-            CommandBindings.Add(new CommandBinding(FormatCommand, ExecuteFormatText));
-            CommandBindings.Add(new CommandBinding(UnformatCommand, ExecuteUnformatText));
             _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
             SetupSyntaxHighlighting();
         }
@@ -121,7 +118,7 @@ namespace MarkdownEdit.Controls
             EditBox.TextArea.TextView.LineTransformers.Add(colorizer);
         }
 
-        public void PasteSpecial() => Execute(() =>
+        private void PasteSpecial() => Execute(() =>
         {
             _removeSpecialCharacters = true;
             EditBox.Paste();
@@ -238,7 +235,7 @@ namespace MarkdownEdit.Controls
             contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
             contextMenu.Items.Add(new MenuItem {Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
             contextMenu.Items.Add(new MenuItem {Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
-            contextMenu.Items.Add(new MenuItem {Header = "Paste Special", Command = MainWindow.PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
+            contextMenu.Items.Add(new MenuItem {Header = "Paste Special", Command = PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
             contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
             contextMenu.Items.Add(new Separator());
             contextMenu.Items.Add(new MenuItem {Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
@@ -328,6 +325,11 @@ namespace MarkdownEdit.Controls
         });
 
         private bool Execute(Func<bool> action) => EditBox.IsReadOnly ? EditorUtilities.ErrorBeep() : action();
+
+        private void CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = !EditBox.IsReadOnly;
+        }
 
         private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
         {
@@ -509,6 +511,8 @@ namespace MarkdownEdit.Controls
         private FindReplaceDialog _findReplaceDialog;
 
         private FindReplaceDialog FindReplaceDialog => _findReplaceDialog ?? (_findReplaceDialog = new FindReplaceDialog(new FindReplaceSettings()));
+
+        private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e) => PasteSpecial();
 
         public void FindDialog() => Execute(() => FindReplaceDialog.ShowFindDialog());
 

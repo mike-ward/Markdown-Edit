@@ -33,7 +33,6 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand ToggleFullScreenCommand = new RoutedCommand();
         public static RoutedCommand WrapToColumnCommand = new RoutedCommand();
         public static RoutedCommand RecentFilesCommand = new RoutedCommand();
-        public static RoutedCommand PasteSpecialCommand = new RoutedCommand();
         public static RoutedCommand ToggleCodeCommand = new RoutedCommand();
         public static RoutedCommand TogglePreviewCommand = new RoutedCommand();
         public static RoutedCommand LoadThemeCommand = new RoutedCommand();
@@ -180,8 +179,6 @@ namespace MarkdownEdit.Controls
         }
 
         private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e) => RecentFilesDialog.Display(this);
-
-        private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e) => Editor.PasteSpecial();
 
         private void ExecuteToggleAutoSave(object sender, ExecutedRoutedEventArgs e) => Settings.Default.AutoSave = !Settings.Default.AutoSave;
 

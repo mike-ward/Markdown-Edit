@@ -77,7 +77,7 @@ namespace MarkdownEdit.Models
             keyBinding(MainWindow.ToggleFullScreenCommand, mergedBindings.ToggleFullScreen);
             keyBinding(MainWindow.TogglePreviewCommand, mergedBindings.TogglePreview);
             keyBinding(MainWindow.RecentFilesCommand, mergedBindings.RecentFiles);
-            keyBinding(MainWindow.PasteSpecialCommand, mergedBindings.PasteSpecial);
+            keyBinding(Editor.PasteSpecialCommand, mergedBindings.PasteSpecial);
             keyBinding(MainWindow.ShowThemeDialogCommand, mergedBindings.ShowThemeDialog);
             keyBinding(MainWindow.ExportHtmlCommand, mergedBindings.ExportHtml);
             keyBinding(MainWindow.ExportHtmlTemplateCommand, mergedBindings.ExportHtmlTemplate);
