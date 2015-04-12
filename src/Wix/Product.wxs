@@ -4,7 +4,7 @@
   <Product Id="*" 
            Name="Markdown Edit" 
            Language="1033" 
-           Version="1.4.2.0" 
+           Version="1.5.0.0" 
            Manufacturer="Mike Ward" 
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
     
@@ -67,6 +67,9 @@
           </Component>
           <Component Id="System.Windows.Interactivity.dll" Guid="{D04B4B99-BBBA-4FC1-90F3-2797379617E4}">
             <File Id="System.Windows.Interactivity.dll" KeyPath="yes" Source="$(var.SourceFiles)\System.Windows.Interactivity.dll" />
+          </Component>
+          <Component Id="Pandoc.exe" Guid="{53A4F2D1-A7CC-47F2-BAC0-B41132B49ACA}">
+            <File Id="Pandoc.exe" KeyPath="yes" Source="$(var.SourceFiles)\pandoc.exe" />
           </Component>
           <Directory Id="SpellCheck" Name="SpellCheck">
             <Directory Id="Dictionaries" Name="Dictionaries">
@@ -177,6 +180,7 @@
       <ComponentRef Id="Newtonsoft.Json.dll" />
       <ComponentRef Id="NHunspell.dll" />
       <ComponentRef Id="System.Windows.Interactivity.dll" />
+      <ComponentRef Id="Pandoc.exe" />
       <ComponentRef Id="en_US.aff" />
       <ComponentRef Id="en_US.dic" />
       <ComponentRef Id="French.aff" />
