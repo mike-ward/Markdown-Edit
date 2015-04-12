@@ -329,9 +329,17 @@ namespace MarkdownEdit.Controls
 
         private bool Execute(Func<bool> action) => EditBox.IsReadOnly ? EditorUtilities.ErrorBeep() : action();
 
-        private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => EditBox.Document.Text = FormatText.Uglify(EditBox.Text));
+        private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
+        {
+            var text = FormatText.Prettify(EditBox.Document.Text);
+            if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
+        });
 
-        private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => EditBox.Document.Text = FormatText.Prettify(EditBox.Text));
+        private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
+        {
+            var text = FormatText.Uglify(EditBox.Document.Text);
+            if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
+        });
 
         public void NewFile() => Execute(() =>
         {
