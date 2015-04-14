@@ -42,7 +42,7 @@ namespace MarkdownEdit.Models
             return new ProcessStartInfo
             {
                 FileName = "pandoc.exe",
-                Arguments = "-f markdown -t markdown",
+                Arguments = "-f markdown_strict -t markdown_strict",
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,

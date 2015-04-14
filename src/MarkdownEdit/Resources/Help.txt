@@ -179,7 +179,7 @@ positions the cursor between *Markdown* and *Edit*
     There can be multiple substitution parameters in a snippet. Here's how the
     *link* snippet is defined:
 
-    link [$link_text$]($link_url$) $END$
+    link [$link\_text$]($link_url$) $END$
 
 When triggered, the snippet will expand as `[link_text](link_url)`, with
 `link_text`, highlighted. Type the link text and press `TAB`. Now the `link_url`
@@ -276,10 +276,8 @@ Limitations
 About
 -----
 
-Version 1.5.0\
-Home Page: <http://mike-ward.net/markdownedit>\
-Twitter: `@mikeward_aa`\
-Source: <https://github.com/mike-ward/Markdown-Edit>
+Version 1.5.0\\ Home Page: <http://mike-ward.net/markdownedit>\\ Twitter:
+`@mikeward_aa`\\ Source: <https://github.com/mike-ward/Markdown-Edit>
 
 Markdown Edit License
 ---------------------
