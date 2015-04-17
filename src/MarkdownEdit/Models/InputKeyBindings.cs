@@ -310,5 +310,21 @@ namespace MarkdownEdit.Models
             get { return _insertfilecommand; }
             set { Set(ref _insertfilecommand, value); }
         }
+
+        private string _formattextcommand = "alt+f";
+
+        public string FormatText
+        {
+            get { return _formattextcommand; }
+            set { Set(ref _formattextcommand, value); }
+        }
+
+        private string _unformattextcommand = "alt+f";
+
+        public string UnformatText
+        {
+            get { return _unformattextcommand; }
+            set { Set(ref _unformattextcommand, value); }
+        }
     }
 }

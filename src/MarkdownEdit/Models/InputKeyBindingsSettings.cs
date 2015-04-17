@@ -87,6 +87,8 @@ namespace MarkdownEdit.Models
             keyBinding(MainWindow.SelectNextHeaderCommand, mergedBindings.SelectNextHeader);
             keyBinding(MainWindow.OpenNewInstanceCommand, mergedBindings.OpenNewInstance);
             keyBinding(MainWindow.InsertFileCommand, mergedBindings.InsertFile);
+            keyBinding(Editor.FormatCommand, mergedBindings.FormatText);
+            keyBinding(Editor.UnformatCommand, mergedBindings.UnformatText);
         }
     }
 }
