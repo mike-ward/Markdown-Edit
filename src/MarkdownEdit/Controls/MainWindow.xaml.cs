@@ -74,8 +74,6 @@ namespace MarkdownEdit.Controls
             SnippetManager = snippetManager;
             Loaded += OnLoaded;
             Closing += OnClosing;
-            var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()));
-            SizeChanged += (s, e) => updateMargins(0);
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor)s));
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
@@ -87,13 +85,15 @@ namespace MarkdownEdit.Controls
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
             Dispatcher.InvokeAsync(() =>
             {
+                var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()));
                 App.UserSettings.PropertyChanged += (o, args) =>
                 {
                     if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin))
                     {
-                        Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins());
+                        updateMargins(0);
                     }
                 };
+                SizeChanged += (s, e) => updateMargins(0);
                 InputKeyBindingsSettings.Update();
                 LoadCommandLineOrLastFile();
             });
