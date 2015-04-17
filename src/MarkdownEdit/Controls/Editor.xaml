@@ -34,6 +34,7 @@
   </UserControl.Resources>
 
   <UserControl.CommandBindings>
+    <CommandBinding Command="Find" Executed="ExecuteFindDialog" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.PasteSpecialCommand}" Executed="ExecutePasteSpecial" CanExecute="CanExecute" />
     <CommandBinding Command="CorrectSpellingError" Executed="ExecuteSpellCheckReplace" CanExecute="CanExecute" />
     <CommandBinding Command="IgnoreSpellingError" Executed="ExecuteAddToDictionary" CanExecute="CanExecute" />

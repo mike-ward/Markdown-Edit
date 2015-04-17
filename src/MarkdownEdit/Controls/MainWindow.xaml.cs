@@ -137,8 +137,6 @@ namespace MarkdownEdit.Controls
 
         public void ExecuteClose(object sender, ExecutedRoutedEventArgs ea) => Close();
 
-        private void ExecuteEditorFind(object sender, ExecutedRoutedEventArgs e) => Editor.FindDialog();
-
         private void ExecuteEditorReplace(object sender, ExecutedRoutedEventArgs e) => Editor.ReplaceDialog();
 
         private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea) => Editor.Bold();

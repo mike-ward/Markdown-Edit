@@ -160,7 +160,6 @@
     <CommandBinding Command="SaveAs" Executed="ExecuteSaveFileAs" />
     <CommandBinding Command="Help" Executed="ExecuteHelp" />
     <CommandBinding Command="Close" Executed="ExecuteClose" />
-    <CommandBinding Command="Find" Executed="ExecuteEditorFind" />
     <CommandBinding Command="{x:Static controls:MainWindow.FindNextCommand}" Executed="ExecuteFindNext" />
     <CommandBinding Command="{x:Static controls:MainWindow.FindPreviousCommand}" Executed="ExecuteFindPrevious" />
     <CommandBinding Command="Replace" Executed="ExecuteEditorReplace" />

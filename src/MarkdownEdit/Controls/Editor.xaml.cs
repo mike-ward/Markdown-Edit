@@ -514,7 +514,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e) => PasteSpecial();
 
-        public void FindDialog() => Execute(() => FindReplaceDialog.ShowFindDialog());
+        private void ExecuteFindDialog(object sender, ExecutedRoutedEventArgs e) => Execute(() => FindReplaceDialog.ShowFindDialog());
 
         public void ReplaceDialog() => Execute(() => FindReplaceDialog.ShowReplaceDialog());
 
