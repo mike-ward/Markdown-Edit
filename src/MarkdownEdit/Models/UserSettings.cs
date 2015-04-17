@@ -28,6 +28,7 @@ namespace MarkdownEdit.Models
         private bool _spellCheckIgnoreAllCaps = true;
         private bool _spellCheckIgnoreMarkupTags = true;
         private bool _spellCheckIgnoreWordsWithDigits = true;
+        private int _singlePaneMargin = 4;
 
         public string EditorFontFamily
         {
@@ -131,6 +132,12 @@ namespace MarkdownEdit.Models
             set { Set(ref _spellCheckIgnoreWordsWithDigits, value); }
         }
 
+        public int SinglePaneMargin
+        {
+            get { return _singlePaneMargin; }
+            set { Set(ref _singlePaneMargin, value); }
+        }
+
         public Theme Theme
         {
             get { return _theme; }
@@ -227,7 +234,8 @@ namespace MarkdownEdit.Models
                    ^ SpellCheckIgnoreMarkupTags.GetHashCode()
                    ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
                    ^ IgnoreYaml.GetHashCode()
-                   ^ Theme.GetHashCode();
+                   ^ Theme.GetHashCode()
+                   ^ SinglePaneMargin.GetHashCode();
         }
     }
 }

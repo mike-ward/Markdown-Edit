@@ -74,7 +74,7 @@ namespace MarkdownEdit.Controls
             SnippetManager = snippetManager;
             Loaded += OnLoaded;
             Closing += OnClosing;
-            SizeChanged += (s, e) => CalculateEditorMargins();
+            SizeChanged += (s, e) => Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()))(0);
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor)s));
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
@@ -86,6 +86,13 @@ namespace MarkdownEdit.Controls
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
             Dispatcher.InvokeAsync(() =>
             {
+                App.UserSettings.PropertyChanged += (o, args) =>
+                {
+                    if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin))
+                    {
+                        Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins());
+                    }
+                };
                 InputKeyBindingsSettings.Update();
                 LoadCommandLineOrLastFile();
             });
@@ -241,7 +248,8 @@ namespace MarkdownEdit.Controls
 
         private Thickness CalculateEditorMargins()
         {
-            var margin = (UniformGrid.Columns == 1) ? Width / 6 : 0;
+            var singlePaneMargin = Math.Min(Math.Max(4, App.UserSettings.SinglePaneMargin), 10);
+            var margin = (UniformGrid.Columns == 1) ? Width / singlePaneMargin : 0;
             return new Thickness(margin, 0, margin, 0);
         }
 
