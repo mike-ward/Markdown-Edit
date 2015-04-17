@@ -74,7 +74,8 @@ namespace MarkdownEdit.Controls
             SnippetManager = snippetManager;
             Loaded += OnLoaded;
             Closing += OnClosing;
-            SizeChanged += (s, e) => Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()))(0);
+            var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()));
+            SizeChanged += (s, e) => updateMargins(0);
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor)s));
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
