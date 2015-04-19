@@ -9,9 +9,9 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              ContextMenuOpening="EditorMenuOnContextMenuOpening"
-             DataContext="{Binding RelativeSource={RelativeSource self}}"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              AllowDrop="True">
-  
+
   <Border>
     <avalonedit:TextEditor
       x:Name="EditBox"
@@ -35,6 +35,8 @@
 
   <UserControl.CommandBindings>
     <CommandBinding Command="Find" Executed="ExecuteFindDialog" CanExecute="CanExecute" />
+    <CommandBinding Command="{x:Static controls:Editor.FindNextCommand}" Executed="ExecuteFindNext" />
+    <CommandBinding Command="{x:Static controls:Editor.FindPreviousCommand}" Executed="ExecuteFindPrevious" />
     <CommandBinding Command="{x:Static controls:Editor.PasteSpecialCommand}" Executed="ExecutePasteSpecial" CanExecute="CanExecute" />
     <CommandBinding Command="CorrectSpellingError" Executed="ExecuteSpellCheckReplace" CanExecute="CanExecute" />
     <CommandBinding Command="IgnoreSpellingError" Executed="ExecuteAddToDictionary" CanExecute="CanExecute" />
@@ -44,6 +46,8 @@
   </UserControl.CommandBindings>
 
   <UserControl.InputBindings>
+    <KeyBinding Command="{x:Static controls:Editor.FindNextCommand}" Gesture="F3" />
+    <KeyBinding Command="{x:Static controls:Editor.FindPreviousCommand}" Gesture="Shift+F3" />
     <KeyBinding Command="{x:Static controls:Editor.PasteSpecialCommand}" Gesture="Ctrl+Shift+V" />
     <KeyBinding Command="{x:Static controls:Editor.DeselectCommand}" Gesture="Esc" />
     <KeyBinding Command="{x:Static controls:Editor.FormatCommand}" Gesture="Alt+F" />

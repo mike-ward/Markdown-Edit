@@ -21,8 +21,6 @@ namespace MarkdownEdit.Controls
     {
         public static RoutedCommand ToggleWordWrapCommand = new RoutedCommand();
         public static RoutedCommand InsertHeaderCommand = new RoutedCommand();
-        public static RoutedCommand FindNextCommand = new RoutedCommand();
-        public static RoutedCommand FindPreviousCommand = new RoutedCommand();
         public static RoutedCommand RestoreFontSizeCommand = new RoutedCommand();
         public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
         public static RoutedCommand OpenKeybindingSettingsCommand = new RoutedCommand();
@@ -51,12 +49,17 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand OpenNewInstanceCommand = new RoutedCommand();
         public static RoutedCommand UpdatePreviewCommand = new RoutedCommand();
         public static RoutedCommand InsertFileCommand = new RoutedCommand();
+        public static RoutedCommand IncreaseEditorMarginCommand = new RoutedCommand();
+        public static RoutedCommand DecreaseEditorMarginCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _markdownConverter;
         private ISpellCheckProvider _spellCheckProvider;
         private FindReplaceDialog _findReplaceDialog;
         private ISnippetManager _snippetManager;
+
+        private const int EditorMarginMin = 4;
+        private const int EditorMarginMax = 16;
 
         public MainWindow()
         {
@@ -85,7 +88,7 @@ namespace MarkdownEdit.Controls
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
             Dispatcher.InvokeAsync(() =>
             {
-                var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()));
+                var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
                 App.UserSettings.PropertyChanged += (o, args) =>
                 {
                     if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin))
@@ -155,10 +158,6 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteInsertHeader(object sender, ExecutedRoutedEventArgs ea) => Editor.InsertHeader(Convert.ToInt32(ea.Parameter));
 
-        private void ExecuteFindNext(object sender, ExecutedRoutedEventArgs e) => Editor.FindNext();
-
-        private void ExecuteFindPrevious(object sender, ExecutedRoutedEventArgs e) => Editor.FindPrevious();
-
         private void ExecuteIncreaseFontSize(object sender, ExecutedRoutedEventArgs e) => Editor.IncreaseFontSize();
 
         private void ExecuteRestoreFontSize(object sender, ExecutedRoutedEventArgs e) => Editor.RestoreFontSize();
@@ -199,6 +198,10 @@ namespace MarkdownEdit.Controls
         private void ExecuteSelectNextHeader(object sender, ExecutedRoutedEventArgs e) => Editor.SelectNextHeader();
 
         private void ExecuteEditorFindCommand(object sender, ExecutedRoutedEventArgs e) => Editor.Find(e.Parameter as Regex);
+
+        private void ExecuteIncreaseEditorMargin(object sender, ExecutedRoutedEventArgs e) => App.UserSettings.SinglePaneMargin = Math.Max(App.UserSettings.SinglePaneMargin - 1, EditorMarginMin);
+
+        private void ExecuteDecreaseEditorMargin(object sender, ExecutedRoutedEventArgs e) => App.UserSettings.SinglePaneMargin = Math.Min(App.UserSettings.SinglePaneMargin + 1, EditorMarginMax);
 
         private void ExecuteEditorReplaceCommand(object sender, ExecutedRoutedEventArgs e)
         {
@@ -249,7 +252,7 @@ namespace MarkdownEdit.Controls
 
         private Thickness CalculateEditorMargins()
         {
-            var singlePaneMargin = Math.Min(Math.Max(4, App.UserSettings.SinglePaneMargin), 10);
+            var singlePaneMargin = Math.Min(Math.Max(EditorMarginMin, App.UserSettings.SinglePaneMargin), EditorMarginMax);
             var margin = (UniformGrid.Columns == 1) ? Width / singlePaneMargin : 0;
             return new Thickness(margin, 0, margin, 0);
         }

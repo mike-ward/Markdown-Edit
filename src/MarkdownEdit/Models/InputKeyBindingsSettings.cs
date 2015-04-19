@@ -57,8 +57,8 @@ namespace MarkdownEdit.Models
             keyBinding(MainWindow.ToggleCodeCommand, mergedBindings.ToggleCode);
             keyBinding(ApplicationCommands.SaveAs, mergedBindings.SaveAs);
             keyBinding(MainWindow.ToggleWordWrapCommand, mergedBindings.ToggleWordWrap);
-            keyBinding(MainWindow.FindNextCommand, mergedBindings.FindNext);
-            keyBinding(MainWindow.FindPreviousCommand, mergedBindings.FindPrevious);
+            keyBinding(Editor.FindNextCommand, mergedBindings.FindNext);
+            keyBinding(Editor.FindPreviousCommand, mergedBindings.FindPrevious);
             keyBindingPar(MainWindow.InsertHeaderCommand, mergedBindings.InsertHeader1, "1");
             keyBindingPar(MainWindow.InsertHeaderCommand, mergedBindings.InsertHeader2, "2");
             keyBindingPar(MainWindow.InsertHeaderCommand, mergedBindings.InsertHeader3, "3");
@@ -89,6 +89,8 @@ namespace MarkdownEdit.Models
             keyBinding(MainWindow.InsertFileCommand, mergedBindings.InsertFile);
             keyBinding(Editor.FormatCommand, mergedBindings.FormatText);
             keyBinding(Editor.UnformatCommand, mergedBindings.UnformatText);
+            keyBinding(MainWindow.IncreaseEditorMarginCommand, mergedBindings.IncreaseEditorMargin);
+            keyBinding(MainWindow.DecreaseEditorMarginCommand, mergedBindings.DecreaseEditorMargin);
         }
     }
 }

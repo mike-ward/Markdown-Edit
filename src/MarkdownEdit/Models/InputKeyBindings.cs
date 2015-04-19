@@ -319,12 +319,28 @@ namespace MarkdownEdit.Models
             set { Set(ref _formattextcommand, value); }
         }
 
-        private string _unformattextcommand = "alt+f";
+        private string _unformattextcommand = "alt+shift+f";
 
         public string UnformatText
         {
             get { return _unformattextcommand; }
             set { Set(ref _unformattextcommand, value); }
+        }
+
+        private string _increaseeditormargincommand = "alt+down";
+
+        public string IncreaseEditorMargin
+        {
+            get { return _increaseeditormargincommand; }
+            set { Set(ref _increaseeditormargincommand, value); }
+        }
+
+        private string _decreaseeditormargincommand = "alt+up";
+
+        public string DecreaseEditorMargin
+        {
+            get { return _decreaseeditormargincommand; }
+            set { Set(ref _decreaseeditormargincommand, value); }
         }
     }
 }

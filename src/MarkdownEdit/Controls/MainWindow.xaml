@@ -160,8 +160,6 @@
     <CommandBinding Command="SaveAs" Executed="ExecuteSaveFileAs" />
     <CommandBinding Command="Help" Executed="ExecuteHelp" />
     <CommandBinding Command="Close" Executed="ExecuteClose" />
-    <CommandBinding Command="{x:Static controls:MainWindow.FindNextCommand}" Executed="ExecuteFindNext" />
-    <CommandBinding Command="{x:Static controls:MainWindow.FindPreviousCommand}" Executed="ExecuteFindPrevious" />
     <CommandBinding Command="Replace" Executed="ExecuteEditorReplace" />
     <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
     <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
@@ -196,6 +194,8 @@
     <CommandBinding Command="{x:Static controls:MainWindow.OpenNewInstanceCommand}" Executed="ExecuteOpenNewInstance" />
     <CommandBinding Command="{x:Static controls:MainWindow.UpdatePreviewCommand}" Executed="ExecuteUpdatePreview" />
     <CommandBinding Command="{x:Static controls:MainWindow.InsertFileCommand}" Executed="ExecuteInsertFile" />
+    <CommandBinding Command="{x:Static controls:MainWindow.IncreaseEditorMarginCommand}" Executed="ExecuteIncreaseEditorMargin" />
+    <CommandBinding Command="{x:Static controls:MainWindow.DecreaseEditorMarginCommand}" Executed="ExecuteDecreaseEditorMargin" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -204,8 +204,6 @@
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleCodeCommand}" Gesture="Ctrl+K" />
     <KeyBinding Command="SaveAs" Gesture="Ctrl+Shift+S" />
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleWordWrapCommand}" Gesture="Ctrl+W" />
-    <KeyBinding Command="{x:Static controls:MainWindow.FindNextCommand}" Gesture="F3" />
-    <KeyBinding Command="{x:Static controls:MainWindow.FindPreviousCommand}" Gesture="Shift+F3" />
     <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+1" CommandParameter="1" />
     <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+2" CommandParameter="2" />
     <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+3" CommandParameter="3" />

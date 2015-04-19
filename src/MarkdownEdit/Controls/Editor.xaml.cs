@@ -35,6 +35,8 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand FormatCommand = new RoutedCommand();
         public static RoutedCommand UnformatCommand = new RoutedCommand();
         public static RoutedCommand PasteSpecialCommand = new RoutedCommand();
+        public static RoutedCommand FindNextCommand = new RoutedCommand();
+        public static RoutedCommand FindPreviousCommand = new RoutedCommand();
 
         public Editor()
         {
@@ -334,28 +336,28 @@ namespace MarkdownEdit.Controls
         private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
         {
             var text = FormatText.Prettify(EditBox.Document.Text);
-            if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
+            if (String.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
         });
 
         private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
         {
             var text = FormatText.Uglify(EditBox.Document.Text);
-            if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
+            if (String.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
         });
 
         public void NewFile() => Execute(() =>
         {
             if (SaveIfModified() == false) return;
-            Text = string.Empty;
+            Text = String.Empty;
             IsModified = false;
-            FileName = string.Empty;
-            Settings.Default.LastOpenFile = string.Empty;
+            FileName = String.Empty;
+            Settings.Default.LastOpenFile = String.Empty;
         });
 
         public void OpenFile(string file) => Execute(() =>
         {
             if (SaveIfModified() == false) return;
-            if (string.IsNullOrWhiteSpace(file))
+            if (String.IsNullOrWhiteSpace(file))
             {
                 var dialog = new OpenFileDialog();
                 var result = dialog.ShowDialog();
@@ -369,7 +371,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(file))
+                if (String.IsNullOrWhiteSpace(file))
                 {
                     var dialog = new OpenFileDialog();
                     var result = dialog.ShowDialog();
@@ -400,16 +402,16 @@ namespace MarkdownEdit.Controls
                 : result == MessageBoxResult.No;
         });
 
-        public bool SaveFile() => Execute(() => string.IsNullOrWhiteSpace(FileName)
+        public bool SaveFile() => Execute(() => String.IsNullOrWhiteSpace(FileName)
             ? SaveFileAs()
             : Save());
 
         public void ExecuteAutoSave()
         {
-            if (AutoSave == false || IsModified == false || string.IsNullOrEmpty(FileName)) return;
+            if (AutoSave == false || IsModified == false || String.IsNullOrEmpty(FileName)) return;
             Execute(() =>
             {
-                if (AutoSave == false || IsModified == false || string.IsNullOrEmpty(FileName)) return;
+                if (AutoSave == false || IsModified == false || String.IsNullOrEmpty(FileName)) return;
                 SaveFile();
             });
         }
@@ -436,7 +438,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(file))
+                if (String.IsNullOrWhiteSpace(file))
                 {
                     NewFile();
                     return true;
@@ -472,7 +474,7 @@ namespace MarkdownEdit.Controls
         private static int ConvertToOffset(string number)
         {
             int offset;
-            return (int.TryParse(number, out offset)) ? offset : 0;
+            return (Int32.TryParse(number, out offset)) ? offset : 0;
         }
 
         private bool Save()
@@ -518,9 +520,9 @@ namespace MarkdownEdit.Controls
 
         public void ReplaceDialog() => Execute(() => FindReplaceDialog.ShowReplaceDialog());
 
-        public void FindNext() => Execute(() => FindReplaceDialog.FindNext());
+        private void ExecuteFindNext(object sender, ExecutedRoutedEventArgs e) => Execute(() => FindReplaceDialog.FindNext());
 
-        public void FindPrevious() => Execute(() => FindReplaceDialog.FindPrevious());
+        private void ExecuteFindPrevious(object sender, ExecutedRoutedEventArgs e) => Execute(() => FindReplaceDialog.FindPrevious());
 
         public void Bold() => Execute(() => EditBox.AddRemoveText("**"));
 
@@ -610,9 +612,9 @@ namespace MarkdownEdit.Controls
         {
             get
             {
-                return (string.IsNullOrWhiteSpace(_displayName) == false)
+                return (String.IsNullOrWhiteSpace(_displayName) == false)
                     ? _displayName
-                    : string.IsNullOrWhiteSpace(FileName)
+                    : String.IsNullOrWhiteSpace(FileName)
                         ? "New Document" + F1ForHelp
                         : Path.GetFileName(FileName);
             }
