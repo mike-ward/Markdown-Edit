@@ -89,13 +89,7 @@ namespace MarkdownEdit.Controls
             Dispatcher.InvokeAsync(() =>
             {
                 var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
-                App.UserSettings.PropertyChanged += (o, args) =>
-                {
-                    if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin))
-                    {
-                        updateMargins(0);
-                    }
-                };
+                App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(0); };
                 SizeChanged += (s, e) => updateMargins(0);
                 InputKeyBindingsSettings.Update();
                 LoadCommandLineOrLastFile();
@@ -215,11 +209,7 @@ namespace MarkdownEdit.Controls
             Editor.ReplaceAll(tuple.Item1, tuple.Item2);
         }
 
-        private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e)
-        {
-            var process = new Process {StartInfo = {FileName = Utility.ExecutingAssembly(), Arguments = "-n"}};
-            process.Start();
-        }
+        private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e) => new Process {StartInfo = {FileName = Utility.ExecutingAssembly(), Arguments = "-n"}}.Start();
 
         private void SetFocus(IInputElement control)
         {
@@ -244,11 +234,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteSaveTheme(object sender, ExecutedRoutedEventArgs e) => App.UserSettings.Save();
 
-        private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
-        {
-            var dialog = new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme};
-            dialog.ShowDialog();
-        }
+        private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e) => new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme}.ShowDialog();
 
         private Thickness CalculateEditorMargins()
         {
@@ -261,11 +247,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlTemplateToClipboard(Editor.Text, MarkdownConverter);
 
-        private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e)
-        {
-            var dialog = new GotoLineDialog {Owner = this};
-            dialog.ShowDialog();
-        }
+        private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e) => new GotoLineDialog {Owner = this}.ShowDialog();
 
         private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
         {
@@ -329,11 +311,9 @@ namespace MarkdownEdit.Controls
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(property, value) == false)
-            {
-                property = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -150,10 +150,7 @@ namespace MarkdownEdit.Controls
 
         protected override void OnDragEnter(DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop) == false)
-            {
-                e.Effects = DragDropEffects.None;
-            }
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) == false) e.Effects = DragDropEffects.None;
         }
 
         protected override void OnDrop(DragEventArgs e)
@@ -336,28 +333,28 @@ namespace MarkdownEdit.Controls
         private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
         {
             var text = FormatText.Prettify(EditBox.Document.Text);
-            if (String.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
+            if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
         });
 
         private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
         {
             var text = FormatText.Uglify(EditBox.Document.Text);
-            if (String.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
+            if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
         });
 
         public void NewFile() => Execute(() =>
         {
             if (SaveIfModified() == false) return;
-            Text = String.Empty;
+            Text = string.Empty;
             IsModified = false;
-            FileName = String.Empty;
-            Settings.Default.LastOpenFile = String.Empty;
+            FileName = string.Empty;
+            Settings.Default.LastOpenFile = string.Empty;
         });
 
         public void OpenFile(string file) => Execute(() =>
         {
             if (SaveIfModified() == false) return;
-            if (String.IsNullOrWhiteSpace(file))
+            if (string.IsNullOrWhiteSpace(file))
             {
                 var dialog = new OpenFileDialog();
                 var result = dialog.ShowDialog();
@@ -371,7 +368,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                if (String.IsNullOrWhiteSpace(file))
+                if (string.IsNullOrWhiteSpace(file))
                 {
                     var dialog = new OpenFileDialog();
                     var result = dialog.ShowDialog();
@@ -402,16 +399,16 @@ namespace MarkdownEdit.Controls
                 : result == MessageBoxResult.No;
         });
 
-        public bool SaveFile() => Execute(() => String.IsNullOrWhiteSpace(FileName)
+        public bool SaveFile() => Execute(() => string.IsNullOrWhiteSpace(FileName)
             ? SaveFileAs()
             : Save());
 
         public void ExecuteAutoSave()
         {
-            if (AutoSave == false || IsModified == false || String.IsNullOrEmpty(FileName)) return;
+            if (AutoSave == false || IsModified == false || string.IsNullOrEmpty(FileName)) return;
             Execute(() =>
             {
-                if (AutoSave == false || IsModified == false || String.IsNullOrEmpty(FileName)) return;
+                if (AutoSave == false || IsModified == false || string.IsNullOrEmpty(FileName)) return;
                 SaveFile();
             });
         }
@@ -438,7 +435,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                if (String.IsNullOrWhiteSpace(file))
+                if (string.IsNullOrWhiteSpace(file))
                 {
                     NewFile();
                     return true;
@@ -474,7 +471,7 @@ namespace MarkdownEdit.Controls
         private static int ConvertToOffset(string number)
         {
             int offset;
-            return (Int32.TryParse(number, out offset)) ? offset : 0;
+            return (int.TryParse(number, out offset)) ? offset : 0;
         }
 
         private bool Save()
@@ -567,8 +564,6 @@ namespace MarkdownEdit.Controls
 
         public void ReplaceAll(Regex find, string replace) => Execute(() => EditBox.ReplaceAll(find, replace));
 
-        // Events
-
         private void ExecuteDeselectCommand(object sender, ExecutedRoutedEventArgs e) => EditBox.SelectionLength = 0;
 
         public EventHandler TextChanged;
@@ -587,8 +582,6 @@ namespace MarkdownEdit.Controls
         {
             public Theme Theme { get; set; }
         }
-
-        // Properties 
 
         public string Text
         {
@@ -612,9 +605,9 @@ namespace MarkdownEdit.Controls
         {
             get
             {
-                return (String.IsNullOrWhiteSpace(_displayName) == false)
+                return (string.IsNullOrWhiteSpace(_displayName) == false)
                     ? _displayName
-                    : String.IsNullOrWhiteSpace(FileName)
+                    : string.IsNullOrWhiteSpace(FileName)
                         ? "New Document" + F1ForHelp
                         : Path.GetFileName(FileName);
             }
@@ -787,11 +780,9 @@ namespace MarkdownEdit.Controls
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(property, value) == false)
-            {
-                property = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
