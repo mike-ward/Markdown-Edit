@@ -84,13 +84,14 @@ namespace MarkdownEdit.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            Activate();
+            var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
+            App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(0); };
+            SizeChanged += (s, e) => updateMargins(0);
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
+            Activate();
+
             Dispatcher.InvokeAsync(() =>
             {
-                var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
-                App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(0); };
-                SizeChanged += (s, e) => updateMargins(0);
                 InputKeyBindingsSettings.Update();
                 LoadCommandLineOrLastFile();
             });
