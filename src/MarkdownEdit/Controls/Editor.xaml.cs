@@ -238,8 +238,8 @@ namespace MarkdownEdit.Controls
             contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
             contextMenu.Items.Add(new Separator());
             contextMenu.Items.Add(new MenuItem {Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
-            contextMenu.Items.Add(new MenuItem {Header = "Format", Command = FormatCommand, InputGestureText = "Alt+F"});
-            contextMenu.Items.Add(new MenuItem {Header = "UnFormat", Command = UnformatCommand, InputGestureText = "Alt+Shift+F"});
+            contextMenu.Items.Add(new MenuItem {Header = "Wrap & Format", Command = FormatCommand, InputGestureText = "Alt+F"});
+            contextMenu.Items.Add(new MenuItem {Header = "Unwrap & Format", Command = UnformatCommand, InputGestureText = "Alt+Shift+F"});
 
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
@@ -332,13 +332,13 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
         {
-            var text = FormatText.Prettify(EditBox.Document.Text);
+            var text = FormatText.Wrap(EditBox.Document.Text);
             if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
         });
 
         private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
         {
-            var text = FormatText.Uglify(EditBox.Document.Text);
+            var text = FormatText.Unwrap(EditBox.Document.Text);
             if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
         });
 

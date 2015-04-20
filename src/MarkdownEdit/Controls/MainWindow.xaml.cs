@@ -88,12 +88,12 @@ namespace MarkdownEdit.Controls
             App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(0); };
             SizeChanged += (s, e) => updateMargins(0);
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
-            Activate();
 
             Dispatcher.InvokeAsync(() =>
             {
                 InputKeyBindingsSettings.Update();
                 LoadCommandLineOrLastFile();
+                Activate();
             });
         }
 

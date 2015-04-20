@@ -6,14 +6,14 @@ namespace MarkdownEdit.Models
 {
     internal static class FormatText
     {
-        public static string Prettify(string text)
+        public static string Wrap(string text)
         {
             var tuple = Utility.SeperateFrontMatter(text);
             var result = Pandoc(tuple.Item2, "--columns 80");
             return tuple.Item1 + result;
         }
 
-        public static string Uglify(string text)
+        public static string Unwrap(string text)
         {
             var tuple = Utility.SeperateFrontMatter(text);
             var result = Pandoc(tuple.Item2, "--no-wrap --atx-headers");
