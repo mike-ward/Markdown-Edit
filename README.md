@@ -20,7 +20,10 @@ Gratuitous Screen Shot
 Features
 --------
 
--   [Drag and Drop image upload](http://mike-ward.net/2015/03/31/markdown-edit-1-4-imgur-uploads/)
+-   [Drag and Drop image
+    upload](http://mike-ward.net/2015/03/31/markdown-edit-1-4-imgur-uploads/)
+-   [Document
+    Formatting](http://mike-ward.net/2015/04/20/markdown-edit-1-5-released/)
 -   Syntax highlighting editor
 -   Side-by-side HTML preview
 -   Quickly show/hide preview
@@ -59,4 +62,3 @@ Installing
 ----------
 
 [Download](http://mike-ward.net/downloads)
-
