@@ -8,6 +8,7 @@
   xmlns:p="clr-namespace:MarkdownEdit.Properties"
   xmlns:interop="clr-namespace:Microsoft.DwayneNeed.Interop;assembly=Microsoft.DwayneNeed"
   xmlns:converters="clr-namespace:MarkdownEdit.Converters"
+  xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
   Title="{Binding TitleName}"
   TitleCaps="False"
   SaveWindowPosition="True"
@@ -108,7 +109,7 @@
   <metrocontrols:MetroWindow.Flyouts>
     <metrocontrols:FlyoutsControl>
       <metrocontrols:Flyout x:Name="SettingsFlyout"
-                       Header="Settings"
+                       Header="{i18N:Localize settings-flyout-header}"
                        Position="Right"
                        Theme="Accent"
                        AnimateOpacity="True"

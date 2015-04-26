@@ -85,7 +85,8 @@ namespace MarkdownEdit.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ## Keyboard Shortcuts
+        ///   Looks up a localized string similar to Keyboard Shortcuts
+        ///------------------
         ///
         ///    F1             Show/Hide this help
         ///
@@ -101,12 +102,21 @@ namespace MarkdownEdit.Properties {
         ///    Alt+F4         Exit
         ///
         ///    Ctrl+W         Toggle word wrap
-        ///    Ctrl+F7        Toggle spell checking
-        ///    F11     [rest of string was truncated]&quot;;.
+        ///    Ctrl+F7        Toggle spell chec [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings-flyout-header:       Settings
+        ///.
+        /// </summary>
+        internal static string local {
+            get {
+                return ResourceManager.GetString("local", resourceCulture);
             }
         }
         

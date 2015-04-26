@@ -130,6 +130,9 @@
     </Compile>
     <Compile Include="Converters\BooleanToScrollBarVisibilityConverter.cs" />
     <Compile Include="Converters\NumberFormatConverter.cs" />
+    <Compile Include="i18n\Localize.cs" />
+    <Compile Include="i18n\LocalizeExtension.cs" />
+    <Compile Include="i18n\TranslationProvider.cs" />
     <Compile Include="ImageUpload\IImageUpload.cs" />
     <Compile Include="ImageUpload\ImageUploadImgur.cs" />
     <Compile Include="MarkdownConverters\CommonMarkConverter.cs" />
@@ -353,10 +356,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Languages\en\local.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="pandoc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\local.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
