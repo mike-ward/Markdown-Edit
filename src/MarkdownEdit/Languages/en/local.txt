@@ -1,6 +1,31 @@
 ﻿=======================================================
 = English
-= 
 =======================================================
 
+=== Main Window
+
+tooltip-new-command:          New - Ctrl+N
+tooltip-open-command:         Open - Ctrl+O
+tooltip-save-command:         Save - Ctrl+S
+tooltip-save-as-command:      Save as - Ctrl+Shift+S
+tooltip-toggle-settings:      Settings
+tooltip-word-count:           Word Count
+tooltip-spell-check:          Spell Check - Ctrl+F7
+tooltip-word-wrap:            Word Wrap - Ctrl+W
+tooltip-auto-save:            Auto Save - Alt+S
 settings-flyout-header:       Settings
+
+=== Editor
+
+editor-f1-for-help:           - F1 for Help
+editor-new-document:          New Document
+editor-menu-undo:             Undo
+editor-menu-redo:             Redo
+editor-menu-cut:              Cut
+editor-menu-copy:             Copy
+editor-menu-paste:            Paste
+editor-menu-paste-special:    Paste Special
+editor-menu-delete:           Delete
+editor-menu-wrap-format:      Wrap & Format
+editor-menu-unwrap-format:    Unwrap & Format
+editor-menu-add-to-dictonary: Add to Dictionary

@@ -125,7 +125,7 @@ namespace MarkdownEdit.Controls
 
         private void SettingsClosingFinished(object sender, RoutedEventArgs e) => DisplaySettings.SaveIfModified();
 
-        private string BuildTitle() => $"MARKDOWN EDIT - {(Editor.IsModified ? "* " : "")}{Editor.DisplayName}";
+        private string BuildTitle() => $"{App.Title} - {(Editor.IsModified ? "* " : "")}{Editor.DisplayName}";
 
         // Commands
 

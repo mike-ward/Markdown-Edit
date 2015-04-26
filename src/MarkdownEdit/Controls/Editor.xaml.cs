@@ -12,6 +12,7 @@ using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using MarkdownEdit.Commands;
+using MarkdownEdit.i18n;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 using MarkdownEdit.Snippets;
@@ -28,7 +29,7 @@ namespace MarkdownEdit.Controls
         private bool _removeSpecialCharacters;
         private bool _appsKeyDown;
         private EditorState _editorState = new EditorState();
-        private const string F1ForHelp = " - F1 for Help";
+        private readonly string F1ForHelp = (string)TranslationProvider.Translate("editor-f1-for-help");
         private readonly Action<string> _executeAutoSaveLater;
 
         public static RoutedCommand DeselectCommand = new RoutedCommand();
@@ -228,18 +229,18 @@ namespace MarkdownEdit.Controls
             var contextMenu = new ContextMenu();
             SpellCheckSuggestions(contextMenu);
 
-            contextMenu.Items.Add(new MenuItem {Header = "Undo", Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z"});
-            contextMenu.Items.Add(new MenuItem {Header = "Redo", Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y"});
+            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-undo"), Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z"});
+            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-redo"), Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y"});
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem {Header = "Cut", Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
-            contextMenu.Items.Add(new MenuItem {Header = "Copy", Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
-            contextMenu.Items.Add(new MenuItem {Header = "Paste", Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
-            contextMenu.Items.Add(new MenuItem {Header = "Paste Special", Command = PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
-            contextMenu.Items.Add(new MenuItem {Header = "Delete", Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
+            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-cut"), Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
+            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-copy"), Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
+            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-paste"), Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
+            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-paste-special"), Command = PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
+            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-delete"), Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem {Header = "Select All", Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
-            contextMenu.Items.Add(new MenuItem {Header = "Wrap & Format", Command = FormatCommand, InputGestureText = "Alt+F"});
-            contextMenu.Items.Add(new MenuItem {Header = "Unwrap & Format", Command = UnformatCommand, InputGestureText = "Alt+Shift+F"});
+            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-select-all"), Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
+            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-wrap-format"), Command = FormatCommand, InputGestureText = "Alt+F"});
+            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-unwrap-format"), Command = UnformatCommand, InputGestureText = "Alt+Shift+F"});
 
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
@@ -279,7 +280,7 @@ namespace MarkdownEdit.Controls
                 foreach (var item in suggestions) contextMenu.Items.Add(SpellSuggestMenuItem(item, misspelledSegment));
                 contextMenu.Items.Add(new MenuItem
                 {
-                    Header = "Add to Dictionary",
+                    Header = TranslationProvider.Translate("editor-menu-add-to-dictionary"),
                     Command = EditingCommands.IgnoreSpellingError,
                     CommandParameter = misspelledText
                 });
@@ -608,7 +609,7 @@ namespace MarkdownEdit.Controls
                 return (string.IsNullOrWhiteSpace(_displayName) == false)
                     ? _displayName
                     : string.IsNullOrWhiteSpace(FileName)
-                        ? "New Document" + F1ForHelp
+                        ? $"{TranslationProvider.Translate("editor-new-document")} {F1ForHelp}"
                         : Path.GetFileName(FileName);
             }
             set { Set(ref _displayName, value); }

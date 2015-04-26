@@ -59,28 +59,28 @@
                   Margin="20 0"
                   VerticalAlignment="Center">
         <Button Content="&#xe160;"
-                ToolTip="New - Ctrl+N"
+                ToolTip="{i18N:Localize tooltip-new-command}"
                 Command="New"
                 FontFamily="Segoe UI Symbol"
                 Style="{StaticResource CommandWindowButtonStyle}" />
         <Button Content="&#xe1A5;"
-                ToolTip="Open - Ctrl+O"
+                ToolTip="{i18N:Localize tooltip-open-command}"
                 Command="Open"
                 FontFamily="Segoe UI Symbol"
                 Style="{StaticResource CommandWindowButtonStyle}" />
         <Button Content="&#xe105;"
-                ToolTip="Save - Ctrl+S"
+                ToolTip="{i18N:Localize tooltip-save-command}"
                 Command="Save"
                 FontFamily="Segoe UI Symbol"
                 Style="{StaticResource CommandWindowButtonStyle}" />
         <Button Content="&#xe28F;"
-                ToolTip="Save as - Ctrl+Shift+S"
+                ToolTip="{i18N:Localize tooltip-save-as-command}"
                 Command="SaveAs"
                 FontFamily="Segoe UI Symbol"
                 Style="{StaticResource CommandWindowButtonStyle}" />
         <Button Content="&#xe115;"
                 Margin="0 0 10 0"
-                ToolTip="Settings"
+                ToolTip="{i18N:Localize tooltip-toggle-settings}"
                 Click="ToggleSettings"
                 FontFamily="Segoe UI Symbol"
                 Foreground="{StaticResource SemiTransparentWhiteBrush}" />
@@ -88,17 +88,17 @@
                    Foreground="{StaticResource SemiTransparentWhiteBrush}"
                    Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" />
         <TextBlock Text="&#xfc;"
-                   ToolTip="Spell Check - Ctrl+F7"
+                   ToolTip="{i18N:Localize tooltip-spell-check}"
                    FontFamily="Wingdings"
                    Style="{StaticResource StatusIndicatorStyle}"
                    IsEnabled="{Binding Path=SpellCheck, ElementName=Editor}" />
         <TextBlock Text="&#x21A9;"
-                   ToolTip="Word Wrap - Ctrl+W"
+                   ToolTip="{i18N:Localize tooltip-word-wrap}"
                    FontFamily="Segoe UI Symbol"
                    Style="{StaticResource StatusIndicatorStyle}"
                    IsEnabled="{Binding Path=WordWrap, ElementName=Editor}" />
         <TextBlock Text="&#xe105;"
-                   ToolTip="Auto Save - Alt+S"
+                   ToolTip="{i18N:Localize tooltip-auto-save}"
                    FontFamily="Segoe UI Symbol"
                    Style="{StaticResource StatusIndicatorStyle}"
                    IsEnabled="{Binding Path=AutoSave, ElementName=Editor}" />
