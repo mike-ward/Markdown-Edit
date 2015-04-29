@@ -32,6 +32,7 @@ editor-menu-add-to-dictonary: Add to Dictionary
 
 === Settings Dialog
 
+settings-editor-section:      Editor
 settings-word-wrap:           Word Wrap
 settings-auto-save:           Auto Save
 settings-line-numbers:        Line Numbers
@@ -44,6 +45,7 @@ settings-show-spaces:         Show Spaces
 settings-show-end-of-line:    Show Line Endings
 settings-sync-scroll-pos:     Synchronize Scroll Positions
 
+settings-spell-check-section: Spell Checking
 settings-spell-checking:      Spell Checking
 settings-ignore-all-caps:     Ignore All Caps
 settings-ignore-code-blocks:  Ignore Code Blocks
