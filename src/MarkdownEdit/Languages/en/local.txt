@@ -29,3 +29,41 @@ editor-menu-delete:           Delete
 editor-menu-wrap-format:      Wrap & Format
 editor-menu-unwrap-format:    Unwrap & Format
 editor-menu-add-to-dictonary: Add to Dictionary
+
+=== Settings Dialog
+
+settings-word-wrap:           Word Wrap
+settings-auto-save:           Auto Save
+settings-line-numbers:        Line Numbers
+settings-open-last-file:      Open Last File
+settings-remember-cursor-pos: Remember Cursor Position
+settings-highlight-current:   Highlight Current Line
+settings-show-scroll-bar:     Show Vertical Scrollbar
+settings-show-tabs:           Show Tabs
+settings-show-spaces:         Show Spaces
+settings-show-end-of-line:    Show Line Endings
+settings-sync-scroll-pos:     Synchronize Scroll Positions
+
+settings-spell-checking:      Spell Checking
+settings-ignore-all-caps:     Ignore All Caps
+settings-ignore-code-blocks:  Ignore Code Blocks
+settings-ignore-markup:       Ignore Markup Tags
+settings-ignore-words-digits: Ignore Words with Digits
+
+settings-advanced:            Advanced
+settings-open-settings:       Settings
+settings-open-html-template:  HTML Template
+settings-open-dictionary:     User Dictionary
+settings-open-snippets:       Snippets
+settings-open-key-bindings:   Key Bindings
+
+=== Tooltips
+
+tooltip-f6:                   F6
+tooltip-f7:                   F7
+tooltip-f8:                   F8
+tooltip-f9:                   F9
+tooltip-f10:                  F10
+tooltip-alt-s:                Alt+S
+tooltip-ctrl-f7:              Ctrl+F7
+tooltip-ctrl-w:               Ctrl+W

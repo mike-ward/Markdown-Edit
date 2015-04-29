@@ -7,72 +7,73 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:MarkdownEdit.Controls"
              xmlns:p="clr-namespace:MarkdownEdit.Properties"
+             xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
              mc:Ignorable="d" 
              d:DesignHeight="1000" d:DesignWidth="400">
-    
-    <UserControl.Resources>
-        <Style x:Key="ToggleSwitchStyle"
-               TargetType="controls:ToggleSwitch">
-            <Setter Property="Foreground" Value="WhiteSmoke" />
-            <Setter Property="Height" Value="30" />
-        </Style>
 
-        <Style x:Key="SectionHeader"
+  <UserControl.Resources>
+    <Style x:Key="ToggleSwitchStyle"
+               TargetType="controls:ToggleSwitch">
+      <Setter Property="Foreground" Value="WhiteSmoke" />
+      <Setter Property="Height" Value="30" />
+    </Style>
+
+    <Style x:Key="SectionHeader"
                TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18" />
-            <Setter Property="Foreground" Value="WhiteSmoke"/>
-        </Style>
-        
-        <Style x:Key="SeparatorStyle"
+      <Setter Property="FontSize" Value="18" />
+      <Setter Property="Foreground" Value="WhiteSmoke"/>
+    </Style>
+
+    <Style x:Key="SeparatorStyle"
                TargetType="Separator">
-            <Setter Property="Margin" Value="0 3 0 5" /> 
-        </Style>
-        
-    </UserControl.Resources>
-    
-    <ScrollViewer>
-      <StackPanel Margin="10 0">
-          <TextBlock Style="{StaticResource SectionHeader}">Editor</TextBlock>
-          <Separator Style="{StaticResource SeparatorStyle}"/>
-          <StackPanel Margin="30 5">
-              <local:FontComboBox  x:Name="FontCombo" Margin="0 0 0 3" />
-              <controls:ToggleSwitch OffLabel="Word Wrap" OnLabel="Word Wrap" ToolTip="Ctrl+W" IsChecked="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Auto Save" OnLabel="Auto Save" ToolTip="Alt+S" IsChecked="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Line Numbers" OnLabel="Line Numbers" IsChecked="{Binding EditorShowLineNumbers}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Open Last File" OnLabel="Open Last File" IsChecked="{Binding EditorOpenLastFile}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Remember Cursor Postion" OnLabel="Remember Cursor Postion" IsChecked="{Binding EditorOpenLastCursorPosition}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Highlight Current Line" OnLabel="Highlight Current Line" IsChecked="{Binding EditorHighlightCurrentLine}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Show Vertical Scroll Bar" OnLabel="Show Vertical Scroll Bar" IsChecked="{Binding EditorVerticalScrollBarVisible}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Show Tabs" OnLabel="Show Tabs" IsChecked="{Binding EditorShowTabs}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Show Show Spaces" OnLabel="Show Spaces" IsChecked="{Binding EditorShowSpaces}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Show End of Line" OnLabel="Show End of Line" IsChecked="{Binding EditorShowEndOfLine}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Synchronize Scroll Positions" OnLabel="Synchronize Scroll Positions" IsChecked="{Binding SynchronizeScrollPositions}" Style="{StaticResource ToggleSwitchStyle}"/>
-          </StackPanel>
-        
-          <TextBlock Style="{StaticResource SectionHeader}">Spell Checking</TextBlock>
-          <Separator Style="{StaticResource SeparatorStyle}"/>
-          <StackPanel Margin="30 5">
-              <local:SpellingDictionaryComboBox Width="200" 
+      <Setter Property="Margin" Value="0 3 0 5" />
+    </Style>
+
+  </UserControl.Resources>
+
+  <ScrollViewer>
+    <StackPanel Margin="10 0">
+      <TextBlock Style="{StaticResource SectionHeader}">Editor</TextBlock>
+      <Separator Style="{StaticResource SeparatorStyle}"/>
+      <StackPanel Margin="30 5">
+        <local:FontComboBox  x:Name="FontCombo" Margin="0 0 0 3" />
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-word-wrap}" OnLabel="{i18N:Localize settings-word-wrap}" ToolTip="{i18N:Localize tooltip-ctrl-w}" IsChecked="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-auto-save}" OnLabel="{i18N:Localize settings-auto-save}" ToolTip="{i18N:Localize tooltip-alt-s}" IsChecked="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-line-numbers}" OnLabel="{i18N:Localize settings-line-numbers}" IsChecked="{Binding EditorShowLineNumbers}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-open-last-file}" OnLabel="{i18N:Localize settings-open-last-file}" IsChecked="{Binding EditorOpenLastFile}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-remember-cursor-pos}" OnLabel="{i18N:Localize settings-remember-cursor-pos}" IsChecked="{Binding EditorOpenLastCursorPosition}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-highlight-current}" OnLabel="{i18N:Localize settings-highlight-current}" IsChecked="{Binding EditorHighlightCurrentLine}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-show-scroll-bar}" OnLabel="{i18N:Localize settings-show-scroll-bar}" IsChecked="{Binding EditorVerticalScrollBarVisible}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-show-tabs}" OnLabel="{i18N:Localize settings-show-tabs}" IsChecked="{Binding EditorShowTabs}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-show-spaces}" OnLabel="{i18N:Localize settings-show-spaces}" IsChecked="{Binding EditorShowSpaces}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-show-end-of-line}" OnLabel="{i18N:Localize settings-show-end-of-line}" IsChecked="{Binding EditorShowEndOfLine}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-sync-scroll-pos}" OnLabel="{i18N:Localize settings-sync-scroll-pos}" IsChecked="{Binding SynchronizeScrollPositions}" Style="{StaticResource ToggleSwitchStyle}"/>
+      </StackPanel>
+
+      <TextBlock Style="{StaticResource SectionHeader}" Text="{i18N:Localize settings-spell-checking}" />
+      <Separator Style="{StaticResource SeparatorStyle}"/>
+      <StackPanel Margin="30 5">
+        <local:SpellingDictionaryComboBox Width="200" 
                                                 HorizontalAlignment="Left" 
                                                 SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                 Margin="0 0 0 3" />
-              <controls:ToggleSwitch OffLabel="Spell Checking" OnLabel="Spell Checking" ToolTip="Ctrl+F7" IsChecked="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Ignore All Caps" OnLabel="Ignore All Caps" IsChecked="{Binding SpellCheckIgnoreAllCaps}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Ignore Code Blocks" OnLabel="Ignore Code Blocks" IsChecked="{Binding SpellCheckIgnoreCodeBlocks}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Ignore Markup Tags" OnLabel="Ignore Markup Tags" IsChecked="{Binding SpellCheckIgnoreMarkupTags}" Style="{StaticResource ToggleSwitchStyle}"/>
-              <controls:ToggleSwitch OffLabel="Ignore Words with Digits" OnLabel="Ignore Words with Digits" IsChecked="{Binding SpellCheckIgnoreWordsWithDigits}" Style="{StaticResource ToggleSwitchStyle}"/>
-          </StackPanel>
-
-          <TextBlock Style="{StaticResource SectionHeader}">Advanced</TextBlock>
-          <Separator Style="{StaticResource SeparatorStyle}"/>
-          <UniformGrid Margin="30 5"
-                       Columns="2">
-              <Button Margin="3 2" ToolTip="F9" Command="{x:Static local:MainWindow.OpenUserSettingsCommand}">Settings</Button>
-              <Button Margin="3 2" ToolTip="F8" Command="{x:Static local:MainWindow.OpenUserTemplateCommand}">HTML Template</Button>
-              <Button Margin="3 2" ToolTip="F7" Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}">User Dictionary</Button>
-              <Button Margin="3 2" ToolTip="F6" Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}">Snippets</Button>
-              <Button Margin="3 2" ToolTip="F10" Command="{x:Static local:MainWindow.OpenKeybindingSettingsCommand}">Key Bindings</Button>
-          </UniformGrid>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-spell-checking}" OnLabel="{i18N:Localize settings-spell-checking}" ToolTip="{i18N:Localize tooltip-ctrl-f7}" IsChecked="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-ignore-all-caps}" OnLabel="{i18N:Localize settings-ignore-all-caps}" IsChecked="{Binding SpellCheckIgnoreAllCaps}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-ignore-code-blocks}" OnLabel="{i18N:Localize settings-ignore-code-blocks}" IsChecked="{Binding SpellCheckIgnoreCodeBlocks}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-ignore-markup}" OnLabel="{i18N:Localize settings-ignore-markup}" IsChecked="{Binding SpellCheckIgnoreMarkupTags}" Style="{StaticResource ToggleSwitchStyle}"/>
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-ignore-words-digits}" OnLabel="{i18N:Localize settings-ignore-words-digits}" IsChecked="{Binding SpellCheckIgnoreWordsWithDigits}" Style="{StaticResource ToggleSwitchStyle}"/>
       </StackPanel>
-    </ScrollViewer>
+
+      <TextBlock Style="{StaticResource SectionHeader}" Text="{i18N:Localize settings-advanced}" />
+      <Separator Style="{StaticResource SeparatorStyle}"/>
+      <UniformGrid Margin="30 5"
+                       Columns="2">
+        <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f9}" Command="{x:Static local:MainWindow.OpenUserSettingsCommand}" Content="{i18N:Localize settings-open-settings}" />
+        <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f8}" Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Content="{i18N:Localize settings-open-html-template}" />
+        <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f7}" Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Content="{i18N:Localize settings-open-dictionary}" />
+        <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f6}" Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}" Content="{i18N:Localize settings-open-snippets}" />
+        <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f10}" Command="{x:Static local:MainWindow.OpenKeybindingSettingsCommand}" Content="{i18N:Localize settings-open-key-bindings}" />
+      </UniformGrid>
+    </StackPanel>
+  </ScrollViewer>
 </UserControl>
