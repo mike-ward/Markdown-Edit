@@ -130,7 +130,6 @@
     </Compile>
     <Compile Include="Converters\BooleanToScrollBarVisibilityConverter.cs" />
     <Compile Include="Converters\NumberFormatConverter.cs" />
-    <Compile Include="i18n\Localize.cs" />
     <Compile Include="i18n\LocalizeExtension.cs" />
     <Compile Include="i18n\TranslationProvider.cs" />
     <Compile Include="ImageUpload\IImageUpload.cs" />
