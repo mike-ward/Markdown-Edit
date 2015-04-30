@@ -72,9 +72,22 @@ find-replace-replace:             Replace
 find-replace-replace-all:         Replace All
 find-replace-match-case:          Match case                                
 find-replace-match-whole-word:    Match whole word                                
-find-replace-regular-expression:  Regular expression                                
-find-replace-wildcards:           Wild cards                                
+find-replace-regular-expression:  Regular expression 
+find-replace-wildcards:           Wild cards
+
+=== Goto Line Dialog
+
+goto-line-title:                  Goto Line
+
+=== Image Drop Progress Dialog
+
+image-drop-insert-path:          Insert Path
+image-drop-upload-imgur:         Upload to Imgur
+
+=== Recent                                
                                   
+recent-files-title:              Recent Files
+
 === Tooltips                      
                                   
 tooltip-f6:                       F6
@@ -85,3 +98,8 @@ tooltip-f10:                      F10
 tooltip-alt-s:                    Alt+S
 tooltip-ctrl-f7:                  Ctrl+F7
 tooltip-ctrl-w:                   Ctrl+W
+
+=== Generic
+
+open:                             Open
+cancel:                           Cancel

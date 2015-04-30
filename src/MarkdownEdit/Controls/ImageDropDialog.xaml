@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:MarkdownEdit.Controls"
+        xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
         mc:Ignorable="d"
         ShowInTaskbar="False"
         WindowStyle="None"
@@ -37,19 +38,19 @@
         </ItemsPanelTemplate>
       </Menu.ItemsPanel>
 
-      <MenuItem Header="Insert Path" Click="OnInsertPath">
+      <MenuItem Header="{i18N:Localize image-drop-insert-path}" Click="OnInsertPath">
         <MenuItem.Icon>
           <Image Source="/Resources/add.png" Width="19" Height="19" />
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem x:Name="ImgurMenuItem" Header="Upload to Imgur" Click="OnUploadToImgur">
+      <MenuItem x:Name="ImgurMenuItem" Header="{i18N:Localize image-drop-upload-imgur}" Click="OnUploadToImgur">
         <MenuItem.Icon>
           <Image Source="/Resources/imgur.png" Width="19" Height="19" />
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem Header="Cancel" Click="OnCancel">
+      <MenuItem Header="{i18N:Localize cancel}" Click="OnCancel">
         <MenuItem.Icon>
           <Image Source="/Resources/error.png" Width="19" Height="19" />
         </MenuItem.Icon>
