@@ -39,7 +39,7 @@ namespace MarkdownEdit.Controls
                 .Select((f, i) => new RecentFile
                 {
                     FileName = f,
-                    DisplayName = string.Format("{0}: {1}", kb[i % kb.Length], f.StripOffsetFromFileName())
+                    DisplayName = $"{kb[i % kb.Length]}: {f.StripOffsetFromFileName()}"
                 }) ?? new RecentFile[0];
         }
 

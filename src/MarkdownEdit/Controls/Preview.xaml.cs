@@ -28,11 +28,15 @@ namespace MarkdownEdit.Controls
         {
             InitializeComponent();
             Browser.Navigate(UserTemplate.Load());
+            Loaded += OnLoaded;
             Unloaded += (sender, args) => _templateWatcher?.Dispose();
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
             UpdatePreview = Utility.Debounce<Editor>(editor => Dispatcher.InvokeAsync(() => Update(editor.Text)));
+        }
 
+        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
             Task.Factory.StartNew(() =>
             {
                 _templateWatcher = UserTemplate.TemplateFile.WatchFile(() => Dispatcher.Invoke(UpdateTemplate));
@@ -40,7 +44,7 @@ namespace MarkdownEdit.Controls
                 // kill popups
                 dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
                     BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                    null, Browser, new object[] {});
+                    null, Browser, new object[] { });
 
                 activeX.Silent = true;
             });

@@ -19,12 +19,11 @@ namespace MarkdownEdit.Controls
 
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
+            IsVisibleChanged -= OnIsVisibleChanged;
             var fontFamilyBinding = new Binding("EditorFontFamily") { Source = DataContext, Mode = BindingMode.TwoWay };
             FontCombo.SetBinding(FontComboBox.SelectedFontFamilyProperty, fontFamilyBinding);
-
             var fontSizeBinding = new Binding("EditorFontSize") { Source = DataContext, Mode = BindingMode.TwoWay };
             FontCombo.SetBinding(FontComboBox.SelectedFontSizeProperty, fontSizeBinding);
-            IsVisibleChanged -= OnIsVisibleChanged;
         }
 
         public void SaveState()

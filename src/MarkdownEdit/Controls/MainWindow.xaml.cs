@@ -77,6 +77,7 @@ namespace MarkdownEdit.Controls
             SpellCheckProvider = spellCheckProvider;
             SnippetManager = snippetManager;
             Closing += OnClosing;
+            Activated += OnActivated;
             IsVisibleChanged += OnIsVisibleChanged;
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor)s));
@@ -85,6 +86,13 @@ namespace MarkdownEdit.Controls
 
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
+            IsVisibleChanged -= OnIsVisibleChanged;
+            UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
+        }
+
+        private void OnActivated(object sender, EventArgs eventArgs)
+        {
+            Activated -= OnActivated;
             Dispatcher.InvokeAsync(() =>
             {
                 var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
@@ -94,8 +102,6 @@ namespace MarkdownEdit.Controls
                 LoadCommandLineOrLastFile();
                 Activate();
             });
-            UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
-            IsVisibleChanged -= OnIsVisibleChanged;
         }
 
         private void LoadCommandLineOrLastFile()

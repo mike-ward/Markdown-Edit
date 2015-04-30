@@ -41,8 +41,8 @@ namespace MarkdownEdit.Controls
 
         public Editor()
         {
-            DataContext = this;
             InitializeComponent();
+            DataContext = this;
             IsVisibleChanged += OnIsVisibleChanged;
             EditBox.Options.IndentationSize = 2;
             EditBox.Options.EnableHyperlinks = false;
@@ -53,15 +53,16 @@ namespace MarkdownEdit.Controls
             EditBox.TextChanged += EditBoxOnTextChanged;
             EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
             EditBox.PreviewKeyDown += (s, e) => _appsKeyDown = e.Key == Key.Apps && e.IsDown;
-            DataObject.AddPastingHandler(EditBox, OnPaste);
             _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
             SetupSyntaxHighlighting();
         }
 
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
+            IsVisibleChanged -= OnIsVisibleChanged;
             Dispatcher.InvokeAsync(() =>
             {
+                DataObject.AddPastingHandler(EditBox, OnPaste);
                 StyleScrollBar();
                 AllowImagePaste();
                 SetupIndentationCommandBinding();
@@ -74,7 +75,6 @@ namespace MarkdownEdit.Controls
                 ContextMenu = new ContextMenu();
                 ContextMenu.Items.Add(new MenuItem());
             });
-            IsVisibleChanged -= OnIsVisibleChanged;
         }
 
         private void StyleScrollBar()

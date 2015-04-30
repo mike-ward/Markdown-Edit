@@ -21,6 +21,7 @@ namespace MarkdownEdit
         private void OnStartup(object sender, StartupEventArgs ea)
         {
             InitializeSettings();
+            Activated += OnActivated;
 
             var container = TinyIoCContainer.Current;
             container.Register<IMarkdownConverter, CommonMarkConverter>();
@@ -41,14 +42,6 @@ namespace MarkdownEdit
 
             MainWindow = mainWindow;
             MainWindow.Show();
-
-            Task.Factory.StartNew(() =>
-            {
-                var spellingService = container.Resolve<ISpellingService>();
-                spellingService.Language = UserSettings.SpellCheckDictionary;
-                UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary)) spellingService.Language = UserSettings.SpellCheckDictionary; };
-                _userSettingsWatcher = UserSettings.SettingsFile.WatchFile(UserSettings.Update);
-            });
         }
 
         private void InitializeSettings()
@@ -65,6 +58,19 @@ namespace MarkdownEdit
 
             UserSettings = UserSettings.Load();
             if (UserSettings == null) Shutdown();
+        }
+
+        private void OnActivated(object sender, System.EventArgs ea)
+        {
+            Activated -= OnActivated;
+            Task.Factory.StartNew(() =>
+            {
+                var container = TinyIoCContainer.Current;
+                var spellingService = container.Resolve<ISpellingService>();
+                spellingService.Language = UserSettings.SpellCheckDictionary;
+                UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary)) spellingService.Language = UserSettings.SpellCheckDictionary; };
+                _userSettingsWatcher = UserSettings.SettingsFile.WatchFile(UserSettings.Update);
+            });
         }
 
         private void ApplicationExit(object sender, ExitEventArgs e)
