@@ -148,6 +148,13 @@
               <File Id="OpenSans_BoldItalic.ttf" KeyPath="yes" Source="..\MarkdownEdit\Fonts\OpenSans\OpenSans-BoldItalic.ttf" TrueType="yes" />
             </Component>
           </Directory>
+          <Directory Id="Languages" Name="Languages">
+            <Directory Id="en" Name="en">
+              <Component Id="lang_en_local.txt" Guid="{BF20B11B-CCB1-4866-907F-BEA29CA6BA87}">
+                <File Id="lang_en_local.txt" KeyPath="yes" Source="$(var.SourceFiles)\Languages\en\local.txt" />
+              </Component>
+            </Directory>
+          </Directory>
         </Directory>
       </Directory>
     </Directory>
@@ -204,6 +211,7 @@
       <ComponentRef Id="OpenSans_Bold.ttf" />
       <ComponentRef Id="OpenSans_Italic.ttf" />
       <ComponentRef Id="OpenSans_BoldItalic.ttf" />
+      <ComponentRef Id="lang_en_local.txt" />
     </ComponentGroup>
   </Product>
 </Wix>
