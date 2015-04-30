@@ -8,6 +8,7 @@ namespace MarkdownEdit.Controls
         public FontComboBox()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         public static readonly DependencyProperty SelectedFontFamilyProperty = DependencyProperty.Register(

@@ -18,18 +18,19 @@ namespace MarkdownEdit.Controls
         public ThemeDialog()
         {
             InitializeComponent();
-            Loaded += OnLoaded;
+            IsVisibleChanged += OnIsVisibleChanged;
             Closed += OnClosed;
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
+            IsVisibleChanged -= OnIsVisibleChanged;
             var assemblyFolder = Utility.AssemblyFolder();
             var path = Path.Combine(assemblyFolder, "Themes");
             var files = Directory.EnumerateFiles(path, "*.json");
             ThemeListBox.ItemsSource = files
                 .Select(LoadTheme)
-                .Select(t => new ListBoxItem {Tag = t, Content = t?.Name ?? "Not Loaded"});
+                .Select(t => new ListBoxItem { Tag = t, Content = t?.Name ?? "Not Loaded" });
 
             ThemeListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
             var theme = ThemeListBox.Items.Cast<ListBoxItem>().FirstOrDefault(li => ((Theme)li.Tag).Name == CurrentTheme.Name);

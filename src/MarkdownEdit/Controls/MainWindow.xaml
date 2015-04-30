@@ -17,7 +17,6 @@
   ResizeMode="CanResizeWithGrip"
   IgnoreTaskbarOnMaximize="True"
   WindowTransitionsEnabled="False"
-  DataContext="{Binding RelativeSource={RelativeSource Self}}"
   Background="{Binding Path=Theme.EditorBackground, Source={x:Static local:App.UserSettings}}"
   TextOptions.TextFormattingMode="Display"
   FocusManager.FocusedElement="{Binding ElementName=Editor}"

@@ -71,30 +71,31 @@ namespace MarkdownEdit.Controls
             ISpellCheckProvider spellCheckProvider,
             ISnippetManager snippetManager)
         {
+            DataContext = this;
             InitializeComponent();
             MarkdownConverter = markdownConverter;
             SpellCheckProvider = spellCheckProvider;
             SnippetManager = snippetManager;
-            Loaded += OnLoaded;
             Closing += OnClosing;
+            IsVisibleChanged += OnIsVisibleChanged;
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor)s));
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
-            App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(0); };
-            SizeChanged += (s, e) => updateMargins(0);
-            UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
-
             Dispatcher.InvokeAsync(() =>
             {
+                var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
+                App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(0); };
+                SizeChanged += (s, e) => updateMargins(0);
                 InputKeyBindingsSettings.Update();
                 LoadCommandLineOrLastFile();
                 Activate();
             });
+            UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
+            IsVisibleChanged -= OnIsVisibleChanged;
         }
 
         private void LoadCommandLineOrLastFile()

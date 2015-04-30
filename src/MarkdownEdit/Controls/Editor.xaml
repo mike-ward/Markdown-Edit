@@ -9,7 +9,6 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              ContextMenuOpening="EditorMenuOnContextMenuOpening"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              AllowDrop="True">
 
   <Border>

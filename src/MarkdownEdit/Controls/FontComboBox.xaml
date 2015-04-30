@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="300">
     <Grid>

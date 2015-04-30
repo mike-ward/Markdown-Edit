@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Data;
 using MarkdownEdit.Models;
 using MarkdownEdit.SpellCheck;
@@ -13,12 +14,17 @@ namespace MarkdownEdit.Controls
         {
             InitializeComponent();
             DataContext = App.UserSettings;
+            IsVisibleChanged += OnIsVisibleChanged;
+        }
 
-            var fontFamilyBinding = new Binding("EditorFontFamily") {Source = DataContext, Mode = BindingMode.TwoWay};
+        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var fontFamilyBinding = new Binding("EditorFontFamily") { Source = DataContext, Mode = BindingMode.TwoWay };
             FontCombo.SetBinding(FontComboBox.SelectedFontFamilyProperty, fontFamilyBinding);
 
-            var fontSizeBinding = new Binding("EditorFontSize") {Source = DataContext, Mode = BindingMode.TwoWay};
+            var fontSizeBinding = new Binding("EditorFontSize") { Source = DataContext, Mode = BindingMode.TwoWay };
             FontCombo.SetBinding(FontComboBox.SelectedFontSizeProperty, fontSizeBinding);
+            IsVisibleChanged -= OnIsVisibleChanged;
         }
 
         public void SaveState()

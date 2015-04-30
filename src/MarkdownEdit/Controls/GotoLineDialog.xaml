@@ -1,16 +1,15 @@
-﻿<controls:MetroWindow 
+﻿<controls:MetroWindow
   x:Class="MarkdownEdit.Controls.GotoLineDialog"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:local="clr-namespace:MarkdownEdit"
   xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
   xmlns:local1="clr-namespace:MarkdownEdit.Controls"
   mc:Ignorable="d"
   Title="Goto Line"
   WindowStyle="SingleBorderWindow"
-  SizeToContent="WidthAndHeight" 
+  SizeToContent="WidthAndHeight"
   ResizeMode="NoResize"
   ShowInTaskbar="False"
   WindowStartupLocation="CenterOwner"
@@ -19,8 +18,7 @@
   WindowTransitionsEnabled="False"
   ShowCloseButton="True"
   ShowMaxRestoreButton="False"
-  ShowMinButton="False"
-  >
+  ShowMinButton="False">
   <Grid Margin="10">
     <TextBox x:Name="Line"
              TabIndex="1">
@@ -29,7 +27,7 @@
       </TextBox.InputBindings>
     </TextBox>
   </Grid>
-  
+
   <Window.CommandBindings>
     <CommandBinding Command="Close" Executed="ExecuteClose" />
   </Window.CommandBindings>
@@ -37,5 +35,5 @@
   <controls:MetroWindow.InputBindings>
     <KeyBinding Gesture="Esc" Command="Close" />
   </controls:MetroWindow.InputBindings>
-  
+
 </controls:MetroWindow>

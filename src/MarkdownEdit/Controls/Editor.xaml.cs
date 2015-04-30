@@ -41,8 +41,9 @@ namespace MarkdownEdit.Controls
 
         public Editor()
         {
+            DataContext = this;
             InitializeComponent();
-            EditBox.Loaded += EditBoxOnLoaded;
+            IsVisibleChanged += OnIsVisibleChanged;
             EditBox.Options.IndentationSize = 2;
             EditBox.Options.EnableHyperlinks = false;
             EditBox.Options.ConvertTabsToSpaces = true;
@@ -57,7 +58,7 @@ namespace MarkdownEdit.Controls
             SetupSyntaxHighlighting();
         }
 
-        private void EditBoxOnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             Dispatcher.InvokeAsync(() =>
             {
@@ -73,6 +74,7 @@ namespace MarkdownEdit.Controls
                 ContextMenu = new ContextMenu();
                 ContextMenu.Items.Add(new MenuItem());
             });
+            IsVisibleChanged -= OnIsVisibleChanged;
         }
 
         private void StyleScrollBar()
