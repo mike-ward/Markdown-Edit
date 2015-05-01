@@ -8,10 +8,11 @@
            Manufacturer="Mike Ward" 
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
     
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited"  />
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
-
+    <SetProperty Id="ProgramFilesFolder" Value="[LocalAppDataFolder]" Before="CostFinalize"><![CDATA[NOT Privileged]]></SetProperty>
+    
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="Markdown Edit">
@@ -134,20 +135,6 @@
               <File Id="zenburn.json" KeyPath="yes" Source="$(var.SourceFiles)\Themes\zenburn.json" />
             </Component>
           </Directory>
-          <Directory Id="FontsFolder">
-            <Component Id="OpenSans_Regular.ttf" Guid="{D17B39B4-4D5E-44CC-BDDF-84EA5F0057A2}"  Permanent="yes">
-              <File Id="OpenSans_Regular.ttf" KeyPath="yes" Source="..\MarkdownEdit\Fonts\OpenSans\OpenSans-Regular.ttf" TrueType="yes" />
-            </Component>
-            <Component Id="OpenSans_Bold.ttf" Guid="{E8EFF7FB-E599-4EA6-9305-A3062BE4D366}" Permanent="yes">
-              <File Id="OpenSans_Bold.ttf" KeyPath="yes" Source="..\MarkdownEdit\Fonts\OpenSans\OpenSans-Bold.ttf" TrueType="yes" />
-            </Component>
-            <Component Id="OpenSans_Italic.ttf" Guid="{B532F53F-38DC-413A-A829-E3773BFFA1BF}" Permanent="yes">
-              <File Id="OpenSans_Italic.ttf" KeyPath="yes" Source="..\MarkdownEdit\Fonts\OpenSans\OpenSans-Italic.ttf" TrueType="yes" />
-            </Component>
-            <Component Id="OpenSans_BoldItalic.ttf" Guid="{6CF9260F-E67B-4C22-9F0F-0D945596FDE2}" Permanent="yes">
-              <File Id="OpenSans_BoldItalic.ttf" KeyPath="yes" Source="..\MarkdownEdit\Fonts\OpenSans\OpenSans-BoldItalic.ttf" TrueType="yes" />
-            </Component>
-          </Directory>
           <Directory Id="Languages" Name="Languages">
             <Directory Id="en" Name="en">
               <Component Id="lang_en_local.txt" Guid="{BF20B11B-CCB1-4866-907F-BEA29CA6BA87}">
@@ -160,7 +147,7 @@
     </Directory>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
-    <UIRef Id="WixUI_InstallDir" />
+    <UIRef Id="WixUI_Minimal" />
 
     <Property Id="SKIPFRAMEWORKCHECK" Value="0" />
     <PropertyRef Id="NETFRAMEWORK45"/>
@@ -207,10 +194,6 @@
       <ComponentRef Id="solarized_light.json" />
       <ComponentRef Id="the_blues.json" />
       <ComponentRef Id="zenburn.json" />
-      <ComponentRef Id="OpenSans_Regular.ttf" />
-      <ComponentRef Id="OpenSans_Bold.ttf" />
-      <ComponentRef Id="OpenSans_Italic.ttf" />
-      <ComponentRef Id="OpenSans_BoldItalic.ttf" />
       <ComponentRef Id="lang_en_local.txt" />
     </ComponentGroup>
   </Product>
