@@ -96,11 +96,11 @@ namespace MarkdownEdit.Controls
             Dispatcher.InvokeAsync(() =>
             {
                 var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
+                updateMargins(0);
                 App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(0); };
                 SizeChanged += (s, e) => updateMargins(0);
                 InputKeyBindingsSettings.Update();
                 LoadCommandLineOrLastFile();
-                Activate();
             });
         }
 
@@ -217,7 +217,7 @@ namespace MarkdownEdit.Controls
             Editor.ReplaceAll(tuple.Item1, tuple.Item2);
         }
 
-        private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e) => new Process {StartInfo = {FileName = Utility.ExecutingAssembly(), Arguments = "-n"}}.Start();
+        private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e) => new Process { StartInfo = { FileName = Utility.ExecutingAssembly(), Arguments = "-n" } }.Start();
 
         private void SetFocus(IInputElement control)
         {
@@ -242,7 +242,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteSaveTheme(object sender, ExecutedRoutedEventArgs e) => App.UserSettings.Save();
 
-        private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e) => new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme}.ShowDialog();
+        private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e) => new ThemeDialog { Owner = this, CurrentTheme = App.UserSettings.Theme }.ShowDialog();
 
         private Thickness CalculateEditorMargins()
         {
@@ -255,7 +255,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlTemplateToClipboard(Editor.Text, MarkdownConverter);
 
-        private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e) => new GotoLineDialog {Owner = this}.ShowDialog();
+        private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e) => new GotoLineDialog { Owner = this }.ShowDialog();
 
         private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
         {
