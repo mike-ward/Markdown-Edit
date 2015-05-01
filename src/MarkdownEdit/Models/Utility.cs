@@ -22,17 +22,31 @@ namespace MarkdownEdit.Models
             return key => cache.GetOrAdd(key, func);
         }
 
+        public static Action Debounce(this Action func, int milliseconds = 300)
+        {
+            var action = Debounce<int>(_ => func(), milliseconds);
+            return () => action(0);
+        }
+
         public static Action<T> Debounce<T>(this Action<T> func, int milliseconds = 300)
         {
-            var last = 0;
+            var last = long.MinValue;
             return arg =>
             {
-                var current = Interlocked.Increment(ref last);
-                Task.Delay(milliseconds).ContinueWith(task =>
+                try
                 {
-                    if (current == last) func(arg);
-                    task.Dispose();
-                });
+                    var current = Interlocked.Increment(ref last);
+                    Task.Delay(milliseconds).ContinueWith(task =>
+                    {
+                        // ReSharper disable once AccessToModifiedClosure
+                        if (current == last) func(arg);
+                        task.Dispose();
+                    });
+                }
+                catch (OverflowException)
+                {
+                    Interlocked.Exchange(ref last, long.MinValue);
+                }
             };
         }
 
@@ -83,7 +97,7 @@ namespace MarkdownEdit.Models
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
             if (element == null) return default(T);
-            if (element.GetType() == typeof (T)) return element as T;
+            if (element.GetType() == typeof(T)) return element as T;
             T foundElement = null;
             (element as FrameworkElement)?.ApplyTemplate();
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)

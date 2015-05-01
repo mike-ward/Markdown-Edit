@@ -95,10 +95,10 @@ namespace MarkdownEdit.Controls
             Activated -= OnActivated;
             Dispatcher.InvokeAsync(() =>
             {
-                var updateMargins = Utility.Debounce<int>(_ => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
-                updateMargins(0);
-                App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(0); };
-                SizeChanged += (s, e) => updateMargins(0);
+                var updateMargins = Utility.Debounce(() => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
+                App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(); };
+                SizeChanged += (s, e) => updateMargins();
+                updateMargins();
                 InputKeyBindingsSettings.Update();
                 LoadCommandLineOrLastFile();
             });
