@@ -162,7 +162,7 @@ namespace MarkdownEdit.Controls
             {
                 var files = e.Data.GetData(DataFormats.FileDrop) as string[];
                 if (files == null) return;
-                var imageExtensions = new[] {".jpg", "jpeg", ".png", ".gif"};
+                var imageExtensions = new[] { ".jpg", "jpeg", ".png", ".gif" };
 
                 if (imageExtensions.Any(ext => files[0].EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
                 {
@@ -231,18 +231,18 @@ namespace MarkdownEdit.Controls
             var contextMenu = new ContextMenu();
             SpellCheckSuggestions(contextMenu);
 
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-undo"), Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-redo"), Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y"});
+            contextMenu.Items.Add(new MenuItem { Header = TranslationProvider.Translate("editor-menu-undo"), Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z" });
+            contextMenu.Items.Add(new MenuItem { Header = TranslationProvider.Translate("editor-menu-redo"), Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y" });
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-cut"), Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-copy"), Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-paste"), Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-paste-special"), Command = PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-delete"), Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
+            contextMenu.Items.Add(new MenuItem { Header = TranslationProvider.Translate("editor-menu-cut"), Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X" });
+            contextMenu.Items.Add(new MenuItem { Header = TranslationProvider.Translate("editor-menu-copy"), Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C" });
+            contextMenu.Items.Add(new MenuItem { Header = TranslationProvider.Translate("editor-menu-paste"), Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V" });
+            contextMenu.Items.Add(new MenuItem { Header = TranslationProvider.Translate("editor-menu-paste-special"), Command = PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text" });
+            contextMenu.Items.Add(new MenuItem { Header = TranslationProvider.Translate("editor-menu-delete"), Command = ApplicationCommands.Delete, InputGestureText = "Delete" });
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-select-all"), Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-wrap-format"), Command = FormatCommand, InputGestureText = "Alt+F"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-unwrap-format"), Command = UnformatCommand, InputGestureText = "Alt+Shift+F"});
+            contextMenu.Items.Add(new MenuItem { Header = TranslationProvider.Translate("editor-menu-select-all"), Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A" });
+            contextMenu.Items.Add(new MenuItem { Header = TranslationProvider.Translate("editor-menu-wrap-format"), Command = FormatCommand, InputGestureText = "Alt+F" });
+            contextMenu.Items.Add(new MenuItem { Header = TranslationProvider.Translate("editor-menu-unwrap-format"), Command = UnformatCommand, InputGestureText = "Alt+Shift+F" });
 
             var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
@@ -271,7 +271,7 @@ namespace MarkdownEdit.Controls
                 var misspelledSegment = errorSegments.FirstOrDefault(segment => segment.StartOffset <= offset && segment.EndOffset >= offset);
                 if (misspelledSegment == null) return;
 
-                // check if the clicked offset is the beginning or end of line to prevent snapping to it 
+                // check if the clicked offset is the beginning or end of line to prevent snapping to it
                 // (like in text selection) with GetPositionFromPoint
                 // in practice makes context menu not show when clicking on the first character of a line
                 var currentLine = EditBox.Document.GetLineByOffset(offset);
@@ -443,7 +443,7 @@ namespace MarkdownEdit.Controls
                     NewFile();
                     return true;
                 }
-                var parts = file.Split(new[] {'|'}, 2);
+                var parts = file.Split(new[] { '|' }, 2);
                 var filename = parts[0];
                 var offset = ConvertToOffset(parts.Length == 2 ? parts[1] : "0");
                 EditBox.Text = File.ReadAllText(filename);
@@ -503,7 +503,7 @@ namespace MarkdownEdit.Controls
                 return;
             }
             _editorState.Save(this);
-            Text = Properties.Resources.Help;
+            Text = TranslationProvider.LoadHelp();
             EditBox.IsModified = false;
             DisplayName = "Help";
         }
@@ -624,7 +624,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty AutoSaveProperty = DependencyProperty.Register(
-            "AutoSave", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+            "AutoSave", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
 
         public bool AutoSave
         {
@@ -633,7 +633,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
+            "Theme", typeof(Theme), typeof(Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
 
         public Theme Theme
         {
@@ -644,11 +644,11 @@ namespace MarkdownEdit.Controls
         public static void ThemeChangedCallback(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
             var editor = (Editor)source;
-            editor.OnThemeChanged(new ThemeChangedEventArgs {Theme = editor.Theme});
+            editor.OnThemeChanged(new ThemeChangedEventArgs { Theme = editor.Theme });
         }
 
         public static readonly DependencyProperty VerticalScrollBarVisibilityProperty = DependencyProperty.Register(
-            "VerticalScrollBarVisibility", typeof (ScrollBarVisibility), typeof (Editor), new PropertyMetadata(default(ScrollBarVisibility)));
+            "VerticalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(Editor), new PropertyMetadata(default(ScrollBarVisibility)));
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
@@ -657,7 +657,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty ShowEndOfLineProperty = DependencyProperty.Register(
-            "ShowEndOfLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
+            "ShowEndOfLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
 
         private static void ShowEndOfLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -672,7 +672,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty ShowSpacesProperty = DependencyProperty.Register(
-            "ShowSpaces", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
+            "ShowSpaces", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
 
         private static void ShowSpacesChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -687,7 +687,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty ShowLineNumbersProperty = DependencyProperty.Register(
-            "ShowLineNumbers", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+            "ShowLineNumbers", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
 
         public bool ShowLineNumbers
         {
@@ -696,7 +696,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty ShowTabsProperty = DependencyProperty.Register(
-            "ShowTabs", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
+            "ShowTabs", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
 
         private static void ShowTabsChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
@@ -711,7 +711,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
-            "SpellCheckProvider", typeof (ISpellCheckProvider), typeof (Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckProviderPropertyChanged));
+            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckProviderPropertyChanged));
 
         private static void SpellCheckProviderPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
@@ -727,7 +727,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty HighlightCurrentLineProperty = DependencyProperty.Register(
-            "HighlightCurrentLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
+            "HighlightCurrentLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
 
         private static void HighlightCurrentLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
@@ -742,7 +742,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SnippetManagerProperty = DependencyProperty.Register(
-            "SnippetManager", typeof (ISnippetManager), typeof (Editor), new PropertyMetadata(default(ISnippetManager)));
+            "SnippetManager", typeof(ISnippetManager), typeof(Editor), new PropertyMetadata(default(ISnippetManager)));
 
         public ISnippetManager SnippetManager
         {
@@ -751,7 +751,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty WordWrapProperty = DependencyProperty.Register(
-            "WordWrap", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+            "WordWrap", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
 
         public bool WordWrap
         {
@@ -760,7 +760,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SpellCheckProperty = DependencyProperty.Register(
-            "SpellCheck", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), SpellCheckPropertyChanged));
+            "SpellCheck", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), SpellCheckPropertyChanged));
 
         private static void SpellCheckPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs ea)
         {
