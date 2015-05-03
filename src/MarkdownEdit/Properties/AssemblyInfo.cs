@@ -13,12 +13,10 @@ using System.Windows;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: NeutralResourcesLanguage("en-US")]
-
 [assembly: ThemeInfo(
-    ResourceDictionaryLocation.None, 
-    ResourceDictionaryLocation.SourceAssembly 
+    ResourceDictionaryLocation.None,
+    ResourceDictionaryLocation.SourceAssembly
     )]
-
-[assembly: AssemblyVersion("1.5.0.0")]
-[assembly: AssemblyFileVersion("1.5.0.0")]
+[assembly: AssemblyVersion("1.6.0.0")]
+[assembly: AssemblyFileVersion("1.6.0.0")]
 [assembly: Guid("A9A0AE86-ED91-498F-A9F9-DB669C9879CE")]

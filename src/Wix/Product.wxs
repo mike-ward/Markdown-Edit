@@ -4,7 +4,7 @@
   <Product Id="*" 
            Name="Markdown Edit" 
            Language="1033" 
-           Version="1.5.0.0" 
+           Version="1.6.0.0" 
            Manufacturer="Mike Ward" 
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
     
@@ -141,6 +141,9 @@
                 <Component Id="lang_en_local.txt" Guid="{BF20B11B-CCB1-4866-907F-BEA29CA6BA87}">
                   <File Id="lang_en_local.txt" KeyPath="yes" Source="$(var.SourceFiles)\Languages\en\local.txt" />
                 </Component>
+                <Component Id="lang_en_help.md" Guid="{44A06986-2122-4A83-8BD5-545EA64F7F0E}">
+                  <File Id="lang_en_help_md" KeyPath="yes" Source="$(var.SourceFiles)\Languages\en\help.md" />
+                </Component>
               </Directory>
             </Directory>
           </Directory>
@@ -197,6 +200,7 @@
       <ComponentRef Id="the_blues.json" />
       <ComponentRef Id="zenburn.json" />
       <ComponentRef Id="lang_en_local.txt" />
+      <ComponentRef Id="lang_en_help.md" />
     </ComponentGroup>
   </Product>
 </Wix>
