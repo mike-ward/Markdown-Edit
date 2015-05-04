@@ -70,8 +70,8 @@ namespace MarkdownEdit.Commands
         }
 
         private static void RenumberOrderedList(
-            IDocument document, 
-            DocumentLine line, 
+            IDocument document,
+            DocumentLine line,
             int number)
         {
             while ((line = line.NextLine) != null)

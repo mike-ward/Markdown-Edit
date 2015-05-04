@@ -12,6 +12,7 @@ namespace MarkdownEdit.Models
     public static class InputKeyBindingsSettings
     {
         private static FileSystemWatcher _keyBindingWatcher;
+
         public static string KeyBindingFile => Path.Combine(UserSettings.SettingsFolder, "key_bindings.json");
 
         private static InputKeyBindings Load()
@@ -50,7 +51,7 @@ namespace MarkdownEdit.Models
                 collection.Add(new KeyBinding(command, (KeyGesture)new KeyGestureConverter().ConvertFromString(gesture)));
 
             Action<ICommand, string, object> keyBindingPar = (command, gesture, parameter) =>
-                collection.Add(new KeyBinding(command, (KeyGesture)new KeyGestureConverter().ConvertFromString(gesture)) {CommandParameter = parameter});
+                collection.Add(new KeyBinding(command, (KeyGesture)new KeyGestureConverter().ConvertFromString(gesture)) { CommandParameter = parameter });
 
             keyBinding(EditingCommands.ToggleBold, mergedBindings.ToggleBold);
             keyBinding(EditingCommands.ToggleItalic, mergedBindings.ToggleItalic);

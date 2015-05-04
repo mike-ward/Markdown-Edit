@@ -48,7 +48,7 @@ namespace MarkdownEdit.Models
 
         public static string AddOffsetToFileName(this string file, int offset)
         {
-            return $"{file.StripOffsetFromFileName()}|{offset}"; 
+            return $"{file.StripOffsetFromFileName()}|{offset}";
         }
 
         public static string StripOffsetFromFileName(this string file)

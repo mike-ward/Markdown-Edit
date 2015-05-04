@@ -12,14 +12,14 @@ namespace MarkdownEdit.Models
         private double _header1Height = 1.0;
         private double _header2Height = 1.0;
 
-        private Highlight _highlightHeading = new Highlight {Name = "Heading", FontWeight = "bold"};
-        private Highlight _highlightEmphasis = new Highlight {Name = "Emphasis", FontStyle = "italic"};
-        private Highlight _highlightStrongEmphasis = new Highlight {Name = "StrongEmphasis", FontWeight = "bold"};
-        private Highlight _highlightInlineCode = new Highlight {Name = "InlineCode", Foreground = "#333", Background = "#ebeff3"};
-        private Highlight _highlightBlockCode = new Highlight {Name = "BlockCode", Foreground = "#654"};
-        private Highlight _highlightBlockQuote = new Highlight {Name = "BlockQuote", Foreground = "#654"};
-        private Highlight _highlightLink = new Highlight {Name = "Link", Foreground = "#654", Underline = true};
-        private Highlight _highlightImage = new Highlight {Name = "Image", Foreground = "#654", FontWeight = "bold"};
+        private Highlight _highlightHeading = new Highlight { Name = "Heading", FontWeight = "bold" };
+        private Highlight _highlightEmphasis = new Highlight { Name = "Emphasis", FontStyle = "italic" };
+        private Highlight _highlightStrongEmphasis = new Highlight { Name = "StrongEmphasis", FontWeight = "bold" };
+        private Highlight _highlightInlineCode = new Highlight { Name = "InlineCode", Foreground = "#333", Background = "#ebeff3" };
+        private Highlight _highlightBlockCode = new Highlight { Name = "BlockCode", Foreground = "#654" };
+        private Highlight _highlightBlockQuote = new Highlight { Name = "BlockQuote", Foreground = "#654" };
+        private Highlight _highlightLink = new Highlight { Name = "Link", Foreground = "#654", Underline = true };
+        private Highlight _highlightImage = new Highlight { Name = "Image", Foreground = "#654", FontWeight = "bold" };
 
         public string Name
         {

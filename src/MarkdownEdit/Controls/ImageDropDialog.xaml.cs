@@ -17,7 +17,9 @@ namespace MarkdownEdit.Controls
     public partial class ImageDropDialog : INotifyPropertyChanged
     {
         public TextEditor TextEditor { get; set; }
+
         public DragEventArgs DragEventArgs { get; set; }
+
         private bool _canceled;
         private byte[] _image;
 

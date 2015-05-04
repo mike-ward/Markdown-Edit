@@ -11,7 +11,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
-            "SpellCheckProvider", typeof (ISpellCheckProvider), typeof (SpellingDictionaryComboBox), new PropertyMetadata(default(ISpellCheckProvider),
+            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(SpellingDictionaryComboBox), new PropertyMetadata(default(ISpellCheckProvider),
                 (o, args) =>
                 {
                     var scb = (SpellingDictionaryComboBox)o;

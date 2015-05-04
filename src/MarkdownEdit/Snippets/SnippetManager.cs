@@ -67,8 +67,8 @@ namespace MarkdownEdit.Snippets
             foreach (var token in replaceable.Split(expanded))
             {
                 if (token == "$END$") snippet.Elements.Add(new SnippetCaretElement());
-                else if (replaceable.IsMatch(token)) snippet.Elements.Add(new SnippetReplaceableTextElement {Text = token.Trim('$')});
-                else snippet.Elements.Add(new SnippetTextElement {Text = token});
+                else if (replaceable.IsMatch(token)) snippet.Elements.Add(new SnippetReplaceableTextElement { Text = token.Trim('$') });
+                else snippet.Elements.Add(new SnippetTextElement { Text = token });
             }
 
             return snippet;

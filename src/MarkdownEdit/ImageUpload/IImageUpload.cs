@@ -8,7 +8,7 @@ namespace MarkdownEdit.ImageUpload
     public interface IImageUpload
     {
         Task<string> UploadBytesAsync(
-            byte[] imageBytes, 
+            byte[] imageBytes,
             UploadProgressChangedEventHandler progress = null,
             UploadValuesCompletedEventHandler completed = null);
     }

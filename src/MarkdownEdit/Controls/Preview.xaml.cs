@@ -12,9 +12,9 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using CommonMark;
 using HtmlAgilityPack;
-using mshtml;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
+using mshtml;
 
 namespace MarkdownEdit.Controls
 {
@@ -192,7 +192,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty MarkdownConverterProperty = DependencyProperty.Register(
-            "MarkdownConverter", typeof (IMarkdownConverter), typeof (Preview), new PropertyMetadata(default(IMarkdownConverter)));
+            "MarkdownConverter", typeof(IMarkdownConverter), typeof(Preview), new PropertyMetadata(default(IMarkdownConverter)));
 
         public IMarkdownConverter MarkdownConverter
         {

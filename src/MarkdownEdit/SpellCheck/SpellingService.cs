@@ -39,8 +39,9 @@ namespace MarkdownEdit.SpellCheck
         public string Language
         {
             get { return _language; }
-            set { SetLanguage(value);}
+            set { SetLanguage(value); }
         }
+
         private void SetLanguage(string language)
         {
             ClearLanguage();
@@ -91,7 +92,7 @@ namespace MarkdownEdit.SpellCheck
         private void UpdateCustomDictionary(string word)
         {
             var file = CustomDictionaryFile();
-            File.AppendAllLines(file, new[] {word});
+            File.AppendAllLines(file, new[] { word });
         }
     }
 }

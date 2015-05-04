@@ -22,7 +22,7 @@ namespace MarkdownEdit.Models
             ms.Read(dibBuffer, 0, dibBuffer.Length);
 
             var infoHeader = BinaryStructConverter.FromByteArray<BITMAPINFOHEADER>(dibBuffer);
-            var fileHeaderSize = Marshal.SizeOf(typeof (BITMAPFILEHEADER));
+            var fileHeaderSize = Marshal.SizeOf(typeof(BITMAPFILEHEADER));
             var infoHeaderSize = infoHeader.biSize;
             var fileSize = fileHeaderSize + infoHeader.biSize + infoHeader.biSizeImage;
 
@@ -104,10 +104,10 @@ namespace MarkdownEdit.Models
                 var ptr = IntPtr.Zero;
                 try
                 {
-                    var size = Marshal.SizeOf(typeof (T));
+                    var size = Marshal.SizeOf(typeof(T));
                     ptr = Marshal.AllocHGlobal(size);
                     Marshal.Copy(bytes, 0, ptr, size);
-                    var obj = Marshal.PtrToStructure(ptr, typeof (T));
+                    var obj = Marshal.PtrToStructure(ptr, typeof(T));
                     return (T)obj;
                 }
                 finally
@@ -121,7 +121,7 @@ namespace MarkdownEdit.Models
                 var ptr = IntPtr.Zero;
                 try
                 {
-                    var size = Marshal.SizeOf(typeof (T));
+                    var size = Marshal.SizeOf(typeof(T));
                     ptr = Marshal.AllocHGlobal(size);
                     Marshal.StructureToPtr(obj, ptr, true);
                     var bytes = new byte[size];

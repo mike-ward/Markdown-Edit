@@ -27,7 +27,7 @@ namespace UnitTests.Models
         [TestMethod]
         public void SeparateFrontMatterTest()
         {
-            const string text = 
+            const string text =
 @"---
 layout: page
 title:  Downloads

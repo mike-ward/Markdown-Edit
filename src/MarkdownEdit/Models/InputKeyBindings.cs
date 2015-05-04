@@ -250,6 +250,7 @@ namespace MarkdownEdit.Models
         }
 
         private string _exporthtmlcommand = "ctrl+e";
+
         public string ExportHtml
         {
             get { return _exporthtmlcommand; }
@@ -257,6 +258,7 @@ namespace MarkdownEdit.Models
         }
 
         private string _exporthtmltemplatecommand = "ctrl+shift+e";
+
         public string ExportHtmlTemplate
         {
             get { return _exporthtmltemplatecommand; }

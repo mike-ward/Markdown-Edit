@@ -13,6 +13,7 @@ namespace MarkdownEdit.Controls
     public class RecentFile
     {
         public string FileName { get; set; }
+
         public string DisplayName { get; set; }
 
         public override string ToString()

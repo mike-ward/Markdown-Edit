@@ -5,6 +5,7 @@ namespace MarkdownEdit.Models
     internal struct EditorState
     {
         public bool StateSaved { get; private set; }
+
         private string _text;
         private bool _isModified;
         private bool _wordWrap;

@@ -12,7 +12,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SelectedFontFamilyProperty = DependencyProperty.Register(
-            "SelectedFontFamily", typeof (FontFamily), typeof (FontComboBox), new PropertyMetadata(default(FontFamily)));
+            "SelectedFontFamily", typeof(FontFamily), typeof(FontComboBox), new PropertyMetadata(default(FontFamily)));
 
         public FontFamily SelectedFontFamily
         {
@@ -21,7 +21,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SelectedFontSizeProperty = DependencyProperty.Register(
-            "SelectedFontSize", typeof (double), typeof (FontComboBox), new PropertyMetadata(default(double)));
+            "SelectedFontSize", typeof(double), typeof(FontComboBox), new PropertyMetadata(default(double)));
 
         public double SelectedFontSize
         {

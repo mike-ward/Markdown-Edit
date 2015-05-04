@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Data;
 using MarkdownEdit.Models;
 using MarkdownEdit.SpellCheck;
@@ -41,7 +40,7 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
-            "SpellCheckProvider", typeof (ISpellCheckProvider), typeof (DisplaySettings), new PropertyMetadata(default(ISpellCheckProvider)));
+            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(DisplaySettings), new PropertyMetadata(default(ISpellCheckProvider)));
 
         public ISpellCheckProvider SpellCheckProvider
         {

@@ -13,6 +13,7 @@ namespace MarkdownEdit.Controls
     public partial class ThemeDialog
     {
         private bool _saved;
+
         public Theme CurrentTheme { get; set; }
 
         public ThemeDialog()
