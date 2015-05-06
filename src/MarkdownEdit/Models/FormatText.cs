@@ -39,10 +39,12 @@ namespace MarkdownEdit.Models
 
         private static ProcessStartInfo PandocInfo()
         {
+            const string extensions = "+fenced_code_blocks+backtick_code_blocks+intraword_underscores";
+
             return new ProcessStartInfo
             {
                 FileName = "pandoc.exe",
-                Arguments = "-f markdown_strict -t markdown_strict",
+                Arguments = $"-f markdown_strict{extensions} -t markdown_strict{extensions}",
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
