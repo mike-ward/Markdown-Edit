@@ -335,13 +335,13 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
         {
-            var text = FormatText.Wrap(EditBox.Document.Text);
+            var text = ConvertText.Wrap(EditBox.Document.Text);
             if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
         });
 
         private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
         {
-            var text = FormatText.Unwrap(EditBox.Document.Text);
+            var text = ConvertText.Unwrap(EditBox.Document.Text);
             if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
         });
 
@@ -446,6 +446,15 @@ namespace MarkdownEdit.Controls
                 var parts = file.Split(new[] { '|' }, 2);
                 var filename = parts[0];
                 var offset = ConvertToOffset(parts.Length == 2 ? parts[1] : "0");
+                var isWordDoc = Path.GetExtension(filename).Equals(".docx", StringComparison.OrdinalIgnoreCase);
+
+                if (isWordDoc)
+                {
+                    NewFile();
+                    EditBox.Text = ConvertText.FromMicrosoftWord(filename);
+                    return true;
+                }
+
                 EditBox.Text = File.ReadAllText(filename);
 
                 if (App.UserSettings.EditorOpenLastCursorPosition)
