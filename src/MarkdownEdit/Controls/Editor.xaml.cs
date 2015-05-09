@@ -333,17 +333,21 @@ namespace MarkdownEdit.Controls
             e.CanExecute = !EditBox.IsReadOnly;
         }
 
-        private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
+        private void FormatTextHandler(Func<string, string> converter)
         {
-            var text = ConvertText.Wrap(EditBox.Document.Text);
-            if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
-        });
+            var isSelectedText = !string.IsNullOrEmpty(EditBox.SelectedText);
+            var originalText = isSelectedText ? EditBox.SelectedText : EditBox.Document.Text;
+            var formattedText = converter(originalText);
+            if (string.CompareOrdinal(formattedText, originalText) != 0)
+            {
+                if (isSelectedText) EditBox.SelectedText = formattedText;
+                else EditBox.Document.Text = formattedText;
+            }
+        }
 
-        private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() =>
-        {
-            var text = ConvertText.Unwrap(EditBox.Document.Text);
-            if (string.CompareOrdinal(text, EditBox.Document.Text) != 0) EditBox.Document.Text = text;
-        });
+        private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => FormatTextHandler(ConvertText.Wrap));
+
+        private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => FormatTextHandler(ConvertText.Unwrap));
 
         public void NewFile() => Execute(() =>
         {
