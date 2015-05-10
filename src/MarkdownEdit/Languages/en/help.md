@@ -288,8 +288,10 @@ Limitations
 About
 -----
 
-Version 1.6.0\\ Home Page: <http://mike-ward.net/markdownedit>\\ Twitter:
-`@mikeward_aa`\\ Source: <https://github.com/mike-ward/Markdown-Edit>
+Version 1.7.0  
+Home Page: <http://mike-ward.net/markdownedit>  
+Twitter: `@mikeward_aa` 
+Source: <https://github.com/mike-ward/Markdown-Edit>
 
 Markdown Edit License
 ---------------------
