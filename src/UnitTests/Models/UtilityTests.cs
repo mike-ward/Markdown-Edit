@@ -40,5 +40,22 @@ A Windows Desktop Markdown Editor[Read more...](/ markdownedit)";
             tuple.Item1.Should().EndWith("---\r\n\r\n");
             tuple.Item2.Should().StartWith("###");
         }
+
+        [TestMethod]
+        public void SuggestTitleTest()
+        {
+            const string text =
+@"---
+layout: page
+title:  ""Friday Links #357""
+---
+
+### (a.k.a. The Goods)
+A Windows Desktop Markdown Editor[Read more...](/ markdownedit)";
+
+            var match = DateTime.Now.ToString("yyyy-MM-dd-") + "friday-links-357";
+            var title = Utility.SuggestFilenameFromTitle(text);
+            title.Should().Be(match);
+        }
     }
 }

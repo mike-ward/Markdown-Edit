@@ -94,6 +94,18 @@ namespace MarkdownEdit.Models
             return Tuple.Create(string.Empty, text);
         }
 
+        public static string SuggestFilenameFromTitle(string text)
+        {
+            var result = SeperateFrontMatter(text);
+            if (string.IsNullOrEmpty(result.Item1)) return string.Empty;
+            var pattern = new Regex(@"title:\s*(.+)", RegexOptions.Multiline);
+            var match = pattern.Match(text);
+            var title = match.Success ? match.Groups[1].Value : string.Empty;
+            if (string.IsNullOrEmpty(title)) return string.Empty;
+            var filename = DateTime.Now.ToString("yyyy-MM-dd-") + title.ToSlug(true);
+            return filename;
+        }
+
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
             if (element == null) return default(T);

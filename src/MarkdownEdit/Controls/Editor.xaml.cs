@@ -427,6 +427,7 @@ namespace MarkdownEdit.Controls
                 FilterIndex = 0,
                 OverwritePrompt = true,
                 RestoreDirectory = true,
+                FileName = Utility.SuggestFilenameFromTitle(EditBox.Text),
                 Filter = @"Markdown files (*.md)|*.md|All files (*.*)|*.*"
             };
 
