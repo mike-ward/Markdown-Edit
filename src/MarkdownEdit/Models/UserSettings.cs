@@ -29,6 +29,7 @@ namespace MarkdownEdit.Models
         private bool _spellCheckIgnoreMarkupTags = true;
         private bool _spellCheckIgnoreWordsWithDigits = true;
         private int _singlePaneMargin = 4;
+        private bool _ignoreTaskbarOnMaximize = true;
 
         public string EditorFontFamily
         {
@@ -136,6 +137,12 @@ namespace MarkdownEdit.Models
         {
             get { return _singlePaneMargin; }
             set { Set(ref _singlePaneMargin, value); }
+        }
+
+        public bool IgnoreTaskbarOnMaximize
+        {
+            get { return _ignoreTaskbarOnMaximize; }
+            set { Set(ref _ignoreTaskbarOnMaximize, value); }
         }
 
         public Theme Theme

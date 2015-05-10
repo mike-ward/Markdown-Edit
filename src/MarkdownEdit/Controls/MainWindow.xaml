@@ -15,7 +15,7 @@
   WindowTitleBrush="{StaticResource GrayBrush2}"
   GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="CanResizeWithGrip"
-  IgnoreTaskbarOnMaximize="True"
+  IgnoreTaskbarOnMaximize="{Binding Path=IgnoreTaskbarOnMaximize, Source={x:Static local:App.UserSettings}}"
   WindowTransitionsEnabled="False"
   Background="{Binding Path=Theme.EditorBackground, Source={x:Static local:App.UserSettings}}"
   TextOptions.TextFormattingMode="Display"
@@ -38,7 +38,7 @@
         </Trigger>
       </Style.Triggers>
     </Style>
-      
+
     <Style x:Key="CommandWindowButtonStyle"
             TargetType="Button"
             BasedOn="{StaticResource MetroBaseWindowButtonStyle}">
@@ -49,7 +49,6 @@
         </Trigger>
       </Style.Triggers>
     </Style>
-    
   </metrocontrols:MetroWindow.Resources>
 
   <metrocontrols:MetroWindow.RightWindowCommands>
