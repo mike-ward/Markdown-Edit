@@ -137,7 +137,7 @@ namespace MarkdownEdit.Models
 
             if (!string.IsNullOrWhiteSpace(highlight.FontWeight) || !string.IsNullOrWhiteSpace(highlight.FontStyle))
             {
-                var tf = element.TextRunProperties.Typeface;
+                var tf = trp.Typeface;
                 var weight = ConvertFontWeight(highlight.FontWeight) ?? tf.Weight;
                 var style = ConvertFontStyle(highlight.FontStyle) ?? tf.Style;
                 var typeFace = new Typeface(tf.FontFamily, style, weight, tf.Stretch);
