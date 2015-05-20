@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Editing;
 
 namespace MarkdownEdit.Models
 {
@@ -147,6 +149,26 @@ namespace MarkdownEdit.Models
         {
             Utility.Beep();
             return false;
+        }
+
+        public static void MoveLineUp(TextArea textArea)
+        {
+            var line = textArea.Caret.Line;
+            if (line == 1) return;
+
+            var documentLine = textArea.Document.GetLineByNumber(line);
+            var documentLinePrevious = documentLine.PreviousLine;
+
+            var text = textArea.Document.GetText(documentLine);
+            var previousText = textArea.Document.GetText(documentLinePrevious);
+
+            textArea.Document.Remove(documentLine);
+            textArea.Document.Remove(documentLinePrevious);
+
+            textArea.Document.Insert(documentLinePrevious.Offset, text);
+            textArea.Document.Insert(documentLine.Offset, previousText);
+
+            textArea.Caret.Line = line - 1;
         }
     }
 }

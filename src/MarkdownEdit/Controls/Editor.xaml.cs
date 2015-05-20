@@ -38,6 +38,7 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand PasteSpecialCommand = new RoutedCommand();
         public static RoutedCommand FindNextCommand = new RoutedCommand();
         public static RoutedCommand FindPreviousCommand = new RoutedCommand();
+        public static RoutedCommand MoveLineUpCommand = new RoutedCommand();
 
         public Editor()
         {
@@ -543,6 +544,8 @@ namespace MarkdownEdit.Controls
         public void Italic() => Execute(() => EditBox.AddRemoveText("*"));
 
         public void Code() => Execute(() => EditBox.AddRemoveText("`"));
+
+        public void ExecuteMoveLineUp(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.MoveLineUp(EditBox.TextArea));
 
         public void InsertHeader(int num) => Execute(() =>
         {

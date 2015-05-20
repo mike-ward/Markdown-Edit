@@ -42,6 +42,7 @@
     <CommandBinding Command="{x:Static controls:Editor.DeselectCommand}" Executed="ExecuteDeselectCommand" />
     <CommandBinding Command="{x:Static controls:Editor.FormatCommand}" Executed="ExecuteFormatText" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.UnformatCommand}" Executed="ExecuteUnformatText" CanExecute="CanExecute" />
+    <CommandBinding Command="{x:Static controls:Editor.MoveLineUpCommand}" Executed="ExecuteMoveLineUp" CanExecute="CanExecute" />
   </UserControl.CommandBindings>
 
   <UserControl.InputBindings>
@@ -51,5 +52,6 @@
     <KeyBinding Command="{x:Static controls:Editor.DeselectCommand}" Gesture="Esc" />
     <KeyBinding Command="{x:Static controls:Editor.FormatCommand}" Gesture="Alt+F" />
     <KeyBinding Command="{x:Static controls:Editor.UnformatCommand}" Gesture="Alt+Shift+F" />
+    <KeyBinding Command="{x:Static controls:Editor.MoveLineUpCommand}" Gesture="Ctrl+L"></KeyBinding>
   </UserControl.InputBindings>
 </UserControl>

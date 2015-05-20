@@ -1,0 +1,14 @@
+﻿<Popup x:Class="MarkdownEdit.Controls.ImagePopup"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       IsOpen="False"
+       Placement="Mouse"
+       AllowsTransparency="True"
+       mc:Ignorable="d"
+       Height="300" Width="300">
+  <Border Background="Transparent">
+    <Image x:Name="_image" MaxWidth="500" />
+  </Border>
+</Popup>

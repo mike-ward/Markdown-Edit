@@ -99,7 +99,6 @@ namespace MarkdownEdit.Controls
                 App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(); };
                 SizeChanged += (s, e) => updateMargins();
                 updateMargins();
-                InputKeyBindingsSettings.Update();
                 LoadCommandLineOrLastFile();
             });
         }
@@ -168,7 +167,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(UserSettings.SettingsFile);
 
-        private void ExecuteOpenKeybindingSettingsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(InputKeyBindingsSettings.KeyBindingFile);
+        private void ExecuteOpenKeybindingSettingsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.Beep(); //Utility.EditFile(InputKeyBindingsSettings.KeyBindingFile);
 
         private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(UserTemplate.TemplateFile);
 
