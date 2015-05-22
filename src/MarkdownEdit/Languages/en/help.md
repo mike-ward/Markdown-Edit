@@ -47,7 +47,6 @@ Keyboard Shortcuts
     F7             Open user dictionary in Notepad
     F8             Open HTML template in Notepad
     F9             Open settings in Notepad
-    F10            Open keybind settings in Notepad
 
     Ctrl+B         Bold selection / no selection insert **
     Ctrl+I         Italic selection / no selection insert *
@@ -288,7 +287,7 @@ Limitations
 About
 -----
 
-Version 1.7.0  
+Version 1.8.0  
 Home Page: <http://mike-ward.net/markdownedit>  
 Twitter: `@mikeward_aa` 
 Source: <https://github.com/mike-ward/Markdown-Edit>

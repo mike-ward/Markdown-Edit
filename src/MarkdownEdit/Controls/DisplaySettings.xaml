@@ -71,7 +71,6 @@
         <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f8}" Command="{x:Static local:MainWindow.OpenUserTemplateCommand}" Content="{i18N:Localize settings-open-html-template}" />
         <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f7}" Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Content="{i18N:Localize settings-open-dictionary}" />
         <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f6}" Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}" Content="{i18N:Localize settings-open-snippets}" />
-        <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f10}" Command="{x:Static local:MainWindow.OpenKeybindingSettingsCommand}" Content="{i18N:Localize settings-open-key-bindings}" />
       </UniformGrid>
     </StackPanel>
   </ScrollViewer>

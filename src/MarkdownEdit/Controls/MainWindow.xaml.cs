@@ -23,7 +23,6 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand InsertHeaderCommand = new RoutedCommand();
         public static RoutedCommand RestoreFontSizeCommand = new RoutedCommand();
         public static RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
-        public static RoutedCommand OpenKeybindingSettingsCommand = new RoutedCommand();
         public static RoutedCommand OpenUserTemplateCommand = new RoutedCommand();
         public static RoutedCommand OpenUserDictionaryCommand = new RoutedCommand();
         public static RoutedCommand OpenUserSnippetsCommand = new RoutedCommand();
