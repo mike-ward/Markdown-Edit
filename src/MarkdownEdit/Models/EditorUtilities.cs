@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
 using ICSharpCode.AvalonEdit;
 
@@ -16,8 +17,9 @@ namespace MarkdownEdit.Models
 
             var startOffset = offset;
             var endOffset = offset;
-            while (startOffset > 0 && IsWordPart(editor.Document.GetCharAt(startOffset - 1))) startOffset -= 1;
-            while (endOffset < editor.Document.TextLength - 1 && IsWordPart(editor.Document.GetCharAt(endOffset + 1))) endOffset += 1;
+            var document = editor.Document;
+            while (startOffset > 0 && IsWordPart(document.GetCharAt(startOffset - 1))) startOffset -= 1;
+            while (endOffset < document.TextLength - 1 && IsWordPart(document.GetCharAt(endOffset + 1))) endOffset += 1;
             editor.Select(startOffset, endOffset - startOffset + 1);
         }
 
@@ -202,6 +204,35 @@ namespace MarkdownEdit.Models
                 document.Insert(documentLine.Offset, nextText);
 
                 textArea.Caret.Line = line + 1;
+            }
+            finally
+            {
+                textEditor.EndChange();
+            }
+        }
+
+        public static void ConvertSelectionToList(TextEditor textEditor)
+        {
+            var selection = textEditor.TextArea.Selection;
+            var start = selection.StartPosition.Line;
+            if (start == 0) return;
+            var end = selection.EndPosition.Line;
+            var document = textEditor.Document;
+            var startsWith = new Regex(@"\s*[-|\*|\+]\s{1,4}");
+
+            textEditor.BeginChange();
+            try
+            {
+                foreach (var l in Enumerable.Range(start, end - start + 1))
+                {
+                    var line = document.GetLineByNumber(l);
+                    var text = document.GetText(line);
+                    if (string.IsNullOrWhiteSpace(text) == false && startsWith.IsMatch(text) == false)
+                    {
+                        var indexOfFirstChar = text.TakeWhile(char.IsWhiteSpace).Count();
+                        document.Insert(line.Offset + indexOfFirstChar, "- ");
+                    }
+                }
             }
             finally
             {
