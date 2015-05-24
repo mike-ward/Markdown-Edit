@@ -166,8 +166,6 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(UserSettings.SettingsFile);
 
-        private void ExecuteOpenKeybindingSettingsCommand(object sender, ExecutedRoutedEventArgs e) => Utility.Beep(); //Utility.EditFile(InputKeyBindingsSettings.KeyBindingFile);
-
         private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e) => Utility.EditFile(UserTemplate.TemplateFile);
 
         private void ExecuteOpenUserDictionaryCommand(object sender, ExecutedRoutedEventArgs e) => Editor.OpenUserDictionary();
