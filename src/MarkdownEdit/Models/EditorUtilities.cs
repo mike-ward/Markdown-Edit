@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Editing;
 
 namespace MarkdownEdit.Models
 {
@@ -151,24 +149,64 @@ namespace MarkdownEdit.Models
             return false;
         }
 
-        public static void MoveLineUp(TextArea textArea)
+        public static void MoveCurrentLineUp(TextEditor textEditor)
         {
+            var textArea = textEditor.TextArea;
+            var document = textEditor.Document;
             var line = textArea.Caret.Line;
             if (line == 1) return;
 
-            var documentLine = textArea.Document.GetLineByNumber(line);
+            var documentLine = document.GetLineByNumber(line);
             var documentLinePrevious = documentLine.PreviousLine;
 
             var text = textArea.Document.GetText(documentLine);
             var previousText = textArea.Document.GetText(documentLinePrevious);
 
-            textArea.Document.Remove(documentLine);
-            textArea.Document.Remove(documentLinePrevious);
+            textEditor.BeginChange();
+            try
+            {
+                document.Remove(documentLine);
+                document.Remove(documentLinePrevious);
 
-            textArea.Document.Insert(documentLinePrevious.Offset, text);
-            textArea.Document.Insert(documentLine.Offset, previousText);
+                document.Insert(documentLinePrevious.Offset, text);
+                document.Insert(documentLine.Offset, previousText);
 
-            textArea.Caret.Line = line - 1;
+                textArea.Caret.Line = line - 1;
+            }
+            finally
+            {
+                textEditor.EndChange();
+            }
+        }
+
+        public static void MoveCurrentLineDown(TextEditor textEditor)
+        {
+            var textArea = textEditor.TextArea;
+            var document = textEditor.Document;
+            var line = textArea.Caret.Line;
+            if (line == textEditor.LineCount) return;
+
+            var documentLine = document.GetLineByNumber(line);
+            var documentLineNext = documentLine.NextLine;
+
+            var text = textArea.Document.GetText(documentLine);
+            var nextText = textArea.Document.GetText(documentLineNext);
+
+            textEditor.BeginChange();
+            try
+            {
+                document.Remove(documentLine);
+                document.Remove(documentLineNext);
+
+                document.Insert(documentLineNext.Offset, text);
+                document.Insert(documentLine.Offset, nextText);
+
+                textArea.Caret.Line = line + 1;
+            }
+            finally
+            {
+                textEditor.EndChange();
+            }
         }
     }
 }

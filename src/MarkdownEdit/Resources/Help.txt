@@ -32,15 +32,18 @@ Keyboard Shortcuts
     F3             Find next
     Shift+F3       Find previous
     Ctrl+H         Find and replace
+
     Ctrl+G         Goto line
+	Alt+Up         Move current line up
+	Alt+Down       Move current line down
     Ctrl+U         Select previous header
     Ctrl+J         Select next header
 
     Ctrl+Plus      Increase font size
     Ctrl+Minus     Decrease font size
     Ctrl+0         Restore font size
-    Alt+Up         Increase editor/preview width (single pane only)
-    Alt+Down       Decrease editor/preview width (single pane only)
+    Alt+Plus       Increase editor/preview width (single pane only)
+    Alt+Minus      Decrease editor/preview width (single pane only)
 
     Ctrl+T         Select editor theme
     F6             Open user snippets in Notepad

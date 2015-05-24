@@ -12,7 +12,7 @@ namespace MarkdownEdit.i18n
     internal static class TranslationProvider
     {
         private static readonly Language _language;
-        private static string _helpMarkup;
+        private static string _helpMarkdown;
 
         static TranslationProvider()
         {
@@ -48,19 +48,19 @@ namespace MarkdownEdit.i18n
 
         public static string LoadHelp()
         {
-            if (_helpMarkup == null)
+            if (_helpMarkdown == null)
             {
                 try
                 {
                     var path = LanguageFolder(Thread.CurrentThread.CurrentUICulture);
-                    _helpMarkup = File.ReadAllText(path + "\\help.md");
+                    _helpMarkdown = File.ReadAllText(path + "\\help.md");
                 }
                 catch (Exception)
                 {
-                    _helpMarkup = Properties.Resources.Help;
+                    _helpMarkdown = Properties.Resources.Help;
                 }
             }
-            return _helpMarkup;
+            return _helpMarkdown;
         }
 
         public static Language Parse(string languageName, string text)

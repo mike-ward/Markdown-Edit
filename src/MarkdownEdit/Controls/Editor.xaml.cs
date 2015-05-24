@@ -29,7 +29,7 @@ namespace MarkdownEdit.Controls
         private bool _removeSpecialCharacters;
         private bool _appsKeyDown;
         private EditorState _editorState = new EditorState();
-        private readonly string F1ForHelp = (string)TranslationProvider.Translate("editor-f1-for-help");
+        private readonly string _f1ForHelp = (string)TranslationProvider.Translate("editor-f1-for-help");
         private readonly Action<string> _executeAutoSaveLater;
 
         public static RoutedCommand DeselectCommand = new RoutedCommand();
@@ -39,6 +39,7 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand FindNextCommand = new RoutedCommand();
         public static RoutedCommand FindPreviousCommand = new RoutedCommand();
         public static RoutedCommand MoveLineUpCommand = new RoutedCommand();
+        public static RoutedCommand MoveLineDownCommand = new RoutedCommand();
 
         public Editor()
         {
@@ -545,7 +546,9 @@ namespace MarkdownEdit.Controls
 
         public void Code() => Execute(() => EditBox.AddRemoveText("`"));
 
-        public void ExecuteMoveLineUp(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.MoveLineUp(EditBox.TextArea));
+        public void ExecuteMoveLineUp(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.MoveCurrentLineUp(EditBox));
+
+        public void ExecuteMoveLineDown(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.MoveCurrentLineDown(EditBox));
 
         public void InsertHeader(int num) => Execute(() =>
         {
@@ -628,7 +631,7 @@ namespace MarkdownEdit.Controls
                 return (string.IsNullOrWhiteSpace(_displayName) == false)
                     ? _displayName
                     : string.IsNullOrWhiteSpace(FileName)
-                        ? $"{TranslationProvider.Translate("editor-new-document")} {F1ForHelp}"
+                        ? $"{TranslationProvider.Translate("editor-new-document")} {_f1ForHelp}"
                         : Path.GetFileName(FileName);
             }
             set { Set(ref _displayName, value); }
