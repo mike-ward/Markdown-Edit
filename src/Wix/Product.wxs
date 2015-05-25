@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" 
-           Name="Markdown Edit" 
-           Language="1033" 
-           Version="1.8.0.0" 
-           Manufacturer="Mike Ward" 
+  <Product Id="*"
+           Name="Markdown Edit"
+           Language="1033"
+           Version="1.8.0.0"
+           Manufacturer="Mike Ward"
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
-    
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited"  />
-    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perUser" InstallPrivileges="limited" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+                  AllowDowngrades="no"
+                  AllowSameVersionUpgrades="yes" />
     <Media Id="1" Cabinet="cab1.cab" EmbedCab="yes" />
     <SetProperty Id="ProgramFilesFolder" Value="[LocalAppDataFolder]" Before="CostFinalize"><![CDATA[NOT Privileged]]></SetProperty>
 
@@ -21,9 +23,9 @@
                       Name="Markdown Edit"
                       Description="Desktop Editor for Markdown"
                       Target="[INSTALLFOLDER]mde.exe"
-                      WorkingDirectory="INSTALLFOLDER"/>
-            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-            <RegistryValue Root="HKCU" Key="Software\Microsoft\Markdown Edit" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+                      WorkingDirectory="INSTALLFOLDER" />
+            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+            <RegistryValue Root="HKCU" Key="Software\Microsoft\Markdown Edit" Name="installed" Type="integer" Value="1" KeyPath="yes" />
           </Component>
         </Directory>
       </Directory>
@@ -155,11 +157,11 @@
     <UIRef Id="WixUI_Minimal" />
 
     <Property Id="SKIPFRAMEWORKCHECK" Value="0" />
-    <PropertyRef Id="NETFRAMEWORK45"/>
+    <PropertyRef Id="NETFRAMEWORK45" />
     <Condition Message="Markdown Edit requires .NET Framework 4.5.2. Visit http://smallestdotnet.com">
       <![CDATA[Installed OR (SKIPFRAMEWORKCHECK <> 0) OR (NETFRAMEWORK45 >= "#379893")]]>
     </Condition>
-    
+
     <Feature Id="ProductFeature" Title="Markdown Edit" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
     </Feature>
