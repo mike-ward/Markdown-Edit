@@ -174,6 +174,7 @@ namespace MarkdownEdit.Models
                 document.Insert(documentLine.Offset, previousText);
 
                 textArea.Caret.Line = line - 1;
+                textArea.Caret.BringCaretToView();
             }
             finally
             {
@@ -204,6 +205,7 @@ namespace MarkdownEdit.Models
                 document.Insert(documentLine.Offset, nextText);
 
                 textArea.Caret.Line = line + 1;
+                textArea.Caret.BringCaretToView();
             }
             finally
             {
@@ -223,9 +225,9 @@ namespace MarkdownEdit.Models
             textEditor.BeginChange();
             try
             {
-                foreach (var l in Enumerable.Range(start, end - start + 1))
+                foreach (var num in Enumerable.Range(start, end - start + 1))
                 {
-                    var line = document.GetLineByNumber(l);
+                    var line = document.GetLineByNumber(num);
                     var text = document.GetText(line);
                     if (string.IsNullOrWhiteSpace(text) == false && startsWith.IsMatch(text) == false)
                     {
@@ -238,6 +240,15 @@ namespace MarkdownEdit.Models
             {
                 textEditor.EndChange();
             }
+        }
+
+        public static void ScrollToLine(TextEditor editor, int line)
+        {
+            var max = Math.Max(1, editor.Document.LineCount);
+            line = Math.Min(max, Math.Max(line, 1));
+            editor.ScrollToLine(line);
+            var offset = editor.Document.GetOffset(line, 0);
+            editor.CaretOffset = offset;
         }
     }
 }
