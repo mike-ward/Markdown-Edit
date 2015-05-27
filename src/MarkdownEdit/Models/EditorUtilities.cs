@@ -163,8 +163,8 @@ namespace MarkdownEdit.Models
             var selection = textArea.Selection;
             if (selection != null && selection.StartPosition.Line > 1)
             {
-                currentLine = selection.EndPosition.Line;
-                segment = document.GetLineByNumber(selection.StartPosition.Line).PreviousLine;
+                currentLine = Math.Max(selection.StartPosition.Line, selection.EndPosition.Line);
+                segment = document.GetLineByNumber(Math.Min(selection.StartPosition.Line, selection.EndPosition.Line)).PreviousLine;
             }
             else
             {
@@ -199,8 +199,8 @@ namespace MarkdownEdit.Models
             var selection = textArea.Selection;
             if (selection != null && selection.StartPosition.Line > 0 && selection.EndPosition.Line < textEditor.LineCount)
             {
-                currentLine = selection.StartPosition.Line;
-                segment = document.GetLineByNumber(selection.EndPosition.Line).NextLine;
+                currentLine = Math.Min(selection.StartPosition.Line, selection.EndPosition.Line);
+                segment = document.GetLineByNumber(Math.Max(selection.StartPosition.Line, selection.EndPosition.Line)).NextLine;
             }
             else
             {
