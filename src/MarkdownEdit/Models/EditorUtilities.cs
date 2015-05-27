@@ -2,7 +2,9 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Threading;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 
 namespace MarkdownEdit.Models
 {
@@ -151,65 +153,75 @@ namespace MarkdownEdit.Models
             return false;
         }
 
-        public static void MoveCurrentLineUp(TextEditor textEditor)
+        public static void MoveSegmentUp(TextEditor textEditor)
         {
             var textArea = textEditor.TextArea;
             var document = textEditor.Document;
-            var line = textArea.Caret.Line;
-            if (line == 1) return;
 
-            var documentLine = document.GetLineByNumber(line);
-            var documentLinePrevious = documentLine.PreviousLine;
-
-            var text = textArea.Document.GetText(documentLine);
-            var previousText = textArea.Document.GetText(documentLinePrevious);
+            int currentLine;
+            DocumentLine segment;
+            var selection = textArea.Selection;
+            if (selection != null && selection.StartPosition.Line > 1)
+            {
+                currentLine = selection.EndPosition.Line;
+                segment = document.GetLineByNumber(selection.StartPosition.Line).PreviousLine;
+            }
+            else
+            {
+                currentLine = textArea.Caret.Line;
+                if (currentLine == 1) return;
+                segment = document.GetLineByNumber(currentLine).PreviousLine;
+            }
 
             textEditor.BeginChange();
             try
             {
-                document.Remove(documentLine);
-                document.Remove(documentLinePrevious);
-
-                document.Insert(documentLinePrevious.Offset, text);
-                document.Insert(documentLine.Offset, previousText);
-
-                textArea.Caret.Line = line - 1;
+                var text = document.GetText(segment.Offset, segment.TotalLength);
+                document.Remove(segment.Offset, segment.TotalLength);
+                document.Insert(document.GetOffset(currentLine, 0), text);
+                textArea.Caret.Line = currentLine - 1;
                 textArea.Caret.BringCaretToView();
             }
             finally
             {
                 textEditor.EndChange();
+                textArea.TextView.Redraw(DispatcherPriority.ApplicationIdle);
             }
         }
 
-        public static void MoveCurrentLineDown(TextEditor textEditor)
+        public static void MoveSegmentDown(TextEditor textEditor)
         {
             var textArea = textEditor.TextArea;
             var document = textEditor.Document;
-            var line = textArea.Caret.Line;
-            if (line == textEditor.LineCount) return;
 
-            var documentLine = document.GetLineByNumber(line);
-            var documentLineNext = documentLine.NextLine;
-
-            var text = textArea.Document.GetText(documentLine);
-            var nextText = textArea.Document.GetText(documentLineNext);
+            int currentLine;
+            DocumentLine segment;
+            var selection = textArea.Selection;
+            if (selection != null && selection.StartPosition.Line > 0 && selection.EndPosition.Line < textEditor.LineCount)
+            {
+                currentLine = selection.StartPosition.Line;
+                segment = document.GetLineByNumber(selection.EndPosition.Line).NextLine;
+            }
+            else
+            {
+                currentLine = textArea.Caret.Line;
+                if (currentLine >= textEditor.LineCount) return;
+                segment = document.GetLineByNumber(currentLine).NextLine;
+            }
 
             textEditor.BeginChange();
             try
             {
-                document.Remove(documentLine);
-                document.Remove(documentLineNext);
-
-                document.Insert(documentLineNext.Offset, text);
-                document.Insert(documentLine.Offset, nextText);
-
-                textArea.Caret.Line = line + 1;
+                var text = document.GetText(segment.Offset, segment.TotalLength);
+                document.Remove(segment.Offset, segment.TotalLength);
+                document.Insert(document.GetOffset(currentLine, 0), text);
+                textArea.Caret.Line = currentLine + 1;
                 textArea.Caret.BringCaretToView();
             }
             finally
             {
                 textEditor.EndChange();
+                textArea.TextView.Redraw(DispatcherPriority.ApplicationIdle);
             }
         }
 

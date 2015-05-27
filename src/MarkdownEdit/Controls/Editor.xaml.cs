@@ -547,9 +547,9 @@ namespace MarkdownEdit.Controls
 
         public void Code() => Execute(() => EditBox.AddRemoveText("`"));
 
-        public void ExecuteMoveLineUp(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.MoveCurrentLineUp(EditBox));
+        public void ExecuteMoveLineUp(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.MoveSegmentUp(EditBox));
 
-        public void ExecuteMoveLineDown(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.MoveCurrentLineDown(EditBox));
+        public void ExecuteMoveLineDown(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.MoveSegmentDown(EditBox));
 
         public void ExecuteConvertSelectionToList(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.ConvertSelectionToList(EditBox));
 
