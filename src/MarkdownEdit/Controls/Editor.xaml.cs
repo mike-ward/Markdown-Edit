@@ -336,9 +336,9 @@ namespace MarkdownEdit.Controls
             e.CanExecute = !EditBox.IsReadOnly;
         }
 
-        private void FormatTextHandler(Func<string, string> converter)
+        private void FormatTextHandler(Func<string, string> converter, bool? forceAllText)
         {
-            var isSelectedText = !string.IsNullOrEmpty(EditBox.SelectedText);
+            var isSelectedText = !string.IsNullOrEmpty(EditBox.SelectedText) && !forceAllText.GetValueOrDefault(false);
             var originalText = isSelectedText ? EditBox.SelectedText : EditBox.Document.Text;
             var formattedText = converter(originalText);
             if (string.CompareOrdinal(formattedText, originalText) != 0)
@@ -348,9 +348,9 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => FormatTextHandler(ConvertText.Wrap));
+        private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => FormatTextHandler(ConvertText.Wrap, ea.Parameter as bool?));
 
-        private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => FormatTextHandler(ConvertText.Unwrap));
+        private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => FormatTextHandler(ConvertText.Unwrap, false));
 
         public void NewFile() => Execute(() =>
         {
@@ -498,6 +498,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
+                if (App.UserSettings.FormatOnSave) FormatCommand.Execute(true, this);
                 File.WriteAllText(FileName, Text);
                 RecentFilesDialog.UpdateRecentFiles(FileName, EditBox.SelectionStart);
                 Settings.Default.LastOpenFile = FileName.AddOffsetToFileName(EditBox.SelectionStart);

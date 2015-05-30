@@ -28,7 +28,6 @@
            TargetType="Separator">
       <Setter Property="Margin" Value="0 3 0 5" />
     </Style>
-
   </UserControl.Resources>
 
   <ScrollViewer>
@@ -41,6 +40,7 @@
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-auto-save}" OnLabel="{i18N:Localize settings-auto-save}" ToolTip="{i18N:Localize tooltip-alt-s}" IsChecked="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-line-numbers}" OnLabel="{i18N:Localize settings-line-numbers}" IsChecked="{Binding EditorShowLineNumbers}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-open-last-file}" OnLabel="{i18N:Localize settings-open-last-file}" IsChecked="{Binding EditorOpenLastFile}" Style="{StaticResource ToggleSwitchStyle}" />
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-format-on-save}" OnLabel="{i18N:Localize settings-format-on-save}" IsChecked="{Binding FormatOnSave}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-remember-cursor-pos}" OnLabel="{i18N:Localize settings-remember-cursor-pos}" IsChecked="{Binding EditorOpenLastCursorPosition}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-highlight-current}" OnLabel="{i18N:Localize settings-highlight-current}" IsChecked="{Binding EditorHighlightCurrentLine}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-show-scroll-bar}" OnLabel="{i18N:Localize settings-show-scroll-bar}" IsChecked="{Binding EditorVerticalScrollBarVisible}" Style="{StaticResource ToggleSwitchStyle}" />

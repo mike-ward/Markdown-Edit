@@ -30,6 +30,7 @@ namespace MarkdownEdit.Models
         private bool _spellCheckIgnoreWordsWithDigits = true;
         private int _singlePaneMargin = 4;
         private bool _ignoreTaskbarOnMaximize = true;
+        private bool _formatOnSave;
 
         public string EditorFontFamily
         {
@@ -145,6 +146,12 @@ namespace MarkdownEdit.Models
             set { Set(ref _ignoreTaskbarOnMaximize, value); }
         }
 
+        public bool FormatOnSave
+        {
+            get { return _formatOnSave; }
+            set { Set(ref _formatOnSave, value); }
+        }
+
         public Theme Theme
         {
             get { return _theme; }
@@ -184,7 +191,7 @@ namespace MarkdownEdit.Models
             {
                 if (File.Exists(SettingsFile) == false)
                 {
-                    var defaultSettings = new UserSettings { Theme = new Theme() };
+                    var defaultSettings = new UserSettings {Theme = new Theme()};
                     defaultSettings.Save();
                 }
                 return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
@@ -241,6 +248,8 @@ namespace MarkdownEdit.Models
                    ^ SpellCheckIgnoreMarkupTags.GetHashCode()
                    ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
                    ^ IgnoreYaml.GetHashCode()
+                   ^ IgnoreTaskbarOnMaximize.GetHashCode()
+                   ^ FormatOnSave.GetHashCode()
                    ^ Theme.GetHashCode()
                    ^ SinglePaneMargin.GetHashCode();
         }

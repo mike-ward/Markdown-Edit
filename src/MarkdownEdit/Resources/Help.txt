@@ -34,8 +34,8 @@ Keyboard Shortcuts
     Ctrl+H         Find and replace
 
     Ctrl+G         Goto line
-	Alt+Up         Move current line up
-	Alt+Down       Move current line down
+	  Alt+Up         Move current line up
+	  Alt+Down       Move current line down
     Ctrl+U         Select previous header
     Ctrl+J         Select next header
 
@@ -55,6 +55,7 @@ Keyboard Shortcuts
     Ctrl+B         Bold selection / no selection insert **
     Ctrl+I         Italic selection / no selection insert *
     Ctrl+K         Code (wrap with back ticks ``) / no selection insert `
+    Ctrl+L         Convert selection to list. Toggle unordered/ordered
     Alt+F          Wrap & Format text
     Alt+Shift+F    Unwrap & Format text
 
