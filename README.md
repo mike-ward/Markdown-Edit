@@ -21,19 +21,19 @@ Features
 --------
 
 -   [Drag and Drop image
-    upload](http://mike-ward.net/2015/03/31/markdown-edit-1-4-imgur-uploads/)
+    uploads](http://mike-ward.net/2015/03/31/markdown-edit-1-4-imgur-uploads/)
 -   [Document
-    Formatting](http://mike-ward.net/2015/04/20/markdown-edit-1-5-released/)
+    Formatting](http://mike-ward.net/2015/04/20/markdown-edit-1-5-released/).
+    Make your Markdown beautiful
 -   Syntax highlighting editor
 -   Side-by-side HTML preview
 -   Quickly show/hide preview
 -   [CommonMark](http://commonmark.org) standard Markdown engine
 -   User preferences stored in a text file for easy sharing
--   Full screen covers task-bar
--   Keyboard shortcuts for bold, italic, headers, etc.
+-   Full screen covers task-bar (optional)
+-   Keyboard shortcuts for bold, italic, headers, lists, block quotes, etc.
 -   User defined snippets improve the speed and proficiency of writing
     documents.
--   User defined key bindings
 -   Modern UI look and feel
 -   **Not** a Windows Store App
 -   Synchronized scrolling
@@ -42,7 +42,8 @@ Features
 -   As you type spell checking
 -   **Paste Special** replaces Microsoft Word's smart quotes/hyphens/etc. with
     plain text equivalents
--   Quickly open recent files - Quickly change themes
+-   Quickly open recent files
+-   Quickly change themes
 -   Word Count
 -   Auto Save
 -   Select previous/next header
@@ -50,7 +51,9 @@ Features
 -   [Open Source](https://github.com/mike-ward/Markdown-Edit)
 -   MIT License
 
-[More](https://github.com/mike-ward/Markdown-Edit/wiki)
+*Markdown Edit's help has a more complete list of features/shortcuts*
+
+[More](https://http://mike-ward.net/markdownedit)
 
 Requirements
 ------------
