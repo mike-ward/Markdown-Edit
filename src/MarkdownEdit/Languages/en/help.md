@@ -260,15 +260,6 @@ Themes are located in the installation directory under `\Themes`.
 If you create an awesome theme, send it to me and I'll add it to the
 distribution. I'm a lousy artist. :)
 
-Key Bindings
-------------
-
-You can change most of the key bindings. Press \`F10', make your changes and
-save. The changes take effect immediately.
-
-If you delete this file, Markdown Edit will create a new one with default
-bindings.
-
 Etc.
 ----
 
