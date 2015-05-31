@@ -55,6 +55,7 @@ Keyboard Shortcuts
     Ctrl+I         Italic selection / no selection insert *
     Ctrl+K         Code (wrap with back ticks ``) / no selection insert `
     Ctrl+L         Convert selection to list. Toggle unordered/ordered
+    Ctrl+Q         Convert selection/line to block quote
     Alt+F          Wrap & Format text
     Alt+Shift+F    Unwrap & Format text
 

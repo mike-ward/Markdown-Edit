@@ -41,6 +41,7 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand MoveLineUpCommand = new RoutedCommand();
         public static RoutedCommand MoveLineDownCommand = new RoutedCommand();
         public static RoutedCommand ConvertSelectionToListCommand = new RoutedCommand();
+        public static RoutedCommand InsertBlockQuoteCommand = new RoutedCommand();
 
         public Editor()
         {
@@ -553,6 +554,8 @@ namespace MarkdownEdit.Controls
         public void ExecuteMoveLineDown(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.MoveSegmentDown(EditBox));
 
         public void ExecuteConvertSelectionToList(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.ConvertSelectionToList(EditBox));
+
+        public void ExecuteInsertBlockQuote(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.InsertBlockQuote(EditBox));
 
         public void InsertHeader(int num) => Execute(() =>
         {

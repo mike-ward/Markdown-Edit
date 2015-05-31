@@ -45,6 +45,7 @@
     <CommandBinding Command="{x:Static controls:Editor.MoveLineUpCommand}" Executed="ExecuteMoveLineUp" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.MoveLineDownCommand}" Executed="ExecuteMoveLineDown" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.ConvertSelectionToListCommand}" Executed="ExecuteConvertSelectionToList" CanExecute="CanExecute" />
+    <CommandBinding Command="{x:Static controls:Editor.InsertBlockQuoteCommand}" Executed="ExecuteInsertBlockQuote" CanExecute="CanExecute" />
   </UserControl.CommandBindings>
 
   <UserControl.InputBindings>
@@ -57,5 +58,6 @@
     <KeyBinding Command="{x:Static controls:Editor.MoveLineUpCommand}" Gesture="Alt+Up" />
     <KeyBinding Command="{x:Static controls:Editor.MoveLineDownCommand}" Gesture="Alt+Down" />
     <KeyBinding Command="{x:Static controls:Editor.ConvertSelectionToListCommand}" Gesture="Ctrl+L" />
+    <KeyBinding Command="{x:Static controls:Editor.InsertBlockQuoteCommand}" Gesture="Ctrl+Q" />
   </UserControl.InputBindings>
 </UserControl>

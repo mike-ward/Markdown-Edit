@@ -236,6 +236,7 @@ namespace MarkdownEdit.Models
             var unordered = new Regex(@"^\s*[-|\*|\+]\s{1,4}");
 
             textEditor.BeginChange();
+            var index = 1;
             try
             {
                 foreach (var num in Enumerable.Range(start, end - start + 1))
@@ -247,7 +248,7 @@ namespace MarkdownEdit.Models
 
                     if (unordered.IsMatch(text))
                     {
-                        var numbered = Regex.Replace(text, @"[-|\*|\+]", "1.");
+                        var numbered = Regex.Replace(text, @"[-|\*|\+]", $"{index++}.");
                         document.Remove(line);
                         document.Insert(offset, numbered);
                     }
@@ -277,6 +278,32 @@ namespace MarkdownEdit.Models
             editor.ScrollToLine(line);
             var offset = editor.Document.GetOffset(line, 0);
             editor.CaretOffset = offset;
+        }
+
+        public static void InsertBlockQuote(TextEditor textEditor)
+        {
+            var textArea = textEditor.TextArea;
+            var document = textEditor.Document;
+            var selection = textEditor.TextArea.Selection;
+
+            var start = Math.Min(selection.StartPosition.Line, selection.EndPosition.Line);
+            if (start == 0) start = textArea.Caret.Line;
+            var end = Math.Max(selection.StartPosition.Line, selection.EndPosition.Line);
+            if (end == 0) end = textArea.Caret.Line;
+
+            textEditor.BeginChange();
+            try
+            {
+                foreach (var line in Enumerable.Range(start, end - start + 1))
+                {
+                    var offset = document.GetOffset(line, 0);
+                    document.Insert(offset, "> ");
+                }
+            }
+            finally
+            {
+                textEditor.EndChange();
+            }
         }
     }
 }

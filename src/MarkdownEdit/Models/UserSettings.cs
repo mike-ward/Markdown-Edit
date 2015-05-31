@@ -28,7 +28,7 @@ namespace MarkdownEdit.Models
         private bool _spellCheckIgnoreAllCaps = true;
         private bool _spellCheckIgnoreMarkupTags = true;
         private bool _spellCheckIgnoreWordsWithDigits = true;
-        private int _singlePaneMargin = 4;
+        private int _singlePaneMargin = 16;
         private bool _ignoreTaskbarOnMaximize = true;
         private bool _formatOnSave;
 
