@@ -6,7 +6,7 @@ namespace MarkdownEdit.Models
 {
     internal static class ConvertText
     {
-        private const string CommonMarkArgs = "commonmark\x20";
+        private const string CommonMarkArgs = "markdown_strict+fenced_code_blocks+backtick_code_blocks+intraword_underscores\x20";
         private const string CommonMark = "-f " + CommonMarkArgs + "-t " + CommonMarkArgs;
 
         public static string Wrap(string text)
