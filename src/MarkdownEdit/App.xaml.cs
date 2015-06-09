@@ -7,7 +7,6 @@ using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
-using TinyIoC;
 
 namespace MarkdownEdit
 {
@@ -15,6 +14,7 @@ namespace MarkdownEdit
     {
         public const string Title = "MARKDOWN EDIT";
         private FileSystemWatcher _userSettingsWatcher;
+        private ISpellingService _spellingService;
 
         public static UserSettings UserSettings { get; private set; }
 
@@ -23,14 +23,11 @@ namespace MarkdownEdit
             InitializeSettings();
             Activated += OnActivated;
 
-            var container = TinyIoCContainer.Current;
-            container.Register<IMarkdownConverter, CommonMarkConverter>();
-            container.Register<ISpellingService, SpellingService>();
-            container.Register<ISpellCheckProvider, SpellCheckProvider>();
-            container.Register<ISnippetManager, SnippetManager>();
-
-            var mainWindow = container.Resolve<MainWindow>();
-
+            var markdownConverter = new CommonMarkConverter();
+            _spellingService = new SpellingService();
+            var spellCheckProvider = new SpellCheckProvider(_spellingService);
+            var snippetManager = new SnippetManager();
+            var mainWindow = new MainWindow(markdownConverter, spellCheckProvider, snippetManager);
             var windowPlacementSettings = mainWindow.GetWindowPlacementSettings();
 
             if (windowPlacementSettings.UpgradeSettings)
@@ -65,10 +62,8 @@ namespace MarkdownEdit
             Activated -= OnActivated;
             Task.Factory.StartNew(() =>
             {
-                var container = TinyIoCContainer.Current;
-                var spellingService = container.Resolve<ISpellingService>();
-                spellingService.Language = UserSettings.SpellCheckDictionary;
-                UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary)) spellingService.Language = UserSettings.SpellCheckDictionary; };
+                _spellingService.Language = UserSettings.SpellCheckDictionary;
+                UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary)) _spellingService.Language = UserSettings.SpellCheckDictionary; };
                 _userSettingsWatcher = UserSettings.SettingsFile.WatchFile(UserSettings.Update);
             });
         }

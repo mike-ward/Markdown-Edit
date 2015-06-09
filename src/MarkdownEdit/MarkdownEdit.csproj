@@ -171,7 +171,6 @@
     <Compile Include="Models\StringExtensions.cs" />
     <Compile Include="Models\UserTemplate.cs" />
     <Compile Include="Models\Utility.cs" />
-    <Compile Include="TinyIoC.cs" />
     <Page Include="Controls\DisplaySettings.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

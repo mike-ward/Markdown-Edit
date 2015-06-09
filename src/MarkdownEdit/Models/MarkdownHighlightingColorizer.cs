@@ -145,7 +145,7 @@ namespace MarkdownEdit.Models
             }
 
             if (highlight.Underline) trp.SetTextDecorations(TextDecorations.Underline);
-            if (double.IsNaN(magnify) == false) trp.SetFontRenderingEmSize(trp.FontRenderingEmSize * magnify);
+            if (double.IsNaN(magnify) == false) trp.SetFontRenderingEmSize(trp.FontRenderingEmSize*magnify);
         }
 
         private static Brush ColorBrush(string color)
@@ -153,7 +153,8 @@ namespace MarkdownEdit.Models
             if (string.IsNullOrWhiteSpace(color)) return null;
             try
             {
-                var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                // ReSharper disable once PossibleNullReferenceException
+                var brush = new SolidColorBrush((Color) ColorConverter.ConvertFromString(color));
                 brush.Freeze();
                 return brush;
             }
@@ -172,7 +173,8 @@ namespace MarkdownEdit.Models
             if (string.IsNullOrWhiteSpace(fontWeight)) return null;
             try
             {
-                return (FontWeight)new FontWeightConverter().ConvertFromString(fontWeight);
+                // ReSharper disable once PossibleNullReferenceException
+                return (FontWeight) new FontWeightConverter().ConvertFromString(fontWeight);
             }
             catch (FormatException)
             {
@@ -189,7 +191,8 @@ namespace MarkdownEdit.Models
             if (string.IsNullOrWhiteSpace(fontStyle)) return null;
             try
             {
-                return (FontStyle)(new FontStyleConverter().ConvertFromString(fontStyle));
+                // ReSharper disable once PossibleNullReferenceException
+                return (FontStyle) (new FontStyleConverter().ConvertFromString(fontStyle));
             }
             catch (FormatException)
             {
