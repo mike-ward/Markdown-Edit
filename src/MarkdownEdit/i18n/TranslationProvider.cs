@@ -17,6 +17,7 @@ namespace MarkdownEdit.i18n
         static TranslationProvider()
         {
             _language = Load(Thread.CurrentThread.CurrentUICulture);
+            //_language = Load(CultureInfo.GetCultureInfo("fr"));
         }
 
         private static string LanguageFolder(CultureInfo cultureInfo)
@@ -53,6 +54,7 @@ namespace MarkdownEdit.i18n
                 try
                 {
                     var path = LanguageFolder(Thread.CurrentThread.CurrentUICulture);
+                    //var path = LanguageFolder(CultureInfo.GetCultureInfo("fr"));
                     _helpMarkdown = File.ReadAllText(path + "\\help.md");
                 }
                 catch (Exception)
@@ -65,15 +67,15 @@ namespace MarkdownEdit.i18n
 
         public static Language Parse(string languageName, string text)
         {
-            var language = new Language { TwoLetterLanguageCode = languageName };
+            var language = new Language {TwoLetterLanguageCode = languageName};
             var regex = new Regex(@"^[a-zA-Z][\-_a-zA-Z0-9]*$");
 
-            foreach (var line in text.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+            foreach (var line in text.Split(new[] {Environment.NewLine}, StringSplitOptions.None))
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
                 if (line.StartsWith("=")) continue;
 
-                var pair = line.Split(new[] { ':' }, 2);
+                var pair = line.Split(new[] {':'}, 2);
                 if (pair.Length != 2) throw new FormatException(ErrorMessage("invalid expression", line));
 
                 var name = pair[0];
