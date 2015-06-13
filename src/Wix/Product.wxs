@@ -147,6 +147,14 @@
                   <File Id="lang_en_help_md" KeyPath="yes" Source="$(var.SourceFiles)\Languages\en\help.md" />
                 </Component>
               </Directory>
+              <Directory Id="fr" Name="fr">
+                <Component Id="lang_fr_local.txt" Guid="{B42B6BE1-95E7-45E2-ADF9-C60BD42E22AC}">
+                  <File Id="lang_fr_local.txt" KeyPath="yes" Source="$(var.SourceFiles)\Languages\fr\local.txt" />
+                </Component>
+                <Component Id="lang_fr_help.md" Guid="{F337369B-028E-4ADC-9AF5-F7719F2FDE5C}">
+                  <File Id="lang_fr_help_md" KeyPath="yes" Source="$(var.SourceFiles)\Languages\fr\help.md" />
+                </Component>
+              </Directory>
             </Directory>
           </Directory>
         </Directory>
@@ -203,6 +211,8 @@
       <ComponentRef Id="zenburn.json" />
       <ComponentRef Id="lang_en_local.txt" />
       <ComponentRef Id="lang_en_help.md" />
+      <ComponentRef Id="lang_fr_local.txt" />
+      <ComponentRef Id="lang_fr_help.md" />
     </ComponentGroup>
   </Product>
 </Wix>
