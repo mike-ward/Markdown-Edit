@@ -283,7 +283,7 @@ Limitations
 About
 -----
 
-Version 1.8.1  
+Version 1.8.2  
 Home Page: <http://mike-ward.net/markdownedit>  
 Twitter: `@mikeward_aa` 
 Source: <https://github.com/mike-ward/Markdown-Edit>
