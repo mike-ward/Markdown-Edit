@@ -75,18 +75,27 @@ namespace MarkdownEdit.Controls
                 if (files == null) return;
                 var path = files[0];
                 name = Path.GetFileNameWithoutExtension(path);
-                Image = File.ReadAllBytes(path);
+                try
+                {
+                    Image = File.ReadAllBytes(path);
+                }
+                catch (Exception ex)
+                {
+                    Close();
+                    MessageBox.Show(Application.Current.MainWindow, ex.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
             }
 
             UploadProgressChangedEventHandler progress = (o, args) => TextEditor.Dispatcher.InvokeAsync(() =>
             {
-                if (_canceled) ((WebClient)o).CancelAsync();
-                var progressPercentage = (int)((args.BytesSent / (double)args.TotalBytesToSend) * 100);
+                if (_canceled) ((WebClient) o).CancelAsync();
+                var progressPercentage = (int) ((args.BytesSent/(double) args.TotalBytesToSend)*100);
                 ProgressBar.Value = progressPercentage;
                 if (progressPercentage == 100) ProgressBar.IsIndeterminate = true;
             });
 
-            UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
+            UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient) o).CancelAsync(); };
 
             var link = await new ImageUploadImgur().UploadBytesAsync(Image, progress, completed);
 
@@ -150,7 +159,7 @@ namespace MarkdownEdit.Controls
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (!(value is Visibility) || (Visibility)value != Visibility.Visible);
+            return (!(value is Visibility) || (Visibility) value != Visibility.Visible);
         }
     }
 
@@ -163,7 +172,7 @@ namespace MarkdownEdit.Controls
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value is Visibility && (Visibility)value == Visibility.Visible);
+            return (value is Visibility && (Visibility) value == Visibility.Visible);
         }
     }
 }
