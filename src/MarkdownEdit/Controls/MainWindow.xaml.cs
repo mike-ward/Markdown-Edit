@@ -105,8 +105,11 @@ namespace MarkdownEdit.Controls
         private void LoadCommandLineOrLastFile()
         {
             var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
-                             ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
-            if (fileToOpen != "-n") Editor.LoadFile(fileToOpen);
+                ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
+            if (fileToOpen != "-n")
+            {
+                if (Editor.LoadFile(fileToOpen) == false) Editor.NewFile();
+            }
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
