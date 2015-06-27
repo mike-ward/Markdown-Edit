@@ -29,7 +29,7 @@ editor-menu-select-all:           Select All
 editor-menu-delete:               Delete
 editor-menu-wrap-format:          Wrap & Format
 editor-menu-unwrap-format:        Unwrap & Format
-editor-menu-add-to-dictonary:     Add to Dictionary
+editor-menu-add-to-dictionary:    Add to Dictionary
 
 === Settings Dialog
 

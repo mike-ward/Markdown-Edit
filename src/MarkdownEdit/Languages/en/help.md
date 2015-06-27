@@ -34,8 +34,8 @@ Keyboard Shortcuts
     Ctrl+H         Find and replace
 
     Ctrl+G         Goto line
-	  Alt+Up         Move current line up
-	  Alt+Down       Move current line down
+    Alt+Up         Move current line up
+    Alt+Down       Move current line down
     Ctrl+U         Select previous header
     Ctrl+J         Select next header
 
