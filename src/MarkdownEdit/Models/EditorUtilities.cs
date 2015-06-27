@@ -178,7 +178,10 @@ namespace MarkdownEdit.Models
             {
                 var text = document.GetText(segment.Offset, segment.TotalLength);
                 document.Remove(segment.Offset, segment.TotalLength);
-                document.Insert(document.GetOffset(currentLine, 0), text);
+                var offset = currentLine >= document.LineCount
+                    ? document.TextLength
+                    : document.GetOffset(currentLine, 0);
+                document.Insert(offset, text);
                 textArea.Caret.Line = currentLine - 1;
                 textArea.Caret.BringCaretToView();
             }
