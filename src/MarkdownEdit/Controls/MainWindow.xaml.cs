@@ -87,6 +87,7 @@ namespace MarkdownEdit.Controls
         {
             IsVisibleChanged -= OnIsVisibleChanged;
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
+            Activate();
         }
 
         private void OnActivated(object sender, EventArgs eventArgs)
