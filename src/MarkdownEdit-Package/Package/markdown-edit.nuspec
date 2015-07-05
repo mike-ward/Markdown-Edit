@@ -3,7 +3,7 @@
   <metadata>
     <id>markdown-edit</id>
     <title>Markdown Edit</title>
-    <version>1.8.2</version>
+    <version>1.9.0</version>
     <authors>Mike Ward</authors>
     <owners>Mike Ward</owners>
     <summary>Desktop CommonMark Editor for Windows</summary>
@@ -13,7 +13,7 @@
     <licenseUrl>https://cdn.rawgit.com/mike-ward/Markdown-Edit/master/LICENSE.txt</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://cdn.rawgit.com/mike-ward/Markdown-Edit/master/src/MarkdownEdit/logo.png</iconUrl>
-    <releaseNotes>French translation</releaseNotes>
+    <releaseNotes>Bug fixes, Package updates, Link references</releaseNotes>
     <dependencies>
       <dependency id="DotNet4.5.2" />
     </dependencies>

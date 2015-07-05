@@ -4,7 +4,7 @@
   <Product Id="*"
            Name="Markdown Edit"
            Language="1033"
-           Version="1.8.2.0"
+           Version="1.9.0.0"
            Manufacturer="Mike Ward"
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
 
@@ -41,7 +41,7 @@
           <RegistryValue Root="HKCU" Key="Software\Microsoft\Markdown Edit" Name="installed" Type="integer" Value="1" KeyPath="yes" />
         </Component>
       </Directory>
-      
+
       <Directory Id="ProgramFilesFolder">
         <Directory Id="MarkdownEdit" Name="MarkdownEdit">
           <Directory Id="INSTALLFOLDER" Name="bin">
