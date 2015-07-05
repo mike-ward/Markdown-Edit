@@ -34,6 +34,7 @@ namespace MarkdownEdit.Controls
 
         public static RoutedCommand DeselectCommand = new RoutedCommand();
         public static RoutedCommand FormatCommand = new RoutedCommand();
+        public static RoutedCommand FormatWithLinkReferencesCommand = new RoutedCommand();
         public static RoutedCommand UnformatCommand = new RoutedCommand();
         public static RoutedCommand PasteSpecialCommand = new RoutedCommand();
         public static RoutedCommand FindNextCommand = new RoutedCommand();
@@ -193,7 +194,7 @@ namespace MarkdownEdit.Controls
 
             CanExecuteRoutedEventHandler canExecute = (sender, args) =>
                 args.CanExecute = EditBox.TextArea?.Document != null &&
-                                  EditBox.TextArea.ReadOnlySectionProvider.CanInsert(EditBox.TextArea.Caret.Offset);
+                    EditBox.TextArea.ReadOnlySectionProvider.CanInsert(EditBox.TextArea.Caret.Offset);
 
             ExecutedRoutedEventHandler execute = null;
             execute = (sender, args) =>
@@ -350,6 +351,8 @@ namespace MarkdownEdit.Controls
         }
 
         private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => FormatTextHandler(ConvertText.Wrap, ea.Parameter as bool?));
+
+        private void ExecuteFormatTextWithLinkReferences(object sender, ExecutedRoutedEventArgs ea) => Execute(() => FormatTextHandler(ConvertText.WrapWithLinkReferences, ea.Parameter as bool?));
 
         private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => FormatTextHandler(ConvertText.Unwrap, false));
 

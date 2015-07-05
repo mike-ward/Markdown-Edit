@@ -57,6 +57,7 @@ Keyboard Shortcuts
     Ctrl+L         Convert selection to list. Toggle unordered/ordered
     Ctrl+Q         Convert selection/line to block quote
     Alt+F          Wrap & Format text
+    Alt+Ctrl+F     Wrap, Format, Use Reference Links
     Alt+Shift+F    Unwrap & Format text
 
     Ctrl+1         Insert # at beginning of line

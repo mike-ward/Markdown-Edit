@@ -41,6 +41,7 @@
     <CommandBinding Command="IgnoreSpellingError" Executed="ExecuteAddToDictionary" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.DeselectCommand}" Executed="ExecuteDeselectCommand" />
     <CommandBinding Command="{x:Static controls:Editor.FormatCommand}" Executed="ExecuteFormatText" CanExecute="CanExecute" />
+    <CommandBinding Command="{x:Static controls:Editor.FormatWithLinkReferencesCommand}" Executed="ExecuteFormatTextWithLinkReferences" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.UnformatCommand}" Executed="ExecuteUnformatText" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.MoveLineUpCommand}" Executed="ExecuteMoveLineUp" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.MoveLineDownCommand}" Executed="ExecuteMoveLineDown" CanExecute="CanExecute" />
@@ -54,6 +55,7 @@
     <KeyBinding Command="{x:Static controls:Editor.PasteSpecialCommand}" Gesture="Ctrl+Shift+V" />
     <KeyBinding Command="{x:Static controls:Editor.DeselectCommand}" Gesture="Esc" />
     <KeyBinding Command="{x:Static controls:Editor.FormatCommand}" Gesture="Alt+F" />
+    <KeyBinding Command="{x:Static controls:Editor.FormatWithLinkReferencesCommand}" Gesture="Ctrl+Alt+F" />
     <KeyBinding Command="{x:Static controls:Editor.UnformatCommand}" Gesture="Alt+Shift+F" />
     <KeyBinding Command="{x:Static controls:Editor.MoveLineUpCommand}" Gesture="Alt+Up" />
     <KeyBinding Command="{x:Static controls:Editor.MoveLineDownCommand}" Gesture="Alt+Down" />
