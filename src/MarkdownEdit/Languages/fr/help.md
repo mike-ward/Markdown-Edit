@@ -298,7 +298,7 @@ Limitations
 A propos
 --------
 
-Version 1.9.0  
+Version 1.10.0  
 Home Page: <http://mike-ward.net/markdownedit>  
 Twitter: `@mikeward_aa` Source: <https://github.com/mike-ward/Markdown-Edit>
 

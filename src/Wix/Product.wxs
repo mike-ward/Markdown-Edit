@@ -4,7 +4,7 @@
   <Product Id="*"
            Name="Markdown Edit"
            Language="1033"
-           Version="1.9.0.0"
+           Version="1.10.0.0"
            Manufacturer="Mike Ward"
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
 
@@ -177,9 +177,9 @@
     <UIRef Id="WixUI_Minimal" />
 
     <Property Id="SKIPFRAMEWORKCHECK" Value="0" />
-    <PropertyRef Id="NETFRAMEWORK45" />
-    <Condition Message="Markdown Edit requires .NET Framework 4.5.2. Visit http://smallestdotnet.com">
-      <![CDATA[Installed OR (SKIPFRAMEWORKCHECK <> 0) OR (NETFRAMEWORK45 >= "#379893")]]>
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED" />
+    <Condition Message="Markdown Edit requires .NET Framework 4.6. Visit http://smallestdotnet.com">
+      <![CDATA[Installed OR (SKIPFRAMEWORKCHECK <> 0) OR (WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED <> 0)]]>
     </Condition>
 
     <Feature Id="ProductFeature" Title="Markdown Edit" Level="1">

@@ -4,7 +4,7 @@ del /Q *.nupkg
 cd src
 nuget restore MarkdownEdit.sln
 if ERRORLEVEL 1 goto END
-msbuild MarkdownEdit\markdownedit.csproj /tv:14.0 /t:Rebuild /p:configuration=release;platform=x86 /verbosity:minimal
+msbuild MarkdownEdit\markdownedit.csproj /t:Rebuild "/p:configuration=Release" /verbosity:minimal
 if ERRORLEVEL 1 goto END
 cd Wix
 call build.cmd
