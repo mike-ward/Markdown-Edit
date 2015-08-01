@@ -53,6 +53,8 @@ namespace MarkdownEdit.Controls
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _markdownConverter;
+        private IMarkdownConverter _commonMarkConverter;
+        private IMarkdownConverter _githubMarkdownConverter;
         private ISpellCheckProvider _spellCheckProvider;
         private FindReplaceDialog _findReplaceDialog;
         private ISnippetManager _snippetManager;
@@ -66,20 +68,23 @@ namespace MarkdownEdit.Controls
         }
 
         public MainWindow(
-            IMarkdownConverter markdownConverter,
+            IMarkdownConverter commonMarkConverter,
+            IMarkdownConverter githubMarkdownConverter,
             ISpellCheckProvider spellCheckProvider,
             ISnippetManager snippetManager)
         {
             DataContext = this;
             InitializeComponent();
-            MarkdownConverter = markdownConverter;
+            CommonMarkConverter = commonMarkConverter;
+            GitHubMarkdownConverter = githubMarkdownConverter;
+            UpdateMarkdownConverter();
             SpellCheckProvider = spellCheckProvider;
             SnippetManager = snippetManager;
             Closing += OnClosing;
             Activated += OnActivated;
             IsVisibleChanged += OnIsVisibleChanged;
             Editor.PropertyChanged += EditorOnPropertyChanged;
-            Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor) s));
+            Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor)s));
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
         }
 
@@ -96,12 +101,22 @@ namespace MarkdownEdit.Controls
             Dispatcher.InvokeAsync(() =>
             {
                 var updateMargins = Utility.Debounce(() => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
-                App.UserSettings.PropertyChanged += (o, args) => { if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins(); };
+                App.UserSettings.PropertyChanged += (o, args) =>
+                {
+                    if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins();
+                    if (args.PropertyName == nameof(App.UserSettings.GitHubMarkdown))
+                    {
+                        UpdateMarkdownConverter();
+                        Preview.UpdatePreview(Editor);
+                    }
+                };
                 SizeChanged += (s, e) => updateMargins();
                 updateMargins();
                 LoadCommandLineOrLastFile();
             });
         }
+
+        private void UpdateMarkdownConverter() => MarkdownConverter = App.UserSettings.GitHubMarkdown ? GitHubMarkdownConverter : CommonMarkConverter;
 
         private void LoadCommandLineOrLastFile()
         {
@@ -191,7 +206,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteTogglePreview(object sender, ExecutedRoutedEventArgs e)
         {
-            Settings.Default.EditPreviewHide = (Settings.Default.EditPreviewHide + 1)%3;
+            Settings.Default.EditPreviewHide = (Settings.Default.EditPreviewHide + 1) % 3;
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
         }
 
@@ -207,17 +222,17 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteEditorReplaceCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            var tuple = (Tuple<Regex, string>) e.Parameter;
+            var tuple = (Tuple<Regex, string>)e.Parameter;
             Editor.Replace(tuple.Item1, tuple.Item2);
         }
 
         private void ExecuteEditorReplaceAllCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            var tuple = (Tuple<Regex, string>) e.Parameter;
+            var tuple = (Tuple<Regex, string>)e.Parameter;
             Editor.ReplaceAll(tuple.Item1, tuple.Item2);
         }
 
-        private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e) => new Process {StartInfo = {FileName = Utility.ExecutingAssembly(), Arguments = "-n"}}.Start();
+        private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e) => new Process { StartInfo = { FileName = Utility.ExecutingAssembly(), Arguments = "-n" } }.Start();
 
         private void SetFocus(IInputElement control)
         {
@@ -242,12 +257,12 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteSaveTheme(object sender, ExecutedRoutedEventArgs e) => App.UserSettings.Save();
 
-        private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e) => new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme}.ShowDialog();
+        private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e) => new ThemeDialog { Owner = this, CurrentTheme = App.UserSettings.Theme }.ShowDialog();
 
         private Thickness CalculateEditorMargins()
         {
             var singlePaneMargin = Math.Min(Math.Max(EditorMarginMin, App.UserSettings.SinglePaneMargin), EditorMarginMax);
-            var margin = (UniformGrid.Columns == 1) ? Width/singlePaneMargin : 0;
+            var margin = (UniformGrid.Columns == 1) ? Width / singlePaneMargin : 0;
             return new Thickness(margin, 0, margin, 0);
         }
 
@@ -255,11 +270,11 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlTemplateToClipboard(Editor.Text, MarkdownConverter);
 
-        private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e) => new GotoLineDialog {Owner = this}.ShowDialog();
+        private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e) => new GotoLineDialog { Owner = this }.ShowDialog();
 
         private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
         {
-            if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int) e.Parameter);
+            if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int)e.Parameter);
         }
 
         private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) => Preview.UpdatePreview(Editor);
@@ -288,6 +303,18 @@ namespace MarkdownEdit.Controls
             set { Set(ref _markdownConverter, value); }
         }
 
+        public IMarkdownConverter CommonMarkConverter
+        {
+            get { return _commonMarkConverter; }
+            set { Set(ref _commonMarkConverter, value); }
+        }
+
+        public IMarkdownConverter GitHubMarkdownConverter
+        {
+            get { return _githubMarkdownConverter; }
+            set { Set(ref _githubMarkdownConverter, value); }
+        }
+
         public ISpellCheckProvider SpellCheckProvider
         {
             get { return _spellCheckProvider; }
@@ -308,7 +335,7 @@ namespace MarkdownEdit.Controls
 
         private void ToggleSettings(object sender, RoutedEventArgs e)
         {
-            var settingsFlyout = (Flyout) Flyouts.Items[0];
+            var settingsFlyout = (Flyout)Flyouts.Items[0];
             settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
             if (settingsFlyout.IsOpen) DisplaySettings.SaveState();
         }

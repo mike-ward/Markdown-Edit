@@ -43,7 +43,7 @@ namespace MarkdownEdit.Models
             }
         }
 
-        private static string Pandoc(string text, string args)
+        public static string Pandoc(string text, string args)
         {
             var info = PandocInfo(args);
 

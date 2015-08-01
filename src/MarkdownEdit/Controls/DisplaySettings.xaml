@@ -48,6 +48,7 @@
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-show-spaces}" OnLabel="{i18N:Localize settings-show-spaces}" IsChecked="{Binding EditorShowSpaces}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-show-end-of-line}" OnLabel="{i18N:Localize settings-show-end-of-line}" IsChecked="{Binding EditorShowEndOfLine}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-sync-scroll-pos}" OnLabel="{i18N:Localize settings-sync-scroll-pos}" IsChecked="{Binding SynchronizeScrollPositions}" Style="{StaticResource ToggleSwitchStyle}" />
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-github-markdown}" OnLabel="{i18N:Localize settings-github-markdown}" IsChecked="{Binding GitHubMarkdown}" Style="{StaticResource ToggleSwitchStyle}" />
       </StackPanel>
 
       <TextBlock Style="{StaticResource SectionHeader}" Text="{i18N:Localize settings-spell-check-section}" />

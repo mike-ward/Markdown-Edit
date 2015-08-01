@@ -31,6 +31,7 @@ namespace MarkdownEdit.Models
         private int _singlePaneMargin = 16;
         private bool _ignoreTaskbarOnMaximize = true;
         private bool _formatOnSave;
+        private bool _githubMarkdown;
 
         public string EditorFontFamily
         {
@@ -152,6 +153,12 @@ namespace MarkdownEdit.Models
             set { Set(ref _formatOnSave, value); }
         }
 
+        public bool GitHubMarkdown
+        {
+            get { return _githubMarkdown; }
+            set { Set(ref _githubMarkdown, value); }
+        }
+
         public Theme Theme
         {
             get { return _theme; }
@@ -250,6 +257,7 @@ namespace MarkdownEdit.Models
                    ^ IgnoreYaml.GetHashCode()
                    ^ IgnoreTaskbarOnMaximize.GetHashCode()
                    ^ FormatOnSave.GetHashCode()
+                   ^ GitHubMarkdown.GetHashCode()
                    ^ Theme.GetHashCode()
                    ^ SinglePaneMargin.GetHashCode();
         }

@@ -23,11 +23,12 @@ namespace MarkdownEdit
             InitializeSettings();
             Activated += OnActivated;
 
-            var markdownConverter = new CommonMarkConverter();
+            var commonmarkConverter = new CommonMarkConverter();
+            var githubMarkdownConverter = new GitHubMarkdownConverter();
             _spellingService = new SpellingService();
             var spellCheckProvider = new SpellCheckProvider(_spellingService);
             var snippetManager = new SnippetManager();
-            var mainWindow = new MainWindow(markdownConverter, spellCheckProvider, snippetManager);
+            var mainWindow = new MainWindow(commonmarkConverter, githubMarkdownConverter, spellCheckProvider, snippetManager);
             var windowPlacementSettings = mainWindow.GetWindowPlacementSettings();
 
             if (windowPlacementSettings.UpgradeSettings)
