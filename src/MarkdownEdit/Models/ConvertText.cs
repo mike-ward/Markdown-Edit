@@ -9,6 +9,7 @@ namespace MarkdownEdit.Models
     {
         private const string CommonMarkArgs = "markdown_strict+fenced_code_blocks+backtick_code_blocks+intraword_underscores\x20";
         private const string CommonMark = "-f " + CommonMarkArgs + "-t " + CommonMarkArgs;
+        private const string GitHub = "-f markdown_github -t markdown_github\x20";
 
         public static string Wrap(string text) => RunPandoc(text, "--columns 80");
 
@@ -19,7 +20,8 @@ namespace MarkdownEdit.Models
         private static string RunPandoc(string text, string options)
         {
             var tuple = Utility.SeperateFrontMatter(text);
-            var result = Pandoc(tuple.Item2, CommonMark + options);
+            var args = App.UserSettings.GitHubMarkdown ? GitHub : CommonMark;
+            var result = Pandoc(tuple.Item2, args + options);
             return tuple.Item1 + result;
         }
 
