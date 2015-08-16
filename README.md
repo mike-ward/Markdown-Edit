@@ -53,7 +53,7 @@ Features
 
 *Markdown Edit's help has a more complete list of features/shortcuts*
 
-[More](https://mike-ward.net/markdownedit)
+[More](http://mike-ward.net/markdownedit/)
 
 Requirements
 ------------
