@@ -26,19 +26,6 @@
     <converters:NumberFormatConverter x:Key="NumberFormatConverter" />
     <converters:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
 
-    <Style x:Key="StatusIndicatorStyle"
-           TargetType="TextBlock">
-      <Setter Property="Margin" Value="10 0 0 0" />
-      <Setter Property="Foreground" Value="{StaticResource GrayBrush10}" />
-      <Setter Property="VerticalAlignment" Value="Bottom" />
-      <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
-      <Style.Triggers>
-        <Trigger Property="IsEnabled" Value="False">
-          <Setter Property="Foreground" Value="{StaticResource GrayBrush3}" />
-        </Trigger>
-      </Style.Triggers>
-    </Style>
-
     <Style x:Key="CommandWindowButtonStyle"
             TargetType="Button"
             BasedOn="{StaticResource MetroBaseWindowButtonStyle}">
@@ -49,6 +36,54 @@
         </Trigger>
       </Style.Triggers>
     </Style>
+    
+    <Style x:Key="ToggleCommandWindowButtonStyle"
+            TargetType="Button"
+            BasedOn="{StaticResource CommandWindowButtonStyle}">
+    </Style>
+
+    <Style x:Key="SpellCheckToggleCommandWindowButtonStyle"
+            TargetType="Button"
+            BasedOn="{StaticResource CommandWindowButtonStyle}">
+      <Style.Triggers>
+        <!-- Order of triggers matters here -->
+        <DataTrigger Binding="{Binding Path=SpellCheck, ElementName=Editor}" Value="False">
+          <Setter Property="Foreground" Value="{StaticResource GrayBrush1}" />
+        </DataTrigger>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+
+    <Style x:Key="WordWrapToggleCommandWindowButtonStyle"
+            TargetType="Button"
+            BasedOn="{StaticResource CommandWindowButtonStyle}">
+      <Style.Triggers>
+        <!-- Order of triggers matters here -->
+        <DataTrigger Binding="{Binding Path=WordWrap, ElementName=Editor}" Value="False">
+          <Setter Property="Foreground" Value="{StaticResource GrayBrush1}" />
+        </DataTrigger>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+
+    <Style x:Key="AutoSaveToggleCommandWindowButtonStyle"
+            TargetType="Button"
+            BasedOn="{StaticResource CommandWindowButtonStyle}">
+      <Style.Triggers>
+        <!-- Order of triggers matters here -->
+        <DataTrigger Binding="{Binding Path=AutoSave, ElementName=Editor}" Value="False">
+          <Setter Property="Foreground" Value="{StaticResource GrayBrush1}" />
+        </DataTrigger>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+
   </metrocontrols:MetroWindow.Resources>
 
   <metrocontrols:MetroWindow.RightWindowCommands>
@@ -60,46 +95,54 @@
                 ToolTip="{i18N:Localize tooltip-new-command}"
                 Command="New"
                 FontFamily="Segoe UI Symbol"
-                Style="{StaticResource CommandWindowButtonStyle}" />
+                Style="{StaticResource CommandWindowButtonStyle}" 
+                />
         <Button Content="&#xe1A5;"
                 ToolTip="{i18N:Localize tooltip-open-command}"
                 Command="Open"
                 FontFamily="Segoe UI Symbol"
-                Style="{StaticResource CommandWindowButtonStyle}" />
+                Style="{StaticResource CommandWindowButtonStyle}" 
+                />
         <Button Content="&#xe105;"
                 ToolTip="{i18N:Localize tooltip-save-command}"
                 Command="Save"
                 FontFamily="Segoe UI Symbol"
-                Style="{StaticResource CommandWindowButtonStyle}" />
+                Style="{StaticResource CommandWindowButtonStyle}" 
+                />
         <Button Content="&#xe28F;"
                 ToolTip="{i18N:Localize tooltip-save-as-command}"
                 Command="SaveAs"
                 FontFamily="Segoe UI Symbol"
-                Style="{StaticResource CommandWindowButtonStyle}" />
+                Style="{StaticResource CommandWindowButtonStyle}" 
+                />
         <Button Content="&#xe115;"
                 Margin="0 0 10 0"
                 ToolTip="{i18N:Localize tooltip-toggle-settings}"
                 Click="ToggleSettings"
                 FontFamily="Segoe UI Symbol"
-                Foreground="{StaticResource SemiTransparentWhiteBrush}" />
+                Foreground="{StaticResource SemiTransparentWhiteBrush}" 
+                />
         <TextBlock ToolTip="{i18N:Localize tooltip-word-count}"
-                   Foreground="{StaticResource SemiTransparentWhiteBrush}"
+                   Foreground="{StaticResource GrayBrush8}"
                    Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" />
-        <TextBlock Text="&#xfc;"
-                   ToolTip="{i18N:Localize tooltip-spell-check}"
-                   FontFamily="Wingdings"
-                   Style="{StaticResource StatusIndicatorStyle}"
-                   IsEnabled="{Binding Path=SpellCheck, ElementName=Editor}" />
-        <TextBlock Text="&#x21A9;"
-                   ToolTip="{i18N:Localize tooltip-word-wrap}"
-                   FontFamily="Segoe UI Symbol"
-                   Style="{StaticResource StatusIndicatorStyle}"
-                   IsEnabled="{Binding Path=WordWrap, ElementName=Editor}" />
-        <TextBlock Text="&#xe105;"
-                   ToolTip="{i18N:Localize tooltip-auto-save}"
-                   FontFamily="Segoe UI Symbol"
-                   Style="{StaticResource StatusIndicatorStyle}"
-                   IsEnabled="{Binding Path=AutoSave, ElementName=Editor}" />
+        <Button Content="&#xfc;"
+                Command="{x:Static controls:MainWindow.ToggleSpellCheckCommand}"
+                ToolTip="{i18N:Localize tooltip-spell-check}"
+                FontFamily="Wingdings"
+                Style="{StaticResource SpellCheckToggleCommandWindowButtonStyle}"
+                />
+        <Button Content="&#x21A9;"
+                Command="{x:Static controls:MainWindow.ToggleWordWrapCommand}"
+                ToolTip="{i18N:Localize tooltip-word-wrap}"
+                FontFamily="Segoe UI Symbol"
+                Style="{StaticResource WordWrapToggleCommandWindowButtonStyle}"
+                />
+        <Button Content="&#xe105;"
+                Command="{x:Static controls:MainWindow.ToggleAutoSaveCommand}"
+                ToolTip="{i18N:Localize tooltip-auto-save}"
+                FontFamily="Segoe UI Symbol"
+                Style="{StaticResource AutoSaveToggleCommandWindowButtonStyle}"
+                />
       </StackPanel>
     </metrocontrols:WindowCommands>
   </metrocontrols:MetroWindow.RightWindowCommands>
