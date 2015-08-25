@@ -175,7 +175,8 @@
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     <UIRef Id="WixUI_Minimal" />
-
+    <WixVariable Id="WixUILicenseRtf" Value="eula.rtf" />
+    
     <Property Id="SKIPFRAMEWORKCHECK" Value="0" />
     <PropertyRef Id="WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED" />
     <Condition Message="Markdown Edit requires .NET Framework 4.6. Visit http://smallestdotnet.com">
