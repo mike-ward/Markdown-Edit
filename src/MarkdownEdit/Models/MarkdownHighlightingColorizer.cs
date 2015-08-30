@@ -85,7 +85,7 @@ namespace MarkdownEdit.Models
                         var position = literal.SourcePosition + literal.SourceLength + 1;
                         var length = inline.SourcePosition + inline.SourceLength - position;
                         ApplyLinePart(highlighter(theme), position, length, start, end, leadingSpaces, double.NaN);
-                        return;
+                        continue;
                     }
                     ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, double.NaN);
                 }
