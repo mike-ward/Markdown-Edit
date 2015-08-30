@@ -78,16 +78,18 @@ namespace MarkdownEdit.Models
                     .TakeWhile(il => il.SourcePosition < end)
                     .Where(il => InlineHighlighter.TryGetValue(il.Tag, out highlighter)))
                 {
-                    // inlines don't magnify
+                    var position = inline.SourcePosition;
+                    var length = inline.SourceLength;
+
                     if ((inline.Tag == InlineTag.Link || inline.Tag == InlineTag.Image) && inline.FirstChild.LiteralContent != inline.TargetUrl)
                     {
                         var literal = inline.FirstChild.LastSibling;
-                        var position = literal.SourcePosition + literal.SourceLength + 1;
-                        var length = inline.SourcePosition + inline.SourceLength - position;
-                        ApplyLinePart(highlighter(theme), position, length, start, end, leadingSpaces, double.NaN);
-                        continue;
+                        position = literal.SourcePosition + literal.SourceLength + 1;
+                        length = inline.SourcePosition + inline.SourceLength - position;
                     }
-                    ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, double.NaN);
+
+                    // inlines don't magnify
+                    ApplyLinePart(highlighter(theme), position, length, start, end, leadingSpaces, double.NaN);
                 }
             }
         }
