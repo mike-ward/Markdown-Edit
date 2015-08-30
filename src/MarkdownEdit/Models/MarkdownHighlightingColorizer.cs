@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using CommonMark;
 using CommonMark.Syntax;
@@ -78,6 +79,14 @@ namespace MarkdownEdit.Models
                     .Where(il => InlineHighlighter.TryGetValue(il.Tag, out highlighter)))
                 {
                     // inlines don't magnify
+                    if ((inline.Tag == InlineTag.Link || inline.Tag == InlineTag.Image) && inline.FirstChild.LiteralContent != inline.TargetUrl)
+                    {
+                        var literal = inline.FirstChild.LastSibling;
+                        var position = literal.SourcePosition + literal.SourceLength + 1;
+                        var length = inline.SourcePosition + inline.SourceLength - position;
+                        ApplyLinePart(highlighter(theme), position, length, start, end, leadingSpaces, double.NaN);
+                        return;
+                    }
                     ApplyLinePart(highlighter(theme), inline.SourcePosition, inline.SourceLength, start, end, leadingSpaces, double.NaN);
                 }
             }
