@@ -84,8 +84,13 @@ namespace MarkdownEdit.Models
                     if ((inline.Tag == InlineTag.Link || inline.Tag == InlineTag.Image) && inline.FirstChild.LiteralContent != inline.TargetUrl)
                     {
                         var literal = inline.FirstChild.LastSibling;
-                        position = literal.SourcePosition + literal.SourceLength + 1;
-                        length = inline.SourcePosition + inline.SourceLength - position;
+                        var urlPosition = literal.SourcePosition + literal.SourceLength + 1;
+                        var urlLength = inline.SourcePosition + inline.SourceLength - urlPosition;
+                        if (urlLength > 0) // check for <name@domain.ext> style links
+                        {
+                            position = urlPosition;
+                            length = urlLength;
+                        }
                     }
 
                     // inlines don't magnify
