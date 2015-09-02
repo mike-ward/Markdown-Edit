@@ -48,8 +48,14 @@
             <Component Id="CommonMark.dll" Guid="{785B177B-0D55-47EB-959D-270F0548A263}">
               <File Id="CommonMark.dll" KeyPath="yes" Source="$(var.SourceFiles)\CommonMark.dll" />
             </Component>
+            <Component Id="CommonMark.pdb" Guid="{210212CB-4522-4140-AC4E-A219EB4596DC}">
+              <File Id="CommonMark.pdb" KeyPath="yes" Source="$(var.SourceFiles)\CommonMark.pdb" />
+            </Component>
             <Component Id="HtmlAgilityPack.dll" Guid="{697D078D-0C77-49F5-92BD-0683C9C55A94}">
               <File Id="HtmlAgilityPack.dll" KeyPath="yes" Source="$(var.SourceFiles)\HtmlAgilityPack.dll" />
+            </Component>
+            <Component Id="HtmlAgilityPack.pdb" Guid="{088804C6-83D8-461B-9310-C9A64839ED3B}">
+              <File Id="HtmlAgilityPack.pdb" KeyPath="yes" Source="$(var.SourceFiles)\HtmlAgilityPack.pdb" />
             </Component>
             <Component Id="Hunspellx64.dll" Guid="{CF56E78F-5FE3-4CF6-983D-251A8FC4ECE5}">
               <File Id="Hunspellx64.dll" KeyPath="yes" Source="$(var.SourceFiles)\Hunspellx64.dll" />
@@ -72,6 +78,9 @@
             <Component Id="mde.exe" Guid="{D8745F9D-E4D6-4682-AF42-46F38A38B27B}">
               <File Id="mde.exe" KeyPath="yes" Source="$(var.SourceFiles)\mde.exe" />
             </Component>
+            <Component Id="mde.pdb" Guid="{933D7D17-7B06-4D36-ACAA-D4308889C845}">
+              <File Id="mde.pdb" KeyPath="yes" Source="$(var.SourceFiles)\mde.pdb" />
+            </Component>
             <Component Id="mde.exe.config" Guid="{BF5FEE33-CC59-4B7B-82A5-3B3DF599919E}">
               <File Id="mde.exe.config" KeyPath="yes" Source="$(var.SourceFiles)\mde.exe.config" />
             </Component>
@@ -80,6 +89,9 @@
             </Component>
             <Component Id="NHunspell.dll" Guid="{9F5FF222-8FC3-43A5-982D-74C3B961C611}">
               <File Id="NHunspell.dll" KeyPath="yes" Source="$(var.SourceFiles)\NHunspell.dll" />
+            </Component>
+            <Component Id="NHunspell.pdb" Guid="{A6E4D773-F5C4-427B-AC7A-6D5A62730FE1}">
+              <File Id="NHunspell.pdb" KeyPath="yes" Source="$(var.SourceFiles)\NHunspell.pdb" />
             </Component>
             <Component Id="System.Windows.Interactivity.dll" Guid="{D04B4B99-BBBA-4FC1-90F3-2797379617E4}">
               <File Id="System.Windows.Interactivity.dll" KeyPath="yes" Source="$(var.SourceFiles)\System.Windows.Interactivity.dll" />
@@ -191,7 +203,9 @@
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="ApplicationShortcutDesktop" />
       <ComponentRef Id="CommonMark.dll" />
+      <ComponentRef Id="CommonMark.pdb" />
       <ComponentRef Id="HtmlAgilityPack.dll" />
+      <ComponentRef Id="HtmlAgilityPack.pdb" />
       <ComponentRef Id="Hunspellx64.dll" />
       <ComponentRef Id="Hunspellx86.dll" />
       <ComponentRef Id="ICSharpCode.AvalonEdit.dll" />
@@ -199,9 +213,11 @@
       <ComponentRef Id="Microsoft.DwayneNeed.dll" />
       <ComponentRef Id="Microsoft.DwayneNeed.Win32.dll" />
       <ComponentRef Id="mde.exe" />
+      <ComponentRef Id="mde.pdb" />
       <ComponentRef Id="mde.exe.config" />
       <ComponentRef Id="Newtonsoft.Json.dll" />
       <ComponentRef Id="NHunspell.dll" />
+      <ComponentRef Id="NHunspell.pdb" />
       <ComponentRef Id="System.Windows.Interactivity.dll" />
       <ComponentRef Id="Pandoc.exe" />
       <ComponentRef Id="en_US.aff" />
