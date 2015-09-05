@@ -43,6 +43,7 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand MoveLineDownCommand = new RoutedCommand();
         public static RoutedCommand ConvertSelectionToListCommand = new RoutedCommand();
         public static RoutedCommand InsertBlockQuoteCommand = new RoutedCommand();
+        public static RoutedCommand RevertCommand = new RoutedCommand();
 
         public Editor()
         {
@@ -589,6 +590,8 @@ namespace MarkdownEdit.Controls
         public void ReplaceAll(Regex find, string replace) => Execute(() => EditBox.ReplaceAll(find, replace));
 
         private void ExecuteDeselectCommand(object sender, ExecutedRoutedEventArgs e) => EditBox.SelectionLength = 0;
+
+        private void ExecuteRevertCommand(object sender, ExecutedRoutedEventArgs e) => OpenFile(FileName);
 
         public EventHandler TextChanged;
 
