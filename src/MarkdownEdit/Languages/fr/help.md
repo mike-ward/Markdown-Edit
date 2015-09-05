@@ -12,6 +12,7 @@ Keyboard Shortcuts
     Ctrl+R         Fichiers récents
     Ctrl+E         Exporter en HTML vers le presse papier
     Ctrl+Shift+E   Exporter en HTML avec le template vers le presse papier
+    F5             Recharger fichier
     Alt+F4         Quitter
 
     Ctrl+W         Activer/désactiver le retour à la ligne automatique

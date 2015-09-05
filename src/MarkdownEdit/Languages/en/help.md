@@ -12,6 +12,7 @@ Keyboard Shortcuts
     Ctrl+R         Recent files
     Ctrl+E         Export HTML to clipboard
     Ctrl+Shift+E   Export HTML and template to clipboard
+    F5             Reload file
     Alt+F4         Exit
 
     Ctrl+W         Toggle word wrap
