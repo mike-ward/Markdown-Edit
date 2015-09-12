@@ -122,6 +122,9 @@
     <Compile Include="Controls\DisplaySettings.xaml.cs">
       <DependentUpon>DisplaySettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FadingPopupControl.xaml.cs">
+      <DependentUpon>FadingPopupControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FontComboBox.xaml.cs">
       <DependentUpon>FontComboBox.xaml</DependentUpon>
     </Compile>
@@ -179,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Editor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FadingPopupControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

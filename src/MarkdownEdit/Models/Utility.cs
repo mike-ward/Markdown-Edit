@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using MarkdownEdit.Controls;
 using MarkdownEdit.MarkdownConverters;
 
 namespace MarkdownEdit.Models
@@ -62,7 +63,7 @@ namespace MarkdownEdit.Models
         {
             var text = RemoveYamlFrontMatter(markdown);
             var html = converter.ConvertToHtml(text, false);
-            Clipboard.SetText(html);
+            CopyHtmlToClipboard(html);
         }
 
         public static void ExportHtmlTemplateToClipboard(string markdown, IMarkdownConverter converter)
@@ -70,7 +71,14 @@ namespace MarkdownEdit.Models
             var text = RemoveYamlFrontMatter(markdown);
             var html = converter.ConvertToHtml(text, false);
             html = UserTemplate.InsertContent(html);
+            CopyHtmlToClipboard(html);
+        }
+
+        private static void CopyHtmlToClipboard(string html)
+        {
             Clipboard.SetText(html);
+            var popup = new FadingPopupControl();
+            popup.ShowDialogBox(Application.Current.MainWindow, "HTML copied to clipboard");
         }
 
         public static string RemoveYamlFrontMatter(string markdown)

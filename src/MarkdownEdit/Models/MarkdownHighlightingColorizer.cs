@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using CommonMark;
 using CommonMark.Syntax;
@@ -81,8 +80,8 @@ namespace MarkdownEdit.Models
                     var position = inline.SourcePosition;
                     var length = inline.SourceLength;
 
-                    if ((inline.Tag == InlineTag.Link || inline.Tag == InlineTag.Image) 
-                        && inline.FirstChild?.LiteralContent != null 
+                    if ((inline.Tag == InlineTag.Link || inline.Tag == InlineTag.Image)
+                        && inline.FirstChild?.LiteralContent != null
                         && inline.FirstChild.LiteralContent != inline.TargetUrl)
                     {
                         var literal = inline.FirstChild.LastSibling;
