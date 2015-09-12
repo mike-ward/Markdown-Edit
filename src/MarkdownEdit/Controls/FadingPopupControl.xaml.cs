@@ -19,7 +19,6 @@ namespace MarkdownEdit.Controls
         {
             _parentWindow = parentWindow;
             _focusedElement = Keyboard.FocusedElement;
-            _parentWindow.IsEnabled = false;
 
             Width = width;
             Height = height;
@@ -36,7 +35,6 @@ namespace MarkdownEdit.Controls
         private void StatusFader_Completed(object sender, EventArgs e)
         {
             Popup.IsOpen = false;
-            _parentWindow.IsEnabled = true;
             if (_focusedElement != null) Keyboard.Focus(_focusedElement);
         }
     }

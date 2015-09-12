@@ -10,11 +10,11 @@
                 Completed="StatusFader_Completed">
       <DoubleAnimation Storyboard.TargetName="PopupBackground" 
                        Storyboard.TargetProperty="Opacity" 
-                       From="0.7" To="0" 
+                       From="0.8" To="0" 
                        BeginTime="0:0:0"  
-                       Duration="0:0:1.5">
+                       Duration="0:0:1.2">
         <DoubleAnimation.EasingFunction>
-          <ExponentialEase Exponent="10" 
+          <ExponentialEase Exponent="20" 
                            EasingMode="EaseIn" />
         </DoubleAnimation.EasingFunction>
       </DoubleAnimation>
