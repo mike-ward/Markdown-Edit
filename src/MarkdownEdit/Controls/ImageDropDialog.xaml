@@ -10,6 +10,7 @@
         ShowInTaskbar="False"
         WindowStyle="None"
         SizeToContent="WidthAndHeight"
+        AllowsTransparency="True"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
   <Window.Resources>
@@ -17,20 +18,24 @@
     <local:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />
   </Window.Resources>
 
-  <Grid>
+  <Grid Margin="7 5"
+        VerticalAlignment="Center">
     <StackPanel x:Name="ProgressPanel"
                 Orientation="Horizontal"
+                VerticalAlignment="Center"
                 Visibility="{Binding Path=Image, Converter={StaticResource NotNullToVisibleConverter}}">
       <controls:MetroProgressBar x:Name="ProgressBar"
-                                 Width="75"
+                                 VerticalAlignment="Center"
+                                 Width="90"
                                  Height="10"
-                                 Margin="4 0 4 0" />
-      <Button Click="OnCancel">
+                                 Margin="0 0 10 0"/>
+      <Button Click="OnCancel"
+              VerticalAlignment="Center">
         Cancel
       </Button>
     </StackPanel>
     <Menu x:Name="Menu"
-          Margin="2"
+          VerticalAlignment="Center"
           Visibility="{Binding Path=Image, Converter={StaticResource NullToVisibleConverter}}">
       <Menu.ItemsPanel>
         <ItemsPanelTemplate>
