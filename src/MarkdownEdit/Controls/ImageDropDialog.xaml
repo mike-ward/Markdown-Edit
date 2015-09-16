@@ -11,6 +11,8 @@
         WindowStyle="None"
         SizeToContent="WidthAndHeight"
         AllowsTransparency="True"
+        BorderThickness="1"
+        BorderBrush="Black"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
   <Window.Resources>
