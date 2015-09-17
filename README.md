@@ -1,6 +1,8 @@
 Markdown Edit
 =============
 
+[![Join the chat at https://gitter.im/mike-ward/Markdown-Edit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mike-ward/Markdown-Edit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ![logo](https://raw.githubusercontent.com/mike-ward/Markdown-Edit/master/src/MarkdownEdit/logo.png)
 
 [Home Page](http://mike-ward.net/markdownedit)
