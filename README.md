@@ -1,7 +1,8 @@
 Markdown Edit
 =============
 
-[![Join the chat at https://gitter.im/mike-ward/Markdown-Edit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mike-ward/Markdown-Edit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at
+https://gitter.im/mike-ward/Markdown-Edit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mike-ward/Markdown-Edit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ![logo](https://raw.githubusercontent.com/mike-ward/Markdown-Edit/master/src/MarkdownEdit/logo.png)
 
@@ -34,8 +35,8 @@ Features
 -   User preferences stored in a text file for easy sharing
 -   Full screen covers task-bar (optional)
 -   Keyboard shortcuts for bold, italic, headers, lists, block quotes, etc.
--   User defined snippets improve the speed and proficiency of writing
-    documents.
+-   User defined snippets improve the speed and proficiency of
+    writing documents.
 -   Modern UI look and feel
 -   **Not** a Windows Store App
 -   Synchronized scrolling
@@ -61,7 +62,7 @@ Requirements
 ------------
 
 -   Windows 7+
--   .NET 4.5.2 (Get it at <http://smallestdotnet.com>)
+-   .NET 4.6 (Get it at <http://smallestdotnet.com>)
 
 Installing
 ----------
