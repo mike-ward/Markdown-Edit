@@ -171,6 +171,14 @@
                   <File Id="lang_en_help_md" KeyPath="yes" Source="$(var.SourceFiles)\Languages\en\help.md" />
                 </Component>
               </Directory>
+              <Directory Id="es" Name="es">
+                <Component Id="lang_es_local.txt" Guid="{D22D082E-0408-4546-9B71-C6D95259E357}">
+                  <File Id="lang_es_local.txt" KeyPath="yes" Source="$(var.SourceFiles)\Languages\es\local.txt" />
+                </Component>
+                <Component Id="lang_es_help.md" Guid="{EC4DE07A-B8A2-44E0-BCC2-8CA437D0FF17}">
+                  <File Id="lang_es_help_md" KeyPath="yes" Source="$(var.SourceFiles)\Languages\es\help.md" />
+                </Component>
+              </Directory>
               <Directory Id="fr" Name="fr">
                 <Component Id="lang_fr_local.txt" Guid="{B42B6BE1-95E7-45E2-ADF9-C60BD42E22AC}">
                   <File Id="lang_fr_local.txt" KeyPath="yes" Source="$(var.SourceFiles)\Languages\fr\local.txt" />
@@ -241,6 +249,8 @@
       <ComponentRef Id="zenburn.json" />
       <ComponentRef Id="lang_en_local.txt" />
       <ComponentRef Id="lang_en_help.md" />
+      <ComponentRef Id="lang_es_local.txt" />
+      <ComponentRef Id="lang_es_help.md" />
       <ComponentRef Id="lang_fr_local.txt" />
       <ComponentRef Id="lang_fr_help.md" />
     </ComponentGroup>

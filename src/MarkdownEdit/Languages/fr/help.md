@@ -184,6 +184,8 @@ Le texte `mde` est remplacé par
 
 ### Paramètres de substitution des snippets
 
+-   $CLIPBOARD$ - est remplacé par le contenu du presse (texte seulement)
+
 -   $END$ - Place le curseur après insertion. Par exemple
 
     mde [Markdown $END$ Edit](http://mike-ward.net/markdown)
@@ -288,12 +290,7 @@ Etc.
 Limitations
 -----------
 
--   Seulement CommonMark est supporté
 -   Interface mono document
--   <s>La colorisation syntaxique ne fonctionne pas avec les constructions sur
-    plusieurs lignes. Elle utilise des expressions régulières qui ne sont pas
-    compatibles avec les constructions sous jacentes de Markdown. J'espère qu'un
-    solide parser CommonMark (like PEG) apparaîtra.</s>
 -   Je l'ai écris ;)
 
 A propos

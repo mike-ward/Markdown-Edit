@@ -182,11 +182,13 @@ The `mde` text is replaced by
 
 ### Snippet Substitution Parameters
 
+-   $CLIPBOARD$ - is replaced with clipboard contents (text only)
+
 -   $END$ - Positions the cursor after insertion. For instance
 
     mde [Markdown $END$ Edit](http://mike-ward.net/markdown)
 
-positions the cursor between *Markdown* and *Edit*
+	positions the cursor between *Markdown* and *Edit*
 
 -   $DATE$ - is replaced with the current date and time
 
@@ -275,18 +277,13 @@ Etc.
 Limitations
 -----------
 
--   Only supports CommonMark
 -   Single document Interface
--   <s>Syntax highlighting does not recognize multiple-line constructs. It uses
-    regular expressions which don't understand the underlying Markdown
-    constructs. I'm hoping that as CommonMark matures a syntax parser (like PEG)
-    will emerge.</s>
 -   I wrote it ;)
 
 About
 -----
 
-Version 1.10.0  
+Version 1.11.0  
 Home Page: <http://mike-ward.net/markdownedit>  
 Twitter: `@mikeward_aa` 
 Source: <https://github.com/mike-ward/Markdown-Edit>
