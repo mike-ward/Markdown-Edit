@@ -61,6 +61,11 @@ settings-open-dictionary:         Dictionnaire utilisateur
 settings-open-snippets:           Snippets
 settings-open-key-bindings:       Raccourcis clavier
 
+settings-about:                   Sur
+settings-version:				  Version
+settings-web:					  Web
+settings-source:				  Source
+
 === Find Replace Dialog
 
 find-replace-title:               Chercher et remplacer

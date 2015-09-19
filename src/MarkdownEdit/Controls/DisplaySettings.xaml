@@ -28,6 +28,18 @@
            TargetType="Separator">
       <Setter Property="Margin" Value="0 3 0 5" />
     </Style>
+
+    <Style x:Key="AboutLabelStyle"
+           TargetType="TextBlock">
+      <Setter Property="Width" Value="75" />
+      <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style x:Key="HyperlinkStyle"
+           TargetType="Hyperlink">
+      <Setter Property="Foreground" Value="WhiteSmoke" />
+      <Setter Property="FontSize" Value="16" />
+    </Style>
   </UserControl.Resources>
 
   <ScrollViewer>
@@ -73,6 +85,46 @@
         <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f7}" Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}" Content="{i18N:Localize settings-open-dictionary}" />
         <Button Margin="3 2" ToolTip="{i18N:Localize tooltip-f6}" Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}" Content="{i18N:Localize settings-open-snippets}" />
       </UniformGrid>
+
+      <TextBlock Style="{StaticResource SectionHeader}" Text="{i18N:Localize settings-about}" />
+      <Separator Style="{StaticResource SeparatorStyle}" />
+      <StackPanel Margin="30 5">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-version}" />
+          <TextBlock FontSize="16" Text="1.11" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-web}" />
+          <TextBlock>
+            <Hyperlink NavigateUri="http://mike-ward.net/markdownedit"
+                       Style="{StaticResource HyperlinkStyle}"
+                       RequestNavigate="HyperlinkOnRequestNavigate">
+              http://mike-ward.net
+            </Hyperlink>
+          </TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Style="{StaticResource AboutLabelStyle}">Twitter</TextBlock>
+          <TextBlock>
+            <Hyperlink NavigateUri="https://twitter.com/mikeward_aa"
+                       Style="{StaticResource HyperlinkStyle}"
+                       RequestNavigate="HyperlinkOnRequestNavigate">
+              mikeward_aa
+            </Hyperlink>
+          </TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Style="{StaticResource AboutLabelStyle}"  Text="{i18N:Localize settings-source}" />
+          <TextBlock>
+            <Hyperlink NavigateUri="https://github.com/mike-ward/Markdown-Edit"
+                       Style="{StaticResource HyperlinkStyle}"
+                       RequestNavigate="HyperlinkOnRequestNavigate">
+              GitHub
+            </Hyperlink>
+          </TextBlock>
+        </StackPanel>
+      </StackPanel>
+
     </StackPanel>
   </ScrollViewer>
 </UserControl>

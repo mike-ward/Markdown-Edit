@@ -298,7 +298,8 @@ A propos
 
 Version 1.11.0  
 Home Page: <http://mike-ward.net/markdownedit>  
-Twitter: `@mikeward_aa` Source: <https://github.com/mike-ward/Markdown-Edit>
+Twitter: `@mikeward_aa`  
+Source: <https://github.com/mike-ward/Markdown-Edit>
 
 Markdown Edit License
 ---------------------
