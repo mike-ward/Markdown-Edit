@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows;
 using ICSharpCode.AvalonEdit.Snippets;
 using MarkdownEdit.Models;
 
@@ -67,6 +68,7 @@ namespace MarkdownEdit.Snippets
             foreach (var token in replaceable.Split(expanded))
             {
                 if (token == "$END$") snippet.Elements.Add(new SnippetCaretElement());
+                else if (token == "$CLIPBOARD$") snippet.Elements.Add(new SnippetTextElement { Text = Clipboard.GetText()});
                 else if (replaceable.IsMatch(token)) snippet.Elements.Add(new SnippetReplaceableTextElement { Text = token.Trim('$') });
                 else snippet.Elements.Add(new SnippetTextElement { Text = token });
             }
