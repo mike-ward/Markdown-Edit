@@ -114,3 +114,4 @@ tooltip-ctrl-w:                   Ctrl+W
 open:                             Ouvrir
 save:                             Enregistrer
 cancel:                           Annuler
+message-html-clipboard:		      HTML copié dans le presse-papiers

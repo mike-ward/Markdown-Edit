@@ -115,3 +115,4 @@ tooltip-ctrl-w:                   Ctrl+W
 open:                             Open
 save:                             Save
 cancel:                           Cancel
+message-html-clipboard:		      HTML copied to clipboard

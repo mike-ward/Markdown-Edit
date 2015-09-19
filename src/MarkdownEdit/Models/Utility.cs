@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using MarkdownEdit.Controls;
+using MarkdownEdit.i18n;
 using MarkdownEdit.MarkdownConverters;
 
 namespace MarkdownEdit.Models
@@ -78,7 +79,8 @@ namespace MarkdownEdit.Models
         {
             Clipboard.SetText(html);
             var popup = new FadingPopupControl();
-            popup.ShowDialogBox(Application.Current.MainWindow, "HTML copied to clipboard");
+            var message = TranslationProvider.Translate("message-html-clipboard") as string;
+            popup.ShowDialogBox(Application.Current.MainWindow, message);
         }
 
         public static string RemoveYamlFrontMatter(string markdown)
