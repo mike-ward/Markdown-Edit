@@ -131,30 +131,28 @@ namespace MarkdownEdit.Controls
 
         private void PasteSpecial() => Execute(() =>
         {
-            _removeSpecialCharacters = true;
-            EditBox.Paste();
+            try
+            {
+                _removeSpecialCharacters = true;
+                EditBox.Paste();
+            }
+            finally
+            {
+                _removeSpecialCharacters = false;
+            }
         });
 
         private void OnPaste(object sender, DataObjectPastingEventArgs pasteEventArgs)
         {
             var text = (string) pasteEventArgs.SourceDataObject.GetData(DataFormats.UnicodeText, true);
-            if (text == null) return;
+            if (string.IsNullOrWhiteSpace(text)) return;
+            if (_removeSpecialCharacters) text = text.ReplaceSmartChars();
+            else if (Uri.IsWellFormedUriString(text, UriKind.Absolute)) text = Images.IsImageUrl(text) ? $"![](<{text}>)\n" : $"<{text}>";
+            else return;
 
-            var modifiedText = _removeSpecialCharacters
-                ? text.ReplaceSmartChars()
-                : Uri.IsWellFormedUriString(text, UriKind.Absolute)
-                    ? Images.IsImageUrl(text)
-                        ? $"![]({text})\n"
-                        : $"<{text}>"
-                    : text;
-
-            if (text == modifiedText) return;
-
-            // AvalongEdit won't use new dataobject. Submitted bug 18 about this.
-            pasteEventArgs.CancelCommand();
-            Clipboard.SetText(modifiedText);
-            EditBox.Focus();
-            EditBox.Paste();
+            var dataObject = new DataObject();
+            dataObject.SetData(DataFormats.UnicodeText, text);
+            pasteEventArgs.DataObject = dataObject;
         }
 
         protected override void OnDragEnter(DragEventArgs e)
