@@ -428,21 +428,10 @@ namespace MarkdownEdit.Controls
 
         public bool SaveFileAs() => Execute(() =>
         {
-            var dialog = new SaveFileDialog
-            {
-                FilterIndex = 0,
-                OverwritePrompt = true,
-                RestoreDirectory = true,
-                FileName = Utility.SuggestFilenameFromTitle(EditBox.Text),
-                Filter = @"Markdown files (*.md)|*.md|All files (*.*)|*.*"
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                FileName = dialog.FileNames[0];
-                return Save() && LoadFile(FileName);
-            }
-            return false;
+            var filename = Utility.SaveFileDialog(
+                Utility.SuggestFilenameFromTitle(EditBox.Text), 
+                @"Markdown files (*.md)|*.md|All files (*.*)|*.*");
+            return !string.IsNullOrWhiteSpace(filename) && (Save() && LoadFile(filename));
         });
 
         public bool LoadFile(string file)

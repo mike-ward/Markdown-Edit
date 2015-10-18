@@ -13,6 +13,7 @@ using System.Windows.Media;
 using MarkdownEdit.Controls;
 using MarkdownEdit.i18n;
 using MarkdownEdit.MarkdownConverters;
+using Microsoft.Win32;
 
 namespace MarkdownEdit.Models
 {
@@ -73,6 +74,37 @@ namespace MarkdownEdit.Models
             var html = converter.ConvertToHtml(text, false);
             html = UserTemplate.InsertContent(html);
             CopyHtmlToClipboard(html);
+        }
+
+        public static void SaveAsHtml(string markdown, IMarkdownConverter converter)
+        {
+            try
+            {
+                var text = RemoveYamlFrontMatter(markdown);
+                var html = converter.ConvertToHtml(text, false);
+                var file = SaveFileDialog(SuggestFilenameFromTitle(text), @"Html files (*.html)|*.html|All files (*.*)|*.*");
+                if (string.IsNullOrWhiteSpace(file)) return;
+                File.WriteAllText(file, html);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public static string SaveFileDialog(string suggestedName, string filter)
+        {
+            var dialog = new SaveFileDialog
+            {
+                FilterIndex = 0,
+                OverwritePrompt = true,
+                RestoreDirectory = true,
+                FileName = suggestedName,
+                Filter = filter
+            };
+
+            var showDialog = dialog.ShowDialog();
+            return showDialog != null && (bool)showDialog ? dialog.FileNames[0] : string.Empty;
         }
 
         private static void CopyHtmlToClipboard(string html)
