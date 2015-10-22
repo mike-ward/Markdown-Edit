@@ -193,37 +193,33 @@ Teksten `mde` vil så blive erstattet med
 
     link [$link_text$]($link_url$) $END$
 
-When triggered, the snippet will expand as `[link_text](link_url)`, with
-`link_text`, highlighted. Type the link text and press `TAB`. Now the `link_url`
-text is highlighted. Enter the link URL and press `Enter`. The cursor moves one
-space past the closing parenthesis.
+Når kodestumpen udføres vil denne udvides til `[link_text](link_url)`, med 
+`link_text` markeret. Indtast teksten til linket og tryk `TAB`. 
+Nu er `link_url` så markeret. Indtast URL'en til linket og tryk `Enter`. 
+Markøren flytter sig et mellemrum forbi den afsluttende parentes.
 
-The description sounds more complicated than it is. Try it and you'll see that
-it's an easy and natural workflow.
+Beskrivelsen lyder mere kompliceret end det er. Prøv det, og du vil opdage at 
+det er en let og naturlig arbejdsgang. 
 
--   `\n` - insert a new line
+-   `\n` - Indsæt en ny linje
 
-If you delete this file, Markdown Edit will restore it with the default
-snippets.
+Hvis du sletter denne fil, vil Markdown Edit genoprette den med standard kodestumperne. 
 
 Skabeloner
 ----------
 
-You can change the appearance of the preview view by changing the user template
-file. User templates work similar to user settings. The template file is stored
-in the `AppData` Folder as `user_template.html`. It can be quickly accessed by
-pressing `F8`. Edit it as you see fit.
+Du kan ændre udseendet af forhåndsvisningen ved at ændre skabelon filen. Bruger skabeloner fungerer ligesom bruger indstillinger. Skabelon filen gemmes i `AppData` mappen som 
+`user_template.html`. Den kan hurtigt åbnes ved at trykke `F8`. Rediger den som du lyster.
 
-It is strongly recommended that you keep the IE9 meta tag in the `<head>`
-section.
+Det er stærkt anbefalet at du beholder IE9 meta tagget i `<head>` sektionen. 
 
-A `<div>` with an ID of `contents` is required. This is where the translated
-markup is inserted into the document.
+Der skal være et `<div>` tag med ID `content`. Dette er påkrævet. Det er her den oversatte 
+markup indsættes i dokumentet. 
 
-When you change settings and save this file, Markdown Edit will immediately
-update to reflect the changes.
+Når du ændrer skabelonen og gemmer filen, vil Markdown Edit opdaterer forhåndsvisningen 
+med det samme.
 
-If you delete this file, Markdown Edit will restore the default template.
+Hvis du sletter filen, vil Markdown Edit genoprette standard skabelonen.
 
 Stave kontrol
 -------------
