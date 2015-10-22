@@ -24,6 +24,7 @@ namespace MarkdownEdit.Controls
     public partial class Editor : INotifyPropertyChanged
     {
         private string _fileName;
+        private string _fileFilter = "Markdown files (*.md)|*md|All files (*.*)|(*.*)";
         private string _displayName = string.Empty;
         private bool _isModified;
         private bool _removeSpecialCharacters;
@@ -370,6 +371,7 @@ namespace MarkdownEdit.Controls
             if (string.IsNullOrWhiteSpace(file))
             {
                 var dialog = new OpenFileDialog();
+                dialog.Filter = _fileFilter;
                 var result = dialog.ShowDialog();
                 if (result == false) return;
                 file = dialog.FileNames[0];
