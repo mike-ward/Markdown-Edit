@@ -1,6 +1,8 @@
 Markdown Edit
 =============
 
+[![Build status](https://ci.appveyor.com/api/projects/status/bqawxp5t4615y25s?svg=true)](https://ci.appveyor.com/project/mike-ward/markdown-edit)
+
 [![Join the chat at
 https://gitter.im/mike-ward/Markdown-Edit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mike-ward/Markdown-Edit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 

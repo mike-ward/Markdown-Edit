@@ -37,7 +37,7 @@ title:  Downloads
 A Windows Desktop Markdown Editor[Read more...](/ markdownedit)";
 
             var tuple = Utility.SeperateFrontMatter(text);
-            tuple.Item1.Should().EndWith("---\r\n\r\n");
+            tuple.Item1.Should().Match("*---*");
             tuple.Item2.Should().StartWith("###");
         }
 

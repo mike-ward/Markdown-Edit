@@ -40,7 +40,7 @@ settings-line-numbers:            Linje numre
 settings-open-last-file:          Åbn seneste fil
 settings-remember-cursor-pos:     Husk markør position
 settings-highlight-current:       Fremhæv aktuel linje
-settings-show-scroll-bar:         Vis vertikal rullepanel
+settings-show-scroll-bar:         Vis vertikalt rullepanel
 settings-show-tabs:               Vis tabuleringer
 settings-show-spaces:             Vis mellemrum
 settings-show-end-of-line:        Vis linje endelser

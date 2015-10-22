@@ -4,7 +4,7 @@
   <Product Id="*"
            Name="Markdown Edit"
            Language="1033"
-           Version="1.11.0.0"
+           Version="1.12.0.0"
            Manufacturer="Mike Ward"
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
 
@@ -131,6 +131,12 @@
                 <Component Id="Spanish.dic" Guid="{5F05F937-13E6-491A-83A1-BBF413A59B0F}">
                   <File Id="Spanish.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Spanish.dic" />
                 </Component>
+                <Component Id="Russian.aff" Guid="{9563DB6D-4470-4609-8EBF-014D82641053}">
+                  <File Id="Russian.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Russian.aff" />
+                </Component>
+                <Component Id="Russian.dic" Guid="{AF4346BC-7836-48ED-ACDF-9D7750E40AC5}">
+                  <File Id="Russian.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Russian.dic" />
+                </Component>
               </Directory>
             </Directory>
             <Directory Id="Themes" Name="Themes">
@@ -238,6 +244,8 @@
       <ComponentRef Id="Italian.dic" />
       <ComponentRef Id="Spanish.aff" />
       <ComponentRef Id="Spanish.dic" />
+      <ComponentRef Id="Russian.aff" />
+      <ComponentRef Id="Russian.dic" />
       <ComponentRef Id="brain_salad_surgery.json" />
       <ComponentRef Id="inflamed_wound.json" />
       <ComponentRef Id="milk_toast.json" />
