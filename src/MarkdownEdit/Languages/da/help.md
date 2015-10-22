@@ -127,8 +127,10 @@ Ved at gemme indstillinger i en ren tekst fil, er det muligt at dele
 indstillinger mellem installationer. Det er også muligt at tilgå nogle, men ikke
 alle indstillinger, ved at klikke på `Tandhjul` ikonet i titel linjen.
 
-Typisk er denne mappe at finde her `C:\Users\<USER>\AppData\Roaming\Markdown Edit\user_settings.json`. Ved at trykke `F9` åbnes filen i systemets Notepad program.
-Filen vil se ud ligesom dette:
+Typisk er denne mappe at finde her
+`C:\Users\<USER>\AppData\Roaming\Markdown Edit\user_settings.json`. Ved at
+trykke `F9` åbnes filen i systemets Notepad program. Filen vil se ud ligesom
+dette:
 
     {
         "EditorBackground": "#F7F4EF",
@@ -137,17 +139,23 @@ Filen vil se ud ligesom dette:
         "EditorFontSize": 14.0
     }
 
-Når du ændrer indstillinger og gemmer denne fil, vil Markdown Edit øjeblikkeligt reflektere ændringerne.
+Når du ændrer indstillinger og gemmer denne fil, vil Markdown Edit øjeblikkeligt
+reflektere ændringerne.
 
-Farver kan defineres som RGB værdier, lige som `EditorBackground` indstillingen, eller ved at forud definerede navne (såsom `EditorForground`). Acceptable forud definerede navn kan findes [her](http://is.gd/IkK9i7). 
+Farver kan defineres som RGB værdier, lige som `EditorBackground` indstillingen,
+eller ved at forud definerede navne (såsom `EditorForground`). Acceptable forud
+definerede navn kan findes [her](http://is.gd/IkK9i7).
 
-Hvis du sletter filen, vil Markdown Edit gendanne den med standard indstillinger.
-
+Hvis du sletter filen, vil Markdown Edit gendanne den med standard
+indstillinger.
 
 Kodestumper
--------
+-----------
 
-Kodestumper gør det muligt at hurtigt indsætte ord og vendinger ved at indtaste et udløser ord, og derefter trykke på `TAB` tasten. Dette kan hjælpe med at forbedre hastighed og skrivefærdighed. Kodestumper gemmes i en tekst fil som kan redigeres ved at trykke `F6`.
+Kodestumper gør det muligt at hurtigt indsætte ord og vendinger ved at indtaste
+et udløser ord, og derefter trykke på `TAB` tasten. Dette kan hjælpe med at
+forbedre hastighed og skrivefærdighed. Kodestumper gemmes i en tekst fil som kan
+redigeres ved at trykke `F6`.
 
 Kodestumper aktiveres ved at indtaste et udløser ord og trykke `TAB`.
 
@@ -157,7 +165,7 @@ Kodestumper består af en enlig linje som starter med:
 -   et eller flere mellemrum
 -   tekst som vil erstatte ordet
 
-Eksempel 
+Eksempel
 
     mde  [Markdown Edit](http://mike-ward.net/markdown)
 
@@ -167,13 +175,14 @@ Når denne kodestumper er defineret, åbn Markdown Edit og indtast
 
 Hvor `[TAB]` er tabulator tasten.
 
-Teksten `mde` vil så blive erstattet med 
+Teksten `mde` vil så blive erstattet med
 
     [Markdown Edit](http://mike-ward.net/markdown)
 
 ### Kodestump erstatnings parametre
 
--   $CLIPBOARD$ - Vil blive erstattet med indholdet af udklipsholderen (kun tekst)
+-   $CLIPBOARD$ - Vil blive erstattet med indholdet af udklipsholderen
+    (kun tekst)
 
 -   $END$ - Placerer cursoren bag det indsatte. For eksempel
 
@@ -186,86 +195,90 @@ Teksten `mde` vil så blive erstattet med
 -   $DATE("format")$ - format er et gyldigt .NET dato format
     (<http://www.dotnetperls.com/datetime-format>)
 
--   $NAME$ - Hvor `NAME` er et vilkårligt ord, inklusiv understregninger. 
-    Når kodestumpen aktiveresm vil parameteren være fremhævet og klar til indtastning.
-    Der kan være adskillige erstatningsparametre i en kodestump.
-    *Link* kodestumpen er f.eks. defineret således: 
+-   $NAME$ - Hvor `NAME` er et vilkårligt ord, inklusiv understregninger. Når
+    kodestumpen aktiveresm vil parameteren være fremhævet og klar
+    til indtastning. Der kan være adskillige erstatningsparametre i
+    en kodestump. *Link* kodestumpen er f.eks. defineret således:
 
-    link [$link_text$]($link_url$) $END$
+    link [$link\_text$]($link_url$) $END$
 
-Når kodestumpen udføres vil denne udvides til `[link_text](link_url)`, med 
-`link_text` markeret. Indtast teksten til linket og tryk `TAB`. 
-Nu er `link_url` så markeret. Indtast URL'en til linket og tryk `Enter`. 
-Markøren flytter sig et mellemrum forbi den afsluttende parentes.
+Når kodestumpen udføres vil denne udvides til `[link_text](link_url)`, med
+`link_text` markeret. Indtast teksten til linket og tryk `TAB`. Nu er `link_url`
+så markeret. Indtast URL'en til linket og tryk `Enter`. Markøren flytter sig et
+mellemrum forbi den afsluttende parentes.
 
-Beskrivelsen lyder mere kompliceret end det er. Prøv det, og du vil opdage at 
-det er en let og naturlig arbejdsgang. 
+Beskrivelsen lyder mere kompliceret end det er. Prøv det, og du vil opdage at
+det er en let og naturlig arbejdsgang.
 
 -   `\n` - Indsæt en ny linje
 
-Hvis du sletter denne fil, vil Markdown Edit genoprette den med standard kodestumperne. 
+Hvis du sletter denne fil, vil Markdown Edit genoprette den med standard
+kodestumperne.
 
 Skabeloner
 ----------
 
-Du kan ændre udseendet af forhåndsvisningen ved at ændre skabelon filen. Bruger skabeloner fungerer ligesom bruger indstillinger. Skabelon filen gemmes i `AppData` mappen som 
-`user_template.html`. Den kan hurtigt åbnes ved at trykke `F8`. Rediger den som du lyster.
+Du kan ændre udseendet af forhåndsvisningen ved at ændre skabelon filen. Bruger
+skabeloner fungerer ligesom bruger indstillinger. Skabelon filen gemmes i
+`AppData` mappen som `user_template.html`. Den kan hurtigt åbnes ved at trykke
+`F8`. Rediger den som du lyster.
 
-Det er stærkt anbefalet at du beholder IE9 meta tagget i `<head>` sektionen. 
+Det er stærkt anbefalet at du beholder IE9 meta tagget i `<head>` sektionen.
 
-Der skal være et `<div>` tag med ID `content`. Dette er påkrævet. Det er her den oversatte 
-markup indsættes i dokumentet. 
+Der skal være et `<div>` tag med ID `content`. Dette er påkrævet. Det er her den
+oversatte markup indsættes i dokumentet.
 
-Når du ændrer skabelonen og gemmer filen, vil Markdown Edit opdaterer forhåndsvisningen 
-med det samme.
+Når du ændrer skabelonen og gemmer filen, vil Markdown Edit opdaterer
+forhåndsvisningen med det samme.
 
 Hvis du sletter filen, vil Markdown Edit genoprette standard skabelonen.
 
-Stave kontrol
--------------
+Stavekontrol
+------------
 
-Pressing `F7` will toggle spell checking. Spell checking is done as you type.
-Right-click on the word to get suggested spellings or to add to the dictionary.
+Trykker man på `F7` bliver stavekontrol slået til eller fra. Stavekontrol
+foregår løbende efterhånden som du skriver. Højre-klikker du på et ord, kan
+stavekontrollen foreslå alternative stavemåder eller tilføje ordet til ordbogen.
 
-The custom dictionary is a simple text file. It stored in the same folder as the
-user settings and user templates. It can be accessed and edited by pressing
+Bruger ordbogen er en simpel tekst fil. Den gemmes samme sted som bruger
+indstillinger og skabeloner. Filen kan åbnes og redigeres ved at trykke
 `Shift+F7`.
 
-Markdown Edit ships with dictionaries for many languages. Set the dictionary by
-pressing `F9`. The dictionaries are stored in the installation folder under
+Markdown Edit kommer med ordbøger til adskillige sprog. Sæt den aktuelle ordbog
+ved at trykke `F9`. Ordbogen gemmes i installationsmappen under
 `Spell Check\Dictionaries`.
 
 Temaer
 ------
 
-Markdown Edit has a rudimentary theme system. Themes, control the appearance of
-the editor and syntax highlighting. The UI elements (i.e. dialogs) are not
-affected.
+Markdown Edit indeholder et simpelt tema system. Temaer kontroller editorens
+udseende og syntaksfremhævning. UI elementer (f.eks. dialoger) er ikke påvirket.
 
-Out of the box, Markdown comes with several themes which can be accessed by
-pressing `Ctrl+T`. Selecting a theme updates your user settings. You can further
-edit the theme by opening your user settings (`F9`) and editing the theme
-section. This is the recommended way to create a new theme.
+Markdown kommer med adskillige temaer som kan tilgås ved at trykke `Ctrl+T`.
+Valg af et tema opdaterer dine bruger indstillinger. Du kan redigerer tema ved
+at åbne dine bruger indstillinger (`F9`) og redigere tema sektionen. Dette er
+den anbefalede måde at lave nye temaer på.
 
-Themes are located in the installation directory under `\Themes`.
+Temaerne findes i installationsmappen under `\Themes`.
 
-If you create an awesome theme, send it to me and I'll add it to the
-distribution. I'm a lousy artist. :)
+Skaber du et fedt tema, så send til mig og så vil jeg inkluderer det i
+distributionen. Jeg er en elendig kunstner. :)
 
 Diverse
 -------
 
--   Line numbers can be enabled/disabled in the settings file
--   List continuations - When editing lists, pressing enter will add the next
-    list marker. Works with numbered lists as well.
--   When opening recent documents, Markdown Edit will scroll to the last
-    saved position. This can be disabled in the setting if not desired.
+-   Linje numre kan slås til og fra i filen med indstillinger
+-   Liste fortsættelser - Når du redigerer lister vil Retur tasten automatisk
+    tilføje den næste liste markør. Det virker også med nummererede liste.
+-   Når du åbner et dokument som har være redigeret for nyligt, vil Markdown
+    Edit rulle ned til den sidst gemte position. Dette kan slås fra i
+    indstillingerne hvis det ikke ønskes.
 
 Begrænsninger
 -------------
 
--   Single document Interface
--   I wrote it ;)
+-   Enkelt-dokument brugerflade.
+-   Jeg skrev det ;)
 
 Om
 --

@@ -1,5 +1,5 @@
 =======================================================
-= Dansk
+= Dansk - Danish
 =======================================================
 
 === Main Window
@@ -17,87 +17,87 @@ settings-flyout-header:           Indstillinger
 
 === Editor
 
-editor-f1-for-help:               - F1 for Help
-editor-new-document:              New Document
-editor-menu-undo:                 Undo
-editor-menu-redo:                 Redo
-editor-menu-cut:                  Cut
-editor-menu-copy:                 Copy
-editor-menu-paste:                Paste
-editor-menu-paste-special:        Paste Special
-editor-menu-select-all:           Select All
-editor-menu-delete:               Delete
-editor-menu-wrap-format:          Wrap & Format
-editor-menu-unwrap-format:        Unwrap & Format
-editor-menu-add-to-dictionary:    Add to Dictionary
+editor-f1-for-help:               - F1 for hjælp
+editor-new-document:              Nyt dokument
+editor-menu-undo:                 Fortryd
+editor-menu-redo:                 Annuller fortryd
+editor-menu-cut:                  Klip
+editor-menu-copy:                 Kopi
+editor-menu-paste:                Indsæt
+editor-menu-paste-special:        Indsæt speciel
+editor-menu-select-all:           Vælg alle
+editor-menu-delete:               Slet
+editor-menu-wrap-format:          Ombryd & Formater
+editor-menu-unwrap-format:        Annuller ombryd & Formater
+editor-menu-add-to-dictionary:    Føj til ordbog
 
 === Settings Dialog
 
 settings-editor-section:          Editor
-settings-word-wrap:               Word Wrap
-settings-auto-save:               Auto Save
-settings-line-numbers:            Line Numbers
-settings-open-last-file:          Open Last File
-settings-remember-cursor-pos:     Remember Cursor Position
-settings-highlight-current:       Highlight Current Line
-settings-show-scroll-bar:         Show Vertical Scrollbar
-settings-show-tabs:               Show Tabs
-settings-show-spaces:             Show Spaces
-settings-show-end-of-line:        Show Line Endings
-settings-sync-scroll-pos:         Synchronize Scroll Positions
-settings-format-on-save:          Format Text on Save
+settings-word-wrap:               Tekst ombrydning
+settings-auto-save:               Auto gem
+settings-line-numbers:            Linje numre
+settings-open-last-file:          Åbn seneste fil
+settings-remember-cursor-pos:     Husk markør position
+settings-highlight-current:       Fremhæv aktuel linje
+settings-show-scroll-bar:         Vis vertikal rullepanel
+settings-show-tabs:               Vis tabuleringer
+settings-show-spaces:             Vis mellemrum
+settings-show-end-of-line:        Vis linje endelser
+settings-sync-scroll-pos:         Synkroniser rullepanel positioner
+settings-format-on-save:          Formater tekst når der gemmes
 settings-github-markdown:         GitHub Markdown
 
-settings-spell-check-section:     Spell Checking
-settings-spell-checking:          Spell Checking
-settings-ignore-all-caps:         Ignore All Caps
-settings-ignore-code-blocks:      Ignore Code Blocks
-settings-ignore-markup:           Ignore Markup Tags
-settings-ignore-words-digits:     Ignore Words with Digits
+settings-spell-check-section:     Stavekontrol
+settings-spell-checking:          Stavekontrol
+settings-ignore-all-caps:         Ignorer store versaler
+settings-ignore-code-blocks:      Ignorer kode blokke
+settings-ignore-markup:           Ignorer Markup mærkater
+settings-ignore-words-digits:     Ignorer ord med cifre
 
-settings-advanced:                Advanced
-settings-open-settings:           Settings
-settings-open-html-template:      HTML Template
-settings-open-dictionary:         User Dictionary
-settings-open-snippets:           Snippets
-settings-open-key-bindings:       Key Bindings
+settings-advanced:                Avanceret
+settings-open-settings:           Indstillinger
+settings-open-html-template:      HTML skabelon
+settings-open-dictionary:         Bruger ordbog
+settings-open-snippets:           Kodestumper
+settings-open-key-bindings:       Tastatur bindinger
 
-settings-about:                   About
-settings-version:				  Version
-settings-web:					  Web
-settings-source:				  Source
+settings-about:                   Om
+settings-version:				          Version
+settings-web:					            Web
+settings-source:				            Kildekode
 
 === Find Replace Dialog
 
-find-replace-title:               Find and Replace
-find-replace-tab-find:            Find
-find-replace-tab-replace:         Replace
-find-replace-watermark-find:      Find
-find-replace-watermark-replace:   Replace
-find-replace-find-next:           Find Next
-find-replace-replace:             Replace
-find-replace-replace-all:         Replace All
-find-replace-match-case:          Match case
-find-replace-match-whole-word:    Match whole word
-find-replace-regular-expression:  Regular expression
+find-replace-title:               Søg og erstat
+find-replace-tab-find:            Søg
+find-replace-tab-replace:         Erstat
+find-replace-watermark-find:      Søg
+find-replace-watermark-replace:   Erstat
+find-replace-find-next:           Søg næste
+find-replace-replace:             Erstat
+find-replace-replace-all:         Erstat alle
+find-replace-match-case:          Forskel på store og små bogstaver
+find-replace-match-whole-word:    Hele ord
+find-replace-regular-expression:  Regulær udtryk
 find-replace-wildcards:           Wild cards
 
 === Goto Line Dialog
 
-goto-line-title:                  Goto Line
+goto-line-title:                  Gå til linje
 
 === Image Drop Progress Dialog
 
-image-drop-insert-path:           Insert Path
-image-drop-upload-imgur:          Upload to Imgur
+image-drop-insert-path:           Indsæt sti
+image-drop-upload-imgur:          Upload til Imgur
 
 === Recent Files Dialog
 
-recent-files-title:               Recent Files
+recent-files-title:               Nylige filer
 
 === Themes Dialog
 
-themes-title:                     Themes
+themes-title:                     Temaer
 
 === Tooltips
 
@@ -112,7 +112,7 @@ tooltip-ctrl-w:                   Ctrl+W
 
 === Generic
 
-open:                             Open
-save:                             Save
-cancel:                           Cancel
-message-html-clipboard:		      HTML copied to clipboard
+open:                             Åbn
+save:                             Gem
+cancel:                           Annuller
+message-html-clipboard:		      HTML kopieret til udklipsholderen
