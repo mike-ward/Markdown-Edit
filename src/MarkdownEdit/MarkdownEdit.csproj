@@ -278,8 +278,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="SpellCheck\Dictionaries\da_DK.aff" />
-    <None Include="SpellCheck\Dictionaries\da_DK.dic" />
+    <None Include="SpellCheck\Dictionaries\Danish.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\Danish.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SpellCheck\Dictionaries\en_US.aff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

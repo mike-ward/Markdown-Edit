@@ -107,6 +107,12 @@
                 <Component Id="en_US.dic" Guid="{5E0746AB-84B4-49A5-B484-A102E434809B}">
                   <File Id="en_US.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\en_US.dic" />
                 </Component>
+                <Component Id="Danish.aff" Guid="{7C13865A-F6FA-43C5-B5F4-FA1E93B0DCCE}">
+                  <File Id="Danish.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Danish.aff" />
+                </Component>
+                <Component Id="Danish.dic" Guid="{029EA5B5-BD37-4534-8EFF-2C5D144C0A41}">
+                  <File Id="Danish.dic" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\Danish.dic" />
+                </Component>
                 <Component Id="French.aff" Guid="{B945C72B-D01C-4974-8405-D80E90FD38ED}">
                   <File Id="French.aff" KeyPath="yes" Source="$(var.SourceFiles)\SpellCheck\Dictionaries\French.aff" />
                 </Component>
@@ -236,6 +242,8 @@
       <ComponentRef Id="Pandoc.exe" />
       <ComponentRef Id="en_US.aff" />
       <ComponentRef Id="en_US.dic" />
+      <ComponentRef Id="Danish.aff" />
+      <ComponentRef Id="Danish.dic" />
       <ComponentRef Id="French.aff" />
       <ComponentRef Id="French.dic" />
       <ComponentRef Id="German.aff" />
