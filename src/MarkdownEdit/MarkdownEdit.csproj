@@ -257,9 +257,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Resource Include="Languages\da\local.txt" />
     <Content Include="Languages\en\help.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Languages\da\help.md" />
     <None Include="Languages\es\local.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -275,6 +277,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="SpellCheck\Dictionaries\da_DK.aff" />
+    <None Include="SpellCheck\Dictionaries\da_DK.dic" />
     <None Include="SpellCheck\Dictionaries\en_US.aff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

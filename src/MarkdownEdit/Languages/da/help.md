@@ -157,7 +157,7 @@ Kodestumper består af en enlig linje som starter med:
 -   et eller flere mellemrum
 -   tekst som vil erstatte ordet
 
-Eksempel
+Eksempel 
 
     mde  [Markdown Edit](http://mike-ward.net/markdown)
 
@@ -175,23 +175,23 @@ Teksten `mde` vil så blive erstattet med
 
 -   $CLIPBOARD$ - Vil blive erstattet med indholdet af udklipsholderen (kun tekst)
 
--   $END$ - Positions the cursor after insertion. For instance
+-   $END$ - Placerer cursoren bag det indsatte. For eksempel
 
     mde [Markdown $END$ Edit](http://mike-ward.net/markdown)
 
-    positions the cursor between *Markdown* and *Edit*
+    placerer cursoren mellem *Markdown* og *Edit*
 
--   $DATE$ - is replaced with the current date and time
+-   $DATE$ - erstattes med indeværende dato og klokkeslæt
 
--   $DATE("format")$ - format is any valid .NET date format
+-   $DATE("format")$ - format er et gyldigt .NET dato format
     (<http://www.dotnetperls.com/datetime-format>)
 
--   $NAME$ - Where `NAME` can be any word including underscores. When the
-    snippet is triggered, the parameter will be highlighted waiting for input.
-    There can be multiple substitution parameters in a snippet. Here's how the
-    *link* snippet is defined:
+-   $NAME$ - Hvor `NAME` er et vilkårligt ord, inklusiv understregninger. 
+    Når kodestumpen aktiveresm vil parameteren være fremhævet og klar til indtastning.
+    Der kan være adskillige erstatningsparametre i en kodestump.
+    *Link* kodestumpen er f.eks. defineret således: 
 
-    link [$link\_text$]($link_url$) $END$
+    link [$link_text$]($link_url$) $END$
 
 When triggered, the snippet will expand as `[link_text](link_url)`, with
 `link_text`, highlighted. Type the link text and press `TAB`. Now the `link_url`
