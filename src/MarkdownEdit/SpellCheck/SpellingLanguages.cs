@@ -23,6 +23,9 @@ namespace MarkdownEdit.SpellCheck
         Spain,
 
         [Description("Russian (Russia)")]
-        Russian
+        Russian,
+		
+		[Description("Danish (Denmark)")]
+		Denmark
     }
 }

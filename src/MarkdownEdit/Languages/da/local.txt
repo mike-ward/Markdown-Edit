@@ -1,0 +1,118 @@
+=======================================================
+= Dansk - Danish
+=======================================================
+
+=== Main Window
+
+tooltip-new-command:              Ny - Ctrl+N
+tooltip-open-command:             Åbn - Ctrl+O
+tooltip-save-command:             Gem - Ctrl+S
+tooltip-save-as-command:          Gem som - Ctrl+Shift+S
+tooltip-toggle-settings:          Indstillinger
+tooltip-word-count:               Ord tæller
+tooltip-spell-check:              Stave kontrol - Ctrl+F7
+tooltip-word-wrap:                Ombryd tekst - Ctrl+W
+tooltip-auto-save:                Gem automatisk - Alt+S
+settings-flyout-header:           Indstillinger
+
+=== Editor
+
+editor-f1-for-help:               - F1 for hjælp
+editor-new-document:              Nyt dokument
+editor-menu-undo:                 Fortryd
+editor-menu-redo:                 Annuller fortryd
+editor-menu-cut:                  Klip
+editor-menu-copy:                 Kopi
+editor-menu-paste:                Indsæt
+editor-menu-paste-special:        Indsæt speciel
+editor-menu-select-all:           Vælg alle
+editor-menu-delete:               Slet
+editor-menu-wrap-format:          Ombryd & Formater
+editor-menu-unwrap-format:        Annuller ombryd & Formater
+editor-menu-add-to-dictionary:    Føj til ordbog
+
+=== Settings Dialog
+
+settings-editor-section:          Editor
+settings-word-wrap:               Tekst ombrydning
+settings-auto-save:               Auto gem
+settings-line-numbers:            Linje numre
+settings-open-last-file:          Åbn seneste fil
+settings-remember-cursor-pos:     Husk markør position
+settings-highlight-current:       Fremhæv aktuel linje
+settings-show-scroll-bar:         Vis vertikalt rullepanel
+settings-show-tabs:               Vis tabuleringer
+settings-show-spaces:             Vis mellemrum
+settings-show-end-of-line:        Vis linje endelser
+settings-sync-scroll-pos:         Synkroniser rullepanel positioner
+settings-format-on-save:          Formater tekst når der gemmes
+settings-github-markdown:         GitHub Markdown
+
+settings-spell-check-section:     Stavekontrol
+settings-spell-checking:          Stavekontrol
+settings-ignore-all-caps:         Ignorer store versaler
+settings-ignore-code-blocks:      Ignorer kode blokke
+settings-ignore-markup:           Ignorer Markup mærkater
+settings-ignore-words-digits:     Ignorer ord med cifre
+
+settings-advanced:                Avanceret
+settings-open-settings:           Indstillinger
+settings-open-html-template:      HTML skabelon
+settings-open-dictionary:         Bruger ordbog
+settings-open-snippets:           Kodestumper
+settings-open-key-bindings:       Tastatur bindinger
+
+settings-about:                   Om
+settings-version:				          Version
+settings-web:					            Web
+settings-source:				            Kildekode
+
+=== Find Replace Dialog
+
+find-replace-title:               Søg og erstat
+find-replace-tab-find:            Søg
+find-replace-tab-replace:         Erstat
+find-replace-watermark-find:      Søg
+find-replace-watermark-replace:   Erstat
+find-replace-find-next:           Søg næste
+find-replace-replace:             Erstat
+find-replace-replace-all:         Erstat alle
+find-replace-match-case:          Forskel på store og små bogstaver
+find-replace-match-whole-word:    Hele ord
+find-replace-regular-expression:  Regulær udtryk
+find-replace-wildcards:           Wild cards
+
+=== Goto Line Dialog
+
+goto-line-title:                  Gå til linje
+
+=== Image Drop Progress Dialog
+
+image-drop-insert-path:           Indsæt sti
+image-drop-upload-imgur:          Upload til Imgur
+
+=== Recent Files Dialog
+
+recent-files-title:               Nylige filer
+
+=== Themes Dialog
+
+themes-title:                     Temaer
+
+=== Tooltips
+
+tooltip-f6:                       F6
+tooltip-f7:                       F7
+tooltip-f8:                       F8
+tooltip-f9:                       F9
+tooltip-f10:                      F10
+tooltip-alt-s:                    Alt+S
+tooltip-ctrl-f7:                  Ctrl+F7
+tooltip-ctrl-w:                   Ctrl+W
+
+=== Generic
+
+open:                             Åbn
+save:                             Gem
+cancel:                           Annuller
+message-html-clipboard:		      HTML kopieret til udklipsholderen
