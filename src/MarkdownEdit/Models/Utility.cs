@@ -103,8 +103,7 @@ namespace MarkdownEdit.Models
                 Filter = filter
             };
 
-            var showDialog = dialog.ShowDialog();
-            return showDialog != null && (bool)showDialog ? dialog.FileNames[0] : string.Empty;
+            return (dialog.ShowDialog() == true) ? dialog.FileNames[0] : string.Empty;
         }
 
         private static void CopyHtmlToClipboard(string html)

@@ -24,7 +24,6 @@ namespace MarkdownEdit.Controls
     public partial class Editor : INotifyPropertyChanged
     {
         private string _fileName;
-        private string _fileFilter = "Markdown files (*.md)|*md|All files (*.*)|(*.*)";
         private string _displayName = string.Empty;
         private bool _isModified;
         private bool _removeSpecialCharacters;
@@ -32,6 +31,7 @@ namespace MarkdownEdit.Controls
         private EditorState _editorState = new EditorState();
         private readonly string _f1ForHelp = (string) TranslationProvider.Translate("editor-f1-for-help");
         private readonly Action<string> _executeAutoSaveLater;
+        private const string FileFilter = @"Markdown files (*.md)|*.md|All files (*.*)|*.*";
 
         public static RoutedCommand DeselectCommand = new RoutedCommand();
         public static RoutedCommand FormatCommand = new RoutedCommand();
@@ -371,7 +371,7 @@ namespace MarkdownEdit.Controls
             if (string.IsNullOrWhiteSpace(file))
             {
                 var dialog = new OpenFileDialog();
-                dialog.Filter = _fileFilter;
+                dialog.Filter = FileFilter;
                 var result = dialog.ShowDialog();
                 if (result == false) return;
                 file = dialog.FileNames[0];
@@ -430,10 +430,13 @@ namespace MarkdownEdit.Controls
 
         public bool SaveFileAs() => Execute(() =>
         {
-            var filename = Utility.SaveFileDialog(
-                Utility.SuggestFilenameFromTitle(EditBox.Text), 
-                @"Markdown files (*.md)|*.md|All files (*.*)|*.*");
-            return !string.IsNullOrWhiteSpace(filename) && (Save() && LoadFile(filename));
+            var filename = Utility.SaveFileDialog(Utility.SuggestFilenameFromTitle(EditBox.Text), FileFilter);
+            if (string.IsNullOrWhiteSpace(filename)) return false;
+            var currentFileName = FileName;
+            FileName = filename;
+            if (Save() && LoadFile(filename)) return true;
+            FileName = currentFileName;
+            return false;
         });
 
         public bool LoadFile(string file)
