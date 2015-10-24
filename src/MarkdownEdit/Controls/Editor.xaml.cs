@@ -23,15 +23,15 @@ namespace MarkdownEdit.Controls
 {
     public partial class Editor : INotifyPropertyChanged
     {
+        private bool _isModified;
+        private bool _appsKeyDown;
+        private bool _removeSpecialCharacters;
         private string _fileName;
         private string _displayName = string.Empty;
-        private bool _isModified;
-        private bool _removeSpecialCharacters;
-        private bool _appsKeyDown;
         private EditorState _editorState = new EditorState();
-        private readonly string _f1ForHelp = (string) TranslationProvider.Translate("editor-f1-for-help");
         private readonly Action<string> _executeAutoSaveLater;
         private const string FileFilter = @"Markdown files (*.md)|*.md|All files (*.*)|*.*";
+        private readonly string _f1ForHelp = (string)TranslationProvider.Translate("editor-f1-for-help");
 
         public static RoutedCommand DeselectCommand = new RoutedCommand();
         public static RoutedCommand FormatCommand = new RoutedCommand();
@@ -370,10 +370,8 @@ namespace MarkdownEdit.Controls
             if (SaveIfModified() == false) return;
             if (string.IsNullOrWhiteSpace(file))
             {
-                var dialog = new OpenFileDialog();
-                dialog.Filter = FileFilter;
-                var result = dialog.ShowDialog();
-                if (result == false) return;
+                var dialog = new OpenFileDialog {Filter = FileFilter};
+                if (dialog.ShowDialog() == false) return;
                 file = dialog.FileNames[0];
             }
             LoadFile(file);
@@ -434,20 +432,21 @@ namespace MarkdownEdit.Controls
             if (string.IsNullOrWhiteSpace(filename)) return false;
             var currentFileName = FileName;
             FileName = filename;
-            if (Save() && LoadFile(filename)) return true;
-            FileName = currentFileName;
-            return false;
+            var offset = EditBox.SelectionStart;
+            if (!Save() || !LoadFile(filename, false))
+            {
+                FileName = currentFileName;
+                return false;
+            }
+            EditBox.SelectionStart = offset;
+            return true;
         });
 
-        public bool LoadFile(string file)
+        public bool LoadFile(string file, bool updateCursorPosition = true)
         {
+            if (string.IsNullOrWhiteSpace(file)) return false;
             try
             {
-                if (string.IsNullOrWhiteSpace(file))
-                {
-                    NewFile();
-                    return true;
-                }
                 var parts = file.Split(new[] {'|'}, 2);
                 var filename = parts[0] ?? "";
                 var offset = ConvertToOffset(parts.Length == 2 ? parts[1] : "0");
@@ -462,14 +461,17 @@ namespace MarkdownEdit.Controls
 
                 EditBox.Text = File.ReadAllText(filename);
 
-                if (App.UserSettings.EditorOpenLastCursorPosition)
+                if (updateCursorPosition)
                 {
-                    EditBox.ScrollToLine(EditBox.Document.GetLineByOffset(offset)?.LineNumber ?? 0);
-                    EditBox.SelectionStart = offset;
-                }
-                else
-                {
-                    EditBox.ScrollToHome();
+                    if (App.UserSettings.EditorOpenLastCursorPosition)
+                    {
+                        EditBox.ScrollToLine(EditBox.Document.GetLineByOffset(offset)?.LineNumber ?? 0);
+                        EditBox.SelectionStart = offset;
+                    }
+                    else
+                    {
+                        EditBox.ScrollToHome();
+                    }
                 }
 
                 Settings.Default.LastOpenFile = file;

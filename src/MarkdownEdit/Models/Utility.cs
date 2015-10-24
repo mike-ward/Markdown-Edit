@@ -174,10 +174,5 @@ namespace MarkdownEdit.Models
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
         }
-
-        public static void RequireNotNull<T>(this T arg, [CallerMemberName] string name = null)
-        {
-            if (arg == null) throw new ArgumentNullException(name);
-        }
     }
 }

@@ -122,9 +122,12 @@ namespace MarkdownEdit.Controls
         {
             var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
                 ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
-            if (fileToOpen != "-n")
+
+            if (string.IsNullOrWhiteSpace(fileToOpen)
+                || fileToOpen == "-n"
+                || !Editor.LoadFile(fileToOpen))
             {
-                if (Editor.LoadFile(fileToOpen) == false) Editor.NewFile();
+                Editor.NewFile();
             }
         }
 
