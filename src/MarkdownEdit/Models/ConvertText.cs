@@ -7,47 +7,19 @@ namespace MarkdownEdit.Models
 {
     internal static class ConvertText
     {
-        private const string CommonMarkArgs = "markdown_strict+fenced_code_blocks+backtick_code_blocks+intraword_underscores\x20";
-        private const string CommonMark = "-f " + CommonMarkArgs + "-t " + CommonMarkArgs;
-        private const string GitHub = "-f markdown_github -t markdown_github\x20";
+        public static string Wrap(string text) => ReformatMarkdown(text);
 
-        public static string Wrap(string text) => RunPandoc(text, "--columns 80");
+        public static string WrapWithLinkReferences(string text) => ReformatMarkdown(text, "--reference-links");
 
-        public static string WrapWithLinkReferences(string text) => RunPandoc(text, "--columns 80 --reference-links");
+        public static string Unwrap(string text) => ReformatMarkdown(text, "--no-wrap --atx-headers");
 
-        public static string Unwrap(string text) => RunPandoc(text, "--no-wrap --atx-headers");
+        public static string FromHtml(string path) => Pandoc(null, $"-f html -t {MarkdownFormat} \"{path}\"");
 
-        private static string RunPandoc(string text, string options)
-        {
-            var tuple = Utility.SeperateFrontMatter(text);
-            var args = App.UserSettings.GitHubMarkdown ? GitHub : CommonMark;
-            var result = Pandoc(tuple.Item2, args + options);
-            return tuple.Item1 + result;
-        }
-
-        public static string FromMicrosoftWord(string path)
-        {
-            var args = $"-f docx -t {CommonMarkArgs} \"{path}\"";
-            var info = PandocInfo(args);
-            info.RedirectStandardInput = false;
-
-            using (var process = Process.Start(info))
-            {
-                if (process == null)
-                {
-                    MessageBox.Show("Error starting Pandoc", App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
-                    return string.Empty;
-                }
-                var result = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                if (process.ExitCode != 0) result = process.StandardError.ReadToEnd();
-                return result;
-            }
-        }
+        public static string FromMicrosoftWord(string path) => Pandoc(null, $"-f docx -t {MarkdownFormat} \"{path}\"");
 
         public static string Pandoc(string text, string args)
         {
-            var info = PandocInfo(args);
+            var info = PandocInfo(args, text != null);
 
             using (var process = Process.Start(info))
             {
@@ -56,9 +28,12 @@ namespace MarkdownEdit.Models
                     MessageBox.Show("Error starting Pandoc", App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                     return text;
                 }
-                var utf8 = new StreamWriter(process.StandardInput.BaseStream, Encoding.UTF8);
-                utf8.Write(text);
-                utf8.Close();
+                if (text != null)
+                {
+                    var utf8 = new StreamWriter(process.StandardInput.BaseStream, Encoding.UTF8);
+                    utf8.Write(text);
+                    utf8.Close();
+                }
                 var result = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
                 if (process.ExitCode != 0) result = process.StandardError.ReadToEnd();
@@ -66,13 +41,23 @@ namespace MarkdownEdit.Models
             }
         }
 
-        private static ProcessStartInfo PandocInfo(string arguments)
+        private static string MarkdownFormat => App.UserSettings.GitHubMarkdown ? "markdown-github" : "commonmark";
+
+        private static string ReformatMarkdown(string text, string options = "")
+        {
+            var tuple = Utility.SeperateFrontMatter(text);
+            var format = MarkdownFormat;
+            var result = Pandoc(tuple.Item2, $"-f {format} -t {format} {options}");
+            return tuple.Item1 + result;
+        }
+
+        private static ProcessStartInfo PandocInfo(string arguments, bool redirectInput)
         {
             return new ProcessStartInfo
             {
                 FileName = "pandoc.exe",
                 Arguments = arguments,
-                RedirectStandardInput = true,
+                RedirectStandardInput = redirectInput,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 StandardOutputEncoding = Encoding.UTF8,
