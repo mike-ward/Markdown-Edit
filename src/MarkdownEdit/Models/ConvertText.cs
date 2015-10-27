@@ -41,7 +41,9 @@ namespace MarkdownEdit.Models
             }
         }
 
-        private static string MarkdownFormat => App.UserSettings.GitHubMarkdown ? "markdown-github" : "commonmark";
+        private static string MarkdownFormat => App.UserSettings.GitHubMarkdown
+            ? "markdown_github"
+            : "markdown_strict+fenced_code_blocks+backtick_code_blocks+intraword_underscores+strikeout";
 
         private static string ReformatMarkdown(string text, string options = "")
         {
