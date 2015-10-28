@@ -31,13 +31,12 @@
       </Directory>
 
       <Directory Id="DesktopFolder" Name="Desktop">
-        <Component Id="ApplicationShortcutDesktop" Guid="{12B3435A-6F17-4484-8F9C-A0D93FF32A6A}">
+        <Component Id="ApplicationShortcutDesktop" Guid="*">
           <Shortcut Id="ApplicationDesktopShortcut"
               Name="Markdown Edit"
               Description="Desktop Markdown Editor"
               Target="[INSTALLFOLDER]mde.exe"
               WorkingDirectory="INSTALLFOLDER" />
-          <RemoveFile Id="RemoveApplicationDesktopShortcut" Name="Markdown Edit.lnk" On="uninstall" />
           <RegistryValue Root="HKCU" Key="Software\Microsoft\Markdown Edit" Name="installed" Type="integer" Value="1" KeyPath="yes" />
         </Component>
       </Directory>
@@ -215,13 +214,8 @@
       <![CDATA[Installed OR (SKIPFRAMEWORKCHECK <> 0) OR (WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED <> 0)]]>
     </Condition>
 
-    <CustomAction Id="RemoveDesktopShortcut" Directory="DesktopFolder"
-      ExeCommand="cmd /C &quot;del &quot;Markdown Edit.lnk&quot; &quot;"
-      Execute="deferred" Return="ignore" HideTarget="no" Impersonate="no" />
-      
     <InstallExecuteSequence>
       <RemoveShortcuts>UILevel="3"</RemoveShortcuts>
-      <!--<Custom Action="RemoveDesktopShortcut" Before="RemoveFiles">UILevel="3"</Custom>-->
     </InstallExecuteSequence>
  
     <Feature Id="ProductFeature" Title="Markdown Edit" Level="1">
