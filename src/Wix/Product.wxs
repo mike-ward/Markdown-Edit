@@ -215,6 +215,10 @@
       <![CDATA[Installed OR (SKIPFRAMEWORKCHECK <> 0) OR (WIX_IS_NETFRAMEWORK_46_OR_LATER_INSTALLED <> 0)]]>
     </Condition>
 
+    <InstallExecuteSequence>
+      <RemoveShortcuts>0</RemoveShortcuts>
+    </InstallExecuteSequence>
+ 
     <Feature Id="ProductFeature" Title="Markdown Edit" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
     </Feature>
