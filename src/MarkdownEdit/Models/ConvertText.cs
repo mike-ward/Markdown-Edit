@@ -7,21 +7,21 @@ namespace MarkdownEdit.Models
 {
     internal static class ConvertText
     {
-        public static string Wrap(string text) => ReformatMarkdown(text);
+        public static string Wrap(string text) => Reformat(text);
 
-        public static string WrapWithLinkReferences(string text) => ReformatMarkdown(text, "--reference-links");
+        public static string WrapWithLinkReferences(string text) => Reformat(text, "--reference-links");
 
-        public static string Unwrap(string text) => ReformatMarkdown(text, "--no-wrap --atx-headers");
+        public static string Unwrap(string text) => Reformat(text, "--no-wrap --atx-headers");
 
-        public static string FromHtml(string path) => Pandoc(null, $"-f html -t {MarkdownFormat} \"{path}\"");
+        public static string FromHtml(string path) => Pandoc(null, $"-f html -t {MarkdownFormat} --no-wrap \"{path}\"");
 
         public static string FromMicrosoftWord(string path) => Pandoc(null, $"-f docx -t {MarkdownFormat} \"{path}\"");
 
         public static string Pandoc(string text, string args)
         {
-            var info = PandocInfo(args, text != null);
+            var pandoc = PandocStartInfo(args, text != null);
 
-            using (var process = Process.Start(info))
+            using (var process = Process.Start(pandoc))
             {
                 if (process == null)
                 {
@@ -45,7 +45,7 @@ namespace MarkdownEdit.Models
             ? "markdown_github"
             : "markdown_strict+fenced_code_blocks+backtick_code_blocks+intraword_underscores+strikeout";
 
-        private static string ReformatMarkdown(string text, string options = "")
+        private static string Reformat(string text, string options = "")
         {
             var tuple = Utility.SeperateFrontMatter(text);
             var format = MarkdownFormat;
@@ -53,7 +53,7 @@ namespace MarkdownEdit.Models
             return tuple.Item1 + result;
         }
 
-        private static ProcessStartInfo PandocInfo(string arguments, bool redirectInput)
+        private static ProcessStartInfo PandocStartInfo(string arguments, bool redirectInput)
         {
             return new ProcessStartInfo
             {

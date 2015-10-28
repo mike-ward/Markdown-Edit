@@ -31,7 +31,7 @@ namespace MarkdownEdit.Controls
         private EditorState _editorState = new EditorState();
         private readonly Action<string> _executeAutoSaveLater;
         private const string FileFilter = @"Markdown files (*.md)|*.md|All files (*.*)|*.*";
-        private readonly string _f1ForHelp = (string)TranslationProvider.Translate("editor-f1-for-help");
+        private readonly string _f1ForHelp = (string) TranslationProvider.Translate("editor-f1-for-help");
 
         public static RoutedCommand DeselectCommand = new RoutedCommand();
         public static RoutedCommand FormatCommand = new RoutedCommand();
@@ -450,12 +450,21 @@ namespace MarkdownEdit.Controls
                 var parts = file.Split(new[] {'|'}, 2);
                 var filename = parts[0] ?? "";
                 var offset = ConvertToOffset(parts.Length == 2 ? parts[1] : "0");
-                var isWordDoc = Path.GetExtension(filename).Equals(".docx", StringComparison.OrdinalIgnoreCase);
+                var pathExtension = Path.GetExtension(filename);
+                var isWordDoc = pathExtension.Equals(".docx", StringComparison.OrdinalIgnoreCase);
 
                 if (isWordDoc)
                 {
-                    NewFile();
                     EditBox.Text = ConvertText.FromMicrosoftWord(filename);
+                    return true;
+                }
+
+                var isHtmlFile = pathExtension.Equals(".html", StringComparison.OrdinalIgnoreCase)
+                    || pathExtension.Equals(".htm", StringComparison.OrdinalIgnoreCase);
+
+                if (isHtmlFile)
+                {
+                    EditBox.Text = ConvertText.FromHtml(filename);
                     return true;
                 }
 
