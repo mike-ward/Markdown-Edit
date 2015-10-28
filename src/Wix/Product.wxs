@@ -215,7 +215,7 @@
     </Condition>
 
     <InstallExecuteSequence>
-      <RemoveShortcuts>UILevel="3"</RemoveShortcuts>
+      <RemoveShortcuts>Installed AND NOT UPGRADINGPRODUCTCODE</RemoveShortcuts>
     </InstallExecuteSequence>
  
     <Feature Id="ProductFeature" Title="Markdown Edit" Level="1">
