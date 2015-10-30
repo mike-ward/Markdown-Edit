@@ -30,7 +30,6 @@ namespace MarkdownEdit.Controls
         private string _displayName = string.Empty;
         private EditorState _editorState = new EditorState();
         private readonly Action<string> _executeAutoSaveLater;
-        private const string FileFilter = @"Markdown files (*.md)|*.md|All files (*.*)|*.*";
         private readonly string _f1ForHelp = (string) TranslationProvider.Translate("editor-f1-for-help");
 
         public static RoutedCommand DeselectCommand = new RoutedCommand();
@@ -194,7 +193,7 @@ namespace MarkdownEdit.Controls
 
             CanExecuteRoutedEventHandler canExecute = (sender, args) =>
                 args.CanExecute = EditBox.TextArea?.Document != null &&
-                    EditBox.TextArea.ReadOnlySectionProvider.CanInsert(EditBox.TextArea.Caret.Offset);
+                                  EditBox.TextArea.ReadOnlySectionProvider.CanInsert(EditBox.TextArea.Caret.Offset);
 
             ExecutedRoutedEventHandler execute = null;
             execute = (sender, args) =>
@@ -370,7 +369,13 @@ namespace MarkdownEdit.Controls
             if (SaveIfModified() == false) return;
             if (string.IsNullOrWhiteSpace(file))
             {
-                var dialog = new OpenFileDialog {Filter = FileFilter};
+                const string fileFilter =
+                    "Markdown files (*.md)|*.md|" +
+                    "Microsoft Word files (*.docx)|*.docx|" +
+                    "HTML files (*.html)|*.html|" +
+                    "All files (*.*)|*.*";
+
+                var dialog = new OpenFileDialog {Filter = fileFilter};
                 if (dialog.ShowDialog() == false) return;
                 file = dialog.FileNames[0];
             }
@@ -428,7 +433,10 @@ namespace MarkdownEdit.Controls
 
         public bool SaveFileAs() => Execute(() =>
         {
-            var filename = Utility.SaveFileDialog(Utility.SuggestFilenameFromTitle(EditBox.Text), FileFilter);
+            var filename = Utility.SaveFileDialog(
+                Utility.SuggestFilenameFromTitle(EditBox.Text),
+                "Markdown files (*.md)|*.md|All files (*.*)|*.*");
+
             if (string.IsNullOrWhiteSpace(filename)) return false;
             var currentFileName = FileName;
             FileName = filename;
@@ -460,7 +468,7 @@ namespace MarkdownEdit.Controls
                 }
 
                 var isHtmlFile = pathExtension.Equals(".html", StringComparison.OrdinalIgnoreCase)
-                    || pathExtension.Equals(".htm", StringComparison.OrdinalIgnoreCase);
+                                 || pathExtension.Equals(".htm", StringComparison.OrdinalIgnoreCase);
 
                 if (isHtmlFile)
                 {
