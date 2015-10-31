@@ -11,7 +11,9 @@ Keyboard Shortcuts
     Ctrl+Shift+S   Save file As
     Ctrl+R         Recent files
     Ctrl+E         Export HTML to clipboard
-    Ctrl+Shift+E   Export HTML and template to clipboard
+    Ctrl+Shift+E   Export HTML with template to clipboard
+    Alt+E          Save As HTML 
+    Alt+Shift+E    Save As HTML with Template
     F5             Reload file
     Alt+F4         Exit
 

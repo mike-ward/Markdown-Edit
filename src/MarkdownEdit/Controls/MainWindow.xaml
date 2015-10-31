@@ -219,6 +219,8 @@
     <CommandBinding Command="{x:Static controls:MainWindow.SaveThemeCommand}" Executed="ExecuteSaveTheme" />
     <CommandBinding Command="{x:Static controls:MainWindow.ExportHtmlCommand}" Executed="ExecuteExportHtml" />
     <CommandBinding Command="{x:Static controls:MainWindow.ExportHtmlTemplateCommand}" Executed="ExecuteExportHtmlTemplate" />
+    <CommandBinding Command="{x:Static controls:MainWindow.SaveAsHtmlCommand}" Executed="ExecuteSaveAsHtml" />
+    <CommandBinding Command="{x:Static controls:MainWindow.SaveAsHtmlTemplateCommand}" Executed="ExecuteSaveAsHtmlTemplate" />
     <CommandBinding Command="{x:Static controls:MainWindow.ShowGotoLineDialogCommand}" Executed="ExecuteShowGotoLineDialog" />
     <CommandBinding Command="{x:Static controls:MainWindow.ScrollToLineCommand}" Executed="ExecuteScrollToLine" />
     <CommandBinding Command="{x:Static controls:MainWindow.ToggleAutoSaveCommand}" Executed="ExecuteToggleAutoSave" />
@@ -261,6 +263,8 @@
     <KeyBinding Command="{x:Static controls:MainWindow.ShowThemeDialogCommand}" Gesture="Ctrl+T" />
     <KeyBinding Command="{x:Static controls:MainWindow.ExportHtmlCommand}" Gesture="Ctrl+E" />
     <KeyBinding Command="{x:Static controls:MainWindow.ExportHtmlTemplateCommand}" Gesture="Ctrl+Shift+E" />
+    <KeyBinding Command="{x:Static controls:MainWindow.SaveAsHtmlCommand}" Gesture="Alt+E" />
+    <KeyBinding Command="{x:Static controls:MainWindow.SaveAsHtmlTemplateCommand}" Gesture="Alt+Shift+E" />
     <KeyBinding Command="{x:Static controls:MainWindow.ShowGotoLineDialogCommand}" Gesture="Ctrl+G" />
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleAutoSaveCommand}" Gesture="Alt+S" />
     <KeyBinding Command="{x:Static controls:MainWindow.SelectPreviousHeaderCommand}" Gesture="Ctrl+U" />

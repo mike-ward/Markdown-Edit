@@ -37,6 +37,8 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand ShowThemeDialogCommand = new RoutedCommand();
         public static RoutedCommand ExportHtmlCommand = new RoutedCommand();
         public static RoutedCommand ExportHtmlTemplateCommand = new RoutedCommand();
+        public static RoutedCommand SaveAsHtmlCommand = new RoutedCommand();
+        public static RoutedCommand SaveAsHtmlTemplateCommand = new RoutedCommand();
         public static RoutedCommand ScrollToLineCommand = new RoutedCommand();
         public static RoutedCommand ShowGotoLineDialogCommand = new RoutedCommand();
         public static RoutedCommand ToggleAutoSaveCommand = new RoutedCommand();
@@ -272,7 +274,11 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text, MarkdownConverter);
 
-        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlTemplateToClipboard(Editor.Text, MarkdownConverter);
+        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text, MarkdownConverter, true);
+
+        private void ExecuteSaveAsHtml(object sender, ExecutedRoutedEventArgs e) => Utility.SaveAsHtml(Editor.Text, MarkdownConverter);
+
+        private void ExecuteSaveAsHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.SaveAsHtml(Editor.Text, MarkdownConverter, true);
 
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e) => new GotoLineDialog { Owner = this }.ShowDialog();
 

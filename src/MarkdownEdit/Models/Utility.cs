@@ -61,27 +61,21 @@ namespace MarkdownEdit.Models
 
         public static string ExecutingAssembly() => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
 
-        public static void ExportHtmlToClipboard(string markdown, IMarkdownConverter converter)
+        public static void ExportHtmlToClipboard(string markdown, IMarkdownConverter converter, bool includeTemplate = false)
         {
             var text = RemoveYamlFrontMatter(markdown);
             var html = converter.ConvertToHtml(text, false);
+            if (includeTemplate) html = UserTemplate.InsertContent(html);
             CopyHtmlToClipboard(html);
         }
 
-        public static void ExportHtmlTemplateToClipboard(string markdown, IMarkdownConverter converter)
-        {
-            var text = RemoveYamlFrontMatter(markdown);
-            var html = converter.ConvertToHtml(text, false);
-            html = UserTemplate.InsertContent(html);
-            CopyHtmlToClipboard(html);
-        }
-
-        public static void SaveAsHtml(string markdown, IMarkdownConverter converter)
+        public static void SaveAsHtml(string markdown, IMarkdownConverter converter, bool includeTemplate = false)
         {
             try
             {
                 var text = RemoveYamlFrontMatter(markdown);
                 var html = converter.ConvertToHtml(text, false);
+                if (includeTemplate) html = UserTemplate.InsertContent(html);
                 var file = SaveFileDialog(SuggestFilenameFromTitle(text), @"Html files (*.html)|*.html|All files (*.*)|*.*");
                 if (string.IsNullOrWhiteSpace(file)) return;
                 File.WriteAllText(file, html);

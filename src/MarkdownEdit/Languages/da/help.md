@@ -12,6 +12,8 @@ Tastatur genveje
     Ctrl+R         Nylige filer
     Ctrl+E         Eksporter HTML til udklipsholderen
     Ctrl+Shift+E   Eksporter HTML og skabelon til udklipsholderen
+    Alt+E          Gem HTML som 
+    Alt+Shift+E    Gem HTML som og skabelon
     F5             Gen-indlæs fil
     Alt+F4         Afslut
 
