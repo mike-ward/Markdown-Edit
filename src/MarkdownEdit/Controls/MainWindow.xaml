@@ -37,11 +37,6 @@
       </Style.Triggers>
     </Style>
     
-    <Style x:Key="ToggleCommandWindowButtonStyle"
-            TargetType="Button"
-            BasedOn="{StaticResource CommandWindowButtonStyle}">
-    </Style>
-
     <Style x:Key="SpellCheckToggleCommandWindowButtonStyle"
             TargetType="Button"
             BasedOn="{StaticResource CommandWindowButtonStyle}">

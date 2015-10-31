@@ -20,6 +20,7 @@ Keyboard Shortcuts
     F11            Toggle full screen
     F12            Toggle preview/edit/both
     Alt+S          Toggle auto save
+    Ctrl+,         Toggle settings
 
     Tab            Indent current line/selection 2 spaces
     Shift+Tab      Out-dent current line/selection 2 spaces

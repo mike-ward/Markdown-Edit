@@ -20,6 +20,7 @@
     F11            Conmutar pantalla completa
     F12            Conmutar previsualizar/editar/ambos
     Alt+S          Conmutar auto guardar
+    Ctrl+,         Conmutar configuración
 
     Tab            Sangría de linea actual/selección con 2 espacios
     Shift+Tab      Quitar sangría de linea actual/selección con 2 espacios

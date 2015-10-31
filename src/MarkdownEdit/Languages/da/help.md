@@ -20,6 +20,7 @@ Tastatur genveje
     F11            Slå fuld skærm til/fra
     F12            Skift mellem forhåndsvisning/redigering/begge
     Alt+S          Slå automatiske gemme til/fra
+    Ctrl+,         Slå indstillinger
 
     Tab            Indryk indeværende linje/valgt blok med 2 mellemrum
     Shift+Tab      Udryk indeværende linje/valgt blok med 2 mellemrum

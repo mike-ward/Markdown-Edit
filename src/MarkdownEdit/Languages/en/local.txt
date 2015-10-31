@@ -8,7 +8,7 @@ tooltip-new-command:              New - Ctrl+N
 tooltip-open-command:             Open - Ctrl+O
 tooltip-save-command:             Save - Ctrl+S
 tooltip-save-as-command:          Save as - Ctrl+Shift+S
-tooltip-toggle-settings:          Settings
+tooltip-toggle-settings:          Settings - Ctrl+,
 tooltip-word-count:               Word Count
 tooltip-spell-check:              Spell Check - Ctrl+F7
 tooltip-word-wrap:                Word Wrap - Ctrl+W

@@ -20,6 +20,7 @@ Keyboard Shortcuts
     F11            Activer/désactiver le mode plein écran
     F12            Basculer entre les modes prévisulation/édition/les deux
     Alt+S          Activer/désactiver l'enregistrement automatique
+    Ctrl+,         Activer/désactiver réglages
 
     Tab            Indenter la ligne courante/sélection de 2 espaces
     Shift+Tab      Désindenter la ligne courante/sélection de 2 espaces
