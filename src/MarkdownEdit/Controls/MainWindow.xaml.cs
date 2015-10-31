@@ -50,6 +50,7 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand InsertFileCommand = new RoutedCommand();
         public static RoutedCommand IncreaseEditorMarginCommand = new RoutedCommand();
         public static RoutedCommand DecreaseEditorMarginCommand = new RoutedCommand();
+        public static RoutedCommand ToggleSettingsFlyoutCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _markdownConverter;
@@ -275,6 +276,8 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e) => new GotoLineDialog { Owner = this }.ShowDialog();
 
+        private void ExecuteToggleShowSettingsFlyout(object sender, ExecutedRoutedEventArgs e) => ToggleSettings();
+
         private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int)e.Parameter);
@@ -336,7 +339,7 @@ namespace MarkdownEdit.Controls
             set { Set(ref _snippetManager, value); }
         }
 
-        private void ToggleSettings(object sender, RoutedEventArgs e)
+        private void ToggleSettings()
         {
             var settingsFlyout = (Flyout)Flyouts.Items[0];
             settingsFlyout.IsOpen = !settingsFlyout.IsOpen;

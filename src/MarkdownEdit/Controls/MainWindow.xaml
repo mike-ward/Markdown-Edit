@@ -118,7 +118,7 @@
         <Button Content="&#xe115;"
                 Margin="0 0 10 0"
                 ToolTip="{i18N:Localize tooltip-toggle-settings}"
-                Click="ToggleSettings"
+                Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}"
                 FontFamily="Segoe UI Symbol"
                 Foreground="{StaticResource SemiTransparentWhiteBrush}" 
                 />
@@ -237,6 +237,7 @@
     <CommandBinding Command="{x:Static controls:MainWindow.InsertFileCommand}" Executed="ExecuteInsertFile" />
     <CommandBinding Command="{x:Static controls:MainWindow.IncreaseEditorMarginCommand}" Executed="ExecuteIncreaseEditorMargin" />
     <CommandBinding Command="{x:Static controls:MainWindow.DecreaseEditorMarginCommand}" Executed="ExecuteDecreaseEditorMargin" />
+    <CommandBinding Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" Executed="ExecuteToggleShowSettingsFlyout" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -273,5 +274,6 @@
     <KeyBinding Command="{x:Static controls:MainWindow.InsertFileCommand}" Gesture="Ctrl+Shift+O" />
     <KeyBinding Command="{x:Static controls:MainWindow.IncreaseEditorMarginCommand}" Gesture="Alt+Plus" />
     <KeyBinding Command="{x:Static controls:MainWindow.DecreaseEditorMarginCommand}" Gesture="Alt+Minus" />
+    <KeyBinding Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" Gesture="Ctrl+Comma" />
   </Window.InputBindings>
 </metrocontrols:MetroWindow>
