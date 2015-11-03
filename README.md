@@ -1,7 +1,8 @@
 Markdown Edit
 =============
 
-[![Build status](https://ci.appveyor.com/api/projects/status/bqawxp5t4615y25s?svg=true)](https://ci.appveyor.com/project/mike-ward/markdown-edit)
+[![Build
+status](https://ci.appveyor.com/api/projects/status/bqawxp5t4615y25s?svg=true)](https://ci.appveyor.com/project/mike-ward/markdown-edit)
 
 [![Join the chat at
 https://gitter.im/mike-ward/Markdown-Edit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mike-ward/Markdown-Edit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -10,13 +11,18 @@ https://gitter.im/mike-ward/Markdown-Edit](https://badges.gitter.im/Join%20Chat.
 
 [Home Page](http://mike-ward.net/markdownedit)
 
-Markdown Edit is a Windows **desktop** Markdown editor with an emphasis on
-content and keyboard shortcuts. There is minimal window chrome and most
-functions are accessed through keyboard shortcuts. There is no main menu, status
-bar, tabbed windows or other distractions.
+Markdown Edit is a Windows **desktop** Markdown editor with an emphasis
+on content and keyboard shortcuts. There is minimal window chrome and
+most functions are accessed through keyboard shortcuts. There is no main
+menu, status bar, tabbed windows or other distractions.
 
 [Mission Statement](MISSION_STATEMENT.md), [Roadmap](ROADMAP.md) and
 [Contributor Guidelines](CONTRIBUTING.md)
+
+> **Windows 7** - You're welcome to install MDE on Windows 7 but it's
+> not supported. Some users have reported a font issue. The issue is
+> cosmetic (some icons appear as blank squares). [Read more and link to
+> new font](https://github.com/mike-ward/Markdown-Edit/issues/14).
 
 Gratuitous Screen Shot
 
@@ -36,7 +42,8 @@ Features
 -   [CommonMark](http://commonmark.org) standard Markdown engine
 -   User preferences stored in a text file for easy sharing
 -   Full screen covers task-bar (optional)
--   Keyboard shortcuts for bold, italic, headers, lists, block quotes, etc.
+-   Keyboard shortcuts for bold, italic, headers, lists, block
+    quotes, etc.
 -   User defined snippets improve the speed and proficiency of
     writing documents.
 -   Modern UI look and feel
@@ -45,8 +52,8 @@ Features
 -   User settable fonts, colors, themes
 -   User defined style sheets
 -   As you type spell checking
--   **Paste Special** replaces Microsoft Word's smart quotes/hyphens/etc. with
-    plain text equivalents
+-   **Paste Special** replaces Microsoft Word's
+    smart quotes/hyphens/etc. with plain text equivalents
 -   Quickly open recent files
 -   Quickly change themes
 -   Word Count
@@ -63,7 +70,7 @@ Features
 Requirements
 ------------
 
--   Windows 7+
+-   Windows 8+
 -   .NET 4.6 (Get it at <http://smallestdotnet.com>)
 
 Installing
