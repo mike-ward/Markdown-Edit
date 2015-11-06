@@ -2,6 +2,7 @@ title:            Markdown Edit
 tagline:          The Best Markdown Editor For Windows
 description:      A full-featured Markdown Editor for Windows with an emphasis on content and keyboard shortcuts
 canonical:        http://mike-ward.net/Markdown-Edit/
+url:              http://mike-ward.net/Markdown-Edit/
 
 # Owner/author information
 owner:
@@ -27,10 +28,10 @@ links:
   - title: About
     url: /about
   - title: Github
-    url: https://github.com/ColeTownsend/Balzac-for-Jekyll
+    url: https://github.com/markdown-edit
     external: true
   - title: Cole Who?
-    url: http://coletownsend.com
+    url: http://mike-ward.net
     external: true
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -45,13 +46,6 @@ kramdown:
   entity_output: as_char
   toc_levels: 1..6
   use_coderay: false
-
-  coderay:
-    coderay_line_numbers:
-    coderay_line_numbers_start: 1
-    coderay_tab_width: 4
-    coderay_bold_every: 10
-    coderay_css: class
 
 sass:
     style: :compressed
