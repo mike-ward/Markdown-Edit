@@ -84,7 +84,7 @@ namespace MarkdownEdit.Controls
             SpellCheckProvider = spellCheckProvider;
             SnippetManager = snippetManager;
             Closing += OnClosing;
-            Activated += OnActivated;
+            Activated += OnFirstActivation;
             IsVisibleChanged += OnIsVisibleChanged;
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor)s));
@@ -98,9 +98,9 @@ namespace MarkdownEdit.Controls
             Activate();
         }
 
-        private void OnActivated(object sender, EventArgs eventArgs)
+        private void OnFirstActivation(object sender, EventArgs eventArgs)
         {
-            Activated -= OnActivated;
+            Activated -= OnFirstActivation;
             Dispatcher.InvokeAsync(() =>
             {
                 var updateMargins = Utility.Debounce(() => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
@@ -116,6 +116,7 @@ namespace MarkdownEdit.Controls
                 SizeChanged += (s, e) => updateMargins();
                 updateMargins();
                 LoadCommandLineOrLastFile();
+                Application.Current.Activated += OnActivated;
             });
         }
 
@@ -247,6 +248,14 @@ namespace MarkdownEdit.Controls
                 control.Focus();
                 Keyboard.Focus(control);
             }));
+        }
+
+        private void OnActivated(object sender, EventArgs args)
+        {
+            if (Preview.Visibility == Visibility.Visible && Editor.Visibility != Visibility.Visible)
+            {
+                SetFocus(Preview.Browser);
+            }
         }
 
         private void UpdateEditorPreviewVisibility(int state)
