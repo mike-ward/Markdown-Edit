@@ -1,0 +1,20 @@
+{% include head-dark.html %}
+
+<section class="article pad-top">
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>{{ page.title }}</h1>
+            <p class="intro">{% if page.description %}{{ page.description }}{% else %}{{ page.tagline }}{% endif %}</p>
+
+          </hgroup>
+        </header>
+
+        {{ content }}
+
+      </article>
+    </section>
+</div>
+
+{% include footer.html %}

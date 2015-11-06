@@ -1,0 +1,17 @@
+---
+---
+
+/* TEAM */
+Creator: {{ site.owner.name }}
+Contact: {{ site.owner.email }}
+Twitter: {{ site.owner.twitter }}
+Location: {{ site.owner.location }}
+                           
+/* THANKS */                           
+Creator of Balzac theme: Cole Townsend
+Twitter: @twnsndco
+
+/* SITE */                         
+Last update: {{ site.time | date: '%F' }}
+Standards: {{ site.tools.standards }}                        
+Software: {{ site.tools.software }}

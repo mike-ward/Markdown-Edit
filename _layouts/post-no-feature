@@ -1,0 +1,33 @@
+{% include head.html %}
+
+<section class="article">
+
+{% if page.image.feature %}
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url({{ site.url }}/images/{{ page.image.feature }})"></div>
+{% else %}
+  <div class="overlay"></div>
+  <div class="featured-image" style="background-image: url({{ site.url }}/images/typewriter.jpg)"></div>
+{% endif %}
+
+
+      <article class="wrap post">
+        <header class="post-header">
+          <hgroup>
+            <h1>{{page.title}}</h1>
+            <p class="date">{{page.date | date: "%b %d, %Y" }}</p>
+            <p class="intro">{% if page.description %}{{ page.description }}{% else %}{{ page.tagline }}{% endif %}</p>
+          </hgroup>
+        </header>
+
+        {{ content }}
+
+      <a class="share" href="https://twitter.com/intent/tweet?text=&quot;{{ page.title }}&quot;%20{{ site.canonical }}{{ page.url }}%20via%20&#64;{{ site.owner.twitter }}" data-dnt="true">Share</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
+      </article>
+    </section>
+</div>
+
+{% include footer.html %}
