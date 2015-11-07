@@ -302,6 +302,8 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteInsertFile(object sender, ExecutedRoutedEventArgs e) => Editor.InsertFile(null);
 
+        private void ExecutePrintHtml(object sender, ExecutedRoutedEventArgs e) => Preview.Print();
+
         // Properites
 
         public string TitleName

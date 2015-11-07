@@ -235,6 +235,7 @@
     <CommandBinding Command="{x:Static controls:MainWindow.IncreaseEditorMarginCommand}" Executed="ExecuteIncreaseEditorMargin" />
     <CommandBinding Command="{x:Static controls:MainWindow.DecreaseEditorMarginCommand}" Executed="ExecuteDecreaseEditorMargin" />
     <CommandBinding Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" Executed="ExecuteToggleShowSettingsFlyout" />
+    <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -274,5 +275,6 @@
     <KeyBinding Command="{x:Static controls:MainWindow.IncreaseEditorMarginCommand}" Gesture="Alt+Plus" />
     <KeyBinding Command="{x:Static controls:MainWindow.DecreaseEditorMarginCommand}" Gesture="Alt+Minus" />
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" Gesture="Ctrl+Comma" />
+    <KeyBinding Command="Print" Gesture="Ctrl+P" />
   </Window.InputBindings>
 </metrocontrols:MetroWindow>

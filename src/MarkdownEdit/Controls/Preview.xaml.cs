@@ -12,9 +12,9 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using CommonMark;
 using HtmlAgilityPack;
+using mshtml;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
-using mshtml;
 
 namespace MarkdownEdit.Controls
 {
@@ -44,7 +44,7 @@ namespace MarkdownEdit.Controls
                 // kill popups
                 dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
                     BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                    null, Browser, new object[] { });
+                    null, Browser, new object[] {});
 
                 activeX.Silent = true;
             });
@@ -65,6 +65,12 @@ namespace MarkdownEdit.Controls
             {
                 MessageBox.Show(e.ToString(), App.Title);
             }
+        }
+
+        public void Print()
+        {
+            var document = (IHTMLDocument2) Browser.Document;
+            document.execCommand("Print", true, null);
         }
 
         private static string ScrubHtml(string html)
@@ -113,7 +119,7 @@ namespace MarkdownEdit.Controls
 
         private IHTMLElement GetContentsDiv()
         {
-            var document = (IHTMLDocument3)Browser.Document;
+            var document = (IHTMLDocument3) Browser.Document;
             var element = document?.getElementById("content");
             return element;
         }
@@ -134,22 +140,22 @@ namespace MarkdownEdit.Controls
         public void SetScrollOffset(ScrollChangedEventArgs ea)
         {
             if (App.UserSettings.SynchronizeScrollPositions == false) return;
-            var document2 = (IHTMLDocument2)Browser.Document;
-            var document3 = (IHTMLDocument3)Browser.Document;
+            var document2 = (IHTMLDocument2) Browser.Document;
+            var document3 = (IHTMLDocument3) Browser.Document;
             if (document3?.documentElement != null)
             {
                 var percentToScroll = PercentScroll(ea);
                 if (percentToScroll > 0.99) percentToScroll = 1.1; // deal with round off at end of scroll
                 var body = document2.body;
-                var scrollHeight = ((IHTMLElement2)body).scrollHeight - document3.documentElement.offsetHeight;
-                document2.parentWindow.scroll(0, (int)Math.Ceiling(percentToScroll * scrollHeight));
+                var scrollHeight = ((IHTMLElement2) body).scrollHeight - document3.documentElement.offsetHeight;
+                document2.parentWindow.scroll(0, (int) Math.Ceiling(percentToScroll*scrollHeight));
             }
         }
 
         private static double PercentScroll(ScrollChangedEventArgs e)
         {
             var y = e.ExtentHeight - e.ViewportHeight;
-            return e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
+            return e.VerticalOffset/((Math.Abs(y) < .000001) ? 1 : y);
         }
 
         private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
@@ -192,11 +198,11 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty MarkdownConverterProperty = DependencyProperty.Register(
-            "MarkdownConverter", typeof(IMarkdownConverter), typeof(Preview), new PropertyMetadata(default(IMarkdownConverter)));
+            "MarkdownConverter", typeof (IMarkdownConverter), typeof (Preview), new PropertyMetadata(default(IMarkdownConverter)));
 
         public IMarkdownConverter MarkdownConverter
         {
-            get { return (IMarkdownConverter)GetValue(MarkdownConverterProperty); }
+            get { return (IMarkdownConverter) GetValue(MarkdownConverterProperty); }
             set { SetValue(MarkdownConverterProperty, value); }
         }
 
