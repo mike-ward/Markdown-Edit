@@ -14,15 +14,13 @@ is no main menu, status bar, tabbed windows or other distractions.
 
 ------------------------------------------------------------------------
 
-`TL;DR`
-
--   [Download via HTTP](http://mike-ward.net/downloads) or
+-   [Download via
+    HTTP](http://mike-ward.net/downloads/cdn/downloads/MarkdownEditSetup.msi)
 -   install via
     [Chocolatey](https://chocolatey.org/packages/markdown-edit) using
     `choco install markdown-edit`
--   **Windows 7 Users** - There's a known font issue. [Read more and
-    link to
-    new font...](https://github.com/mike-ward/Markdown-Edit/issues/14)
+-   **Windows 7 Users** - [Fix for font
+    issue](https://github.com/mike-ward/Markdown-Edit/issues/14)
 
 ------------------------------------------------------------------------
 
