@@ -18,8 +18,11 @@ is no main menu, status bar, tabbed windows or other distractions.
 -   install via
     [Chocolatey](https://chocolatey.org/packages/markdown-edit) using
     `choco install markdown-edit`
+-   **Windows 7 Users** - There's a known font issue. [Read more and
+    link to
+    new font...](https://github.com/mike-ward/Markdown-Edit/issues/14)
 
-Gratuitous Screen Shot
+Obligatory Screen Shot
 
 <a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank">![markdown-edit-screenshot.png](http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png "Gratuitous Screen Shot")</a>
 
@@ -31,7 +34,8 @@ Features
 -   [Document
     Formatting](http://mike-ward.net/2015/04/20/markdown-edit-1-5-released/).
     Make your Markdown beautiful
--   Convert `.docx` and `.html` files to markdown using simple drag & drop
+-   Convert `.docx` and `.html` files to markdown using simple drag &
+    drop
 -   Syntax highlighting editor
 -   Side-by-side HTML preview
 -   Quickly show/hide preview

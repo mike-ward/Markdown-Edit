@@ -25,6 +25,8 @@ tools:
 # Links to include in top navigation
 # For external links add external: true
 links:
+  - title: Features
+    url: /features
   - title: About
     url: /about
   - title: Github
