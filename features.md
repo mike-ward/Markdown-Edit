@@ -5,12 +5,12 @@ title: Features
 
 ------------------------------------------------------------------------
 
-*From [Wikipedia](https://www.wikiwand.com/en/Software_feature), the
-free encyclopedia*
+From [Wikipedia](https://www.wikiwand.com/en/Software_feature), the free
+encyclopedia
 
 The [Institute of Electrical and Electronics
 Engineers](https://www.wikiwand.com/en/Institute_of_Electrical_and_Electronics_Engineers)
-defines the term feature in [IEEE
+defines the term **feature** in [IEEE
 829](https://www.wikiwand.com/en/IEEE_829) as "A distinguishing
 characteristic of a software item (e.g., performance, portability, or
 functionality)."
