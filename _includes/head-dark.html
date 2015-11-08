@@ -51,13 +51,13 @@
     <header class="site-header darken">
       <div class="wrap">
         <hgroup>
-          <h1><a href="/">{{ site.title }}</a></h1>
+          <h1><a href="{{ site.url }}">{{ site.title }}</a></h1>
         </hgroup>
         <a href="#nav" class="menu"><span class='icons'>☰</span></a>
         <nav role="navigation">
           <ul>
             <li>
-              <a href="/" title="{{ site.title }}">Home</a>
+              <a href="{{ site.url }}" title="{{ site.title }}">Home</a>
             </li>
             
             {% for link in site.links %}
