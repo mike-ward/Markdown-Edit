@@ -1,5 +1,5 @@
 title:            Markdown Edit
-tagline:          The Best Markdown Editor For Windows
+tagline:          A Beautiful Markdown Editor For Windows
 description:      A full-featured Markdown Editor for Windows with an emphasis on content and keyboard shortcuts
 canonical:        http://mike-ward.net/Markdown-Edit/
 url:              http://mike-ward.net/Markdown-Edit/
@@ -11,11 +11,11 @@ owner:
   bio:            Programmer and Bourbon Drinker
   email:          mike@mike-ward.net
   twitter:        mikeward_aa
-  github:         mikeward
-  instagram:      ""
-  dribbble:       ""
-  disqus:         mikeward
-  location:       "Ann Arbor, MI"
+  github:         mike-ward
+  instagram:      
+  dribbble:       
+  disqus:         mikeward_aa
+  location:       "Ann Arbor, MI  USA"
   # Plug in your disqus shortname!
 
 tools:
@@ -28,10 +28,10 @@ links:
   - title: About
     url: /about
   - title: Github
-    url: http://mike-ward.net/Markdown-Edit/about/
+    url: https://github.com/mike-ward/Markdown-Edit/
     external: true
-  - title: Cole Who?
-    url: http://mike-ward.net/Markdown-Edit/
+  - title: Mike Who?
+    url: http://mike-ward.net/about/
     external: true
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
