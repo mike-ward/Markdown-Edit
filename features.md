@@ -5,8 +5,8 @@ title: Features
 
 ------------------------------------------------------------------------
 
-From [Wikipedia](https://www.wikiwand.com/en/Software_feature), the free
-encyclopedia
+*From [Wikipedia](https://www.wikiwand.com/en/Software_feature), the
+free encyclopedia*
 
 The [Institute of Electrical and Electronics
 Engineers](https://www.wikiwand.com/en/Institute_of_Electrical_and_Electronics_Engineers)
