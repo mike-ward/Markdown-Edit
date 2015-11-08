@@ -12,6 +12,8 @@ emphasis on content and keyboard shortcuts. There is minimal window
 chrome and most functions are accessed through keyboard shortcuts. There
 is no main menu, status bar, tabbed windows or other distractions.
 
+------------------------------------------------------------------------
+
 `TL;DR`
 
 -   [Download via HTTP](http://mike-ward.net/downloads) or
@@ -21,6 +23,8 @@ is no main menu, status bar, tabbed windows or other distractions.
 -   **Windows 7 Users** - There's a known font issue. [Read more and
     link to
     new font...](https://github.com/mike-ward/Markdown-Edit/issues/14)
+
+------------------------------------------------------------------------
 
 Obligatory Screen Shot
 
