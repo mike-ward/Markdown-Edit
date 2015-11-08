@@ -280,7 +280,7 @@ header.site-header nav {
         min-height: 360px;
         height: 50vh;
         width: 100%;
-        max-height: 800px;
+        max-height: 500px;
         position: absolute;
         z-index: 2;
         background: rgba(0,0,0,.55);
@@ -294,7 +294,7 @@ header.site-header nav {
         min-height: 360px;
         height: 50vh;
         width: 100%;
-        max-height: 800px;
+        max-height: 500px;
         background-position: center center;
         background-size: cover;
         vertical-align: middle;
@@ -305,7 +305,7 @@ header.site-header nav {
         top: 0;
         z-index: -1;
         img {
-            max-height: 800px;
+            max-height: 500px;
         }
     }
     

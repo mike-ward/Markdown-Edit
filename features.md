@@ -1,8 +1,9 @@
 ---
 layout: page
 title: Features
-description: All the Stuff. None of the Fluff
 ---
+
+------------------------------------------------------------------------
 
 *From [Wikipedia](https://www.wikiwand.com/en/Software_feature), the
 free encyclopedia*
@@ -12,10 +13,12 @@ Engineers](https://www.wikiwand.com/en/Institute_of_Electrical_and_Electronics_E
 defines the term feature in [IEEE
 829](https://www.wikiwand.com/en/IEEE_829) as "A distinguishing
 characteristic of a software item (e.g., performance, portability, or
-functionality)." \[1\]
+functionality)."
+
+------------------------------------------------------------------------
 
 -   Open `.html` and `.docx` (Microsoft Word) files. They're converted
-    to Markdown *auto-magically*.
+    to Markdown auto-magically.
 
 -   Drag & drop to open files (yep, the conversion thing works for drag
     & drop).
