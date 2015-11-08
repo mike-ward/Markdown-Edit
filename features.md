@@ -29,11 +29,11 @@ functionality)."
 -   Make your Markdown beautiful. `Alt+F` will reformat your Markdown
     and wrap it to 80 columns.
 
-    > "Markdown-formatted document should be publishable as-is, as plain
-    > text, without looking like it’s been marked up with tags or
+    > "A Markdown-formatted document should be publishable as-is, as
+    > plain text, without looking like it’s been marked up with tags or
     > formatting instructions"  
-    > [John Gruber - Markdown's
-    > creator](https://daringfireball.net/projects/markdown/)
+    > [John Gruber - Creator of
+    > Markdown](https://daringfireball.net/projects/markdown/)
 
 -   A real editor, not a watered down textarea or rich text control
     (Thank you [Avalon Edit](http://avalonedit.net/))
