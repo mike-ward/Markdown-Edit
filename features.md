@@ -2,11 +2,17 @@
 layout: page
 title: Features
 description: All the Stuff. None of the Fluff
-image:
-  feature: sticker-mule.jpg
 ---
 
-Here's some cool stuff about Markdown Edit (in no particular order).
+*From [Wikipedia](https://www.wikiwand.com/en/Software_feature), the
+free encyclopedia*
+
+The [Institute of Electrical and Electronics
+Engineers](https://www.wikiwand.com/en/Institute_of_Electrical_and_Electronics_Engineers)
+defines the term feature in [IEEE
+829](https://www.wikiwand.com/en/IEEE_829) as "A distinguishing
+characteristic of a software item (e.g., performance, portability, or
+functionality)." \[1\]
 
 -   Open `.html` and `.docx` (Microsoft Word) files. They're converted
     to Markdown *auto-magically*.
