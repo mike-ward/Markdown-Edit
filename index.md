@@ -65,4 +65,5 @@ Features
 -   Highlight current line
 -   [Open Source](https://github.com/mike-ward/Markdown-Edit)
 -   MIT License
+-   [And more!](/features)
 
