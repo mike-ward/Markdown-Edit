@@ -502,8 +502,8 @@ header.site-header nav {
         li {
             list-style: disc;
             list-style-type: disc;
-            margin-left: $lh*2;
-            padding-left: $lh/3;
+            margin-left: -2em;
+            padding-left: 0;
         &:last-child {
             margin-bottom: 0;
             }
