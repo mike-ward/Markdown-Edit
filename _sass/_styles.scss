@@ -31,7 +31,7 @@ a:hover {
 }
 
 em {
-  font-color: $grey-light;
+  color: $grey-light;
 }
 
 strong {
@@ -500,7 +500,7 @@ header.site-header nav {
         li {
             list-style: disc;
             list-style-type: disc;
-            margin-left: -2em;
+            margin-left: 1em;
             padding-left: 0;
         &:last-child {
             margin-bottom: 0;
