@@ -1,6 +1,8 @@
 ---
 layout: page
 title: Features
+image:
+  feature: typewriter.jpg
 ---
 
 ------------------------------------------------------------------------
