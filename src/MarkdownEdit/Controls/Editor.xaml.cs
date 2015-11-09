@@ -463,6 +463,7 @@ namespace MarkdownEdit.Controls
 
                 if (isWordDoc)
                 {
+                    NewFile();
                     EditBox.Text = ConvertText.FromMicrosoftWord(filename);
                     return true;
                 }
@@ -472,6 +473,7 @@ namespace MarkdownEdit.Controls
 
                 if (isHtmlFile)
                 {
+                    NewFile();
                     EditBox.Text = ConvertText.FromHtml(filename);
                     return true;
                 }
