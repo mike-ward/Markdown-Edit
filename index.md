@@ -24,9 +24,9 @@ is no main menu, status bar, tabbed windows or other distractions.
 
 ------------------------------------------------------------------------
 
-Obligatory Screen Shot
-
-<a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank">![markdown-edit-screenshot.png](http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png "Gratuitous Screen Shot")</a>
+<div style="height:700px">
+<a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank" style="position:absolute">![markdown-edit-screenshot.png](http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png "Gratuitous Screen Shot")</a>
+</div>
 
 Features
 --------
