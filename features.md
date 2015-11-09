@@ -7,9 +7,6 @@ image:
 
 ------------------------------------------------------------------------
 
-*From [Wikipedia](https://www.wikiwand.com/en/Software_feature), the
-free encyclopedia*
-
 The [Institute of Electrical and Electronics
 Engineers](https://www.wikiwand.com/en/Institute_of_Electrical_and_Electronics_Engineers)
 defines the term **feature** in [IEEE
@@ -27,6 +24,9 @@ functionality)."
 
 -   Upload images to Imgur using drag & drop. [Video
     Examples](http://mike-ward.net/2015/03/31/markdown-edit-1-4-imgur-uploads/)
+
+-   Keyboard snippets. Capture those frequently entered items into quick
+    keyboard shortcuts.
 
 -   Make your Markdown beautiful. `Alt+F` will reformat your Markdown
     and wrap it to 80 columns.
@@ -48,5 +48,7 @@ functionality)."
     to decide how to color highlight a document. Other editors use
     regular expressions that don't correctly interpret the multi-line
     block nature of Markdown.
+
+-   Live preview and user defined templates
 
 *More to come*
