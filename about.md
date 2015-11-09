@@ -26,12 +26,13 @@ felt didn't directly contribute to the writing of words.
 
 Perhaps the most controversial of these changes was removing the
 traditional menu bar under the title bar. Common actions in many word
-processing editors are the invoked in a similar manner. Can you think of
-an editor that doesn't use `Ctrl+S` to save a document. `Ctrl+Z`,
-`Ctrl+C`, `Ctrl+X` and `Ctrl+V`? Granted, not everyone uses these
-shortcuts but I didn't write MDE for everyone. I wrote MDE to work done
-with less friction. That requires a bit of training on your part
-although frankly, I don't think it's overly burdensome.
+processing editors are invoked in a similar manner. Can you think of an
+editor that doesn't use `Ctrl+S` to save a document? I'm betting you
+know what `Ctrl+Z`, `Ctrl+C`, `Ctrl+X` and `Ctrl+V` do. Granted, not
+everyone uses these shortcuts but I didn't write MDE for everyone. I
+wrote MDE to get work done with less friction. That requires a bit of
+training on your part although frankly, I don't think it's overly
+burdensome.
 
 Other things I wanted.
 
@@ -42,7 +43,7 @@ Other things I wanted.
 -   Stupid simple installer.
 -   Focus on doing Markdown well. Avoid non-Markdown stuff
     where practical.
--   And above all, make it PITA to use.
+-   And above all, don't make it PITA to use.
 
 So there you have it. My attempt at a Markdown editor. Enjoy it or hate
 it. I've had fun writing and using it and that's enough for me.
