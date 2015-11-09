@@ -24,7 +24,7 @@ is no main menu, status bar, tabbed windows or other distractions.
 
 ------------------------------------------------------------------------
 
-<div style="height:700px;>
+<div style="height:700px;">
 <a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank" style="position:absolute; width:880px; margin-left:-100px"><img src="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" alt="Screen Shot"/></a>
 </div>
 
