@@ -25,7 +25,7 @@ is no main menu, status bar, tabbed windows or other distractions.
 ------------------------------------------------------------------------
 
 <div style="height:700px">
-<a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank" style="position:absolute">![markdown-edit-screenshot.png](http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png "Gratuitous Screen Shot")</a>
+<a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank" style="position:absolute"><img src="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" alt="Screen Shot"/></a>
 </div>
 
 Features
@@ -65,5 +65,4 @@ Features
 -   Highlight current line
 -   [Open Source](https://github.com/mike-ward/Markdown-Edit)
 -   MIT License
--   [And more!]({{site.url}}/features)
-
+-   [And more!](%7B%7Bsite.url%7D%7D/features)
