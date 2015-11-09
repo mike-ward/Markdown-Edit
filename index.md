@@ -6,6 +6,10 @@ image:
   feature: typewriter.jpg
 ---
 
+<div style="height:700px;">
+<a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank" style="position:absolute; width:880px; margin-left:-100px"><img src="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" alt="Screen Shot"/></a>
+</div>
+
 Markdown Edit is a Windows **desktop**
 [CommonMark](http://commonmark.org) (a.k.a. Markdown) editor with an
 emphasis on content and keyboard shortcuts. There is minimal window
@@ -24,45 +28,3 @@ is no main menu, status bar, tabbed windows or other distractions.
 
 ------------------------------------------------------------------------
 
-<div style="height:700px;">
-<a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank" style="position:absolute; width:880px; margin-left:-100px"><img src="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" alt="Screen Shot"/></a>
-</div>
-
-Features
---------
-
--   [Drag and Drop image
-    uploads](http://mike-ward.net/2015/03/31/markdown-edit-1-4-imgur-uploads/)
--   [Document
-    Formatting](http://mike-ward.net/2015/04/20/markdown-edit-1-5-released/).
-    Make your Markdown beautiful
--   Convert `.docx` and `.html` files to markdown using simple drag &
-    drop
--   Syntax highlighting editor
--   Side-by-side HTML preview
--   Quickly show/hide preview
--   [CommonMark](http://commonmark.org) standard Markdown engine
--   GitHub Flavored Markdown supported
--   User preferences stored in a text file for easy sharing
--   Full screen covers task-bar (optional)
--   Keyboard shortcuts for bold, italic, headers, lists, block
-    quotes, etc.
--   User defined snippets improve the speed and proficiency of
-    writing documents.
--   Modern UI look and feel
--   **Not** a Windows Store App
--   Synchronized scrolling
--   User settable fonts, colors, themes
--   User defined style sheets
--   As you type spell checking
--   **Paste Special** replaces Microsoft Word's
-    smart quotes/hyphens/etc. with plain text equivalents
--   Quickly open recent files
--   Quickly change themes
--   Word Count
--   Auto Save
--   Select previous/next header
--   Highlight current line
--   [Open Source](https://github.com/mike-ward/Markdown-Edit)
--   MIT License
--   [And more!](%7B%7Bsite.url%7D%7D/features)
