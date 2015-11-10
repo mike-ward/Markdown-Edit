@@ -29,5 +29,3 @@ tabbed windows or other distractions.
     `choco install markdown-edit`
 -   **Windows 7 Users** - [Fix for font
     issue](https://github.com/mike-ward/Markdown-Edit/issues/14)
-
-------------------------------------------------------------------------
