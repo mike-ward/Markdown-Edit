@@ -20,7 +20,7 @@ shortcuts. There is minimal window chrome and most functions are
 accessed through keyboard shortcuts. There is no main menu, status bar,
 tabbed windows or other distractions.
 
--   [Install (v: 1.14,
+-   [Download Installer (v: 1.14,
     Windows 7+)](https://github.com/mike-ward/Markdown-Edit/releases/latest)
 -   Install using
     [Chocolatey](https://chocolatey.org/packages/markdown-edit):
