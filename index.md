@@ -3,7 +3,7 @@ layout: page
 title: Markdown Edit
 description: A full-featured Markdown Editor for Windows with an emphasis on content and keyboard shortcuts
 image:
-  feature: typewriter.jpg
+  feature: typewriter-home.jpg
 ---
 
 <div class="screenshot">
