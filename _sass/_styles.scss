@@ -265,6 +265,15 @@ header.site-header nav {
   }
 }
 
+.screenshot { 
+    height: 700px;
+    
+    a: {
+        position:absolute; 
+        width:880px; 
+        margin-left:-100px
+    }
+}
 
 /* Article Stuff */
 
@@ -716,6 +725,16 @@ footer {
     }
     
     }
+    
+    .screenshot { 
+        height: auto;
+        
+        a: {
+            position: static; 
+            width:100%; 
+            margin-left: 0
+        }
+    }
 }
 
 @media only screen and (max-width : 680px) {
@@ -826,6 +845,15 @@ footer {
         }
     }
 
+    .screenshot { 
+        height: auto;
+        
+        a: {
+            position: static; 
+            width:100%; 
+            margin-left: 0
+        }
+    }
 }
 
 

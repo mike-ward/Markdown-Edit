@@ -27,14 +27,16 @@ tools:
 links:
   - title: Features
     url: /features
-  - title: About
-    url: /about
+  - title: Blog
+    url: /blog
+  - title: Bugs
+    url: https://github.com/mike-ward/Markdown-Edit/issues/
+    external: true
   - title: Github
     url: https://github.com/mike-ward/Markdown-Edit/
     external: true
-  - title: Mike Who?
-    url: http://mike-ward.net/about/
-    external: true
+  - title: About
+    url: /about
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    America/Detroit
