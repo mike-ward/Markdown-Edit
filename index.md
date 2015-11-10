@@ -20,8 +20,6 @@ shortcuts. There is minimal window chrome and most functions are
 accessed through keyboard shortcuts. There is no main menu, status bar,
 tabbed windows or other distractions.
 
-------------------------------------------------------------------------
-
 -   [Install (v: 1.14,
     Windows 7+)](https://github.com/mike-ward/Markdown-Edit/releases/latest)
 -   Install using
@@ -29,3 +27,4 @@ tabbed windows or other distractions.
     `choco install markdown-edit`
 -   **Windows 7 Users** - [Fix for font
     issue](https://github.com/mike-ward/Markdown-Edit/issues/14)
+
