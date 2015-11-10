@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "New Website, New Release"
-description: "New website for Markdown Edit"
 category: articles
 tags: [release]
 ---
