@@ -22,6 +22,7 @@ p {
 
 a, a:visited, a:active {
     color: $link;
+    font-weight: bold;
     @include transit(all,0.25s,ease-in-out);
 }
 
