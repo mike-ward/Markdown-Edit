@@ -6,9 +6,13 @@ image:
   feature: typewriter-home.jpg
 ---
 
+------------------------------------------------------------------------
+
 <div class="screenshot">
 <a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank"><img src="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" alt="Screen Shot"/></a>
 </div>
+
+------------------------------------------------------------------------
 
 Markdown Edit is a Windows desktop [CommonMark](http://commonmark.org)
 (a.k.a. Markdown) editor with an emphasis on content and keyboard
@@ -18,8 +22,8 @@ tabbed windows or other distractions.
 
 ------------------------------------------------------------------------
 
--   [Install Version 1.13 (Windows 7, 8
-    and 10)](http://mike-ward.net/downloads/cdn/downloads/MarkdownEditSetup.msi)
+-   [Install (v: 1.14,
+    Windows 7+)](https://github.com/mike-ward/Markdown-Edit/releases/latest)
 -   Install using
     [Chocolatey](https://chocolatey.org/packages/markdown-edit):
     `choco install markdown-edit`
