@@ -2,7 +2,7 @@
 layout: page
 title: About
 image:
-  feature: soft-trees.jpg
+  feature: typewriter-about.jpg
 ---
 
 There's something hopeful and exciting about a blank page. The promise
