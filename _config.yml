@@ -3,6 +3,7 @@ tagline:          A full-featured Markdown Editor For Windows
 description:      A full-featured Markdown Editor for Windows with an emphasis on content and keyboard shortcuts
 canonical:        http://markdownedit.com
 url:              http://markdownedit.com
+download:         https://github.com/mike-ward/Markdown-Edit/releases/download/v1.14.0/MarkdownEditSetup.msi
 
 # Owner/author information
 owner:
@@ -25,18 +26,20 @@ tools:
 # Links to include in top navigation
 # For external links add external: true
 links:
+  - title: Download
+    url: https://github.com/mike-ward/Markdown-Edit/releases/download/v1.14.0/MarkdownEditSetup.msi
   - title: Features
     url: /features
   - title: Blog
     url: /blog
+  - title: About
+    url: /about
   - title: Bugs
     url: https://github.com/mike-ward/Markdown-Edit/issues/
     external: true
   - title: Github
     url: https://github.com/mike-ward/Markdown-Edit/
     external: true
-  - title: About
-    url: /about
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    America/Detroit
