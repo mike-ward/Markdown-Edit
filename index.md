@@ -28,3 +28,13 @@ tabbed windows or other distractions.
 -   **Windows 7 Users** - [Fix for font
     issue](https://github.com/mike-ward/Markdown-Edit/issues/14)
 
+------------------------------------------------------------------------
+
+### Donate
+
+Like what I'm doing? Show your appreciation by donating. What happens to
+the money? Some of it is donated to makers of software and tools I use.
+The rest goes to equipment funding and software licensing.
+
+[Donate with
+PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XGGZ8BEED7R62)
