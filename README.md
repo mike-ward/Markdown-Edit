@@ -74,6 +74,5 @@ Requirements
 -   .NET 4.6 (Get it at <http://smallestdotnet.com>)
 -   [Fix for Windows 7 font
     issue](https://github.com/mike-ward/Markdown-Edit/issues/14)
-    Installing ----------
 
 [Download](https://github.com/mike-ward/Markdown-Edit/releases/latest)
