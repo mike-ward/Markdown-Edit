@@ -96,10 +96,10 @@
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-web}" />
           <TextBlock>
-            <Hyperlink NavigateUri="http://mike-ward.net/markdownedit"
+            <Hyperlink NavigateUri="http://markdownedit.com"
                        Style="{StaticResource HyperlinkStyle}"
                        RequestNavigate="HyperlinkOnRequestNavigate">
-              http://mike-ward.net
+              http://markdownedit.com
             </Hyperlink>
           </TextBlock>
         </StackPanel>

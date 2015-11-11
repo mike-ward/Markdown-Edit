@@ -170,7 +170,7 @@ Kodestumper består af en enlig linje som starter med:
 
 Eksempel
 
-    mde  [Markdown Edit](http://mike-ward.net/markdown)
+    mde  [Markdown Edit](http://markdownedit.com)
 
 Når denne kodestumper er defineret, åbn Markdown Edit og indtast
 
@@ -180,7 +180,7 @@ Hvor `[TAB]` er tabulator tasten.
 
 Teksten `mde` vil så blive erstattet med
 
-    [Markdown Edit](http://mike-ward.net/markdown)
+    [Markdown Edit](http://markdownedit.com)
 
 ### Kodestump erstatnings parametre
 
@@ -189,7 +189,7 @@ Teksten `mde` vil så blive erstattet med
 
 -   $END$ - Placerer cursoren bag det indsatte. For eksempel
 
-    mde [Markdown $END$ Edit](http://mike-ward.net/markdown)
+    mde [Markdown $END$ Edit](http://markdownedit.com)
 
     placerer cursoren mellem *Markdown* og *Edit*
 
@@ -287,7 +287,7 @@ Om
 --
 
 Version 1.11.0  
-Hjemmeside: <http://mike-ward.net/markdownedit>  
+Hjemmeside: <http://http://markdownedit.com>  
 Twitter: `@mikeward_aa`  
 Kildekode: <https://github.com/mike-ward/Markdown-Edit>
 

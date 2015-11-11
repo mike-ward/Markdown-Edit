@@ -173,7 +173,7 @@ Les snippets sont constituées d'une seule ligne commençant par:
 
 Exemple
 
-    mde  [Markdown Edit](http://mike-ward.net/markdown)
+    mde  [Markdown Edit](http://markdownedit.com)
 
 Avec cette snippet définie, ouvrez Markdown Edit et saisissez
 
@@ -183,7 +183,7 @@ Où `[TAB]` est la touche tab.
 
 Le texte `mde` est remplacé par
 
-    [Markdown Edit](http://mike-ward.net/markdown)
+    [Markdown Edit](http://markdownedit.com)
 
 ### Paramètres de substitution des snippets
 
@@ -191,7 +191,7 @@ Le texte `mde` est remplacé par
 
 -   $END$ - Place le curseur après insertion. Par exemple
 
-    mde [Markdown $END$ Edit](http://mike-ward.net/markdown)
+    mde [Markdown $END$ Edit](http://markdownedit.com)
 
     place le curseur entre *Markdown* et *Edit*
 
@@ -300,7 +300,7 @@ A propos
 --------
 
 Version 1.13.0  
-Home Page: <http://mike-ward.net/markdownedit>  
+Home Page: <http://markdownedit.com>  
 Twitter: `@mikeward_aa`  
 Source: <https://github.com/mike-ward/Markdown-Edit>
 
