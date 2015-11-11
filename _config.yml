@@ -28,6 +28,7 @@ tools:
 links:
   - title: Download
     url: https://github.com/mike-ward/Markdown-Edit/releases/download/v1.14.0/MarkdownEditSetup.msi
+    external: true
   - title: Features
     url: /features
   - title: Blog
