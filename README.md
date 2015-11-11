@@ -9,7 +9,7 @@ https://gitter.im/mike-ward/Markdown-Edit](https://badges.gitter.im/Join%20Chat.
 
 ![logo](https://raw.githubusercontent.com/mike-ward/Markdown-Edit/master/src/MarkdownEdit/logo.png)
 
-[Home Page](http://mike-ward.net/markdownedit)
+[Home Page](http://markdownedit.com)
 
 Markdown Edit is a Windows **desktop** Markdown editor with an emphasis
 on content and keyboard shortcuts. There is minimal window chrome and
@@ -76,4 +76,4 @@ Requirements
 Installing
 ----------
 
-[Download](http://mike-ward.net/downloads)
+[Download](https://github.com/mike-ward/Markdown-Edit/releases/latest)

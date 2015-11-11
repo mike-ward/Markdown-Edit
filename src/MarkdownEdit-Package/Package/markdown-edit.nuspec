@@ -3,17 +3,17 @@
   <metadata>
     <id>markdown-edit</id>
     <title>Markdown Edit</title>
-    <version>1.13.0</version>
+    <version>1.14.0</version>
     <authors>Mike Ward</authors>
     <owners>Mike Ward</owners>
     <summary>Desktop CommonMark Editor for Windows</summary>
     <description>Markdown Edit is a Windows desktop CommonMark (a.k.a. Markdown) editor with an emphasis on content and keyboard shortcuts. There is minimal window chrome and most functions are accessed through keyboard shortcuts. There is no main menu, status bar, tabbed windows or other distractions.
     </description>
-    <projectUrl>http://mike-ward.net/markdownedit</projectUrl>
+    <projectUrl>http://markdownedit.com</projectUrl>
     <licenseUrl>https://cdn.rawgit.com/mike-ward/Markdown-Edit/master/LICENSE.txt</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://cdn.rawgit.com/mike-ward/Markdown-Edit/master/src/MarkdownEdit/logo.png</iconUrl>
-    <releaseNotes>Save As HTML, Bugs</releaseNotes>
+    <releaseNotes>Ctrl+P added</releaseNotes>
     <dependencies>
       <dependency id="DotNet4.6" />
     </dependencies>

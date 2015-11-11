@@ -285,7 +285,6 @@ Limitations
 About
 -----
 
-Version 1.13.0  
 Home Page: <http://markdownedit.com>  
 Twitter: `@mikeward_aa` 
 Source: <https://github.com/mike-ward/Markdown-Edit>

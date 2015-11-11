@@ -286,8 +286,7 @@ Begrænsninger
 Om
 --
 
-Version 1.11.0  
-Hjemmeside: <http://http://markdownedit.com>  
+Hjemmeside: <http://markdownedit.com>  
 Twitter: `@mikeward_aa`  
 Kildekode: <https://github.com/mike-ward/Markdown-Edit>
 
