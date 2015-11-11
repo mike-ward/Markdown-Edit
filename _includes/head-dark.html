@@ -56,14 +56,9 @@
         <a href="#nav" class="menu"><span class='icons'>☰</span></a>
         <nav role="navigation">
           <ul>
-            <li>
-              <a href="{{ site.url }}" title="{{ site.title }}">Home</a>
-            </li>
-            
             {% for link in site.links %}
                 <li><a href="{% if link.external %}{{ link.url }}{% else %}{{ site.url }}{{ link.url }}{% endif %}" {% if link.external %}target="_blank"{% endif %}>{{ link.title }}</a></li>
             {% endfor %}
-
           </ul>
         </nav>
       </div>
