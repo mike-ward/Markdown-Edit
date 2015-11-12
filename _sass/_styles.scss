@@ -256,7 +256,6 @@ header.site-header nav {
     position: relative;
     margin-left: 20px; 
     a {
-        color: white;
         @include transit(all, .2s, ease);
         &:hover {
             @include tshd(0, 0, 3px, rgba(255,255,255,.6));
