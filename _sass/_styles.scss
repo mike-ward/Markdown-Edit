@@ -826,6 +826,8 @@ footer {
     &:hover {
         text-shadow: none;
     }
+    background-color: rgba(0,0,0,.2);
+    box-shadow: 4px 4px 80px #000;
   }
   
   #bump .darken nav ul {
