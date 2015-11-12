@@ -818,7 +818,6 @@ footer {
     padding-right: 7%;
     position: relative;
     width: 100%;
-    color: $white;
     &:active {
       border-bottom: 2px solid white;
       color: white;  
@@ -826,8 +825,6 @@ footer {
     &:hover {
         text-shadow: none;
     }
-    background-color: rgba(0,0,0,.2);
-    box-shadow: 4px 4px 80px #000;
   }
   
   #bump .darken nav ul {
