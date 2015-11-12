@@ -1,5 +1,6 @@
 ---
 layout: page
+title: Markdown Edit
 description: A full-featured Markdown Editor for Windows with an emphasis on content and keyboard shortcuts
 image:
   feature: typewriter-home.jpg
