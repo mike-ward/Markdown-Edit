@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: post-no-feature
 title: "New Website, New Release"
 category: articles
 tags: [release]
