@@ -37,7 +37,10 @@ $(function(){
         imgUrl = imgUrl[1]; // Captured subexpression.
       }
       return imgUrl;
-  })
+  }).load(function(){
+    $('img.loading').fadeOut(100);
+    $('div.overlay').fadeTo("fast", 0.6);
+  });
 });
 
 $(function(){
