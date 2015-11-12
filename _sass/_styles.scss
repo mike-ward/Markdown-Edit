@@ -200,6 +200,8 @@ header.site-header {
       
       nav ul li a {
             color: $black;
+            box-shadow: none;
+            background-color: inherit;
             &:active {
               color: $link;  
             }
