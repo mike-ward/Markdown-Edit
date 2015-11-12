@@ -258,7 +258,7 @@ header.site-header nav {
     a {
         color: white;
         background-color: rgba(0, 0, 0, .1);
-        box-shadow: 4px 4x 80px #000;
+        box-shadow: 4px 4px 80px #000;
         @include transit(all, .2s, ease);
         &:hover {
             @include tshd(0, 0, 3px, rgba(255,255,255,.6));
