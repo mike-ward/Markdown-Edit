@@ -820,7 +820,7 @@ footer {
     width: 100%;
     color: $white;
     &:active {
-      background-color: $link;
+      border-bottom: 2px solid white;
       color: white;  
     }
     &:hover {
