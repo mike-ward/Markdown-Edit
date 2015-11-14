@@ -44,6 +44,8 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand ConvertSelectionToListCommand = new RoutedCommand();
         public static RoutedCommand InsertBlockQuoteCommand = new RoutedCommand();
         public static RoutedCommand RevertCommand = new RoutedCommand();
+        public static RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
+        public static RoutedCommand InsertHyperlinkDialogCommand = new RoutedCommand();
 
         public Editor()
         {
@@ -573,6 +575,10 @@ namespace MarkdownEdit.Controls
         public void ExecuteConvertSelectionToList(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.ConvertSelectionToList(EditBox));
 
         public void ExecuteInsertBlockQuote(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.InsertBlockQuote(EditBox));
+
+        public void ExecuteInsertHyperlinkDialog(object sender, ExecutedRoutedEventArgs e) => Execute(() => new InsertHyperlinkDialog { Owner = Application.Current.MainWindow}.ShowDialog() );
+
+        public void ExecuteInsertHyperlink(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.InsertHyperlink(EditBox, e.Parameter as string));
 
         public void InsertHeader(int num) => Execute(() =>
         {

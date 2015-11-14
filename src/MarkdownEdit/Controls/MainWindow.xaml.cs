@@ -53,6 +53,7 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand IncreaseEditorMarginCommand = new RoutedCommand();
         public static RoutedCommand DecreaseEditorMarginCommand = new RoutedCommand();
         public static RoutedCommand ToggleSettingsFlyoutCommand = new RoutedCommand();
+        public static RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _markdownConverter;
@@ -226,6 +227,8 @@ namespace MarkdownEdit.Controls
         private void ExecuteIncreaseEditorMargin(object sender, ExecutedRoutedEventArgs e) => App.UserSettings.SinglePaneMargin = Math.Max(App.UserSettings.SinglePaneMargin - 1, EditorMarginMin);
 
         private void ExecuteDecreaseEditorMargin(object sender, ExecutedRoutedEventArgs e) => App.UserSettings.SinglePaneMargin = Math.Min(App.UserSettings.SinglePaneMargin + 1, EditorMarginMax);
+
+        private void ExecuteInsertHyperlinkCommand(object sender, ExecutedRoutedEventArgs e) => Editor.InsertHyperlinkCommand.Execute(e.Parameter, Editor);
 
         private void ExecuteEditorReplaceCommand(object sender, ExecutedRoutedEventArgs e)
         {

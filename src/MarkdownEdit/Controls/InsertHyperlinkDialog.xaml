@@ -1,0 +1,43 @@
+﻿<controls:MetroWindow
+  x:Class="MarkdownEdit.Controls.InsertHyperlinkDialog"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:local="clr-namespace:MarkdownEdit.Controls"
+  xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+  mc:Ignorable="d"
+  Title="Insert Hyperlink" 
+  WindowStyle="SingleBorderWindow"
+  SizeToContent="WidthAndHeight"
+  ResizeMode="NoResize"
+  ShowInTaskbar="False"
+  WindowStartupLocation="CenterOwner"
+  WindowTitleBrush="{StaticResource GrayBrush2}"
+  GlowBrush="{StaticResource GrayBrush2}"
+  WindowTransitionsEnabled="False"
+  ShowCloseButton="True"
+  ShowMaxRestoreButton="False"
+  ShowMinButton="False"
+  MinWidth="400">
+  <StackPanel Margin="20">
+      <TextBlock>http://example.com/ "optional title"</TextBlock>
+    <TextBox
+        x:Name="Link"
+        Margin="10"
+        TabIndex="1">
+      <TextBox.InputBindings>
+        <KeyBinding Command="{x:Static local:InsertHyperlinkDialog.AcceptLinkCommand}" Gesture="Enter" />
+      </TextBox.InputBindings>
+    </TextBox>
+    </StackPanel>
+
+  <Window.CommandBindings>
+    <CommandBinding Command="Close" Executed="ExecuteClose" />
+  </Window.CommandBindings>
+
+  <controls:MetroWindow.InputBindings>
+    <KeyBinding Gesture="Esc" Command="Close" />
+  </controls:MetroWindow.InputBindings>
+
+</controls:MetroWindow>

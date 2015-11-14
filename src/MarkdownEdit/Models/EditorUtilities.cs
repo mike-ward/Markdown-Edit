@@ -308,5 +308,17 @@ namespace MarkdownEdit.Models
                 textEditor.EndChange();
             }
         }
+
+        public static void InsertHyperlink(TextEditor textEditor, string link)
+        {
+            if (string.IsNullOrWhiteSpace(link)) return;
+
+            var parts = link.Split(new[] {'"'}, 2);
+            var text = parts.Length == 1
+                ? $"<{parts[0].Trim()}>"
+                : $"[{parts[1].Trim('"', ' ')}]({parts[0].Trim()})";
+
+            textEditor.Document.Insert(textEditor.TextArea.Caret.Offset, text);
+        }
     }
 }

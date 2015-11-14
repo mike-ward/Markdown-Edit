@@ -196,11 +196,9 @@ namespace MarkdownEdit.Models
         {
             try
             {
-                if (File.Exists(SettingsFile) == false)
-                {
-                    var defaultSettings = new UserSettings {Theme = new Theme()};
-                    defaultSettings.Save();
-                }
+                if (File.Exists(SettingsFile)) return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
+                var defaultSettings = new UserSettings {Theme = new Theme()};
+                defaultSettings.Save();
                 return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(SettingsFile));
             }
             catch (Exception ex)
@@ -216,11 +214,9 @@ namespace MarkdownEdit.Models
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {
-            if (EqualityComparer<T>.Default.Equals(property, value) == false)
-            {
-                property = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         // ICloneable
@@ -239,27 +235,27 @@ namespace MarkdownEdit.Models
         public override int GetHashCode()
         {
             return 17
-                   ^ EditorFontFamily.GetHashCode()
-                   ^ EditorFontSize.GetHashCode()
-                   ^ EditorHighlightCurrentLine.GetHashCode()
-                   ^ EditorOpenLastCursorPosition.GetHashCode()
-                   ^ EditorOpenLastFile.GetHashCode()
-                   ^ EditorShowEndOfLine.GetHashCode()
-                   ^ EditorShowLineNumbers.GetHashCode()
-                   ^ EditorShowSpaces.GetHashCode()
-                   ^ EditorShowTabs.GetHashCode()
-                   ^ EditorVerticalScrollBarVisible.GetHashCode()
-                   ^ SynchronizeScrollPositions.GetHashCode()
-                   ^ SpellCheckDictionary.GetHashCode()
-                   ^ SpellCheckIgnoreCodeBlocks.GetHashCode()
-                   ^ SpellCheckIgnoreMarkupTags.GetHashCode()
-                   ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
-                   ^ IgnoreYaml.GetHashCode()
-                   ^ IgnoreTaskbarOnMaximize.GetHashCode()
-                   ^ FormatOnSave.GetHashCode()
-                   ^ GitHubMarkdown.GetHashCode()
-                   ^ Theme.GetHashCode()
-                   ^ SinglePaneMargin.GetHashCode();
+                ^ EditorFontFamily.GetHashCode()
+                ^ EditorFontSize.GetHashCode()
+                ^ EditorHighlightCurrentLine.GetHashCode()
+                ^ EditorOpenLastCursorPosition.GetHashCode()
+                ^ EditorOpenLastFile.GetHashCode()
+                ^ EditorShowEndOfLine.GetHashCode()
+                ^ EditorShowLineNumbers.GetHashCode()
+                ^ EditorShowSpaces.GetHashCode()
+                ^ EditorShowTabs.GetHashCode()
+                ^ EditorVerticalScrollBarVisible.GetHashCode()
+                ^ SynchronizeScrollPositions.GetHashCode()
+                ^ SpellCheckDictionary.GetHashCode()
+                ^ SpellCheckIgnoreCodeBlocks.GetHashCode()
+                ^ SpellCheckIgnoreMarkupTags.GetHashCode()
+                ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
+                ^ IgnoreYaml.GetHashCode()
+                ^ IgnoreTaskbarOnMaximize.GetHashCode()
+                ^ FormatOnSave.GetHashCode()
+                ^ GitHubMarkdown.GetHashCode()
+                ^ Theme.GetHashCode()
+                ^ SinglePaneMargin.GetHashCode();
         }
     }
 }

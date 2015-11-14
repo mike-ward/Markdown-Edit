@@ -131,6 +131,9 @@
     <Compile Include="Controls\ImageDropDialog.xaml.cs">
       <DependentUpon>ImageDropDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\InsertHyperlinkDialog.xaml.cs">
+      <DependentUpon>InsertHyperlinkDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SpellingDictionaryComboBox.xaml.cs">
       <DependentUpon>SpellingDictionaryComboBox.xaml</DependentUpon>
     </Compile>
@@ -201,6 +204,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ImageDropDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\InsertHyperlinkDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
