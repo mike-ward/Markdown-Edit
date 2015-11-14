@@ -12,6 +12,10 @@ about font size and colors and layouts. That's not for me. Content is
 what I value. That's why I write in Markdown. And it's why I wrote
 Markdown Edit.
 
+> Writing for the web with Microsoft Word is like commuting to work in
+> an 18-wheeler. &ndash;
+> [MakeUseOf.com](http://www.makeuseof.com/tag/5-sites-quickly-learning-markdown/)
+
 Writing should first and foremost be about, well, writing. Presentation
 matters but is in most cases it's an enhancement, not the message. Who
 cares if your header is tall or short, fat or wide? That's the job of a
@@ -24,15 +28,14 @@ realized that these artifacts actually distracted from the writing
 experience. And so little by little, I removed those elements that I
 felt didn't directly contribute to the writing of words.
 
-Perhaps the most controversial of these changes was removing the
-traditional menu bar under the title bar. Common actions in many word
-processing editors are invoked in a similar manner. Can you think of an
-editor that doesn't use `Ctrl+S` to save a document? I'm betting you
-know what `Ctrl+Z`, `Ctrl+C`, `Ctrl+X` and `Ctrl+V` do. Granted, not
-everyone uses these shortcuts but I didn't write MDE for everyone. I
-wrote MDE to get work done with less friction. That requires a bit of
-training on your part although frankly, I don't think it's overly
-burdensome.
+Perhaps the most unusual of these changes was removing the traditional
+menu bar under the title bar. Common actions in many word processing
+editors are invoked in a similar manner. Can you think of an editor that
+doesn't use `Ctrl+S` to save a document? I'm betting you know what
+`Ctrl+Z`, `Ctrl+C`, `Ctrl+X` and `Ctrl+V` do. Granted, not everyone uses
+these shortcuts but I didn't write MDE for everyone. I wrote MDE to get
+work done with less friction. That requires a bit of training on your
+part although frankly, I don't think it's overly burdensome.
 
 Other things I wanted.
 
@@ -46,6 +49,6 @@ Other things I wanted.
 -   And above all, don't make it PITA to use.
 
 So there you have it. My attempt at a Markdown editor. Enjoy it or hate
-it. I've had fun writing and using it and that's enough for me.
+it. I have fun writing and using it and that's enough for me.
 
 -- Mike
