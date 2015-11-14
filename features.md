@@ -51,8 +51,6 @@ functionality)."
 
 -   User settable fonts, colors, themes
 
--   User defined style sheets
-
 -   Word count, auto save, find and replace (including
     regular expressions)
 
