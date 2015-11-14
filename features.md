@@ -37,12 +37,10 @@ functionality)."
     > [John Gruber - Creator of
     > Markdown](https://daringfireball.net/projects/markdown/)
 
--   A real editor, not a watered down textarea or rich text control
+-   A real editor, not a watered down text-area or rich-text control
     (Thank you [Avalon Edit](http://avalonedit.net/))
 
--   Loads fast - My goal was to make it open as fast as Windows built-in
-    Notepad program. While that's next to impossible given the
-    technologies and features in MDE, I didn't miss by much.
+-   Loads fast
 
 -   Accurate syntax highlighting. MDE uses an Abstract Syntax Tree (AST)
     to decide how to color highlight a document. Other editors use
@@ -51,4 +49,27 @@ functionality)."
 
 -   Live preview and user defined templates
 
-*More to come*
+-   User settable fonts, colors, themes
+
+-   User defined style sheets
+
+-   Word count, auto save, find and replace (including
+    regular expressions)
+
+-   As you type spell checking
+
+-   Quickly open recent files
+
+-   Remember last cursor position when opening file (optional)
+
+-   Quickly navigate to the next or previous header (`Ctrl+J` `Ctrl+U`)
+
+-   CommonMark and GitHub Markdown
+
+-   Modern UI with minimal distractions
+
+-   Open Source
+
+-   MIT License
+
+
