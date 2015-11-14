@@ -149,7 +149,10 @@ namespace MarkdownEdit.Controls
             var text = (string) pasteEventArgs.SourceDataObject.GetData(DataFormats.UnicodeText, true);
             if (string.IsNullOrWhiteSpace(text)) return;
             if (_removeSpecialCharacters) text = text.ReplaceSmartChars();
-            else if (Uri.IsWellFormedUriString(text, UriKind.Absolute)) text = Images.IsImageUrl(text) ? $"![](<{text}>)\n" : $"<{text}>";
+            else if (Uri.IsWellFormedUriString(text, UriKind.Absolute))
+                text = Images.IsImageUrl(text.TrimEnd())
+                    ? $"![]({text})\n"
+                    : $"<{text}>";
             else return;
 
             var dataObject = new DataObject();
@@ -168,9 +171,8 @@ namespace MarkdownEdit.Controls
             {
                 var files = e.Data.GetData(DataFormats.FileDrop) as string[];
                 if (files == null) return;
-                var imageExtensions = new[] {".jpg", "jpeg", ".png", ".gif"};
 
-                if (imageExtensions.Any(ext => files[0].EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
+                if (Images.HasImageExtension(files[0]))
                 {
                     var dialog = new ImageDropDialog
                     {
@@ -195,7 +197,7 @@ namespace MarkdownEdit.Controls
 
             CanExecuteRoutedEventHandler canExecute = (sender, args) =>
                 args.CanExecute = EditBox.TextArea?.Document != null &&
-                                  EditBox.TextArea.ReadOnlySectionProvider.CanInsert(EditBox.TextArea.Caret.Offset);
+                    EditBox.TextArea.ReadOnlySectionProvider.CanInsert(EditBox.TextArea.Caret.Offset);
 
             ExecutedRoutedEventHandler execute = null;
             execute = (sender, args) =>
@@ -373,9 +375,9 @@ namespace MarkdownEdit.Controls
             {
                 const string fileFilter =
                     "Markdown files (*.md)|*.md|" +
-                    "Microsoft Word files (*.docx)|*.docx|" +
-                    "HTML files (*.html)|*.html|" +
-                    "All files (*.*)|*.*";
+                        "Microsoft Word files (*.docx)|*.docx|" +
+                        "HTML files (*.html)|*.html|" +
+                        "All files (*.*)|*.*";
 
                 var dialog = new OpenFileDialog {Filter = fileFilter};
                 if (dialog.ShowDialog() == false) return;
@@ -471,7 +473,7 @@ namespace MarkdownEdit.Controls
                 }
 
                 var isHtmlFile = pathExtension.Equals(".html", StringComparison.OrdinalIgnoreCase)
-                                 || pathExtension.Equals(".htm", StringComparison.OrdinalIgnoreCase);
+                    || pathExtension.Equals(".htm", StringComparison.OrdinalIgnoreCase);
 
                 if (isHtmlFile)
                 {
@@ -576,7 +578,7 @@ namespace MarkdownEdit.Controls
 
         public void ExecuteInsertBlockQuote(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.InsertBlockQuote(EditBox));
 
-        public void ExecuteInsertHyperlinkDialog(object sender, ExecutedRoutedEventArgs e) => Execute(() => new InsertHyperlinkDialog { Owner = Application.Current.MainWindow}.ShowDialog() );
+        public void ExecuteInsertHyperlinkDialog(object sender, ExecutedRoutedEventArgs e) => Execute(() => new InsertHyperlinkDialog {Owner = Application.Current.MainWindow}.ShowDialog());
 
         public void ExecuteInsertHyperlink(object sender, ExecutedRoutedEventArgs e) => Execute(() => EditorUtilities.InsertHyperlink(EditBox, e.Parameter as string));
 

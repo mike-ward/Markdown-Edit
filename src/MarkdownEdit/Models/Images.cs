@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -22,7 +23,7 @@ namespace MarkdownEdit.Models
             ms.Read(dibBuffer, 0, dibBuffer.Length);
 
             var infoHeader = BinaryStructConverter.FromByteArray<BITMAPINFOHEADER>(dibBuffer);
-            var fileHeaderSize = Marshal.SizeOf(typeof(BITMAPFILEHEADER));
+            var fileHeaderSize = Marshal.SizeOf(typeof (BITMAPFILEHEADER));
             var infoHeaderSize = infoHeader.biSize;
             var fileSize = fileHeaderSize + infoHeader.biSize + infoHeader.biSizeImage;
 
@@ -32,7 +33,7 @@ namespace MarkdownEdit.Models
                 bfSize = fileSize,
                 bfReserved1 = 0,
                 bfReserved2 = 0,
-                bfOffBits = fileHeaderSize + infoHeaderSize + infoHeader.biClrUsed * 4
+                bfOffBits = fileHeaderSize + infoHeaderSize + infoHeader.biClrUsed*4
             };
 
             var fileHeaderBytes = BinaryStructConverter.ToByteArray(fileHeader);
@@ -55,10 +56,19 @@ namespace MarkdownEdit.Models
             }
         }
 
+        public static bool HasImageExtension(string url)
+        {
+            var trimUrl = url.TrimEnd();
+            var imageExtensions = new[] {".jpg", "jpeg", ".png", ".gif"};
+            return imageExtensions.Any(ext => trimUrl.EndsWith(ext, StringComparison.OrdinalIgnoreCase));
+        }
+
         public static bool IsImageUrl(string url)
         {
             try
             {
+                if (HasImageExtension(url)) return true;
+
                 var request = WebRequest.Create(url);
                 request.Method = "HEAD";
                 request.Timeout = 2000;
@@ -104,11 +114,11 @@ namespace MarkdownEdit.Models
                 var ptr = IntPtr.Zero;
                 try
                 {
-                    var size = Marshal.SizeOf(typeof(T));
+                    var size = Marshal.SizeOf(typeof (T));
                     ptr = Marshal.AllocHGlobal(size);
                     Marshal.Copy(bytes, 0, ptr, size);
-                    var obj = Marshal.PtrToStructure(ptr, typeof(T));
-                    return (T)obj;
+                    var obj = Marshal.PtrToStructure(ptr, typeof (T));
+                    return (T) obj;
                 }
                 finally
                 {
@@ -121,7 +131,7 @@ namespace MarkdownEdit.Models
                 var ptr = IntPtr.Zero;
                 try
                 {
-                    var size = Marshal.SizeOf(typeof(T));
+                    var size = Marshal.SizeOf(typeof (T));
                     ptr = Marshal.AllocHGlobal(size);
                     Marshal.StructureToPtr(obj, ptr, true);
                     var bytes = new byte[size];

@@ -309,7 +309,7 @@ namespace MarkdownEdit.Models
             }
         }
 
-        public static void InsertHyperlink(TextEditor textEditor, string link)
+        public static void InsertHyperlink(TextEditor editor, string link)
         {
             if (string.IsNullOrWhiteSpace(link)) return;
 
@@ -318,7 +318,7 @@ namespace MarkdownEdit.Models
                 ? $"<{parts[0].Trim()}>"
                 : $"[{parts[1].Trim('"', ' ')}]({parts[0].Trim()})";
 
-            textEditor.Document.Insert(textEditor.TextArea.Caret.Offset, text);
+            editor.Document.Replace(editor.SelectionStart, editor.SelectionLength, text);
         }
     }
 }
