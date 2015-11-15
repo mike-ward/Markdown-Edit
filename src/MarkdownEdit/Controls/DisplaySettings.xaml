@@ -91,7 +91,7 @@
       <StackPanel Margin="30 5">
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-version}" />
-          <TextBlock FontSize="16" Text="1.14" />
+          <TextBlock FontSize="16" Text="1.15" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-web}" />
