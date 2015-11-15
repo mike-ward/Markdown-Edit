@@ -150,9 +150,11 @@ namespace MarkdownEdit.Controls
             if (string.IsNullOrWhiteSpace(text)) return;
             if (_removeSpecialCharacters) text = text.ReplaceSmartChars();
             else if (Uri.IsWellFormedUriString(text, UriKind.Absolute))
+            {
                 text = Images.IsImageUrl(text.TrimEnd())
-                    ? $"![]({text})\n"
-                    : $"<{text}>";
+                    ? $"![{EditBox.SelectedText}]({text})\n"
+                    : string.IsNullOrEmpty(EditBox.SelectedText) ? $"<{text}>" : $"[{EditBox.SelectedText}]({text})";
+            }
             else return;
 
             var dataObject = new DataObject();
