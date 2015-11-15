@@ -13,6 +13,7 @@ tooltip-word-count:               Ord tæller
 tooltip-spell-check:              Stave kontrol - Ctrl+F7
 tooltip-word-wrap:                Ombryd tekst - Ctrl+W
 tooltip-auto-save:                Gem automatisk - Alt+S
+tooltip-new-version:              Ny version tilgængelig
 settings-flyout-header:           Indstillinger
 
 === Editor

@@ -13,6 +13,7 @@ tooltip-word-count:               Word Count
 tooltip-spell-check:              Spell Check - Ctrl+F7
 tooltip-word-wrap:                Word Wrap - Ctrl+W
 tooltip-auto-save:                Auto Save - Alt+S
+tooltip-new-version:              New version available
 settings-flyout-header:           Settings
 
 === Editor

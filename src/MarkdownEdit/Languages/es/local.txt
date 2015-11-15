@@ -13,6 +13,7 @@ tooltip-word-count:               Cantidad de palabras
 tooltip-spell-check:              Corregir Ortografía - Ctrl+F7
 tooltip-word-wrap:                Ajuste de Línea - Ctrl+W
 tooltip-auto-save:                Auto Guardar - Alt+S
+tooltip-new-version:              Nueva versión disponible
 settings-flyout-header:           Configuración
 
 === Editor

@@ -150,7 +150,7 @@
                 />
         <Button Content="&#xE182;"
                 ToolTip="{i18N:Localize tooltip-new-version}"
-                Command="SaveAs"
+                Command="{x:Static controls:MainWindow.GotToMarkdownEditWebSiteCommand}"
                 FontFamily="Segoe UI Symbol"
                 Style="{StaticResource NewVersionCommandWindoButtonStyle}" 
                 />
@@ -253,6 +253,7 @@
     <CommandBinding Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" Executed="ExecuteToggleShowSettingsFlyout" />
     <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
     <CommandBinding Command="{x:Static controls:MainWindow.InsertHyperlinkCommand}" Executed="ExecuteInsertHyperlinkCommand" />
+    <CommandBinding Command="{x:Static controls:MainWindow.GotToMarkdownEditWebSiteCommand}" Executed="ExecuteGotToMarkdownEditWebSite" />
   </Window.CommandBindings>
 
   <Window.InputBindings>

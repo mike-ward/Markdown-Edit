@@ -5,7 +5,6 @@ using System.IO;
 using System.Media;
 using System.Net.Http;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -147,7 +146,7 @@ namespace MarkdownEdit.Models
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
             if (element == null) return default(T);
-            if (element.GetType() == typeof(T)) return element as T;
+            if (element.GetType() == typeof (T)) return element as T;
             T foundElement = null;
             (element as FrameworkElement)?.ApplyTemplate();
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
@@ -179,7 +178,7 @@ namespace MarkdownEdit.Models
                 using (var http = new HttpClient())
                 {
                     var version = await http.GetStringAsync("http://markdownedit.com/version.txt");
-                    return string.IsNullOrWhiteSpace(version) || version != Version;
+                    return string.IsNullOrWhiteSpace(version) || version == Version;
                 }
             }
             catch (Exception)
