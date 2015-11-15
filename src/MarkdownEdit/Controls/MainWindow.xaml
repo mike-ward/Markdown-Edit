@@ -36,7 +36,7 @@
         </Trigger>
       </Style.Triggers>
     </Style>
-    
+
     <Style x:Key="SpellCheckToggleCommandWindowButtonStyle"
             TargetType="Button"
             BasedOn="{StaticResource CommandWindowButtonStyle}">
@@ -62,6 +62,16 @@
         <Trigger Property="IsMouseOver" Value="True">
           <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
         </Trigger>
+      </Style.Triggers>
+    </Style>
+
+    <Style x:Key="NewVersionCommandWindoButtonStyle"
+           TargetType="Button"
+           BasedOn="{StaticResource CommandWindowButtonStyle}">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding NewVersion}" Value="False">
+          <Setter Property="Visibility" Value="Collapsed" />
+        </DataTrigger>
       </Style.Triggers>
     </Style>
 
@@ -137,6 +147,12 @@
                 ToolTip="{i18N:Localize tooltip-auto-save}"
                 FontFamily="Segoe UI Symbol"
                 Style="{StaticResource AutoSaveToggleCommandWindowButtonStyle}"
+                />
+        <Button Content="&#xE182;"
+                ToolTip="{i18N:Localize tooltip-new-version}"
+                Command="SaveAs"
+                FontFamily="Segoe UI Symbol"
+                Style="{StaticResource NewVersionCommandWindoButtonStyle}" 
                 />
       </StackPanel>
     </metrocontrols:WindowCommands>

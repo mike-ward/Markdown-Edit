@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Media;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -19,6 +20,8 @@ namespace MarkdownEdit.Models
 {
     public static class Utility
     {
+        public const string Version = "1.15";
+
         public static Func<TKey, TResult> Memoize<TKey, TResult>(this Func<TKey, TResult> func)
         {
             var cache = new ConcurrentDictionary<TKey, TResult>();
@@ -167,6 +170,22 @@ namespace MarkdownEdit.Models
                 App.Title,
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
+        }
+
+        public static async Task<bool> IsCurrentVersion()
+        {
+            try
+            {
+                using (var http = new HttpClient())
+                {
+                    var version = await http.GetStringAsync("http://markdownedit.com/version.txt");
+                    return string.IsNullOrWhiteSpace(version) || version != Version;
+                }
+            }
+            catch (Exception)
+            {
+                return true;
+            }
         }
     }
 }

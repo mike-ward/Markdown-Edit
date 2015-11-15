@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:MarkdownEdit.Controls"
+             xmlns:models="clr-namespace:MarkdownEdit.Models"
              xmlns:p="clr-namespace:MarkdownEdit.Properties"
              xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
              mc:Ignorable="d"
@@ -91,7 +92,7 @@
       <StackPanel Margin="30 5">
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-version}" />
-          <TextBlock FontSize="16" Text="1.15" />
+          <TextBlock FontSize="16" Text="{x:Static models:Utility.Version}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-web}" />

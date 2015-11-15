@@ -66,6 +66,8 @@ namespace MarkdownEdit.Controls
         private const int EditorMarginMin = 4;
         private const int EditorMarginMax = 16;
 
+        private bool _newVersion;
+
         public MainWindow()
         {
             // for designer
@@ -102,7 +104,7 @@ namespace MarkdownEdit.Controls
         private void OnFirstActivation(object sender, EventArgs eventArgs)
         {
             Activated -= OnFirstActivation;
-            Dispatcher.InvokeAsync(() =>
+            Dispatcher.InvokeAsync(async () =>
             {
                 var updateMargins = Utility.Debounce(() => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
                 App.UserSettings.PropertyChanged += (o, args) =>
@@ -118,6 +120,7 @@ namespace MarkdownEdit.Controls
                 updateMargins();
                 LoadCommandLineOrLastFile();
                 Application.Current.Activated += OnActivated;
+                NewVersion = !await Utility.IsCurrentVersion();
             });
         }
 
@@ -357,6 +360,12 @@ namespace MarkdownEdit.Controls
         {
             get { return _snippetManager; }
             set { Set(ref _snippetManager, value); }
+        }
+
+        public bool NewVersion
+        {
+            get { return _newVersion; }
+            set { Set(ref _newVersion, value); }
         }
 
         private void ToggleSettings()
