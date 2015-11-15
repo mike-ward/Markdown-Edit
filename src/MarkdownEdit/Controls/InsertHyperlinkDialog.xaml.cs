@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using MarkdownEdit.Models;
+﻿using System.Windows.Input;
 
 namespace MarkdownEdit.Controls
 {
@@ -12,18 +10,16 @@ namespace MarkdownEdit.Controls
         {
             InitializeComponent();
             Link.Focus();
+            Link.SelectAll();
             CommandBindings.Add(new CommandBinding(AcceptLinkCommand, ExecuteAcceptLinkCommand));
         }
 
         private void ExecuteAcceptLinkCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(Link.Text))
+            if (!string.IsNullOrWhiteSpace(Link.Text))
             {
-                Utility.Beep();
-                return;
+                MainWindow.InsertHyperlinkCommand.Execute(Link.Text, Owner);
             }
-
-            MainWindow.InsertHyperlinkCommand.Execute(Link.Text, Owner);
             Close();
         }
 

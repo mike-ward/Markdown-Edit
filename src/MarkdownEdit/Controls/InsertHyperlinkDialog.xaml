@@ -25,6 +25,7 @@
     <TextBox
         x:Name="Link"
         Margin="10"
+        Text="http://"
         TabIndex="1">
       <TextBox.InputBindings>
         <KeyBinding Command="{x:Static local:InsertHyperlinkDialog.AcceptLinkCommand}" Gesture="Enter" />
