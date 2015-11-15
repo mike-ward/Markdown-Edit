@@ -6,8 +6,9 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:local="clr-namespace:MarkdownEdit.Controls"
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+  xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
   mc:Ignorable="d"
-  Title="Insert Hyperlink" 
+  Title="{i18N:Localize insert-hyperlink-title}" 
   WindowStyle="SingleBorderWindow"
   SizeToContent="WidthAndHeight"
   ResizeMode="NoResize"
@@ -21,7 +22,8 @@
   ShowMinButton="False"
   MinWidth="400">
   <StackPanel Margin="20">
-      <TextBlock>http://example.com/ "optional title"</TextBlock>
+    <TextBlock>
+      <Run>http://example.com/ "</Run><Run Text="{i18N:Localize insert-hyperlink-optional-title}"></Run><Run>"</Run></TextBlock>
     <TextBox
         x:Name="Link"
         Margin="10"

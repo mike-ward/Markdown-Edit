@@ -58,11 +58,12 @@ Keyboard Shortcuts
     Ctrl+B         Mettre en gras le texte sélectionné
     Ctrl+I         Mettre en italique le texte sélectionné
     Ctrl+K         Code (entoure le mot courant ou la sélection par des ``) / insère un ` si pas de sélection
-    Ctrl+L         Convertir le texte sélectionné en liste. Basculer entre non numérotée/numérotée
+    Alt+L          Convertir le texte sélectionné en liste. Basculer entre non numérotée/numérotée
     Ctrl+Q         Convertir le texte sélectionné/la ligne en bloc de citation
     Alt+F          Couper et formater le texte
     Alt+Ctrl+F     Couper et formater le texte et lien de référence
     Alt+Shift+F    Ne pas couper et formater le texte
+    Ctrl+L         Insérer un lien hypertexte
 
     Ctrl+1         Insérer # en début de ligne
     Ctrl+2         Insérer ## en début de ligne

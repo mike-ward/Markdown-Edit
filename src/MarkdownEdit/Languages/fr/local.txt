@@ -109,9 +109,14 @@ tooltip-alt-s:                    Alt+S
 tooltip-ctrl-f7:                  Ctrl+F7
 tooltip-ctrl-w:                   Ctrl+W
 
+=== Insert Hyperlink Dialog
+
+insert-hyperlink-title:           Insérer un lien Hypertexte
+insert-hyperlink-optional-title:  titre optiona
+
 === Generic
 
 open:                             Ouvrir
 save:                             Enregistrer
 cancel:                           Annuler
-message-html-clipboard:		      HTML copié dans le presse-papiers
+message-html-clipboard:		        HTML copié dans le presse-papiers

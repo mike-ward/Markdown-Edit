@@ -58,11 +58,12 @@ Tastatur genveje
     Ctrl+B         Fed skrift **
     Ctrl+I         Kursiv *
     Ctrl+K         Kode (ombryd med bagvendte accenter ``) `
-    Ctrl+L         Konverter valgt tekst til liste. Skift mellem ordnet og uordnet
+    Alt+L          Konverter valgt tekst til liste. Skift mellem ordnet og uordnet
     Ctrl+Q         Konverter vlgt tekst&linje til block citat
     Alt+F          Ombryd og formatter tekst
     Alt+Ctrl+F     Ombryd, formatter, anvend reference links
     Alt+Shift+F    Fjern ombrydning og formatter tekst
+    Ctrl+L         Indsæt hyperlink
 
     Ctrl+1         Indsæt # ved begyndelsen af linje
     Ctrl+2         Indsæt ## ved begyndelsen af linje

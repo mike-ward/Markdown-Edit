@@ -110,9 +110,14 @@ tooltip-alt-s:                    Alt+S
 tooltip-ctrl-f7:                  Ctrl+F7
 tooltip-ctrl-w:                   Ctrl+W
 
+=== Insert Hyperlink Dialog
+
+insert-hyperlink-title:           Indsæt Hyperlink
+insert-hyperlink-optional-title:  optiona titel
+
 === Generic
 
 open:                             Åbn
 save:                             Gem
 cancel:                           Annuller
-message-html-clipboard:		      HTML kopieret til udklipsholderen
+message-html-clipboard:		        HTML kopieret til udklipsholderen

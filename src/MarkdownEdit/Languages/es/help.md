@@ -58,11 +58,12 @@
     Ctrl+B         Selección en Negrita / sin selección inserta **
     Ctrl+I         Selección en Cursiva / sin selección inserta *
     Ctrl+K         Código (encapsula con acento grave ``) / sin selección inserta `
-    Ctrl+L         Convertir selección a lista. Cambiar desordenado/ordenado
+    Alt+L          Convertir selección a lista. Cambiar desordenado/ordenado
     Ctrl+Q         Convertir selección/linea a bloque de cita
     Alt+F          Ajustar y formatear texto
     Alt+Ctrl+F     Ajustar, formatear, usar enlaces de referencia
     Alt+Shift+F    Desajustar y formatear texto
+    Ctrl+L         Insertar hipervínculo
 
     Ctrl+1         Insertar # al principio de la línea
     Ctrl+2         Insertar ## al principio de la línea
