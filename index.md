@@ -38,3 +38,14 @@ The rest goes to equipment funding and software licensing.
 
 [Donate with
 PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XGGZ8BEED7R62)
+
+------------------------------------------------------------------------
+
+### Reviews
+
+[Beta
+News](http://betanews.com/2015/11/16/markdown-edit-is-a-distraction-free-editor-for-windows/)
+– Markdown Edit is far more capable than it looks.
+
+[Download Crew](http://www.downloadcrew.com/article/33887-markdown_edit)
+– An excellent Markdown editor which doesn't get in your way
