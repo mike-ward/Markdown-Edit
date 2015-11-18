@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Editing;
 using MarkdownEdit.Commands;
 using MarkdownEdit.i18n;
 using MarkdownEdit.Models;
@@ -523,7 +525,13 @@ namespace MarkdownEdit.Controls
             try
             {
                 if (App.UserSettings.FormatOnSave) FormatCommand.Execute(true, this);
-                File.WriteAllText(FileName, Text);
+
+                var lineEnd = "\r\n";
+                if (App.UserSettings.LineEnding.Equals("cr", StringComparison.OrdinalIgnoreCase)) lineEnd = "\r";
+                if (App.UserSettings.LineEnding.Equals("lf", StringComparison.OrdinalIgnoreCase)) lineEnd = "\n";
+                var text = string.Join(lineEnd, EditBox.Document.Lines.Select(line => EditBox.Document.GetText(line).Trim('\r', '\n')));
+
+                File.WriteAllText(FileName, text);
                 RecentFilesDialog.UpdateRecentFiles(FileName, EditBox.SelectionStart);
                 Settings.Default.LastOpenFile = FileName.AddOffsetToFileName(EditBox.SelectionStart);
                 IsModified = false;

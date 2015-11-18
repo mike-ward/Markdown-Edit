@@ -32,6 +32,7 @@ namespace MarkdownEdit.Models
         private bool _ignoreTaskbarOnMaximize = true;
         private bool _formatOnSave;
         private bool _githubMarkdown;
+        private string _lineEnding = "crlf";  
 
         public string EditorFontFamily
         {
@@ -157,6 +158,12 @@ namespace MarkdownEdit.Models
         {
             get { return _githubMarkdown; }
             set { Set(ref _githubMarkdown, value); }
+        }
+
+        public string LineEnding
+        {
+            get { return _lineEnding; }
+            set { Set(ref _lineEnding, value); }
         }
 
         public Theme Theme
