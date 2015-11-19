@@ -32,7 +32,7 @@ namespace MarkdownEdit.Models
         private bool _ignoreTaskbarOnMaximize = true;
         private bool _formatOnSave;
         private bool _githubMarkdown;
-        private string _lineEnding = "crlf";  
+        private string _lineEnding = "crlf";
 
         public string EditorFontFamily
         {
@@ -166,6 +166,14 @@ namespace MarkdownEdit.Models
             set { Set(ref _lineEnding, value); }
         }
 
+        [JsonIgnore]
+        public Tuple<string, string>[] LineEndings => new[]
+        {
+            new Tuple<string, string>("Windows (CR+LF)", "crlf"),
+            new Tuple<string, string>("Unix/Mac (LF)", "lf"),
+            new Tuple<string, string>("Apple II (CR)", "cr")
+        };
+
         public Theme Theme
         {
             get { return _theme; }
@@ -262,7 +270,8 @@ namespace MarkdownEdit.Models
                 ^ FormatOnSave.GetHashCode()
                 ^ GitHubMarkdown.GetHashCode()
                 ^ Theme.GetHashCode()
-                ^ SinglePaneMargin.GetHashCode();
+                ^ SinglePaneMargin.GetHashCode()
+                ^ LineEnding.GetHashCode();
         }
     }
 }

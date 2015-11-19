@@ -34,6 +34,8 @@
            TargetType="TextBlock">
       <Setter Property="Width" Value="75" />
       <Setter Property="FontSize" Value="16" />
+      <Setter Property="FontWeight" Value="DemiBold" />
+      <Setter Property="Foreground" Value="WhiteSmoke" />
     </Style>
 
     <Style x:Key="HyperlinkStyle"
@@ -62,6 +64,19 @@
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-show-end-of-line}" OnLabel="{i18N:Localize settings-show-end-of-line}" IsChecked="{Binding EditorShowEndOfLine}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-sync-scroll-pos}" OnLabel="{i18N:Localize settings-sync-scroll-pos}" IsChecked="{Binding SynchronizeScrollPositions}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-github-markdown}" OnLabel="{i18N:Localize settings-github-markdown}" IsChecked="{Binding GitHubMarkdown}" Style="{StaticResource ToggleSwitchStyle}" />
+        <Grid HorizontalAlignment="Stretch"
+              Margin="0 5 0 0">
+          <TextBlock Text="Line Endings"
+                   Style="{StaticResource AboutLabelStyle}" HorizontalAlignment="Left"
+                   Width="150"/>
+          <ComboBox Width="130"
+                    DisplayMemberPath="Item1"
+                    SelectedValuePath="Item2"
+                    SelectedValue="{Binding LineEnding}"
+                    ItemsSource="{Binding LineEndings}"
+                    HorizontalAlignment="Right">
+          </ComboBox>
+        </Grid>
       </StackPanel>
 
       <TextBlock Style="{StaticResource SectionHeader}" Text="{i18N:Localize settings-spell-check-section}" />
