@@ -15,6 +15,7 @@ using HtmlAgilityPack;
 using mshtml;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
+using MarkdownEdit.Properties;
 
 namespace MarkdownEdit.Controls
 {
@@ -57,6 +58,7 @@ namespace MarkdownEdit.Controls
             {
                 markdown = Utility.RemoveYamlFrontMatter(markdown);
                 var html = MarkdownConverter.ConvertToHtml(markdown);
+                UpdateBaseTag();
                 var div = GetContentsDiv();
                 div.innerHTML = ScrubHtml(html);
                 WordCount = div.innerText.WordCount();
@@ -65,6 +67,26 @@ namespace MarkdownEdit.Controls
             {
                 MessageBox.Show(e.ToString(), App.Title);
             }
+        }
+
+        private void UpdateBaseTag()
+        {
+            const string basetTagId = "base-tag-id";
+            var lastOpen = Settings.Default.LastOpenFile.StripOffsetFromFileName();
+            if (string.IsNullOrWhiteSpace(lastOpen)) return;
+            var folder = Path.GetDirectoryName(lastOpen);
+            if (string.IsNullOrWhiteSpace(folder)) return;
+            var document = (IHTMLDocument3)Browser.Document;
+            var baseElement = document?.getElementById(basetTagId);
+            if (baseElement == null)
+            {
+                var doc2 = (IHTMLDocument2) Browser.Document;
+                baseElement = doc2.createElement("base");
+                baseElement.id = basetTagId;
+                var head = document?.getElementsByTagName("head").item(0);
+                head?.appendChild(baseElement);
+            }
+            baseElement?.setAttribute("href", "file:///" + folder.Replace('\\', '/') + "/");
         }
 
         public void Print()
