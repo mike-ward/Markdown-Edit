@@ -30,18 +30,24 @@
       <Setter Property="Margin" Value="0 3 0 5" />
     </Style>
 
-    <Style x:Key="AboutLabelStyle"
+    <Style x:Key="LabelStyle"
            TargetType="TextBlock">
-      <Setter Property="Width" Value="75" />
       <Setter Property="FontSize" Value="16" />
       <Setter Property="FontWeight" Value="DemiBold" />
       <Setter Property="Foreground" Value="WhiteSmoke" />
+    </Style>
+    
+    <Style x:Key="AboutLabelStyle"
+           TargetType="TextBlock"
+           BasedOn="{StaticResource LabelStyle}">
+      <Setter Property="Width" Value="75" />
     </Style>
 
     <Style x:Key="HyperlinkStyle"
            TargetType="Hyperlink">
       <Setter Property="Foreground" Value="WhiteSmoke" />
       <Setter Property="FontSize" Value="16" />
+      <Setter Property="FontWeight" Value="DemiBold" />
     </Style>
   </UserControl.Resources>
 
@@ -66,7 +72,7 @@
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-github-markdown}" OnLabel="{i18N:Localize settings-github-markdown}" IsChecked="{Binding GitHubMarkdown}" Style="{StaticResource ToggleSwitchStyle}" />
         <Grid HorizontalAlignment="Stretch"
               Margin="0 5 0 0">
-          <TextBlock Text="Line Endings"
+          <TextBlock Text="{i18N:Localize settings-line-endings}"
                    Style="{StaticResource AboutLabelStyle}" HorizontalAlignment="Left"
                    Width="150"/>
           <ComboBox Width="130"
@@ -107,7 +113,7 @@
       <StackPanel Margin="30 5">
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-version}" />
-          <TextBlock FontSize="16" Text="{x:Static models:Utility.Version}" />
+          <TextBlock Style="{StaticResource LabelStyle}" Text="{x:Static models:Utility.Version}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-web}" />

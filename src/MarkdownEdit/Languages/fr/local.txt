@@ -47,6 +47,8 @@ settings-show-spaces:             Monter les espaces
 settings-show-end-of-line:        Monter les fins de ligne
 settings-sync-scroll-pos:         Synchroniser le défilement
 settings-format-on-save:          Formater à l'enregistrement
+settings-github-markdown:         GitHub Markdown
+settings-line-endings:            Les Fins de Ligne
 
 settings-spell-check-section:     Correction orthographique
 settings-spell-checking:          Correction orthographique

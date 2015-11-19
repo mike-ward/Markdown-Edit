@@ -48,6 +48,7 @@ settings-show-end-of-line:        Vis linje endelser
 settings-sync-scroll-pos:         Synkroniser rullepanel positioner
 settings-format-on-save:          Formater tekst når der gemmes
 settings-github-markdown:         GitHub Markdown
+settings-line-endings:            Linjeafslutninger
 
 settings-spell-check-section:     Stavekontrol
 settings-spell-checking:          Stavekontrol

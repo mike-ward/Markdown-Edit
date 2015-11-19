@@ -48,6 +48,7 @@ settings-show-end-of-line:        Show Line Endings
 settings-sync-scroll-pos:         Synchronize Scroll Positions
 settings-format-on-save:          Format Text on Save
 settings-github-markdown:         GitHub Markdown
+settings-line-endings:            Line Endings
 
 settings-spell-check-section:     Spell Checking
 settings-spell-checking:          Spell Checking

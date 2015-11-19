@@ -48,6 +48,7 @@ settings-show-end-of-line:        Mostrar Fin de Línea
 settings-sync-scroll-pos:         Sincronizar Barras de Desplazamiento
 settings-format-on-save:          Dar Formato al Guardar
 settings-github-markdown:         GitHub Markdown
+settings-line-endings:            Finales de Línea
 
 settings-spell-check-section:     Corrector Ortográfico
 settings-spell-checking:          Corregir Ortografía
