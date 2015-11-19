@@ -57,7 +57,7 @@ namespace MarkdownEdit.Controls
             try
             {
                 markdown = Utility.RemoveYamlFrontMatter(markdown);
-                var html = MarkdownConverter.ConvertToHtml(markdown);
+                var html = CustomMarkdownConvertor.ConvertToHtml(markdown) ?? MarkdownConverter.ConvertToHtml(markdown);
                 UpdateBaseTag();
                 var div = GetContentsDiv();
                 div.innerHTML = ScrubHtml(html);

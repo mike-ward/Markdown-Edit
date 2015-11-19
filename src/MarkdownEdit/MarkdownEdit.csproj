@@ -145,6 +145,7 @@
     <Compile Include="ImageUpload\IImageUpload.cs" />
     <Compile Include="ImageUpload\ImageUploadImgur.cs" />
     <Compile Include="MarkdownConverters\CommonMarkConverter.cs" />
+    <Compile Include="MarkdownConverters\CustomMarkdownConvertor.cs" />
     <Compile Include="MarkdownConverters\GitHubMarkdownConverter.cs" />
     <Compile Include="MarkdownConverters\IMarkdownConverter.cs" />
     <Compile Include="Models\EditorUtilities.cs" />

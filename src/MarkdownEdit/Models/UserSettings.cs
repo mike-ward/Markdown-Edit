@@ -33,6 +33,13 @@ namespace MarkdownEdit.Models
         private bool _formatOnSave;
         private bool _githubMarkdown;
         private string _lineEnding = "crlf";
+        private string _customMarkdownConverter = "";
+
+        public Theme Theme
+        {
+            get { return _theme; }
+            set { Set(ref _theme, value); }
+        }
 
         public string EditorFontFamily
         {
@@ -174,10 +181,10 @@ namespace MarkdownEdit.Models
             new Tuple<string, string>("Apple II (CR)", "cr")
         };
 
-        public Theme Theme
+        public string CustomMarkdownConverter
         {
-            get { return _theme; }
-            set { Set(ref _theme, value); }
+            get { return _customMarkdownConverter; }
+            set { Set(ref _customMarkdownConverter, value); }
         }
 
         public void Update()
@@ -271,7 +278,8 @@ namespace MarkdownEdit.Models
                 ^ GitHubMarkdown.GetHashCode()
                 ^ Theme.GetHashCode()
                 ^ SinglePaneMargin.GetHashCode()
-                ^ LineEnding.GetHashCode();
+                ^ LineEnding.GetHashCode()
+                ^ CustomMarkdownConverter.GetHashCode();
         }
     }
 }

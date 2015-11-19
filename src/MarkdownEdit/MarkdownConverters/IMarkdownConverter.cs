@@ -2,6 +2,6 @@
 {
     public interface IMarkdownConverter
     {
-        string ConvertToHtml(string markdown, bool resolveUrls = true);
+        string ConvertToHtml(string markdown);
     }
 }

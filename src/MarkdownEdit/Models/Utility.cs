@@ -66,7 +66,7 @@ namespace MarkdownEdit.Models
         public static void ExportHtmlToClipboard(string markdown, IMarkdownConverter converter, bool includeTemplate = false)
         {
             var text = RemoveYamlFrontMatter(markdown);
-            var html = converter.ConvertToHtml(text, false);
+            var html = converter.ConvertToHtml(text);
             if (includeTemplate) html = UserTemplate.InsertContent(html);
             CopyHtmlToClipboard(html);
         }
@@ -76,7 +76,7 @@ namespace MarkdownEdit.Models
             try
             {
                 var text = RemoveYamlFrontMatter(markdown);
-                var html = converter.ConvertToHtml(text, false);
+                var html = converter.ConvertToHtml(text);
                 if (includeTemplate) html = UserTemplate.InsertContent(html);
                 var file = SaveFileDialog(SuggestFilenameFromTitle(text), @"Html files (*.html)|*.html|All files (*.*)|*.*");
                 if (string.IsNullOrWhiteSpace(file)) return;
