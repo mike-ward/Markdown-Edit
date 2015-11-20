@@ -274,7 +274,7 @@ namespace MarkdownEdit.Controls
             SpellCheck = !SpellCheck;
         }
 
-        // Command handlers
+        // Command handlers and helpers
 
         private void IfNotReadOnly(Action action) => IfNotReadOnly(() =>
         {
@@ -411,6 +411,8 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteRevertCommand(object sender, ExecutedRoutedEventArgs e) => OpenFile(FileName);
 
+        // Event handlers
+
         public EventHandler TextChanged;
 
         private void EditBoxOnTextChanged(object sender, EventArgs eventArgs) => TextChanged?.Invoke(this, eventArgs);
@@ -422,7 +424,7 @@ namespace MarkdownEdit.Controls
         public EventHandler<ThemeChangedEventArgs> ThemeChanged;
 
         private void OnThemeChanged(ThemeChangedEventArgs ea) => ThemeChanged?.Invoke(this, ea);
-
+  
         public class ThemeChangedEventArgs : EventArgs
         {
             public Theme Theme { get; set; }
@@ -439,6 +441,8 @@ namespace MarkdownEdit.Controls
             get { return EditBox.IsReadOnly; }
             set { EditBox.IsReadOnly = value; }
         }
+
+        // Bindable Properties
 
         public string FileName
         {
