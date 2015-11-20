@@ -269,8 +269,14 @@
     <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+5" CommandParameter="5" />
     <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" Gesture="Ctrl+6" CommandParameter="6" />
     <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Plus" />
+    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Add" />
+    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+OemPlus" />
     <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Minus" />
+    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Subtract" />
+    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+OemMinus" />
     <KeyBinding Command="{x:Static controls:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+0" />
+    <KeyBinding Command="{x:Static controls:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+D0" />
+    <KeyBinding Command="{x:Static controls:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+NumPad0" />
     <KeyBinding Command="{x:Static controls:MainWindow.OpenUserSnippetsCommand}" Gesture="F6" />
     <KeyBinding Command="{x:Static controls:MainWindow.OpenUserDictionaryCommand}" Gesture="F7" />
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleSpellCheckCommand}" Gesture="Ctrl+F7" />
