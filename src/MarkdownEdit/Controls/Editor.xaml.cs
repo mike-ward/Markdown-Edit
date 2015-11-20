@@ -11,10 +11,11 @@ using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using MarkdownEdit.Commands;
-using MarkdownEdit.i18n;
 using MarkdownEdit.Models;
 using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
+using static System.Windows.Input.ApplicationCommands;
+using static MarkdownEdit.i18n.TranslationProvider;
 
 namespace MarkdownEdit.Controls
 {
@@ -26,7 +27,7 @@ namespace MarkdownEdit.Controls
         private string _displayName = string.Empty;
         private EditorState _editorState = new EditorState();
         private readonly Action<string> _executeAutoSaveLater;
-        private readonly string _f1ForHelp = (string) TranslationProvider.Translate("editor-f1-for-help");
+        private readonly string _f1ForHelp = (string) Translate("editor-f1-for-help");
 
         public static RoutedCommand DeselectCommand = new RoutedCommand();
         public static RoutedCommand FormatCommand = new RoutedCommand();
@@ -190,7 +191,7 @@ namespace MarkdownEdit.Controls
         private void AllowImagePaste()
         {
             // AvalonEdit only allows text paste. Hack the command to allow otherwise.
-            var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.FirstOrDefault(cb => cb.Command == ApplicationCommands.Paste);
+            var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.FirstOrDefault(cb => cb.Command == Paste);
             if (cmd == null) return;
 
             CanExecuteRoutedEventHandler canExecute = (sender, args) =>
@@ -237,18 +238,18 @@ namespace MarkdownEdit.Controls
             var contextMenu = new ContextMenu();
             SpellCheckSuggestions(contextMenu);
 
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-undo"), Command = ApplicationCommands.Undo, InputGestureText = "Ctrl+Z"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-redo"), Command = ApplicationCommands.Redo, InputGestureText = "Ctrl+Y"});
+            contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-undo"), Command = Undo, InputGestureText = "Ctrl+Z"});
+            contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-redo"), Command = Redo, InputGestureText = "Ctrl+Y"});
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-cut"), Command = ApplicationCommands.Cut, InputGestureText = "Ctrl+X"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-copy"), Command = ApplicationCommands.Copy, InputGestureText = "Ctrl+C"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-paste"), Command = ApplicationCommands.Paste, InputGestureText = "Ctrl+V"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-paste-special"), Command = PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-delete"), Command = ApplicationCommands.Delete, InputGestureText = "Delete"});
+            contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-cut"), Command = Cut, InputGestureText = "Ctrl+X"});
+            contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-copy"), Command = Copy, InputGestureText = "Ctrl+C"});
+            contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-paste"), Command = Paste, InputGestureText = "Ctrl+V"});
+            contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-paste-special"), Command = PasteSpecialCommand, InputGestureText = "Ctrl+Shift+V", ToolTip = "Paste smart quotes and hypens as plain text"});
+            contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-delete"), Command = Delete, InputGestureText = "Delete"});
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-select-all"), Command = ApplicationCommands.SelectAll, InputGestureText = "Ctrl+A"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-wrap-format"), Command = FormatCommand, InputGestureText = "Alt+F"});
-            contextMenu.Items.Add(new MenuItem {Header = TranslationProvider.Translate("editor-menu-unwrap-format"), Command = UnformatCommand, InputGestureText = "Alt+Shift+F"});
+            contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-select-all"), Command = SelectAll, InputGestureText = "Ctrl+A"});
+            contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-wrap-format"), Command = FormatCommand, InputGestureText = "Alt+F"});
+            contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-unwrap-format"), Command = UnformatCommand, InputGestureText = "Alt+Shift+F"});
 
             var element = (FrameworkElement) ea.Source;
             element.ContextMenu = contextMenu;
@@ -340,7 +341,7 @@ namespace MarkdownEdit.Controls
                 return;
             }
             _editorState.Save(this);
-            Text = TranslationProvider.LoadHelp();
+            Text = LoadHelp();
             EditBox.IsModified = false;
             DisplayName = "Help";
         }
@@ -424,7 +425,7 @@ namespace MarkdownEdit.Controls
         public EventHandler<ThemeChangedEventArgs> ThemeChanged;
 
         private void OnThemeChanged(ThemeChangedEventArgs ea) => ThemeChanged?.Invoke(this, ea);
-  
+
         public class ThemeChangedEventArgs : EventArgs
         {
             public Theme Theme { get; set; }
@@ -457,7 +458,7 @@ namespace MarkdownEdit.Controls
                 return (string.IsNullOrWhiteSpace(_displayName) == false)
                     ? _displayName
                     : string.IsNullOrWhiteSpace(FileName)
-                        ? $"{TranslationProvider.Translate("editor-new-document")} {_f1ForHelp}"
+                        ? $"{Translate("editor-new-document")} {_f1ForHelp}"
                         : Path.GetFileName(FileName);
             }
             set { Set(ref _displayName, value); }
