@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -12,14 +11,11 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Editing;
 using MarkdownEdit.Commands;
 using MarkdownEdit.i18n;
 using MarkdownEdit.Models;
-using MarkdownEdit.Properties;
 using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
-using Microsoft.Win32;
 
 namespace MarkdownEdit.Controls
 {
@@ -363,71 +359,19 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => Execute(() => FormatTextHandler(ConvertText.Unwrap, false));
 
-        public void NewFile() => Execute(() =>
-        {
-            if (SaveIfModified() == false) return;
-            Text = string.Empty;
-            IsModified = false;
-            FileName = string.Empty;
-            Settings.Default.LastOpenFile = string.Empty;
-        });
+        public void NewFile() => Execute(() => EditorLoadSave.NewFile(this));
 
-        public void OpenFile(string file) => Execute(() =>
-        {
-            if (SaveIfModified() == false) return;
-            if (string.IsNullOrWhiteSpace(file))
-            {
-                const string fileFilter =
-                    "Markdown files (*.md)|*.md|" +
-                        "Microsoft Word files (*.docx)|*.docx|" +
-                        "HTML files (*.html)|*.html|" +
-                        "All files (*.*)|*.*";
+        public void OpenFile(string file) => Execute(() => EditorLoadSave.OpenFile(this, file));
 
-                var dialog = new OpenFileDialog {Filter = fileFilter};
-                if (dialog.ShowDialog() == false) return;
-                file = dialog.FileNames[0];
-            }
-            LoadFile(file);
-        });
+        public void InsertFile(string file) => Execute(() => EditorLoadSave.InsertFile(this, file));
 
-        public void InsertFile(string file) => Execute(() =>
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(file))
-                {
-                    var dialog = new OpenFileDialog();
-                    var result = dialog.ShowDialog();
-                    if (result == false) return;
-                    file = dialog.FileNames[0];
-                }
-                var text = File.ReadAllText(file);
-                EditBox.Document.Insert(EditBox.SelectionStart, text);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        });
+        public bool SaveIfModified() => Execute(() => EditorLoadSave.SaveIfModified(this));
 
-        public bool SaveIfModified() => Execute(() =>
-        {
-            if (IsModified == false) return true;
+        public bool SaveFile() => Execute(() => EditorLoadSave.SaveFile(this));
 
-            var result = MessageBox.Show(
-                @"Save your changes?",
-                App.Title,
-                MessageBoxButton.YesNoCancel,
-                MessageBoxImage.Question);
+        public bool SaveFileAs() => Execute(() => EditorLoadSave.SaveFileAs(this));
 
-            return (result == MessageBoxResult.Yes)
-                ? SaveFile()
-                : result == MessageBoxResult.No;
-        });
-
-        public bool SaveFile() => Execute(() => string.IsNullOrWhiteSpace(FileName)
-            ? SaveFileAs()
-            : Save());
+        public bool LoadFile(string file, bool updateCursorPosition = true) => EditorLoadSave.LoadFile(this, file, updateCursorPosition);
 
         public void ExecuteAutoSave()
         {
@@ -437,111 +381,6 @@ namespace MarkdownEdit.Controls
                 if (AutoSave == false || IsModified == false || string.IsNullOrEmpty(FileName)) return;
                 SaveFile();
             });
-        }
-
-        public bool SaveFileAs() => Execute(() =>
-        {
-            var filename = Utility.SaveFileDialog(
-                Utility.SuggestFilenameFromTitle(EditBox.Text),
-                "Markdown files (*.md)|*.md|All files (*.*)|*.*");
-
-            if (string.IsNullOrWhiteSpace(filename)) return false;
-            var currentFileName = FileName;
-            FileName = filename;
-            var offset = EditBox.SelectionStart;
-            if (!Save() || !LoadFile(filename, false))
-            {
-                FileName = currentFileName;
-                return false;
-            }
-            EditBox.SelectionStart = offset;
-            return true;
-        });
-
-        public bool LoadFile(string file, bool updateCursorPosition = true)
-        {
-            if (string.IsNullOrWhiteSpace(file)) return false;
-            try
-            {
-                var parts = file.Split(new[] {'|'}, 2);
-                var filename = parts[0] ?? "";
-                var offset = ConvertToOffset(parts.Length == 2 ? parts[1] : "0");
-                var pathExtension = Path.GetExtension(filename);
-                var isWordDoc = pathExtension.Equals(".docx", StringComparison.OrdinalIgnoreCase);
-
-                if (isWordDoc)
-                {
-                    NewFile();
-                    EditBox.Text = ConvertText.FromMicrosoftWord(filename);
-                    return true;
-                }
-
-                var isHtmlFile = pathExtension.Equals(".html", StringComparison.OrdinalIgnoreCase)
-                    || pathExtension.Equals(".htm", StringComparison.OrdinalIgnoreCase);
-
-                if (isHtmlFile)
-                {
-                    NewFile();
-                    EditBox.Text = ConvertText.FromHtml(filename);
-                    return true;
-                }
-
-                EditBox.Text = File.ReadAllText(filename);
-
-                if (updateCursorPosition)
-                {
-                    if (App.UserSettings.EditorOpenLastCursorPosition)
-                    {
-                        EditBox.ScrollToLine(EditBox.Document.GetLineByOffset(offset)?.LineNumber ?? 0);
-                        EditBox.SelectionStart = offset;
-                    }
-                    else
-                    {
-                        EditBox.ScrollToHome();
-                    }
-                }
-
-                Settings.Default.LastOpenFile = file;
-                RecentFilesDialog.UpdateRecentFiles(filename, offset);
-                IsModified = false;
-                FileName = filename;
-                return true;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
-        }
-
-        private static int ConvertToOffset(string number)
-        {
-            int offset;
-            return (int.TryParse(number, out offset)) ? offset : 0;
-        }
-
-        private bool Save()
-        {
-            try
-            {
-                if (App.UserSettings.FormatOnSave) FormatCommand.Execute(true, this);
-
-                var lineEnd = "\r\n";
-                if (App.UserSettings.LineEnding.Equals("cr", StringComparison.OrdinalIgnoreCase)) lineEnd = "\r";
-                if (App.UserSettings.LineEnding.Equals("lf", StringComparison.OrdinalIgnoreCase)) lineEnd = "\n";
-                var text = string.Join(lineEnd, EditBox.Document.Lines.Select(line => EditBox.Document.GetText(line).Trim('\r', '\n')));
-
-                File.WriteAllText(FileName, text);
-                RecentFilesDialog.UpdateRecentFiles(FileName, EditBox.SelectionStart);
-                Settings.Default.LastOpenFile = FileName.AddOffsetToFileName(EditBox.SelectionStart);
-                IsModified = false;
-                return true;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
-                return false;
-            }
         }
 
         public void ToggleHelp()

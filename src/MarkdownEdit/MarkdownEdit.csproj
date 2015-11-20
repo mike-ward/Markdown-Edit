@@ -164,6 +164,7 @@
       <DependentUpon>RecentFilesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Images.cs" />
+    <Compile Include="Models\EditorLoadSave.cs" />
     <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
     <Compile Include="Commands\SnippetTabCommand.cs" />
     <Compile Include="Settings.cs" />
