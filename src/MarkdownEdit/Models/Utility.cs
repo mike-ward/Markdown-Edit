@@ -57,7 +57,9 @@ namespace MarkdownEdit.Models
 
         public static void Beep() => SystemSounds.Beep.Play();
 
-        public static void EditFile(string file) => Process.Start("Notepad.exe", file);
+        public static Process EditFile(string file) => App.UserSettings.UseDefaultEditor
+            ? Process.Start(file)
+            : Process.Start("Notepad.exe", file);
 
         public static string AssemblyFolder() => Path.GetDirectoryName(ExecutingAssembly());
 
@@ -163,12 +165,20 @@ namespace MarkdownEdit.Models
 
         public static void ShowParseError(Exception ex, string file)
         {
-            MessageBox.Show(
-                Application.Current.MainWindow,
-                $"{ex.Message} in {file}",
-                App.Title,
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
+            Application.Current.Dispatcher.Invoke(() =>
+                Application.Current.MainWindow != null
+                    ? MessageBox.Show(
+                        Application.Current.MainWindow,
+                        $"{ex.Message} in {file}",
+                        App.Title,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error)
+                    : MessageBox.Show(
+                        $"{ex.Message} in {file}",
+                        App.Title,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error)
+                );
         }
 
         public static async Task<bool> IsCurrentVersion()

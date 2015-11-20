@@ -34,6 +34,7 @@ namespace MarkdownEdit.Models
         private bool _githubMarkdown;
         private string _lineEnding = "crlf";
         private string _customMarkdownConverter = "";
+        private bool _useDefaultEditor;
 
         public Theme Theme
         {
@@ -187,6 +188,12 @@ namespace MarkdownEdit.Models
             set { Set(ref _customMarkdownConverter, value); }
         }
 
+        public bool UseDefaultEditor
+        {
+            get { return _useDefaultEditor; }
+            set { Set(ref _useDefaultEditor, value); }
+        }
+
         public void Update()
         {
             var userSettings = Load();
@@ -279,7 +286,8 @@ namespace MarkdownEdit.Models
                 ^ Theme.GetHashCode()
                 ^ SinglePaneMargin.GetHashCode()
                 ^ LineEnding.GetHashCode()
-                ^ CustomMarkdownConverter.GetHashCode();
+                ^ CustomMarkdownConverter.GetHashCode()
+                ^ UseDefaultEditor.GetHashCode();
         }
     }
 }

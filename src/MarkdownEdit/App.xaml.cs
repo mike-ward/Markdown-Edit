@@ -21,6 +21,7 @@ namespace MarkdownEdit
         private void OnStartup(object sender, StartupEventArgs ea)
         {
             InitializeSettings();
+            if (UserSettings == null) return;
             Activated += OnActivated;
 
             var commonmarkConverter = new CommonMarkConverter();
