@@ -130,9 +130,9 @@ namespace MarkdownEdit.Models
             if (dialog.ShowDialog() == false) return false;
 
             var filename = dialog.FileNames[0];
-            if (dialog.FilterIndex == html) return SaveAsHtml(filename, editor.Text, defaultFilter);
-            if (dialog.FilterIndex == pdf) return SaveAsPdf(editor, filename);
-            if (dialog.FilterIndex == docx) return SaveAsDocx(editor, filename);
+            if (dialog.FilterIndex == html) return SaveAsHtml(editor.Text, filename, defaultFilter);
+            if (dialog.FilterIndex == pdf) return SaveAsPdf(editor.Text, filename);
+            if (dialog.FilterIndex == docx) return SaveAsDocx(editor.Text, filename);
 
             var currentFileName = editor.FileName;
             editor.FileName = filename;
@@ -218,7 +218,7 @@ namespace MarkdownEdit.Models
             return (int.TryParse(number, out offset)) ? offset : 0;
         }
 
-        private static bool SaveAsHtml(string filename, string markdown, string filter)
+        private static bool SaveAsHtml(string markdown, string filename, string filter)
         {
             var html = Markdown.ToHtml(Utility.RemoveYamlFrontMatter(markdown));
             if (filter == "html-with-template") html = UserTemplate.InsertContent(html);
@@ -226,14 +226,17 @@ namespace MarkdownEdit.Models
             return true;
         }
 
-        private static bool SaveAsPdf(Editor editor, string filename)
+        private static bool SaveAsPdf(string markdown, string filename)
         {
-            return false;
+            var html = UserTemplate.InsertContent(Markdown.ToHtml(Utility.RemoveYamlFrontMatter(markdown)));
+            var pdf = Markdown.HtmlToPdf(html);
+            File.WriteAllBytes(filename, pdf);
+            return true;
         }
 
-        private static bool SaveAsDocx(Editor editor, string filename)
+        private static bool SaveAsDocx(string markdown, string filename)
         {
-            Markdown.ToMicrosoftWord(editor.Text, filename);
+            Markdown.ToMicrosoftWord(markdown, filename);
             return true;
         }
     }

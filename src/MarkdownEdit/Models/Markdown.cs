@@ -34,9 +34,11 @@ namespace MarkdownEdit.Models
                 return CustomMarkdownConverter.ConvertToHtml(markdown);
             }
             return App.UserSettings.GitHubMarkdown
-                    ? GitHubMarkdownConverter.ConvertToHtml(markdown)
-                    : CommonMarkConverter.ConvertToHtml(markdown);
+                ? GitHubMarkdownConverter.ConvertToHtml(markdown)
+                : CommonMarkConverter.ConvertToHtml(markdown);
         }
+
+        public static byte[] HtmlToPdf(string html) => new NReco.PdfGenerator.HtmlToPdfConverter().GeneratePdf(html);
 
         public static string Pandoc(string text, string args)
         {
@@ -99,7 +101,7 @@ namespace MarkdownEdit.Models
                 if (matches.Count < 2) return Tuple.Create(Empty, text);
                 var match = matches[1];
                 var index = match.Index + match.Groups[0].Value.Length + 1;
-                while (index < text.Length && Char.IsWhiteSpace(text[index])) index += 1;
+                while (index < text.Length && char.IsWhiteSpace(text[index])) index += 1;
                 return Tuple.Create(text.Substring(0, index), text.Substring(index));
             }
             return Tuple.Create(Empty, text);
