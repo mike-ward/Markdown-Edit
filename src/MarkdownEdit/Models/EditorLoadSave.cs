@@ -124,7 +124,7 @@ namespace MarkdownEdit.Models
                 Filter = "Markdown files (*.md)|*.md|"
                     + "HTML files (*.html)|*.html|"
                     + "PDF files (*.pdf)|*.pdf|"
-                    + "Word files (*.docx)|*.docx|"
+                    + "Docx files (*.docx)|*.docx|"
                     + "All files (*.*)|*.*"
             };
             if (dialog.ShowDialog() == false) return false;
