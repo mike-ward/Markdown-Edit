@@ -71,37 +71,6 @@ namespace MarkdownEdit.Models
             CopyHtmlToClipboard(html);
         }
 
-        public static void SaveAsHtml(string markdown, bool includeTemplate = false)
-        {
-            try
-            {
-                var text = RemoveYamlFrontMatter(markdown);
-                var html = Markdown.ToHtml(text);
-                if (includeTemplate) html = UserTemplate.InsertContent(html);
-                var file = SaveFileDialog(Markdown.SuggestFilenameFromTitle(text), @"Html files (*.html)|*.html|All files (*.*)|*.*");
-                if (string.IsNullOrWhiteSpace(file)) return;
-                File.WriteAllText(file, html);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        public static string SaveFileDialog(string suggestedName, string filter)
-        {
-            var dialog = new SaveFileDialog
-            {
-                FilterIndex = 0,
-                OverwritePrompt = true,
-                RestoreDirectory = true,
-                FileName = suggestedName,
-                Filter = filter
-            };
-
-            return (dialog.ShowDialog() == true) ? dialog.FileNames[0] : string.Empty;
-        }
-
         private static void CopyHtmlToClipboard(string html)
         {
             Clipboard.SetText(html);
