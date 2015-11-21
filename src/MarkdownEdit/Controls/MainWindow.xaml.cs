@@ -285,9 +285,9 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text, true);
 
-        private void ExecuteSaveAsHtml(object sender, ExecutedRoutedEventArgs e) => Utility.SaveAsHtml(Editor.Text);
+        private void ExecuteSaveAsHtml(object sender, ExecutedRoutedEventArgs e) => EditorLoadSave.SaveFileAs(Editor, "html");
 
-        private void ExecuteSaveAsHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.SaveAsHtml(Editor.Text, true);
+        private void ExecuteSaveAsHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => EditorLoadSave.SaveFileAs(Editor, "html-with-template");
 
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e) => new GotoLineDialog {Owner = this}.ShowDialog();
 

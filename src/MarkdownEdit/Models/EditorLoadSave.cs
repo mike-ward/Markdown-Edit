@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
 using MarkdownEdit.Controls;
 using MarkdownEdit.Properties;
@@ -37,6 +36,7 @@ namespace MarkdownEdit.Models
                 var filename = parts[0] ?? "";
                 var offset = ConvertToOffset(parts.Length == 2 ? parts[1] : "0");
                 var pathExtension = Path.GetExtension(filename);
+
                 var isWordDoc = pathExtension.Equals(".docx", StringComparison.OrdinalIgnoreCase);
 
                 if (isWordDoc)
@@ -103,26 +103,36 @@ namespace MarkdownEdit.Models
                 : result == MessageBoxResult.No;
         }
 
-        public static bool SaveFileAs(Editor editor)
+        public static bool SaveFileAs(Editor editor, string defaultFilter = "markdown")
         {
+            const int markdown = 1;
+            const int html = 2;
+            const int pdf = 3;
+            const int docx = 4;
+
+            var filterIndex = markdown;
+            if (defaultFilter == "html" || defaultFilter == "html-with-template") filterIndex = html;
+            if (defaultFilter == "pdf") filterIndex = pdf;
+            if (defaultFilter == "docx") filterIndex = docx;
+
             var dialog = new SaveFileDialog
             {
-                FilterIndex = 0,
+                FilterIndex = filterIndex,
                 OverwritePrompt = true,
                 RestoreDirectory = true,
                 FileName = Markdown.SuggestFilenameFromTitle(editor.EditBox.Text),
-                Filter = "Markdown files (*.md)|*.md|" // 0
-                    + "HTML files (*.html)|*.html|" // 1
-                    + "PDF files (*.pdf)|*.pdf|" // 2
-                    + "Word files (*.docx)|*.docx|" // 3
-                    + "All files (*.*)|*.*" // 4
+                Filter = "Markdown files (*.md)|*.md|"
+                    + "HTML files (*.html)|*.html|"
+                    + "PDF files (*.pdf)|*.pdf|"
+                    + "Word files (*.docx)|*.docx|"
+                    + "All files (*.*)|*.*"
             };
             if (dialog.ShowDialog() == false) return false;
 
             var filename = dialog.FileNames[0];
-            if (dialog.FilterIndex == 1) return SaveAsHtml(filename, editor.Text);
-            if (dialog.FilterIndex == 2) return SaveAsPdf(editor, filename);
-            if (dialog.FilterIndex == 3) return SaveAsWord(editor, filename);
+            if (dialog.FilterIndex == html) return SaveAsHtml(filename, editor.Text, defaultFilter);
+            if (dialog.FilterIndex == pdf) return SaveAsPdf(editor, filename);
+            if (dialog.FilterIndex == docx) return SaveAsDocx(editor, filename);
 
             var currentFileName = editor.FileName;
             editor.FileName = filename;
@@ -208,10 +218,11 @@ namespace MarkdownEdit.Models
             return (int.TryParse(number, out offset)) ? offset : 0;
         }
 
-        private static bool SaveAsHtml(string filename, string markdown)
+        private static bool SaveAsHtml(string filename, string markdown, string filter)
         {
             var html = Markdown.ToHtml(Utility.RemoveYamlFrontMatter(markdown));
-            File.WriteAllText(filename, UserTemplate.InsertContent(html));
+            if (filter == "html-with-template") html = UserTemplate.InsertContent(html);
+            File.WriteAllText(filename, html);
             return true;
         }
 
@@ -220,9 +231,10 @@ namespace MarkdownEdit.Models
             return false;
         }
 
-        private static bool SaveAsWord(Editor editor, string filename)
+        private static bool SaveAsDocx(Editor editor, string filename)
         {
-            return false;
+            Markdown.ToMicrosoftWord(editor.Text, filename);
+            return true;
         }
     }
 }

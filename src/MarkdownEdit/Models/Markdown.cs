@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using MarkdownEdit.MarkdownConverters;
+using static System.String;
 
 namespace MarkdownEdit.Models
 {
@@ -24,9 +25,11 @@ namespace MarkdownEdit.Models
 
         public static string FromMicrosoftWord(string path) => Pandoc(null, $"-f docx -t {MarkdownFormat} \"{path}\"");
 
+        public static string ToMicrosoftWord(string markdown, string path) => Pandoc(markdown, $"-f {MarkdownFormat} -t docx -o \"{path}\"");
+
         public static string ToHtml(string markdown)
         {
-            if (!string.IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter))
+            if (!IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter))
             {
                 return CustomMarkdownConverter.ConvertToHtml(markdown);
             }
@@ -93,23 +96,23 @@ namespace MarkdownEdit.Models
             if (Regex.IsMatch(text, @"^---\s*$", RegexOptions.Multiline))
             {
                 var matches = Regex.Matches(text, @"^(?:---)|(?:\.\.\.)\s*$", RegexOptions.Multiline);
-                if (matches.Count < 2) return Tuple.Create(String.Empty, text);
+                if (matches.Count < 2) return Tuple.Create(Empty, text);
                 var match = matches[1];
                 var index = match.Index + match.Groups[0].Value.Length + 1;
                 while (index < text.Length && Char.IsWhiteSpace(text[index])) index += 1;
                 return Tuple.Create(text.Substring(0, index), text.Substring(index));
             }
-            return Tuple.Create(String.Empty, text);
+            return Tuple.Create(Empty, text);
         }
 
         public static string SuggestFilenameFromTitle(string markdown)
         {
-            var result = Markdown.SeperateFrontMatter(markdown);
-            if (String.IsNullOrEmpty(result.Item1)) return String.Empty;
+            var result = SeperateFrontMatter(markdown);
+            if (IsNullOrEmpty(result.Item1)) return Empty;
             var pattern = new Regex(@"title:\s*(.+)", RegexOptions.Multiline);
             var match = pattern.Match(markdown);
-            var title = match.Success ? match.Groups[1].Value : String.Empty;
-            if (String.IsNullOrEmpty(title)) return String.Empty;
+            var title = match.Success ? match.Groups[1].Value : Empty;
+            if (IsNullOrEmpty(title)) return Empty;
             var filename = DateTime.Now.ToString("yyyy-MM-dd-") + title.ToSlug(true);
             return filename;
         }
