@@ -5,14 +5,12 @@ using System.IO;
 using System.Media;
 using System.Net.Http;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using MarkdownEdit.Controls;
 using MarkdownEdit.i18n;
-using MarkdownEdit.MarkdownConverters;
 using Microsoft.Win32;
 
 namespace MarkdownEdit.Models
@@ -65,22 +63,22 @@ namespace MarkdownEdit.Models
 
         public static string ExecutingAssembly() => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
 
-        public static void ExportHtmlToClipboard(string markdown, IMarkdownConverter converter, bool includeTemplate = false)
+        public static void ExportHtmlToClipboard(string markdown, bool includeTemplate = false)
         {
             var text = RemoveYamlFrontMatter(markdown);
-            var html = converter.ConvertToHtml(text);
+            var html = Markdown.ToHtml(text);
             if (includeTemplate) html = UserTemplate.InsertContent(html);
             CopyHtmlToClipboard(html);
         }
 
-        public static void SaveAsHtml(string markdown, IMarkdownConverter converter, bool includeTemplate = false)
+        public static void SaveAsHtml(string markdown, bool includeTemplate = false)
         {
             try
             {
                 var text = RemoveYamlFrontMatter(markdown);
-                var html = converter.ConvertToHtml(text);
+                var html = Markdown.ToHtml(text);
                 if (includeTemplate) html = UserTemplate.InsertContent(html);
-                var file = SaveFileDialog(SuggestFilenameFromTitle(text), @"Html files (*.html)|*.html|All files (*.*)|*.*");
+                var file = SaveFileDialog(Markdown.SuggestFilenameFromTitle(text), @"Html files (*.html)|*.html|All files (*.*)|*.*");
                 if (string.IsNullOrWhiteSpace(file)) return;
                 File.WriteAllText(file, html);
             }
@@ -115,34 +113,8 @@ namespace MarkdownEdit.Models
         public static string RemoveYamlFrontMatter(string markdown)
         {
             if (App.UserSettings.IgnoreYaml == false) return markdown;
-            var tuple = SeperateFrontMatter(markdown);
+            var tuple = Markdown.SeperateFrontMatter(markdown);
             return tuple.Item2;
-        }
-
-        public static Tuple<string, string> SeperateFrontMatter(string text)
-        {
-            if (Regex.IsMatch(text, @"^---\s*$", RegexOptions.Multiline))
-            {
-                var matches = Regex.Matches(text, @"^(?:---)|(?:\.\.\.)\s*$", RegexOptions.Multiline);
-                if (matches.Count < 2) return Tuple.Create(string.Empty, text);
-                var match = matches[1];
-                var index = match.Index + match.Groups[0].Value.Length + 1;
-                while (index < text.Length && char.IsWhiteSpace(text[index])) index += 1;
-                return Tuple.Create(text.Substring(0, index), text.Substring(index));
-            }
-            return Tuple.Create(string.Empty, text);
-        }
-
-        public static string SuggestFilenameFromTitle(string text)
-        {
-            var result = SeperateFrontMatter(text);
-            if (string.IsNullOrEmpty(result.Item1)) return string.Empty;
-            var pattern = new Regex(@"title:\s*(.+)", RegexOptions.Multiline);
-            var match = pattern.Match(text);
-            var title = match.Success ? match.Groups[1].Value : string.Empty;
-            if (string.IsNullOrEmpty(title)) return string.Empty;
-            var filename = DateTime.Now.ToString("yyyy-MM-dd-") + title.ToSlug(true);
-            return filename;
         }
 
         public static T GetDescendantByType<T>(this Visual element) where T : class

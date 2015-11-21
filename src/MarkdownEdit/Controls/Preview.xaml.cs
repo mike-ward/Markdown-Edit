@@ -13,7 +13,6 @@ using System.Windows.Navigation;
 using CommonMark;
 using HtmlAgilityPack;
 using mshtml;
-using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 
@@ -57,7 +56,7 @@ namespace MarkdownEdit.Controls
             try
             {
                 markdown = Utility.RemoveYamlFrontMatter(markdown);
-                var html = CustomMarkdownConvertor.ConvertToHtml(markdown) ?? MarkdownConverter.ConvertToHtml(markdown);
+                var html = Markdown.ToHtml(markdown);
                 UpdateBaseTag();
                 var div = GetContentsDiv();
                 div.innerHTML = ScrubHtml(html);
@@ -76,7 +75,7 @@ namespace MarkdownEdit.Controls
             if (string.IsNullOrWhiteSpace(lastOpen)) return;
             var folder = Path.GetDirectoryName(lastOpen);
             if (string.IsNullOrWhiteSpace(folder)) return;
-            var document = (IHTMLDocument3)Browser.Document;
+            var document = (IHTMLDocument3) Browser.Document;
             var baseElement = document?.getElementById(basetTagId);
             if (baseElement == null)
             {
@@ -86,7 +85,7 @@ namespace MarkdownEdit.Controls
                 var head = document?.getElementsByTagName("head").item(0);
                 head?.appendChild(baseElement);
             }
-            baseElement?.setAttribute("href", "file:///" + folder.Replace('\\', '/') + "/");
+            baseElement.setAttribute("href", "file:///" + folder.Replace('\\', '/') + "/");
         }
 
         public void Print()
@@ -217,15 +216,6 @@ namespace MarkdownEdit.Controls
         {
             get { return _wordCount; }
             set { Set(ref _wordCount, value); }
-        }
-
-        public static readonly DependencyProperty MarkdownConverterProperty = DependencyProperty.Register(
-            "MarkdownConverter", typeof (IMarkdownConverter), typeof (Preview), new PropertyMetadata(default(IMarkdownConverter)));
-
-        public IMarkdownConverter MarkdownConverter
-        {
-            get { return (IMarkdownConverter) GetValue(MarkdownConverterProperty); }
-            set { SetValue(MarkdownConverterProperty, value); }
         }
 
         // INotifyPropertyChanged

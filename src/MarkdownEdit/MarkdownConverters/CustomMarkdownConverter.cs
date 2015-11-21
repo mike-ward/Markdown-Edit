@@ -6,12 +6,11 @@ using MarkdownEdit.Models;
 
 namespace MarkdownEdit.MarkdownConverters
 {
-    public static class CustomMarkdownConvertor
+    public class CustomMarkdownConverter : IMarkdownConverter
     {
-        public static string ConvertToHtml(string markdown)
+        public string ConvertToHtml(string markdown)
         {
             var converter = App.UserSettings.CustomMarkdownConverter;
-            if (string.IsNullOrWhiteSpace(converter)) return null;
             return RunConverter(converter, markdown);
         }
 

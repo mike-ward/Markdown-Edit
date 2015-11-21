@@ -57,7 +57,6 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand GotToMarkdownEditWebSiteCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
-        private IMarkdownConverter _markdownConverter;
         private IMarkdownConverter _commonMarkConverter;
         private IMarkdownConverter _githubMarkdownConverter;
         private ISpellCheckProvider _spellCheckProvider;
@@ -75,16 +74,11 @@ namespace MarkdownEdit.Controls
         }
 
         public MainWindow(
-            IMarkdownConverter commonMarkConverter,
-            IMarkdownConverter githubMarkdownConverter,
             ISpellCheckProvider spellCheckProvider,
             ISnippetManager snippetManager)
         {
             DataContext = this;
             InitializeComponent();
-            CommonMarkConverter = commonMarkConverter;
-            GitHubMarkdownConverter = githubMarkdownConverter;
-            UpdateMarkdownConverter();
             SpellCheckProvider = spellCheckProvider;
             SnippetManager = snippetManager;
             Closing += OnClosing;
@@ -113,7 +107,6 @@ namespace MarkdownEdit.Controls
                     if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins();
                     if (args.PropertyName == nameof(App.UserSettings.GitHubMarkdown))
                     {
-                        UpdateMarkdownConverter();
                         Preview.UpdatePreview(Editor);
                     }
                 };
@@ -124,8 +117,6 @@ namespace MarkdownEdit.Controls
                 NewVersion = !await Utility.IsCurrentVersion();
             });
         }
-
-        private void UpdateMarkdownConverter() => MarkdownConverter = App.UserSettings.GitHubMarkdown ? GitHubMarkdownConverter : CommonMarkConverter;
 
         private void LoadCommandLineOrLastFile()
         {
@@ -290,13 +281,13 @@ namespace MarkdownEdit.Controls
             return new Thickness(margin, 0, margin, 0);
         }
 
-        private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text, MarkdownConverter);
+        private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text);
 
-        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text, MarkdownConverter, true);
+        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text, true);
 
-        private void ExecuteSaveAsHtml(object sender, ExecutedRoutedEventArgs e) => Utility.SaveAsHtml(Editor.Text, MarkdownConverter);
+        private void ExecuteSaveAsHtml(object sender, ExecutedRoutedEventArgs e) => Utility.SaveAsHtml(Editor.Text);
 
-        private void ExecuteSaveAsHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.SaveAsHtml(Editor.Text, MarkdownConverter, true);
+        private void ExecuteSaveAsHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.SaveAsHtml(Editor.Text, true);
 
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e) => new GotoLineDialog {Owner = this}.ShowDialog();
 
@@ -327,12 +318,6 @@ namespace MarkdownEdit.Controls
         {
             get { return _editorMargins; }
             set { Set(ref _editorMargins, value); }
-        }
-
-        public IMarkdownConverter MarkdownConverter
-        {
-            get { return _markdownConverter; }
-            set { Set(ref _markdownConverter, value); }
         }
 
         public IMarkdownConverter CommonMarkConverter

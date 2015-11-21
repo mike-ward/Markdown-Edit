@@ -9,11 +9,11 @@ namespace UnitTests.ImageUpload
     [TestClass]
     public class UnitTest1
     {
-        [TestMethod]
+        [TestMethod, Ignore]
         public async Task ImgurAnonymousUploadTestShouldReturnLink()
         {
             var service = new ImageUploadImgur();
-            var imageBytes = File.ReadAllBytes(@"..\..\..\MarkdownEdit\logo.png");
+            var imageBytes = File.ReadAllBytes(@"MarkdownEdit\logo.png");
             var link = await service.UploadBytesAsync(imageBytes);
             link.Should().StartWith("http://i.imgur.com/");
         }

@@ -145,7 +145,7 @@
     <Compile Include="ImageUpload\IImageUpload.cs" />
     <Compile Include="ImageUpload\ImageUploadImgur.cs" />
     <Compile Include="MarkdownConverters\CommonMarkConverter.cs" />
-    <Compile Include="MarkdownConverters\CustomMarkdownConvertor.cs" />
+    <Compile Include="MarkdownConverters\CustomMarkdownConverter.cs" />
     <Compile Include="MarkdownConverters\GitHubMarkdownConverter.cs" />
     <Compile Include="MarkdownConverters\IMarkdownConverter.cs" />
     <Compile Include="Models\EditorSpellCheck.cs" />
@@ -159,7 +159,7 @@
     <Compile Include="Controls\GotoLineDialog.xaml.cs">
       <DependentUpon>GotoLineDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\ConvertText.cs" />
+    <Compile Include="Models\Markdown.cs" />
     <Compile Include="Models\Highlight.cs" />
     <Compile Include="Controls\RecentFilesDialog.xaml.cs">
       <DependentUpon>RecentFilesDialog.xaml</DependentUpon>
@@ -371,7 +371,9 @@
   <ItemGroup>
     <None Include="Resources\Snippets.txt" />
     <Resource Include="logo.ico" />
-    <None Include="logo.png" />
+    <None Include="logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Lib\Microsoft.DwayneNeed.dll" />
     <None Include="Lib\Microsoft.DwayneNeed.Win32.dll" />
   </ItemGroup>

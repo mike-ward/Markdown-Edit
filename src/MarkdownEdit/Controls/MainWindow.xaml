@@ -200,8 +200,7 @@
                                  IsInputRedirectionEnabled="True"
                                  IsOutputRedirectionEnabled="True">
         <controls:Preview x:Name="Preview"
-                           Margin="{Binding EditorMargins}"
-                           MarkdownConverter="{Binding MarkdownConverter}" />
+                          Margin="{Binding EditorMargins}" />
       </interop:AirspaceDecorator>
     </UniformGrid>
   </Grid>

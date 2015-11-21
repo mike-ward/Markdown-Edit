@@ -36,7 +36,7 @@ title:  Downloads
 ### (a.k.a. The Goods)
 A Windows Desktop Markdown Editor[Read more...](/ markdownedit)";
 
-            var tuple = Utility.SeperateFrontMatter(text);
+            var tuple = Markdown.SeperateFrontMatter(text);
             tuple.Item1.Should().Match("*---*");
             tuple.Item2.Should().StartWith("###");
         }
@@ -54,7 +54,7 @@ title:  ""Friday Links #357""
 A Windows Desktop Markdown Editor[Read more...](/ markdownedit)";
 
             var match = DateTime.Now.ToString("yyyy-MM-dd-") + "friday-links-357";
-            var title = Utility.SuggestFilenameFromTitle(text);
+            var title = Markdown.SuggestFilenameFromTitle(text);
             title.Should().Be(match);
         }
     }

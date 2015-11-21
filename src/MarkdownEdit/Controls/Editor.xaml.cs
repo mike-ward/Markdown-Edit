@@ -302,11 +302,11 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => IfNotReadOnly(() => FormatTextHandler(ConvertText.Wrap, ea.Parameter as bool?));
+        private void ExecuteFormatText(object sender, ExecutedRoutedEventArgs ea) => IfNotReadOnly(() => FormatTextHandler(Markdown.Wrap, ea.Parameter as bool?));
 
-        private void ExecuteFormatTextWithLinkReferences(object sender, ExecutedRoutedEventArgs ea) => IfNotReadOnly(() => FormatTextHandler(ConvertText.WrapWithLinkReferences, ea.Parameter as bool?));
+        private void ExecuteFormatTextWithLinkReferences(object sender, ExecutedRoutedEventArgs ea) => IfNotReadOnly(() => FormatTextHandler(Markdown.WrapWithLinkReferences, ea.Parameter as bool?));
 
-        private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => IfNotReadOnly(() => FormatTextHandler(ConvertText.Unwrap, false));
+        private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea) => IfNotReadOnly(() => FormatTextHandler(Markdown.Unwrap, false));
 
         public void NewFile() => IfNotReadOnly(() => EditorLoadSave.NewFile(this));
 

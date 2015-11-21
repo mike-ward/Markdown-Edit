@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using MarkdownEdit.Controls;
 using MarkdownEdit.Properties;
@@ -8,6 +9,14 @@ using Microsoft.Win32;
 
 namespace MarkdownEdit.Models
 {
+    public enum FileType
+    {
+        Markdown,
+        Html,
+        Word,
+        Pdf
+    }
+
     public static class EditorLoadSave
     {
         public static void NewFile(Editor editor)
@@ -33,7 +42,7 @@ namespace MarkdownEdit.Models
                 if (isWordDoc)
                 {
                     NewFile(editor);
-                    editor.EditBox.Text = ConvertText.FromMicrosoftWord(filename);
+                    editor.EditBox.Text = Markdown.FromMicrosoftWord(filename);
                     return true;
                 }
 
@@ -43,7 +52,7 @@ namespace MarkdownEdit.Models
                 if (isHtmlFile)
                 {
                     NewFile(editor);
-                    editor.EditBox.Text = ConvertText.FromHtml(filename);
+                    editor.EditBox.Text = Markdown.FromHtml(filename);
                     return true;
                 }
 
@@ -96,17 +105,29 @@ namespace MarkdownEdit.Models
 
         public static bool SaveFileAs(Editor editor)
         {
-            var filename = Utility.SaveFileDialog(
-                Utility.SuggestFilenameFromTitle(editor.EditBox.Text),
-                "Markdown files (*.md)|*.md|"
-                    //+ "PDF files (*.pdf)|*.pdf|"
-                    //+ "Word files (*.docx)|*.docx|"
-                    + "All files (*.*)|*.*");
+            var dialog = new SaveFileDialog
+            {
+                FilterIndex = 0,
+                OverwritePrompt = true,
+                RestoreDirectory = true,
+                FileName = Markdown.SuggestFilenameFromTitle(editor.EditBox.Text),
+                Filter = "Markdown files (*.md)|*.md|" // 0
+                    + "HTML files (*.html)|*.html|" // 1
+                    + "PDF files (*.pdf)|*.pdf|" // 2
+                    + "Word files (*.docx)|*.docx|" // 3
+                    + "All files (*.*)|*.*" // 4
+            };
+            if (dialog.ShowDialog() == false) return false;
 
-            if (string.IsNullOrWhiteSpace(filename)) return false;
+            var filename = dialog.FileNames[0];
+            if (dialog.FilterIndex == 1) return SaveAsHtml(filename, editor.Text);
+            if (dialog.FilterIndex == 2) return SaveAsPdf(editor, filename);
+            if (dialog.FilterIndex == 3) return SaveAsWord(editor, filename);
+
             var currentFileName = editor.FileName;
             editor.FileName = filename;
             var offset = editor.EditBox.SelectionStart;
+
             if (!Save(editor) || !LoadFile(editor, filename, false))
             {
                 editor.FileName = currentFileName;
@@ -115,7 +136,6 @@ namespace MarkdownEdit.Models
             editor.EditBox.SelectionStart = offset;
             return true;
         }
-
 
         private static bool Save(Editor editor)
         {
@@ -150,10 +170,10 @@ namespace MarkdownEdit.Models
             if (string.IsNullOrWhiteSpace(file))
             {
                 const string fileFilter =
-                    "Markdown files (*.md)|*.md|" +
-                        "Microsoft Word files (*.docx)|*.docx|" +
-                        "HTML files (*.html)|*.html|" +
-                        "All files (*.*)|*.*";
+                    "Markdown files (*.md)|*.md|"
+                        + "Microsoft Word files (*.docx)|*.docx|"
+                        + "HTML files (*.html)|*.html|"
+                        + "All files (*.*)|*.*";
 
                 var dialog = new OpenFileDialog {Filter = fileFilter};
                 if (dialog.ShowDialog() == false) return;
@@ -186,6 +206,23 @@ namespace MarkdownEdit.Models
         {
             int offset;
             return (int.TryParse(number, out offset)) ? offset : 0;
+        }
+
+        private static bool SaveAsHtml(string filename, string markdown)
+        {
+            var html = Markdown.ToHtml(Utility.RemoveYamlFrontMatter(markdown));
+            File.WriteAllText(filename, UserTemplate.InsertContent(html));
+            return true;
+        }
+
+        private static bool SaveAsPdf(Editor editor, string filename)
+        {
+            return false;
+        }
+
+        private static bool SaveAsWord(Editor editor, string filename)
+        {
+            return false;
         }
     }
 }
