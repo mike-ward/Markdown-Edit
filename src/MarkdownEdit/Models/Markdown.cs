@@ -4,7 +4,9 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
+using HtmlAgilityPack;
 using MarkdownEdit.MarkdownConverters;
+using MarkdownEdit.Properties;
 using static System.String;
 
 namespace MarkdownEdit.Models
@@ -23,10 +25,6 @@ namespace MarkdownEdit.Models
 
         public static string FromHtml(string path) => Pandoc(null, $"-f html -t {MarkdownFormat} --no-wrap \"{path}\"");
 
-        public static string FromMicrosoftWord(string path) => Pandoc(null, $"-f docx -t {MarkdownFormat} \"{path}\"");
-
-        public static string ToMicrosoftWord(string markdown, string path) => Pandoc(markdown, $"-f {MarkdownFormat} -t docx -o \"{path}\"");
-
         public static string ToHtml(string markdown)
         {
             if (!IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter))
@@ -38,7 +36,13 @@ namespace MarkdownEdit.Models
                 : CommonMarkConverter.ConvertToHtml(markdown);
         }
 
-        public static byte[] HtmlToPdf(string html) => new NReco.PdfGenerator.HtmlToPdfConverter().GeneratePdf(html);
+        public static string FromMicrosoftWord(string path) => Pandoc(null, $"-f docx -t {MarkdownFormat} \"{path}\"");
+
+        public static string ToMicrosoftWord(string markdown, string path) => 
+            Pandoc(ResolveImageUrls(ToHtml(markdown)), $"-f html -t docx -o \"{path}\"");
+
+        public static byte[] HtmlToPdf(string html) => 
+            new NReco.PdfGenerator.HtmlToPdfConverter().GeneratePdf(ResolveImageUrls(html));
 
         public static string Pandoc(string text, string args)
         {
@@ -117,6 +121,31 @@ namespace MarkdownEdit.Models
             if (IsNullOrEmpty(title)) return Empty;
             var filename = DateTime.Now.ToString("yyyy-MM-dd-") + title.ToSlug(true);
             return filename;
+        }
+
+        private static string ResolveImageUrls(string html)
+        {
+            var filename = Settings.Default.LastOpenFile.StripOffsetFromFileName();
+            if (IsNullOrWhiteSpace(filename)) return html;
+            var folder = Path.GetDirectoryName(filename);
+            if (IsNullOrWhiteSpace(folder)) return html;
+
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+            var images = doc.DocumentNode.SelectNodes("//img");
+            var modified = false;
+
+            foreach (var image in images)
+            {
+                var src = image.GetAttributeValue("src", "");
+                if (IsNullOrWhiteSpace(src)) continue;
+                if (src.StartsWith("http://", StringComparison.OrdinalIgnoreCase)) continue;
+                var path = Path.Combine(folder, src);
+                image.SetAttributeValue("src", path);
+                modified = true;
+            }
+
+            return modified ? doc.DocumentNode.WriteTo() : html;
         }
     }
 }
