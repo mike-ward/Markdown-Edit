@@ -21,7 +21,7 @@ shortcuts. There is no main menu, status bar, tabbed windows or other
 distractions.
 
 -   <a href="{{ site.download }}" style="font-weight:bold; font-size:larger;">Download
-    Installer (v: 1.15, Windows 7+)</a>
+    Installer (v: 1.16, Windows 7+)</a>
 -   Install using [Chocolatey]: `choco install markdown-edit`
 -   **Windows 7 Users** - [Fix for font issue]
 
