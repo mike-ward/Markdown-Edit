@@ -69,7 +69,6 @@ namespace MarkdownEdit.Controls
             {
                 DataObject.AddPastingHandler(EditBox, OnPaste);
                 StyleScrollBar();
-                AllowImagePaste();
                 SetupIndentationCommandBinding();
                 SetupTabSnippetHandler();
                 SetupLineContinuationEnterCommandHandler();
@@ -188,50 +187,6 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private void AllowImagePaste()
-        {
-            // AvalonEdit only allows text paste. Hack the command to allow otherwise.
-            var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.FirstOrDefault(cb => cb.Command == Paste);
-            if (cmd == null) return;
-
-            CanExecuteRoutedEventHandler canExecute = (sender, args) =>
-                args.CanExecute = EditBox.TextArea?.Document != null &&
-                    EditBox.TextArea.ReadOnlySectionProvider.CanInsert(EditBox.TextArea.Caret.Offset);
-
-            ExecutedRoutedEventHandler execute = null;
-            execute = (sender, args) =>
-            {
-                if (Clipboard.ContainsImage())
-                {
-                    var dialog = new ImageDropDialog
-                    {
-                        Owner = Application.Current.MainWindow,
-                        TextEditor = EditBox,
-                        Image = Images.ImageFromClipboardDib().ToPngArray()
-                    };
-                    dialog.ShowDialog();
-                    args.Handled = true;
-                }
-                else if (Clipboard.ContainsText())
-                {
-                    // WPF won't continue routing the command if there's PreviewExecuted handler.
-                    // So, remove it, call Execute and reinstall the handler.
-                    // Hack, hack hack...
-                    try
-                    {
-                        cmd.PreviewExecuted -= execute;
-                        cmd.Command.Execute(args.Parameter);
-                    }
-                    finally
-                    {
-                        cmd.PreviewExecuted += execute;
-                    }
-                }
-            };
-
-            cmd.CanExecute += canExecute;
-            cmd.PreviewExecuted += execute;
-        }
 
         private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)
         {
