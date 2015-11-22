@@ -63,7 +63,11 @@ namespace MarkdownEdit.Models
                 }
                 var result = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
-                if (process.ExitCode != 0) result = process.StandardError.ReadToEnd();
+                if (process.ExitCode != 0)
+                {
+                    var msg = process.StandardError.ReadToEnd();
+                    result = string.IsNullOrWhiteSpace(msg) ? "empty error response" : msg;
+                }
                 return result;
             }
         }
