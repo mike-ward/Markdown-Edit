@@ -137,6 +137,7 @@ namespace MarkdownEdit.Models
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
             var images = doc.DocumentNode.SelectNodes("//img");
+            if (images == null) return html;
             var modified = false;
 
             foreach (var image in images)
