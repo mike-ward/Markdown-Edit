@@ -22,7 +22,7 @@ namespace MarkdownEdit.Models
         private bool _editorShowLineNumbers;
         private bool _editorHighlightCurrentLine;
         private bool _synchronizeScrollPositions = true;
-        private bool _ignoreYaml;
+        private bool _ignoreYaml = true;
         private string _spellCheckDictionary = "en_US";
         private bool _spellCheckIgnoreCodeBlocks = true;
         private bool _spellCheckIgnoreAllCaps = true;
