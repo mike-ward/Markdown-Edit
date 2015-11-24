@@ -130,7 +130,7 @@ namespace MarkdownEdit.Models
             if (dialog.ShowDialog() == false) return false;
 
             var filename = dialog.FileNames[0];
-            if (dialog.FilterIndex == html) return SaveAsHtml(editor.Text, filename, defaultFilter);
+            if (dialog.FilterIndex == html) return SaveAsHtml(editor.Text, filename, "html-with-template");
             if (dialog.FilterIndex == pdf) return SaveAsPdf(editor.Text, filename);
             if (dialog.FilterIndex == docx) return SaveAsDocx(editor.Text, filename);
 
@@ -236,7 +236,7 @@ namespace MarkdownEdit.Models
 
         private static bool SaveAsDocx(string markdown, string filename)
         {
-            Markdown.ToMicrosoftWord(markdown, filename);
+            Markdown.ToMicrosoftWord(Utility.RemoveYamlFrontMatter(markdown), filename);
             return true;
         }
     }
