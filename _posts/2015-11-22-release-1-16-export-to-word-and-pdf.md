@@ -1,7 +1,9 @@
 ---
-layout: post  
+layout: "post-no-feature"
 title: "Release 1.16 - Export to Word and PDF"
+published: true
 ---
+
 
 Thanks to some excellent suggestions from GitHub user `borekb`, release
 1.16 has a mother-load of new features.
@@ -46,5 +48,3 @@ Thanks to some excellent suggestions from GitHub user `borekb`, release
     paste an image to MDE and it would automatically upload it to MDE?
     As well intentioned as that was, it represented a privacy issue so I
     removed it. (Issue \#73).
-
-
