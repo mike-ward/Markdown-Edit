@@ -27,7 +27,7 @@ namespace MarkdownEdit.Controls
         public Preview()
         {
             InitializeComponent();
-            Browser.Navigate(UserTemplate.Load());
+            Browser.Navigate(new Uri(UserTemplate.Load()));
             Loaded += OnLoaded;
             Unloaded += (sender, args) => _templateWatcher?.Dispose();
             Browser.Navigating += BrowserOnNavigating;
