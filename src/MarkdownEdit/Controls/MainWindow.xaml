@@ -287,8 +287,7 @@
     <KeyBinding Command="{x:Static controls:MainWindow.ShowThemeDialogCommand}" Gesture="Ctrl+T" />
     <KeyBinding Command="{x:Static controls:MainWindow.ExportHtmlCommand}" Gesture="Ctrl+E" />
     <KeyBinding Command="{x:Static controls:MainWindow.ExportHtmlTemplateCommand}" Gesture="Ctrl+Shift+E" />
-    <KeyBinding Command="{x:Static controls:MainWindow.SaveAsHtmlCommand}" Gesture="Alt+E" />
-    <KeyBinding Command="{x:Static controls:MainWindow.SaveAsHtmlTemplateCommand}" Gesture="Alt+Shift+E" />
+    <KeyBinding Command="{x:Static controls:MainWindow.SaveAsHtmlTemplateCommand}" Gesture="Alt+E" />
     <KeyBinding Command="{x:Static controls:MainWindow.ShowGotoLineDialogCommand}" Gesture="Ctrl+G" />
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleAutoSaveCommand}" Gesture="Alt+S" />
     <KeyBinding Command="{x:Static controls:MainWindow.SelectPreviousHeaderCommand}" Gesture="Ctrl+U" />

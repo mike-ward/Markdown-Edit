@@ -13,7 +13,6 @@ Keyboard Shortcuts
     Ctrl+E         Exporter en HTML vers le presse papier
     Ctrl+Shift+E   Exporter en HTML avec le template vers le presse papier
     Alt+E          Enregistrer sous HTML 
-    Alt+Shift+E    Enregistrer sous HTML avec le template
     F5             Recharger fichier
     Alt+F4         Quitter
 

@@ -13,8 +13,7 @@
     Ctrl+E         Exportar HTML al portapales
     Ctrl+Shift+E   Exportar el HTML y la plantilla al portapapeles
     Alt+E          Guardar HTML como 
-    Alt+Shift+E    Guardar HTML como y la plantilla
-	F5             Recargar archivo
+	  F5             Recargar archivo
     Alt+F4         Salir
 
     Ctrl+W         Conmutar ajuste de línea
