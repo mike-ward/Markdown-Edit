@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;

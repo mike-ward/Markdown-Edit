@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,10 +62,25 @@ namespace MarkdownEdit.Controls
                 var div = GetContentsDiv();
                 div.innerHTML = ScrubHtml(html);
                 WordCount = div.innerText.WordCount();
+                FirePreviewUpdatedEvent();
             }
             catch (CommonMarkException e)
             {
                 MessageBox.Show(e.ToString(), App.Title);
+            }
+        }
+
+        private void FirePreviewUpdatedEvent()
+        {
+            try
+            {
+                dynamic doc = Browser.Document;
+                var ev = doc.createEvent("event");
+                ev.initEvent("previewUpdated", true, true);
+                doc.dispatchEvent(ev);
+            }
+            catch (COMException)
+            {
             }
         }
 

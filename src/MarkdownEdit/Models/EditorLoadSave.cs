@@ -143,7 +143,8 @@ namespace MarkdownEdit.Models
                 editor.FileName = currentFileName;
                 return false;
             }
-            editor.EditBox.SelectionStart = offset;
+            var max = editor.EditBox.Text.Length;
+            editor.EditBox.SelectionStart = Math.Min(max, offset);
             return true;
         }
 
