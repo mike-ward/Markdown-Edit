@@ -8,6 +8,7 @@ published: true
 ---
 
 
+
 ------------------------------------------------------------------------
 
 <div class="screenshot">
@@ -41,10 +42,10 @@ The rest goes to equipment funding and software licensing.
 
 ### Reviews
 
-[Beta News] – Markdown Edit is far more capable than it looks
+[Beta News] – "Markdown Edit is far more capable than it looks"
 
-[Download Crew] – An excellent Markdown editor which doesn't get in your
-way
+[Download Crew] – "An excellent Markdown editor which doesn't get in your
+way"
 
   [CommonMark]: http://commonmark.org
   [Chocolatey]: https://chocolatey.org/packages/markdown-edit
