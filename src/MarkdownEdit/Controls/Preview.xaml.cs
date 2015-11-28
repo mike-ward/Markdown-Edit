@@ -62,7 +62,7 @@ namespace MarkdownEdit.Controls
                 var div = GetContentsDiv();
                 div.innerHTML = ScrubHtml(html);
                 WordCount = div.innerText.WordCount();
-                FirePreviewUpdatedEvent();
+                EmitFirePreviewUpdatedEvent();
             }
             catch (CommonMarkException e)
             {
@@ -70,12 +70,13 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private void FirePreviewUpdatedEvent()
+        private void EmitFirePreviewUpdatedEvent()
         {
             try
             {
                 dynamic doc = Browser.Document;
                 var ev = doc.createEvent("event");
+                if (ev == null) return;
                 ev.initEvent("previewUpdated", true, true);
                 doc.dispatchEvent(ev);
             }
