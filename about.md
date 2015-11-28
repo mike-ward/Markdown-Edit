@@ -1,9 +1,11 @@
 ---
 layout: page
 title: About
-image:
-  feature: typewriter-about.jpg
+image: 
+  feature: "typewriter-about.jpg"
+published: true
 ---
+
 
 There's something hopeful and exciting about a blank page. The promise
 of new journeys and of stories untold. And yet when I open a program
@@ -17,7 +19,7 @@ Markdown Edit.
 > [MakeUseOf.com](http://www.makeuseof.com/tag/5-sites-quickly-learning-markdown/)
 
 Writing should first and foremost be about, well, writing. Presentation
-matters but is in most cases it's an enhancement, not the message. Who
+matters but in most cases it's an enhancement, not the message. Who
 cares if your header is tall or short, fat or wide? That's the job of a
 designer. The words, the content, the meaning, the flow and pace. That's
 the writer's job.
@@ -46,7 +48,7 @@ Other things I wanted.
 -   Stupid simple installer.
 -   Focus on doing Markdown well. Avoid non-Markdown stuff
     where practical.
--   And above all, don't make it PITA to use.
+-   And above all, don't make it a PITA to use.
 
 So there you have it. My attempt at a Markdown editor. Enjoy it or hate
 it. I have fun writing and using it and that's enough for me.
