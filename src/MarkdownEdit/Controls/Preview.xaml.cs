@@ -75,6 +75,7 @@ namespace MarkdownEdit.Controls
             try
             {
                 dynamic doc = Browser.Document;
+                if (doc == null) return;
                 var ev = doc.createEvent("event");
                 if (ev == null) return;
                 ev.initEvent("previewUpdated", true, true);

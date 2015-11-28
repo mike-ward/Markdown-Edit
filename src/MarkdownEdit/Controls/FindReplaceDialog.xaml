@@ -31,6 +31,7 @@
 				<StackPanel>
 					<TextBox Margin="3" 
                    Name="txtFind"
+                   Text="{Binding FindText}"
                    KeyDown="TxtFindOnKeyDown"
                    controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-find}" />
 					<Button Margin="5" HorizontalAlignment="Right" x:Name="FindNextButton"
@@ -39,7 +40,7 @@
 			</TabItem>
 			<TabItem Header="{i18N:Localize find-replace-tab-replace}">
 				<StackPanel>
-					<TextBox Margin="3" Name="txtFind2" controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-find}" />
+          <TextBox Margin="3" Name="txtFind2" Text="{Binding FindText}" controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-find}" />
 					<TextBox Margin="3" Name="txtReplace" controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-replace}" />
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 						<Button Margin="5" HorizontalAlignment="Right"
@@ -53,13 +54,13 @@
 			</TabItem>
 		</TabControl>
 
-		<CheckBox Grid.Row="1" Grid.Column="0" Margin="10,2" IsChecked="{Binding Path=CaseSensitive}"
+    <CheckBox Grid.Row="1" Grid.Column="0" Margin="10,2" IsChecked="{Binding Path=CaseSensitive}" DataContext="{Binding Path=FindReplaceSettings}"
 		          Name="cbCaseSensitive" Content="{i18N:Localize find-replace-match-case}" />
-		<CheckBox Grid.Row="2" Grid.Column="0" Margin="10,2" IsChecked="{Binding Path=WholeWord}"
+    <CheckBox Grid.Row="2" Grid.Column="0" Margin="10,2" IsChecked="{Binding Path=WholeWord}" DataContext="{Binding Path=FindReplaceSettings}"
 		          Name="cbWholeWord" Content="{i18N:Localize find-replace-match-whole-word}" />
-		<CheckBox Grid.Row="1" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=UseRegex}"
+    <CheckBox Grid.Row="1" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=UseRegex}" DataContext="{Binding Path=FindReplaceSettings}"
 		          Name="cbRegex" Content="{i18N:Localize find-replace-regular-expression}" />
-		<CheckBox Grid.Row="2" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=UseWildcards}"
+    <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=UseWildcards}" DataContext="{Binding Path=FindReplaceSettings}"
 		          Name="cbWildcards" Content="{i18N:Localize find-replace-wildcards}" />
 	</Grid>
 

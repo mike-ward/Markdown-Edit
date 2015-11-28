@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls.Primitives;
@@ -8,23 +11,37 @@ using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
 {
-    public partial class FindReplaceDialog
+    public partial class FindReplaceDialog : INotifyPropertyChanged
     {
         private string _findText;
+        private FindReplaceSettings _findReplaceSettings;
 
         public FindReplaceDialog(FindReplaceSettings findReplaceSettings)
         {
             InitializeComponent();
-            DataContext = findReplaceSettings;
+            DataContext = this;
+            _findReplaceSettings = findReplaceSettings;
             Closed += (s, e) => findReplaceSettings.Save();
             Closing += (s, e) => { e.Cancel = true; Hide(); };
+        }
+
+        public string FindText
+        {
+            get { return _findText; }
+            set { Set(ref _findText, value);}
+        }
+
+        public FindReplaceSettings FindReplaceSettings
+        {
+            get { return _findReplaceSettings; }
+            set { Set(ref _findReplaceSettings, value); }
         }
 
         private void FindNextClick(object sender, RoutedEventArgs e)
         {
             try
             {
-                _findText = txtFind.Text;
+                _findText = FindText;
                 var find = GetRegEx(_findText, false);
                 MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
             }
@@ -38,7 +55,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                _findText = txtFind2.Text;
+                _findText = FindText;
                 var find = GetRegEx(_findText, false);
                 MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
             }
@@ -52,7 +69,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                _findText = txtFind2.Text;
+                _findText = FindText;
                 var find = GetRegEx(_findText, false);
                 var replace = txtReplace.Text;
                 var tuple = new Tuple<Regex, string>(find, replace);
@@ -68,7 +85,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                _findText = txtFind2.Text;
+                _findText = FindText;
                 var find = GetRegEx(_findText, false);
                 var replace = txtReplace.Text;
                 var tuple = new Tuple<Regex, string>(find, replace);
@@ -134,6 +151,15 @@ namespace MarkdownEdit.Controls
         private void TxtFindOnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) FindNextButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
