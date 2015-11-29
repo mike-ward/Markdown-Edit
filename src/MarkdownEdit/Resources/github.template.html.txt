@@ -4,7 +4,7 @@
   <!-- Must have base tag with id of "base-tag-id" -->
   <base id="base-tag-id">
   <!-- Don't delete this X-UA tag. The browser control behaves like IE8 otherwise -->
-  <meta http-equiv="X-UA-Compatible" content="IE=9">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <style type="text/css">
 
@@ -672,7 +672,13 @@
 <body>
 <!-- Content goes here. The div must have an id of "content" -->
 <div id="content"></div>
+
 <!-- Adds some scroll space to the bottom of the doucment -->
 <div style="height: 1pc">&nbsp;</div>
+
+<!-- Scripts to handle MathJax -->
+<script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script async src="http://markdownedit.com/assets/js/mathjax-scripts.js"></script>
+
 </body>
 </html>

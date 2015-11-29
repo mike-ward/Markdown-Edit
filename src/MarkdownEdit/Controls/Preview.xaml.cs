@@ -187,8 +187,11 @@ namespace MarkdownEdit.Controls
                 if (percentToScroll > 0.99) percentToScroll = 1.1; // deal with round off at end of scroll
                 var body = document2.body;
                 if (body == null) return;
-                var scrollHeight = ((IHTMLElement2) body).scrollHeight - document3.documentElement.offsetHeight;
-                document2.parentWindow.scroll(0, (int) Math.Ceiling(percentToScroll*scrollHeight));
+                var bodyElement = (IHTMLElement2) body;
+                var documentElement = (IHTMLElement2)document3.documentElement;
+                var scrollHeight = bodyElement.scrollHeight - documentElement.clientHeight;
+                var scrollPos = (int) Math.Ceiling(percentToScroll*scrollHeight);
+                document2.parentWindow.scroll(0, scrollPos);
             }
         }
 
