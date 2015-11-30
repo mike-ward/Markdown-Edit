@@ -7,8 +7,6 @@ image:
 published: true
 ---
 
-
-
 ------------------------------------------------------------------------
 
 <div class="screenshot">
@@ -44,8 +42,12 @@ The rest goes to equipment funding and software licensing.
 
 [Beta News] – "Markdown Edit is far more capable than it looks"
 
-[Download Crew] – "An excellent Markdown editor which doesn't get in your
-way"
+[Download Crew] – "An excellent Markdown editor which doesn't get in
+your way"
+
+[Softpedia] – "It comes with all the options that you would expect from
+such an application, but what makes it stand out from the crowd is the
+minimalistic, stylish-looking interface"
 
   [CommonMark]: http://commonmark.org
   [Chocolatey]: https://chocolatey.org/packages/markdown-edit
@@ -53,3 +55,4 @@ way"
   [Donate with PayPal]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XGGZ8BEED7R62
   [Beta News]: http://betanews.com/2015/11/16/markdown-edit-is-a-distraction-free-editor-for-windows/
   [Download Crew]: http://www.downloadcrew.com/article/33887-markdown_edit
+  [Softpedia]: http://www.softpedia.com/get/Internet/WEB-Design/HTML-Editors/Markdown-Edit.shtml
