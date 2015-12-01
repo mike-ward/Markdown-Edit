@@ -1,5 +1,5 @@
 ---
-layout: post  
+layout: post-no-feature  
 title: "Markdown Edit &ndash; Math Equations"
 ---
 
