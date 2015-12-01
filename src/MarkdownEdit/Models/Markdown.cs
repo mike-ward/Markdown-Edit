@@ -74,7 +74,7 @@ namespace MarkdownEdit.Models
 
         private static string MarkdownFormat => App.UserSettings.GitHubMarkdown
             ? "markdown_github"
-            : "markdown_strict+fenced_code_blocks+backtick_code_blocks+intraword_underscores+strikeout";
+            : "markdown_strict+fenced_code_blocks+backtick_code_blocks+intraword_underscores+strikeout+tex_math_dollars";
 
         private static string Reformat(string text, string options = "")
         {

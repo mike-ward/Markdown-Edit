@@ -24,9 +24,9 @@ menu, status bar, tabbed windows or other distractions.
 > cosmetic (some icons appear as blank squares). [Read more and link to
 > new font](https://github.com/mike-ward/Markdown-Edit/issues/14).
 
-Gratuitous Screen Shot
+Obligatory Screen Shot
 
-<a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank">![markdown-edit-screenshot.png](http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png "Gratuitous Screen Shot")</a>
+![screenshot](http://i.imgur.com/3zFELBl.png)
 
 Features
 --------

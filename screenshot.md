@@ -8,10 +8,17 @@ menu, status bar, tabbed windows or other distractions.
 
 ### Features
 
--   Display Equation Markup
+-   [Display Equation
+    Markup](http://markdownedit.com/markdown-edit-math-equations/)
 
-$$ \\left( \\sum\_{k=1}^n a\_k b\_k \\right)^2 \\leq \\left(
-\\sum\_{k=1}^n a\_k^2 \\right) \\left( \\sum\_{k=1}^n b\_k^2 \\right) $$
+    $$
+    \begin{align}
+      \nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} & = \frac{4\pi}{c}\vec{\mathbf{j}} \\\\
+      \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\\\
+      \nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\\\
+      \nabla \cdot \vec{\mathbf{B}} & = 0
+    \end{align}
+    $$
 
 -   [Drag and Drop image
     uploads](http://mike-ward.net/2015/03/31/markdown-edit-1-4-imgur-uploads/)
@@ -47,4 +54,5 @@ $$ \\left( \\sum\_{k=1}^n a\_k b\_k \\right)^2 \\leq \\left(
 -   Highlight current line
 -   [Open Source](https://github.com/mike-ward/Markdown-Edit)
 -   MIT License
+
 
