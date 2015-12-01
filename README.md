@@ -31,11 +31,8 @@ Obligatory Screen Shot
 Features
 --------
 
--   Display Equation Markup
-
-$$ \\left( \\sum\_{k=1}^n a\_k b\_k \\right)^2 \\leq \\left(
-\\sum\_{k=1}^n a\_k^2 \\right) \\left( \\sum\_{k=1}^n b\_k^2 \\right) $$
-
+-   [Display Equation
+    Markup](http://markdownedit.com/markdown-edit-math-equations/)
 -   [Drag and Drop image
     uploads](http://mike-ward.net/2015/03/31/markdown-edit-1-4-imgur-uploads/)
 -   [Document
@@ -70,7 +67,6 @@ $$ \\left( \\sum\_{k=1}^n a\_k b\_k \\right)^2 \\leq \\left(
 -   Highlight current line
 -   [Open Source](https://github.com/mike-ward/Markdown-Edit)
 -   MIT License
-
 
 *Markdown Edit's help has a more complete list of features/shortcuts*
 
