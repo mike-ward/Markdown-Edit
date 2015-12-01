@@ -6,6 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
   <Grid>
-    <WebBrowser x:Name="Browser" />
+    <WebBrowser x:Name="Browser" SnapsToDevicePixels="True" />
   </Grid>
 </UserControl>

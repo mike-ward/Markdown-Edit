@@ -45,9 +45,10 @@ namespace MarkdownEdit.Controls
                 // kill popups
                 dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
                     BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                    null, Browser, new object[] {});
+                    null, Browser, new object[] { });
 
                 activeX.Silent = true;
+
             });
         }
 
@@ -93,11 +94,11 @@ namespace MarkdownEdit.Controls
             if (string.IsNullOrWhiteSpace(lastOpen)) return;
             var folder = Path.GetDirectoryName(lastOpen);
             if (string.IsNullOrWhiteSpace(folder)) return;
-            var document = (IHTMLDocument3) Browser.Document;
+            var document = (IHTMLDocument3)Browser.Document;
             var baseElement = document?.getElementById(basetTagId);
             if (baseElement == null)
             {
-                var doc2 = (IHTMLDocument2) Browser.Document;
+                var doc2 = (IHTMLDocument2)Browser.Document;
                 baseElement = doc2.createElement("base");
                 baseElement.id = basetTagId;
                 var head = document?.getElementsByTagName("head").item(0);
@@ -108,7 +109,7 @@ namespace MarkdownEdit.Controls
 
         public void Print()
         {
-            var document = (IHTMLDocument2) Browser.Document;
+            var document = (IHTMLDocument2)Browser.Document;
             document.execCommand("Print", true, null);
         }
 
@@ -158,7 +159,7 @@ namespace MarkdownEdit.Controls
 
         private IHTMLElement GetContentsDiv()
         {
-            var document = (IHTMLDocument3) Browser.Document;
+            var document = (IHTMLDocument3)Browser.Document;
             var element = document?.getElementById("content");
             return element;
         }
@@ -179,18 +180,18 @@ namespace MarkdownEdit.Controls
         public void SetScrollOffset(ScrollChangedEventArgs ea)
         {
             if (App.UserSettings.SynchronizeScrollPositions == false) return;
-            var document2 = (IHTMLDocument2) Browser.Document;
-            var document3 = (IHTMLDocument3) Browser.Document;
+            var document2 = (IHTMLDocument2)Browser.Document;
+            var document3 = (IHTMLDocument3)Browser.Document;
             if (document3?.documentElement != null)
             {
                 var percentToScroll = PercentScroll(ea);
                 if (percentToScroll > 0.99) percentToScroll = 1.1; // deal with round off at end of scroll
                 var body = document2.body;
                 if (body == null) return;
-                var bodyElement = (IHTMLElement2) body;
+                var bodyElement = (IHTMLElement2)body;
                 var documentElement = (IHTMLElement2)document3.documentElement;
                 var scrollHeight = bodyElement.scrollHeight - documentElement.clientHeight;
-                var scrollPos = (int) Math.Ceiling(percentToScroll*scrollHeight);
+                var scrollPos = (int)Math.Ceiling(percentToScroll * scrollHeight);
                 document2.parentWindow.scroll(0, scrollPos);
             }
         }
@@ -198,7 +199,7 @@ namespace MarkdownEdit.Controls
         private static double PercentScroll(ScrollChangedEventArgs e)
         {
             var y = e.ExtentHeight - e.ViewportHeight;
-            return e.VerticalOffset/((Math.Abs(y) < .000001) ? 1 : y);
+            return e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
         }
 
         private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
