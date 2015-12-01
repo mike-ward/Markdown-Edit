@@ -61,42 +61,31 @@ blockquote, blockquote p {
 
 /*   Code Formatting    */
 
-code {
-    color: $accent;
-    font-family: "Monaco", "Courier New", "Courier";
-    font-size: .75em;
-    font-weight: bold;
+code, tt {
+  padding: 0.2em 0.3em;
+  white-space: pre;
+  background-color: #f3f3f3;
+  font-size: 85%;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Liberation Mono', Menlo, monospace;
+  color: black;
 }
 
-.highlight {
-    background: $black;
-    padding: 12px;
-    border-radius: 4px;
-    margin-bottom: $lh;
-    overflow-x: scroll;
-
-    code {
-        color: $white;
-        font-family: "Monaco", "Courier New", "Courier";
-        font-size: .9em;
-        .lineno {
-            margin-right: $lh/2;
-            color: $grey-light;
-            line-height: 2em;
-        }
-        .nt {
-            color: #c85b5c;
-        }
-        .na {
-            color: #f0e687;
-        }
-        .s {
-            color: #87ceeb;
-        }
-    }
+pre {
+  background-color: #f3f3f3;
+  overflow: auto;
+  overflow-y: hidden;
+  width: 97%;
+  padding: 1em;
+  white-space: pre;
+  line-height: 1.4;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Liberation Mono', Menlo, monospace;
+  overflow-x: auto;
+  margin-bottom: 1em;
 }
 
-
+pre code {
+  font-size: 16px !important;
+}
 
 hr {
     display: block;
