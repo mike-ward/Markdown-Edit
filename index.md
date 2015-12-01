@@ -10,7 +10,7 @@ published: true
 ------------------------------------------------------------------------
 
 <div class="screenshot">
-<a href="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" target="_blank"><img src="http://mike-ward.net/cdn/images/markdown-edit/markdown-edit-screenshot.png" alt="Screen Shot"/></a>
+<a href="http://i.imgur.com/3zFELBl.png" target="_blank"><img src="http://i.imgur.com/3zFELBl.png" alt="Screen Shot"/></a>
 </div>
 
 ------------------------------------------------------------------------
