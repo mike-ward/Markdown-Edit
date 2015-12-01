@@ -70,7 +70,7 @@ Features
 
 *Markdown Edit's help has a more complete list of features/shortcuts*
 
-[More](http://mike-ward.net/markdownedit/)
+[Home Page](http://markdownedit.com)
 
 Requirements
 ------------
