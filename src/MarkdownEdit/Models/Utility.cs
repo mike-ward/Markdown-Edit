@@ -11,13 +11,12 @@ using System.Windows;
 using System.Windows.Media;
 using MarkdownEdit.Controls;
 using MarkdownEdit.i18n;
-using Microsoft.Win32;
 
 namespace MarkdownEdit.Models
 {
     public static class Utility
     {
-        public const string Version = "1.17";
+        public const string Version = "1.17.1";
 
         public static Func<TKey, TResult> Memoize<TKey, TResult>(this Func<TKey, TResult> func)
         {
