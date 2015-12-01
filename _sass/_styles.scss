@@ -67,6 +67,7 @@ code, tt {
   background-color: #f3f3f3;
   font-size: 85%;
   font-family: Consolas, Monaco, 'Andale Mono', 'Liberation Mono', Menlo, monospace;
+  color: black;
 }
 
 pre {
@@ -74,20 +75,11 @@ pre {
   overflow: auto;
   overflow-y: hidden;
   width: 97%;
-  padding: 6px 10px;
+  padding: 1em;
   white-space: pre;
-  line-height: 1;
-  font-size: 90%;
+  line-height: 1.1;
   font-family: Consolas, Monaco, 'Andale Mono', 'Liberation Mono', Menlo, monospace;
   overflow-x: auto;
-  word-wrap: normal;
-}
-
-pre code {
-  margin: 0;
-  padding: 0;
-  font-size: 90%;
-  background-color: transparent;
 }
 
 hr {
