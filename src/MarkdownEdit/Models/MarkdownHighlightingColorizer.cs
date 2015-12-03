@@ -103,7 +103,7 @@ namespace MarkdownEdit.Models
         private static IEnumerable<Block> EnumerateSpanningBlocks(Block ast, int startOffset, int endOffset)
         {
             return EnumerateBlocks(ast.FirstChild)
-                .Where(b => (b.SourcePosition + b.SourceLength) >= startOffset)
+                .Where(b => (b.SourcePosition + b.SourceLength) > startOffset)
                 .TakeWhile(b => b.SourcePosition < endOffset);
         }
 
