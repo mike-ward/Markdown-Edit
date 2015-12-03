@@ -25,6 +25,7 @@ namespace MarkdownEdit.Controls
         private bool _removeSpecialCharacters;
         private string _fileName;
         private string _displayName = string.Empty;
+        private MarkdownHighlightingColorizer _colorizer;
         private EditorState _editorState = new EditorState();
         private readonly Action<string> _executeAutoSaveLater;
         private readonly string _f1ForHelp = (string) Translate("editor-f1-for-help");
@@ -121,10 +122,10 @@ namespace MarkdownEdit.Controls
 
         private void SetupSyntaxHighlighting()
         {
-            var colorizer = new MarkdownHighlightingColorizer();
-            TextChanged += (s, e) => colorizer.OnTextChanged(Text);
-            ThemeChanged += (s, e) => colorizer.OnThemeChanged(e.Theme);
-            EditBox.TextArea.TextView.LineTransformers.Add(colorizer);
+            _colorizer = new MarkdownHighlightingColorizer();
+            TextChanged += (s, e) => _colorizer.OnTextChanged(Text);
+            ThemeChanged += (s, e) => _colorizer.OnThemeChanged(e.Theme);
+            EditBox.TextArea.TextView.LineTransformers.Add(_colorizer);
         }
 
         private void PasteSpecial() => IfNotReadOnly(() =>
@@ -145,7 +146,9 @@ namespace MarkdownEdit.Controls
             var text = (string) pasteEventArgs.SourceDataObject.GetData(DataFormats.UnicodeText, true);
             if (string.IsNullOrWhiteSpace(text)) return;
             if (_removeSpecialCharacters) text = text.ReplaceSmartChars();
-            else if (Uri.IsWellFormedUriString(text, UriKind.Absolute))
+            else if (Uri.IsWellFormedUriString(text, UriKind.Absolute)
+                && _colorizer != null
+                && _colorizer.PositionSafeForSmartLink(EditBox.SelectionStart, EditBox.SelectionLength))
             {
                 text = Images.IsImageUrl(text.TrimEnd())
                     ? $"![{EditBox.SelectedText}]({text})\n"
@@ -187,11 +190,10 @@ namespace MarkdownEdit.Controls
             }
         }
 
-
         private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)
         {
             var contextMenu = new ContextMenu();
-            SpellCheckSuggestions(contextMenu);
+            EditorSpellCheck.SpellCheckSuggestions(this, contextMenu);
 
             contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-undo"), Command = Undo, InputGestureText = "Ctrl+Z"});
             contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-redo"), Command = Redo, InputGestureText = "Ctrl+Y"});
@@ -211,8 +213,6 @@ namespace MarkdownEdit.Controls
         }
 
         // Spell Check
-
-        private void SpellCheckSuggestions(ContextMenu contextMenu) => EditorSpellCheck.SpellCheckSuggestions(this, contextMenu);
 
         private void ExecuteSpellCheckReplace(object sender, ExecutedRoutedEventArgs ea)
         {

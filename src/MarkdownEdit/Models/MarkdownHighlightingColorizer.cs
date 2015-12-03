@@ -103,7 +103,7 @@ namespace MarkdownEdit.Models
         private static IEnumerable<Block> EnumerateSpanningBlocks(Block ast, int startOffset, int endOffset)
         {
             return EnumerateBlocks(ast.FirstChild)
-                .Where(b => (b.SourcePosition + b.SourceLength) > startOffset)
+                .Where(b => (b.SourcePosition + b.SourceLength) >= startOffset)
                 .TakeWhile(b => b.SourcePosition < endOffset);
         }
 
@@ -245,6 +245,30 @@ namespace MarkdownEdit.Models
         private static string Normalize(string value)
         {
             return value.Replace('→', '\t').Replace('␣', ' ');
+        }
+
+        public bool PositionSafeForSmartLink(int start, int length)
+        {
+            var ast = _abstractSyntaxTree;
+            if (ast == null) return true;
+            var end = start + length;
+            var blockTags = new[] {BlockTag.FencedCode, BlockTag.HtmlBlock, BlockTag.IndentedCode, BlockTag.ReferenceDefinition};
+            var inlineTags = new[] {InlineTag.Code, InlineTag.Link, InlineTag.RawHtml, InlineTag.Image};
+
+            foreach (var block in EnumerateSpanningBlocks(ast, start, end))
+            {
+                if (blockTags.Any(tag => tag == block.Tag)) return false;
+
+                if (EnumerateInlines(block.InlineContent)
+                    .TakeWhile(il => il.SourcePosition < end)
+                    .Where(il => il.SourcePosition + il.SourceLength > start)
+                    .Any(il => inlineTags.Any(tag => tag == il.Tag)))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
