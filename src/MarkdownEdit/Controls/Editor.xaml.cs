@@ -145,7 +145,10 @@ namespace MarkdownEdit.Controls
         {
             var text = (string) pasteEventArgs.SourceDataObject.GetData(DataFormats.UnicodeText, true);
             if (string.IsNullOrWhiteSpace(text)) return;
-            if (_removeSpecialCharacters) text = text.ReplaceSmartChars();
+            if (_removeSpecialCharacters)
+            {
+                text = text.ReplaceSmartChars();
+            }
             else if (Uri.IsWellFormedUriString(text, UriKind.Absolute)
                 && _colorizer != null
                 && _colorizer.PositionSafeForSmartLink(EditBox.SelectionStart, EditBox.SelectionLength))
@@ -154,7 +157,10 @@ namespace MarkdownEdit.Controls
                     ? $"![{EditBox.SelectedText}]({text})\n"
                     : string.IsNullOrEmpty(EditBox.SelectedText) ? $"<{text}>" : $"[{EditBox.SelectedText}]({text})";
             }
-            else return;
+            else
+            {
+                return;
+            }
 
             var dataObject = new DataObject();
             dataObject.SetData(DataFormats.UnicodeText, text);
