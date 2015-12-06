@@ -83,8 +83,13 @@ namespace MarkdownEdit.Models
             var foregroundBrush = ColorBrush(highlight.Foreground);
             if (foregroundBrush != null) trp.SetForegroundBrush(foregroundBrush);
 
-            var backgroundBrush = ColorBrush(highlight.Background);
-            if (backgroundBrush != null) trp.SetBackgroundBrush(backgroundBrush);
+            // Block background highlighting handled by BlockBackgroundRenderer
+            // Otherwise selection highlight does not work as expected
+            if (!highlight.Name.Contains("Block"))
+            {
+                var backgroundBrush = ColorBrush(highlight.Background);
+                if (backgroundBrush != null) trp.SetBackgroundBrush(backgroundBrush);
+            }
 
             if (!string.IsNullOrWhiteSpace(highlight.FontWeight) || !string.IsNullOrWhiteSpace(highlight.FontStyle))
             {

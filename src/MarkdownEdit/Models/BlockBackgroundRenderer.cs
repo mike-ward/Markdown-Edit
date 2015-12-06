@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Windows;
 using System.Windows.Media;
 using CommonMark.Syntax;
@@ -10,7 +11,6 @@ namespace MarkdownEdit.Models
 {
     public class BlockBackgroundRenderer : IBackgroundRenderer
     {
-        private static readonly Pen Pen;
         private Block _abstractSyntaxTree;
         private readonly Dictionary<BlockTag, Brush> _brushes = new Dictionary<BlockTag, Brush>();
 
@@ -24,14 +24,6 @@ namespace MarkdownEdit.Models
             BlockTag.BlockQuote
         };
 
-        static BlockBackgroundRenderer()
-        {
-            var blackBrush = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-            blackBrush.Freeze();
-            Pen = new Pen(blackBrush, 0.0);
-            Pen.Freeze();
-        }
-
         public KnownLayer Layer => KnownLayer.Background;
 
         public void Draw(TextView textView, DrawingContext drawingContext)
@@ -41,7 +33,7 @@ namespace MarkdownEdit.Models
 
             foreach (var line in textView.VisualLines)
             {
-                var rc = BackgroundGeometryBuilder.GetRectsFromVisualSegment(textView, line, 0, 1).FirstOrDefault();
+                var rc = BackgroundGeometryBuilder.GetRectsFromVisualSegment(textView, line, 0, 1000).FirstOrDefault();
                 if (rc == default(Rect)) continue;
 
                 foreach (var block in AbstractSyntaxTree.EnumerateBlocks(ast.FirstChild))
@@ -49,12 +41,23 @@ namespace MarkdownEdit.Models
                     if (block.SourcePosition + block.SourceLength <= line.StartOffset) continue;
                     if (block.SourcePosition > line.LastDocumentLine.EndOffset) break;
 
+                    // Indented code does not terminate (at least in the AST) until a new
+                    // block is encountered. Thus blank lines at the end of the block are
+                    // highlighted. It looks much better if they're not highlighted.
+                    if (block.Tag == BlockTag.IndentedCode)
+                    {
+                        var length = block.SourcePosition + block.SourceLength - line.StartOffset;
+                        if (line.StartOffset + length > textView.Document.TextLength) break;
+                        var remainder = textView.Document.GetText(line.StartOffset, length);
+                        if (string.IsNullOrWhiteSpace(remainder)) break;
+                    }
+
                     if (_blockTags.Any(tag => tag == block.Tag))
                     {
                         Brush brush;
-                        if (_brushes.TryGetValue(block.Tag, out brush))
+                        if (_brushes.TryGetValue(block.Tag, out brush) && brush != null)
                         {
-                            drawingContext.DrawRectangle(brush, Pen, new Rect(0, rc.Top, textView.ActualWidth, rc.Height));
+                            drawingContext.DrawRectangle(brush, null, new Rect(0, rc.Top, textView.ActualWidth, rc.Height));
                         }
                     }
                     break;
@@ -88,7 +91,7 @@ namespace MarkdownEdit.Models
             try
             {
                 // ReSharper disable once PossibleNullReferenceException
-                var brush = new SolidColorBrush((Color) ColorConverter.ConvertFromString(color));
+                var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
                 brush.Freeze();
                 return brush;
             }
