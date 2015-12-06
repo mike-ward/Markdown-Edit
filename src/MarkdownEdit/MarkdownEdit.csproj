@@ -152,6 +152,8 @@
     <Compile Include="MarkdownConverters\CustomMarkdownConverter.cs" />
     <Compile Include="MarkdownConverters\GitHubMarkdownConverter.cs" />
     <Compile Include="MarkdownConverters\IMarkdownConverter.cs" />
+    <Compile Include="Models\AbstractSyntaxTree.cs" />
+    <Compile Include="Models\BlockBackgroundRenderer.cs" />
     <Compile Include="Models\EditorSpellCheck.cs" />
     <Compile Include="Models\EditorUtilities.cs" />
     <Compile Include="Models\EditorState.cs" />

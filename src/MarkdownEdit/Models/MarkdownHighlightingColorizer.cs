@@ -1,49 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using CommonMark;
 using CommonMark.Syntax;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
+using static MarkdownEdit.Models.AbstractSyntaxTree;
 
 namespace MarkdownEdit.Models
 {
     public class MarkdownHighlightingColorizer : DocumentColorizingTransformer
     {
-        private readonly CommonMarkSettings _commonMarkSettings;
         private Block _abstractSyntaxTree;
         private Theme _theme;
-
-        public MarkdownHighlightingColorizer()
-        {
-            _commonMarkSettings = CommonMarkSettings.Default.Clone();
-            _commonMarkSettings.TrackSourcePosition = true;
-        }
-
-        private static readonly Dictionary<BlockTag, Func<Theme, Highlight>> BlockHighlighter = new Dictionary<BlockTag, Func<Theme, Highlight>>
-        {
-            {BlockTag.AtxHeader, t => t.HighlightHeading},
-            {BlockTag.SETextHeader, t => t.HighlightHeading},
-            {BlockTag.BlockQuote, t => t.HighlightBlockQuote},
-            {BlockTag.ListItem, t => t.HighlightStrongEmphasis},
-            {BlockTag.FencedCode, t => t.HighlightBlockCode},
-            {BlockTag.IndentedCode, t => t.HighlightBlockCode},
-            {BlockTag.HtmlBlock, t => t.HighlightBlockCode},
-            {BlockTag.ReferenceDefinition, t => t.HighlightLink}
-        };
-
-        private static readonly Dictionary<InlineTag, Func<Theme, Highlight>> InlineHighlighter = new Dictionary<InlineTag, Func<Theme, Highlight>>
-        {
-            {InlineTag.Code, t => t.HighlightInlineCode},
-            {InlineTag.Emphasis, t => t.HighlightEmphasis},
-            {InlineTag.Strong, t => t.HighlightStrongEmphasis},
-            {InlineTag.Link, t => t.HighlightLink},
-            {InlineTag.Image, t => t.HighlightImage},
-            {InlineTag.RawHtml, t => t.HighlightBlockCode}
-        };
 
         protected override void ColorizeLine(DocumentLine line)
         {
@@ -98,72 +67,6 @@ namespace MarkdownEdit.Models
                     ApplyLinePart(highlighter(theme), position, length, start, end, leadingSpaces, double.NaN);
                 }
             }
-        }
-
-        private static IEnumerable<Block> EnumerateSpanningBlocks(Block ast, int startOffset, int endOffset)
-        {
-            return EnumerateBlocks(ast.FirstChild)
-                .Where(b => (b.SourcePosition + b.SourceLength) > startOffset)
-                .TakeWhile(b => b.SourcePosition < endOffset);
-        }
-
-        private static IEnumerable<Block> EnumerateBlocks(Block block)
-        {
-            if (block == null) yield break;
-            var stack = new Stack<Block>();
-            stack.Push(block);
-            while (stack.Any())
-            {
-                var next = stack.Pop();
-                yield return next;
-                if (next.NextSibling != null) stack.Push(next.NextSibling);
-                if (next.FirstChild != null) stack.Push(next.FirstChild);
-            }
-        }
-
-        private static IEnumerable<Inline> EnumerateInlines(Inline inline)
-        {
-            if (inline == null) yield break;
-            var stack = new Stack<Inline>();
-            stack.Push(inline);
-            while (stack.Any())
-            {
-                var next = stack.Pop();
-                yield return next;
-                if (next.NextSibling != null) stack.Push(next.NextSibling);
-                if (next.FirstChild != null) stack.Push(next.FirstChild);
-            }
-        }
-
-        public bool PositionSafeForSmartLink(int start, int length)
-        {
-            var ast = _abstractSyntaxTree;
-            if (ast == null) return true;
-            var end = start + length;
-            var blockTags = new[] {BlockTag.FencedCode, BlockTag.HtmlBlock, BlockTag.IndentedCode, BlockTag.ReferenceDefinition};
-            var inlineTags = new[] {InlineTag.Code, InlineTag.Link, InlineTag.RawHtml, InlineTag.Image};
-            var lastBlockTag = BlockTag.Document;
-
-            foreach (var block in EnumerateBlocks(ast.FirstChild))
-            {
-                if (block.SourcePosition + block.SourceLength < start)
-                {
-                    lastBlockTag = block.Tag;
-                    continue;
-                }
-
-                if (block.SourcePosition >= end) return !blockTags.Any(tag => tag == lastBlockTag);
-                if (blockTags.Any(tag => tag == block.Tag)) return false;
-
-                if (EnumerateInlines(block.InlineContent)
-                    .TakeWhile(il => il.SourcePosition < end)
-                    .Where(il => il.SourcePosition + il.SourceLength > start)
-                    .Any(il => inlineTags.Any(tag => tag == il.Tag)))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         private void ApplyLinePart(Highlight highlight, int sourceStart, int sourceLength, int lineStart, int lineEnd, int leadingSpaces, double magnify)
@@ -252,30 +155,14 @@ namespace MarkdownEdit.Models
             }
         }
 
-        public void OnTextChanged(string text)
+        public void UpdateAbstractSyntaxTree(Block ast)
         {
-            var ast = ParseDocument(text);
             _abstractSyntaxTree = ast;
         }
 
         public void OnThemeChanged(Theme theme)
         {
             _theme = theme;
-        }
-
-        private Block ParseDocument(string text)
-        {
-            using (var reader = new StringReader(Normalize(text)))
-            {
-                var ast = CommonMarkConverter.ProcessStage1(reader, _commonMarkSettings);
-                CommonMarkConverter.ProcessStage2(ast, _commonMarkSettings);
-                return ast;
-            }
-        }
-
-        private static string Normalize(string value)
-        {
-            return value.Replace('→', '\t').Replace('␣', ' ');
         }
     }
 }

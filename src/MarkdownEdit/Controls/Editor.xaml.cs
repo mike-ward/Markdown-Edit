@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using CommonMark.Syntax;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using MarkdownEdit.Commands;
@@ -16,6 +17,7 @@ using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
 using static System.Windows.Input.ApplicationCommands;
 using static MarkdownEdit.i18n.TranslationProvider;
+using static MarkdownEdit.Models.AbstractSyntaxTree;
 
 namespace MarkdownEdit.Controls
 {
@@ -24,8 +26,8 @@ namespace MarkdownEdit.Controls
         private bool _isModified;
         private bool _removeSpecialCharacters;
         private string _fileName;
+        private Block _abstractSyntaxTree;
         private string _displayName = string.Empty;
-        private MarkdownHighlightingColorizer _colorizer;
         private EditorState _editorState = new EditorState();
         private readonly Action<string> _executeAutoSaveLater;
         private readonly string _f1ForHelp = (string) Translate("editor-f1-for-help");
@@ -122,10 +124,22 @@ namespace MarkdownEdit.Controls
 
         private void SetupSyntaxHighlighting()
         {
-            _colorizer = new MarkdownHighlightingColorizer();
-            TextChanged += (s, e) => _colorizer.OnTextChanged(Text);
-            ThemeChanged += (s, e) => _colorizer.OnThemeChanged(e.Theme);
-            EditBox.TextArea.TextView.LineTransformers.Add(_colorizer);
+            var colorizer = new MarkdownHighlightingColorizer();
+            var blockBackgroundRenderer = new BlockBackgroundRenderer();
+
+            TextChanged += (s, e) =>
+            {
+                _abstractSyntaxTree = Markdown.GenerateAbstractSyntaxTree(Text);
+                colorizer.UpdateAbstractSyntaxTree(_abstractSyntaxTree);
+                blockBackgroundRenderer.UpdateAbstractSyntaxTree(_abstractSyntaxTree);
+            };
+            ThemeChanged += (s, e) =>
+            {
+                colorizer.OnThemeChanged(e.Theme);
+                blockBackgroundRenderer.OnThemeChanged(e.Theme);
+            };
+            EditBox.TextArea.TextView.LineTransformers.Add(colorizer);
+            EditBox.TextArea.TextView.BackgroundRenderers.Add(blockBackgroundRenderer);
         }
 
         private void PasteSpecial() => IfNotReadOnly(() =>
@@ -150,8 +164,7 @@ namespace MarkdownEdit.Controls
                 text = text.ReplaceSmartChars();
             }
             else if (Uri.IsWellFormedUriString(text, UriKind.Absolute)
-                && _colorizer != null
-                && _colorizer.PositionSafeForSmartLink(EditBox.SelectionStart, EditBox.SelectionLength))
+                && PositionSafeForSmartLink(_abstractSyntaxTree, EditBox.SelectionStart, EditBox.SelectionLength))
             {
                 text = Images.IsImageUrl(text.TrimEnd())
                     ? $"![{EditBox.SelectedText}]({text})\n"

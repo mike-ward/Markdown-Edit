@@ -4,18 +4,28 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
+using CommonMark;
+using CommonMark.Syntax;
 using HtmlAgilityPack;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Properties;
 using static System.String;
+using CommonMarkConverter = MarkdownEdit.MarkdownConverters.CommonMarkConverter;
 
 namespace MarkdownEdit.Models
 {
     public static class Markdown
     {
+        private static readonly CommonMarkSettings CommonMarkSettings;
         private static readonly IMarkdownConverter CommonMarkConverter = new CommonMarkConverter();
         private static readonly IMarkdownConverter GitHubMarkdownConverter = new GitHubMarkdownConverter();
         private static readonly IMarkdownConverter CustomMarkdownConverter = new CustomMarkdownConverter();
+
+        static Markdown()
+        {
+            CommonMarkSettings = CommonMarkSettings.Default.Clone();
+            CommonMarkSettings.TrackSourcePosition = true;
+        }
 
         public static string Wrap(string text) => Reformat(text);
 
@@ -38,10 +48,10 @@ namespace MarkdownEdit.Models
 
         public static string FromMicrosoftWord(string path) => Pandoc(null, $"-f docx -t {MarkdownFormat} \"{path}\"");
 
-        public static string ToMicrosoftWord(string markdown, string path) => 
+        public static string ToMicrosoftWord(string markdown, string path) =>
             Pandoc(ResolveImageUrls(ToHtml(markdown)), $"-f html -t docx -o \"{path}\"");
 
-        public static byte[] HtmlToPdf(string html) => 
+        public static byte[] HtmlToPdf(string html) =>
             new NReco.PdfGenerator.HtmlToPdfConverter().GeneratePdf(ResolveImageUrls(html));
 
         public static string Pandoc(string text, string args)
@@ -103,7 +113,7 @@ namespace MarkdownEdit.Models
 
         public static Tuple<string, string> SeperateFrontMatter(string text)
         {
-            if (Regex.IsMatch(text, @"^---\s*$", RegexOptions.Multiline))
+            if (Regex.IsMatch(text, @"^---\s*"))
             {
                 var matches = Regex.Matches(text, @"^(?:---)|(?:\.\.\.)\s*$", RegexOptions.Multiline);
                 if (matches.Count < 2) return Tuple.Create(Empty, text);
@@ -151,6 +161,21 @@ namespace MarkdownEdit.Models
             }
 
             return modified ? doc.DocumentNode.WriteTo() : html;
+        }
+
+        public static Block GenerateAbstractSyntaxTree(string text)
+        {
+            using (var reader = new StringReader(Normalize(text)))
+            {
+                var ast = CommonMark.CommonMarkConverter.ProcessStage1(reader, CommonMarkSettings);
+                CommonMark.CommonMarkConverter.ProcessStage2(ast, CommonMarkSettings);
+                return ast;
+            }
+        }
+
+        private static string Normalize(string value)
+        {
+            return value.Replace('→', '\t').Replace('␣', ' ');
         }
     }
 }
