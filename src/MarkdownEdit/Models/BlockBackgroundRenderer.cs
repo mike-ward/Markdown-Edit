@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Windows;
 using System.Windows.Media;
 using CommonMark.Syntax;
@@ -60,7 +59,6 @@ namespace MarkdownEdit.Models
                             drawingContext.DrawRectangle(brush, null, new Rect(0, rc.Top, textView.ActualWidth, rc.Height));
                         }
                     }
-                    break;
                 }
             }
         }
@@ -91,7 +89,7 @@ namespace MarkdownEdit.Models
             try
             {
                 // ReSharper disable once PossibleNullReferenceException
-                var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                var brush = new SolidColorBrush((Color) ColorConverter.ConvertFromString(color));
                 brush.Freeze();
                 return brush;
             }
