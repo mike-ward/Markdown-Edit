@@ -56,7 +56,7 @@ namespace MarkdownEdit.Models
                         Brush brush;
                         if (_brushes.TryGetValue(block.Tag, out brush) && brush != null)
                         {
-                            drawingContext.DrawRectangle(brush, null, new Rect(0, rc.Top, textView.ActualWidth, rc.Height));
+                            drawingContext.DrawRectangle(brush, null, new Rect(0, rc.Top, textView.ActualWidth, line.Height));
                         }
                     }
                 }
