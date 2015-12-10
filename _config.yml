@@ -35,8 +35,8 @@ links:
     url: /blog
   - title: About
     url: /about
-  - title: Bugs
-    url: https://github.com/mike-ward/Markdown-Edit/issues/
+  - title: Forum
+    url: https://muut.com/makrdown-edit
     external: true
   - title: Github
     url: https://github.com/mike-ward/Markdown-Edit/
