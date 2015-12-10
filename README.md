@@ -71,8 +71,8 @@ Features
 *Markdown Edit's help has a more complete list of features/shortcuts*
 
 [Home Page](http://markdownedit.com)
-
-Requirements
+ 
+Requirements 
 ------------
 
 -   Windows 7+
