@@ -26,7 +26,7 @@ tools:
 # Links to include in top navigation
 # For external links add external: true
 links:
-  - title: "Download <img src=https://img.shields.io/github/release/mike-ward/markdown-edit.svg?style=flat-square alt='' />"
+  - title: "Download<br/><img src=https://img.shields.io/github/release/mike-ward/markdown-edit.svg?style=flat-square alt='' />"
     url: https://github.com/mike-ward/Markdown-Edit/releases/download/v1.18/MarkdownEditSetup.msi
     external: true
   - title: Features
