@@ -7,7 +7,7 @@ status](https://ci.appveyor.com/api/projects/status/bqawxp5t4615y25s?svg=true)](
 https://gitter.im/mike-ward/Markdown-Edit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/mike-ward/Markdown-Edit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/mike-ward/Markdown-Edit.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
 
-[![Release](https://img.shields.io/github/release/mike-ward/markdown-edit.svg?style=flat-square)](https://github.com/mike-ward/mike-ward/releases/latest)
+[![Release](https://img.shields.io/github/release/mike-ward/Markdown-Edit.svg?style=flat-square)](https://github.com/mike-ward/Markdown-Edit/releases/latest)
 [![GitHub issues](https://img.shields.io/github/issues/mike-ward/Markdown-Edit.svg)](https://github.com/mike-ward/Markdown-Edit/issues)
 [![GitHub forks](https://img.shields.io/github/forks/mike-ward/Markdown-Edit.svg)](https://github.com/mike-ward/Markdown-Edit/network)
 [![GitHub stars](https://img.shields.io/github/stars/mike-ward/Markdown-Edit.svg)](https://github.com/mike-ward/Markdown-Edit/stargazers)
