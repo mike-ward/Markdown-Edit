@@ -84,7 +84,13 @@ namespace MarkdownEdit.Models
 
         private static string MarkdownFormat => App.UserSettings.GitHubMarkdown
             ? "markdown_github"
-            : "markdown_strict+fenced_code_blocks+backtick_code_blocks+intraword_underscores+strikeout+tex_math_dollars";
+            : "markdown_strict" +
+                "+fenced_code_blocks" +
+                "+backtick_code_blocks" +
+                "+intraword_underscores" +
+                "+strikeout" +
+                "+tex_math_dollars" +
+                "+pipe_tables";
 
         private static string Reformat(string text, string options = "")
         {
@@ -122,6 +128,17 @@ namespace MarkdownEdit.Models
                 while (index < text.Length && char.IsWhiteSpace(text[index])) index += 1;
                 return Tuple.Create(text.Substring(0, index), text.Substring(index));
             }
+
+            // Hack for non-standard front-matter
+            const string formatHack = @"^<\!--\s*MDE formating start\s*-->\s*$";
+            if (Regex.IsMatch(text, formatHack, RegexOptions.Multiline))
+            {
+                var match = Regex.Match(text, formatHack, RegexOptions.Multiline);
+                var index = match.Index + match.Groups[0].Value.Length + 1;
+                while (index < text.Length && char.IsWhiteSpace(text[index])) index += 1;
+                return Tuple.Create(text.Substring(0, index), text.Substring(index));
+            }
+
             return Tuple.Create(Empty, text);
         }
 
