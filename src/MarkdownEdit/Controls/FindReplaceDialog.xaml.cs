@@ -150,7 +150,11 @@ namespace MarkdownEdit.Controls
 
         private void TxtFindOnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter) FindNextButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            if (e.Key == Key.Enter)
+            {
+                FindNextButton.Focus();
+                FindNextButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
