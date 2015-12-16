@@ -128,15 +128,17 @@ namespace MarkdownEdit.Models
                 while (index < text.Length && char.IsWhiteSpace(text[index])) index += 1;
                 return Tuple.Create(text.Substring(0, index), text.Substring(index));
             }
-
-            // Hack for non-standard front-matter
-            const string formatHack = @"^<\!--\s*MDE formating start\s*-->\s*$";
-            if (Regex.IsMatch(text, formatHack, RegexOptions.Multiline))
+            else
             {
+                // Hack for non-standard front-matter
+                const string formatHack = @"^<\!--\s*MDE\s*-->\s*$";
                 var match = Regex.Match(text, formatHack, RegexOptions.Multiline);
-                var index = match.Index + match.Groups[0].Value.Length + 1;
-                while (index < text.Length && char.IsWhiteSpace(text[index])) index += 1;
-                return Tuple.Create(text.Substring(0, index), text.Substring(index));
+                if (match.Success)
+                {
+                    var index = match.Index + match.Groups[0].Value.Length + 1;
+                    while (index < text.Length && char.IsWhiteSpace(text[index])) index += 1;
+                    return Tuple.Create(text.Substring(0, index), text.Substring(index));
+                }
             }
 
             return Tuple.Create(Empty, text);
