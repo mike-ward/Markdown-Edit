@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -66,8 +67,15 @@ namespace MarkdownEdit.SpellCheck
 
         private void LoadCustomDictonary(Hunspell speller)
         {
-            var file = CustomDictionaryFile();
-            foreach (var word in File.ReadAllLines(file)) speller.Add(word);
+            try
+            {
+                var file = CustomDictionaryFile();
+                foreach (var word in File.ReadAllLines(file)) speller.Add(word);
+            }
+            catch (Exception ex)
+            {
+                Utility.ShowParseError(ex, CustomDictionaryFile());
+            }
         }
 
         public string CustomDictionaryFile()
@@ -92,7 +100,7 @@ namespace MarkdownEdit.SpellCheck
         private void UpdateCustomDictionary(string word)
         {
             var file = CustomDictionaryFile();
-            File.AppendAllLines(file, new[] { word });
+            File.AppendAllLines(file, new[] {word});
         }
     }
 }
