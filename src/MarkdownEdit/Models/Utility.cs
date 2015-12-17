@@ -103,7 +103,7 @@ namespace MarkdownEdit.Models
             return foundElement;
         }
 
-        public static void ShowParseError(Exception ex, string file)
+        public static void ShowFileError(Exception ex, string file)
         {
             Application.Current.Dispatcher.Invoke(() =>
                 Application.Current.MainWindow != null

@@ -232,7 +232,7 @@ namespace MarkdownEdit.Models
             }
             catch (Exception ex)
             {
-                Utility.ShowParseError(ex, SettingsFile);
+                Utility.ShowFileError(ex, SettingsFile);
                 return null;
             }
         }

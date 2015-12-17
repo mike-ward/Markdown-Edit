@@ -46,7 +46,7 @@ namespace MarkdownEdit.Controls
             }
             catch (Exception ex)
             {
-                Utility.ShowParseError(ex, file);
+                Utility.ShowFileError(ex, file);
                 return null;
             }
         }

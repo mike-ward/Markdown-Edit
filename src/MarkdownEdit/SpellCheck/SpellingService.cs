@@ -45,23 +45,30 @@ namespace MarkdownEdit.SpellCheck
 
         private void SetLanguage(string language)
         {
-            ClearLanguage();
-            var speller = new Hunspell();
-            var path = SpellCheckFolder();
-
-            var aff = Path.Combine(path, language + ".aff");
-            var dic = Path.Combine(path, language + ".dic");
-
-            if (File.Exists(aff) && File.Exists(dic))
+            try
             {
-                speller.Load(aff, dic);
-                LoadCustomDictonary(speller);
-                _speller = speller;
-                _language = language;
+                ClearLanguage();
+                var speller = new Hunspell();
+                var path = SpellCheckFolder();
+
+                var aff = Path.Combine(path, language + ".aff");
+                var dic = Path.Combine(path, language + ".dic");
+
+                if (File.Exists(aff) && File.Exists(dic))
+                {
+                    speller.Load(aff, dic);
+                    LoadCustomDictonary(speller);
+                    _speller = speller;
+                    _language = language;
+                }
+                else
+                {
+                    MessageBox.Show(Application.Current.MainWindow, language + " dictionary not found", App.Title, MessageBoxButton.OK);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show(Application.Current.MainWindow, language + " dictionary not found", App.Title, MessageBoxButton.OK);
+                Utility.ShowFileError(ex, string.IsNullOrWhiteSpace(language) ? "unspecified" : language + ".aff/dic");
             }
         }
 
@@ -74,7 +81,7 @@ namespace MarkdownEdit.SpellCheck
             }
             catch (Exception ex)
             {
-                Utility.ShowParseError(ex, CustomDictionaryFile());
+                Utility.ShowFileError(ex, "Custom Dictionary file (loading)");
             }
         }
 
@@ -99,8 +106,15 @@ namespace MarkdownEdit.SpellCheck
 
         private void UpdateCustomDictionary(string word)
         {
-            var file = CustomDictionaryFile();
-            File.AppendAllLines(file, new[] {word});
+            try
+            {
+                var file = CustomDictionaryFile();
+                File.AppendAllLines(file, new[] {word});
+            }
+            catch (Exception ex)
+            {
+                Utility.ShowFileError(ex, "Custom Dictionary file (updating)");
+            }
         }
     }
 }
