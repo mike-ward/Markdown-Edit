@@ -65,9 +65,9 @@ namespace MarkdownEdit.Controls
                 WordCount = div.innerText.WordCount();
                 EmitFirePreviewUpdatedEvent();
             }
-            catch (CommonMarkException e)
+            catch (CommonMarkException ex)
             {
-                MessageBox.Show(e.ToString(), App.Title);
+                Utility.Alert(ex.ToString());
             }
         }
 

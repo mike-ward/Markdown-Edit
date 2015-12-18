@@ -77,9 +77,9 @@ namespace MarkdownEdit.Models
                 editor.FileName = filename;
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                MessageBox.Show(e.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                Utility.Alert($"{ex.Message} {file}");
                 return false;
             }
         }
@@ -92,11 +92,7 @@ namespace MarkdownEdit.Models
         {
             if (editor.IsModified == false) return true;
 
-            var result = MessageBox.Show(
-                @"Save your changes?",
-                App.Title,
-                MessageBoxButton.YesNoCancel,
-                MessageBoxImage.Question);
+            var result = Utility.Confirm("Save your changes?");
 
             return (result == MessageBoxResult.Yes)
                 ? SaveFile(editor)
@@ -168,9 +164,9 @@ namespace MarkdownEdit.Models
                 editor.IsModified = false;
                 return true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                MessageBox.Show(e.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                Utility.Alert(ex.Message);
                 return false;
             }
         }
@@ -209,7 +205,7 @@ namespace MarkdownEdit.Models
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                Utility.Alert(ex.Message);
             }
         }
 

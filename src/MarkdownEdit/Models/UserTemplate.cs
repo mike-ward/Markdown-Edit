@@ -46,7 +46,7 @@ namespace MarkdownEdit.Models
             }
             catch (Exception ex)
             {
-                MessageBox.Show(Application.Current.MainWindow, ex.Message, App.Title, MessageBoxButton.OK);
+                Utility.Alert(ex.Message);
                 return content;
             }
         }

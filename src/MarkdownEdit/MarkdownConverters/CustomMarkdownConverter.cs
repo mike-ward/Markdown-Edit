@@ -26,7 +26,7 @@ namespace MarkdownEdit.MarkdownConverters
             {
                 if (process == null)
                 {
-                    MessageBox.Show($"Error starting {fileName}", App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    Utility.Alert($"Error starting {fileName}");
                     return text;
                 }
                 if (text != null)

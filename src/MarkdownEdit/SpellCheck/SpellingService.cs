@@ -63,12 +63,12 @@ namespace MarkdownEdit.SpellCheck
                 }
                 else
                 {
-                    MessageBox.Show(Application.Current.MainWindow, language + " dictionary not found", App.Title, MessageBoxButton.OK);
+                    Utility.Alert(language + " dictionary not found");
                 }
             }
             catch (Exception ex)
             {
-                Utility.ShowFileError(ex, string.IsNullOrWhiteSpace(language) ? "unspecified" : language + ".aff/dic");
+                Utility.Alert($"{ex.Message} in {language ?? "null"} file");
             }
         }
 
@@ -81,7 +81,7 @@ namespace MarkdownEdit.SpellCheck
             }
             catch (Exception ex)
             {
-                Utility.ShowFileError(ex, "Custom Dictionary file (loading)");
+                Utility.Alert($"{ex.Message} while loading custom dictionary");
             }
         }
 
@@ -113,7 +113,7 @@ namespace MarkdownEdit.SpellCheck
             }
             catch (Exception ex)
             {
-                Utility.ShowFileError(ex, "Custom Dictionary file (updating)");
+                Utility.Alert($"{ex.Message} while updating custom dictionary");
             }
         }
     }

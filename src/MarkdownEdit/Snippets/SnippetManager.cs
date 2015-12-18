@@ -82,7 +82,7 @@ namespace MarkdownEdit.Snippets
             }
             catch (Exception ex)
             {
-                Utility.ShowFileError(ex, SnippetFile());
+                Utility.Alert($"{ex.Message} in {SnippetFile()}");
             }
         }
 

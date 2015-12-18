@@ -11,6 +11,7 @@ using System.Windows.Data;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Rendering;
 using MarkdownEdit.ImageUpload;
+using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
 {
@@ -82,7 +83,7 @@ namespace MarkdownEdit.Controls
                 catch (Exception ex)
                 {
                     Close();
-                    MessageBox.Show(Application.Current.MainWindow, ex.Message, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    Utility.Alert(ex.Message);
                     return;
                 }
             }
@@ -101,7 +102,7 @@ namespace MarkdownEdit.Controls
 
             Close();
             if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
-            else MessageBox.Show(Application.Current.MainWindow, link, App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+            else Utility.Alert(link);
         }
 
         private void OnCancel(object sender, RoutedEventArgs e)

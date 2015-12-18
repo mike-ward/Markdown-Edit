@@ -62,7 +62,7 @@ namespace MarkdownEdit.Models
             {
                 if (process == null)
                 {
-                    MessageBox.Show("Error starting Pandoc", App.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    Utility.Alert("Error starting Pandoc");
                     return text;
                 }
                 if (text != null)

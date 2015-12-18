@@ -103,22 +103,19 @@ namespace MarkdownEdit.Models
             return foundElement;
         }
 
-        public static void ShowFileError(Exception ex, string file)
+        // public static void Notify(string message) => Show(message, MessageBoxButton.OK, MessageBoxImage.Information);
+
+        public static void Alert(string text) => Show(text, MessageBoxButton.OK, MessageBoxImage.Error);
+
+        public static MessageBoxResult Confirm(string question) => Show(question, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+        private static MessageBoxResult Show(string message, MessageBoxButton button, MessageBoxImage image)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-                Application.Current.MainWindow != null
-                    ? MessageBox.Show(
-                        Application.Current.MainWindow,
-                        $"{ex.Message} in {file}",
-                        App.Title,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error)
-                    : MessageBox.Show(
-                        $"{ex.Message} in {file}",
-                        App.Title,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error)
-                );
+            var text = message ?? "unspecified";
+
+            return Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow != null
+                ? MessageBox.Show(Application.Current.MainWindow, text, App.Title, button, image)
+                : MessageBox.Show(text, App.Title, button, image));
         }
 
         public static async Task<bool> IsCurrentVersion()
