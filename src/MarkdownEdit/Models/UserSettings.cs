@@ -225,10 +225,12 @@ namespace MarkdownEdit.Models
         {
             try
             {
-                if (File.Exists(SettingsFile)) return JsonConvert.DeserializeObject<UserSettings>(SettingsFile.ReadAllText());
-                var defaultSettings = new UserSettings {Theme = new Theme()};
-                defaultSettings.Save();
-                return JsonConvert.DeserializeObject<UserSettings>(SettingsFile.ReadAllText());
+                if (File.Exists(SettingsFile) == false)
+                {
+                    var defaultSettings = new UserSettings {Theme = new Theme()};
+                    defaultSettings.Save();
+                }
+                return JsonConvert.DeserializeObject<UserSettings>(SettingsFile.ReadAllTextRetry());
             }
             catch (Exception ex)
             {
@@ -264,30 +266,30 @@ namespace MarkdownEdit.Models
         public override int GetHashCode()
         {
             return 17
-                ^ EditorFontFamily.GetHashCode()
-                ^ EditorFontSize.GetHashCode()
-                ^ EditorHighlightCurrentLine.GetHashCode()
-                ^ EditorOpenLastCursorPosition.GetHashCode()
-                ^ EditorOpenLastFile.GetHashCode()
-                ^ EditorShowEndOfLine.GetHashCode()
-                ^ EditorShowLineNumbers.GetHashCode()
-                ^ EditorShowSpaces.GetHashCode()
-                ^ EditorShowTabs.GetHashCode()
-                ^ EditorVerticalScrollBarVisible.GetHashCode()
-                ^ SynchronizeScrollPositions.GetHashCode()
-                ^ SpellCheckDictionary.GetHashCode()
-                ^ SpellCheckIgnoreCodeBlocks.GetHashCode()
-                ^ SpellCheckIgnoreMarkupTags.GetHashCode()
-                ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
-                ^ IgnoreYaml.GetHashCode()
-                ^ IgnoreTaskbarOnMaximize.GetHashCode()
-                ^ FormatOnSave.GetHashCode()
-                ^ GitHubMarkdown.GetHashCode()
-                ^ Theme.GetHashCode()
-                ^ SinglePaneMargin.GetHashCode()
-                ^ LineEnding.GetHashCode()
-                ^ CustomMarkdownConverter.GetHashCode()
-                ^ UseDefaultEditor.GetHashCode();
+                   ^ EditorFontFamily.GetHashCode()
+                   ^ EditorFontSize.GetHashCode()
+                   ^ EditorHighlightCurrentLine.GetHashCode()
+                   ^ EditorOpenLastCursorPosition.GetHashCode()
+                   ^ EditorOpenLastFile.GetHashCode()
+                   ^ EditorShowEndOfLine.GetHashCode()
+                   ^ EditorShowLineNumbers.GetHashCode()
+                   ^ EditorShowSpaces.GetHashCode()
+                   ^ EditorShowTabs.GetHashCode()
+                   ^ EditorVerticalScrollBarVisible.GetHashCode()
+                   ^ SynchronizeScrollPositions.GetHashCode()
+                   ^ SpellCheckDictionary.GetHashCode()
+                   ^ SpellCheckIgnoreCodeBlocks.GetHashCode()
+                   ^ SpellCheckIgnoreMarkupTags.GetHashCode()
+                   ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
+                   ^ IgnoreYaml.GetHashCode()
+                   ^ IgnoreTaskbarOnMaximize.GetHashCode()
+                   ^ FormatOnSave.GetHashCode()
+                   ^ GitHubMarkdown.GetHashCode()
+                   ^ Theme.GetHashCode()
+                   ^ SinglePaneMargin.GetHashCode()
+                   ^ LineEnding.GetHashCode()
+                   ^ CustomMarkdownConverter.GetHashCode()
+                   ^ UseDefaultEditor.GetHashCode();
         }
     }
 }

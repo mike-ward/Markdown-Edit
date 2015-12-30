@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Threading;
 
 namespace MarkdownEdit.Models
@@ -57,7 +56,7 @@ namespace MarkdownEdit.Models
             return fileWatcher;
         }
 
-        public static string ReadAllText(this string file)
+        public static string ReadAllTextRetry(this string file)
         {
             var retries = 3;
             while (retries > 0)
@@ -67,13 +66,14 @@ namespace MarkdownEdit.Models
                     retries -= 1;
                     return File.ReadAllText(file);
                 }
-                catch (UnauthorizedAccessException)
+                catch (IOException ex)
                 {
-                    if (retries == 0) throw;
+                    const int sharingViolation = 32;
+                    if (retries == 0 || (ex.HResult & 0xFFFF) != sharingViolation) throw;
                     Thread.Sleep(50);
                 }
             }
-            throw new UnauthorizedAccessException(file);
+            throw new IOException();
         }
     }
 }
