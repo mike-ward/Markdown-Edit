@@ -42,7 +42,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                return JsonConvert.DeserializeObject<Theme>(File.ReadAllText(file));
+                return JsonConvert.DeserializeObject<Theme>(file.ReadAllTextRetry());
             }
             catch (Exception ex)
             {

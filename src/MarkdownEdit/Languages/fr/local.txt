@@ -42,9 +42,9 @@ settings-open-last-file:          Ouvrir le dernier fichier
 settings-remember-cursor-pos:     Conserver la position d'édition
 settings-highlight-current:       Montrer la ligne courante
 settings-show-scroll-bar:         Barre de défilement vertical
-settings-show-tabs:               Monter les tabulations
-settings-show-spaces:             Monter les espaces
-settings-show-end-of-line:        Monter les fins de ligne
+settings-show-tabs:               Montrer les tabulations
+settings-show-spaces:             Montrer les espaces
+settings-show-end-of-line:        Montrer les fins de ligne
 settings-sync-scroll-pos:         Synchroniser le défilement
 settings-format-on-save:          Formater à l'enregistrement
 settings-github-markdown:         GitHub Markdown

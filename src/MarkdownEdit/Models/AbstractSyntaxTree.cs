@@ -9,8 +9,8 @@ namespace MarkdownEdit.Models
     {
         public static readonly Dictionary<BlockTag, Func<Theme, Highlight>> BlockHighlighter = new Dictionary<BlockTag, Func<Theme, Highlight>>
         {
-            {BlockTag.AtxHeader, t => t.HighlightHeading},
-            {BlockTag.SETextHeader, t => t.HighlightHeading},
+            {BlockTag.AtxHeading, t => t.HighlightHeading},
+            {BlockTag.SetextHeading, t => t.HighlightHeading},
             {BlockTag.BlockQuote, t => t.HighlightBlockQuote},
             {BlockTag.ListItem, t => t.HighlightStrongEmphasis},
             {BlockTag.FencedCode, t => t.HighlightBlockCode},

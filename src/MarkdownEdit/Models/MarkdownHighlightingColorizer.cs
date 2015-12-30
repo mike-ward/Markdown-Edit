@@ -32,8 +32,8 @@ namespace MarkdownEdit.Models
                 if (BlockHighlighter.TryGetValue(block.Tag, out highlighter))
                 {
                     var magnify = double.NaN;
-                    if (block.HeaderLevel == 1) magnify = theme.Header1Height;
-                    if (block.HeaderLevel == 2) magnify = theme.Header2Height;
+                    if (block.Heading.Level == 1) magnify = theme.Header1Height;
+                    if (block.Heading.Level == 2) magnify = theme.Header2Height;
 
                     var length = (block.Tag == BlockTag.ListItem)
                         ? Math.Min(block.SourceLength, block.ListData.Padding)
