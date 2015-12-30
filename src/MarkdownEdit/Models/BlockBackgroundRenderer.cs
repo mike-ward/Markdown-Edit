@@ -17,8 +17,8 @@ namespace MarkdownEdit.Models
         {
             BlockTag.FencedCode,
             BlockTag.IndentedCode,
-            BlockTag.AtxHeader,
-            BlockTag.SETextHeader,
+            BlockTag.AtxHeading,
+            BlockTag.SetextHeading,
             BlockTag.HtmlBlock,
             BlockTag.BlockQuote
         };
@@ -77,8 +77,8 @@ namespace MarkdownEdit.Models
             _brushes[BlockTag.HtmlBlock] = codeBrush;
 
             var headingBrush = ColorBrush(theme.HighlightHeading.Background);
-            _brushes[BlockTag.AtxHeader] = headingBrush;
-            _brushes[BlockTag.SETextHeader] = headingBrush;
+            _brushes[BlockTag.AtxHeading] = headingBrush;
+            _brushes[BlockTag.SetextHeading] = headingBrush;
 
             _brushes[BlockTag.BlockQuote] = ColorBrush(theme.HighlightBlockQuote.Background);
         }
