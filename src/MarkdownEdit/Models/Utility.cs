@@ -103,15 +103,15 @@ namespace MarkdownEdit.Models
             return foundElement;
         }
 
-        // public static void Notify(string message) => Show(message, MessageBoxButton.OK, MessageBoxImage.Information);
+        public static void Alert(string alert) => Show(alert, MessageBoxButton.OK, MessageBoxImage.Error);
 
-        public static void Alert(string text) => Show(text, MessageBoxButton.OK, MessageBoxImage.Error);
+        // public static void Notify(string message) => Show(message, MessageBoxButton.OK, MessageBoxImage.Information);
 
         public static MessageBoxResult Confirm(string question) => Show(question, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
         private static MessageBoxResult Show(string message, MessageBoxButton button, MessageBoxImage image)
         {
-            var text = message ?? "unspecified";
+            var text = message ?? "null";
 
             return Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow != null
                 ? MessageBox.Show(Application.Current.MainWindow, text, App.Title, button, image)
