@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Text;
+using System.Threading;
 
 namespace MarkdownEdit.Models
 {
@@ -53,6 +55,25 @@ namespace MarkdownEdit.Models
             };
             fileWatcher.EnableRaisingEvents = true;
             return fileWatcher;
+        }
+
+        public static string ReadAllText(this string file)
+        {
+            var retries = 3;
+            while (retries > 0)
+            {
+                try
+                {
+                    retries -= 1;
+                    return File.ReadAllText(file);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    if (retries == 0) throw;
+                    Thread.Sleep(50);
+                }
+            }
+            throw new UnauthorizedAccessException(file);
         }
     }
 }

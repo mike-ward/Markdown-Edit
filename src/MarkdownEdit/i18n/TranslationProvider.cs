@@ -32,7 +32,7 @@ namespace MarkdownEdit.i18n
             try
             {
                 var file = LanguageFolder(cultureInfo) + "\\local.txt";
-                var text = File.ReadAllText(file, Encoding.UTF8);
+                var text = file.ReadAllText();
                 return Parse(cultureInfo.TwoLetterISOLanguageName, text);
             }
             catch (Exception)
@@ -55,7 +55,8 @@ namespace MarkdownEdit.i18n
                 {
                     var path = LanguageFolder(Thread.CurrentThread.CurrentUICulture);
                     //var path = LanguageFolder(CultureInfo.GetCultureInfo("fr"));
-                    _helpMarkdown = File.ReadAllText(path + "\\help.md");
+                    var file = path + "\\help.md";
+                    _helpMarkdown = file.ReadAllText();
                 }
                 catch (Exception)
                 {
