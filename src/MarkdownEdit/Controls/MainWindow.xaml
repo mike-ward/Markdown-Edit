@@ -65,7 +65,7 @@
       </Style.Triggers>
     </Style>
 
-    <Style x:Key="NewVersionCommandWindoButtonStyle"
+    <Style x:Key="NewVersionCommandWindowButtonStyle"
            TargetType="Button"
            BasedOn="{StaticResource CommandWindowButtonStyle}">
       <Style.Triggers>
@@ -89,10 +89,20 @@
       </Style.Triggers>
     </Style>
 
+    <Style x:Key="ToolbarSeparator"
+           TargetType="Rectangle">
+      <Setter Property="Stroke" Value="White"></Setter>
+      <Setter Property="Margin" Value="10 0" />
+      <Setter Property="Opacity" Value="0.25" />
+      <Setter Property="UseLayoutRounding" Value="True"/>
+      <Setter Property="SnapsToDevicePixels" Value="True"/>
+      <Setter Property="Width" Value="1" />
+      <Setter Property="Height" Value="15" />
+    </Style>
   </mah:MetroWindow.Resources>
 
   <mah:MetroWindow.RightWindowCommands>
-    <mah:WindowCommands>
+    <mah:WindowCommands ShowLastSeparator="False">
       <StackPanel Orientation="Horizontal"
                   Margin="20 0"
                   VerticalAlignment="Center">
@@ -121,12 +131,15 @@
                 Style="{StaticResource CommandWindowButtonStyle}" 
                 />
         <Button Content="&#xe115;"
-                Margin="0 0 10 0"
                 ToolTip="{i18N:Localize tooltip-toggle-settings}"
                 Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}"
                 FontFamily="Segoe UI Symbol"
-                Foreground="{StaticResource SemiTransparentWhiteBrush}" 
+                Style="{StaticResource CommandWindowButtonStyle}"
                 />
+        
+        <Rectangle Style="{StaticResource ToolbarSeparator}"/>
+        <Separator></Separator>
+        
         <TextBlock ToolTip="{i18N:Localize tooltip-word-count}"
                    Foreground="{StaticResource GrayBrush8}"
                    Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" />
@@ -152,7 +165,7 @@
                 ToolTip="{i18N:Localize tooltip-new-version}"
                 Command="{x:Static controls:MainWindow.GotToMarkdownEditWebSiteCommand}"
                 FontFamily="Segoe UI Symbol"
-                Style="{StaticResource NewVersionCommandWindoButtonStyle}" 
+                Style="{StaticResource NewVersionCommandWindowButtonStyle}" 
                 />
       </StackPanel>
     </mah:WindowCommands>

@@ -16,6 +16,7 @@ using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
+using Theme = MarkdownEdit.Models.Theme;
 
 namespace MarkdownEdit.Controls
 {
