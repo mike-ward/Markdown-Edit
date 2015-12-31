@@ -1,8 +1,8 @@
-﻿<metrocontrols:MetroWindow
+﻿<mah:MetroWindow
   x:Class="MarkdownEdit.Controls.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:metrocontrols="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
   xmlns:local="clr-namespace:MarkdownEdit"
   xmlns:controls="clr-namespace:MarkdownEdit.Controls"
   xmlns:p="clr-namespace:MarkdownEdit.Properties"
@@ -22,7 +22,7 @@
   FocusManager.FocusedElement="{Binding ElementName=Editor}"
   WindowButtonCommandsOverlayBehavior="Never">
 
-  <metrocontrols:MetroWindow.Resources>
+  <mah:MetroWindow.Resources>
     <converters:NumberFormatConverter x:Key="NumberFormatConverter" />
     <converters:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
 
@@ -89,10 +89,10 @@
       </Style.Triggers>
     </Style>
 
-  </metrocontrols:MetroWindow.Resources>
+  </mah:MetroWindow.Resources>
 
-  <metrocontrols:MetroWindow.RightWindowCommands>
-    <metrocontrols:WindowCommands>
+  <mah:MetroWindow.RightWindowCommands>
+    <mah:WindowCommands>
       <StackPanel Orientation="Horizontal"
                   Margin="20 0"
                   VerticalAlignment="Center">
@@ -155,24 +155,28 @@
                 Style="{StaticResource NewVersionCommandWindoButtonStyle}" 
                 />
       </StackPanel>
-    </metrocontrols:WindowCommands>
-  </metrocontrols:MetroWindow.RightWindowCommands>
+    </mah:WindowCommands>
+  </mah:MetroWindow.RightWindowCommands>
 
-  <metrocontrols:MetroWindow.Flyouts>
-    <metrocontrols:FlyoutsControl>
-      <metrocontrols:Flyout x:Name="SettingsFlyout"
-                       Header="{i18N:Localize settings-flyout-header}"
-                       Position="Right"
-                       Theme="Accent"
-                       AnimateOpacity="True"
-                       Width="400"
-                       ClosingFinished="SettingsClosingFinished">
+  <mah:MetroWindow.Flyouts>
+    <mah:FlyoutsControl>
+      <mah:Flyout x:Name="SettingsFlyout"
+                  Header="{i18N:Localize settings-flyout-header}"
+                  Position="Right"
+                  Theme="Accent"
+                  AnimateOpacity="True"
+                  Width="400"
+                  IsModal="True"
+                  ClosingFinished="SettingsClosingFinished">
         <controls:DisplaySettings x:Name="DisplaySettings"
                                    Margin="10"
                                    SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}" />
-      </metrocontrols:Flyout>
-    </metrocontrols:FlyoutsControl>
-  </metrocontrols:MetroWindow.Flyouts>
+        <mah:Flyout.InputBindings>
+          <KeyBinding Key="Escape" Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" />
+        </mah:Flyout.InputBindings>
+      </mah:Flyout>
+    </mah:FlyoutsControl>
+  </mah:MetroWindow.Flyouts>
 
   <Grid>
     <UniformGrid x:Name="UniformGrid" Columns="2">
@@ -299,4 +303,4 @@
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" Gesture="Ctrl+Comma" />
     <KeyBinding Command="Print" Gesture="Ctrl+P" />
   </Window.InputBindings>
-</metrocontrols:MetroWindow>
+</mah:MetroWindow>
