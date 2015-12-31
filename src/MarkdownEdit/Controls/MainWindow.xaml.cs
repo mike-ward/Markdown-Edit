@@ -4,10 +4,10 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
@@ -87,7 +87,7 @@ namespace MarkdownEdit.Controls
             Activated += OnFirstActivation;
             IsVisibleChanged += OnIsVisibleChanged;
             Editor.PropertyChanged += EditorOnPropertyChanged;
-            Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor) s));
+            Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor)s));
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
         }
 
@@ -117,6 +117,7 @@ namespace MarkdownEdit.Controls
                 LoadCommandLineOrLastFile();
                 Application.Current.Activated += OnActivated;
                 NewVersion = !await Utility.IsCurrentVersion();
+                TitleBarTooltip();
             });
         }
 
@@ -131,6 +132,14 @@ namespace MarkdownEdit.Controls
             {
                 Editor.NewFile();
             }
+        }
+
+        private void TitleBarTooltip()
+        {
+            var titleBar = GetTemplateChild("PART_TitleBar") as UIElement;
+            var textBlock = titleBar?.GetDescendantByType<TextBlock>();
+            var fileNameBinding = new Binding {Path = new PropertyPath("FileName"), Source = Editor};
+            textBlock?.SetBinding(ToolTipProperty, fileNameBinding);
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -229,13 +238,13 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteEditorReplaceCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            var tuple = (Tuple<Regex, string>) e.Parameter;
+            var tuple = (Tuple<Regex, string>)e.Parameter;
             Editor.Replace(tuple.Item1, tuple.Item2);
         }
 
         private void ExecuteEditorReplaceAllCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            var tuple = (Tuple<Regex, string>) e.Parameter;
+            var tuple = (Tuple<Regex, string>)e.Parameter;
             Editor.ReplaceAll(tuple.Item1, tuple.Item2);
         }
 
@@ -297,7 +306,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
         {
-            if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int) e.Parameter);
+            if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int)e.Parameter);
         }
 
         private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) => Preview.UpdatePreview(Editor);
@@ -360,7 +369,7 @@ namespace MarkdownEdit.Controls
 
         private void ToggleSettings()
         {
-            var settingsFlyout = (Flyout) Flyouts.Items[0];
+            var settingsFlyout = (Flyout)Flyouts.Items[0];
             settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
             if (settingsFlyout.IsOpen) DisplaySettings.SaveState();
         }
