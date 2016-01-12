@@ -48,7 +48,6 @@ namespace MarkdownEdit.Controls
                     null, Browser, new object[] { });
 
                 activeX.Silent = true;
-
             });
         }
 
