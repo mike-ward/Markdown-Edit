@@ -199,19 +199,24 @@ namespace MarkdownEdit.Controls
 
         private static double PercentScroll(ScrollChangedEventArgs e, double correction)
         {
-            var y = e.ExtentHeight + correction - e.ViewportHeight;
-            return e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
+            var y =  e.ExtentHeight - e.ViewportHeight;
+            var yy = ((Math.Abs(y) < .000000001) ? 1 : y);
+            var percentToScroll = e.VerticalOffset / yy;
+            var yyy = correction * (percentToScroll * percentToScroll) / yy;
+            return percentToScroll + yyy;
         }
 
-        private static int HeightCorrection(IHTMLDocument3 document3)
+        private static double HeightCorrection(IHTMLDocument3 document3)
         {
-            var images = document3.getElementsByTagName("img").Cast<IHTMLElement>().Sum(item => item.offsetHeight);
-            var h1 = document3.getElementsByTagName("h1").Cast<IHTMLElement>().Sum(item => item.offsetHeight);
-            var h2 = document3.getElementsByTagName("h2").Cast<IHTMLElement>().Sum(item => item.offsetHeight);
-            var h3 = document3.getElementsByTagName("h3").Cast<IHTMLElement>().Sum(item => item.offsetHeight);
-            var h4 = document3.getElementsByTagName("h4").Cast<IHTMLElement>().Sum(item => item.offsetHeight);
-            var height = images + h1 + h2 + h3 + h4;
-            return height;
+            var images = document3.getElementsByTagName("img").Cast<IHTMLElement>().Sum(item => GetElementHeight(item));
+            var h1 = document3.getElementsByTagName("h1").Cast<IHTMLElement>().Sum(item => GetElementHeight(item) / 3);
+            var h2 = document3.getElementsByTagName("h2").Cast<IHTMLElement>().Sum(item => GetElementHeight(item) / 4);
+            return images + h1 + h2;
+        }
+
+        private static double GetElementHeight(IHTMLElement element)
+        {
+            return element.offsetHeight;
         }
 
         private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
