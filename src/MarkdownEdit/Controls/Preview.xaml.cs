@@ -16,6 +16,7 @@ using HtmlAgilityPack;
 using mshtml;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
+using System.Linq;
 
 namespace MarkdownEdit.Controls
 {
@@ -183,7 +184,8 @@ namespace MarkdownEdit.Controls
             var document3 = (IHTMLDocument3)Browser.Document;
             if (document3?.documentElement != null)
             {
-                var percentToScroll = PercentScroll(ea);
+                var heightCorrection = HeightCorrection(document3);
+                var percentToScroll = PercentScroll(ea, heightCorrection);
                 if (percentToScroll > 0.99) percentToScroll = 1.1; // deal with round off at end of scroll
                 var body = document2.body;
                 if (body == null) return;
@@ -195,10 +197,21 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private static double PercentScroll(ScrollChangedEventArgs e)
+        private static double PercentScroll(ScrollChangedEventArgs e, double correction)
         {
-            var y = e.ExtentHeight - e.ViewportHeight;
+            var y = e.ExtentHeight + correction - e.ViewportHeight;
             return e.VerticalOffset / ((Math.Abs(y) < .000001) ? 1 : y);
+        }
+
+        private static int HeightCorrection(IHTMLDocument3 document3)
+        {
+            var images = document3.getElementsByTagName("img").Cast<IHTMLElement>().Sum(item => item.offsetHeight);
+            var h1 = document3.getElementsByTagName("h1").Cast<IHTMLElement>().Sum(item => item.offsetHeight);
+            var h2 = document3.getElementsByTagName("h2").Cast<IHTMLElement>().Sum(item => item.offsetHeight);
+            var h3 = document3.getElementsByTagName("h3").Cast<IHTMLElement>().Sum(item => item.offsetHeight);
+            var h4 = document3.getElementsByTagName("h4").Cast<IHTMLElement>().Sum(item => item.offsetHeight);
+            var height = images + h1 + h2 + h3 + h4;
+            return height;
         }
 
         private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
