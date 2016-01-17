@@ -60,7 +60,7 @@ Tastatur genveje
     Alt+L          Konverter valgt tekst til liste. Skift mellem ordnet og uordnet
     Ctrl+Q         Konverter vlgt tekst&linje til block citat
     Alt+F          Ombryd og formatter tekst
-    Alt+Ctrl+F     Ombryd, formatter, anvend reference links
+    Ctrl+Shift+F   Ombryd, formatter, anvend reference links
     Alt+Shift+F    Fjern ombrydning og formatter tekst
     Ctrl+L         Indsæt hyperlink
 

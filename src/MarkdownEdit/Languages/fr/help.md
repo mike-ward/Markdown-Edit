@@ -60,7 +60,7 @@ Keyboard Shortcuts
     Alt+L          Convertir le texte sélectionné en liste. Basculer entre non numérotée/numérotée
     Ctrl+Q         Convertir le texte sélectionné/la ligne en bloc de citation
     Alt+F          Couper et formater le texte
-    Alt+Ctrl+F     Couper et formater le texte et lien de référence
+    Ctrl+Shift+F   Couper et formater le texte et lien de référence
     Alt+Shift+F    Ne pas couper et formater le texte
     Ctrl+L         Insérer un lien hypertexte
 

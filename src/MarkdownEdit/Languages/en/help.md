@@ -60,7 +60,7 @@ Keyboard Shortcuts
     Alt+L          Convert selection to list. Toggle unordered/ordered
     Ctrl+Q         Convert selection/line to block quote
     Alt+F          Wrap & Format text
-    Alt+Ctrl+F     Wrap, Format, Use Reference Links
+    Ctrl+Shift+F   Wrap, Format, Use Reference Links
     Alt+Shift+F    Unwrap & Format text
     Ctrl+L         Insert Hyperlink
 

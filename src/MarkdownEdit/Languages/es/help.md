@@ -60,7 +60,7 @@
     Alt+L          Convertir selección a lista. Cambiar desordenado/ordenado
     Ctrl+Q         Convertir selección/linea a bloque de cita
     Alt+F          Ajustar y formatear texto
-    Alt+Ctrl+F     Ajustar, formatear, usar enlaces de referencia
+    Ctrl+Shift+F   Ajustar, formatear, usar enlaces de referencia
     Alt+Shift+F    Desajustar y formatear texto
     Ctrl+L         Insertar hipervínculo
 
