@@ -125,8 +125,16 @@ namespace MarkdownEdit.Controls
             Owner = Application.Current.MainWindow;
             Show();
 
-            if (index == 1) txtFind2.Focus();
-            else txtFind.Focus();
+            if (index == 1)
+            {
+                txtFind2.Focus();
+                txtFind2.SelectAll();
+            }
+            else
+            {
+                txtFind.Focus();
+                txtFind.SelectAll();
+            }
         }
 
         public void FindPrevious()
