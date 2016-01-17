@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -16,7 +17,6 @@ using HtmlAgilityPack;
 using mshtml;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
-using System.Linq;
 
 namespace MarkdownEdit.Controls
 {
@@ -34,6 +34,7 @@ namespace MarkdownEdit.Controls
             Unloaded += (sender, args) => _templateWatcher?.Dispose();
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
+            Browser.MessageHook += BrowserOnMessageHook;
             UpdatePreview = Utility.Debounce<Editor>(editor => Dispatcher.InvokeAsync(() => Update(editor.Text)));
         }
 
@@ -46,7 +47,7 @@ namespace MarkdownEdit.Controls
                 // kill popups
                 dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
                     BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                    null, Browser, new object[] { });
+                    null, Browser, new object[] {});
 
                 activeX.Silent = true;
             });
@@ -192,25 +193,25 @@ namespace MarkdownEdit.Controls
                 var bodyElement = (IHTMLElement2)body;
                 var documentElement = (IHTMLElement2)document3.documentElement;
                 var scrollHeight = bodyElement.scrollHeight - documentElement.clientHeight;
-                var scrollPos = (int)Math.Ceiling(percentToScroll * scrollHeight);
+                var scrollPos = (int)Math.Ceiling(percentToScroll*scrollHeight);
                 document2.parentWindow.scroll(0, scrollPos);
             }
         }
 
         private static double PercentScroll(ScrollChangedEventArgs e, double correction)
         {
-            var y =  e.ExtentHeight - e.ViewportHeight;
+            var y = e.ExtentHeight - e.ViewportHeight;
             var yy = ((Math.Abs(y) < .000000001) ? 1 : y);
-            var percentToScroll = e.VerticalOffset / yy;
-            var yyy = correction * (percentToScroll * percentToScroll) / yy;
+            var percentToScroll = e.VerticalOffset/yy;
+            var yyy = correction*(percentToScroll*percentToScroll)/yy;
             return percentToScroll + yyy;
         }
 
         private static double HeightCorrection(IHTMLDocument3 document3)
         {
             var images = document3.getElementsByTagName("img").Cast<IHTMLElement>().Sum(item => GetElementHeight(item));
-            var h1 = document3.getElementsByTagName("h1").Cast<IHTMLElement>().Sum(item => GetElementHeight(item) / 3);
-            var h2 = document3.getElementsByTagName("h2").Cast<IHTMLElement>().Sum(item => GetElementHeight(item) / 4);
+            var h1 = document3.getElementsByTagName("h1").Cast<IHTMLElement>().Sum(item => GetElementHeight(item)/3);
+            var h2 = document3.getElementsByTagName("h2").Cast<IHTMLElement>().Sum(item => GetElementHeight(item)/4);
             return images + h1 + h2;
         }
 
@@ -248,6 +249,16 @@ namespace MarkdownEdit.Controls
                     e.Handled = true;
                     break;
             }
+        }
+
+        private static IntPtr BrowserOnMessageHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == 0x021)
+            {
+                Application.Current.MainWindow.Activate();
+                handled = true;
+            }
+            return hwnd;
         }
 
         // Properties
