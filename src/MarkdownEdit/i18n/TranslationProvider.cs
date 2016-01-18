@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using MarkdownEdit.Models;
@@ -17,7 +16,7 @@ namespace MarkdownEdit.i18n
         static TranslationProvider()
         {
             _language = Load(Thread.CurrentThread.CurrentUICulture);
-            //_language = Load(CultureInfo.GetCultureInfo("fr"));
+            //_language = Load(CultureInfo.GetCultureInfo("de"));
         }
 
         private static string LanguageFolder(CultureInfo cultureInfo)
@@ -54,7 +53,7 @@ namespace MarkdownEdit.i18n
                 try
                 {
                     var path = LanguageFolder(Thread.CurrentThread.CurrentUICulture);
-                    //var path = LanguageFolder(CultureInfo.GetCultureInfo("fr"));
+                    //var path = LanguageFolder(CultureInfo.GetCultureInfo("de"));
                     var file = path + "\\help.md";
                     _helpMarkdown = file.ReadAllTextRetry();
                 }

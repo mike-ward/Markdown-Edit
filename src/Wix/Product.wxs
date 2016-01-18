@@ -177,6 +177,22 @@
               </Component>
             </Directory>
             <Directory Id="Languages" Name="Languages">
+              <Directory Id="da" Name="da">
+                <Component Id="lang_da_local.txt" Guid="{B68248C2-142A-470D-A898-8982091919A8}">
+                  <File Id="lang_da_local.txt" KeyPath="yes" Source="$(var.SourceFiles)\Languages\da\local.txt" />
+                </Component>
+                <Component Id="lang_da_help.md" Guid="{CD78C110-9626-4BB6-AD00-15F31F5ADBBE}">
+                  <File Id="lang_da_help_md" KeyPath="yes" Source="$(var.SourceFiles)\Languages\da\help.md" />
+                </Component>
+              </Directory>
+              <Directory Id="de" Name="de">
+                <Component Id="lang_de_local.txt" Guid="{8BA2CE0A-842B-453D-A010-052E56E8768F}">
+                  <File Id="lang_de_local.txt" KeyPath="yes" Source="$(var.SourceFiles)\Languages\de\local.txt" />
+                </Component>
+                <Component Id="lang_de_help.md" Guid="{35DFFD12-397B-4138-9F24-050AF745F2C0}">
+                  <File Id="lang_de_help_md" KeyPath="yes" Source="$(var.SourceFiles)\Languages\de\help.md" />
+                </Component>
+              </Directory>
               <Directory Id="en" Name="en">
                 <Component Id="lang_en_local.txt" Guid="{BF20B11B-CCB1-4866-907F-BEA29CA6BA87}">
                   <File Id="lang_en_local.txt" KeyPath="yes" Source="$(var.SourceFiles)\Languages\en\local.txt" />
@@ -270,6 +286,10 @@
       <ComponentRef Id="solarized_light.json" />
       <ComponentRef Id="the_blues.json" />
       <ComponentRef Id="zenburn.json" />
+      <ComponentRef Id="lang_da_local.txt" />
+      <ComponentRef Id="lang_da_help.md" />
+      <ComponentRef Id="lang_de_local.txt" />
+      <ComponentRef Id="lang_de_help.md" />
       <ComponentRef Id="lang_en_local.txt" />
       <ComponentRef Id="lang_en_help.md" />
       <ComponentRef Id="lang_es_local.txt" />

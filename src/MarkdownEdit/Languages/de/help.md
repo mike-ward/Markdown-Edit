@@ -4,12 +4,12 @@ Tastenkombinationen
     F1             Anzeigen/Verbergen dieser Hilfe
 
     Ctrl+N         Neue Datei
-    Ctrl+Shift+N   Öffnen neuer Instanz
-    Ctrl+O         Datei öffnen
-    Ctrl+Shift+O   Datei einfügen
+    Ctrl+Shift+N   Ã–ffnen neuer Instanz
+    Ctrl+O         Datei Ã¶ffnen
+    Ctrl+Shift+O   Datei einfÃ¼gen
     Ctrl+S         Datei Speichern
     Ctrl+Shift+S   Datei speichern unter...
-    Ctrl+R         Kürzlich verwendet
+    Ctrl+R         KÃ¼rzlich verwendet
     Ctrl+E         Als HTML in die Zwischenablage exportieren
     Ctrl+Shift+E   Als HTML mit Template in die Zwischenablage exportieren
     Alt+E          Datei als HTML speichern...
@@ -17,59 +17,59 @@ Tastenkombinationen
     Alt+F4         Beenden
 
     Ctrl+W         Zeilenumbruch umschalten
-    Ctrl+F7        Rechtschreibüberprüfung umschalten
+    Ctrl+F7        RechtschreibÃ¼berprÃ¼fung umschalten
     F11            Vollbild
     F12            Wechseln Vorschau/Bearbeitungs/Duale Ansicht
     Alt+S          Automatisches Speichern umschalten
     Ctrl+,         Einstellungen
 
-    Tab            Aktuelle Selektion 2 Zeichen einrücken
-    Shift+Tab      Aktuelle Selektion 2 Zeichen rausrücken
+    Tab            Aktuelle Selektion 2 Zeichen einrÃ¼cken
+    Shift+Tab      Aktuelle Selektion 2 Zeichen rausrÃ¼cken
 
     Ctrl+C         Kopieren
-    Ctrl+V         Einfügen
+    Ctrl+V         EinfÃ¼gen
     Ctrl+X         Ausschneiden
-    Ctrl+Shift+V   Einfügen spezialer Smartcodes und Links als reinen Text
+    Ctrl+Shift+V   EinfÃ¼gen spezialer Smartcodes und Links als reinen Text
 
     Ctrl+F         Suchen
-    F3             Nächstes Finden
+    F3             NÃ¤chstes Finden
     Shift+F3       Vorheriges Finden
     Ctrl+H         Finden und Ersetzen
 
     Ctrl+G         Zur Zeile gehen
     Alt+Up         Aktuelle Zeile raufschieben
     Alt+Down       Aktuelle Zeile runterschieben
-    Ctrl+U         Auswahl der vorrigen Überschrift
-    Ctrl+J         Auswahl der nächsten Überschrift
+    Ctrl+U         Auswahl der vorrigen Ãœberschrift
+    Ctrl+J         Auswahl der nÃ¤chsten Ãœberschrift
 
-    Ctrl+Plus      Schriftgröße vergrößern
-    Ctrl+Minus     Schriftgröße verringern
-    Ctrl+0         Schriftgröße zurücksetzen
-    Alt+Plus       Vergrößerung des Editor-/Vorschau-Fensers (nur in der Einelansicht möglich)
-    Alt+Minus      Verkleinerung des Editor-/Vorschau-Fensers (nur in der Einelansicht möglich)
+    Ctrl+Plus      SchriftgrÃ¶ÃŸe vergrÃ¶ÃŸern
+    Ctrl+Minus     SchriftgrÃ¶ÃŸe verringern
+    Ctrl+0         SchriftgrÃ¶ÃŸe zurÃ¼cksetzen
+    Alt+Plus       VergrÃ¶ÃŸerung des Editor-/Vorschau-Fensers (nur in der Einelansicht mÃ¶glich)
+    Alt+Minus      Verkleinerung des Editor-/Vorschau-Fensers (nur in der Einelansicht mÃ¶glich)
 
-    Ctrl+T         Editordesign auswählen
-    F6             Öffnen personalisierter Snippets
-    F7             Personalisiertes Wörterbuch öffnen
-    F8             Personalisiertes HTML Template öffnen
-    F9             Öffnen der Einstellungensdatei
+    Ctrl+T         Editordesign auswÃ¤hlen
+    F6             Ã–ffnen personalisierter Snippets
+    F7             Personalisiertes WÃ¶rterbuch Ã¶ffnen
+    F8             Personalisiertes HTML Template Ã¶ffnen
+    F9             Ã–ffnen der Einstellungensdatei
 
     Ctrl+B         Fett
     Ctrl+I         Kursiv
     Ctrl+K         Code
-    Alt+L          Auswahl zu Liste. Umschalten zwischen nummerierter und unnummierierter Aufzählung
+    Alt+L          Auswahl zu Liste. Umschalten zwischen nummerierter und unnummierierter AufzÃ¤hlung
     Ctrl+Q         Auswahl zu Zitat konvertieren
     Alt+F          Text umbrechen & formatieren
     Ctrl+Shift+F   Umbrechen, Formatieren, Verwendung von Referenzlinks
     Alt+Shift+F    Brechung umkehren & Text formatieren
-    Ctrl+L         Link einfügen
+    Ctrl+L         Link einfÃ¼gen
 
-    Ctrl+1         Einfügen von # am Anfang der Zeile
-    Ctrl+2         Einfügen von ## am Anfang der Zeile
-    Ctrl+3         Einfügen von ### am Anfang der Zeile
-    Ctrl+4         Einfügen von #### am Anfang der Zeile
-    Ctrl+5         Einfügen von ##### am Anfang der Zeile
-    Ctrl+6         Einfügen von ###### am Anfang der Zeile
+    Ctrl+1         EinfÃ¼gen von # am Anfang der Zeile
+    Ctrl+2         EinfÃ¼gen von ## am Anfang der Zeile
+    Ctrl+3         EinfÃ¼gen von ### am Anfang der Zeile
+    Ctrl+4         EinfÃ¼gen von #### am Anfang der Zeile
+    Ctrl+5         EinfÃ¼gen von ##### am Anfang der Zeile
+    Ctrl+6         EinfÃ¼gen von ###### am Anfang der Zeile
 
 -   [Syntax Cheat Sheet (Tables, strikethrough not
     supported)](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
@@ -91,21 +91,21 @@ PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XGG
 Bilder hochladen
 ----------------
 
-Markdown Edit (MDE) kann für dich Bilder auf [Imgur](https://imgur.com) hochladen.
+Markdown Edit (MDE) kann fÃ¼r dich Bilder auf [Imgur](https://imgur.com) hochladen.
 Es kann es auf mehreren Arten
 
 -   Drag and Drop: Halte und Ziehe das Bild in den Editor. MDE wird dich
-    fragen ob du das Bild einfügen oder hochladen willst. Darauf hin wird
-	Der Link in das Dokument eingefügt.
--   Zwischenablage: Kopiere das Bild in die Zwischenablage. Füge das Bild in MDE
+    fragen ob du das Bild einfÃ¼gen oder hochladen willst. Darauf hin wird
+	Der Link in das Dokument eingefÃ¼gt.
+-   Zwischenablage: Kopiere das Bild in die Zwischenablage. FÃ¼ge das Bild in MDE
 	mittels Strg+V in MDE ein. Darauf hin wird das Bild zu Imgur hochgeladen und
 	in das Dokument eingebunden.
 
-Während dem Einfügen eines Textes überprüft MDE automatisch ob es sich um einen
+WÃ¤hrend dem EinfÃ¼gen eines Textes Ã¼berprÃ¼ft MDE automatisch ob es sich um einen
 Link handelt und wird gegebenenfalls diesen als Markdown Link in das Dokument
-einfügen.
+einfÃ¼gen.
 Handelt es sich bei diesem Link um einen, welcher auf ein Bild verweist, wird 
-der Link in der Markdown Bild Syntax eingefügt.
+der Link in der Markdown Bild Syntax eingefÃ¼gt.
 
 Formatting
 ----------
