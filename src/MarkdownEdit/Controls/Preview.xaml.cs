@@ -47,7 +47,7 @@ namespace MarkdownEdit.Controls
                 // kill popups
                 dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
                     BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                    null, Browser, new object[] {});
+                    null, Browser, new object[] { });
 
                 activeX.Silent = true;
             });
@@ -114,6 +114,8 @@ namespace MarkdownEdit.Controls
             document.execCommand("Print", true, null);
         }
 
+        private static string GetIdName(int number) => $"mde-{number}";
+
         private static string ScrubHtml(string html)
         {
             var doc = new HtmlDocument();
@@ -125,8 +127,22 @@ namespace MarkdownEdit.Controls
                 foreach (var node in nodes) action.Invoke(node);
             };
 
+            Func<string, HtmlNode> namedAnchorNode = name =>
+            {
+                var node = doc.CreateElement("a");
+                node.Attributes.Add("name", name);
+                return node;
+            };
+
+            var idx = 1;
+            Func<string> getName = () => GetIdName(idx++);
+
+            // Inject anchors at all block level elements for scroll synchronization
+            var nc = doc.DocumentNode.SelectNodes("//p|//h1|//h2|//h3|//h4|//h5|//h6|//ul|//ol|//li|//hr|//pre|//blockquote");
+            each(nc, node => node.Attributes.Add("id", getName()));
+
             // Remove potentially harmful elements
-            var nc = doc.DocumentNode.SelectNodes("//script|//link|//iframe|//frameset|//frame|//applet|//object|//embed");
+            nc = doc.DocumentNode.SelectNodes("//script|//link|//iframe|//frameset|//frame|//applet|//object|//embed");
             each(nc, node => node.ParentNode.RemoveChild(node, false));
 
             // Remove hrefs to java/j/vbscript URLs
@@ -178,46 +194,23 @@ namespace MarkdownEdit.Controls
             if (url?.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
         }
 
-        public void SetScrollOffset(ScrollChangedEventArgs ea)
+        public void SetScrollOffset(object sender, ScrollChangedEventArgs ea)
         {
             if (App.UserSettings.SynchronizeScrollPositions == false) return;
             var document2 = (IHTMLDocument2)Browser.Document;
             var document3 = (IHTMLDocument3)Browser.Document;
             if (document3?.documentElement != null)
             {
-                var heightCorrection = HeightCorrection(document3);
-                var percentToScroll = PercentScroll(ea, heightCorrection);
-                if (percentToScroll > 0.99) percentToScroll = 1.1; // deal with round off at end of scroll
-                var body = document2.body;
-                if (body == null) return;
-                var bodyElement = (IHTMLElement2)body;
-                var documentElement = (IHTMLElement2)document3.documentElement;
-                var scrollHeight = bodyElement.scrollHeight - documentElement.clientHeight;
-                var scrollPos = (int)Math.Ceiling(percentToScroll*scrollHeight);
-                document2.parentWindow.scroll(0, scrollPos);
+                var number = ((Editor)sender).VisibleBlockNumber();
+                if (number == 1)
+                {
+                    document2.parentWindow.scrollTo(0, 0);
+                    return;
+                }
+                var element = document3.getElementById(GetIdName(number));
+                if (element == null) return;
+                document2.parentWindow.scroll(0, element.offsetTop);
             }
-        }
-
-        private static double PercentScroll(ScrollChangedEventArgs e, double correction)
-        {
-            var y = e.ExtentHeight - e.ViewportHeight;
-            var yy = ((Math.Abs(y) < .000000001) ? 1 : y);
-            var percentToScroll = e.VerticalOffset/yy;
-            var yyy = correction*(percentToScroll*percentToScroll)/yy;
-            return percentToScroll + yyy;
-        }
-
-        private static double HeightCorrection(IHTMLDocument3 document3)
-        {
-            var images = document3.getElementsByTagName("img").Cast<IHTMLElement>().Sum(item => GetElementHeight(item));
-            var h1 = document3.getElementsByTagName("h1").Cast<IHTMLElement>().Sum(item => GetElementHeight(item)/3);
-            var h2 = document3.getElementsByTagName("h2").Cast<IHTMLElement>().Sum(item => GetElementHeight(item)/4);
-            return images + h1 + h2;
-        }
-
-        private static double GetElementHeight(IHTMLElement element)
-        {
-            return element.offsetHeight;
         }
 
         private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)

@@ -89,7 +89,7 @@ namespace MarkdownEdit.Controls
             IsVisibleChanged += OnIsVisibleChanged;
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview(((Editor)s));
-            Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(e);
+            Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(s, e);
         }
 
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)

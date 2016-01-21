@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CommonMark.Syntax;
+using ICSharpCode.AvalonEdit.Document;
 
 namespace MarkdownEdit.Models
 {

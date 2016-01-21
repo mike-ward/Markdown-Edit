@@ -30,7 +30,7 @@ namespace MarkdownEdit.Controls
         private string _displayName = string.Empty;
         private EditorState _editorState = new EditorState();
         private readonly Action<string> _executeAutoSaveLater;
-        private readonly string _f1ForHelp = (string) Translate("editor-f1-for-help");
+        private readonly string _f1ForHelp = (string)Translate("editor-f1-for-help");
 
         public static RoutedCommand DeselectCommand = new RoutedCommand();
         public static RoutedCommand FormatCommand = new RoutedCommand();
@@ -142,6 +142,25 @@ namespace MarkdownEdit.Controls
             EditBox.TextArea.TextView.BackgroundRenderers.Add(blockBackgroundRenderer);
         }
 
+        public int VisibleBlockNumber()
+        {
+            var textView = EditBox.TextArea.TextView;
+            var line = textView.GetDocumentLineByVisualTop(textView.ScrollOffset.Y);
+
+            var number = 1;
+            var skipListItem = true;
+
+            foreach (var block in EnumerateBlocks(_abstractSyntaxTree.FirstChild))
+            {
+                if (block.Tag == BlockTag.List) skipListItem = block.ListData.IsTight;
+                if (block.SourcePosition >= line.Offset) break;
+                if (block.Tag == BlockTag.ListItem && skipListItem) continue;
+                number += 1;
+            }
+
+            return Math.Max(number, 1);
+        }
+
         private void PasteSpecial() => IfNotReadOnly(() =>
         {
             try
@@ -157,7 +176,7 @@ namespace MarkdownEdit.Controls
 
         private void OnPaste(object sender, DataObjectPastingEventArgs pasteEventArgs)
         {
-            var text = (string) pasteEventArgs.SourceDataObject.GetData(DataFormats.UnicodeText, true);
+            var text = (string)pasteEventArgs.SourceDataObject.GetData(DataFormats.UnicodeText, true);
             if (string.IsNullOrWhiteSpace(text)) return;
             if (_removeSpecialCharacters)
             {
@@ -227,7 +246,7 @@ namespace MarkdownEdit.Controls
             contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-wrap-format"), Command = FormatCommand, InputGestureText = "Alt+F"});
             contextMenu.Items.Add(new MenuItem {Header = Translate("editor-menu-unwrap-format"), Command = UnformatCommand, InputGestureText = "Alt+Shift+F"});
 
-            var element = (FrameworkElement) ea.Source;
+            var element = (FrameworkElement)ea.Source;
             element.ContextMenu = contextMenu;
         }
 
@@ -235,7 +254,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteSpellCheckReplace(object sender, ExecutedRoutedEventArgs ea)
         {
-            var parameters = (Tuple<string, TextSegment>) ea.Parameter;
+            var parameters = (Tuple<string, TextSegment>)ea.Parameter;
             var word = parameters.Item1;
             var segment = parameters.Item2;
             EditBox.Document.Replace(segment, word);
@@ -243,7 +262,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteAddToDictionary(object sender, ExecutedRoutedEventArgs ea)
         {
-            var word = (string) ea.Parameter;
+            var word = (string)ea.Parameter;
             SpellCheckProvider.Add(word);
             SpellCheck = !SpellCheck;
             SpellCheck = !SpellCheck;
@@ -445,156 +464,156 @@ namespace MarkdownEdit.Controls
         }
 
         public static readonly DependencyProperty AutoSaveProperty = DependencyProperty.Register(
-            "AutoSave", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+            "AutoSave", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
 
         public bool AutoSave
         {
-            get { return (bool) GetValue(AutoSaveProperty); }
+            get { return (bool)GetValue(AutoSaveProperty); }
             set { SetValue(AutoSaveProperty, value); }
         }
 
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register(
-            "Theme", typeof (Theme), typeof (Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
+            "Theme", typeof(Theme), typeof(Editor), new PropertyMetadata(default(Theme), ThemeChangedCallback));
 
         public Theme Theme
         {
-            get { return (Theme) GetValue(ThemeProperty); }
+            get { return (Theme)GetValue(ThemeProperty); }
             set { SetValue(ThemeProperty, value); }
         }
 
         public static void ThemeChangedCallback(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
-            var editor = (Editor) source;
+            var editor = (Editor)source;
             editor.OnThemeChanged(new ThemeChangedEventArgs {Theme = editor.Theme});
         }
 
         public static readonly DependencyProperty VerticalScrollBarVisibilityProperty = DependencyProperty.Register(
-            "VerticalScrollBarVisibility", typeof (ScrollBarVisibility), typeof (Editor), new PropertyMetadata(default(ScrollBarVisibility)));
+            "VerticalScrollBarVisibility", typeof(ScrollBarVisibility), typeof(Editor), new PropertyMetadata(default(ScrollBarVisibility)));
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
-            get { return (ScrollBarVisibility) GetValue(VerticalScrollBarVisibilityProperty); }
+            get { return (ScrollBarVisibility)GetValue(VerticalScrollBarVisibilityProperty); }
             set { SetValue(VerticalScrollBarVisibilityProperty, value); }
         }
 
         public static readonly DependencyProperty ShowEndOfLineProperty = DependencyProperty.Register(
-            "ShowEndOfLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
+            "ShowEndOfLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowEndOfLineChanged));
 
         private static void ShowEndOfLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
-            var editor = (Editor) source;
+            var editor = (Editor)source;
             editor.EditBox.Options.ShowEndOfLine = editor.ShowEndOfLine;
         }
 
         public bool ShowEndOfLine
         {
-            get { return (bool) GetValue(ShowEndOfLineProperty); }
+            get { return (bool)GetValue(ShowEndOfLineProperty); }
             set { SetValue(ShowEndOfLineProperty, value); }
         }
 
         public static readonly DependencyProperty ShowSpacesProperty = DependencyProperty.Register(
-            "ShowSpaces", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
+            "ShowSpaces", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowSpacesChanged));
 
         private static void ShowSpacesChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
-            var editor = (Editor) source;
+            var editor = (Editor)source;
             editor.EditBox.Options.ShowSpaces = editor.ShowSpaces;
         }
 
         public bool ShowSpaces
         {
-            get { return (bool) GetValue(ShowSpacesProperty); }
+            get { return (bool)GetValue(ShowSpacesProperty); }
             set { SetValue(ShowSpacesProperty, value); }
         }
 
         public static readonly DependencyProperty ShowLineNumbersProperty = DependencyProperty.Register(
-            "ShowLineNumbers", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+            "ShowLineNumbers", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
 
         public bool ShowLineNumbers
         {
-            get { return (bool) GetValue(ShowLineNumbersProperty); }
+            get { return (bool)GetValue(ShowLineNumbersProperty); }
             set { SetValue(ShowLineNumbersProperty, value); }
         }
 
         public static readonly DependencyProperty ShowTabsProperty = DependencyProperty.Register(
-            "ShowTabs", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
+            "ShowTabs", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), ShowTabsChanged));
 
         private static void ShowTabsChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
-            var editor = (Editor) source;
+            var editor = (Editor)source;
             editor.EditBox.Options.ShowTabs = editor.ShowTabs;
         }
 
         public bool ShowTabs
         {
-            get { return (bool) GetValue(ShowTabsProperty); }
+            get { return (bool)GetValue(ShowTabsProperty); }
             set { SetValue(ShowTabsProperty, value); }
         }
 
         public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
-            "SpellCheckProvider", typeof (ISpellCheckProvider), typeof (Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckProviderPropertyChanged));
+            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(Editor), new PropertyMetadata(default(ISpellCheckProvider), SpellCheckProviderPropertyChanged));
 
         private static void SpellCheckProviderPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
-            var editor = (Editor) source;
+            var editor = (Editor)source;
             editor.SpellCheckProvider.Initialize(editor);
             editor.SpellCheckProvider.Enabled = editor.SpellCheck;
         }
 
         public ISpellCheckProvider SpellCheckProvider
         {
-            get { return (ISpellCheckProvider) GetValue(SpellCheckProviderProperty); }
+            get { return (ISpellCheckProvider)GetValue(SpellCheckProviderProperty); }
             set { SetValue(SpellCheckProviderProperty, value); }
         }
 
         public static readonly DependencyProperty HighlightCurrentLineProperty = DependencyProperty.Register(
-            "HighlightCurrentLine", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
+            "HighlightCurrentLine", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), HighlightCurrentLineChanged));
 
         private static void HighlightCurrentLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
         {
-            var editor = (Editor) source;
+            var editor = (Editor)source;
             editor.EditBox.Options.HighlightCurrentLine = editor.HighlightCurrentLine;
         }
 
         public bool HighlightCurrentLine
         {
-            get { return (bool) GetValue(HighlightCurrentLineProperty); }
+            get { return (bool)GetValue(HighlightCurrentLineProperty); }
             set { SetValue(HighlightCurrentLineProperty, value); }
         }
 
         public static readonly DependencyProperty SnippetManagerProperty = DependencyProperty.Register(
-            "SnippetManager", typeof (ISnippetManager), typeof (Editor), new PropertyMetadata(default(ISnippetManager)));
+            "SnippetManager", typeof(ISnippetManager), typeof(Editor), new PropertyMetadata(default(ISnippetManager)));
 
         public ISnippetManager SnippetManager
         {
-            get { return (ISnippetManager) GetValue(SnippetManagerProperty); }
+            get { return (ISnippetManager)GetValue(SnippetManagerProperty); }
             set { SetValue(SnippetManagerProperty, value); }
         }
 
         public static readonly DependencyProperty WordWrapProperty = DependencyProperty.Register(
-            "WordWrap", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool)));
+            "WordWrap", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
 
         public bool WordWrap
         {
-            get { return (bool) GetValue(WordWrapProperty); }
+            get { return (bool)GetValue(WordWrapProperty); }
             set { SetValue(WordWrapProperty, value); }
         }
 
         public static readonly DependencyProperty SpellCheckProperty = DependencyProperty.Register(
-            "SpellCheck", typeof (bool), typeof (Editor), new PropertyMetadata(default(bool), SpellCheckPropertyChanged));
+            "SpellCheck", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool), SpellCheckPropertyChanged));
 
         private static void SpellCheckPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs ea)
         {
-            var editor = (Editor) dependencyObject;
+            var editor = (Editor)dependencyObject;
             if (editor.SpellCheckProvider == null) return;
-            editor.SpellCheckProvider.Enabled = (bool) ea.NewValue;
+            editor.SpellCheckProvider.Enabled = (bool)ea.NewValue;
             editor.EditBox.Document.Insert(0, " ");
             editor.EditBox.Document.UndoStack.Undo();
         }
 
         public bool SpellCheck
         {
-            get { return (bool) GetValue(SpellCheckProperty); }
+            get { return (bool)GetValue(SpellCheckProperty); }
             set { SetValue(SpellCheckProperty, value); }
         }
 
