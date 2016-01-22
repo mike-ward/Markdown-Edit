@@ -201,15 +201,17 @@ namespace MarkdownEdit.Controls
             var document3 = (IHTMLDocument3)Browser.Document;
             if (document3?.documentElement != null)
             {
-                var number = ((Editor)sender).VisibleBlockNumber();
-                if (number == 1)
+                var editor = ((Editor)sender);
+                var number = editor.VisibleBlockNumber();
+                if (App.UserSettings.IgnoreYaml) number -= 3;
+                var offsetTop = 0;
+                if (number > 1)
                 {
-                    document2.parentWindow.scrollTo(0, 0);
-                    return;
+                    var element = document3.getElementById(GetIdName(number));
+                    if (element == null) return;
+                    offsetTop = element.offsetTop;
                 }
-                var element = document3.getElementById(GetIdName(number));
-                if (element == null) return;
-                document2.parentWindow.scroll(0, element.offsetTop);
+                document2.parentWindow.scroll(0, offsetTop);
             }
         }
 
