@@ -88,7 +88,7 @@ namespace MarkdownEdit.Models
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
             if (element == null) return default(T);
-            if (element.GetType() == typeof (T)) return element as T;
+            if (element.GetType() == typeof(T)) return element as T;
             T foundElement = null;
             (element as FrameworkElement)?.ApplyTemplate();
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)

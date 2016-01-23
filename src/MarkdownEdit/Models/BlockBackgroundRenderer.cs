@@ -89,7 +89,7 @@ namespace MarkdownEdit.Models
             try
             {
                 // ReSharper disable once PossibleNullReferenceException
-                var brush = new SolidColorBrush((Color) ColorConverter.ConvertFromString(color));
+                var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
                 brush.Freeze();
                 return brush;
             }

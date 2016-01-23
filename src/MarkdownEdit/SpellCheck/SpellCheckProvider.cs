@@ -104,11 +104,11 @@ namespace MarkdownEdit.SpellCheck
                     var trimmedWord = word.Trim('\'', '_', '-');
 
                     var num = currentLine.FirstDocumentLine.Offset
-                              + originalText.IndexOf(trimmedWord, startIndex, StringComparison.InvariantCultureIgnoreCase);
+                        + originalText.IndexOf(trimmedWord, startIndex, StringComparison.InvariantCultureIgnoreCase);
 
                     if (!_spellingService.Spell(trimmedWord))
                     {
-                        var textSegment = new TextSegment { StartOffset = num, Length = word.Length };
+                        var textSegment = new TextSegment {StartOffset = num, Length = word.Length};
                         _spellCheckRenderer.ErrorSegments.Add(textSegment);
                     }
 

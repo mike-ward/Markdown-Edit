@@ -90,13 +90,13 @@ namespace MarkdownEdit.Controls
 
             UploadProgressChangedEventHandler progress = (o, args) => TextEditor.Dispatcher.InvokeAsync(() =>
             {
-                if (_canceled) ((WebClient) o).CancelAsync();
-                var progressPercentage = (int) ((args.BytesSent/(double) args.TotalBytesToSend)*100);
+                if (_canceled) ((WebClient)o).CancelAsync();
+                var progressPercentage = (int)((args.BytesSent/(double)args.TotalBytesToSend)*100);
                 ProgressBar.Value = progressPercentage;
                 if (progressPercentage == 100) ProgressBar.IsIndeterminate = true;
             });
 
-            UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient) o).CancelAsync(); };
+            UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
 
             var link = await new ImageUploadImgur().UploadBytesAsync(Image, progress, completed);
 
@@ -160,7 +160,7 @@ namespace MarkdownEdit.Controls
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (!(value is Visibility) || (Visibility) value != Visibility.Visible);
+            return (!(value is Visibility) || (Visibility)value != Visibility.Visible);
         }
     }
 
@@ -173,7 +173,7 @@ namespace MarkdownEdit.Controls
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value is Visibility && (Visibility) value == Visibility.Visible);
+            return (value is Visibility && (Visibility)value == Visibility.Visible);
         }
     }
 }

@@ -23,7 +23,8 @@
   MinWidth="400">
   <StackPanel Margin="20">
     <TextBlock>
-      <Run>http://example.com/ "</Run><Run Text="{i18N:Localize insert-hyperlink-optional-title}"></Run><Run>"</Run></TextBlock>
+      <Run>http://example.com/ "</Run><Run Text="{i18N:Localize insert-hyperlink-optional-title}" />
+      <Run>"</Run></TextBlock>
     <TextBox
         x:Name="Link"
         Margin="10"

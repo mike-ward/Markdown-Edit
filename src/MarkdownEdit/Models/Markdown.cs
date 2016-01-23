@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Windows;
 using CommonMark;
 using CommonMark.Syntax;
 using HtmlAgilityPack;

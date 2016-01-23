@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 
 // ReSharper disable once CheckNamespace
+
 namespace MarkdownEdit.Converters
 {
     internal class BooleanToScrollBarVisibilityConverter : IValueConverter

@@ -110,7 +110,7 @@ namespace MarkdownEdit.Models
             try
             {
                 // ReSharper disable once PossibleNullReferenceException
-                var brush = new SolidColorBrush((Color) ColorConverter.ConvertFromString(color));
+                var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
                 brush.Freeze();
                 return brush;
             }
@@ -130,7 +130,7 @@ namespace MarkdownEdit.Models
             try
             {
                 // ReSharper disable once PossibleNullReferenceException
-                return (FontWeight) new FontWeightConverter().ConvertFromString(fontWeight);
+                return (FontWeight)new FontWeightConverter().ConvertFromString(fontWeight);
             }
             catch (FormatException)
             {
@@ -148,7 +148,7 @@ namespace MarkdownEdit.Models
             try
             {
                 // ReSharper disable once PossibleNullReferenceException
-                return (FontStyle) (new FontStyleConverter().ConvertFromString(fontStyle));
+                return (FontStyle)(new FontStyleConverter().ConvertFromString(fontStyle));
             }
             catch (FormatException)
             {

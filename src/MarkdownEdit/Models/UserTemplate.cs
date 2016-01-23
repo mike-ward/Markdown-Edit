@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Windows;
 using HtmlAgilityPack;
 using MarkdownEdit.Properties;
 

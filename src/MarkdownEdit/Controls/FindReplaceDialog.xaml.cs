@@ -22,13 +22,17 @@ namespace MarkdownEdit.Controls
             DataContext = this;
             _findReplaceSettings = findReplaceSettings;
             Closed += (s, e) => findReplaceSettings.Save();
-            Closing += (s, e) => { e.Cancel = true; Hide(); };
+            Closing += (s, e) =>
+            {
+                e.Cancel = true;
+                Hide();
+            };
         }
 
         public string FindText
         {
             get { return _findText; }
-            set { Set(ref _findText, value);}
+            set { Set(ref _findText, value); }
         }
 
         public FindReplaceSettings FindReplaceSettings

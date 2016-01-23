@@ -80,8 +80,7 @@
                     SelectedValuePath="Item2"
                     SelectedValue="{Binding LineEnding}"
                     ItemsSource="{Binding LineEndings}"
-                    HorizontalAlignment="Right">
-          </ComboBox>
+                    HorizontalAlignment="Right" />
         </Grid>
       </StackPanel>
 

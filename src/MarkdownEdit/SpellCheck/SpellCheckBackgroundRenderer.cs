@@ -21,7 +21,7 @@ namespace MarkdownEdit.SpellCheck
         {
             for (var i = 0; i < count; i++)
             {
-                yield return new Point(start.X + i * offset, start.Y - (((i + 1) % 2 == 0) ? offset : 0.0));
+                yield return new Point(start.X + i*offset, start.Y - (((i + 1)%2 == 0) ? offset : 0.0));
             }
         }
 
@@ -36,7 +36,7 @@ namespace MarkdownEdit.SpellCheck
                     var pen = new Pen(new SolidColorBrush(Colors.Red), 0.6);
                     pen.Freeze();
                     const double num = 2.0;
-                    var count = Math.Max((int)((bottomRight.X - bottomLeft.X) / num) + 1, 4);
+                    var count = Math.Max((int)((bottomRight.X - bottomLeft.X)/num) + 1, 4);
                     var streamGeometry = new StreamGeometry();
                     using (var streamGeometryContext = streamGeometry.Open())
                     {

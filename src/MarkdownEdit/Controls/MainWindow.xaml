@@ -91,7 +91,7 @@
 
     <Style x:Key="ToolbarSeparator"
            TargetType="Rectangle">
-      <Setter Property="Stroke" Value="White"></Setter>
+      <Setter Property="Stroke" Value="White" />
       <Setter Property="Margin" Value="10 0" />
       <Setter Property="Opacity" Value="0.25" />
       <Setter Property="UseLayoutRounding" Value="True"/>
@@ -138,8 +138,8 @@
                 />
         
         <Rectangle Style="{StaticResource ToolbarSeparator}"/>
-        <Separator></Separator>
-        
+        <Separator />
+
         <TextBlock ToolTip="{i18N:Localize tooltip-word-count}"
                    Foreground="{StaticResource GrayBrush8}"
                    Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" />

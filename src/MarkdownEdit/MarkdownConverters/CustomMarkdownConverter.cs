@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Windows;
 using MarkdownEdit.Models;
 
 namespace MarkdownEdit.MarkdownConverters

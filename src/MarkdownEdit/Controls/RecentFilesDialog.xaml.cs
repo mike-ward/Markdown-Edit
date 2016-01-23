@@ -35,12 +35,12 @@ namespace MarkdownEdit.Controls
             IsVisibleChanged -= OnIsVisibleChanged;
             FilesListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
 
-            var kb = new[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j' };
+            var kb = new[] {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
             FilesListBox.ItemsSource = Settings.Default.RecentFiles?.Cast<string>()
                 .Select((f, i) => new RecentFile
                 {
                     FileName = f,
-                    DisplayName = $"{kb[i % kb.Length]}: {f.StripOffsetFromFileName()}"
+                    DisplayName = $"{kb[i%kb.Length]}: {f.StripOffsetFromFileName()}"
                 }) ?? new RecentFile[0];
         }
 
@@ -59,7 +59,7 @@ namespace MarkdownEdit.Controls
 
         public static void Display(Window owner)
         {
-            var dialog = new RecentFilesDialog { Owner = owner };
+            var dialog = new RecentFilesDialog {Owner = owner};
             dialog.ShowDialog();
         }
 

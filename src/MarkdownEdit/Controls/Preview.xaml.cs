@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -47,7 +46,7 @@ namespace MarkdownEdit.Controls
                 // kill popups
                 dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
                     BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                    null, Browser, new object[] { });
+                    null, Browser, new object[] {});
 
                 activeX.Silent = true;
             });
@@ -124,13 +123,6 @@ namespace MarkdownEdit.Controls
             {
                 if (nodes == null) return;
                 foreach (var node in nodes) action.Invoke(node);
-            };
-
-            Func<string, HtmlNode> namedAnchorNode = name =>
-            {
-                var node = doc.CreateElement("a");
-                node.Attributes.Add("name", name);
-                return node;
             };
 
             var idx = 1;

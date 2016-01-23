@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
-using MarkdownEdit.Controls;
 
 namespace MarkdownEdit.Models
 {
