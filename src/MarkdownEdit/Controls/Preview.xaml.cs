@@ -93,12 +93,13 @@ namespace MarkdownEdit.Controls
             if (string.IsNullOrWhiteSpace(lastOpen)) return;
             var folder = Path.GetDirectoryName(lastOpen);
             if (string.IsNullOrWhiteSpace(folder)) return;
-            var document = (IHTMLDocument3)Browser.Document;
+            var document = Browser.Document as IHTMLDocument3;
             var baseElement = document?.getElementById(basetTagId);
             if (baseElement == null)
             {
-                var doc2 = (IHTMLDocument2)Browser.Document;
-                baseElement = doc2.createElement("base");
+                var doc2 = Browser.Document as IHTMLDocument2;
+                baseElement = doc2?.createElement("base");
+                if (baseElement == null) return;
                 baseElement.id = basetTagId;
                 var head = document?.getElementsByTagName("head").item(0);
                 head?.appendChild(baseElement);
@@ -108,8 +109,8 @@ namespace MarkdownEdit.Controls
 
         public void Print()
         {
-            var document = (IHTMLDocument2)Browser.Document;
-            document.execCommand("Print", true, null);
+            var document = Browser.Document as IHTMLDocument2;
+            document?.execCommand("Print", true, null);
         }
 
         private static string GetIdName(int number) => $"mde-{number}";
@@ -167,7 +168,7 @@ namespace MarkdownEdit.Controls
 
         private IHTMLElement GetContentsDiv()
         {
-            var document = (IHTMLDocument3)Browser.Document;
+            var document = Browser.Document as IHTMLDocument3;
             var element = document?.getElementById("content");
             return element;
         }
@@ -187,12 +188,14 @@ namespace MarkdownEdit.Controls
 
         public void SetScrollOffset(object sender, ScrollChangedEventArgs ea)
         {
+            if (!IsVisible) return;
             if (App.UserSettings.SynchronizeScrollPositions == false) return;
-            var document2 = (IHTMLDocument2)Browser.Document;
-            var document3 = (IHTMLDocument3)Browser.Document;
+
+            var document3 = Browser.Document as IHTMLDocument3;
             if (document3?.documentElement != null)
             {
-                var editor = ((Editor)sender);
+                var editor = sender as Editor;
+                if (editor == null) return;
                 var number = editor.VisibleBlockNumber();
                 var offsetTop = 0;
                 if (number > 1)
@@ -201,7 +204,8 @@ namespace MarkdownEdit.Controls
                     if (element == null) return;
                     offsetTop = element.offsetTop;
                 }
-                document2.parentWindow.scroll(0, offsetTop);
+                var document2 = Browser.Document as IHTMLDocument2;
+                document2?.parentWindow.scroll(0, offsetTop);
             }
         }
 
