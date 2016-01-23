@@ -144,6 +144,7 @@ namespace MarkdownEdit.Controls
 
         public int VisibleBlockNumber()
         {
+            if (_abstractSyntaxTree == null) return 1;
             var textView = EditBox.TextArea.TextView;
             var line = textView.GetDocumentLineByVisualTop(textView.ScrollOffset.Y);
 
