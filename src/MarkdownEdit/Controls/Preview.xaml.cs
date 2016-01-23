@@ -58,7 +58,6 @@ namespace MarkdownEdit.Controls
             if (markdown == null) return;
             try
             {
-                markdown = Utility.RemoveYamlFrontMatter(markdown);
                 var html = Markdown.ToHtml(markdown);
                 UpdateBaseTag();
                 var div = GetContentsDiv();
@@ -203,7 +202,6 @@ namespace MarkdownEdit.Controls
             {
                 var editor = ((Editor)sender);
                 var number = editor.VisibleBlockNumber();
-                if (App.UserSettings.IgnoreYaml) number -= 3;
                 var offsetTop = 0;
                 if (number > 1)
                 {
