@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,7 +16,45 @@ namespace MarkdownEdit.Models
 {
     internal static class Images
     {
-        public static BitmapSource ImageFromClipboardDib()
+        public static string ImageFileToDataUri(string imageFile)
+        {
+            var ext = Path.GetExtension(imageFile)?.Replace(".", "");
+            var bytes = File.ReadAllBytes(imageFile);
+            return ImageBytesToDataUri(bytes, ext);
+        }
+
+        public static string ClipboardDibToDataUri()
+        {
+            var bitmapSource = ClipboardDibToBitmapSource();
+            if (bitmapSource == null) return null;
+            var bytes = ToPngArray(bitmapSource);
+            return ImageBytesToDataUri(bytes, "png");
+        }
+
+        public static string BitmapToDataUri(Bitmap bitmap, string imageType)
+        {
+            using (var stream = new MemoryStream())
+            {
+                var codec = GetEncoder(ImageFormat.Png);
+                var encoderParameters = new EncoderParameters(1) { Param = { [0] = new EncoderParameter(Encoder.Quality, 100L) } };
+                bitmap.Save(stream, codec, encoderParameters);
+                stream.Flush();
+                return ImageBytesToDataUri(stream.ToArray(), "png");
+            }
+        }
+
+        private static ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            var codecs = ImageCodecInfo.GetImageDecoders();
+            return codecs.FirstOrDefault(codec => codec.FormatID == format.Guid);
+        }
+
+        private static string ImageBytesToDataUri(byte[] bytes, string imageType)
+        {
+            return $"<img src=\"data:image/{imageType};base64,{Convert.ToBase64String(bytes)}\" />";
+        }
+
+        private static BitmapSource ClipboardDibToBitmapSource()
         {
             var ms = Clipboard.GetData("DeviceIndependentBitmap") as MemoryStream;
             if (ms == null) return null;
@@ -41,10 +81,10 @@ namespace MarkdownEdit.Models
             msBitmap.Write(fileHeaderBytes, 0, fileHeaderSize);
             msBitmap.Write(dibBuffer, 0, dibBuffer.Length);
             msBitmap.Seek(0, SeekOrigin.Begin);
-            return BitmapFrame.Create(msBitmap);
+            return BitmapFrame.Create(msBitmap); // frees stream when rendered 
         }
 
-        public static byte[] ToPngArray(this BitmapSource bitmapsource)
+        private static byte[] ToPngArray(this BitmapSource bitmapsource)
         {
             using (var outStream = new MemoryStream())
             {

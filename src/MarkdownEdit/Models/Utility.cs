@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Media;
 using System.Net.Http;
 using System.Reflection;
@@ -107,7 +110,9 @@ namespace MarkdownEdit.Models
 
         // public static void Notify(string message) => Show(message, MessageBoxButton.OK, MessageBoxImage.Information);
 
-        public static MessageBoxResult Confirm(string question) => Show(question, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+        public static MessageBoxResult ConfirmYesNo(string question) => Show(question, MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+        public static MessageBoxResult ConfirmYesNoCancel(string question) => Show(question, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
         private static MessageBoxResult Show(string message, MessageBoxButton button, MessageBoxImage image)
         {

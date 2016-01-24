@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -10,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Rendering;
+using MarkdownEdit.i18n;
 using MarkdownEdit.ImageUpload;
 using MarkdownEdit.Models;
 
@@ -17,12 +20,13 @@ namespace MarkdownEdit.Controls
 {
     public partial class ImageDropDialog : INotifyPropertyChanged
     {
+        public string DocumentFileName { get; set; }
         public TextEditor TextEditor { get; set; }
-
         public DragEventArgs DragEventArgs { get; set; }
 
         private bool _canceled;
         private byte[] _image;
+        private string[] _doumentFolders;
 
         public ImageDropDialog()
         {
@@ -34,6 +38,12 @@ namespace MarkdownEdit.Controls
         {
             get { return _image; }
             set { Set(ref _image, value); }
+        }
+
+        public string[] DoumentFolders
+        {
+            get { return _doumentFolders; }
+            set { Set(ref _doumentFolders, value); }
         }
 
         private void OnLoaded(object sender, EventArgs eventArgs)
@@ -52,57 +62,127 @@ namespace MarkdownEdit.Controls
             var screen = TextEditor.PointToScreen(new Point(position.X, position.Y));
             Left = screen.X;
             Top = screen.Y;
+
+            AsLocalFile.SubmenuOpened += AsLocalFileOnSubmenuOpened;
+        }
+
+        private void AsLocalFileOnSubmenuOpened(object sender, RoutedEventArgs routedEventArgs)
+        {
+            var directoryName = Path.GetDirectoryName(DocumentFileName);
+            if (string.IsNullOrWhiteSpace(directoryName)) throw new Exception("directoryName in ImageDropDialog member is invalid");
+
+            var documentFolder = new[] {".\\"};
+
+            var folders = Directory.EnumerateDirectories(directoryName)
+                .Select(d => "." + d.Remove(0, directoryName.Length));
+
+            DoumentFolders = documentFolder.Concat(folders).ToArray();
+        }
+
+        private string DroppedFilePath()
+        {
+            var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
+            var path = files?[0];
+            return path;
+        }
+
+        private void TryIt(Action<string> action)
+        {
+            try
+            {
+                var droppedFilePath = DroppedFilePath();
+                action(droppedFilePath);
+            }
+            catch (Exception ex)
+            {
+                Utility.Alert(ex.Message);
+            }
+            finally
+            {
+                Close();
+            }
         }
 
         private void OnInsertPath(object sender, RoutedEventArgs e)
         {
-            var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
-            if (files == null) return;
-            var path = files[0];
-            var file = Path.GetFileNameWithoutExtension(path);
-            path = path.Replace('\\', '/');
-            if (path.Contains(" ")) path = $"<{path}>";
-            InsertImageTag(TextEditor, DragEventArgs, path, file);
-            Close();
+            TryIt(droppedFilePath =>
+            {
+                var file = Path.GetFileNameWithoutExtension(droppedFilePath);
+                droppedFilePath = droppedFilePath.Replace('\\', '/');
+                if (droppedFilePath.Contains(" ")) droppedFilePath = $"<{droppedFilePath}>";
+                InsertImageTag(TextEditor, DragEventArgs, droppedFilePath, file);
+            });
         }
 
         private async void OnUploadToImgur(object sender, RoutedEventArgs e)
         {
-            var name = "Clipboard";
-
-            if (Image == null)
+            try
             {
-                var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
-                if (files == null) return;
-                var path = files[0];
-                name = Path.GetFileNameWithoutExtension(path);
-                try
+                UploadProgressChangedEventHandler progress = (o, args) => TextEditor.Dispatcher.InvokeAsync(() =>
                 {
+                    if (_canceled) ((WebClient)o).CancelAsync();
+                    var progressPercentage = (int)((args.BytesSent/(double)args.TotalBytesToSend)*100);
+                    ProgressBar.Value = progressPercentage;
+                    if (progressPercentage == 100) ProgressBar.IsIndeterminate = true;
+                });
+
+                UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
+
+                var name = "Clipboard";
+
+                if (Image == null)
+                {
+                    var path = DroppedFilePath();
+                    name = Path.GetFileNameWithoutExtension(path);
                     Image = File.ReadAllBytes(path);
                 }
-                catch (Exception ex)
-                {
-                    Close();
-                    Utility.Alert(ex.Message);
-                    return;
-                }
+
+                var link = await new ImageUploadImgur().UploadBytesAsync(Image, progress, completed);
+                Close();
+                if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
+                else Utility.Alert(link);
             }
-
-            UploadProgressChangedEventHandler progress = (o, args) => TextEditor.Dispatcher.InvokeAsync(() =>
+            catch (Exception ex)
             {
-                if (_canceled) ((WebClient)o).CancelAsync();
-                var progressPercentage = (int)((args.BytesSent/(double)args.TotalBytesToSend)*100);
-                ProgressBar.Value = progressPercentage;
-                if (progressPercentage == 100) ProgressBar.IsIndeterminate = true;
+                Close();
+                Utility.Alert(ex.Message);
+            }
+        }
+
+        private void OnInsertDataUri(object sender, RoutedEventArgs e)
+        {
+            TryIt(droppedFilePath =>
+            {
+                var dataUri = Images.ImageFileToDataUri(droppedFilePath);
+                TextEditor.Document.Insert(GetInsertOffset(TextEditor, DragEventArgs), dataUri);
             });
+        }
 
-            UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
+        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
+        private void FolderMenuItemClicked(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            OnInsertFile(menuItem.Header.ToString());
+        }
 
-            var link = await new ImageUploadImgur().UploadBytesAsync(Image, progress, completed);
-
-            Close();
-            if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
-            else Utility.Alert(link);
+        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        private void OnInsertFile(string documentRelativeDestinationPath)
+        {
+            TryIt(droppedFilePath =>
+            {
+                var title = Path.GetFileName(droppedFilePath);
+                var link = Path.Combine(documentRelativeDestinationPath, title);
+                var destination = Path.Combine(Path.GetDirectoryName(DocumentFileName), link);
+                if (link.Contains(" ")) link = $"<{link}>";
+                if (File.Exists(destination))
+                {
+                    var message = (string)TranslationProvider.Translate("image-drop-overwrite-file");
+                    if (Utility.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
+                }
+                File.Copy(droppedFilePath, destination, true);
+                InsertImageTag(TextEditor, DragEventArgs, link, title);
+            });
         }
 
         private void OnCancel(object sender, RoutedEventArgs e)
@@ -111,7 +191,7 @@ namespace MarkdownEdit.Controls
             Close();
         }
 
-        public static void InsertImageTag(TextEditor textEditor, DragEventArgs dragEventArgs, string link, string title)
+        private static void InsertImageTag(TextEditor textEditor, DragEventArgs dragEventArgs, string link, string title)
         {
             textEditor.Document.Insert(GetInsertOffset(textEditor, dragEventArgs), $"![{title}]({link})\n");
         }

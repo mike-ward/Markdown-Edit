@@ -65,9 +65,9 @@ settings-open-snippets:           Schnipseln
 settings-open-key-bindings:       Tastenbelegung
 
 settings-about:                   &Uuml;ber
-settings-version:				  Version
-settings-web:					  Website
-settings-source:				  Sourcecode
+settings-version:				          Version
+settings-web:					            Website
+settings-source:				          Sourcecode
 
 === Find Replace Dialog
 
@@ -92,6 +92,9 @@ goto-line-title:                  Zur Zeile gehen
 
 image-drop-insert-path:           Pfad einfügen
 image-drop-upload-imgur:          Auf Imgur hochladen
+image-drop-as-data-uri:           Als Daten URI
+image-drop-as-local-file:         Als Lokale Datei
+image-drop-overwrite-file:        Die Datei existiert bereits. Überschreiben?
 
 === Recent Files Dialog
 

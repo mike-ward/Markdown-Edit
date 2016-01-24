@@ -18,10 +18,16 @@
   <Window.Resources>
     <local:NullToVisibleConverter x:Key="NullToVisibleConverter" />
     <local:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />
+    
+    <Style x:Key="MenuIconStyle"
+           TargetType="TextBlock">
+      <Setter Property="FontFamily" Value="Segoe UI Symbol" /> 
+    </Style>
+    
   </Window.Resources>
 
-  <Grid Margin="7 5"
-        VerticalAlignment="Center">
+  <Grid Margin="7 5" VerticalAlignment="Center">
+    
     <StackPanel x:Name="ProgressPanel"
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
@@ -32,10 +38,11 @@
                                  Height="10"
                                  Margin="0 0 10 0"/>
       <Button Click="OnCancel"
-              VerticalAlignment="Center">
-        Cancel
+              VerticalAlignment="Center"
+              Content="{i18N:Localize cancel}">
       </Button>
     </StackPanel>
+    
     <Menu x:Name="Menu"
           VerticalAlignment="Center"
           Visibility="{Binding Path=Image, Converter={StaticResource NullToVisibleConverter}}">
@@ -47,21 +54,52 @@
 
       <MenuItem Header="{i18N:Localize image-drop-insert-path}" Click="OnInsertPath">
         <MenuItem.Icon>
-          <Image Source="/Resources/add.png" Width="19" Height="19" />
+          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE167;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
       <MenuItem x:Name="ImgurMenuItem" Header="{i18N:Localize image-drop-upload-imgur}" Click="OnUploadToImgur">
         <MenuItem.Icon>
-          <Image Source="/Resources/imgur.png" Width="19" Height="19" />
+          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE158;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
+      <MenuItem Header="{i18N:Localize image-drop-as-data-uri}" Click="OnInsertDataUri">
+        <MenuItem.Icon>
+          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16C;</TextBlock>
+        </MenuItem.Icon>
+      </MenuItem>
+
+      <MenuItem x:Name="AsLocalFile" Header="{i18N:Localize image-drop-as-local-file}">
+        <MenuItem.Icon>
+          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16F;</TextBlock>
+        </MenuItem.Icon>
+        
+        <Menu x:Name="LocalFoldersMenu"
+              Background="{DynamicResource MenuItemSelectionFill}"
+              ItemsSource="{Binding DoumentFolders}">
+          <Menu.ItemsPanel>
+            <ItemsPanelTemplate>
+              <VirtualizingStackPanel Orientation="Vertical"  />
+            </ItemsPanelTemplate>
+          </Menu.ItemsPanel>
+          <Menu.ItemContainerStyle>
+            <Style TargetType="MenuItem">
+              <EventSetter Event="Click" Handler="FolderMenuItemClicked" />
+            </Style>
+          </Menu.ItemContainerStyle>
+        </Menu>
+      
+      </MenuItem>
+
+      <Separator />
+      
       <MenuItem Header="{i18N:Localize cancel}" Click="OnCancel">
         <MenuItem.Icon>
-          <Image Source="/Resources/error.png" Width="19" Height="19" />
+          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE10A;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
     </Menu>
+    
   </Grid>
 </Window>

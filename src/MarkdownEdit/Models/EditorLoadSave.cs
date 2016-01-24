@@ -92,7 +92,7 @@ namespace MarkdownEdit.Models
         {
             if (editor.IsModified == false) return true;
 
-            var result = Utility.Confirm("Save your changes?");
+            var result = Utility.ConfirmYesNoCancel("Save your changes?");
 
             return (result == MessageBoxResult.Yes)
                 ? SaveFile(editor)

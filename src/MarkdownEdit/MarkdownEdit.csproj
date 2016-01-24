@@ -392,13 +392,6 @@
     <None Include="Lib\Microsoft.DwayneNeed.Win32.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\imgur.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\add.png" />
-    <Resource Include="Resources\error.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Hunspellx64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
