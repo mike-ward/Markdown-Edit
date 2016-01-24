@@ -105,6 +105,26 @@ namespace MarkdownEdit.Controls
             else Utility.Alert(link);
         }
 
+        private void OnInsertDataUri(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
+                if (files == null) return;
+                var path = files[0];
+                var text = Images.ImageFileToDataUri(path);
+                TextEditor.Document.Insert(GetInsertOffset(TextEditor, DragEventArgs), text);
+            }
+            catch (Exception ex)
+            {
+                Utility.Alert(ex.Message);
+            }
+            finally
+            {
+                Close();
+            }
+        }
+
         private void OnCancel(object sender, RoutedEventArgs e)
         {
             _canceled = true;
