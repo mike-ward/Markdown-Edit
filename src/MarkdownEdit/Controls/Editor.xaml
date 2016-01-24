@@ -50,6 +50,7 @@
     <CommandBinding Command="{x:Static controls:Editor.RevertCommand}" Executed="ExecuteRevertCommand" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.InsertHyperlinkCommand}" Executed="ExecuteInsertHyperlink" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.InsertHyperlinkDialogCommand}" Executed="ExecuteInsertHyperlinkDialog" CanExecute="CanExecute" />
+    <CommandBinding Command="{x:Static controls:Editor.ToggleOverTypeModeCommand}" Executed="ExecuteToggleOverTypeCommand" CanExecute="CanExecute" />
   </UserControl.CommandBindings>
 
   <UserControl.InputBindings>
@@ -66,5 +67,6 @@
     <KeyBinding Command="{x:Static controls:Editor.InsertBlockQuoteCommand}" Gesture="Ctrl+Q" />
     <KeyBinding Command="{x:Static controls:Editor.RevertCommand}" Gesture="F5" />
     <KeyBinding Command="{x:Static controls:Editor.InsertHyperlinkDialogCommand}" Gesture="Ctrl+L" />
+    <KeyBinding Command="{x:Static controls:Editor.ToggleOverTypeModeCommand}" Gesture="Insert" />
   </UserControl.InputBindings>
 </UserControl>

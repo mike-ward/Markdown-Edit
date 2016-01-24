@@ -46,6 +46,7 @@ namespace MarkdownEdit.Controls
         public static RoutedCommand RevertCommand = new RoutedCommand();
         public static RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
         public static RoutedCommand InsertHyperlinkDialogCommand = new RoutedCommand();
+        public static RoutedCommand ToggleOverTypeModeCommand = new RoutedCommand();
 
         public Editor()
         {
@@ -405,6 +406,8 @@ namespace MarkdownEdit.Controls
         private void ExecuteDeselectCommand(object sender, ExecutedRoutedEventArgs e) => EditBox.SelectionLength = 0;
 
         private void ExecuteRevertCommand(object sender, ExecutedRoutedEventArgs e) => OpenFile(FileName);
+
+        private void ExecuteToggleOverTypeCommand(object sender, ExecutedRoutedEventArgs e) => EditBox.TextArea.OverstrikeMode = !EditBox.TextArea.OverstrikeMode;
 
         // Event handlers
 
