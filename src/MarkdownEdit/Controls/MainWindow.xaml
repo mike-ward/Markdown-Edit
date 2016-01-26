@@ -20,6 +20,7 @@
   Background="{Binding Path=Theme.EditorBackground, Source={x:Static local:App.UserSettings}}"
   TextOptions.TextFormattingMode="Display"
   FocusManager.FocusedElement="{Binding ElementName=Editor}"
+  UseLayoutRounding="True"
   WindowButtonCommandsOverlayBehavior="Never">
 
   <mah:MetroWindow.Resources>
