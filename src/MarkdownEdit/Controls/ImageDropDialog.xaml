@@ -63,6 +63,12 @@
         </MenuItem.Icon>
       </MenuItem>
 
+      <MenuItem Header="As Local File" Click="OnInsertFile">
+        <MenuItem.Icon>
+          <Image Source="/Resources/imgur.png" Width="19" Height="19" />
+        </MenuItem.Icon>
+      </MenuItem>
+
       <MenuItem Header="{i18N:Localize cancel}" Click="OnCancel">
         <MenuItem.Icon>
           <Image Source="/Resources/error.png" Width="19" Height="19" />

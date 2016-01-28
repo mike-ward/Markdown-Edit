@@ -200,16 +200,16 @@ namespace MarkdownEdit.Controls
             pasteEventArgs.DataObject = dataObject;
         }
 
-        protected override void OnDragEnter(DragEventArgs e)
+        protected override void OnDragEnter(DragEventArgs dea)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop) == false) e.Effects = DragDropEffects.None;
+            if (dea.Data.GetDataPresent(DataFormats.FileDrop) == false) dea.Effects = DragDropEffects.None;
         }
 
-        protected override void OnDrop(DragEventArgs e)
+        protected override void OnDrop(DragEventArgs dea)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (dea.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                var files = e.Data.GetData(DataFormats.FileDrop) as string[];
+                var files = dea.Data.GetData(DataFormats.FileDrop) as string[];
                 if (files == null) return;
 
                 if (Images.HasImageExtension(files[0]))
@@ -218,7 +218,8 @@ namespace MarkdownEdit.Controls
                     {
                         Owner = Application.Current.MainWindow,
                         TextEditor = EditBox,
-                        DragEventArgs = e
+                        FileName = FileName,
+                        DragEventArgs = dea
                     };
                     dialog.ShowDialog();
                 }
