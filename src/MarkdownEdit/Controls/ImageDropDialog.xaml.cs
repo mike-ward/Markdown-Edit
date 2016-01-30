@@ -157,7 +157,7 @@ namespace MarkdownEdit.Controls
             Close();
         }
 
-        public static void InsertImageTag(TextEditor textEditor, DragEventArgs dragEventArgs, string link, string title)
+        private static void InsertImageTag(TextEditor textEditor, DragEventArgs dragEventArgs, string link, string title)
         {
             textEditor.Document.Insert(GetInsertOffset(textEditor, dragEventArgs), $"![{title}]({link})\n");
         }
