@@ -26,8 +26,8 @@
   
   </Window.Resources>
 
-  <Grid Margin="7 5"
-        VerticalAlignment="Center">
+  <Grid Margin="7 5" VerticalAlignment="Center">
+    
     <StackPanel x:Name="ProgressPanel"
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
@@ -38,8 +38,8 @@
                                  Height="10"
                                  Margin="0 0 10 0"/>
       <Button Click="OnCancel"
-              VerticalAlignment="Center">
-        Cancel
+              VerticalAlignment="Center"
+              Content="{i18N:Localize cancel}">
       </Button>
     </StackPanel>
     
