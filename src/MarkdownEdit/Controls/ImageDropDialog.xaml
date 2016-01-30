@@ -23,7 +23,7 @@
            TargetType="TextBlock">
       <Setter Property="FontFamily" Value="Segoe UI Symbol" /> 
     </Style>
-  
+    
   </Window.Resources>
 
   <Grid Margin="7 5" VerticalAlignment="Center">
@@ -70,10 +70,26 @@
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem Header="As Local File" Click="OnInsertFile">
+      <MenuItem x:Name="AsLocalFile" Header="As Local File">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16F;</TextBlock>
         </MenuItem.Icon>
+        
+        <Menu x:Name="LocalFoldersMenu"
+              Background="{DynamicResource MenuItemSelectionFill}"
+              ItemsSource="{Binding DoumentFolders}">
+          <Menu.ItemsPanel>
+            <ItemsPanelTemplate>
+              <VirtualizingStackPanel Orientation="Vertical"  />
+            </ItemsPanelTemplate>
+          </Menu.ItemsPanel>
+          <Menu.ItemContainerStyle>
+            <Style TargetType="MenuItem">
+              <EventSetter Event="Click" Handler="FolderMenuItemClicked" />
+            </Style>
+          </Menu.ItemContainerStyle>
+        </Menu>
+      
       </MenuItem>
 
       <Separator />

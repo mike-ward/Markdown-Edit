@@ -218,7 +218,7 @@ namespace MarkdownEdit.Controls
                     {
                         Owner = Application.Current.MainWindow,
                         TextEditor = EditBox,
-                        FileName = FileName,
+                        DocumentFileName = FileName,
                         DragEventArgs = dea
                     };
                     dialog.ShowDialog();

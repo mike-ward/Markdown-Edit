@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -18,12 +19,13 @@ namespace MarkdownEdit.Controls
 {
     public partial class ImageDropDialog : INotifyPropertyChanged
     {
-        public string FileName { get; set; }
+        public string DocumentFileName { get; set; }
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
 
         private bool _canceled;
         private byte[] _image;
+        private string[] _doumentFolders;
 
         public ImageDropDialog()
         {
@@ -35,6 +37,12 @@ namespace MarkdownEdit.Controls
         {
             get { return _image; }
             set { Set(ref _image, value); }
+        }
+
+        public string[] DoumentFolders
+        {
+            get { return _doumentFolders; }
+            set { Set(ref _doumentFolders, value); }
         }
 
         private void OnLoaded(object sender, EventArgs eventArgs)
@@ -53,6 +61,21 @@ namespace MarkdownEdit.Controls
             var screen = TextEditor.PointToScreen(new Point(position.X, position.Y));
             Left = screen.X;
             Top = screen.Y;
+
+            AsLocalFile.SubmenuOpened += AsLocalFileOnSubmenuOpened;
+        }
+
+        private void AsLocalFileOnSubmenuOpened(object sender, RoutedEventArgs routedEventArgs)
+        {
+            var directoryName = Path.GetDirectoryName(DocumentFileName);
+            if (string.IsNullOrWhiteSpace(directoryName)) throw new Exception("directoryName in ImageDropDialog member is invalid");
+
+            var documentFolder = new[] {".\\"};
+
+            var folders = Directory.EnumerateDirectories(directoryName)
+                .Select(d => "." + d.Remove(0, directoryName.Length));
+
+            DoumentFolders = documentFolder.Concat(folders).ToArray();
         }
 
         private string DroppedFilePath()
@@ -62,12 +85,12 @@ namespace MarkdownEdit.Controls
             return path;
         }
 
-        private void TryIt(Action<string> func)
+        private void TryIt(Action<string> action)
         {
             try
             {
-                var path = DroppedFilePath();
-                func(path);
+                var droppedFilePath = DroppedFilePath();
+                action(droppedFilePath);
             }
             catch (Exception ex)
             {
@@ -81,12 +104,12 @@ namespace MarkdownEdit.Controls
 
         private void OnInsertPath(object sender, RoutedEventArgs e)
         {
-            TryIt(path =>
+            TryIt(droppedFilePath =>
             {
-                var file = Path.GetFileNameWithoutExtension(path);
-                path = path.Replace('\\', '/');
-                if (path.Contains(" ")) path = $"<{path}>";
-                InsertImageTag(TextEditor, DragEventArgs, path, file);
+                var file = Path.GetFileNameWithoutExtension(droppedFilePath);
+                droppedFilePath = droppedFilePath.Replace('\\', '/');
+                if (droppedFilePath.Contains(" ")) droppedFilePath = $"<{droppedFilePath}>";
+                InsertImageTag(TextEditor, DragEventArgs, droppedFilePath, file);
             });
         }
 
@@ -127,26 +150,31 @@ namespace MarkdownEdit.Controls
 
         private void OnInsertDataUri(object sender, RoutedEventArgs e)
         {
-            TryIt(path =>
+            TryIt(droppedFilePath =>
             {
-                var dataUri = Images.ImageFileToDataUri(path);
+                var dataUri = Images.ImageFileToDataUri(droppedFilePath);
                 TextEditor.Document.Insert(GetInsertOffset(TextEditor, DragEventArgs), dataUri);
             });
         }
 
         [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        private void OnInsertFile(object sender, RoutedEventArgs e)
+        private void FolderMenuItemClicked(object sender, RoutedEventArgs e)
         {
-            TryIt(path =>
-            {
-                var destination = Path.Combine(
-                    Path.GetDirectoryName(FileName),
-                    Path.GetFileName(path));
+            var menuItem = (MenuItem)sender;
+            OnInsertFile(menuItem.Header.ToString());
+        }
 
-                File.Copy(path, destination);
-                var title = Path.GetFileNameWithoutExtension(destination);
-                var link = Path.GetFileName(destination);
+        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
+        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
+        private void OnInsertFile(string documentRelativeDestinationPath)
+        {
+            TryIt(droppedFilePath =>
+            {
+                var title = Path.GetFileName(droppedFilePath);
+                var link = Path.Combine(documentRelativeDestinationPath, title);
+                var destination = Path.Combine(Path.GetDirectoryName(DocumentFileName), link);
                 if (link.Contains(" ")) link = $"<{link}>";
+                File.Copy(droppedFilePath, destination);
                 InsertImageTag(TextEditor, DragEventArgs, link, title);
             });
         }
