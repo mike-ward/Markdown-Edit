@@ -174,7 +174,11 @@ namespace MarkdownEdit.Controls
                 var link = Path.Combine(documentRelativeDestinationPath, title);
                 var destination = Path.Combine(Path.GetDirectoryName(DocumentFileName), link);
                 if (link.Contains(" ")) link = $"<{link}>";
-                File.Copy(droppedFilePath, destination);
+                if (File.Exists(destination))
+                {
+                    if (Utility.ConfirmYesNo("File already exists. Overrwrite?") != MessageBoxResult.Yes) return;
+                }
+                File.Copy(droppedFilePath, destination, true);
                 InsertImageTag(TextEditor, DragEventArgs, link, title);
             });
         }
