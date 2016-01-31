@@ -65,9 +65,9 @@ settings-open-snippets:           Fragmentos de Código
 settings-open-key-bindings:       Combinaciones del Teclado
 
 settings-about:                   Acerca de
-settings-version:				  Versión
-settings-web:					  Web
-settings-source:				  Fuente
+settings-version:				          Versión
+settings-web:					            Web
+settings-source:				          Fuente
 
 === Find Replace Dialog
 
@@ -92,6 +92,9 @@ goto-line-title:                  Ir a Línea
 
 image-drop-insert-path:           Insertar Dirección
 image-drop-upload-imgur:          Subir a Imgur
+image-drop-as-data-uri:           Como Datos URI
+image-drop-as-local-file:         Como Archivo Local
+image-drop-overwrite-file:        El archivo ya existe. ¿Exagerar?
 
 === Recent Files Dialog
 

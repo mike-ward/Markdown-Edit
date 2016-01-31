@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Rendering;
+using MarkdownEdit.i18n;
 using MarkdownEdit.ImageUpload;
 using MarkdownEdit.Models;
 
@@ -176,7 +177,8 @@ namespace MarkdownEdit.Controls
                 if (link.Contains(" ")) link = $"<{link}>";
                 if (File.Exists(destination))
                 {
-                    if (Utility.ConfirmYesNo("File already exists. Overrwrite?") != MessageBoxResult.Yes) return;
+                    var message = (string)TranslationProvider.Translate("image-drop-overwrite-file");
+                    if (Utility.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
                 }
                 File.Copy(droppedFilePath, destination, true);
                 InsertImageTag(TextEditor, DragEventArgs, link, title);

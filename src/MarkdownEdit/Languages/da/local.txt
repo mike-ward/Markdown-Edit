@@ -92,6 +92,9 @@ goto-line-title:                  Gå til linje
 
 image-drop-insert-path:           Indsæt sti
 image-drop-upload-imgur:          Upload til Imgur
+image-drop-as-data-uri:           Som Data URI
+image-drop-as-local-file:         Som Lokal Fil
+image-drop-overwrite-file:        Fil findes allerede. Overskriv?
 
 === Recent Files Dialog
 
