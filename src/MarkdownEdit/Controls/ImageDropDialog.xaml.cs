@@ -20,13 +20,13 @@ namespace MarkdownEdit.Controls
 {
     public partial class ImageDropDialog : INotifyPropertyChanged
     {
-        public string DocumentFileName { get; set; }
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
 
         private bool _canceled;
         private byte[] _image;
         private string[] _doumentFolders;
+        private string _documentFileName;
 
         public ImageDropDialog()
         {
@@ -44,6 +44,12 @@ namespace MarkdownEdit.Controls
         {
             get { return _doumentFolders; }
             set { Set(ref _doumentFolders, value); }
+        }
+
+        public string DocumentFileName
+        {
+            get { return _documentFileName; }
+            set { Set(ref _documentFileName, value); }
         }
 
         private void OnLoaded(object sender, EventArgs eventArgs)
