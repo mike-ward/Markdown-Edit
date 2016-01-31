@@ -18,6 +18,7 @@
   <Window.Resources>
     <local:NullToVisibleConverter x:Key="NullToVisibleConverter" />
     <local:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />
+    <local:NullOrEmptyToBooleanConverter x:Key="NullOrEmptyToBooleanConverter" />
     
     <Style x:Key="MenuIconStyle"
            TargetType="TextBlock">
@@ -70,13 +71,14 @@
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem x:Name="AsLocalFile" Header="{i18N:Localize image-drop-as-local-file}">
+      <MenuItem x:Name="AsLocalFile" 
+                Header="{i18N:Localize image-drop-as-local-file}"
+                IsEnabled="{Binding DocumentFileName, Converter={StaticResource NullOrEmptyToBooleanConverter}}">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16F;</TextBlock>
         </MenuItem.Icon>
         
-        <Menu x:Name="LocalFoldersMenu"
-              Background="{DynamicResource MenuItemSelectionFill}"
+        <Menu Background="{DynamicResource MenuItemSelectionFill}"
               ItemsSource="{Binding DoumentFolders}">
           <Menu.ItemsPanel>
             <ItemsPanelTemplate>

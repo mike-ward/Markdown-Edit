@@ -256,4 +256,18 @@ namespace MarkdownEdit.Controls
             return (value is Visibility && (Visibility)value == Visibility.Visible);
         }
     }
+
+    public sealed class NullOrEmptyToBooleanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var text = value as string;
+            return !string.IsNullOrWhiteSpace(text);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
 }
