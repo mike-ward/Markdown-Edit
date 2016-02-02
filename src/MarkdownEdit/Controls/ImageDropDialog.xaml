@@ -32,7 +32,7 @@
     
     <StackPanel Orientation="Horizontal"
                 VerticalAlignment="Center"
-                Visibility="{Binding Path=Image, Converter={StaticResource NotNullToVisibleConverter}}">
+                Visibility="{Binding Path=Uploading, Converter={StaticResource NotNullToVisibleConverter}}">
       <controls:MetroProgressBar x:Name="ProgressBar"
                                  VerticalAlignment="Center"
                                  Width="90"
@@ -45,7 +45,7 @@
     </StackPanel>
     
     <Menu VerticalAlignment="Center"
-          Visibility="{Binding Path=Image, Converter={StaticResource NullToVisibleConverter}}">
+          Visibility="{Binding Path=Uploading, Converter={StaticResource NullToVisibleConverter}}">
       <Menu.ItemsPanel>
         <ItemsPanelTemplate>
           <VirtualizingStackPanel Orientation="Vertical" />
@@ -53,14 +53,14 @@
       </Menu.ItemsPanel>
 
       <MenuItem Header="{i18N:Localize image-drop-insert-path}" 
-                IsEnabled="{Binding Image, Converter={StaticResource NullToBooleanConverter}}" 
+                IsEnabled="{Binding Uploading, Converter={StaticResource NullToBooleanConverter}}" 
                 Click="OnInsertPath">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE167;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem x:Name="ImgurMenuItem" Header="{i18N:Localize image-drop-upload-imgur}" Click="OnUploadToImgur">
+      <MenuItem Header="{i18N:Localize image-drop-upload-imgur}" Click="OnUploadToImgur">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE158;</TextBlock>
         </MenuItem.Icon>

@@ -22,9 +22,10 @@ namespace MarkdownEdit.Controls
     {
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
+        public bool UseClipboardImage { get; set; }
 
         private bool _canceled;
-        private byte[] _image;
+        private object _uploading;
         private string[] _doumentFolders;
         private string _documentFileName;
 
@@ -32,12 +33,6 @@ namespace MarkdownEdit.Controls
         {
             InitializeComponent();
             Loaded += OnLoaded;
-        }
-
-        public byte[] Image
-        {
-            get { return _image; }
-            set { Set(ref _image, value); }
         }
 
         public string[] DoumentFolders
@@ -52,24 +47,23 @@ namespace MarkdownEdit.Controls
             set { Set(ref _documentFileName, value); }
         }
 
+        public object Uploading
+        {
+            get { return _uploading; }    
+            set { Set(ref _uploading, value); }
+        }
+
         private void OnLoaded(object sender, EventArgs eventArgs)
         {
-            Point position;
-            if (Image == null)
-            {
-                position = DragEventArgs.GetPosition(TextEditor);
-            }
-            else
-            {
-                position = TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom);
-                var clickEvent = new RoutedEventArgs(MenuItem.ClickEvent);
-                ImgurMenuItem.RaiseEvent(clickEvent);
-            }
+            AsLocalFile.SubmenuOpened += AsLocalFileOnSubmenuOpened;
+
+            var position = UseClipboardImage 
+                ? DragEventArgs.GetPosition(TextEditor) 
+                : TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom);
+
             var screen = TextEditor.PointToScreen(new Point(position.X, position.Y));
             Left = screen.X;
             Top = screen.Y;
-
-            AsLocalFile.SubmenuOpened += AsLocalFileOnSubmenuOpened;
         }
 
         private void AsLocalFileOnSubmenuOpened(object sender, RoutedEventArgs routedEventArgs)
@@ -92,12 +86,12 @@ namespace MarkdownEdit.Controls
             return path;
         }
 
-        private void TryIt(Action<string, byte[]> action)
+        private void TryIt(Action<string> action)
         {
             try
             {
-                var droppedFilePath = Image == null ? DroppedFilePath() : null;
-                action(droppedFilePath, Image);
+                var droppedFilePath = UseClipboardImage ? DroppedFilePath() : null;
+                action(droppedFilePath);
             }
             catch (Exception ex)
             {
@@ -111,7 +105,7 @@ namespace MarkdownEdit.Controls
 
         private void OnInsertPath(object sender, RoutedEventArgs e)
         {
-            TryIt((droppedFilePath, imageBytes) =>
+            TryIt(droppedFilePath =>
             {
                 var file = Path.GetFileNameWithoutExtension(droppedFilePath);
                 droppedFilePath = droppedFilePath.Replace('\\', '/');
@@ -136,14 +130,22 @@ namespace MarkdownEdit.Controls
 
                 var name = "Clipboard";
 
-                if (Image == null)
+                byte[] image;
+
+                if (UseClipboardImage)
+                {
+                    image = Images.ClipboardDibToBitmapSource().ToPngArray();
+                }
+                else
                 {
                     var path = DroppedFilePath();
                     name = Path.GetFileNameWithoutExtension(path);
-                    Image = File.ReadAllBytes(path);
+                    image = File.ReadAllBytes(path);
                 }
 
-                var link = await new ImageUploadImgur().UploadBytesAsync(Image, progress, completed);
+                Uploading = image;
+                var link = await new ImageUploadImgur().UploadBytesAsync(image, progress, completed);
+
                 Close();
                 if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
                 else Utility.Alert(link);
@@ -157,9 +159,12 @@ namespace MarkdownEdit.Controls
 
         private void OnInsertDataUri(object sender, RoutedEventArgs e)
         {
-            TryIt((droppedFilePath, imageBytes) =>
+            TryIt(droppedFilePath =>
             {
-                var dataUri = Images.ImageFileToDataUri(droppedFilePath);
+                var dataUri = UseClipboardImage 
+                    ? Images.ClipboardDibToDataUri()
+                    : Images.ImageFileToDataUri(droppedFilePath);
+
                 TextEditor.Document.Insert(GetInsertOffset(TextEditor, DragEventArgs), dataUri);
             });
         }
@@ -175,7 +180,7 @@ namespace MarkdownEdit.Controls
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         private void OnInsertFile(string documentRelativeDestinationPath)
         {
-            TryIt((droppedFilePath, imageBytes) =>
+            TryIt(droppedFilePath =>
             {
                 var title = Path.GetFileName(droppedFilePath);
                 var link = Path.Combine(documentRelativeDestinationPath, title);

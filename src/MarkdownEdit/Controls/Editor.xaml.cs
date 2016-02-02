@@ -251,7 +251,7 @@ namespace MarkdownEdit.Controls
                     {
                         Owner = Application.Current.MainWindow,
                         TextEditor = EditBox,
-                        Image = Images.ClipboardDibToBitmapSource().ToPngArray()
+                        UseClipboardImage = true
                     };
                     dialog.ShowDialog();
                     args.Handled = true;

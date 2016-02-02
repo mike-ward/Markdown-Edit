@@ -31,18 +31,6 @@ namespace MarkdownEdit.Models
             return ImageBytesToDataUri(bytes, "png");
         }
 
-        public static string BitmapToDataUri(Bitmap bitmap, string imageType)
-        {
-            using (var stream = new MemoryStream())
-            {
-                var codec = GetEncoder(ImageFormat.Png);
-                var encoderParameters = new EncoderParameters(1) { Param = { [0] = new EncoderParameter(Encoder.Quality, 100L) } };
-                bitmap.Save(stream, codec, encoderParameters);
-                stream.Flush();
-                return ImageBytesToDataUri(stream.ToArray(), "png");
-            }
-        }
-
         private static ImageCodecInfo GetEncoder(ImageFormat format)
         {
             var codecs = ImageCodecInfo.GetImageDecoders();
