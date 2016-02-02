@@ -19,6 +19,7 @@
     <local:NullToVisibleConverter x:Key="NullToVisibleConverter" />
     <local:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />
     <local:NullOrEmptyToBooleanConverter x:Key="NullOrEmptyToBooleanConverter" />
+    <local:NullToBooleanConverter x:Key="NullToBooleanConverter" />
     
     <Style x:Key="MenuIconStyle"
            TargetType="TextBlock">
@@ -29,8 +30,7 @@
 
   <Grid Margin="7 5" VerticalAlignment="Center">
     
-    <StackPanel x:Name="ProgressPanel"
-                Orientation="Horizontal"
+    <StackPanel Orientation="Horizontal"
                 VerticalAlignment="Center"
                 Visibility="{Binding Path=Image, Converter={StaticResource NotNullToVisibleConverter}}">
       <controls:MetroProgressBar x:Name="ProgressBar"
@@ -44,8 +44,7 @@
       </Button>
     </StackPanel>
     
-    <Menu x:Name="Menu"
-          VerticalAlignment="Center"
+    <Menu VerticalAlignment="Center"
           Visibility="{Binding Path=Image, Converter={StaticResource NullToVisibleConverter}}">
       <Menu.ItemsPanel>
         <ItemsPanelTemplate>
@@ -53,7 +52,9 @@
         </ItemsPanelTemplate>
       </Menu.ItemsPanel>
 
-      <MenuItem Header="{i18N:Localize image-drop-insert-path}" Click="OnInsertPath">
+      <MenuItem Header="{i18N:Localize image-drop-insert-path}" 
+                IsEnabled="{Binding Image, Converter={StaticResource NullToBooleanConverter}}" 
+                Click="OnInsertPath">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE167;</TextBlock>
         </MenuItem.Icon>

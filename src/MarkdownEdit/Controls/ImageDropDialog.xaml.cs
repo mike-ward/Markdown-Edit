@@ -92,12 +92,12 @@ namespace MarkdownEdit.Controls
             return path;
         }
 
-        private void TryIt(Action<string> action)
+        private void TryIt(Action<string, byte[]> action)
         {
             try
             {
-                var droppedFilePath = DroppedFilePath();
-                action(droppedFilePath);
+                var droppedFilePath = Image == null ? DroppedFilePath() : null;
+                action(droppedFilePath, Image);
             }
             catch (Exception ex)
             {
@@ -111,7 +111,7 @@ namespace MarkdownEdit.Controls
 
         private void OnInsertPath(object sender, RoutedEventArgs e)
         {
-            TryIt(droppedFilePath =>
+            TryIt((droppedFilePath, imageBytes) =>
             {
                 var file = Path.GetFileNameWithoutExtension(droppedFilePath);
                 droppedFilePath = droppedFilePath.Replace('\\', '/');
@@ -157,7 +157,7 @@ namespace MarkdownEdit.Controls
 
         private void OnInsertDataUri(object sender, RoutedEventArgs e)
         {
-            TryIt(droppedFilePath =>
+            TryIt((droppedFilePath, imageBytes) =>
             {
                 var dataUri = Images.ImageFileToDataUri(droppedFilePath);
                 TextEditor.Document.Insert(GetInsertOffset(TextEditor, DragEventArgs), dataUri);
@@ -175,7 +175,7 @@ namespace MarkdownEdit.Controls
         [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
         private void OnInsertFile(string documentRelativeDestinationPath)
         {
-            TryIt(droppedFilePath =>
+            TryIt((droppedFilePath, imageBytes) =>
             {
                 var title = Path.GetFileName(droppedFilePath);
                 var link = Path.Combine(documentRelativeDestinationPath, title);
@@ -269,6 +269,19 @@ namespace MarkdownEdit.Controls
         {
             var text = value as string;
             return !string.IsNullOrWhiteSpace(text);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+    public sealed class NullToBooleanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value == null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
