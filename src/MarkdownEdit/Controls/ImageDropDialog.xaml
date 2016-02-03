@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:MarkdownEdit.Controls"
+        xmlns:converters="clr-namespace:MarkdownEdit.Converters"
         xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
         mc:Ignorable="d"
         ShowInTaskbar="False"
@@ -16,11 +17,9 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
   <Window.Resources>
-    <local:NullToVisibleConverter x:Key="NullToVisibleConverter" />
-    <local:NotNullToVisibleConverter x:Key="NotNullToVisibleConverter" />
-    <local:NullOrEmptyToBooleanConverter x:Key="NullOrEmptyToBooleanConverter" />
-    <local:NullToBooleanConverter x:Key="NullToBooleanConverter" />
-    
+    <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    <converters:BooleanToVisiblityConverter x:Key="BooleanToVisiblityConverter" />
+    <converters:NullOrEmptyToBooleanConverter x:Key="NullOrEmptyToBooleanConverter" />
     <Style x:Key="MenuIconStyle"
            TargetType="TextBlock">
       <Setter Property="FontFamily" Value="Segoe UI Symbol" /> 
@@ -32,7 +31,7 @@
     
     <StackPanel Orientation="Horizontal"
                 VerticalAlignment="Center"
-                Visibility="{Binding Path=Uploading, Converter={StaticResource NotNullToVisibleConverter}}">
+                Visibility="{Binding Uploading, Converter={StaticResource BooleanToVisiblityConverter}}">
       <controls:MetroProgressBar x:Name="ProgressBar"
                                  VerticalAlignment="Center"
                                  Width="90"
@@ -45,7 +44,7 @@
     </StackPanel>
     
     <Menu VerticalAlignment="Center"
-          Visibility="{Binding Path=Uploading, Converter={StaticResource NullToVisibleConverter}}">
+          Visibility="{Binding Uploading, Converter={StaticResource BooleanToVisiblityConverter}, ConverterParameter=true}">
       <Menu.ItemsPanel>
         <ItemsPanelTemplate>
           <VirtualizingStackPanel Orientation="Vertical" />
@@ -53,20 +52,22 @@
       </Menu.ItemsPanel>
 
       <MenuItem Header="{i18N:Localize image-drop-insert-path}" 
-                IsEnabled="{Binding Uploading, Converter={StaticResource NullToBooleanConverter}}" 
+                IsEnabled="{Binding UseClipboardImage, Converter={StaticResource InverseBooleanConverter}}"
                 Click="OnInsertPath">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE167;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem Header="{i18N:Localize image-drop-upload-imgur}" Click="OnUploadToImgur">
+      <MenuItem Header="{i18N:Localize image-drop-upload-imgur}" 
+                Click="OnUploadToImgur">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE158;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem Header="{i18N:Localize image-drop-as-data-uri}" Click="OnInsertDataUri">
+      <MenuItem Header="{i18N:Localize image-drop-as-data-uri}" 
+                Click="OnInsertDataUri">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16C;</TextBlock>
         </MenuItem.Icon>

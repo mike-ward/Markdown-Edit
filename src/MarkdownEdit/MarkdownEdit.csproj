@@ -140,6 +140,9 @@
     <Compile Include="Controls\InsertHyperlinkDialog.xaml.cs">
       <DependentUpon>InsertHyperlinkDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToVisiblityConverter.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Converters\NullOrEmptyToBooleanConverter.cs" />
     <Compile Include="Controls\SpellingDictionaryComboBox.xaml.cs">
       <DependentUpon>SpellingDictionaryComboBox.xaml</DependentUpon>
     </Compile>

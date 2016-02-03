@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Rendering;
 using MarkdownEdit.i18n;
@@ -22,10 +20,10 @@ namespace MarkdownEdit.Controls
     {
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
-        public bool UseClipboardImage { get; set; }
 
         private bool _canceled;
-        private object _uploading;
+        private bool _useClipboardImage;
+        private bool _uploading;
         private string[] _doumentFolders;
         private string _documentFileName;
 
@@ -47,19 +45,25 @@ namespace MarkdownEdit.Controls
             set { Set(ref _documentFileName, value); }
         }
 
-        public object Uploading
+        public bool Uploading
         {
             get { return _uploading; }    
             set { Set(ref _uploading, value); }
+        }
+
+        public bool UseClipboardImage
+        {
+            get { return _useClipboardImage; }
+            set { Set(ref _useClipboardImage, value); }
         }
 
         private void OnLoaded(object sender, EventArgs eventArgs)
         {
             AsLocalFile.SubmenuOpened += AsLocalFileOnSubmenuOpened;
 
-            var position = UseClipboardImage 
-                ? DragEventArgs.GetPosition(TextEditor) 
-                : TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom);
+            var position = UseClipboardImage
+                ? TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom)
+                : DragEventArgs.GetPosition(TextEditor);
 
             var screen = TextEditor.PointToScreen(new Point(position.X, position.Y));
             Left = screen.X;
@@ -90,7 +94,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                var droppedFilePath = UseClipboardImage ? DroppedFilePath() : null;
+                var droppedFilePath = UseClipboardImage ? null : DroppedFilePath();
                 action(droppedFilePath);
             }
             catch (Exception ex)
@@ -143,10 +147,10 @@ namespace MarkdownEdit.Controls
                     image = File.ReadAllBytes(path);
                 }
 
-                Uploading = image;
+                Uploading = true;
                 var link = await new ImageUploadImgur().UploadBytesAsync(image, progress, completed);
-
                 Close();
+
                 if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
                 else Utility.Alert(link);
             }
@@ -239,59 +243,6 @@ namespace MarkdownEdit.Controls
             if (EqualityComparer<T>.Default.Equals(property, value)) return;
             property = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public sealed class NullToVisibleConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (value == null) ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (!(value is Visibility) || (Visibility)value != Visibility.Visible);
-        }
-    }
-
-    public sealed class NotNullToVisibleConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (value != null) ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (value is Visibility && (Visibility)value == Visibility.Visible);
-        }
-    }
-
-    public sealed class NullOrEmptyToBooleanConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var text = value as string;
-            return !string.IsNullOrWhiteSpace(text);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
-        }
-    }
-
-    public sealed class NullToBooleanConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value == null;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
         }
     }
 }
