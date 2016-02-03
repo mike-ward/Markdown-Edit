@@ -32,21 +32,21 @@ namespace MarkdownEdit.Controls
         private readonly Action<string> _executeAutoSaveLater;
         private readonly string _f1ForHelp = (string)Translate("editor-f1-for-help");
 
-        public static RoutedCommand DeselectCommand = new RoutedCommand();
-        public static RoutedCommand FormatCommand = new RoutedCommand();
-        public static RoutedCommand FormatWithLinkReferencesCommand = new RoutedCommand();
-        public static RoutedCommand UnformatCommand = new RoutedCommand();
-        public static RoutedCommand PasteSpecialCommand = new RoutedCommand();
-        public static RoutedCommand FindNextCommand = new RoutedCommand();
-        public static RoutedCommand FindPreviousCommand = new RoutedCommand();
-        public static RoutedCommand MoveLineUpCommand = new RoutedCommand();
-        public static RoutedCommand MoveLineDownCommand = new RoutedCommand();
-        public static RoutedCommand ConvertSelectionToListCommand = new RoutedCommand();
-        public static RoutedCommand InsertBlockQuoteCommand = new RoutedCommand();
-        public static RoutedCommand RevertCommand = new RoutedCommand();
-        public static RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
-        public static RoutedCommand InsertHyperlinkDialogCommand = new RoutedCommand();
-        public static RoutedCommand ToggleOverTypeModeCommand = new RoutedCommand();
+        public static readonly RoutedCommand DeselectCommand = new RoutedCommand();
+        public static readonly RoutedCommand FormatCommand = new RoutedCommand();
+        public static readonly RoutedCommand FormatWithLinkReferencesCommand = new RoutedCommand();
+        public static readonly RoutedCommand UnformatCommand = new RoutedCommand();
+        public static readonly RoutedCommand PasteSpecialCommand = new RoutedCommand();
+        public static readonly RoutedCommand FindNextCommand = new RoutedCommand();
+        public static readonly RoutedCommand FindPreviousCommand = new RoutedCommand();
+        public static readonly RoutedCommand MoveLineUpCommand = new RoutedCommand();
+        public static readonly RoutedCommand MoveLineDownCommand = new RoutedCommand();
+        public static readonly RoutedCommand ConvertSelectionToListCommand = new RoutedCommand();
+        public static readonly RoutedCommand InsertBlockQuoteCommand = new RoutedCommand();
+        public static readonly RoutedCommand RevertCommand = new RoutedCommand();
+        public static readonly RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
+        public static readonly RoutedCommand InsertHyperlinkDialogCommand = new RoutedCommand();
+        public static readonly RoutedCommand ToggleOverTypeModeCommand = new RoutedCommand();
 
         public Editor()
         {

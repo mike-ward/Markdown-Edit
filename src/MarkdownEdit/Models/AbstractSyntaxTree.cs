@@ -5,7 +5,7 @@ using CommonMark.Syntax;
 
 namespace MarkdownEdit.Models
 {
-    public class AbstractSyntaxTree
+    public static class AbstractSyntaxTree
     {
         public static readonly Dictionary<BlockTag, Func<Theme, Highlight>> BlockHighlighter = new Dictionary<BlockTag, Func<Theme, Highlight>>
         {
