@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using CommonMark.Syntax;
 using ICSharpCode.AvalonEdit;
@@ -92,6 +93,8 @@ namespace MarkdownEdit.Controls
             var grid = EditBox.GetDescendantByType<Grid>();
             grid.ColumnDefinitions[1].Width = new GridLength(8);
             grid.RowDefinitions[1].Height = new GridLength(8);
+            grid.Children[1].Opacity = 0.3;
+            grid.Children[2].Opacity = 0.3;
         }
 
         private void SetupIndentationCommandBinding()

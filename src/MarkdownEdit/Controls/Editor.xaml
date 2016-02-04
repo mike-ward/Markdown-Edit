@@ -26,12 +26,6 @@
       ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged" />
   </Border>
 
-  <UserControl.Resources>
-    <Style TargetType="{x:Type Thumb}">
-      <Setter Property="Opacity" Value="0.1" />
-    </Style>
-  </UserControl.Resources>
-
   <UserControl.CommandBindings>
     <CommandBinding Command="Find" Executed="ExecuteFindDialog" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.FindNextCommand}" Executed="ExecuteFindNext" />
