@@ -5,45 +5,49 @@
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
   xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
   Title="{i18N:Localize recent-files-title}"
-  WindowStartupLocation="CenterOwner"
-  WindowTitleBrush="{StaticResource GrayBrush2}"
+  Width="700"
+  Height="300"
   GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="CanResizeWithGrip"
-  ShowInTaskbar="False"
-  ShowMinButton="False"
-  ShowMaxRestoreButton="False"
-  WindowTransitionsEnabled="False"
   SaveWindowPosition="True"
-  Height="300"
-  Width="700">
+  ShowInTaskbar="False"
+  ShowMaxRestoreButton="False"
+  ShowMinButton="False"
+  WindowStartupLocation="CenterOwner"
+  WindowTitleBrush="{StaticResource GrayBrush2}"
+  WindowTransitionsEnabled="False">
 
   <DockPanel>
-    <StackPanel Orientation="Horizontal"
-                HorizontalAlignment="Center"
-                Margin="10"
-                DockPanel.Dock="Bottom">
-      <Button Click="OnOpen"
-              TabIndex="2"
-              IsDefault="True"
-              BorderThickness="2"
-              Margin="20 0"
-              Width="100"
-              Content="{i18N:Localize open}" />
-      <Button TabIndex="3"
-              Margin="20 0"
-              Width="100"
-              Click="ClearOnClick"
-              Content="Clear" />
+    <StackPanel
+      Margin="10"
+      HorizontalAlignment="Center"
+      DockPanel.Dock="Bottom"
+      Orientation="Horizontal">
+      <Button
+        Width="100"
+        Margin="20,0"
+        BorderThickness="2"
+        Click="OnOpen"
+        Content="{i18N:Localize open}"
+        IsDefault="True"
+        TabIndex="2" />
+      <Button
+        Width="100"
+        Margin="20,0"
+        Click="ClearOnClick"
+        Content="Clear"
+        TabIndex="3" />
     </StackPanel>
 
-    <ListBox x:Name="FilesListBox"
-             SelectionMode="Single"
-             SelectedIndex="0"
-             Margin="10"
-             MouseLeftButtonUp="OnOpen"
-             TabIndex="1"
-             BorderThickness="1"
-             BorderBrush="{StaticResource ControlBorderBrush}" />
+    <ListBox
+      x:Name="FilesListBox"
+      Margin="10"
+      BorderBrush="{StaticResource ControlBorderBrush}"
+      BorderThickness="1"
+      MouseLeftButtonUp="OnOpen"
+      SelectedIndex="0"
+      SelectionMode="Single"
+      TabIndex="1" />
   </DockPanel>
 
   <Window.CommandBindings>
@@ -51,7 +55,7 @@
   </Window.CommandBindings>
 
   <Window.InputBindings>
-    <KeyBinding Gesture="Esc" Command="Close" />
+    <KeyBinding Command="Close" Gesture="Esc" />
   </Window.InputBindings>
 
 </controls:MetroWindow>

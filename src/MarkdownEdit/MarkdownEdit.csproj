@@ -146,6 +146,9 @@
     <Compile Include="Controls\InsertHyperlinkDialog.xaml.cs">
       <DependentUpon>InsertHyperlinkDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PromptDialog.xaml.cs">
+      <DependentUpon>PromptDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToVisiblityConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToBooleanConverter.cs" />
@@ -247,6 +250,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Controls\Preview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PromptDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

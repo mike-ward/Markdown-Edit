@@ -132,12 +132,12 @@ namespace MarkdownEdit.Controls
 
                 UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
 
-                var name = "Clipboard";
-
+                string name;
                 byte[] image;
 
                 if (UseClipboardImage)
                 {
+                    name = "clipboard";
                     image = Images.ClipboardDibToBitmapSource().ToPngArray();
                 }
                 else
@@ -186,7 +186,21 @@ namespace MarkdownEdit.Controls
         {
             TryIt(droppedFilePath =>
             {
-                var title = Path.GetFileName(droppedFilePath);
+                string title;
+                byte[] image = new byte[0];
+
+                if (UseClipboardImage)
+                {
+                    var name = PromptDialog.Prompt("Save file as (.png appended to name)?");
+                    if (string.IsNullOrWhiteSpace(name)) return;
+                    image = Images.ClipboardDibToBitmapSource().ToPngArray();
+                    title = name + ".png";
+
+                }
+                else
+                {
+                    title = Path.GetFileName(droppedFilePath);
+                }
                 var link = Path.Combine(documentRelativeDestinationPath, title);
                 var destination = Path.Combine(Path.GetDirectoryName(DocumentFileName), link);
                 if (link.Contains(" ")) link = $"<{link}>";
@@ -195,7 +209,10 @@ namespace MarkdownEdit.Controls
                     var message = (string)TranslationProvider.Translate("image-drop-overwrite-file");
                     if (Utility.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
                 }
-                File.Copy(droppedFilePath, destination, true);
+
+                if (UseClipboardImage) File.WriteAllBytes(destination, image);
+                else File.Copy(droppedFilePath, destination, true);
+
                 InsertImageTag(TextEditor, DragEventArgs, link, title);
             });
         }

@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using CommonMark.Syntax;
 using ICSharpCode.AvalonEdit;
@@ -254,6 +253,7 @@ namespace MarkdownEdit.Controls
                     {
                         Owner = Application.Current.MainWindow,
                         TextEditor = EditBox,
+                        DocumentFileName = FileName,
                         UseClipboardImage = true
                     };
                     dialog.ShowDialog();
