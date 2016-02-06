@@ -24,19 +24,12 @@ namespace MarkdownEdit.Controls
         private bool _canceled;
         private bool _useClipboardImage;
         private bool _uploading;
-        private string[] _doumentFolders;
         private string _documentFileName;
 
         public ImageDropDialog()
         {
             InitializeComponent();
             Loaded += OnLoaded;
-        }
-
-        public string[] DoumentFolders
-        {
-            get { return _doumentFolders; }
-            set { Set(ref _doumentFolders, value); }
         }
 
         public string DocumentFileName
@@ -59,8 +52,6 @@ namespace MarkdownEdit.Controls
 
         private void OnLoaded(object sender, EventArgs eventArgs)
         {
-            AsLocalFile.SubmenuOpened += AsLocalFileOnSubmenuOpened;
-
             var position = UseClipboardImage
                 ? TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom)
                 : DragEventArgs.GetPosition(TextEditor);
@@ -68,9 +59,13 @@ namespace MarkdownEdit.Controls
             var screen = TextEditor.PointToScreen(new Point(position.X, position.Y));
             Left = screen.X;
             Top = screen.Y;
+
+            SetDocumentFoldersMenuItems();
+            ContextMenu.Closed += (o, args) => { if (!Uploading) Close(); };
+            Dispatcher.InvokeAsync(() => ContextMenu.IsOpen = true);
         }
 
-        private void AsLocalFileOnSubmenuOpened(object sender, RoutedEventArgs routedEventArgs)
+        private void SetDocumentFoldersMenuItems()
         {
             var directoryName = Path.GetDirectoryName(DocumentFileName);
             if (string.IsNullOrWhiteSpace(directoryName)) throw new Exception("directoryName in ImageDropDialog member is invalid");
@@ -80,7 +75,7 @@ namespace MarkdownEdit.Controls
             var folders = Directory.EnumerateDirectories(directoryName)
                 .Select(d => "." + d.Remove(0, directoryName.Length));
 
-            DoumentFolders = documentFolder.Concat(folders).ToArray();
+            AsLocalFile.ItemsSource = documentFolder.Concat(folders).ToArray();
         }
 
         private string DroppedFilePath()
