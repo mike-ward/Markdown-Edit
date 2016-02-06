@@ -31,18 +31,6 @@ namespace MarkdownEdit.Models
             return ImageBytesToDataUri(bytes, "png");
         }
 
-        public static string BitmapToDataUri(Bitmap bitmap, string imageType)
-        {
-            using (var stream = new MemoryStream())
-            {
-                var codec = GetEncoder(ImageFormat.Png);
-                var encoderParameters = new EncoderParameters(1) { Param = { [0] = new EncoderParameter(Encoder.Quality, 100L) } };
-                bitmap.Save(stream, codec, encoderParameters);
-                stream.Flush();
-                return ImageBytesToDataUri(stream.ToArray(), "png");
-            }
-        }
-
         private static ImageCodecInfo GetEncoder(ImageFormat format)
         {
             var codecs = ImageCodecInfo.GetImageDecoders();
@@ -54,7 +42,7 @@ namespace MarkdownEdit.Models
             return $"<img src=\"data:image/{imageType};base64,{Convert.ToBase64String(bytes)}\" />";
         }
 
-        private static BitmapSource ClipboardDibToBitmapSource()
+        public static BitmapSource ClipboardDibToBitmapSource()
         {
             var ms = Clipboard.GetData("DeviceIndependentBitmap") as MemoryStream;
             if (ms == null) return null;
@@ -84,7 +72,7 @@ namespace MarkdownEdit.Models
             return BitmapFrame.Create(msBitmap); // frees stream when rendered 
         }
 
-        private static byte[] ToPngArray(this BitmapSource bitmapsource)
+        public static byte[] ToPngArray(this BitmapSource bitmapsource)
         {
             using (var outStream = new MemoryStream())
             {

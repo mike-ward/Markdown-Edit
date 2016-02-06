@@ -32,21 +32,21 @@ namespace MarkdownEdit.Controls
         private readonly Action<string> _executeAutoSaveLater;
         private readonly string _f1ForHelp = (string)Translate("editor-f1-for-help");
 
-        public static RoutedCommand DeselectCommand = new RoutedCommand();
-        public static RoutedCommand FormatCommand = new RoutedCommand();
-        public static RoutedCommand FormatWithLinkReferencesCommand = new RoutedCommand();
-        public static RoutedCommand UnformatCommand = new RoutedCommand();
-        public static RoutedCommand PasteSpecialCommand = new RoutedCommand();
-        public static RoutedCommand FindNextCommand = new RoutedCommand();
-        public static RoutedCommand FindPreviousCommand = new RoutedCommand();
-        public static RoutedCommand MoveLineUpCommand = new RoutedCommand();
-        public static RoutedCommand MoveLineDownCommand = new RoutedCommand();
-        public static RoutedCommand ConvertSelectionToListCommand = new RoutedCommand();
-        public static RoutedCommand InsertBlockQuoteCommand = new RoutedCommand();
-        public static RoutedCommand RevertCommand = new RoutedCommand();
-        public static RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
-        public static RoutedCommand InsertHyperlinkDialogCommand = new RoutedCommand();
-        public static RoutedCommand ToggleOverTypeModeCommand = new RoutedCommand();
+        public static readonly RoutedCommand DeselectCommand = new RoutedCommand();
+        public static readonly RoutedCommand FormatCommand = new RoutedCommand();
+        public static readonly RoutedCommand FormatWithLinkReferencesCommand = new RoutedCommand();
+        public static readonly RoutedCommand UnformatCommand = new RoutedCommand();
+        public static readonly RoutedCommand PasteSpecialCommand = new RoutedCommand();
+        public static readonly RoutedCommand FindNextCommand = new RoutedCommand();
+        public static readonly RoutedCommand FindPreviousCommand = new RoutedCommand();
+        public static readonly RoutedCommand MoveLineUpCommand = new RoutedCommand();
+        public static readonly RoutedCommand MoveLineDownCommand = new RoutedCommand();
+        public static readonly RoutedCommand ConvertSelectionToListCommand = new RoutedCommand();
+        public static readonly RoutedCommand InsertBlockQuoteCommand = new RoutedCommand();
+        public static readonly RoutedCommand RevertCommand = new RoutedCommand();
+        public static readonly RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
+        public static readonly RoutedCommand InsertHyperlinkDialogCommand = new RoutedCommand();
+        public static readonly RoutedCommand ToggleOverTypeModeCommand = new RoutedCommand();
 
         public Editor()
         {
@@ -73,6 +73,7 @@ namespace MarkdownEdit.Controls
             {
                 DataObject.AddPastingHandler(EditBox, OnPaste);
                 StyleScrollBar();
+                AllowImagePaste();
                 SetupIndentationCommandBinding();
                 SetupTabSnippetHandler();
                 SetupLineContinuationEnterCommandHandler();
@@ -91,6 +92,8 @@ namespace MarkdownEdit.Controls
             var grid = EditBox.GetDescendantByType<Grid>();
             grid.ColumnDefinitions[1].Width = new GridLength(8);
             grid.RowDefinitions[1].Height = new GridLength(8);
+            grid.Children[1].Opacity = 0.3;
+            grid.Children[2].Opacity = 0.3;
         }
 
         private void SetupIndentationCommandBinding()
@@ -229,6 +232,52 @@ namespace MarkdownEdit.Controls
                     Dispatcher.InvokeAsync(() => OpenFile(files[0]));
                 }
             }
+        }
+
+        private void AllowImagePaste()
+        {
+            // AvalonEdit only allows text paste. Hack the command to allow otherwise.
+            var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.FirstOrDefault(cb => cb.Command == Paste);
+            if (cmd == null) return;
+
+            CanExecuteRoutedEventHandler canExecute = (sender, args) =>
+                args.CanExecute = EditBox.TextArea?.Document != null &&
+                    EditBox.TextArea.ReadOnlySectionProvider.CanInsert(EditBox.TextArea.Caret.Offset);
+
+            ExecutedRoutedEventHandler execute = null;
+            execute = (sender, args) =>
+            {
+                if (Clipboard.ContainsText())
+                {
+                    // WPF won't continue routing the command if there's PreviewExecuted handler.
+                    // So, remove it, call Execute and reinstall the handler.
+                    // Hack, hack hack...
+                    try
+                    {
+                        cmd.PreviewExecuted -= execute;
+                        cmd.Command.Execute(args.Parameter);
+                    }
+                    finally
+                    {
+                        cmd.PreviewExecuted += execute;
+                    }
+                }
+                else if (Clipboard.ContainsImage())
+                {
+                    var dialog = new ImageDropDialog
+                    {
+                        Owner = Application.Current.MainWindow,
+                        TextEditor = EditBox,
+                        DocumentFileName = FileName,
+                        UseClipboardImage = true
+                    };
+                    dialog.ShowDialog();
+                    args.Handled = true;
+                }
+            };
+
+            cmd.CanExecute += canExecute;
+            cmd.PreviewExecuted += execute;
         }
 
         private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)

@@ -122,7 +122,9 @@ insert-hyperlink-optional-title:  titre optiona
 
 === Generic
 
+ok:                               OK
 open:                             Ouvrir
 save:                             Enregistrer
 cancel:                           Annuler
 message-html-clipboard:		        HTML copié dans le presse-papiers
+aslocalfile-save-file-as:         Save file as (.png appended to name)?

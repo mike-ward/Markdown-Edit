@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Rendering;
 using MarkdownEdit.i18n;
@@ -24,8 +22,8 @@ namespace MarkdownEdit.Controls
         public DragEventArgs DragEventArgs { get; set; }
 
         private bool _canceled;
-        private byte[] _image;
-        private string[] _doumentFolders;
+        private bool _useClipboardImage;
+        private bool _uploading;
         private string _documentFileName;
 
         public ImageDropDialog()
@@ -34,45 +32,40 @@ namespace MarkdownEdit.Controls
             Loaded += OnLoaded;
         }
 
-        public byte[] Image
-        {
-            get { return _image; }
-            set { Set(ref _image, value); }
-        }
-
-        public string[] DoumentFolders
-        {
-            get { return _doumentFolders; }
-            set { Set(ref _doumentFolders, value); }
-        }
-
         public string DocumentFileName
         {
             get { return _documentFileName; }
             set { Set(ref _documentFileName, value); }
         }
 
+        public bool Uploading
+        {
+            get { return _uploading; }    
+            set { Set(ref _uploading, value); }
+        }
+
+        public bool UseClipboardImage
+        {
+            get { return _useClipboardImage; }
+            set { Set(ref _useClipboardImage, value); }
+        }
+
         private void OnLoaded(object sender, EventArgs eventArgs)
         {
-            Point position;
-            if (Image == null)
-            {
-                position = DragEventArgs.GetPosition(TextEditor);
-            }
-            else
-            {
-                position = TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom);
-                var clickEvent = new RoutedEventArgs(MenuItem.ClickEvent);
-                ImgurMenuItem.RaiseEvent(clickEvent);
-            }
+            var position = UseClipboardImage
+                ? TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom)
+                : DragEventArgs.GetPosition(TextEditor);
+
             var screen = TextEditor.PointToScreen(new Point(position.X, position.Y));
             Left = screen.X;
             Top = screen.Y;
 
-            AsLocalFile.SubmenuOpened += AsLocalFileOnSubmenuOpened;
+            SetDocumentFoldersMenuItems();
+            ContextMenu.Closed += (o, args) => { if (!Uploading) Close(); };
+            Dispatcher.InvokeAsync(() => ContextMenu.IsOpen = true);
         }
 
-        private void AsLocalFileOnSubmenuOpened(object sender, RoutedEventArgs routedEventArgs)
+        private void SetDocumentFoldersMenuItems()
         {
             var directoryName = Path.GetDirectoryName(DocumentFileName);
             if (string.IsNullOrWhiteSpace(directoryName)) throw new Exception("directoryName in ImageDropDialog member is invalid");
@@ -82,7 +75,7 @@ namespace MarkdownEdit.Controls
             var folders = Directory.EnumerateDirectories(directoryName)
                 .Select(d => "." + d.Remove(0, directoryName.Length));
 
-            DoumentFolders = documentFolder.Concat(folders).ToArray();
+            AsLocalFile.ItemsSource = documentFolder.Concat(folders).ToArray();
         }
 
         private string DroppedFilePath()
@@ -96,7 +89,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                var droppedFilePath = DroppedFilePath();
+                var droppedFilePath = UseClipboardImage ? null : DroppedFilePath();
                 action(droppedFilePath);
             }
             catch (Exception ex)
@@ -134,17 +127,25 @@ namespace MarkdownEdit.Controls
 
                 UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
 
-                var name = "Clipboard";
+                string name;
+                byte[] image;
 
-                if (Image == null)
+                if (UseClipboardImage)
+                {
+                    name = "clipboard";
+                    image = Images.ClipboardDibToBitmapSource().ToPngArray();
+                }
+                else
                 {
                     var path = DroppedFilePath();
                     name = Path.GetFileNameWithoutExtension(path);
-                    Image = File.ReadAllBytes(path);
+                    image = File.ReadAllBytes(path);
                 }
 
-                var link = await new ImageUploadImgur().UploadBytesAsync(Image, progress, completed);
+                Uploading = true;
+                var link = await new ImageUploadImgur().UploadBytesAsync(image, progress, completed);
                 Close();
+
                 if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
                 else Utility.Alert(link);
             }
@@ -159,7 +160,10 @@ namespace MarkdownEdit.Controls
         {
             TryIt(droppedFilePath =>
             {
-                var dataUri = Images.ImageFileToDataUri(droppedFilePath);
+                var dataUri = UseClipboardImage 
+                    ? Images.ClipboardDibToDataUri()
+                    : Images.ImageFileToDataUri(droppedFilePath);
+
                 TextEditor.Document.Insert(GetInsertOffset(TextEditor, DragEventArgs), dataUri);
             });
         }
@@ -177,7 +181,21 @@ namespace MarkdownEdit.Controls
         {
             TryIt(droppedFilePath =>
             {
-                var title = Path.GetFileName(droppedFilePath);
+                string title;
+                byte[] image = new byte[0];
+
+                if (UseClipboardImage)
+                {
+                    var name = PromptDialog.Prompt((string)TranslationProvider.Translate("aslocalfile-save-file-as"));
+                    if (string.IsNullOrWhiteSpace(name)) return;
+                    image = Images.ClipboardDibToBitmapSource().ToPngArray();
+                    title = name + ".png";
+
+                }
+                else
+                {
+                    title = Path.GetFileName(droppedFilePath);
+                }
                 var link = Path.Combine(documentRelativeDestinationPath, title);
                 var destination = Path.Combine(Path.GetDirectoryName(DocumentFileName), link);
                 if (link.Contains(" ")) link = $"<{link}>";
@@ -186,7 +204,10 @@ namespace MarkdownEdit.Controls
                     var message = (string)TranslationProvider.Translate("image-drop-overwrite-file");
                     if (Utility.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
                 }
-                File.Copy(droppedFilePath, destination, true);
+
+                if (UseClipboardImage) File.WriteAllBytes(destination, image);
+                else File.Copy(droppedFilePath, destination, true);
+
                 InsertImageTag(TextEditor, DragEventArgs, link, title);
             });
         }
@@ -234,46 +255,6 @@ namespace MarkdownEdit.Controls
             if (EqualityComparer<T>.Default.Equals(property, value)) return;
             property = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    public sealed class NullToVisibleConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (value == null) ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (!(value is Visibility) || (Visibility)value != Visibility.Visible);
-        }
-    }
-
-    public sealed class NotNullToVisibleConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (value != null) ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return (value is Visibility && (Visibility)value == Visibility.Visible);
-        }
-    }
-
-    public sealed class NullOrEmptyToBooleanConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var text = value as string;
-            return !string.IsNullOrWhiteSpace(text);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
         }
     }
 }
