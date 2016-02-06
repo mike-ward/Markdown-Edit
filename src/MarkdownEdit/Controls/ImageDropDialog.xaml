@@ -31,9 +31,9 @@
   <Window.ContextMenu>
     <ContextMenu StaysOpen="True">
       <MenuItem
+        x:Name="InsertPathMenuItem"
         Click="OnInsertPath"
         Header="{i18N:Localize image-drop-insert-path}"
-        IsEnabled="{Binding UseClipboardImage, Converter={StaticResource InverseBooleanConverter}}"
         StaysOpenOnClick="True">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE167;</TextBlock>
@@ -59,9 +59,8 @@
       </MenuItem>
 
       <MenuItem
-        x:Name="AsLocalFile"
+        x:Name="AsLocalFileMenuItem"
         Header="{i18N:Localize image-drop-as-local-file}"
-        IsEnabled="{Binding DocumentFileName, Converter={StaticResource NullOrEmptyToBooleanConverter}}"
         StaysOpenOnClick="True">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16F;</TextBlock>

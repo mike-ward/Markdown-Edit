@@ -61,12 +61,15 @@ namespace MarkdownEdit.Controls
             Top = screen.Y;
 
             SetDocumentFoldersMenuItems();
+            InsertPathMenuItem.IsEnabled = !UseClipboardImage;
+            AsLocalFileMenuItem.IsEnabled = !string.IsNullOrWhiteSpace(DocumentFileName);
             ContextMenu.Closed += (o, args) => { if (!Uploading) Close(); };
             Dispatcher.InvokeAsync(() => ContextMenu.IsOpen = true);
         }
 
         private void SetDocumentFoldersMenuItems()
         {
+            if (string.IsNullOrWhiteSpace(DocumentFileName)) return;
             var directoryName = Path.GetDirectoryName(DocumentFileName);
             if (string.IsNullOrWhiteSpace(directoryName)) throw new Exception("directoryName in ImageDropDialog member is invalid");
 
@@ -75,7 +78,7 @@ namespace MarkdownEdit.Controls
             var folders = Directory.EnumerateDirectories(directoryName)
                 .Select(d => "." + d.Remove(0, directoryName.Length));
 
-            AsLocalFile.ItemsSource = documentFolder.Concat(folders).ToArray();
+            AsLocalFileMenuItem.ItemsSource = documentFolder.Concat(folders).ToArray();
         }
 
         private string DroppedFilePath()
