@@ -40,7 +40,7 @@ namespace MarkdownEdit.Controls
 
         public bool Uploading
         {
-            get { return _uploading; }    
+            get { return _uploading; }
             set { Set(ref _uploading, value); }
         }
 
@@ -61,12 +61,15 @@ namespace MarkdownEdit.Controls
             Top = screen.Y;
 
             SetDocumentFoldersMenuItems();
+            InsertPathMenuItem.IsEnabled = !UseClipboardImage;
+            AsLocalFileMenuItem.IsEnabled = !string.IsNullOrWhiteSpace(DocumentFileName);
             ContextMenu.Closed += (o, args) => { if (!Uploading) Close(); };
             Dispatcher.InvokeAsync(() => ContextMenu.IsOpen = true);
         }
 
         private void SetDocumentFoldersMenuItems()
         {
+            if (string.IsNullOrWhiteSpace(DocumentFileName)) return;
             var directoryName = Path.GetDirectoryName(DocumentFileName);
             if (string.IsNullOrWhiteSpace(directoryName)) throw new Exception("directoryName in ImageDropDialog member is invalid");
 
@@ -75,7 +78,7 @@ namespace MarkdownEdit.Controls
             var folders = Directory.EnumerateDirectories(directoryName)
                 .Select(d => "." + d.Remove(0, directoryName.Length));
 
-            AsLocalFile.ItemsSource = documentFolder.Concat(folders).ToArray();
+            AsLocalFileMenuItem.ItemsSource = documentFolder.Concat(folders).ToArray();
         }
 
         private string DroppedFilePath()
@@ -160,7 +163,7 @@ namespace MarkdownEdit.Controls
         {
             TryIt(droppedFilePath =>
             {
-                var dataUri = UseClipboardImage 
+                var dataUri = UseClipboardImage
                     ? Images.ClipboardDibToDataUri()
                     : Images.ImageFileToDataUri(droppedFilePath);
 
@@ -182,7 +185,7 @@ namespace MarkdownEdit.Controls
             TryIt(droppedFilePath =>
             {
                 string title;
-                byte[] image = new byte[0];
+                var image = new byte[0];
 
                 if (UseClipboardImage)
                 {
@@ -190,7 +193,6 @@ namespace MarkdownEdit.Controls
                     if (string.IsNullOrWhiteSpace(name)) return;
                     image = Images.ClipboardDibToBitmapSource().ToPngArray();
                     title = name + ".png";
-
                 }
                 else
                 {
