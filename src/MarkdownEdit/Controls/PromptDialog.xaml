@@ -22,6 +22,7 @@
     <TextBlock
       x:Name="QuestionText"
       Margin="5"
+      FontSize="16"
       Text="?" />
     <TextBox x:Name="Response" Margin="5" />
     <StackPanel
