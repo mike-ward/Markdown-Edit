@@ -33,12 +33,12 @@
         Width="75"
         Margin="5"
         Click="OkClick"
-        Content="_Ok"
+        Content="{i18N:Localize ok}"
         IsDefault="True" />
       <Button
         Width="75"
         Margin="5"
-        Content="_Cancel"
+        Content="{i18N:Localize cancel}"
         IsCancel="True" />
     </StackPanel>
   </StackPanel>

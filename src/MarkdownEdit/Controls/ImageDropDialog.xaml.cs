@@ -186,7 +186,7 @@ namespace MarkdownEdit.Controls
 
                 if (UseClipboardImage)
                 {
-                    var name = PromptDialog.Prompt("Save file as (.png appended to name)?");
+                    var name = PromptDialog.Prompt((string)TranslationProvider.Translate("aslocalfile-save-file-as"));
                     if (string.IsNullOrWhiteSpace(name)) return;
                     image = Images.ClipboardDibToBitmapSource().ToPngArray();
                     title = name + ".png";
