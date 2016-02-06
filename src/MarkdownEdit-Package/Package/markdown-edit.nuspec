@@ -3,7 +3,7 @@
   <metadata>
     <id>markdown-edit</id>
     <title>Markdown Edit</title>
-    <version>1.22.1</version>
+    <version>1.23</version>
     <authors>Mike Ward</authors>
     <owners>Mike Ward</owners>
     <summary>Desktop CommonMark Editor for Windows</summary>
@@ -13,7 +13,7 @@
     <licenseUrl>https://cdn.rawgit.com/mike-ward/Markdown-Edit/master/LICENSE.txt</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <iconUrl>https://cdn.rawgit.com/mike-ward/Markdown-Edit/master/src/MarkdownEdit/logo.png</iconUrl>
-    <releaseNotes>Sync scroll enhancements, German translation</releaseNotes>
+    <releaseNotes>Paste from clipboard</releaseNotes>
     <dependencies>
       <dependency id="DotNet4.6" />
     </dependencies>
