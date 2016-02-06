@@ -52,9 +52,9 @@
 
       <MenuItem
         x:Name="AsLocalFile"
-        StaysOpenOnClick="True"
         Header="{i18N:Localize image-drop-as-local-file}"
-        IsEnabled="{Binding DocumentFileName, Converter={StaticResource NullOrEmptyToBooleanConverter}}">
+        IsEnabled="{Binding DocumentFileName, Converter={StaticResource NullOrEmptyToBooleanConverter}}"
+        StaysOpenOnClick="True">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16F;</TextBlock>
         </MenuItem.Icon>
@@ -77,12 +77,15 @@
     </ContextMenu>
   </Window.ContextMenu>
 
-  <Grid Margin="7,5" VerticalAlignment="Center">
-
+  <Border
+    BorderThickness="1"
+    Background="{DynamicResource WindowBackgroundBrush}"
+    BorderBrush="{DynamicResource TextBoxBorderBrush}"
+    Visibility="{Binding Uploading, Converter={StaticResource BooleanToVisiblityConverter}}">
     <StackPanel
+      Margin="4"
       VerticalAlignment="Center"
-      Orientation="Horizontal"
-      Visibility="{Binding Uploading, Converter={StaticResource BooleanToVisiblityConverter}}">
+      Orientation="Horizontal">
       <controls:MetroProgressBar
         x:Name="ProgressBar"
         Width="90"
@@ -94,6 +97,5 @@
         Click="OnCancel"
         Content="{i18N:Localize cancel}" />
     </StackPanel>
-
-  </Grid>
+  </Border>
 </Window>
