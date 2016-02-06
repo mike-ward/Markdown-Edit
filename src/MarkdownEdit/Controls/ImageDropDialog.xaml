@@ -23,6 +23,7 @@
 
     <Style x:Key="MenuIconStyle" TargetType="TextBlock">
       <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+      <Setter Property="Margin" Value="5 0 0 0"></Setter>
     </Style>
 
   </Window.Resources>
@@ -32,19 +33,26 @@
       <MenuItem
         Click="OnInsertPath"
         Header="{i18N:Localize image-drop-insert-path}"
-        IsEnabled="{Binding UseClipboardImage, Converter={StaticResource InverseBooleanConverter}}">
+        IsEnabled="{Binding UseClipboardImage, Converter={StaticResource InverseBooleanConverter}}"
+        StaysOpenOnClick="True">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE167;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem Click="OnUploadToImgur" Header="{i18N:Localize image-drop-upload-imgur}">
+      <MenuItem
+        Click="OnUploadToImgur"
+        Header="{i18N:Localize image-drop-upload-imgur}"
+        StaysOpenOnClick="True">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE158;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem Click="OnInsertDataUri" Header="{i18N:Localize image-drop-as-data-uri}">
+      <MenuItem
+        Click="OnInsertDataUri"
+        Header="{i18N:Localize image-drop-as-data-uri}"
+        StaysOpenOnClick="True">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16C;</TextBlock>
         </MenuItem.Icon>
@@ -63,6 +71,11 @@
             <Setter Property="Header" Value="{Binding}" />
             <EventSetter Event="Click" Handler="FolderMenuItemClicked" />
             <Setter Property="Padding" Value="5" />
+            <Setter Property="Icon">
+              <Setter.Value>
+                <TextBlock Style="{StaticResource MenuIconStyle}">&#xE19C;</TextBlock>
+              </Setter.Value>
+            </Setter>
           </Style>
         </MenuItem.ItemContainerStyle>
       </MenuItem>
@@ -78,9 +91,9 @@
   </Window.ContextMenu>
 
   <Border
-    BorderThickness="1"
     Background="{DynamicResource WindowBackgroundBrush}"
     BorderBrush="{DynamicResource TextBoxBorderBrush}"
+    BorderThickness="1"
     Visibility="{Binding Uploading, Converter={StaticResource BooleanToVisiblityConverter}}">
     <StackPanel
       Margin="4"
