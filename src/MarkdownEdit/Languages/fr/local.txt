@@ -65,9 +65,10 @@ settings-open-snippets:           Snippets
 settings-open-key-bindings:       Raccourcis clavier
 
 settings-about:                   Sur
-settings-version:				  Version
-settings-web:					  Web
-settings-source:				  Source
+settings-version:				          Version
+settings-web:					            Web
+settings-source:				          Source
+settings-donate:				          Faire don
 
 === Find Replace Dialog
 

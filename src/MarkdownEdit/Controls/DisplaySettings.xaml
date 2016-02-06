@@ -144,6 +144,16 @@
             </Hyperlink>
           </TextBlock>
         </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Style="{StaticResource AboutLabelStyle}"  Text="{i18N:Localize settings-donate}" />
+          <TextBlock>
+            <Hyperlink NavigateUri="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=XGGZ8BEED7R62"
+                       Style="{StaticResource HyperlinkStyle}"
+                       RequestNavigate="HyperlinkOnRequestNavigate">
+              PayPal
+            </Hyperlink>
+          </TextBlock>
+        </StackPanel>
       </StackPanel>
 
     </StackPanel>

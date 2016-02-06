@@ -67,7 +67,8 @@ settings-open-key-bindings:       Tastatur bindinger
 settings-about:                   Om
 settings-version:				          Version
 settings-web:					            Web
-settings-source:				            Kildekode
+settings-source:				          Kildekode
+settings-donate:				          Donér
 
 === Find Replace Dialog
 
