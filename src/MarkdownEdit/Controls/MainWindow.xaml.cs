@@ -148,6 +148,9 @@ namespace MarkdownEdit.Controls
             Editor.CloseHelp();
             DisplaySettings.SaveIfModified();
             cancelEventArgs.Cancel = !Editor.SaveIfModified();
+            if (cancelEventArgs.Cancel || App.UserSettings.YesIDonated) return;
+            var donate = new Donate {Owner = Application.Current.MainWindow};
+            donate.ShowDialog();
         }
 
         private void EditorOnPropertyChanged(object sender, PropertyChangedEventArgs ea)
