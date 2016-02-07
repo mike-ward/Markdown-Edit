@@ -43,7 +43,7 @@
         Header="{i18N:Localize image-drop-upload-imgur}"
         StaysOpenOnClick="True">
         <MenuItem.Icon>
-          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE158;</TextBlock>
+          <TextBlock Style="{StaticResource MenuIconStyle}">&#x1f301;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
@@ -52,7 +52,7 @@
         Header="{i18N:Localize image-drop-as-data-uri}"
         StaysOpenOnClick="True">
         <MenuItem.Icon>
-          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16C;</TextBlock>
+          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16D;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
