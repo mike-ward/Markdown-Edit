@@ -134,6 +134,9 @@
     <Compile Include="Controls\DisplaySettings.xaml.cs">
       <DependentUpon>DisplaySettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Donate.xaml.cs">
+      <DependentUpon>Donate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FadingPopupControl.xaml.cs">
       <DependentUpon>FadingPopupControl.xaml</DependentUpon>
     </Compile>
@@ -205,6 +208,10 @@
     <Compile Include="Models\UserTemplate.cs" />
     <Compile Include="Models\Utility.cs" />
     <Page Include="Controls\DisplaySettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Donate.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Editor.xaml">
@@ -286,6 +293,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\donate.png" />
     <Resource Include="SpellCheck\Dictionaries\Russian.txt" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

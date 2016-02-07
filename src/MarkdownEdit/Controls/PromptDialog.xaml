@@ -10,7 +10,6 @@
   Height="160"
   GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="NoResize"
-  SaveWindowPosition="True"
   ShowInTaskbar="False"
   ShowMaxRestoreButton="False"
   ShowMinButton="False"

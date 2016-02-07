@@ -90,6 +90,9 @@ namespace MarkdownEdit.Models
 
         public static bool SaveIfModified(Editor editor)
         {
+            var donate = new Donate {Owner = Application.Current.MainWindow};
+            donate.ShowDialog();
+
             if (editor.IsModified == false) return true;
 
             var result = Utility.ConfirmYesNoCancel("Save your changes?");
