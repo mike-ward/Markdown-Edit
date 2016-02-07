@@ -69,6 +69,7 @@ settings-version:				          Versión
 settings-web:					            Web
 settings-source:				          Fuente
 settings-donate:				          Donar
+settings-yes-i-donated:           Yes, I Donated!
 
 === Find Replace Dialog
 

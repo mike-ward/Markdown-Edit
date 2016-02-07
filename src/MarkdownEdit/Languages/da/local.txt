@@ -69,6 +69,7 @@ settings-version:				          Version
 settings-web:					            Web
 settings-source:				          Kildekode
 settings-donate:				          Donér
+settings-yes-i-donated:           Yes, I Donated!
 
 === Find Replace Dialog
 

@@ -35,6 +35,7 @@ namespace MarkdownEdit.Models
         private string _lineEnding = "crlf";
         private string _customMarkdownConverter = "";
         private bool _useDefaultEditor;
+        private bool _yesIDonated;
 
         public Theme Theme
         {
@@ -174,6 +175,12 @@ namespace MarkdownEdit.Models
             set { Set(ref _lineEnding, value); }
         }
 
+        public bool YesIDonated
+        {
+            get { return _yesIDonated; }
+            set { Set(ref _yesIDonated, value); }
+        }
+
         [JsonIgnore]
         public Tuple<string, string>[] LineEndings => new[]
         {
@@ -227,7 +234,7 @@ namespace MarkdownEdit.Models
             {
                 if (File.Exists(SettingsFile) == false)
                 {
-                    var defaultSettings = new UserSettings {Theme = new Theme()};
+                    var defaultSettings = new UserSettings { Theme = new Theme() };
                     defaultSettings.Save();
                 }
                 return JsonConvert.DeserializeObject<UserSettings>(SettingsFile.ReadAllTextRetry());
@@ -289,7 +296,8 @@ namespace MarkdownEdit.Models
                 ^ SinglePaneMargin.GetHashCode()
                 ^ LineEnding.GetHashCode()
                 ^ CustomMarkdownConverter.GetHashCode()
-                ^ UseDefaultEditor.GetHashCode();
+                ^ UseDefaultEditor.GetHashCode()
+                ^ YesIDonated.GetHashCode();
         }
     }
 }
