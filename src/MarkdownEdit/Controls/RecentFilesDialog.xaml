@@ -44,13 +44,68 @@
       Margin="10"
       BorderBrush="{StaticResource ControlBorderBrush}"
       BorderThickness="1"
-      MouseLeftButtonUp="OnOpen"
       SelectedIndex="0"
       SelectionMode="Single"
-      TabIndex="1" />
+      TabIndex="1">
+
+      <ListBox.Resources>
+        <Style x:Key="RemoveButtonStyle" TargetType="TextBlock">
+          <Setter Property="Padding" Value="6,0" />
+          <Setter Property="Cursor" Value="Hand" />
+        </Style>
+      </ListBox.Resources>
+
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <DockPanel>
+            <TextBlock
+              Style="{StaticResource RemoveButtonStyle}"
+              DockPanel.Dock="Right"
+              Text="X">
+              <TextBlock.InputBindings>
+                <MouseBinding
+                  Command="Cut"
+                  CommandParameter="{Binding}"
+                  MouseAction="LeftClick" />
+              </TextBlock.InputBindings>
+            </TextBlock>
+            <TextBlock Text="{Binding}">
+              <TextBlock.InputBindings>
+                <MouseBinding
+                  Command="Open"
+                  CommandParameter="{Binding}"
+                  MouseAction="LeftClick" />
+              </TextBlock.InputBindings>
+            </TextBlock>
+          </DockPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+
+      <ListBox.ItemContainerStyle>
+        <Style TargetType="{x:Type ListBoxItem}">
+          <Style.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+              <EventTrigger.Actions>
+                <BeginStoryboard>
+                  <Storyboard>
+                    <DoubleAnimation
+                      Duration="0:0:0.2"
+                      From="0"
+                      Storyboard.TargetProperty="Opacity"
+                      To="1" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger.Actions>
+            </EventTrigger>
+          </Style.Triggers>
+        </Style>
+      </ListBox.ItemContainerStyle>
+    </ListBox>
   </DockPanel>
 
   <Window.CommandBindings>
+    <CommandBinding Command="Open" Executed="OpenFileCommandHander"></CommandBinding>
+    <CommandBinding Command="Cut" Executed="RemoveFromRecentFiles" />
     <CommandBinding Command="Close" Executed="ExecuteClose" />
   </Window.CommandBindings>
 

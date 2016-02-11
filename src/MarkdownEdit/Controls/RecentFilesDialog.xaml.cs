@@ -34,7 +34,11 @@ namespace MarkdownEdit.Controls
         {
             IsVisibleChanged -= OnIsVisibleChanged;
             FilesListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
+            SetItemsSource();
+        }
 
+        private void SetItemsSource()
+        {
             var kb = new[] {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
             FilesListBox.ItemsSource = Settings.Default.RecentFiles?.Cast<string>()
                 .Select((f, i) => new RecentFile
@@ -71,6 +75,11 @@ namespace MarkdownEdit.Controls
 
         private void OnOpen(object sender, RoutedEventArgs e)
         {
+            OpenFile();
+        }
+
+        private void OpenFile()
+        {
             var file = FilesListBox.SelectedItem as RecentFile;
             if (file == null) return;
             ApplicationCommands.Open.Execute(file.FileName, Application.Current.MainWindow);
@@ -97,6 +106,20 @@ namespace MarkdownEdit.Controls
             sc.AddRange(files.Take(19).ToArray());
             sc.Insert(0, file.AddOffsetToFileName(offset));
             Settings.Default.RecentFiles = sc;
+        }
+
+        private void RemoveFromRecentFiles(object sender, ExecutedRoutedEventArgs e)
+        {
+            var recentFile = e.Parameter as RecentFile;
+            if (recentFile == null) return;
+            var recent = Settings.Default.RecentFiles ?? new StringCollection();
+            recent.Remove(recentFile.FileName);
+            SetItemsSource();
+        }
+
+        private void OpenFileCommandHander(object sender, ExecutedRoutedEventArgs e)
+        {
+            OpenFile();
         }
     }
 }
