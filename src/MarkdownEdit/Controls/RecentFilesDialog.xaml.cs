@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using MarkdownEdit.i18n;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 
@@ -82,6 +84,11 @@ namespace MarkdownEdit.Controls
         {
             var file = FilesListBox.SelectedItem as RecentFile;
             if (file == null) return;
+            if (File.Exists(file.FileName.StripOffsetFromFileName()) == false)
+            {
+                Utility.Alert((string)TranslationProvider.Translate("recent-file-not-found"), this);
+                return;
+            }
             ApplicationCommands.Open.Execute(file.FileName, Application.Current.MainWindow);
             ApplicationCommands.Close.Execute(null, this);
         }
@@ -117,9 +124,10 @@ namespace MarkdownEdit.Controls
             SetItemsSource();
         }
 
-        private void OpenFileCommandHander(object sender, ExecutedRoutedEventArgs e)
+        private void OnSelected(object sender, RoutedEventArgs e)
         {
-            OpenFile();
+            var listBox = e.OriginalSource as ListBox;
+            if (listBox != null && listBox.IsMouseCaptureWithin) OpenFile();
         }
     }
 }

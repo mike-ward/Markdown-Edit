@@ -95,28 +95,24 @@ namespace MarkdownEdit.Models
             {
                 var visual = VisualTreeHelper.GetChild(element, i) as Visual;
                 foundElement = visual.GetDescendantByType<T>();
-                if (foundElement != null)
-                {
-                    break;
-                }
+                if (foundElement != null) break;
             }
             return foundElement;
         }
 
-        public static void Alert(string alert) => Show(alert, MessageBoxButton.OK, MessageBoxImage.Error);
+        public static void Alert(string alert, Window owner = null) => Show(alert, MessageBoxButton.OK, MessageBoxImage.Error, owner);
 
-        // public static void Notify(string message) => Show(message, MessageBoxButton.OK, MessageBoxImage.Information);
+        public static MessageBoxResult ConfirmYesNo(string question, Window owner = null) => Show(question, MessageBoxButton.YesNo, MessageBoxImage.Question, owner);
 
-        public static MessageBoxResult ConfirmYesNo(string question) => Show(question, MessageBoxButton.YesNo, MessageBoxImage.Question);
+        public static MessageBoxResult ConfirmYesNoCancel(string question, Window owner = null) => Show(question, MessageBoxButton.YesNoCancel, MessageBoxImage.Question, owner);
 
-        public static MessageBoxResult ConfirmYesNoCancel(string question) => Show(question, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-
-        private static MessageBoxResult Show(string message, MessageBoxButton button, MessageBoxImage image)
+        private static MessageBoxResult Show(string message, MessageBoxButton button, MessageBoxImage image, Window owner)
         {
             var text = message ?? "null";
+            var window = owner ?? Application.Current.MainWindow;
 
-            return Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow != null
-                ? MessageBox.Show(Application.Current.MainWindow, text, App.Title, button, image)
+            return Application.Current.Dispatcher.Invoke(() => window != null
+                ? MessageBox.Show(window, text, App.Title, button, image)
                 : MessageBox.Show(text, App.Title, button, image));
         }
 

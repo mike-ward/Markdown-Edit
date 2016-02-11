@@ -45,6 +45,7 @@
       BorderBrush="{StaticResource ControlBorderBrush}"
       BorderThickness="1"
       SelectedIndex="0"
+      SelectionChanged="OnSelected"
       SelectionMode="Single"
       TabIndex="1">
 
@@ -52,16 +53,16 @@
         <Style x:Key="RemoveButtonStyle" TargetType="TextBlock">
           <Setter Property="Padding" Value="6,0" />
           <Setter Property="Cursor" Value="Hand" />
+          <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+          <Setter Property="Text" Value="&#xE106;" />
+          <Setter Property="DockPanel.Dock" Value="Right" />
         </Style>
       </ListBox.Resources>
 
       <ListBox.ItemTemplate>
         <DataTemplate>
           <DockPanel>
-            <TextBlock
-              Style="{StaticResource RemoveButtonStyle}"
-              DockPanel.Dock="Right"
-              Text="X">
+            <TextBlock Style="{StaticResource RemoveButtonStyle}">
               <TextBlock.InputBindings>
                 <MouseBinding
                   Command="Cut"
@@ -69,14 +70,7 @@
                   MouseAction="LeftClick" />
               </TextBlock.InputBindings>
             </TextBlock>
-            <TextBlock Text="{Binding}">
-              <TextBlock.InputBindings>
-                <MouseBinding
-                  Command="Open"
-                  CommandParameter="{Binding}"
-                  MouseAction="LeftClick" />
-              </TextBlock.InputBindings>
-            </TextBlock>
+            <TextBlock Text="{Binding}" />
           </DockPanel>
         </DataTemplate>
       </ListBox.ItemTemplate>
@@ -104,7 +98,6 @@
   </DockPanel>
 
   <Window.CommandBindings>
-    <CommandBinding Command="Open" Executed="OpenFileCommandHander"></CommandBinding>
     <CommandBinding Command="Cut" Executed="RemoveFromRecentFiles" />
     <CommandBinding Command="Close" Executed="ExecuteClose" />
   </Window.CommandBindings>

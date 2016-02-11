@@ -101,6 +101,7 @@ image-drop-overwrite-file:        Le fichier existe déjà. Écraser?
 === Recent Files Dialog
 
 recent-files-title:               Fichiers récents
+recent-file-not-found:            No dossier existe plus
 
 === Themes Dialog
 

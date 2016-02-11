@@ -101,6 +101,7 @@ image-drop-overwrite-file:        Die Datei existiert bereits. Überschreiben?
 === Recent Files Dialog
 
 recent-files-title:               Zuletzt verwendete Dateien
+recent-file-not-found:            Datei existiert nicht mehr
 
 === Themes Dialog
 
