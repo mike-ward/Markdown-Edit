@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MarkdownEdit.MarkdownConverters;
@@ -387,6 +389,33 @@ namespace MarkdownEdit.Controls
             if (EqualityComparer<T>.Default.Equals(property, value)) return;
             property = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        // Old School
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            var source = PresentationSource.FromVisual(this) as HwndSource;
+            source?.AddHook(WndProc);
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            var source = PresentationSource.FromVisual(this) as HwndSource;
+            source?.RemoveHook(WndProc);
+            base.OnClosing(e);
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == 0x4A /* WM_COPYDATA */)
+            {
+                handled = true;
+                var filename = OldSchool.CopyDataStructToString(lParam);
+                return Editor.FileName.Equals(filename, StringComparison.OrdinalIgnoreCase) ? new IntPtr(1) : IntPtr.Zero;
+            }
+            return IntPtr.Zero;
         }
     }
 }

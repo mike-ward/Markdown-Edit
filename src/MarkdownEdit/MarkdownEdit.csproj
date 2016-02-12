@@ -131,8 +131,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\LineContinuationEnterCommand.cs" />
+    <Compile Include="Controls\DisplayDocumentOutlineViewModel.cs" />
     <Compile Include="Controls\DisplaySettings.xaml.cs">
       <DependentUpon>DisplaySettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DisplayDocumentOutline.xaml.cs">
+      <DependentUpon>DisplayDocumentOutline.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Donate.xaml.cs">
       <DependentUpon>Donate.xaml</DependentUpon>
@@ -170,6 +174,7 @@
     <Compile Include="MarkdownConverters\IMarkdownConverter.cs" />
     <Compile Include="Models\AbstractSyntaxTree.cs" />
     <Compile Include="Models\BlockBackgroundRenderer.cs" />
+    <Compile Include="Models\DocumentOutline.cs" />
     <Compile Include="Models\EditorSpellCheck.cs" />
     <Compile Include="Models\EditorUtilities.cs" />
     <Compile Include="Models\EditorState.cs" />
@@ -190,6 +195,7 @@
     <Compile Include="Models\EditorLoadSave.cs" />
     <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
     <Compile Include="Commands\SnippetTabCommand.cs" />
+    <Compile Include="Models\OldSchool.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Snippets\ISnippetManager.cs" />
     <Compile Include="Snippets\SnippetManager.cs" />
@@ -208,6 +214,10 @@
     <Compile Include="Models\UserTemplate.cs" />
     <Compile Include="Models\Utility.cs" />
     <Page Include="Controls\DisplaySettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DisplayDocumentOutline.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Donate.xaml">
