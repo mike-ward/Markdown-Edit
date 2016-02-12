@@ -175,12 +175,6 @@ namespace MarkdownEdit.Models
             set { Set(ref _lineEnding, value); }
         }
 
-        public bool YesIDonated
-        {
-            get { return _yesIDonated; }
-            set { Set(ref _yesIDonated, value); }
-        }
-
         [JsonIgnore]
         public Tuple<string, string>[] LineEndings => new[]
         {
@@ -199,6 +193,12 @@ namespace MarkdownEdit.Models
         {
             get { return _useDefaultEditor; }
             set { Set(ref _useDefaultEditor, value); }
+        }
+
+        public bool YesIDonated
+        {
+            get { return _yesIDonated; }
+            set { Set(ref _yesIDonated, value); }
         }
 
         public void Update()
