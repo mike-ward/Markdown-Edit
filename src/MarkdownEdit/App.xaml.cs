@@ -32,15 +32,9 @@ namespace MarkdownEdit
 
         private void OnStartup(object sender, StartupEventArgs ea)
         {
-            if (AlreadyEditingFileInProcess())
-            {
-                Shutdown();
-                return;
-            }
-
             InitializeSettings();
 
-            if (UserSettings == null)
+            if (UserSettings == null || AlreadyEditingFileInProcess())
             {
                 Shutdown();
                 return;
@@ -66,7 +60,9 @@ namespace MarkdownEdit
 
         private static bool AlreadyEditingFileInProcess()
         {
-            var fileName = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault();
+            var fileName = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
+                ?? (UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
+
             if (string.IsNullOrWhiteSpace(fileName)) return false;
             var currentProcess = Process.GetCurrentProcess();
 
