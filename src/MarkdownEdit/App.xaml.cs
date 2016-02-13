@@ -1,4 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using MarkdownEdit.Controls;
@@ -15,14 +19,28 @@ namespace MarkdownEdit
         private FileSystemWatcher _userSettingsWatcher;
         private ISpellingService _spellingService;
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll")]
+        private static extern bool IsIconic(IntPtr hWnd);
+
         public static UserSettings UserSettings { get; private set; }
 
         private void OnStartup(object sender, StartupEventArgs ea)
         {
             InitializeSettings();
-            if (UserSettings == null) return;
-            Activated += OnActivated;
 
+            if (UserSettings == null || AlreadyEditingFileInProcess())
+            {
+                Shutdown();
+                return;
+            }
+
+            Activated += OnActivated;
             _spellingService = new SpellingService();
             var spellCheckProvider = new SpellCheckProvider(_spellingService);
             var snippetManager = new SnippetManager();
@@ -40,7 +58,27 @@ namespace MarkdownEdit
             MainWindow.Show();
         }
 
-        private void InitializeSettings()
+        private static bool AlreadyEditingFileInProcess()
+        {
+            var fileName = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
+                ?? (UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
+
+            if (string.IsNullOrWhiteSpace(fileName)) return false;
+            var currentProcess = Process.GetCurrentProcess();
+
+            foreach (var process in Process.GetProcessesByName(currentProcess.ProcessName)
+                .Where(p => p.Id != currentProcess.Id)
+                .Where(p => OldSchool.IsEditingFile(p, fileName)))
+            {
+                if (IsIconic(process.MainWindowHandle)) ShowWindowAsync(process.MainWindowHandle, 9 /* SW_RESTORE */);
+                SetForegroundWindow(process.MainWindowHandle);
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void InitializeSettings()
         {
             if (Settings.Default.UpgradeSettings)
             {
@@ -53,10 +91,9 @@ namespace MarkdownEdit
             }
 
             UserSettings = UserSettings.Load();
-            if (UserSettings == null) Shutdown();
         }
 
-        private void OnActivated(object sender, System.EventArgs ea)
+        private void OnActivated(object sender, EventArgs ea)
         {
             Activated -= OnActivated;
             Task.Factory.StartNew(() =>

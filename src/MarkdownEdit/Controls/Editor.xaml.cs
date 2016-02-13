@@ -340,10 +340,16 @@ namespace MarkdownEdit.Controls
             var isSelectedText = !string.IsNullOrEmpty(EditBox.SelectedText) && !forceAllText.GetValueOrDefault(false);
             var originalText = isSelectedText ? EditBox.SelectedText : EditBox.Document.Text;
             var formattedText = converter(originalText);
-            if (string.CompareOrdinal(formattedText, originalText) != 0)
+            if (string.CompareOrdinal(formattedText, originalText) == 0) return;
+            if (isSelectedText)
             {
-                if (isSelectedText) EditBox.SelectedText = formattedText;
-                else EditBox.Document.Text = formattedText;
+                EditBox.SelectedText = formattedText;
+            }
+            else
+            {
+                var start = EditBox.SelectionStart;
+                EditBox.Document.Text = formattedText;
+                EditBox.SelectionStart = start;
             }
         }
 

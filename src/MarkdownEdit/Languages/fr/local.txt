@@ -65,9 +65,11 @@ settings-open-snippets:           Snippets
 settings-open-key-bindings:       Raccourcis clavier
 
 settings-about:                   Sur
-settings-version:				  Version
-settings-web:					  Web
-settings-source:				  Source
+settings-version:				          Version
+settings-web:					            Web
+settings-source:				          Source
+settings-donate:				          Faire don
+settings-yes-i-donated:           Yes, I Donated!
 
 === Find Replace Dialog
 
@@ -99,6 +101,7 @@ image-drop-overwrite-file:        Le fichier existe déjà. Écraser?
 === Recent Files Dialog
 
 recent-files-title:               Fichiers récents
+recent-file-not-found:            No dossier existe plus
 
 === Themes Dialog
 

@@ -40,7 +40,7 @@ namespace MarkdownEdit.Controls
 
         public bool Uploading
         {
-            get { return _uploading; }    
+            get { return _uploading; }
             set { Set(ref _uploading, value); }
         }
 
@@ -163,7 +163,7 @@ namespace MarkdownEdit.Controls
         {
             TryIt(droppedFilePath =>
             {
-                var dataUri = UseClipboardImage 
+                var dataUri = UseClipboardImage
                     ? Images.ClipboardDibToDataUri()
                     : Images.ImageFileToDataUri(droppedFilePath);
 
@@ -185,7 +185,7 @@ namespace MarkdownEdit.Controls
             TryIt(droppedFilePath =>
             {
                 string title;
-                byte[] image = new byte[0];
+                var image = new byte[0];
 
                 if (UseClipboardImage)
                 {
@@ -193,7 +193,6 @@ namespace MarkdownEdit.Controls
                     if (string.IsNullOrWhiteSpace(name)) return;
                     image = Images.ClipboardDibToBitmapSource().ToPngArray();
                     title = name + ".png";
-
                 }
                 else
                 {

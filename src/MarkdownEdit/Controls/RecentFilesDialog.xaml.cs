@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using MarkdownEdit.i18n;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 
@@ -34,7 +36,11 @@ namespace MarkdownEdit.Controls
         {
             IsVisibleChanged -= OnIsVisibleChanged;
             FilesListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
+            SetItemsSource();
+        }
 
+        private void SetItemsSource()
+        {
             var kb = new[] {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
             FilesListBox.ItemsSource = Settings.Default.RecentFiles?.Cast<string>()
                 .Select((f, i) => new RecentFile
@@ -71,8 +77,18 @@ namespace MarkdownEdit.Controls
 
         private void OnOpen(object sender, RoutedEventArgs e)
         {
+            OpenFile();
+        }
+
+        private void OpenFile()
+        {
             var file = FilesListBox.SelectedItem as RecentFile;
             if (file == null) return;
+            if (File.Exists(file.FileName.StripOffsetFromFileName()) == false)
+            {
+                Utility.Alert((string)TranslationProvider.Translate("recent-file-not-found"), this);
+                return;
+            }
             ApplicationCommands.Open.Execute(file.FileName, Application.Current.MainWindow);
             ApplicationCommands.Close.Execute(null, this);
         }
@@ -97,6 +113,21 @@ namespace MarkdownEdit.Controls
             sc.AddRange(files.Take(19).ToArray());
             sc.Insert(0, file.AddOffsetToFileName(offset));
             Settings.Default.RecentFiles = sc;
+        }
+
+        private void RemoveFromRecentFiles(object sender, ExecutedRoutedEventArgs e)
+        {
+            var recentFile = e.Parameter as RecentFile;
+            if (recentFile == null) return;
+            var recent = Settings.Default.RecentFiles ?? new StringCollection();
+            recent.Remove(recentFile.FileName);
+            SetItemsSource();
+        }
+
+        private void OnSelected(object sender, RoutedEventArgs e)
+        {
+            var listBox = e.OriginalSource as ListBox;
+            if (listBox != null && listBox.IsMouseCaptureWithin) OpenFile();
         }
     }
 }

@@ -13,7 +13,7 @@ Tastenkombinationen
     Ctrl+E         Als HTML in die Zwischenablage exportieren
     Ctrl+Shift+E   Als HTML mit Template in die Zwischenablage exportieren
     Alt+E          Datei als HTML speichern...
-    F5             Datei neuladen
+    F5             Datei neu laden
     Alt+F4         Beenden
 
     Ctrl+W         Zeilenumbruch umschalten
@@ -32,11 +32,11 @@ Tastenkombinationen
     Ctrl+Shift+V   Einfügen spezialer Smartcodes und Links als reinen Text
 
     Ctrl+F         Suchen
-    F3             Nächstes Finden
-    Shift+F3       Vorheriges Finden
-    Ctrl+H         Finden und Ersetzen
+    F3             Weitersuchen
+    Shift+F3       Rückwärts suchen
+    Ctrl+H         Suchen und Ersetzen
 
-    Ctrl+G         Zur Zeile gehen
+    Ctrl+G         Gehe zu...
     Alt+Up         Aktuelle Zeile raufschieben
     Alt+Down       Aktuelle Zeile runterschieben
     Ctrl+U         Auswahl der vorrigen Überschrift
@@ -45,14 +45,14 @@ Tastenkombinationen
     Ctrl+Plus      Schriftgröße vergrößern
     Ctrl+Minus     Schriftgröße verringern
     Ctrl+0         Schriftgröße zurücksetzen
-    Alt+Plus       Vergrößerung des Editor-/Vorschau-Fensers (nur in der Einelansicht möglich)
-    Alt+Minus      Verkleinerung des Editor-/Vorschau-Fensers (nur in der Einelansicht möglich)
+    Alt+Plus       Vergrößerung des Editor-/Vorschau-Fensters (nur in der Einzelansicht möglich)
+    Alt+Minus      Verkleinerung des Editor-/Vorschau-Fensters (nur in der Einzelansicht möglich)
 
-    Ctrl+T         Editordesign auswählen
-    F6             Öffnen personalisierter Snippets
-    F7             Personalisiertes Wörterbuch öffnen
-    F8             Personalisiertes HTML Template öffnen
-    F9             Öffnen der Einstellungensdatei
+    Ctrl+T         Theme auswählen
+    F6             Eigene Snippets öffnen
+    F7             Eigenes Wörterbuch öffnen
+    F8             Eigene HTML Templates öffnen
+    F9             Einstellungsdatei öffnen
 
     Ctrl+B         Fett
     Ctrl+I         Kursiv

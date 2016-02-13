@@ -67,7 +67,9 @@ settings-open-key-bindings:       Tastatur bindinger
 settings-about:                   Om
 settings-version:				          Version
 settings-web:					            Web
-settings-source:				            Kildekode
+settings-source:				          Kildekode
+settings-donate:				          Donér
+settings-yes-i-donated:           Yes, I Donated!
 
 === Find Replace Dialog
 
@@ -99,7 +101,8 @@ image-drop-overwrite-file:        Fil findes allerede. Overskriv?
 === Recent Files Dialog
 
 recent-files-title:               Nylige filer
-
+recent-file-not-found:            Fil eksisterer ikke længere
+                                      
 === Themes Dialog
 
 themes-title:                     Temaer
