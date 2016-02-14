@@ -71,8 +71,14 @@
             <Component Id="Microsoft.DwayneNeed.dll" Guid="{AD38859F-6AE9-44D8-B611-E7770F5D67E6}">
               <File Id="Microsoft.DwayneNeed.dll" KeyPath="yes" Source="$(var.SourceFiles)\Microsoft.DwayneNeed.dll" />
             </Component>
+            <Component Id="Microsoft.DwayneNeed.pdb" Guid="*">
+              <File Id="Microsoft.DwayneNeed.pdb" KeyPath="yes" Source="$(var.SourceFiles)\Microsoft.DwayneNeed.pdb" />
+            </Component>
             <Component Id="Microsoft.DwayneNeed.Win32.dll" Guid="{44EE5C55-BA64-4387-ABA2-4DBE2DD735B8}">
               <File Id="Microsoft.DwayneNeed.Win32.dll" KeyPath="yes" Source="$(var.SourceFiles)\Microsoft.DwayneNeed.Win32.dll" />
+            </Component>
+            <Component Id="Microsoft.DwayneNeed.Win32.pdb" Guid="*">
+              <File Id="Microsoft.DwayneNeed.Win32.pdb" KeyPath="yes" Source="$(var.SourceFiles)\Microsoft.DwayneNeed.Win32.pdb" />
             </Component>
             <Component Id="mde.exe" Guid="{D8745F9D-E4D6-4682-AF42-46F38A38B27B}">
               <File Id="mde.exe" KeyPath="yes" Source="$(var.SourceFiles)\mde.exe" />
@@ -253,7 +259,9 @@
       <ComponentRef Id="ICSharpCode.AvalonEdit.dll" />
       <ComponentRef Id="MahApps.Metro.dll" />
       <ComponentRef Id="Microsoft.DwayneNeed.dll" />
+      <ComponentRef Id="Microsoft.DwayneNeed.pdb" />
       <ComponentRef Id="Microsoft.DwayneNeed.Win32.dll" />
+      <ComponentRef Id="Microsoft.DwayneNeed.Win32.pdb" />
       <ComponentRef Id="mde.exe" />
       <ComponentRef Id="mde.pdb" />
       <ComponentRef Id="mde.exe.config" />
