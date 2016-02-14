@@ -443,8 +443,12 @@
     <Content Include="Languages\de\local.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Lib\Microsoft.DwayneNeed.pdb" />
-    <Content Include="Lib\Microsoft.DwayneNeed.Win32.pdb" />
+    <Content Include="Lib\Microsoft.DwayneNeed.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lib\Microsoft.DwayneNeed.Win32.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="pandoc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
