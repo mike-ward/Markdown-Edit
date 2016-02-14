@@ -422,8 +422,8 @@
     <None Include="logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Lib\Microsoft.DwayneNeed.dll" />
-    <None Include="Lib\Microsoft.DwayneNeed.Win32.dll" />
+    <Content Include="Lib\Microsoft.DwayneNeed.dll" />
+    <Content Include="Lib\Microsoft.DwayneNeed.Win32.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Hunspellx64.dll">
@@ -443,6 +443,8 @@
     <Content Include="Languages\de\local.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Lib\Microsoft.DwayneNeed.pdb" />
+    <Content Include="Lib\Microsoft.DwayneNeed.Win32.pdb" />
     <Content Include="pandoc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
