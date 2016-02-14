@@ -38,7 +38,7 @@ Features
 --------
 
 -   [Display Equation
-    Markup](http://markdownedit.com/markdown-edit-math-equations/)
+    Markup](http://markdownedit.com/markdown-edit-math-equations)
 -   [Drag and Drop image
     uploads](http://mike-ward.net/2015/03/31/markdown-edit-1-4-imgur-uploads/)
 -   [Document
