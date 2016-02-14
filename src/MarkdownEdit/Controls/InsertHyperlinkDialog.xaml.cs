@@ -6,19 +6,25 @@ namespace MarkdownEdit.Controls
     {
         public static RoutedCommand AcceptLinkCommand = new RoutedUICommand();
 
-        public InsertHyperlinkDialog()
+        public InsertHyperlinkDialog(string selectedText)
         {
             InitializeComponent();
             Link.Focus();
             Link.SelectAll();
+            LinkTitle.Text = selectedText;
             CommandBindings.Add(new CommandBinding(AcceptLinkCommand, ExecuteAcceptLinkCommand));
         }
 
         private void ExecuteAcceptLinkCommand(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(Link.Text))
+            var linkText = Link.Text;
+            if (!string.IsNullOrWhiteSpace(linkText))
             {
-                MainWindow.InsertHyperlinkCommand.Execute(Link.Text, Owner);
+                if (!string.IsNullOrWhiteSpace(LinkTitle.Text))
+                {
+                    linkText = $"{linkText} \"{LinkTitle.Text}\"";
+                }
+                MainWindow.InsertHyperlinkCommand.Execute(linkText, Owner);
             }
             Close();
         }

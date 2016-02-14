@@ -427,7 +427,7 @@ namespace MarkdownEdit.Controls
 
         public void ExecuteInsertBlockQuote(object sender, ExecutedRoutedEventArgs e) => IfNotReadOnly(() => EditorUtilities.InsertBlockQuote(EditBox));
 
-        public void ExecuteInsertHyperlinkDialog(object sender, ExecutedRoutedEventArgs e) => IfNotReadOnly(() => new InsertHyperlinkDialog {Owner = Application.Current.MainWindow}.ShowDialog());
+        public void ExecuteInsertHyperlinkDialog(object sender, ExecutedRoutedEventArgs e) => IfNotReadOnly(() => new InsertHyperlinkDialog(EditBox.SelectedText) {Owner = Application.Current.MainWindow}.ShowDialog());
 
         public void ExecuteInsertHyperlink(object sender, ExecutedRoutedEventArgs e) => IfNotReadOnly(() => EditorUtilities.InsertHyperlink(EditBox, e.Parameter as string));
 
