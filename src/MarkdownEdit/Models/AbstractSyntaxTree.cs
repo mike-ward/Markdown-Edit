@@ -83,13 +83,10 @@ namespace MarkdownEdit.Models
                 if (block.SourcePosition >= end) return !blockTags.Any(tag => tag == lastBlockTag);
                 if (blockTags.Any(tag => tag == block.Tag)) return false;
 
-                if (EnumerateInlines(block.InlineContent)
+                return !EnumerateInlines(block.InlineContent)
                     .TakeWhile(il => il.SourcePosition < end)
                     .Where(il => il.SourcePosition + il.SourceLength > start)
-                    .Any(il => inlineTags.Any(tag => tag == il.Tag)))
-                {
-                    return false;
-                }
+                    .Any(il => inlineTags.Any(tag => tag == il.Tag));
             }
             return true;
         }
