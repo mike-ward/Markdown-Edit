@@ -62,7 +62,7 @@ namespace MarkdownEdit.Controls
             EditBox.TextChanged += EditBoxOnTextChanged;
             EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
             EditBox.PreviewKeyDown += (s, e) => EditorSpellCheck.AppsKeyDown = e.Key == Key.Apps && e.IsDown;
-            _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
+            _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher?.Invoke(ExecuteAutoSave), 4000);
             SetupSyntaxHighlighting();
         }
 

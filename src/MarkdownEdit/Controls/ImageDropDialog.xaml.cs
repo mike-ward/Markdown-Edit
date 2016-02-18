@@ -60,9 +60,10 @@ namespace MarkdownEdit.Controls
             Left = screen.X;
             Top = screen.Y;
 
+            var hasDocumentFileName = !string.IsNullOrWhiteSpace(DocumentFileName);
             SetDocumentFoldersMenuItems();
-            InsertPathMenuItem.IsEnabled = !UseClipboardImage;
-            AsLocalFileMenuItem.IsEnabled = !string.IsNullOrWhiteSpace(DocumentFileName);
+            InsertPathMenuItem.IsEnabled = !UseClipboardImage && hasDocumentFileName;
+            AsLocalFileMenuItem.IsEnabled = hasDocumentFileName;
             ContextMenu.Closed += (o, args) => { if (!Uploading) Close(); };
             Dispatcher.InvokeAsync(() => ContextMenu.IsOpen = true);
         }
@@ -101,7 +102,7 @@ namespace MarkdownEdit.Controls
             }
             finally
             {
-                Close();
+                ActivateClose();
             }
         }
 
@@ -109,10 +110,11 @@ namespace MarkdownEdit.Controls
         {
             TryIt(droppedFilePath =>
             {
+                var relativePath = FileExtensions
+                    .MakeRelativePath(DocumentFileName, droppedFilePath)
+                    .Replace('\\', '/');
                 var file = Path.GetFileNameWithoutExtension(droppedFilePath);
-                droppedFilePath = droppedFilePath.Replace('\\', '/');
-                if (droppedFilePath.Contains(" ")) droppedFilePath = $"<{droppedFilePath}>";
-                InsertImageTag(TextEditor, DragEventArgs, droppedFilePath, file);
+                InsertImageTag(TextEditor, DragEventArgs, relativePath, file);
             });
         }
 
@@ -147,16 +149,22 @@ namespace MarkdownEdit.Controls
 
                 Uploading = true;
                 var link = await new ImageUploadImgur().UploadBytesAsync(image, progress, completed);
-                Close();
+                ActivateClose();
 
                 if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
                 else Utility.Alert(link);
             }
             catch (Exception ex)
             {
-                Close();
+                ActivateClose();
                 Utility.Alert(ex.Message);
             }
+        }
+
+        private void ActivateClose()
+        {
+            Owner?.Activate();
+            Close();
         }
 
         private void OnInsertDataUri(object sender, RoutedEventArgs e)
@@ -217,7 +225,7 @@ namespace MarkdownEdit.Controls
         private void OnCancel(object sender, RoutedEventArgs e)
         {
             _canceled = true;
-            Close();
+            ActivateClose();
         }
 
         private static void InsertImageTag(TextEditor textEditor, DragEventArgs dragEventArgs, string link, string title)
