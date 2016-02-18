@@ -82,19 +82,27 @@ namespace MarkdownEdit.Controls
             AsLocalFileMenuItem.ItemsSource = documentFolder.Concat(folders).ToArray();
         }
 
-        private string DroppedFilePath()
+        private string[] DroppedFiles()
         {
             var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
-            var path = files?[0];
-            return path;
+            return files;
         }
 
         private void TryIt(Action<string> action)
         {
             try
             {
-                var droppedFilePath = UseClipboardImage ? null : DroppedFilePath();
-                action(droppedFilePath);
+                if (UseClipboardImage)
+                {
+                    action(null);
+                }
+                else
+                {
+                    foreach (var droppedFile in DroppedFiles().Where(Images.IsImageUrl))
+                    {
+                        action(droppedFile);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -113,6 +121,7 @@ namespace MarkdownEdit.Controls
                 var relativePath = FileExtensions
                     .MakeRelativePath(DocumentFileName, droppedFilePath)
                     .Replace('\\', '/');
+
                 var file = Path.GetFileNameWithoutExtension(droppedFilePath);
                 InsertImageTag(TextEditor, DragEventArgs, relativePath, file);
             });
@@ -142,7 +151,9 @@ namespace MarkdownEdit.Controls
                 }
                 else
                 {
-                    var path = DroppedFilePath();
+                    var files = DroppedFiles();
+                    if (files.Length > 1) throw new Exception("Upload only 1 file at a time");
+                    var path = files[0];
                     name = Path.GetFileNameWithoutExtension(path);
                     image = File.ReadAllBytes(path);
                 }
