@@ -36,6 +36,7 @@ namespace MarkdownEdit.Models
         private string _customMarkdownConverter = "";
         private bool _useDefaultEditor;
         private bool _yesIDonated;
+        private bool _insertImagePathsOnly;
 
         public Theme Theme
         {
@@ -201,6 +202,12 @@ namespace MarkdownEdit.Models
             set { Set(ref _yesIDonated, value); }
         }
 
+        public bool InsertImagePathsOnly
+        {
+            get { return _insertImagePathsOnly; }
+            set { Set(ref _insertImagePathsOnly, value); }
+        }
+
         public void Update()
         {
             var userSettings = Load();
@@ -234,7 +241,7 @@ namespace MarkdownEdit.Models
             {
                 if (File.Exists(SettingsFile) == false)
                 {
-                    var defaultSettings = new UserSettings { Theme = new Theme() };
+                    var defaultSettings = new UserSettings {Theme = new Theme()};
                     defaultSettings.Save();
                 }
                 return JsonConvert.DeserializeObject<UserSettings>(SettingsFile.ReadAllTextRetry());
@@ -297,7 +304,8 @@ namespace MarkdownEdit.Models
                 ^ LineEnding.GetHashCode()
                 ^ CustomMarkdownConverter.GetHashCode()
                 ^ UseDefaultEditor.GetHashCode()
-                ^ YesIDonated.GetHashCode();
+                ^ YesIDonated.GetHashCode()
+                ^ InsertImagePathsOnly.GetHashCode();
         }
     }
 }

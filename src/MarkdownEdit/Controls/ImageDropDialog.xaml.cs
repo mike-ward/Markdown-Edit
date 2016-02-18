@@ -52,6 +52,12 @@ namespace MarkdownEdit.Controls
 
         private void OnLoaded(object sender, EventArgs eventArgs)
         {
+            if (App.UserSettings.InsertImagePathsOnly)
+            {
+                OnInsertPath(null, null);
+                return;
+            }
+
             var position = UseClipboardImage
                 ? TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom)
                 : DragEventArgs.GetPosition(TextEditor);

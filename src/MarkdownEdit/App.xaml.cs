@@ -34,7 +34,7 @@ namespace MarkdownEdit
         {
             InitializeSettings();
 
-            if (UserSettings == null || AlreadyEditingFileInProcess())
+            if (UserSettings == null || AlreadyEditingFile())
             {
                 Shutdown();
                 return;
@@ -58,7 +58,7 @@ namespace MarkdownEdit
             MainWindow.Show();
         }
 
-        private static bool AlreadyEditingFileInProcess()
+        private static bool AlreadyEditingFile()
         {
             var fileName = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
                 ?? (UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
