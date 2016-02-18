@@ -52,7 +52,7 @@ namespace MarkdownEdit.Controls
 
         private void OnLoaded(object sender, EventArgs eventArgs)
         {
-            if (App.UserSettings.InsertImagePathsOnly)
+            if (App.UserSettings.InsertImagePathsOnly && !string.IsNullOrWhiteSpace(DocumentFileName))
             {
                 OnInsertPath(null, null);
                 return;
