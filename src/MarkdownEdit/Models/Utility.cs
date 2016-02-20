@@ -16,7 +16,7 @@ namespace MarkdownEdit.Models
 {
     public static class Utility
     {
-        public const string Version = "1.23";
+        public const string Version = "1.24";
 
         public static Func<TKey, TResult> Memoize<TKey, TResult>(this Func<TKey, TResult> func)
         {
