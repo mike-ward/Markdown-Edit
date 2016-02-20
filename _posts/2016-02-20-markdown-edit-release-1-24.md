@@ -49,17 +49,17 @@ shortcuts and a link to the wiki.
 
 As happens with many of the programs I write, users know it better than
 I do. I welcome additions to the wiki. Last night I roughed out an
-outline of chapters. Add as little or as much content as you desire.
-I'll be filling it out over the next couple of weeks, but your help is
-always appreciated.
+[outline of chapters](https://github.com/mike-ward/Markdown-Edit/wiki).
+Add as little or as much content as you desire. I'll be filling it out
+over the next couple of weeks, but your help is always appreciated.
 
 #### Logo
 
 I added a nag screen about donations. It's easy to shutoff. It's just a
 reminder that while free, donations do help. I've started a program in
 [VSColorOutput](http://mike-ward.net/vscoloroutput/) where donations of
-\$25 receive a couple of product stickers mailed to the confirmed PayPal
-address.
+$25 receive a couple of product stickers mailed to the confirmed
+PayPal address.
 
 ![VSColorOutput sticker](http://i.imgur.com/P1UfjB0.png)
 
