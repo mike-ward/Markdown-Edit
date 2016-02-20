@@ -22,9 +22,7 @@
   ShowMinButton="False"
   MinWidth="400">
   <StackPanel Margin="20">
-    <TextBlock>
-      <Run>http://example.com/ "</Run><Run Text="{i18N:Localize insert-hyperlink-optional-title}" />
-      <Run>"</Run></TextBlock>
+    <TextBlock Text="http://example.com/" />
     <TextBox
         x:Name="Link"
         Margin="10"
@@ -34,7 +32,17 @@
         <KeyBinding Command="{x:Static local:InsertHyperlinkDialog.AcceptLinkCommand}" Gesture="Enter" />
       </TextBox.InputBindings>
     </TextBox>
-    </StackPanel>
+    <TextBox
+        x:Name="LinkTitle"
+        controls:TextBoxHelper.Watermark="{i18N:Localize insert-hyperlink-optional-title}"
+        controls:TextBoxHelper.UseFloatingWatermark="True"
+        Margin="10"
+        TabIndex="1">
+      <TextBox.InputBindings>
+        <KeyBinding Command="{x:Static local:InsertHyperlinkDialog.AcceptLinkCommand}" Gesture="Enter" />
+      </TextBox.InputBindings>
+    </TextBox>
+  </StackPanel>
 
   <Window.CommandBindings>
     <CommandBinding Command="Close" Executed="ExecuteClose" />

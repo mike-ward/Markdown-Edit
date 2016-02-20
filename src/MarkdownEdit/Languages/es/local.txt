@@ -68,6 +68,8 @@ settings-about:                   Acerca de
 settings-version:				          Versión
 settings-web:					            Web
 settings-source:				          Fuente
+settings-donate:				          Donar
+settings-yes-i-donated:           Yes, I Donated!
 
 === Find Replace Dialog
 
@@ -99,6 +101,7 @@ image-drop-overwrite-file:        El archivo ya existe. ¿Exagerar?
 === Recent Files Dialog
 
 recent-files-title:               Archivos Recientes
+recent-file-not-found:            Archivo ya no existe
 
 === Themes Dialog
 

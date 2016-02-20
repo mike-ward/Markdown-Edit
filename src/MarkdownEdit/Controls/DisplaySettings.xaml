@@ -70,6 +70,7 @@
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-show-end-of-line}" OnLabel="{i18N:Localize settings-show-end-of-line}" IsChecked="{Binding EditorShowEndOfLine}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-sync-scroll-pos}" OnLabel="{i18N:Localize settings-sync-scroll-pos}" IsChecked="{Binding SynchronizeScrollPositions}" Style="{StaticResource ToggleSwitchStyle}" />
         <controls:ToggleSwitch OffLabel="{i18N:Localize settings-github-markdown}" OnLabel="{i18N:Localize settings-github-markdown}" IsChecked="{Binding GitHubMarkdown}" Style="{StaticResource ToggleSwitchStyle}" />
+        <controls:ToggleSwitch OffLabel="{i18N:Localize settings-yes-i-donated}" OnLabel="{i18N:Localize settings-yes-i-donated}" IsChecked="{Binding YesIDonated}" Style="{StaticResource ToggleSwitchStyle}" />
         <Grid HorizontalAlignment="Stretch"
               Margin="0 5 0 0">
           <TextBlock Text="{i18N:Localize settings-line-endings}"
@@ -124,7 +125,7 @@
             </Hyperlink>
           </TextBlock>
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
+        <!--<StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}">Twitter</TextBlock>
           <TextBlock>
             <Hyperlink NavigateUri="https://twitter.com/mikeward_aa"
@@ -133,14 +134,24 @@
               mikeward_aa
             </Hyperlink>
           </TextBlock>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
+        </StackPanel>-->
+        <!--<StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}"  Text="{i18N:Localize settings-source}" />
           <TextBlock>
             <Hyperlink NavigateUri="https://github.com/mike-ward/Markdown-Edit"
                        Style="{StaticResource HyperlinkStyle}"
                        RequestNavigate="HyperlinkOnRequestNavigate">
               GitHub
+            </Hyperlink>
+          </TextBlock>
+        </StackPanel>-->
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Style="{StaticResource AboutLabelStyle}"  Text="{i18N:Localize settings-donate}" />
+          <TextBlock>
+            <Hyperlink NavigateUri="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=XGGZ8BEED7R62"
+                       Style="{StaticResource HyperlinkStyle}"
+                       RequestNavigate="HyperlinkOnRequestNavigate">
+              PayPal
             </Hyperlink>
           </TextBlock>
         </StackPanel>

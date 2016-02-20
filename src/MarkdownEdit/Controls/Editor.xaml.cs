@@ -62,7 +62,7 @@ namespace MarkdownEdit.Controls
             EditBox.TextChanged += EditBoxOnTextChanged;
             EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
             EditBox.PreviewKeyDown += (s, e) => EditorSpellCheck.AppsKeyDown = e.Key == Key.Apps && e.IsDown;
-            _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher.Invoke(ExecuteAutoSave), 4000);
+            _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher?.Invoke(ExecuteAutoSave), 4000);
             SetupSyntaxHighlighting();
         }
 
@@ -340,10 +340,16 @@ namespace MarkdownEdit.Controls
             var isSelectedText = !string.IsNullOrEmpty(EditBox.SelectedText) && !forceAllText.GetValueOrDefault(false);
             var originalText = isSelectedText ? EditBox.SelectedText : EditBox.Document.Text;
             var formattedText = converter(originalText);
-            if (string.CompareOrdinal(formattedText, originalText) != 0)
+            if (string.CompareOrdinal(formattedText, originalText) == 0) return;
+            if (isSelectedText)
             {
-                if (isSelectedText) EditBox.SelectedText = formattedText;
-                else EditBox.Document.Text = formattedText;
+                EditBox.SelectedText = formattedText;
+            }
+            else
+            {
+                var start = EditBox.SelectionStart;
+                EditBox.Document.Text = formattedText;
+                EditBox.SelectionStart = start;
             }
         }
 
@@ -421,7 +427,7 @@ namespace MarkdownEdit.Controls
 
         public void ExecuteInsertBlockQuote(object sender, ExecutedRoutedEventArgs e) => IfNotReadOnly(() => EditorUtilities.InsertBlockQuote(EditBox));
 
-        public void ExecuteInsertHyperlinkDialog(object sender, ExecutedRoutedEventArgs e) => IfNotReadOnly(() => new InsertHyperlinkDialog {Owner = Application.Current.MainWindow}.ShowDialog());
+        public void ExecuteInsertHyperlinkDialog(object sender, ExecutedRoutedEventArgs e) => IfNotReadOnly(() => new InsertHyperlinkDialog(EditBox.SelectedText) {Owner = Application.Current.MainWindow}.ShowDialog());
 
         public void ExecuteInsertHyperlink(object sender, ExecutedRoutedEventArgs e) => IfNotReadOnly(() => EditorUtilities.InsertHyperlink(EditBox, e.Parameter as string));
 

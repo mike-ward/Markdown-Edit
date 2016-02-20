@@ -1,0 +1,38 @@
+﻿<Window
+  x:Class="MarkdownEdit.Controls.Donate"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  Width="800"
+  Height="600"
+  AllowsTransparency="True"
+  ResizeMode="NoResize"
+  ShowInTaskbar="False"
+  WindowStartupLocation="CenterOwner"
+  WindowStyle="None"
+  Background="Transparent"
+  mc:Ignorable="d">
+
+  <Canvas>
+    <Image Source="pack://application:,,,/Resources/donate.png" Stretch="Fill" />
+    <Canvas
+      Canvas.Left="740"
+      Canvas.Top="10"
+      Width="50"
+      Height="45"
+      Background="Transparent"
+      MouseDown="CloseOnMouseDown"
+      MouseEnter="OnMouseEnter"
+      MouseLeave="OnMouseLeave" />
+    <Canvas
+      Canvas.Left="293"
+      Canvas.Top="438"
+      Width="224"
+      Height="70"
+      Background="Transparent"
+      MouseDown="DonateOnMouseDown"
+      MouseEnter="OnMouseEnter"
+      MouseLeave="OnMouseLeave" />
+  </Canvas>
+</Window>

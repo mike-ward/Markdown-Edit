@@ -120,10 +120,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="XamlSpy, Version=3.0.0.0, Culture=neutral, PublicKeyToken=bc9b0c37bf06c6a9, processorArchitecture=MSIL">
-      <HintPath>..\packages\XamlSpyLibs.3.0.3\lib\net46\XamlSpy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -131,8 +127,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\LineContinuationEnterCommand.cs" />
+    <Compile Include="Controls\DisplayDocumentOutlineViewModel.cs" />
     <Compile Include="Controls\DisplaySettings.xaml.cs">
       <DependentUpon>DisplaySettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DisplayDocumentOutline.xaml.cs">
+      <DependentUpon>DisplayDocumentOutline.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Donate.xaml.cs">
+      <DependentUpon>Donate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\FadingPopupControl.xaml.cs">
       <DependentUpon>FadingPopupControl.xaml</DependentUpon>
@@ -167,6 +170,7 @@
     <Compile Include="MarkdownConverters\IMarkdownConverter.cs" />
     <Compile Include="Models\AbstractSyntaxTree.cs" />
     <Compile Include="Models\BlockBackgroundRenderer.cs" />
+    <Compile Include="Models\DocumentOutline.cs" />
     <Compile Include="Models\EditorSpellCheck.cs" />
     <Compile Include="Models\EditorUtilities.cs" />
     <Compile Include="Models\EditorState.cs" />
@@ -187,6 +191,7 @@
     <Compile Include="Models\EditorLoadSave.cs" />
     <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
     <Compile Include="Commands\SnippetTabCommand.cs" />
+    <Compile Include="Models\OldSchool.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Snippets\ISnippetManager.cs" />
     <Compile Include="Snippets\SnippetManager.cs" />
@@ -205,6 +210,14 @@
     <Compile Include="Models\UserTemplate.cs" />
     <Compile Include="Models\Utility.cs" />
     <Page Include="Controls\DisplaySettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DisplayDocumentOutline.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Donate.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Editor.xaml">
@@ -286,6 +299,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\donate.png" />
     <Resource Include="SpellCheck\Dictionaries\Russian.txt" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -404,8 +418,8 @@
     <None Include="logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Lib\Microsoft.DwayneNeed.dll" />
-    <None Include="Lib\Microsoft.DwayneNeed.Win32.dll" />
+    <Content Include="Lib\Microsoft.DwayneNeed.dll" />
+    <Content Include="Lib\Microsoft.DwayneNeed.Win32.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Hunspellx64.dll">
@@ -423,6 +437,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Languages\de\local.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lib\Microsoft.DwayneNeed.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lib\Microsoft.DwayneNeed.Win32.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="pandoc.exe">

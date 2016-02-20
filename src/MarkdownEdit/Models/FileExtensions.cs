@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace MarkdownEdit.Models
 {
-    internal static class FileExtensions
+    public static class FileExtensions
     {
         public static string GetRelativePathFrom(this FileSystemInfo to, FileSystemInfo from)
         {
@@ -74,6 +75,19 @@ namespace MarkdownEdit.Models
                 }
             }
             throw new IOException();
+        }
+
+        public static string MakeRelativePath(string fromPath, string toPath)
+        {
+            if (string.IsNullOrEmpty(fromPath)) throw new ArgumentNullException(nameof(fromPath));
+            if (string.IsNullOrEmpty(toPath)) throw new ArgumentNullException(nameof(toPath));
+
+            var fromUri = new Uri(fromPath);
+            var toUri = new Uri(toPath);
+            if (fromUri.Scheme != toUri.Scheme) return toPath; // path can't be made relative.
+            var relativeUri = fromUri.MakeRelativeUri(toUri);
+            var relativePath = relativeUri.ToString();
+            return relativePath;
         }
     }
 }

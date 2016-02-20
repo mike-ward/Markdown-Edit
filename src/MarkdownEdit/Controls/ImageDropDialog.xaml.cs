@@ -40,7 +40,7 @@ namespace MarkdownEdit.Controls
 
         public bool Uploading
         {
-            get { return _uploading; }    
+            get { return _uploading; }
             set { Set(ref _uploading, value); }
         }
 
@@ -52,6 +52,12 @@ namespace MarkdownEdit.Controls
 
         private void OnLoaded(object sender, EventArgs eventArgs)
         {
+            if (App.UserSettings.InsertImagePathsOnly && !string.IsNullOrWhiteSpace(DocumentFileName))
+            {
+                OnInsertPath(null, null);
+                return;
+            }
+
             var position = UseClipboardImage
                 ? TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom)
                 : DragEventArgs.GetPosition(TextEditor);
@@ -60,9 +66,10 @@ namespace MarkdownEdit.Controls
             Left = screen.X;
             Top = screen.Y;
 
+            var hasDocumentFileName = !string.IsNullOrWhiteSpace(DocumentFileName);
             SetDocumentFoldersMenuItems();
-            InsertPathMenuItem.IsEnabled = !UseClipboardImage;
-            AsLocalFileMenuItem.IsEnabled = !string.IsNullOrWhiteSpace(DocumentFileName);
+            InsertPathMenuItem.IsEnabled = !UseClipboardImage && hasDocumentFileName;
+            AsLocalFileMenuItem.IsEnabled = hasDocumentFileName;
             ContextMenu.Closed += (o, args) => { if (!Uploading) Close(); };
             Dispatcher.InvokeAsync(() => ContextMenu.IsOpen = true);
         }
@@ -81,19 +88,27 @@ namespace MarkdownEdit.Controls
             AsLocalFileMenuItem.ItemsSource = documentFolder.Concat(folders).ToArray();
         }
 
-        private string DroppedFilePath()
+        private string[] DroppedFiles()
         {
             var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
-            var path = files?[0];
-            return path;
+            return files;
         }
 
         private void TryIt(Action<string> action)
         {
             try
             {
-                var droppedFilePath = UseClipboardImage ? null : DroppedFilePath();
-                action(droppedFilePath);
+                if (UseClipboardImage)
+                {
+                    action(null);
+                }
+                else
+                {
+                    foreach (var droppedFile in DroppedFiles().Where(Images.IsImageUrl))
+                    {
+                        action(droppedFile);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -101,7 +116,7 @@ namespace MarkdownEdit.Controls
             }
             finally
             {
-                Close();
+                ActivateClose();
             }
         }
 
@@ -109,10 +124,12 @@ namespace MarkdownEdit.Controls
         {
             TryIt(droppedFilePath =>
             {
+                var relativePath = FileExtensions
+                    .MakeRelativePath(DocumentFileName, droppedFilePath)
+                    .Replace('\\', '/');
+
                 var file = Path.GetFileNameWithoutExtension(droppedFilePath);
-                droppedFilePath = droppedFilePath.Replace('\\', '/');
-                if (droppedFilePath.Contains(" ")) droppedFilePath = $"<{droppedFilePath}>";
-                InsertImageTag(TextEditor, DragEventArgs, droppedFilePath, file);
+                InsertImageTag(TextEditor, DragEventArgs, relativePath, file);
             });
         }
 
@@ -140,30 +157,38 @@ namespace MarkdownEdit.Controls
                 }
                 else
                 {
-                    var path = DroppedFilePath();
+                    var files = DroppedFiles();
+                    if (files.Length > 1) throw new Exception("Upload only 1 file at a time");
+                    var path = files[0];
                     name = Path.GetFileNameWithoutExtension(path);
                     image = File.ReadAllBytes(path);
                 }
 
                 Uploading = true;
                 var link = await new ImageUploadImgur().UploadBytesAsync(image, progress, completed);
-                Close();
+                ActivateClose();
 
                 if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
                 else Utility.Alert(link);
             }
             catch (Exception ex)
             {
-                Close();
+                ActivateClose();
                 Utility.Alert(ex.Message);
             }
+        }
+
+        private void ActivateClose()
+        {
+            Owner?.Activate();
+            Close();
         }
 
         private void OnInsertDataUri(object sender, RoutedEventArgs e)
         {
             TryIt(droppedFilePath =>
             {
-                var dataUri = UseClipboardImage 
+                var dataUri = UseClipboardImage
                     ? Images.ClipboardDibToDataUri()
                     : Images.ImageFileToDataUri(droppedFilePath);
 
@@ -185,7 +210,7 @@ namespace MarkdownEdit.Controls
             TryIt(droppedFilePath =>
             {
                 string title;
-                byte[] image = new byte[0];
+                var image = new byte[0];
 
                 if (UseClipboardImage)
                 {
@@ -193,7 +218,6 @@ namespace MarkdownEdit.Controls
                     if (string.IsNullOrWhiteSpace(name)) return;
                     image = Images.ClipboardDibToBitmapSource().ToPngArray();
                     title = name + ".png";
-
                 }
                 else
                 {
@@ -218,7 +242,7 @@ namespace MarkdownEdit.Controls
         private void OnCancel(object sender, RoutedEventArgs e)
         {
             _canceled = true;
-            Close();
+            ActivateClose();
         }
 
         private static void InsertImageTag(TextEditor textEditor, DragEventArgs dragEventArgs, string link, string title)

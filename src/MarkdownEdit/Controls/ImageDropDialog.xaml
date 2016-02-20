@@ -17,13 +17,11 @@
   mc:Ignorable="d">
 
   <Window.Resources>
-    <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     <converters:BooleanToVisiblityConverter x:Key="BooleanToVisiblityConverter" />
-    <converters:NullOrEmptyToBooleanConverter x:Key="NullOrEmptyToBooleanConverter" />
 
     <Style x:Key="MenuIconStyle" TargetType="TextBlock">
       <Setter Property="FontFamily" Value="Segoe UI Symbol" />
-      <Setter Property="Margin" Value="5 0 0 0"></Setter>
+      <Setter Property="Margin" Value="5,0,0,0" />
     </Style>
 
   </Window.Resources>
@@ -45,7 +43,7 @@
         Header="{i18N:Localize image-drop-upload-imgur}"
         StaysOpenOnClick="True">
         <MenuItem.Icon>
-          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE158;</TextBlock>
+          <TextBlock Style="{StaticResource MenuIconStyle}">&#x1f301;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
@@ -54,7 +52,7 @@
         Header="{i18N:Localize image-drop-as-data-uri}"
         StaysOpenOnClick="True">
         <MenuItem.Icon>
-          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16C;</TextBlock>
+          <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16D;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 

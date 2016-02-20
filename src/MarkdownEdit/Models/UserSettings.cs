@@ -35,6 +35,8 @@ namespace MarkdownEdit.Models
         private string _lineEnding = "crlf";
         private string _customMarkdownConverter = "";
         private bool _useDefaultEditor;
+        private bool _yesIDonated;
+        private bool _insertImagePathsOnly;
 
         public Theme Theme
         {
@@ -194,6 +196,18 @@ namespace MarkdownEdit.Models
             set { Set(ref _useDefaultEditor, value); }
         }
 
+        public bool YesIDonated
+        {
+            get { return _yesIDonated; }
+            set { Set(ref _yesIDonated, value); }
+        }
+
+        public bool InsertImagePathsOnly
+        {
+            get { return _insertImagePathsOnly; }
+            set { Set(ref _insertImagePathsOnly, value); }
+        }
+
         public void Update()
         {
             var userSettings = Load();
@@ -289,7 +303,9 @@ namespace MarkdownEdit.Models
                 ^ SinglePaneMargin.GetHashCode()
                 ^ LineEnding.GetHashCode()
                 ^ CustomMarkdownConverter.GetHashCode()
-                ^ UseDefaultEditor.GetHashCode();
+                ^ UseDefaultEditor.GetHashCode()
+                ^ YesIDonated.GetHashCode()
+                ^ InsertImagePathsOnly.GetHashCode();
         }
     }
 }
