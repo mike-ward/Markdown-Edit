@@ -58,6 +58,7 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand IncreaseEditorMarginCommand = new RoutedCommand();
         public static readonly RoutedCommand DecreaseEditorMarginCommand = new RoutedCommand();
         public static readonly RoutedCommand ToggleSettingsFlyoutCommand = new RoutedCommand();
+        public static readonly RoutedCommand ToggleDocumentStructureFlyoutCommand = new RoutedCommand();
         public static readonly RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
         public static readonly RoutedCommand GotToMarkdownEditWebSiteCommand = new RoutedCommand();
 
@@ -310,6 +311,8 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteToggleShowSettingsFlyout(object sender, ExecutedRoutedEventArgs e) => ToggleSettings();
 
+        private void ExecuteToggleDocumentStructureFlyout(object sender, ExecutedRoutedEventArgs e) => ToggleDocumentStructure();
+
         private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int)e.Parameter);
@@ -378,6 +381,12 @@ namespace MarkdownEdit.Controls
             var settingsFlyout = (Flyout)Flyouts.Items[0];
             settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
             if (settingsFlyout.IsOpen) DisplaySettings.SaveState();
+        }
+
+        private void ToggleDocumentStructure()
+        {
+            var structureFlyout = (Flyout)Flyouts.Items[1];
+            structureFlyout.IsOpen = !structureFlyout.IsOpen;
         }
 
         // INotifyPropertyChanged implementation

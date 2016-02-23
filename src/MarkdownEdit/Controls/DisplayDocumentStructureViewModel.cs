@@ -1,18 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using CommonMark.Syntax;
 using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
 {
-    internal class DisplayDocumentOutlineViewModel : INotifyPropertyChanged
+    internal class DisplayDocumentStructureViewModel : INotifyPropertyChanged
     {
-        private DocumentOutline _outline;
+        private string[] _structure;
 
-        public DocumentOutline Outline
+        public string[] Structure
         {
-            get { return _outline; }
-            set { Set(ref _outline, value); }
+            get { return _structure; }
+            set { Set(ref _structure, value); }
+        }
+
+        public void Update(Block ast)
+        {
+            Structure = AbstractSyntaxTree.DocumentStructure(ast);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

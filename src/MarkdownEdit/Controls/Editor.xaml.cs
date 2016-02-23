@@ -26,7 +26,6 @@ namespace MarkdownEdit.Controls
         private bool _isModified;
         private bool _removeSpecialCharacters;
         private string _fileName;
-        private Block _abstractSyntaxTree;
         private string _displayName = string.Empty;
         private EditorState _editorState = new EditorState();
         private readonly Action<string> _executeAutoSaveLater;
@@ -133,9 +132,9 @@ namespace MarkdownEdit.Controls
 
             TextChanged += (s, e) =>
             {
-                _abstractSyntaxTree = Markdown.GenerateAbstractSyntaxTree(Text);
-                colorizer.UpdateAbstractSyntaxTree(_abstractSyntaxTree);
-                blockBackgroundRenderer.UpdateAbstractSyntaxTree(_abstractSyntaxTree);
+                AbstractSyntaxTree = Markdown.GenerateAbstractSyntaxTree(Text);
+                colorizer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
+                blockBackgroundRenderer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
             };
             ThemeChanged += (s, e) =>
             {
@@ -148,14 +147,14 @@ namespace MarkdownEdit.Controls
 
         public int VisibleBlockNumber()
         {
-            if (_abstractSyntaxTree == null) return 1;
+            if (AbstractSyntaxTree == null) return 1;
             var textView = EditBox.TextArea.TextView;
             var line = textView.GetDocumentLineByVisualTop(textView.ScrollOffset.Y);
 
             var number = 1;
             var skipListItem = true;
 
-            foreach (var block in EnumerateBlocks(_abstractSyntaxTree.FirstChild))
+            foreach (var block in EnumerateBlocks(AbstractSyntaxTree.FirstChild))
             {
                 if (block.Tag == BlockTag.List) skipListItem = block.ListData.IsTight;
                 if (block.SourcePosition >= line.Offset) break;
@@ -188,7 +187,7 @@ namespace MarkdownEdit.Controls
                 text = text.ReplaceSmartChars();
             }
             else if (Uri.IsWellFormedUriString(text, UriKind.Absolute)
-                && PositionSafeForSmartLink(_abstractSyntaxTree, EditBox.SelectionStart, EditBox.SelectionLength))
+                && PositionSafeForSmartLink(AbstractSyntaxTree, EditBox.SelectionStart, EditBox.SelectionLength))
             {
                 text = Images.IsImageUrl(text.TrimEnd())
                     ? $"![{EditBox.SelectedText}]({text})\n"
@@ -675,6 +674,15 @@ namespace MarkdownEdit.Controls
         {
             get { return (bool)GetValue(SpellCheckProperty); }
             set { SetValue(SpellCheckProperty, value); }
+        }
+
+        public static readonly DependencyProperty AbstractSyntaxTreeProperty = DependencyProperty.Register(
+            "AbstractSyntaxTree", typeof(Block), typeof(Editor), new PropertyMetadata(default(Block)));
+
+        public Block AbstractSyntaxTree
+        {
+            get { return (Block)GetValue(AbstractSyntaxTreeProperty); }
+            set { SetValue(AbstractSyntaxTreeProperty, value); }
         }
 
         // INotifyPropertyChanged
