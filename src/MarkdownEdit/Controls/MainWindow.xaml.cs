@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,6 +60,7 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand ToggleDocumentStructureFlyoutCommand = new RoutedCommand();
         public static readonly RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
         public static readonly RoutedCommand GotToMarkdownEditWebSiteCommand = new RoutedCommand();
+        public static readonly RoutedCommand ScrollToOffsetCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _commonMarkConverter;
@@ -316,6 +316,11 @@ namespace MarkdownEdit.Controls
         private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int)e.Parameter);
+        }
+
+        private void ExecuteScrollToOffset(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Parameter != null) EditorUtilities.ScrollToOffset(Editor.EditBox, (int)e.Parameter);
         }
 
         private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) => Preview.UpdatePreview(Editor);

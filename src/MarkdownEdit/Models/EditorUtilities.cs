@@ -274,6 +274,14 @@ namespace MarkdownEdit.Models
             }
         }
 
+        public static void ScrollToOffset(TextEditor editor, int offset)
+        {
+            var line = editor.Document.GetLineByOffset(offset);
+            if (line == null) return;
+            editor.ScrollToLine(line.LineNumber);
+            editor.CaretOffset = offset;
+        }
+
         public static void ScrollToLine(TextEditor editor, int line)
         {
             var max = Math.Max(1, editor.Document.LineCount);

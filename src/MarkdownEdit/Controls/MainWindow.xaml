@@ -295,6 +295,7 @@
     <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
     <CommandBinding Command="{x:Static controls:MainWindow.InsertHyperlinkCommand}" Executed="ExecuteInsertHyperlinkCommand" />
     <CommandBinding Command="{x:Static controls:MainWindow.GotToMarkdownEditWebSiteCommand}" Executed="ExecuteGotToMarkdownEditWebSite" />
+    <CommandBinding Command="{x:Static controls:MainWindow.ScrollToOffsetCommand}" Executed="ExecuteScrollToOffset" />
   </Window.CommandBindings>
 
   <Window.InputBindings>

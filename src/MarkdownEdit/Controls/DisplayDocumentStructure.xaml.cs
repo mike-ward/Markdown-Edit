@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using CommonMark.Syntax;
 
 namespace MarkdownEdit.Controls
@@ -14,6 +15,12 @@ namespace MarkdownEdit.Controls
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             if (IsVisible) ((DisplayDocumentStructureViewModel)DataContext).Update(AbstractSyntaxTree);
+        }
+
+        private void OnSelected(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            ((DisplayDocumentStructureViewModel)DataContext).Selected(Headings.SelectedIndex);
         }
 
         public static readonly DependencyProperty AbstractSyntaxTreeProperty = DependencyProperty.Register(

@@ -32,12 +32,25 @@ namespace MarkdownEdit.Controls
                 .Where(b => b.Tag == BlockTag.AtxHeading || b.Tag == BlockTag.SetextHeading)
                 .Select(b => new DocumentStructure
                 {
-                    Heading = b.InlineContent.LiteralContent,
+                    Heading = InlineContent(b.InlineContent),
                     Level = b.Heading.Level * 20,
                     FontWeight = b.Heading.Level == 1 ? FontWeights.Bold : FontWeights.Normal,
                     Offset = b.SourcePosition
                 })
                 .ToArray();
+        }
+
+        private string InlineContent(Inline inline )
+        {
+            var content = inline.LiteralContent;
+            if (inline.FirstChild != null) content += InlineContent(inline.FirstChild);
+            return content;
+        }
+
+        public void Selected(int index)
+        {
+            var offset = index <= Structure.Length ? Structure[index].Offset : 0;
+            MainWindow.ScrollToOffsetCommand.Execute(offset, Application.Current.MainWindow);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
