@@ -90,15 +90,5 @@ namespace MarkdownEdit.Models
             }
             return true;
         }
-
-        public static string[] DocumentStructure(Block ast)
-        {
-            var structure = EnumerateBlocks(ast.FirstChild)
-                .Where(b => b.Tag == BlockTag.AtxHeading || b.Tag == BlockTag.SetextHeading)
-                .Select(b => $"{b.Heading.Level.ToString("D")} {b.InlineContent.LiteralContent}")
-                .ToArray();
-
-            return structure;
-        }
     }
 }

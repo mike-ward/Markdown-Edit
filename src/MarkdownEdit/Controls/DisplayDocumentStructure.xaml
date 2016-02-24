@@ -5,7 +5,6 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:local="clr-namespace:MarkdownEdit.Controls"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:model="clr-namespace:MarkdownEdit.Models"
   d:DesignHeight="300"
   d:DesignWidth="300"
   mc:Ignorable="d">
@@ -15,6 +14,13 @@
   </UserControl.DataContext>
 
   <ListBox ItemsSource="{Binding Structure}">
-    
+    <ListBox.ItemTemplate>
+      <DataTemplate>
+        <StackPanel Orientation="Horizontal">
+          <TextBlock MinWidth="{Binding Level}" Text=" " />
+          <TextBlock Text="{Binding Heading}" FontWeight="{Binding FontWeight}" />
+        </StackPanel>
+      </DataTemplate>
+    </ListBox.ItemTemplate>
   </ListBox>
 </UserControl>
