@@ -127,7 +127,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\LineContinuationEnterCommand.cs" />
-    <Compile Include="Controls\DisplayDocumentStructureViewModel.cs" />
+    <Compile Include="Controls\DisplayDocumentStructureViewModel.cs">
+      <DependentUpon>DisplayDocumentStructure.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DisplaySettings.xaml.cs">
       <DependentUpon>DisplaySettings.xaml</DependentUpon>
     </Compile>

@@ -16,10 +16,10 @@ namespace MarkdownEdit.Controls
             if (IsVisible) ((DisplayDocumentStructureViewModel)DataContext).Update(AbstractSyntaxTree);
         }
 
-        private void OnSelected(object sender, RoutedEventArgs e)
+        private async void OnSelected(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
-            Dispatcher.InvokeAsync(() => ((DisplayDocumentStructureViewModel)DataContext).Selected(Headings.SelectedIndex));
+            await Dispatcher.InvokeAsync(() => ((DisplayDocumentStructureViewModel)DataContext).Selected(Headings.SelectedIndex));
         }
 
         public static readonly DependencyProperty AbstractSyntaxTreeProperty = DependencyProperty.Register(
