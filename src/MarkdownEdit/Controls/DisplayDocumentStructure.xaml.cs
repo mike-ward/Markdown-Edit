@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using CommonMark.Syntax;
 
 namespace MarkdownEdit.Controls
@@ -20,7 +19,7 @@ namespace MarkdownEdit.Controls
         private void OnSelected(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
-            ((DisplayDocumentStructureViewModel)DataContext).Selected(Headings.SelectedIndex);
+            Dispatcher.InvokeAsync(() => ((DisplayDocumentStructureViewModel)DataContext).Selected(Headings.SelectedIndex));
         }
 
         public static readonly DependencyProperty AbstractSyntaxTreeProperty = DependencyProperty.Register(

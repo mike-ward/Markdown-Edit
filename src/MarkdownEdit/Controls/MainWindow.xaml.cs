@@ -383,6 +383,7 @@ namespace MarkdownEdit.Controls
 
         private void ToggleSettings()
         {
+            ((Flyout)Flyouts.Items[1]).IsOpen = false;
             var settingsFlyout = (Flyout)Flyouts.Items[0];
             settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
             if (settingsFlyout.IsOpen) DisplaySettings.SaveState();
@@ -390,6 +391,7 @@ namespace MarkdownEdit.Controls
 
         private void ToggleDocumentStructure()
         {
+            ((Flyout)Flyouts.Items[0]).IsOpen = false;
             var structureFlyout = (Flyout)Flyouts.Items[1];
             structureFlyout.IsOpen = !structureFlyout.IsOpen;
         }
