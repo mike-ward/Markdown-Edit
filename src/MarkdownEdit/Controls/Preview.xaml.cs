@@ -34,6 +34,7 @@ namespace MarkdownEdit.Controls
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
             Browser.MessageHook += BrowserOnMessageHook;
+            Browser.Unloaded += (s, e) => ApplicationCommands.Close.Execute(null, Application.Current.MainWindow);
             UpdatePreview = Utility.Debounce<Editor>(editor => Dispatcher.InvokeAsync(() => Update(editor.Text)));
         }
 
@@ -233,20 +234,19 @@ namespace MarkdownEdit.Controls
                     ApplicationCommands.Help.Execute(this, Application.Current.MainWindow);
                     e.Handled = true;
                     break;
-
-                case Key.F5:
-                    e.Handled = true;
-                    break;
             }
         }
 
         private static IntPtr BrowserOnMessageHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == 0x021)
+            switch (msg)
             {
-                Application.Current.MainWindow.Activate();
-                handled = true;
+                case 0x021:
+                    Application.Current.MainWindow.Activate();
+                    handled = true;
+                    break;
             }
+
             return hwnd;
         }
 

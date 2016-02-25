@@ -27,10 +27,7 @@
     <converters:NumberFormatConverter x:Key="NumberFormatConverter" />
     <converters:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
 
-    <Style
-      x:Key="CommandWindowButtonStyle"
-      BasedOn="{StaticResource MetroBaseWindowButtonStyle}"
-      TargetType="Button">
+    <Style x:Key="CommandWindowButtonStyle" BasedOn="{StaticResource MetroBaseWindowButtonStyle}" TargetType="Button">
       <Setter Property="Margin" Value="7,0,0,0" />
       <Style.Triggers>
         <Trigger Property="IsMouseOver" Value="True">
@@ -39,10 +36,7 @@
       </Style.Triggers>
     </Style>
 
-    <Style
-      x:Key="SpellCheckToggleCommandWindowButtonStyle"
-      BasedOn="{StaticResource CommandWindowButtonStyle}"
-      TargetType="Button">
+    <Style x:Key="SpellCheckToggleCommandWindowButtonStyle" BasedOn="{StaticResource CommandWindowButtonStyle}" TargetType="Button">
       <Style.Triggers>
         <!--  Order of triggers matters here  -->
         <DataTrigger Binding="{Binding Path=SpellCheck, ElementName=Editor}" Value="False">
@@ -54,10 +48,7 @@
       </Style.Triggers>
     </Style>
 
-    <Style
-      x:Key="WordWrapToggleCommandWindowButtonStyle"
-      BasedOn="{StaticResource CommandWindowButtonStyle}"
-      TargetType="Button">
+    <Style x:Key="WordWrapToggleCommandWindowButtonStyle" BasedOn="{StaticResource CommandWindowButtonStyle}" TargetType="Button">
       <Style.Triggers>
         <!--  Order of triggers matters here  -->
         <DataTrigger Binding="{Binding Path=WordWrap, ElementName=Editor}" Value="False">
@@ -69,10 +60,7 @@
       </Style.Triggers>
     </Style>
 
-    <Style
-      x:Key="NewVersionCommandWindowButtonStyle"
-      BasedOn="{StaticResource CommandWindowButtonStyle}"
-      TargetType="Button">
+    <Style x:Key="NewVersionCommandWindowButtonStyle" BasedOn="{StaticResource CommandWindowButtonStyle}" TargetType="Button">
       <Style.Triggers>
         <DataTrigger Binding="{Binding NewVersion}" Value="False">
           <Setter Property="Visibility" Value="Collapsed" />
@@ -80,10 +68,7 @@
       </Style.Triggers>
     </Style>
 
-    <Style
-      x:Key="AutoSaveToggleCommandWindowButtonStyle"
-      BasedOn="{StaticResource CommandWindowButtonStyle}"
-      TargetType="Button">
+    <Style x:Key="AutoSaveToggleCommandWindowButtonStyle" BasedOn="{StaticResource CommandWindowButtonStyle}" TargetType="Button">
       <Style.Triggers>
         <!--  Order of triggers matters here  -->
         <DataTrigger Binding="{Binding Path=AutoSave, ElementName=Editor}" Value="False">
@@ -108,10 +93,7 @@
 
   <mah:MetroWindow.RightWindowCommands>
     <mah:WindowCommands ShowLastSeparator="False">
-      <StackPanel
-        Margin="20,0"
-        VerticalAlignment="Center"
-        Orientation="Horizontal">
+      <StackPanel Margin="20,0" VerticalAlignment="Center" Orientation="Horizontal">
         <Button
           Style="{StaticResource CommandWindowButtonStyle}"
           FontFamily="Segoe UI Symbol"
@@ -146,10 +128,7 @@
         <Rectangle Style="{StaticResource ToolbarSeparator}" />
         <Separator />
 
-        <TextBlock
-          Foreground="{StaticResource GrayBrush8}"
-          Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}"
-          ToolTip="{i18N:Localize tooltip-word-count}" />
+        <TextBlock Foreground="{StaticResource GrayBrush8}" Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" ToolTip="{i18N:Localize tooltip-word-count}" />
         <Button
           Style="{StaticResource SpellCheckToggleCommandWindowButtonStyle}"
           FontFamily="Wingdings"
@@ -189,10 +168,7 @@
         IsModal="True"
         Position="Right"
         Theme="Accent">
-        <controls:DisplaySettings
-          x:Name="DisplaySettings"
-          Margin="10"
-          SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}" />
+        <controls:DisplaySettings x:Name="DisplaySettings" Margin="10" SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}" />
         <mah:Flyout.InputBindings>
           <KeyBinding Key="Escape" Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" />
         </mah:Flyout.InputBindings>
@@ -304,30 +280,12 @@
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleCodeCommand}" Gesture="Ctrl+K" />
     <KeyBinding Command="SaveAs" Gesture="Ctrl+Shift+S" />
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleWordWrapCommand}" Gesture="Ctrl+W" />
-    <KeyBinding
-      Command="{x:Static controls:MainWindow.InsertHeaderCommand}"
-      CommandParameter="1"
-      Gesture="Ctrl+1" />
-    <KeyBinding
-      Command="{x:Static controls:MainWindow.InsertHeaderCommand}"
-      CommandParameter="2"
-      Gesture="Ctrl+2" />
-    <KeyBinding
-      Command="{x:Static controls:MainWindow.InsertHeaderCommand}"
-      CommandParameter="3"
-      Gesture="Ctrl+3" />
-    <KeyBinding
-      Command="{x:Static controls:MainWindow.InsertHeaderCommand}"
-      CommandParameter="4"
-      Gesture="Ctrl+4" />
-    <KeyBinding
-      Command="{x:Static controls:MainWindow.InsertHeaderCommand}"
-      CommandParameter="5"
-      Gesture="Ctrl+5" />
-    <KeyBinding
-      Command="{x:Static controls:MainWindow.InsertHeaderCommand}"
-      CommandParameter="6"
-      Gesture="Ctrl+6" />
+    <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" CommandParameter="1" Gesture="Ctrl+1" />
+    <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" CommandParameter="2" Gesture="Ctrl+2" />
+    <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" CommandParameter="3" Gesture="Ctrl+3" />
+    <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" CommandParameter="4" Gesture="Ctrl+4" />
+    <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" CommandParameter="5" Gesture="Ctrl+5" />
+    <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" CommandParameter="6" Gesture="Ctrl+6" />
     <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Plus" />
     <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Add" />
     <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+OemPlus" />
