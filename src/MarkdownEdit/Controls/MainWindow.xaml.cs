@@ -278,10 +278,10 @@ namespace MarkdownEdit.Controls
 
         private void UpdateEditorPreviewVisibility(int state)
         {
-            UniformGrid.Columns = state == 0 ? 2 : 1;
             Editor.Visibility = state == 2 ? Visibility.Collapsed : Visibility.Visible;
             PreviewAirspaceDecorator.Visibility = state == 1 ? Visibility.Collapsed : Visibility.Visible;
             Preview.Visibility = PreviewAirspaceDecorator.Visibility;
+            UniformGrid.Columns = state == 0 ? 2 : 1;
             SetFocus(state == 2 ? Preview.Browser as IInputElement : Editor.EditBox);
             EditorMargins = CalculateEditorMargins();
         }
@@ -295,7 +295,7 @@ namespace MarkdownEdit.Controls
         private Thickness CalculateEditorMargins()
         {
             var singlePaneMargin = Math.Min(Math.Max(EditorMarginMin, App.UserSettings.SinglePaneMargin), EditorMarginMax);
-            var margin = (UniformGrid.Columns == 1) ? Width/singlePaneMargin : 0;
+            var margin = (UniformGrid.Columns == 1) ? ActualWidth/singlePaneMargin : 0;
             return new Thickness(margin, 0, margin, 0);
         }
 
