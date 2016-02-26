@@ -61,6 +61,7 @@ namespace MarkdownEdit.Controls
                 var html = Markdown.ToHtml(markdown);
                 UpdateBaseTag();
                 var div = GetContentsDiv();
+                if (div == null) return;
                 div.innerHTML = ScrubHtml(html);
                 WordCount = div.innerText.WordCount();
                 EmitFirePreviewUpdatedEvent();
@@ -197,13 +198,15 @@ namespace MarkdownEdit.Controls
             {
                 var editor = sender as Editor;
                 if (editor == null) return;
-                var number = editor.VisibleBlockNumber();
+                var numberAndExtra = editor.VisibleBlockNumber();
+                var number = numberAndExtra.Item1;
+                var extra = numberAndExtra.Item2;
                 var offsetTop = 0;
                 if (number > 1)
                 {
                     var element = document3.getElementById(GetIdName(number));
                     if (element == null) return;
-                    offsetTop = element.offsetTop;
+                    offsetTop = element.offsetTop + (extra * 20);
                 }
                 var document2 = Browser.Document as IHTMLDocument2;
                 document2?.parentWindow.scroll(0, offsetTop);

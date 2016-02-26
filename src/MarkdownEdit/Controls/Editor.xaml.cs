@@ -145,24 +145,28 @@ namespace MarkdownEdit.Controls
             EditBox.TextArea.TextView.BackgroundRenderers.Add(blockBackgroundRenderer);
         }
 
-        public int VisibleBlockNumber()
+        public Tuple<int, int> VisibleBlockNumber()
         {
-            if (AbstractSyntaxTree == null) return 1;
+            if (AbstractSyntaxTree == null) return new Tuple<int, int>(1, 0);
             var textView = EditBox.TextArea.TextView;
             var line = textView.GetDocumentLineByVisualTop(textView.ScrollOffset.Y);
 
             var number = 1;
+            var blockOffset = line.Offset;
             var skipListItem = true;
 
             foreach (var block in EnumerateBlocks(AbstractSyntaxTree.FirstChild))
             {
                 if (block.Tag == BlockTag.List) skipListItem = block.ListData.IsTight;
+                blockOffset = block.SourcePosition;
                 if (block.SourcePosition >= line.Offset) break;
                 if (block.Tag == BlockTag.ListItem && skipListItem) continue;
                 number += 1;
             }
 
-            return Math.Max(number, 1);
+            var startOfBlock = EditBox.Document.GetLineByOffset(blockOffset);
+            var extra = line.LineNumber - startOfBlock.LineNumber;
+            return new Tuple<int, int>(number, extra);
         }
 
         private void PasteSpecial() => IfNotReadOnly(() =>
