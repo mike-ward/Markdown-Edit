@@ -49,6 +49,8 @@ your way"
 such an application, but what makes it stand out from the crowd is the
 minimalistic, stylish-looking interface"
 
+[Programosy] – "The best Markdown Editor at the moment"
+
   [CommonMark]: http://commonmark.org
   [Chocolatey]: https://chocolatey.org/packages/markdown-edit
   [Fix for font issue]: https://github.com/mike-ward/Markdown-Edit/issues/14
@@ -56,3 +58,4 @@ minimalistic, stylish-looking interface"
   [Beta News]: http://betanews.com/2015/11/16/markdown-edit-is-a-distraction-free-editor-for-windows/
   [Download Crew]: http://www.downloadcrew.com/article/33887-markdown_edit
   [Softpedia]: http://www.softpedia.com/get/Internet/WEB-Design/HTML-Editors/Markdown-Edit.shtml
+  [Programosy]: http://www.programosy.pl/program,markdown-edit.html
