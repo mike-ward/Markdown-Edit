@@ -22,7 +22,7 @@ shortcuts. There is no main menu, status bar, tabbed windows or other
 distractions.
 
 -   <a href="{{ site.download }}" style="font-weight:bold; font-size:larger;">Download
-    Installer (v: 1.18, Windows 7+)</a>
+    Installer (v: 1.24, Windows 7+)</a>
 -   Install using [Chocolatey]: `choco install markdown-edit`
 -   **Windows 7 Users** - [Fix for font issue]
 
@@ -54,7 +54,7 @@ minimalistic, stylish-looking interface"
   [CommonMark]: http://commonmark.org
   [Chocolatey]: https://chocolatey.org/packages/markdown-edit
   [Fix for font issue]: https://github.com/mike-ward/Markdown-Edit/issues/14
-  [Donate with PayPal]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XGGZ8BEED7R62
+  [Donate with PayPal]: http://mike-ward.net/donate/
   [Beta News]: http://betanews.com/2015/11/16/markdown-edit-is-a-distraction-free-editor-for-windows/
   [Download Crew]: http://www.downloadcrew.com/article/33887-markdown_edit
   [Softpedia]: http://www.softpedia.com/get/Internet/WEB-Design/HTML-Editors/Markdown-Edit.shtml
