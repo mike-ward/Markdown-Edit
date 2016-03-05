@@ -6,19 +6,22 @@
   xmlns:converters="clr-namespace:MarkdownEdit.Converters"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
+  xmlns:local="clr-namespace:MarkdownEdit.Controls"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   Background="Transparent"
   BorderThickness="0"
   AllowsTransparency="True"
-  DataContext="{Binding RelativeSource={RelativeSource Self}}"
   ShowInTaskbar="False"
   SizeToContent="WidthAndHeight"
   WindowStyle="None"
   mc:Ignorable="d">
 
+  <Window.DataContext>
+    <local:ImageDropDialogViewModel />
+  </Window.DataContext>
+
   <Window.Resources>
     <converters:BooleanToVisiblityConverter x:Key="BooleanToVisiblityConverter" />
-    <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
 
     <Style x:Key="MenuIconStyle" TargetType="TextBlock">
       <Setter Property="FontFamily" Value="Segoe UI Symbol" />
@@ -39,28 +42,19 @@
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem
-        Click="OnUploadToImgur"
-        Header="{i18N:Localize image-drop-upload-imgur}"
-        StaysOpenOnClick="True">
+      <MenuItem Click="OnUploadToImgur" Header="{i18N:Localize image-drop-upload-imgur}" StaysOpenOnClick="True">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#x1f301;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem
-        Click="OnInsertDataUri"
-        Header="{i18N:Localize image-drop-as-data-uri}"
-        StaysOpenOnClick="True">
+      <MenuItem Click="OnInsertDataUri" Header="{i18N:Localize image-drop-as-data-uri}" StaysOpenOnClick="True">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16D;</TextBlock>
         </MenuItem.Icon>
       </MenuItem>
 
-      <MenuItem
-        x:Name="AsLocalFileMenuItem"
-        Header="{i18N:Localize image-drop-as-local-file}"
-        StaysOpenOnClick="True">
+      <MenuItem x:Name="AsLocalFileMenuItem" Header="{i18N:Localize image-drop-as-local-file}" StaysOpenOnClick="True">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xE16F;</TextBlock>
         </MenuItem.Icon>
@@ -93,20 +87,14 @@
     BorderBrush="{DynamicResource TextBoxBorderBrush}"
     BorderThickness="1"
     Visibility="{Binding Uploading, Converter={StaticResource BooleanToVisiblityConverter}}">
-    <StackPanel
-      Margin="4"
-      VerticalAlignment="Center"
-      Orientation="Horizontal">
+    <StackPanel Margin="4" VerticalAlignment="Center" Orientation="Horizontal">
       <controls:MetroProgressBar
         x:Name="ProgressBar"
         Width="90"
         Height="10"
         Margin="0,0,10,0"
         VerticalAlignment="Center" />
-      <Button
-        VerticalAlignment="Center"
-        Click="OnCancel"
-        Content="{i18N:Localize cancel}" />
+      <Button VerticalAlignment="Center" Click="OnCancel" Content="{i18N:Localize cancel}" />
     </StackPanel>
   </Border>
 </Window>
