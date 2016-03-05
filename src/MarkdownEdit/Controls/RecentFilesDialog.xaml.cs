@@ -86,7 +86,7 @@ namespace MarkdownEdit.Controls
             if (file == null) return;
             if (File.Exists(file.FileName.StripOffsetFromFileName()) == false)
             {
-                Utility.Alert((string)TranslationProvider.Translate("recent-file-not-found"), this);
+                Notify.Alert((string)TranslationProvider.Translate("recent-file-not-found"), this);
                 return;
             }
             ApplicationCommands.Open.Execute(file.FileName, Application.Current.MainWindow);

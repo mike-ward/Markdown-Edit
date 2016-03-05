@@ -68,7 +68,7 @@ namespace MarkdownEdit.Controls
             }
             catch (CommonMarkException ex)
             {
-                Utility.Alert(ex.ToString());
+                Notify.Alert(ex.ToString());
             }
         }
 

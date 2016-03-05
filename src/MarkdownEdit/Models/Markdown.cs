@@ -8,6 +8,7 @@ using CommonMark.Syntax;
 using HtmlAgilityPack;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Properties;
+using NReco.PdfGenerator;
 using static System.String;
 using CommonMarkConverter = MarkdownEdit.MarkdownConverters.CommonMarkConverter;
 
@@ -51,7 +52,7 @@ namespace MarkdownEdit.Models
             Pandoc(ResolveImageUrls(ToHtml(markdown)), $"-f html -t docx -o \"{path}\"");
 
         public static byte[] HtmlToPdf(string html) =>
-            new NReco.PdfGenerator.HtmlToPdfConverter().GeneratePdf(ResolveImageUrls(html));
+            new HtmlToPdfConverter().GeneratePdf(ResolveImageUrls(html));
 
         public static string Pandoc(string text, string args)
         {
@@ -61,7 +62,7 @@ namespace MarkdownEdit.Models
             {
                 if (process == null)
                 {
-                    Utility.Alert("Error starting Pandoc");
+                    Notify.Alert("Error starting Pandoc");
                     return text;
                 }
                 if (text != null)
@@ -75,7 +76,7 @@ namespace MarkdownEdit.Models
                 if (process.ExitCode != 0)
                 {
                     var msg = process.StandardError.ReadToEnd();
-                    result = string.IsNullOrWhiteSpace(msg) ? "empty error response" : msg;
+                    result = IsNullOrWhiteSpace(msg) ? "empty error response" : msg;
                 }
                 return result;
             }
@@ -194,6 +195,13 @@ namespace MarkdownEdit.Models
         private static string Normalize(string value)
         {
             return value.Replace('→', '\t').Replace('␣', ' ');
+        }
+
+        public static string RemoveYamlFrontMatter(string markdown)
+        {
+            if (App.UserSettings.IgnoreYaml == false) return markdown;
+            var tuple = SeperateFrontMatter(markdown);
+            return tuple.Item2;
         }
     }
 }

@@ -79,7 +79,7 @@ namespace MarkdownEdit.Models
             }
             catch (Exception ex)
             {
-                Utility.Alert($"{ex.Message} {file}");
+                Notify.Alert($"{ex.Message} {file}");
                 return false;
             }
         }
@@ -92,7 +92,7 @@ namespace MarkdownEdit.Models
         {
             if (editor.IsModified == false) return true;
 
-            var result = Utility.ConfirmYesNoCancel("Save your changes?");
+            var result = Notify.ConfirmYesNoCancel("Save your changes?");
 
             return (result == MessageBoxResult.Yes)
                 ? SaveFile(editor)
@@ -166,7 +166,7 @@ namespace MarkdownEdit.Models
             }
             catch (Exception ex)
             {
-                Utility.Alert(ex.Message);
+                Notify.Alert(ex.Message);
                 return false;
             }
         }
@@ -205,7 +205,7 @@ namespace MarkdownEdit.Models
             }
             catch (Exception ex)
             {
-                Utility.Alert(ex.Message);
+                Notify.Alert(ex.Message);
             }
         }
 
@@ -217,7 +217,7 @@ namespace MarkdownEdit.Models
 
         private static bool SaveAsHtml(string markdown, string filename, string filter)
         {
-            var html = Markdown.ToHtml(Utility.RemoveYamlFrontMatter(markdown));
+            var html = Markdown.ToHtml(Markdown.RemoveYamlFrontMatter(markdown));
             if (filter == "html-with-template") html = UserTemplate.InsertContent(html);
             File.WriteAllText(filename, html);
             return true;
@@ -225,7 +225,7 @@ namespace MarkdownEdit.Models
 
         private static bool SaveAsPdf(string markdown, string filename)
         {
-            var html = UserTemplate.InsertContent(Markdown.ToHtml(Utility.RemoveYamlFrontMatter(markdown)));
+            var html = UserTemplate.InsertContent(Markdown.ToHtml(Markdown.RemoveYamlFrontMatter(markdown)));
             var pdf = Markdown.HtmlToPdf(html);
             File.WriteAllBytes(filename, pdf);
             return true;
@@ -233,7 +233,7 @@ namespace MarkdownEdit.Models
 
         private static bool SaveAsDocx(string markdown, string filename)
         {
-            Markdown.ToMicrosoftWord(Utility.RemoveYamlFrontMatter(markdown), filename);
+            Markdown.ToMicrosoftWord(Markdown.RemoveYamlFrontMatter(markdown), filename);
             return true;
         }
     }

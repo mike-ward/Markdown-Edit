@@ -2,22 +2,16 @@
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
-using System.Media;
-using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using MarkdownEdit.Controls;
-using MarkdownEdit.i18n;
 
 namespace MarkdownEdit.Models
 {
     public static class Utility
     {
-        public const string Version = "1.24";
-
         public static Func<TKey, TResult> Memoize<TKey, TResult>(this Func<TKey, TResult> func)
         {
             var cache = new ConcurrentDictionary<TKey, TResult>();
@@ -52,8 +46,6 @@ namespace MarkdownEdit.Models
             };
         }
 
-        public static void Beep() => SystemSounds.Beep.Play();
-
         public static Process EditFile(string file) => App.UserSettings.UseDefaultEditor
             ? Process.Start(file)
             : Process.Start("Notepad.exe", file);
@@ -61,29 +53,6 @@ namespace MarkdownEdit.Models
         public static string AssemblyFolder() => Path.GetDirectoryName(ExecutingAssembly());
 
         public static string ExecutingAssembly() => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
-
-        public static void ExportHtmlToClipboard(string markdown, bool includeTemplate = false)
-        {
-            var text = RemoveYamlFrontMatter(markdown);
-            var html = Markdown.ToHtml(text);
-            if (includeTemplate) html = UserTemplate.InsertContent(html);
-            CopyHtmlToClipboard(html);
-        }
-
-        private static void CopyHtmlToClipboard(string html)
-        {
-            Clipboard.SetText(html);
-            var popup = new FadingPopupControl();
-            var message = TranslationProvider.Translate("message-html-clipboard") as string;
-            popup.ShowDialogBox(Application.Current.MainWindow, message);
-        }
-
-        public static string RemoveYamlFrontMatter(string markdown)
-        {
-            if (App.UserSettings.IgnoreYaml == false) return markdown;
-            var tuple = Markdown.SeperateFrontMatter(markdown);
-            return tuple.Item2;
-        }
 
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
@@ -98,38 +67,6 @@ namespace MarkdownEdit.Models
                 if (foundElement != null) break;
             }
             return foundElement;
-        }
-
-        public static void Alert(string alert, Window owner = null) => Show(alert, MessageBoxButton.OK, MessageBoxImage.Error, owner);
-
-        public static MessageBoxResult ConfirmYesNo(string question, Window owner = null) => Show(question, MessageBoxButton.YesNo, MessageBoxImage.Question, owner);
-
-        public static MessageBoxResult ConfirmYesNoCancel(string question, Window owner = null) => Show(question, MessageBoxButton.YesNoCancel, MessageBoxImage.Question, owner);
-
-        private static MessageBoxResult Show(string message, MessageBoxButton button, MessageBoxImage image, Window owner)
-        {
-            var text = message ?? "null";
-            var window = owner ?? Application.Current.MainWindow;
-
-            return Application.Current.Dispatcher.Invoke(() => window != null
-                ? MessageBox.Show(window, text, App.Title, button, image)
-                : MessageBox.Show(text, App.Title, button, image));
-        }
-
-        public static async Task<bool> IsCurrentVersion()
-        {
-            try
-            {
-                using (var http = new HttpClient())
-                {
-                    var version = await http.GetStringAsync("http://markdownedit.com/version.txt");
-                    return string.IsNullOrWhiteSpace(version) || version == Version;
-                }
-            }
-            catch (Exception)
-            {
-                return true;
-            }
         }
     }
 }

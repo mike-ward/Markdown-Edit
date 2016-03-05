@@ -17,7 +17,9 @@ using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
+using Clipboard = MarkdownEdit.Models.Clipboard;
 using Theme = MarkdownEdit.Models.Theme;
+using Version = MarkdownEdit.Models.Version;
 
 namespace MarkdownEdit.Controls
 {
@@ -120,7 +122,7 @@ namespace MarkdownEdit.Controls
                 updateMargins();
                 LoadCommandLineOrLastFile();
                 Application.Current.Activated += OnActivated;
-                NewVersion = !await Utility.IsCurrentVersion();
+                NewVersion = !await Version.IsCurrentVersion();
                 TitleBarTooltip();
             });
         }
@@ -299,9 +301,9 @@ namespace MarkdownEdit.Controls
             return new Thickness(margin, 0, margin, 0);
         }
 
-        private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text);
+        private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e) => Clipboard.ExportHtmlToClipboard(Editor.Text);
 
-        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text, true);
+        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Clipboard.ExportHtmlToClipboard(Editor.Text, true);
 
         private void ExecuteSaveAsHtml(object sender, ExecutedRoutedEventArgs e) => EditorLoadSave.SaveFileAs(Editor, "html");
 

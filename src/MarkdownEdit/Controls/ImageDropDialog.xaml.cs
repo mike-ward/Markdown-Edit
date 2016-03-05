@@ -100,7 +100,7 @@ namespace MarkdownEdit.Controls
             }
             catch (Exception ex)
             {
-                Utility.Alert(ex.Message);
+                Notify.Alert(ex.Message);
             }
             finally
             {
@@ -158,12 +158,12 @@ namespace MarkdownEdit.Controls
                 ActivateClose();
 
                 if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
-                else Utility.Alert(link);
+                else Notify.Alert(link);
             }
             catch (Exception ex)
             {
                 ActivateClose();
-                Utility.Alert(ex.Message);
+                Notify.Alert(ex.Message);
             }
         }
 
@@ -218,7 +218,7 @@ namespace MarkdownEdit.Controls
                 if (File.Exists(destination))
                 {
                     var message = (string)TranslationProvider.Translate("image-drop-overwrite-file");
-                    if (Utility.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
+                    if (Notify.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
                 }
 
                 if (_vm.UseClipboardImage) File.WriteAllBytes(destination, image);

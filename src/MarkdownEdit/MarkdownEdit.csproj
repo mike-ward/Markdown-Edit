@@ -175,6 +175,7 @@
     <Compile Include="MarkdownConverters\IMarkdownConverter.cs" />
     <Compile Include="Models\AbstractSyntaxTree.cs" />
     <Compile Include="Models\BlockBackgroundRenderer.cs" />
+    <Compile Include="Models\Clipboard.cs" />
     <Compile Include="Models\EditorSpellCheck.cs" />
     <Compile Include="Models\EditorUtilities.cs" />
     <Compile Include="Models\EditorState.cs" />
@@ -195,7 +196,9 @@
     <Compile Include="Models\EditorLoadSave.cs" />
     <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
     <Compile Include="Commands\SnippetTabCommand.cs" />
+    <Compile Include="Models\Notify.cs" />
     <Compile Include="Models\OldSchool.cs" />
+    <Compile Include="Models\Version.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Snippets\ISnippetManager.cs" />
     <Compile Include="Snippets\SnippetManager.cs" />

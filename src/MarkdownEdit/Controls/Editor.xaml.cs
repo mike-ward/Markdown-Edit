@@ -250,7 +250,7 @@ namespace MarkdownEdit.Controls
             ExecutedRoutedEventHandler execute = null;
             execute = (sender, args) =>
             {
-                if (Clipboard.ContainsText())
+                if (System.Windows.Clipboard.ContainsText())
                 {
                     // WPF won't continue routing the command if there's PreviewExecuted handler.
                     // So, remove it, call Execute and reinstall the handler.
@@ -265,7 +265,7 @@ namespace MarkdownEdit.Controls
                         cmd.PreviewExecuted += execute;
                     }
                 }
-                else if (Clipboard.ContainsImage())
+                else if (System.Windows.Clipboard.ContainsImage())
                 {
                     var dialog = new ImageDropDialog
                     {

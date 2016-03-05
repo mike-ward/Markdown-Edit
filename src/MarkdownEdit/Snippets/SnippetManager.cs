@@ -82,7 +82,7 @@ namespace MarkdownEdit.Snippets
             }
             catch (Exception ex)
             {
-                Utility.Alert($"{ex.Message} in {SnippetFile()}");
+                Notify.Alert($"{ex.Message} in {SnippetFile()}");
             }
         }
 
@@ -108,7 +108,7 @@ namespace MarkdownEdit.Snippets
             foreach (var token in replaceable.Split(expanded))
             {
                 if (token == "$END$") snippet.Elements.Add(new SnippetCaretElement());
-                else if (token == "$CLIPBOARD$") snippet.Elements.Add(new SnippetTextElement {Text = Clipboard.GetText()});
+                else if (token == "$CLIPBOARD$") snippet.Elements.Add(new SnippetTextElement {Text = System.Windows.Clipboard.GetText()});
                 else if (replaceable.IsMatch(token)) snippet.Elements.Add(new SnippetReplaceableTextElement {Text = token.Trim('$')});
                 else snippet.Elements.Add(new SnippetTextElement {Text = token});
             }

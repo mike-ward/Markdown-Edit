@@ -248,7 +248,7 @@ namespace MarkdownEdit.Models
             }
             catch (Exception ex)
             {
-                Utility.Alert($"{ex.Message} in {SettingsFile}");
+                Notify.Alert($"{ex.Message} in {SettingsFile}");
                 return null;
             }
         }

@@ -46,7 +46,7 @@ namespace MarkdownEdit.Controls
             }
             catch (Exception ex)
             {
-                Utility.Alert($"{ex.Message} in {file ?? "null"}");
+                Notify.Alert($"{ex.Message} in {file ?? "null"}");
                 return null;
             }
         }
