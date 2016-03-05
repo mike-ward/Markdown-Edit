@@ -18,6 +18,7 @@
 
   <Window.Resources>
     <converters:BooleanToVisiblityConverter x:Key="BooleanToVisiblityConverter" />
+    <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
 
     <Style x:Key="MenuIconStyle" TargetType="TextBlock">
       <Setter Property="FontFamily" Value="Segoe UI Symbol" />

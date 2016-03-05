@@ -9,6 +9,8 @@ _posts
 *.sln.docstates
 cov-int/
 *.DotSettings
+.idea/
+*.iml
 
 # Build results
 

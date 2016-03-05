@@ -165,6 +165,7 @@ namespace MarkdownEdit.Controls
                 }
 
                 Uploading = true;
+                ContextMenu.IsOpen = false;
                 var link = await new ImageUploadImgur().UploadBytesAsync(image, progress, completed);
                 ActivateClose();
 
