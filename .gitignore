@@ -8,7 +8,6 @@ _posts
 *.user
 *.sln.docstates
 cov-int/
-*.DotSettings
 .idea/
 *.iml
 
