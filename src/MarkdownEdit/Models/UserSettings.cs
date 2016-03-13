@@ -37,6 +37,7 @@ namespace MarkdownEdit.Models
         private bool _useDefaultEditor;
         private bool _yesIDonated;
         private bool _insertImagePathsOnly;
+        private string _cultureLanguage = "";
 
         public Theme Theme
         {
@@ -208,6 +209,12 @@ namespace MarkdownEdit.Models
             set { Set(ref _insertImagePathsOnly, value); }
         }
 
+        public string CultureLanguage
+        {
+            get { return _cultureLanguage; }
+            set { Set(ref _cultureLanguage, value); }
+        }
+
         public void Update()
         {
             var userSettings = Load();
@@ -248,7 +255,7 @@ namespace MarkdownEdit.Models
             }
             catch (Exception ex)
             {
-                Utility.Alert($"{ex.Message} in {SettingsFile}");
+                Notify.Alert($"{ex.Message} in {SettingsFile}");
                 return null;
             }
         }
@@ -305,7 +312,8 @@ namespace MarkdownEdit.Models
                 ^ CustomMarkdownConverter.GetHashCode()
                 ^ UseDefaultEditor.GetHashCode()
                 ^ YesIDonated.GetHashCode()
-                ^ InsertImagePathsOnly.GetHashCode();
+                ^ InsertImagePathsOnly.GetHashCode()
+                ^ CultureLanguage.GetHashCode();
         }
     }
 }

@@ -62,12 +62,12 @@ namespace MarkdownEdit.SpellCheck
                 }
                 else
                 {
-                    Utility.Alert(language + " dictionary not found");
+                    Notify.Alert(language + " dictionary not found");
                 }
             }
             catch (Exception ex)
             {
-                Utility.Alert($"{ex.Message} in {language ?? "null"} file");
+                Notify.Alert($"{ex.Message} in {language ?? "null"} file");
             }
         }
 
@@ -80,7 +80,7 @@ namespace MarkdownEdit.SpellCheck
             }
             catch (Exception ex)
             {
-                Utility.Alert($"{ex.Message} while loading custom dictionary");
+                Notify.Alert($"{ex.Message} while loading custom dictionary");
             }
         }
 
@@ -112,7 +112,7 @@ namespace MarkdownEdit.SpellCheck
             }
             catch (Exception ex)
             {
-                Utility.Alert($"{ex.Message} while updating custom dictionary");
+                Notify.Alert($"{ex.Message} while updating custom dictionary");
             }
         }
     }

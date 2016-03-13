@@ -22,6 +22,7 @@ Tastatur genveje
     F12            Skift mellem forhåndsvisning/redigering/begge
     Alt+S          Slå automatiske gemme til/fra
     Ctrl+,         Slå indstillinger
+    Ctrl+.         Slå indholdsfortegnelse
 
     Tab            Indryk indeværende linje/valgt blok med 2 mellemrum
     Shift+Tab      Udryk indeværende linje/valgt blok med 2 mellemrum

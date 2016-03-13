@@ -24,7 +24,7 @@ namespace MarkdownEdit.Controls
             }
             else
             {
-                Utility.Beep();
+                Notify.Beep();
             }
         }
 

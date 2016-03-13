@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Media.Imaging;
 
 // ReSharper disable InconsistentNaming
@@ -44,7 +42,7 @@ namespace MarkdownEdit.Models
 
         public static BitmapSource ClipboardDibToBitmapSource()
         {
-            var ms = Clipboard.GetData("DeviceIndependentBitmap") as MemoryStream;
+            var ms = System.Windows.Clipboard.GetData("DeviceIndependentBitmap") as MemoryStream;
             if (ms == null) return null;
 
             var dibBuffer = new byte[ms.Length];

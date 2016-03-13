@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using ICSharpCode.AvalonEdit;
@@ -16,49 +13,40 @@ using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
 {
-    public partial class ImageDropDialog : INotifyPropertyChanged
+    public partial class ImageDropDialog
     {
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
 
-        private bool _canceled;
-        private bool _useClipboardImage;
-        private bool _uploading;
-        private string _documentFileName;
-
-        public ImageDropDialog()
-        {
-            InitializeComponent();
-            Loaded += OnLoaded;
-        }
-
         public string DocumentFileName
         {
-            get { return _documentFileName; }
-            set { Set(ref _documentFileName, value); }
-        }
-
-        public bool Uploading
-        {
-            get { return _uploading; }
-            set { Set(ref _uploading, value); }
+            set { _vm.DocumentFileName = value; }
         }
 
         public bool UseClipboardImage
         {
-            get { return _useClipboardImage; }
-            set { Set(ref _useClipboardImage, value); }
+            set { _vm.UseClipboardImage = value; }
+        }
+
+        private bool _canceled;
+        private readonly ImageDropDialogViewModel _vm;
+
+        public ImageDropDialog()
+        {
+            InitializeComponent();
+            _vm = (ImageDropDialogViewModel)DataContext;
+            Loaded += OnLoaded;
         }
 
         private void OnLoaded(object sender, EventArgs eventArgs)
         {
-            if (App.UserSettings.InsertImagePathsOnly && !string.IsNullOrWhiteSpace(DocumentFileName))
+            if (App.UserSettings.InsertImagePathsOnly && !string.IsNullOrWhiteSpace(_vm.DocumentFileName))
             {
                 OnInsertPath(null, null);
                 return;
             }
 
-            var position = UseClipboardImage
+            var position = _vm.UseClipboardImage
                 ? TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom)
                 : DragEventArgs.GetPosition(TextEditor);
 
@@ -66,18 +54,18 @@ namespace MarkdownEdit.Controls
             Left = screen.X;
             Top = screen.Y;
 
-            var hasDocumentFileName = !string.IsNullOrWhiteSpace(DocumentFileName);
+            var hasDocumentFileName = !string.IsNullOrWhiteSpace(_vm.DocumentFileName);
             SetDocumentFoldersMenuItems();
-            InsertPathMenuItem.IsEnabled = !UseClipboardImage && hasDocumentFileName;
+            InsertPathMenuItem.IsEnabled = !_vm.UseClipboardImage && hasDocumentFileName;
             AsLocalFileMenuItem.IsEnabled = hasDocumentFileName;
-            ContextMenu.Closed += (o, args) => { if (!Uploading) Close(); };
+            ContextMenu.Closed += (o, args) => { if (!_vm.Uploading) Close(); };
             Dispatcher.InvokeAsync(() => ContextMenu.IsOpen = true);
         }
 
         private void SetDocumentFoldersMenuItems()
         {
-            if (string.IsNullOrWhiteSpace(DocumentFileName)) return;
-            var directoryName = Path.GetDirectoryName(DocumentFileName);
+            if (string.IsNullOrWhiteSpace(_vm.DocumentFileName)) return;
+            var directoryName = Path.GetDirectoryName(_vm.DocumentFileName);
             if (string.IsNullOrWhiteSpace(directoryName)) throw new Exception("directoryName in ImageDropDialog member is invalid");
 
             var documentFolder = new[] {".\\"};
@@ -98,7 +86,7 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                if (UseClipboardImage)
+                if (_vm.UseClipboardImage)
                 {
                     action(null);
                 }
@@ -112,7 +100,7 @@ namespace MarkdownEdit.Controls
             }
             catch (Exception ex)
             {
-                Utility.Alert(ex.Message);
+                Notify.Alert(ex.Message);
             }
             finally
             {
@@ -125,7 +113,7 @@ namespace MarkdownEdit.Controls
             TryIt(droppedFilePath =>
             {
                 var relativePath = FileExtensions
-                    .MakeRelativePath(DocumentFileName, droppedFilePath)
+                    .MakeRelativePath(_vm.DocumentFileName, droppedFilePath)
                     .Replace('\\', '/');
 
                 var file = Path.GetFileNameWithoutExtension(droppedFilePath);
@@ -150,7 +138,7 @@ namespace MarkdownEdit.Controls
                 string name;
                 byte[] image;
 
-                if (UseClipboardImage)
+                if (_vm.UseClipboardImage)
                 {
                     name = "clipboard";
                     image = Images.ClipboardDibToBitmapSource().ToPngArray();
@@ -164,17 +152,18 @@ namespace MarkdownEdit.Controls
                     image = File.ReadAllBytes(path);
                 }
 
-                Uploading = true;
+                _vm.Uploading = true;
+                ContextMenu.IsOpen = false;
                 var link = await new ImageUploadImgur().UploadBytesAsync(image, progress, completed);
                 ActivateClose();
 
                 if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
-                else Utility.Alert(link);
+                else Notify.Alert(link);
             }
             catch (Exception ex)
             {
                 ActivateClose();
-                Utility.Alert(ex.Message);
+                Notify.Alert(ex.Message);
             }
         }
 
@@ -188,7 +177,7 @@ namespace MarkdownEdit.Controls
         {
             TryIt(droppedFilePath =>
             {
-                var dataUri = UseClipboardImage
+                var dataUri = _vm.UseClipboardImage
                     ? Images.ClipboardDibToDataUri()
                     : Images.ImageFileToDataUri(droppedFilePath);
 
@@ -212,7 +201,7 @@ namespace MarkdownEdit.Controls
                 string title;
                 var image = new byte[0];
 
-                if (UseClipboardImage)
+                if (_vm.UseClipboardImage)
                 {
                     var name = PromptDialog.Prompt((string)TranslationProvider.Translate("aslocalfile-save-file-as"));
                     if (string.IsNullOrWhiteSpace(name)) return;
@@ -224,15 +213,15 @@ namespace MarkdownEdit.Controls
                     title = Path.GetFileName(droppedFilePath);
                 }
                 var link = Path.Combine(documentRelativeDestinationPath, title);
-                var destination = Path.Combine(Path.GetDirectoryName(DocumentFileName), link);
+                var destination = Path.Combine(Path.GetDirectoryName(_vm.DocumentFileName), link);
                 if (link.Contains(" ")) link = $"<{link}>";
                 if (File.Exists(destination))
                 {
                     var message = (string)TranslationProvider.Translate("image-drop-overwrite-file");
-                    if (Utility.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
+                    if (Notify.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
                 }
 
-                if (UseClipboardImage) File.WriteAllBytes(destination, image);
+                if (_vm.UseClipboardImage) File.WriteAllBytes(destination, image);
                 else File.Copy(droppedFilePath, destination, true);
 
                 InsertImageTag(TextEditor, DragEventArgs, link, title);
@@ -271,17 +260,6 @@ namespace MarkdownEdit.Controls
             if (line == null) return -1;
             var visualColumn = line.GetVisualColumn(pos);
             return line.GetRelativeOffset(visualColumn) + line.FirstDocumentLine.Offset;
-        }
-
-        // INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(property, value)) return;
-            property = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

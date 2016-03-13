@@ -45,7 +45,7 @@ namespace MarkdownEdit.Models
             }
             catch (Exception ex)
             {
-                Utility.Alert(ex.Message);
+                Notify.Alert(ex.Message);
                 return content;
             }
         }

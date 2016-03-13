@@ -38,7 +38,7 @@ namespace MarkdownEdit.Models
             var match = regex.Match(editor.Text, start);
             if (!match.Success)
             {
-                Utility.Beep();
+                Notify.Beep();
                 return;
             }
             editor.Select(match.Index, match.Length);
@@ -114,7 +114,7 @@ namespace MarkdownEdit.Models
                     replaced = true;
                 }
 
-                if (!editor.Find(find) && !replaced) Utility.Beep();
+                if (!editor.Find(find) && !replaced) Notify.Beep();
                 return replaced;
             }
             catch (Exception e)
@@ -149,7 +149,7 @@ namespace MarkdownEdit.Models
 
         public static bool ErrorBeep()
         {
-            Utility.Beep();
+            Notify.Beep();
             return false;
         }
 
@@ -272,6 +272,14 @@ namespace MarkdownEdit.Models
             {
                 textEditor.EndChange();
             }
+        }
+
+        public static void ScrollToOffset(TextEditor editor, int offset)
+        {
+            var line = editor.Document.GetLineByOffset(offset);
+            if (line == null) return;
+            editor.ScrollToLine(line.LineNumber);
+            editor.CaretOffset = offset;
         }
 
         public static void ScrollToLine(TextEditor editor, int line)

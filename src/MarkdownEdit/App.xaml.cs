@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -80,6 +81,8 @@ namespace MarkdownEdit
 
         private static void InitializeSettings()
         {
+            try
+        {
             if (Settings.Default.UpgradeSettings)
             {
                 Settings.Default.Upgrade();
@@ -88,6 +91,19 @@ namespace MarkdownEdit
 
                 // Adds new settings from this version
                 UserSettings.Load()?.Save();
+            }
+            }
+            catch (ConfigurationErrorsException e)
+            {
+                var ex = e.InnerException as ConfigurationErrorsException;
+                if (string.IsNullOrWhiteSpace(ex?.Filename))
+                {
+                    Notify.Alert("Settings file corrupted, can't delete.");
+                    throw;
+                }
+                File.Delete(ex.Filename);
+                Process.Start(ResourceAssembly.Location);
+                Current.Shutdown();
             }
 
             UserSettings = UserSettings.Load();

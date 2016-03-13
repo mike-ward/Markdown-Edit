@@ -131,3 +131,4 @@ save:                             Save
 cancel:                           Cancel
 message-html-clipboard:		        HTML copied to clipboard
 aslocalfile-save-file-as:         Save file as (.png appended to name)?
+table-of-contents:                Table of Contents

@@ -107,6 +107,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -127,12 +128,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\LineContinuationEnterCommand.cs" />
-    <Compile Include="Controls\DisplayDocumentOutlineViewModel.cs" />
+    <Compile Include="Controls\DisplayDocumentStructureViewModel.cs">
+      <DependentUpon>DisplayDocumentStructure.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DisplaySettings.xaml.cs">
       <DependentUpon>DisplaySettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DisplayDocumentOutline.xaml.cs">
-      <DependentUpon>DisplayDocumentOutline.xaml</DependentUpon>
+    <Compile Include="Controls\DisplayDocumentStructure.xaml.cs">
+      <DependentUpon>DisplayDocumentStructure.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Donate.xaml.cs">
       <DependentUpon>Donate.xaml</DependentUpon>
@@ -144,6 +147,9 @@
       <DependentUpon>FontComboBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ImageDropDialog.xaml.cs">
+      <DependentUpon>ImageDropDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageDropDialogViewModel.cs">
       <DependentUpon>ImageDropDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\InsertHyperlinkDialog.xaml.cs">
@@ -170,7 +176,7 @@
     <Compile Include="MarkdownConverters\IMarkdownConverter.cs" />
     <Compile Include="Models\AbstractSyntaxTree.cs" />
     <Compile Include="Models\BlockBackgroundRenderer.cs" />
-    <Compile Include="Models\DocumentOutline.cs" />
+    <Compile Include="Models\Clipboard.cs" />
     <Compile Include="Models\EditorSpellCheck.cs" />
     <Compile Include="Models\EditorUtilities.cs" />
     <Compile Include="Models\EditorState.cs" />
@@ -191,7 +197,9 @@
     <Compile Include="Models\EditorLoadSave.cs" />
     <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
     <Compile Include="Commands\SnippetTabCommand.cs" />
+    <Compile Include="Models\Notify.cs" />
     <Compile Include="Models\OldSchool.cs" />
+    <Compile Include="Models\Version.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Snippets\ISnippetManager.cs" />
     <Compile Include="Snippets\SnippetManager.cs" />
@@ -212,7 +220,7 @@
     <Page Include="Controls\DisplaySettings.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DisplayDocumentOutline.xaml">
+    <Page Include="Controls\DisplayDocumentStructure.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

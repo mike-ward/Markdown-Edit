@@ -22,6 +22,7 @@ Tastenkombinationen
     F12            Wechseln Vorschau/Bearbeitungs/Duale Ansicht
     Alt+S          Automatisches Speichern umschalten
     Ctrl+,         Einstellungen
+    Ctrl+.         Inhaltsverzeichnis
 
     Tab            Aktuelle Selektion 2 Zeichen einrücken
     Shift+Tab      Aktuelle Selektion 2 Zeichen rausrücken

@@ -131,3 +131,4 @@ save:                             Enregistrer
 cancel:                           Annuler
 message-html-clipboard:		        HTML copié dans le presse-papiers
 aslocalfile-save-file-as:         Save file as (.png appended to name)?
+table-of-contents:                Table des Matières

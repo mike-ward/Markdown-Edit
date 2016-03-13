@@ -131,3 +131,4 @@ save:                             Guardar
 cancel:                           Cancelar
 message-html-clipboard:		        HTML copiado al portapapeles
 aslocalfile-save-file-as:         Save file as (.png appended to name)?
+table-of-contents:                Tabla de Contenidos

@@ -113,7 +113,7 @@
       <StackPanel Margin="30 5">
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-version}" />
-          <TextBlock Style="{StaticResource LabelStyle}" Text="{x:Static models:Utility.Version}" />
+          <TextBlock Style="{StaticResource LabelStyle}" Text="{x:Static models:Version.VersionNumber}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-web}" />

@@ -25,7 +25,7 @@ namespace MarkdownEdit.MarkdownConverters
             {
                 if (process == null)
                 {
-                    Utility.Alert($"Error starting {fileName}");
+                    Notify.Alert($"Error starting {fileName}");
                     return text;
                 }
                 if (text != null)

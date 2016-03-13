@@ -18,7 +18,9 @@ using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
+using Clipboard = MarkdownEdit.Models.Clipboard;
 using Theme = MarkdownEdit.Models.Theme;
+using Version = MarkdownEdit.Models.Version;
 
 namespace MarkdownEdit.Controls
 {
@@ -58,8 +60,10 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand IncreaseEditorMarginCommand = new RoutedCommand();
         public static readonly RoutedCommand DecreaseEditorMarginCommand = new RoutedCommand();
         public static readonly RoutedCommand ToggleSettingsFlyoutCommand = new RoutedCommand();
+        public static readonly RoutedCommand ToggleDocumentStructureFlyoutCommand = new RoutedCommand();
         public static readonly RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
         public static readonly RoutedCommand GotToMarkdownEditWebSiteCommand = new RoutedCommand();
+        public static readonly RoutedCommand ScrollToOffsetCommand = new RoutedCommand();
 
         private string _titleName = string.Empty;
         private IMarkdownConverter _commonMarkConverter;
@@ -119,7 +123,7 @@ namespace MarkdownEdit.Controls
                 updateMargins();
                 LoadCommandLineOrLastFile();
                 Application.Current.Activated += OnActivated;
-                NewVersion = !await Utility.IsCurrentVersion();
+                NewVersion = !await Version.IsCurrentVersion();
                 TitleBarTooltip();
             });
         }
@@ -277,10 +281,10 @@ namespace MarkdownEdit.Controls
 
         private void UpdateEditorPreviewVisibility(int state)
         {
-            UniformGrid.Columns = state == 0 ? 2 : 1;
             Editor.Visibility = state == 2 ? Visibility.Collapsed : Visibility.Visible;
             PreviewAirspaceDecorator.Visibility = state == 1 ? Visibility.Collapsed : Visibility.Visible;
             Preview.Visibility = PreviewAirspaceDecorator.Visibility;
+            UniformGrid.Columns = state == 0 ? 2 : 1;
             SetFocus(state == 2 ? Preview.Browser as IInputElement : Editor.EditBox);
             EditorMargins = CalculateEditorMargins();
         }
@@ -294,13 +298,13 @@ namespace MarkdownEdit.Controls
         private Thickness CalculateEditorMargins()
         {
             var singlePaneMargin = Math.Min(Math.Max(EditorMarginMin, App.UserSettings.SinglePaneMargin), EditorMarginMax);
-            var margin = (UniformGrid.Columns == 1) ? Width/singlePaneMargin : 0;
+            var margin = (UniformGrid.Columns == 1) ? ActualWidth/singlePaneMargin : 0;
             return new Thickness(margin, 0, margin, 0);
         }
 
-        private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text);
+        private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e) => Clipboard.ExportHtmlToClipboard(Editor.Text);
 
-        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Utility.ExportHtmlToClipboard(Editor.Text, true);
+        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e) => Clipboard.ExportHtmlToClipboard(Editor.Text, true);
 
         private void ExecuteSaveAsHtml(object sender, ExecutedRoutedEventArgs e) => EditorLoadSave.SaveFileAs(Editor, "html");
 
@@ -310,9 +314,16 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteToggleShowSettingsFlyout(object sender, ExecutedRoutedEventArgs e) => ToggleSettings();
 
+        private void ExecuteToggleDocumentStructureFlyout(object sender, ExecutedRoutedEventArgs e) => ToggleDocumentStructure();
+
         private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int)e.Parameter);
+        }
+
+        private void ExecuteScrollToOffset(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Parameter != null) EditorUtilities.ScrollToOffset(Editor.EditBox, (int)e.Parameter);
         }
 
         private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) => Preview.UpdatePreview(Editor);
@@ -375,9 +386,17 @@ namespace MarkdownEdit.Controls
 
         private void ToggleSettings()
         {
+            ((Flyout)Flyouts.Items[1]).IsOpen = false;
             var settingsFlyout = (Flyout)Flyouts.Items[0];
             settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
             if (settingsFlyout.IsOpen) DisplaySettings.SaveState();
+        }
+
+        private void ToggleDocumentStructure()
+        {
+            ((Flyout)Flyouts.Items[0]).IsOpen = false;
+            var structureFlyout = (Flyout)Flyouts.Items[1];
+            structureFlyout.IsOpen = !structureFlyout.IsOpen;
         }
 
         // INotifyPropertyChanged implementation

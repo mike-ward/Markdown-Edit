@@ -34,6 +34,7 @@ namespace MarkdownEdit.Controls
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
             Browser.MessageHook += BrowserOnMessageHook;
+            Browser.Unloaded += (s, e) => ApplicationCommands.Close.Execute(null, Application.Current.MainWindow);
             UpdatePreview = Utility.Debounce<Editor>(editor => Dispatcher.InvokeAsync(() => Update(editor.Text)));
         }
 
@@ -60,13 +61,14 @@ namespace MarkdownEdit.Controls
                 var html = Markdown.ToHtml(markdown);
                 UpdateBaseTag();
                 var div = GetContentsDiv();
+                if (div == null) return;
                 div.innerHTML = ScrubHtml(html);
                 WordCount = div.innerText.WordCount();
                 EmitFirePreviewUpdatedEvent();
             }
             catch (CommonMarkException ex)
             {
-                Utility.Alert(ex.ToString());
+                Notify.Alert(ex.ToString());
             }
         }
 
@@ -196,13 +198,15 @@ namespace MarkdownEdit.Controls
             {
                 var editor = sender as Editor;
                 if (editor == null) return;
-                var number = editor.VisibleBlockNumber();
+                var numberAndExtra = editor.VisibleBlockNumber();
+                var number = numberAndExtra.Item1;
+                var extra = numberAndExtra.Item2;
                 var offsetTop = 0;
                 if (number > 1)
                 {
                     var element = document3.getElementById(GetIdName(number));
                     if (element == null) return;
-                    offsetTop = element.offsetTop;
+                    offsetTop = element.offsetTop + (extra * 20);
                 }
                 var document2 = Browser.Document as IHTMLDocument2;
                 document2?.parentWindow.scroll(0, offsetTop);
@@ -233,20 +237,19 @@ namespace MarkdownEdit.Controls
                     ApplicationCommands.Help.Execute(this, Application.Current.MainWindow);
                     e.Handled = true;
                     break;
-
-                case Key.F5:
-                    e.Handled = true;
-                    break;
             }
         }
 
         private static IntPtr BrowserOnMessageHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == 0x021)
+            switch (msg)
             {
-                Application.Current.MainWindow.Activate();
-                handled = true;
+                case 0x021:
+                    Application.Current.MainWindow.Activate();
+                    handled = true;
+                    break;
             }
+
             return hwnd;
         }
 
