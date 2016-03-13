@@ -28,6 +28,8 @@ namespace MarkdownEdit.Controls
 
         public void Update(Block ast)
         {
+            if (ast == null) return;
+
             Structure = AbstractSyntaxTree.EnumerateBlocks(ast.FirstChild)
                 .Where(b => b.Tag == BlockTag.AtxHeading || b.Tag == BlockTag.SetextHeading)
                 .Select(b => new DocumentStructure
