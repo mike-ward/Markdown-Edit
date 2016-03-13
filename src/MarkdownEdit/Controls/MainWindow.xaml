@@ -178,7 +178,7 @@
         x:Name="DocumentStructureFlyout"
         Width="400"
         AnimateOpacity="True"
-        Header="Table of Contents"
+        Header="{i18N:Localize table-of-contents}"
         IsModal="True"
         Position="Right"
         Theme="Accent">

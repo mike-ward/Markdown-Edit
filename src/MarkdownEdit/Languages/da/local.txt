@@ -131,3 +131,4 @@ save:                             Gem
 cancel:                           Annuller
 message-html-clipboard:		        HTML kopieret til udklipsholderen
 aslocalfile-save-file-as:         Save file as (.png appended to name)?
+table-of-contents:                indholdsfortegnelse

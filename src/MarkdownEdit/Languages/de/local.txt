@@ -129,5 +129,6 @@ ok:                               OK
 open:                             Öffnen
 save:                             Speichern
 cancel:                           Abbrechen
-message-html-clipboard:		      HTML in die Zwischenablage kopieren
+message-html-clipboard:		        HTML in die Zwischenablage kopieren
 aslocalfile-save-file-as:         Speichern unter (.png anfügen)?
+table-of-contents:                Inhaltsverzeichnis

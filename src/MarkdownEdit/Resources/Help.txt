@@ -22,6 +22,7 @@ Keyboard Shortcuts
     F12            Toggle preview/edit/both
     Alt+S          Toggle auto save
     Ctrl+,         Toggle settings
+    Ctrl+.         Toogle table of contents
 
     Tab            Indent current line/selection 2 spaces
     Shift+Tab      Out-dent current line/selection 2 spaces
