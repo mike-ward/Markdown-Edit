@@ -87,7 +87,7 @@ devient l'argent? Une partie revient aux créateurs des logiciels et outils que
 j'utilise. Le reste finance l'équipement et les licences logicielles.
 
 [Donnez avec
-PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XGGZ8BEED7R62)
+PayPal](http://mike-ward.net/donate)
 
 Téléchargement des images
 -------------------------

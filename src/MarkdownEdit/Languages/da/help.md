@@ -87,7 +87,7 @@ med pengene? Nogle af dem doneres til producenter af software og værktøjer jeg
 anvender. Resten går til udstyr og software licenser.
 
 [Doner med
-PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XGGZ8BEED7R62)
+PayPal](http://mike-ward.net/donate)
 
 Upload af billeder
 ------------------

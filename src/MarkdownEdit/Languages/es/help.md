@@ -88,7 +88,7 @@ software y herramientas que uso. El resto va a equipamiento y licenciamiento
 de software.
 
 [Donar a través de
-PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XGGZ8BEED7R62)
+PayPal](http://mike-ward.net/donate)
 
 Subiendo Imágenes
 ----------------

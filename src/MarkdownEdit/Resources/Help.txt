@@ -88,7 +88,7 @@ money? Some of it is donated to makers of software and tools I use. The rest
 goes to equipment funding and software licensing.
 
 [Donate with
-PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XGGZ8BEED7R62)
+PayPal](http://mike-ward.net/donate)
 
 Uploading Images
 ----------------
