@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using MarkdownEdit.Models;
+using MarkdownEdit.Properties;
 
 namespace MarkdownEdit.i18n
 {
@@ -15,7 +16,10 @@ namespace MarkdownEdit.i18n
 
         static TranslationProvider()
         {
-            _language = Load(Thread.CurrentThread.CurrentUICulture);
+            _language = Load(string.IsNullOrWhiteSpace(App.UserSettings.CultureLanguage) 
+                ? Thread.CurrentThread.CurrentUICulture
+                : new CultureInfo(App.UserSettings.CultureLanguage));
+
             //_language = Load(CultureInfo.GetCultureInfo("de"));
         }
 
