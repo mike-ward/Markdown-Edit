@@ -352,7 +352,7 @@ namespace MarkdownEdit.Controls
             {
                 var start = EditBox.SelectionStart;
                 EditBox.Document.Text = formattedText;
-                EditBox.SelectionStart = start;
+                EditBox.SelectionStart = Math.Min(start, formattedText.Length);
             }
         }
 
