@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:controls="clr-namespace:MarkdownEdit.Controls"
+             xmlns:i="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300"
@@ -23,7 +24,10 @@
       WordWrap="{Binding Path=WordWrap, Mode=TwoWay}"
       ShowLineNumbers="{Binding Path=ShowLineNumbers, Mode=TwoWay}"
       IsModified="{Binding Path=IsModified, Mode=TwoWay}"
-      ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged" />
+      ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"
+      i:MouseWheel.Enhanced="True"
+      i:MouseWheel.ScrollSmoothing="Linear"
+      i:MouseWheel.Debouncing="Auto"/>
   </Border>
 
   <UserControl.CommandBindings>
