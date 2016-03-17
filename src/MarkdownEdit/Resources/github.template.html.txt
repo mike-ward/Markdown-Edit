@@ -432,6 +432,7 @@
     #content table tr {
       background-color: #fff;
       border-top: 1px solid #ccc;
+      page-break-inside: avoid;
     }
 
     #content table tr:nth-child(2n) {
