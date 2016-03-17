@@ -9,9 +9,5 @@ if ERRORLEVEL 1 goto END
 cd Wix
 call build.cmd
 cd ..
-if ERRORLEVEL 1 goto END
-cd MarkdownEdit-Package
-call build.cmd
-cd ..
 :END
 cd ..
