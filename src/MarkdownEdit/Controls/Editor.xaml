@@ -26,8 +26,7 @@
       IsModified="{Binding Path=IsModified, Mode=TwoWay}"
       ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"
       i:MouseWheel.Enhanced="True"
-      i:MouseWheel.ScrollSmoothing="Linear"
-      i:MouseWheel.Debouncing="Auto"/>
+      i:MouseWheel.ScrollSmoothing="None" />
   </Border>
 
   <UserControl.CommandBindings>
