@@ -6,7 +6,7 @@ namespace MarkdownEdit.MarkdownConverters
     {
         public string ConvertToHtml(string markdown)
         {
-            return Markdown.Pandoc(markdown, "-f markdown_github -t html5 --email-obfuscation=none");
+            return Markdown.Pandoc(markdown, "-f markdown_github-emoji -t html5 --email-obfuscation=none");
         }
     }
 }

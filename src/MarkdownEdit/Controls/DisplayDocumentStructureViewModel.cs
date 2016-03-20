@@ -45,7 +45,7 @@ namespace MarkdownEdit.Controls
         private string InlineContent(Inline inline )
         {
             var content = inline.LiteralContent;
-            if (inline.FirstChild != null) content += InlineContent(inline.FirstChild);
+            if (inline.NextSibling != null) content += InlineContent(inline.NextSibling);
             return content;
         }
 
