@@ -37,6 +37,7 @@ namespace MarkdownEdit.Models
 
         public static string ToHtml(string markdown)
         {
+            markdown = markdown.ConvertEmojis();
             if (!IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter))
             {
                 return CustomMarkdownConverter.ConvertToHtml(markdown);
@@ -83,7 +84,7 @@ namespace MarkdownEdit.Models
         }
 
         private static string MarkdownFormat => App.UserSettings.GitHubMarkdown
-            ? "markdown_github"
+            ? "markdown_github-emoji"
             : "markdown_strict" +
                 "+fenced_code_blocks" +
                 "+backtick_code_blocks" +
