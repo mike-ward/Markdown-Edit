@@ -14,6 +14,11 @@ namespace MarkdownEdit.Models
                 var userTemplate = Resources.GithubTemplateHtml;
                 Save(userTemplate);
             }
+            if (File.Exists(EmojiSpritesFile) == false)
+            {
+                var emjoiSprites = Resources.EmojiSprites;
+                emjoiSprites.Save(EmojiSpritesFile);
+            }
             return TemplateFile;
         }
 
@@ -24,6 +29,7 @@ namespace MarkdownEdit.Models
         }
 
         public static string TemplateFile => Path.Combine(UserSettings.SettingsFolder, "user_template.html");
+        public static string EmojiSpritesFile => Path.Combine(UserSettings.SettingsFolder, "emoji-sprite.png");
 
         public static string InsertContent(string content)
         {

@@ -311,6 +311,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Resources\emoji-sprites.png" />
     <Resource Include="Resources\donate.png" />
     <Resource Include="SpellCheck\Dictionaries\Russian.txt" />
     <EmbeddedResource Include="Properties\Resources.resx">

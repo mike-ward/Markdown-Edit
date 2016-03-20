@@ -61,22 +61,26 @@ namespace MarkdownEdit.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap EmojiSprites {
+            get {
+                object obj = ResourceManager.GetObject("EmojiSprites", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;html&gt;
         ///&lt;head&gt;
-        ///  &lt;title&gt;Markdown Edit Preview&lt;/title&gt;
-        ///  &lt;!-- Don&apos;t delete this X-UA tag. The browser control behaves like IE8 otherwise --&gt;
-        ///  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=9&quot;&gt;
-        ///  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=utf-8&quot; /&gt;
-        ///  &lt;style type=&quot;text/css&quot;&gt;
-        ///    body {
-        ///      font-family: &quot;Century Gothic&quot;, Arial;
-        ///      font-size: 15px;
-        ///      line-height: 1.5;
-        ///      color: #555;
-        ///      padding: 0.5pc 0;
-        ///      overflow-x: hidden;
-        ///      overflow-y: scroll;
-        ///      backg [rest of string was truncated]&quot;;.
+        ///	&lt;title&gt;Markdown Edit Preview&lt;/title&gt;
+        ///	&lt;!-- Must have base tag with id of &quot;base-tag-id&quot; --&gt;
+        ///	&lt;base id=&quot;base-tag-id&quot;&gt;
+        ///	&lt;!-- Don&apos;t delete this X-UA tag. The browser control behaves like IE8 otherwise --&gt;
+        ///	&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=Edge&quot;&gt;
+        ///	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=utf-8&quot;/&gt;
+        ///	&lt;style type=&quot;text/css&quot;&gt;
+        ///		@font-face{ font-family: octicons-anchor; src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAYcAA0AAAAACjQAAQAAAAAAAAAAAAAAAAAAA [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string GithubTemplateHtml {
             get {
@@ -98,11 +102,12 @@ namespace MarkdownEdit.Properties {
         ///    Ctrl+Shift+S   Save file As
         ///    Ctrl+R         Recent files
         ///    Ctrl+E         Export HTML to clipboard
-        ///    Ctrl+Shift+E   Export HTML and template to clipboard
+        ///    Ctrl+Shift+E   Export HTML with template to clipboard
+        ///    Alt+E          Save As HTML
+        ///    F5             Reload file
         ///    Alt+F4         Exit
         ///
-        ///    Ctrl+W         Toggle word wrap
-        ///    Ctrl+F7        Toggle spell chec [rest of string was truncated]&quot;;.
+        ///    Ctr [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Help {
             get {
@@ -121,10 +126,10 @@ namespace MarkdownEdit.Properties {
         ///tooltip-open-command:             Open - Ctrl+O
         ///tooltip-save-command:             Save - Ctrl+S
         ///tooltip-save-as-command:          Save as - Ctrl+Shift+S
-        ///tooltip-toggle-settings:          Settings
+        ///tooltip-toggle-settings:          Settings - Ctrl+,
         ///tooltip-word-count:               Word Count
         ///tooltip-spell-check:              Spell Check - Ctrl+F7
-        ///tooltip-word-wr [rest of string was truncated]&quot;;.
+        ///toolti [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string local {
             get {
