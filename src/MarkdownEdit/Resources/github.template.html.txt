@@ -124,7 +124,7 @@
 		#content :checked + .radio-label{ z-index: 1; position: relative; border-color: #4078c0; }
 	</style>
 	<style type="text/css">
-		._sprite{ background-image: url('emoji-sprite.png'); background-color: transparent; background-repeat: no-repeat; display: inline-block; zoom:0.4; vertical-align: middle; }
+		._sprite{ background-image: url('emoji-sprite.png'); background-color: transparent; background-repeat: no-repeat; display: inline-block; zoom:0.39; vertical-align: middle; }
 		._shipit{ width: 75px; height: 75px; background-position: 0 -27520px; }
 		._0023-20e3{ width: 64px; height: 64px; background-position: 0 -27456px; }
 		._0030-20e3{ width: 64px; height: 64px; background-position: -64px 0; }
