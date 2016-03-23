@@ -37,7 +37,8 @@ namespace MarkdownEdit.Models
 
         public static string ToHtml(string markdown)
         {
-            markdown = markdown.ConvertEmojis();
+            var ast = GenerateAbstractSyntaxTree(markdown);
+            markdown = markdown.ConvertEmojis(ast);
             if (!IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter))
             {
                 return CustomMarkdownConverter.ConvertToHtml(markdown);

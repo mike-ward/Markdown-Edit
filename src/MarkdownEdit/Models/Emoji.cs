@@ -7,10 +7,11 @@ namespace MarkdownEdit.Models
     {
         private static readonly Regex Scan = new Regex(@":[^\s]+:", RegexOptions.Compiled);
 
-        public static string ConvertEmojis(this string markdown)
+        public static string ConvertEmojis(this string markdown, CommonMark.Syntax.Block ast)
         {
             return Scan.Replace(markdown, match =>
             {
+                if (!AbstractSyntaxTree.PositionSafeForSmartLink(ast, match.Index, match.Length)) return match.Value;
                 string value;
                 return Emojis.TryGetValue(match.Value, out value)
                     ? $"<i class=\"_sprite {value}\"/>"
