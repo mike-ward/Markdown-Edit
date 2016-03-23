@@ -1,6 +1,5 @@
 echo off
-del /Q *.msi
-del /Q *.nupkg
+if EXIST MarkdownEditSetup.msi del /Q MarkdownEditSetup.msi
 cd src
 nuget restore MarkdownEdit.sln
 if ERRORLEVEL 1 goto END
