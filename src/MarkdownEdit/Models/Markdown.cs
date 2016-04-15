@@ -201,7 +201,6 @@ namespace MarkdownEdit.Models
 
         public static string RemoveYamlFrontMatter(string markdown)
         {
-            if (App.UserSettings.IgnoreYaml == false) return markdown;
             var tuple = SeperateFrontMatter(markdown);
             return tuple.Item2;
         }

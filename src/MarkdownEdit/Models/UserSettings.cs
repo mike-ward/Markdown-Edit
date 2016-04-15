@@ -22,7 +22,6 @@ namespace MarkdownEdit.Models
         private bool _editorShowLineNumbers;
         private bool _editorHighlightCurrentLine;
         private bool _synchronizeScrollPositions = true;
-        private bool _ignoreYaml = true;
         private string _spellCheckDictionary = "en_US";
         private bool _spellCheckIgnoreCodeBlocks = true;
         private bool _spellCheckIgnoreAllCaps = true;
@@ -109,12 +108,6 @@ namespace MarkdownEdit.Models
         {
             get { return _synchronizeScrollPositions; }
             set { Set(ref _synchronizeScrollPositions, value); }
-        }
-
-        public bool IgnoreYaml
-        {
-            get { return _ignoreYaml; }
-            set { Set(ref _ignoreYaml, value); }
         }
 
         public string SpellCheckDictionary
@@ -302,7 +295,6 @@ namespace MarkdownEdit.Models
                 ^ SpellCheckIgnoreCodeBlocks.GetHashCode()
                 ^ SpellCheckIgnoreMarkupTags.GetHashCode()
                 ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
-                ^ IgnoreYaml.GetHashCode()
                 ^ IgnoreTaskbarOnMaximize.GetHashCode()
                 ^ FormatOnSave.GetHashCode()
                 ^ GitHubMarkdown.GetHashCode()
