@@ -8,3 +8,5 @@ link      [$link_text$]($link_url$) $END$
 tm        &trade;
 cp        &copy;
 reg       &reg;
+
+"         “$END$”
