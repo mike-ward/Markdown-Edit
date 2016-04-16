@@ -10,3 +10,4 @@ cp        &copy;
 reg       &reg;
 
 "         “$END$”
+'         ‘$END$’
