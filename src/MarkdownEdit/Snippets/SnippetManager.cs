@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows;
 using ICSharpCode.AvalonEdit.Snippets;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
