@@ -16,6 +16,7 @@ using HtmlAgilityPack;
 using mshtml;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
+using MarkdownEdit.Converters;
 
 namespace MarkdownEdit.Controls
 {
@@ -24,7 +25,7 @@ namespace MarkdownEdit.Controls
         public readonly Action<Editor> UpdatePreview;
         private FileSystemWatcher _templateWatcher;
         private int _wordCount;
-
+        private string _documentStatistics;
         public Preview()
         {
             InitializeComponent();
@@ -36,6 +37,7 @@ namespace MarkdownEdit.Controls
             Browser.MessageHook += BrowserOnMessageHook;
             Browser.Unloaded += (s, e) => ApplicationCommands.Close.Execute(null, Application.Current.MainWindow);
             UpdatePreview = Utility.Debounce<Editor>(editor => Dispatcher.InvokeAsync(() => Update(editor.Text)));
+            DocumentStatisticMode = StatisticMode.Word;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -47,7 +49,7 @@ namespace MarkdownEdit.Controls
                 // kill popups
                 dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
                     BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                    null, Browser, new object[] {});
+                    null, Browser, new object[] { });
 
                 activeX.Silent = true;
             });
@@ -63,13 +65,77 @@ namespace MarkdownEdit.Controls
                 var div = GetContentsDiv();
                 if (div == null) return;
                 div.innerHTML = ScrubHtml(html);
-                WordCount = div.innerText.WordCount();
+
+                UpdateDocumentStatistics(div.innerText);
                 EmitFirePreviewUpdatedEvent();
             }
             catch (CommonMarkException ex)
             {
                 Notify.Alert(ex.ToString());
             }
+        }
+
+        public void UpdateDocumentStatistics(string innerText)
+        {
+            CharacterCount = innerText.Length;
+            WordCount = innerText.WordCount();
+            PageCount = (int)Math.Ceiling(CharacterCount / 1500m);
+
+            UpdateDocumentStatisticDisplayText();
+        }
+
+        public void UpdateDocumentStatisticDisplayText()
+        {
+            var converter = new NumberFormatConverter();
+
+            switch (DocumentStatisticMode)
+            {
+                default:
+                case StatisticMode.Word:
+                    DocumentStatisticDisplayText = converter.Convert( WordCount, typeof(string),null, System.Globalization.CultureInfo.CurrentCulture) + "W";
+                    break;
+                case StatisticMode.Character:
+                    DocumentStatisticDisplayText = converter.Convert(CharacterCount, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture) + "C";
+                    break;
+                case StatisticMode.Page:
+                    DocumentStatisticDisplayText = converter.Convert(PageCount, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture) + "P";
+                    break;
+            }
+        }
+
+        public int WordCount
+        {
+            get { return _wordCount; }
+            set { Set(ref _wordCount, value); }
+        }
+
+        public enum StatisticMode
+        {
+            Character,
+            Word,
+            Page
+        }
+
+        private int _pageCount;
+        private int _characterCount;
+
+        public int CharacterCount
+        {
+            get { return _characterCount; }
+            set { Set(ref _characterCount, value); }
+        }
+
+        public StatisticMode DocumentStatisticMode { get; set; }
+        public string DocumentStatisticDisplayText
+        {
+            get { return _documentStatistics; }
+            set { Set(ref _documentStatistics, value); }
+        }
+
+        public int PageCount
+        {
+            get { return _pageCount; }
+            set { Set(ref _pageCount, value); }
         }
 
         private void EmitFirePreviewUpdatedEvent()
@@ -253,13 +319,7 @@ namespace MarkdownEdit.Controls
             return hwnd;
         }
 
-        // Properties
 
-        public int WordCount
-        {
-            get { return _wordCount; }
-            set { Set(ref _wordCount, value); }
-        }
 
         // INotifyPropertyChanged
 
