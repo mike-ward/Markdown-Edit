@@ -9,7 +9,7 @@ tooltip-open-command:             Open - Ctrl+O
 tooltip-save-command:             Save - Ctrl+S
 tooltip-save-as-command:          Save as - Ctrl+Shift+S
 tooltip-toggle-settings:          Settings - Ctrl+,
-tooltip-word-count:               Word Count
+tooltip-document-statistics:      (C)haracter/(W)ord/Standard(P)age Count (1500C=1P)
 tooltip-spell-check:              Spell Check - Ctrl+F7
 tooltip-word-wrap:                Word Wrap - Ctrl+W
 tooltip-auto-save:                Auto Save - Alt+S

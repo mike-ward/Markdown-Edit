@@ -34,6 +34,7 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand OpenUserDictionaryCommand = new RoutedCommand();
         public static readonly RoutedCommand OpenUserSnippetsCommand = new RoutedCommand();
         public static readonly RoutedCommand ToggleSpellCheckCommand = new RoutedCommand();
+        public static readonly RoutedCommand ToggleDocumentStatistics = new RoutedCommand();
         public static readonly RoutedCommand ToggleFullScreenCommand = new RoutedCommand();
         public static readonly RoutedCommand WrapToColumnCommand = new RoutedCommand();
         public static readonly RoutedCommand RecentFilesCommand = new RoutedCommand();
@@ -435,6 +436,25 @@ namespace MarkdownEdit.Controls
                 return Editor.FileName.Equals(filename, StringComparison.OrdinalIgnoreCase) ? new IntPtr(1) : IntPtr.Zero;
             }
             return IntPtr.Zero;
+        }
+
+        private void ExecuteToggleDocumentStatistics(object sender, ExecutedRoutedEventArgs e)
+        {
+            switch (Preview.DocumentStatisticMode)
+            {
+                default:
+                case Preview.StatisticMode.Character:
+                    Preview.DocumentStatisticMode = Preview.StatisticMode.Word;
+                    break;
+                case Preview.StatisticMode.Word:
+                    Preview.DocumentStatisticMode = Preview.StatisticMode.Page;
+                    break;
+                case Preview.StatisticMode.Page:
+                    Preview.DocumentStatisticMode = Preview.StatisticMode.Character;
+                    break;
+            }
+
+            Preview.UpdateDocumentStatisticDisplayText();
         }
     }
 }
