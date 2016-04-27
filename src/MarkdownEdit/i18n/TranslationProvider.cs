@@ -16,7 +16,9 @@ namespace MarkdownEdit.i18n
 
         static TranslationProvider()
         {
-            _language = Load(string.IsNullOrWhiteSpace(App.UserSettings.CultureLanguage) 
+          
+
+            _language = Load(App.UserSettings == null || string.IsNullOrWhiteSpace(App.UserSettings.CultureLanguage) 
                 ? Thread.CurrentThread.CurrentUICulture
                 : new CultureInfo(App.UserSettings.CultureLanguage));
 

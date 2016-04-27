@@ -128,8 +128,14 @@
         <Rectangle Style="{StaticResource ToolbarSeparator}" />
         <Separator />
 
-        <TextBlock Foreground="{StaticResource GrayBrush8}" Text="{Binding Path=WordCount, ElementName=Preview, Converter={StaticResource NumberFormatConverter}}" ToolTip="{i18N:Localize tooltip-word-count}" />
         <Button
+          Style="{StaticResource SpellCheckToggleCommandWindowButtonStyle}"
+          FontFamily="Arial"
+          Command="{x:Static controls:MainWindow.ToggleDocumentStatistics}"
+          Content="{Binding Path=DocumentStatisticDisplayText, ElementName=Preview}"
+          ToolTip="{i18N:Localize tooltip-document-statistics}" />
+                
+          <Button
           Style="{StaticResource SpellCheckToggleCommandWindowButtonStyle}"
           FontFamily="Wingdings"
           Command="{x:Static controls:MainWindow.ToggleSpellCheckCommand}"
@@ -243,6 +249,7 @@
     <CommandBinding Command="{x:Static controls:MainWindow.OpenUserDictionaryCommand}" Executed="ExecuteOpenUserDictionaryCommand" />
     <CommandBinding Command="{x:Static controls:MainWindow.OpenUserSnippetsCommand}" Executed="ExecuteOpenUserSnippetsCommand" />
     <CommandBinding Command="{x:Static controls:MainWindow.ToggleSpellCheckCommand}" Executed="ExecuteToggleSpellCheck" />
+    <CommandBinding Command="{x:Static controls:MainWindow.ToggleDocumentStatistics}" Executed="ExecuteToggleDocumentStatistics" />
     <CommandBinding Command="{x:Static controls:MainWindow.ToggleFullScreenCommand}" Executed="ExecuteToggleFullScreen" />
     <CommandBinding Command="{x:Static controls:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" />
     <CommandBinding Command="{x:Static controls:MainWindow.TogglePreviewCommand}" Executed="ExecuteTogglePreview" />
