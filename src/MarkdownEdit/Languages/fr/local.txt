@@ -9,7 +9,7 @@ tooltip-open-command:             Ouvrir - Ctrl+O
 tooltip-save-command:             Enregistrer - Ctrl+S
 tooltip-save-as-command:          Enregistrer sous - Ctrl+Shift+S
 tooltip-toggle-settings:          Réglages - Ctrl+,
-tooltip-document-statistics:      Nombre (C)haracter/(W)mots/Standard(P)age (1500C=1P)
+tooltip-document-statistics:      Nombre (c)haracter/(w)mots/Standard(p)age (1500c=1p)
 tooltip-spell-check:              Correction orthographique - Ctrl+F7
 tooltip-word-wrap:                Retour à la ligne - Ctrl+W
 tooltip-auto-save:                Sauvegarde automatique - Alt+S

@@ -14,9 +14,9 @@ using System.Windows.Navigation;
 using CommonMark;
 using HtmlAgilityPack;
 using mshtml;
+using MarkdownEdit.Converters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
-using MarkdownEdit.Converters;
 
 namespace MarkdownEdit.Controls
 {
@@ -26,6 +26,7 @@ namespace MarkdownEdit.Controls
         private FileSystemWatcher _templateWatcher;
         private int _wordCount;
         private string _documentStatistics;
+
         public Preview()
         {
             InitializeComponent();
@@ -49,7 +50,7 @@ namespace MarkdownEdit.Controls
                 // kill popups
                 dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
                     BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                    null, Browser, new object[] { });
+                    null, Browser, new object[] {});
 
                 activeX.Silent = true;
             });
@@ -79,26 +80,27 @@ namespace MarkdownEdit.Controls
         {
             CharacterCount = innerText.Length;
             WordCount = innerText.WordCount();
-            PageCount = (int)Math.Ceiling(CharacterCount / 1500m);
+            PageCount = (int)Math.Ceiling(CharacterCount/1500m);
 
             UpdateDocumentStatisticDisplayText();
         }
 
         public void UpdateDocumentStatisticDisplayText()
         {
-            var converter = new NumberFormatConverter();
+            Func<int, string, string> convert = (count, suffix) =>
+                new NumberFormatConverter().Convert(count, typeof(string), null,
+                    System.Globalization.CultureInfo.CurrentCulture) + suffix;
 
             switch (DocumentStatisticMode)
             {
-                default:
-                case StatisticMode.Word:
-                    DocumentStatisticDisplayText = converter.Convert( WordCount, typeof(string),null, System.Globalization.CultureInfo.CurrentCulture) + "W";
-                    break;
                 case StatisticMode.Character:
-                    DocumentStatisticDisplayText = converter.Convert(CharacterCount, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture) + "C";
+                    DocumentStatisticDisplayText = convert(CharacterCount, "c");
                     break;
                 case StatisticMode.Page:
-                    DocumentStatisticDisplayText = converter.Convert(PageCount, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture) + "P";
+                    DocumentStatisticDisplayText = convert(PageCount, "p");
+                    break;
+                default:
+                    DocumentStatisticDisplayText = convert(WordCount, "w");
                     break;
             }
         }
@@ -126,6 +128,7 @@ namespace MarkdownEdit.Controls
         }
 
         public StatisticMode DocumentStatisticMode { get; set; }
+
         public string DocumentStatisticDisplayText
         {
             get { return _documentStatistics; }
@@ -178,7 +181,7 @@ namespace MarkdownEdit.Controls
         public void Print()
         {
             var document = Browser.Document as IHTMLDocument2;
-            document?.execCommand("Print", true, null);
+            document?.execCommand("Print", true);
         }
 
         private static string GetIdName(int number) => $"mde-{number}";
@@ -272,7 +275,7 @@ namespace MarkdownEdit.Controls
                 {
                     var element = document3.getElementById(GetIdName(number));
                     if (element == null) return;
-                    offsetTop = element.offsetTop + (extra * 20);
+                    offsetTop = element.offsetTop + (extra*20);
                 }
                 var document2 = Browser.Document as IHTMLDocument2;
                 document2?.parentWindow.scroll(0, offsetTop);
@@ -318,8 +321,6 @@ namespace MarkdownEdit.Controls
 
             return hwnd;
         }
-
-
 
         // INotifyPropertyChanged
 

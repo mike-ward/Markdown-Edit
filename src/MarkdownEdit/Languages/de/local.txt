@@ -9,7 +9,7 @@ tooltip-open-command:             Öffnen - Ctrl+O
 tooltip-save-command:             Speichern - Ctrl+S
 tooltip-save-as-command:          Speichern unter - Ctrl+Shift+S
 tooltip-toggle-settings:          Einstellungen - Ctrl+,
-tooltip-document-statistics:      (C)Zeichen/(W)Wörter/(P)Standardseiten zählen (1500C=1P)
+tooltip-document-statistics:      (c)Zeichen/(w)Wörter/(p)Standardseiten zählen (1500c=1p)
 tooltip-spell-check:              Rechtschreibkontrolle - Ctrl+F7
 tooltip-word-wrap:                Zeilenumbruch - Ctrl+W
 tooltip-auto-save:                Automatisches Speichern - Alt+S
