@@ -26,6 +26,7 @@ namespace MarkdownEdit.Controls
         private FileSystemWatcher _templateWatcher;
         private int _wordCount;
         private string _documentStatistics;
+        private string _documentStatisticsToolTip;
 
         public Preview()
         {
@@ -95,12 +96,15 @@ namespace MarkdownEdit.Controls
             {
                 case StatisticMode.Character:
                     DocumentStatisticDisplayText = convert(CharacterCount, "c");
+                    DocumentStatisticsToolTip = $"{convert(WordCount, "w")}, {convert(PageCount, "p")}";
                     break;
                 case StatisticMode.Page:
                     DocumentStatisticDisplayText = convert(PageCount, "p");
+                    DocumentStatisticsToolTip = $"{convert(WordCount, "w")}, {convert(CharacterCount, "c")}";
                     break;
                 default:
                     DocumentStatisticDisplayText = convert(WordCount, "w");
+                    DocumentStatisticsToolTip = $"{convert(CharacterCount, "c")}, {convert(PageCount, "p")}";
                     break;
             }
         }
@@ -133,6 +137,12 @@ namespace MarkdownEdit.Controls
         {
             get { return _documentStatistics; }
             set { Set(ref _documentStatistics, value); }
+        }
+
+        public string DocumentStatisticsToolTip
+        {
+            get { return _documentStatisticsToolTip; }
+            set { Set(ref _documentStatisticsToolTip, value); }
         }
 
         public int PageCount

@@ -133,8 +133,7 @@
           FontFamily="Arial"
           Command="{x:Static controls:MainWindow.ToggleDocumentStatistics}"
           Content="{Binding Path=DocumentStatisticDisplayText, ElementName=Preview}"
-          ToolTip="{i18N:Localize tooltip-document-statistics}" />
-                
+          ToolTip="{Binding Path=DocumentStatisticsToolTip, ElementName=Preview}" />
           <Button
           Style="{StaticResource SpellCheckToggleCommandWindowButtonStyle}"
           FontFamily="Wingdings"

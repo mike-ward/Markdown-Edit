@@ -11,9 +11,14 @@ namespace UnitTests.Models
         [TestMethod]
         public void MemoizeShouldReturnFunction()
         {
-            Func<int, int> func = i => i;
+            var mul = 2;
+            Func<int, int> func = i => i * mul;
             var result = func.Memoize();
             result.Should().NotBeNull();
+            result(2).Should().Be(4);
+            mul = 3;
+            result(2).Should().Be(4);
+            result(3).Should().Be(9);
         }
 
         [TestMethod]
