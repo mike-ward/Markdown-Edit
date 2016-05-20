@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Markdown Edit
+title: Home
 description: "A full-featured Markdown editor for Windows with an emphasis on content and keyboard shortcuts"
 image: 
   feature: "typewriter-home.jpg"
