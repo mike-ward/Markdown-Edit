@@ -68,7 +68,7 @@ namespace MarkdownEdit.Controls
                 if (div == null) return;
                 div.innerHTML = ScrubHtml(html);
 
-                UpdateDocumentStatistics(div.innerText);
+                UpdateDocumentStatistics(div.innerText ?? string.Empty);
                 EmitFirePreviewUpdatedEvent();
             }
             catch (CommonMarkException ex)
