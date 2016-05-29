@@ -1,3 +1,3 @@
 pushd src\MarkdownEdit\bin\Release
-"c:\Program Files\7-Zip\7z.exe" a -x!*.vshost.* -x!*.xml  -r ..\..\..\..\MarkdownEdit.zip *.* -mmt
+"%ProgramFiles(x86)%\7-Zip\7z.exe" a -x!*.vshost.* -x!*.xml -x!lib/*.*  -r ..\..\..\..\MarkdownEdit.zip *.* -mmt
 popd 
