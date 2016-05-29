@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using CommonMark;
 using HtmlAgilityPack;
 using mshtml;
+using MarkdownEdit.Converters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 
@@ -24,6 +25,8 @@ namespace MarkdownEdit.Controls
         public readonly Action<Editor> UpdatePreview;
         private FileSystemWatcher _templateWatcher;
         private int _wordCount;
+        private string _documentStatistics;
+        private string _documentStatisticsToolTip;
 
         public Preview()
         {
@@ -36,6 +39,7 @@ namespace MarkdownEdit.Controls
             Browser.MessageHook += BrowserOnMessageHook;
             Browser.Unloaded += (s, e) => ApplicationCommands.Close.Execute(null, Application.Current.MainWindow);
             UpdatePreview = Utility.Debounce<Editor>(editor => Dispatcher.InvokeAsync(() => Update(editor.Text)));
+            DocumentStatisticMode = StatisticMode.Word;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -63,13 +67,88 @@ namespace MarkdownEdit.Controls
                 var div = GetContentsDiv();
                 if (div == null) return;
                 div.innerHTML = ScrubHtml(html);
-                WordCount = div.innerText.WordCount();
+
+                UpdateDocumentStatistics(div.innerText ?? string.Empty);
                 EmitFirePreviewUpdatedEvent();
             }
             catch (CommonMarkException ex)
             {
                 Notify.Alert(ex.ToString());
             }
+        }
+
+        public void UpdateDocumentStatistics(string innerText)
+        {
+            CharacterCount = innerText.Length;
+            WordCount = innerText.WordCount();
+            PageCount = (int)Math.Ceiling(CharacterCount/1500m);
+
+            UpdateDocumentStatisticDisplayText();
+        }
+
+        public void UpdateDocumentStatisticDisplayText()
+        {
+            Func<int, string, string> convert = (count, suffix) =>
+                new NumberFormatConverter().Convert(count, typeof(string), null,
+                    System.Globalization.CultureInfo.CurrentCulture) + suffix;
+
+            switch (DocumentStatisticMode)
+            {
+                case StatisticMode.Character:
+                    DocumentStatisticDisplayText = convert(CharacterCount, "c");
+                    DocumentStatisticsToolTip = $"{convert(WordCount, "w")}, {convert(PageCount, "p")}";
+                    break;
+                case StatisticMode.Page:
+                    DocumentStatisticDisplayText = convert(PageCount, "p");
+                    DocumentStatisticsToolTip = $"{convert(WordCount, "w")}, {convert(CharacterCount, "c")}";
+                    break;
+                default:
+                    DocumentStatisticDisplayText = convert(WordCount, "w");
+                    DocumentStatisticsToolTip = $"{convert(CharacterCount, "c")}, {convert(PageCount, "p")}";
+                    break;
+            }
+        }
+
+        public int WordCount
+        {
+            get { return _wordCount; }
+            set { Set(ref _wordCount, value); }
+        }
+
+        public enum StatisticMode
+        {
+            Character,
+            Word,
+            Page
+        }
+
+        private int _pageCount;
+        private int _characterCount;
+
+        public int CharacterCount
+        {
+            get { return _characterCount; }
+            set { Set(ref _characterCount, value); }
+        }
+
+        public StatisticMode DocumentStatisticMode { get; set; }
+
+        public string DocumentStatisticDisplayText
+        {
+            get { return _documentStatistics; }
+            set { Set(ref _documentStatistics, value); }
+        }
+
+        public string DocumentStatisticsToolTip
+        {
+            get { return _documentStatisticsToolTip; }
+            set { Set(ref _documentStatisticsToolTip, value); }
+        }
+
+        public int PageCount
+        {
+            get { return _pageCount; }
+            set { Set(ref _pageCount, value); }
         }
 
         private void EmitFirePreviewUpdatedEvent()
@@ -112,7 +191,7 @@ namespace MarkdownEdit.Controls
         public void Print()
         {
             var document = Browser.Document as IHTMLDocument2;
-            document?.execCommand("Print", true, null);
+            document?.execCommand("Print", true);
         }
 
         private static string GetIdName(int number) => $"mde-{number}";
@@ -206,7 +285,7 @@ namespace MarkdownEdit.Controls
                 {
                     var element = document3.getElementById(GetIdName(number));
                     if (element == null) return;
-                    offsetTop = element.offsetTop + (extra * 20);
+                    offsetTop = element.offsetTop + (extra*20);
                 }
                 var document2 = Browser.Document as IHTMLDocument2;
                 document2?.parentWindow.scroll(0, offsetTop);
@@ -251,14 +330,6 @@ namespace MarkdownEdit.Controls
             }
 
             return hwnd;
-        }
-
-        // Properties
-
-        public int WordCount
-        {
-            get { return _wordCount; }
-            set { Set(ref _wordCount, value); }
         }
 
         // INotifyPropertyChanged

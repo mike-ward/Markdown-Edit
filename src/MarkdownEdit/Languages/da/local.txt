@@ -9,6 +9,7 @@ tooltip-open-command:             Åbn - Ctrl+O
 tooltip-save-command:             Gem - Ctrl+S
 tooltip-save-as-command:          Gem som - Ctrl+Shift+S
 tooltip-toggle-settings:          Indstillinger - Ctrl+,
+tooltip-document-statistics:      (c)haracter/(w)ord/Standard(p)age Count (1500c=1p)
 tooltip-word-count:               Ord tæller
 tooltip-spell-check:              Stave kontrol - Ctrl+F7
 tooltip-word-wrap:                Ombryd tekst - Ctrl+W

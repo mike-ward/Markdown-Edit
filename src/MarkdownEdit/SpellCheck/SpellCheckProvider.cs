@@ -12,7 +12,7 @@ namespace MarkdownEdit.SpellCheck
     {
         private readonly Regex _mardownUri = new Regex(@"\[([^\[]+)\]\(([^\)]+)\)");
         private readonly Regex _inlineCode = new Regex(@"`(.*?)`");
-        private readonly Regex _codeBlock = new Regex(@"^(\s{4,}|\t).*");
+        private readonly Regex _codeBlock = new Regex(@"^(\s{4,}|\t)[^-*0..9].*");
         private readonly Regex _wordSeparatorRegex = new Regex("-[^\\w]+|^'[^\\w]+|[^\\w]+'[^\\w]+|[^\\w]+-[^\\w]+|[^\\w]+'$|[^\\w]+-$|^-$|^'$|[^\\w'-]", RegexOptions.Compiled);
         private readonly Regex _uriFinderRegex = new Regex("(http|ftp|https|mailto):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?", RegexOptions.Compiled);
         private readonly Regex _markupTag = new Regex("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>", RegexOptions.Compiled);

@@ -1,12 +1,15 @@
 echo off
 if EXIST MarkdownEditSetup.msi del /Q MarkdownEditSetup.msi
-cd src
+if EXIST MarkdownEditSetup.zip del /Q MarkdownEditSetup.zip
+pushd src
 nuget restore MarkdownEdit.sln
 if ERRORLEVEL 1 goto END
 msbuild MarkdownEdit\markdownedit.csproj /t:Rebuild "/p:configuration=Release;platform=AnyCPU" /verbosity:minimal
+popd
 if ERRORLEVEL 1 goto END
-cd Wix
+pushd src\Wix
 call build.cmd
-cd ..
+popd
+if ERRORLEVEL 1 goto END
+call build_zip.cmd
 :END
-cd ..

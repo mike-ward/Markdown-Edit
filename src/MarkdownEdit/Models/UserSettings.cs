@@ -225,7 +225,25 @@ namespace MarkdownEdit.Models
 
         // Serialization
 
-        public static string SettingsFolder => Path.Combine(GetFolderPath(SpecialFolder.ApplicationData), "Markdown Edit");
+        private static string _settingsFolder;
+
+        public static string SettingsFolder
+        {
+            get
+            {
+                if (_settingsFolder == null)
+                {
+                    var appFolder = Utility.AssemblyFolder();
+                    var appDataFolder = GetFolderPath(SpecialFolder.ApplicationData);
+                    // Application is considered portable if it is installed on a drive
+                    // different from the drive of the default user application folder.
+                    _settingsFolder = appFolder[0] == appDataFolder[0]
+                        ? Path.Combine(appDataFolder, "Markdown Edit")
+                        : Path.Combine(appFolder, "AppData");
+                }
+                return _settingsFolder;
+            }
+        }
 
         public static string SettingsFile => Path.Combine(SettingsFolder, "user_settings.json");
 
