@@ -21,9 +21,8 @@ window chrome and most functions are accessed through keyboard
 shortcuts. There is no main menu, status bar, tabbed windows or other
 distractions.
 
--   <a href="{{ site.download }}" style="font-weight:bold; font-size:larger;">Download
-    Installer (v: 1.26, Windows 7+)</a>
--   Install using [Chocolatey]: `choco install markdown-edit`
+-   <a href="{{ site.download }}" style="font-weight:bold; font-size:larger;">Download Installer (Windows 7+)</a>
+-   <a href="{{ site.portable }}">Download Portable (.zip)</a>
 -   **Windows 7 Users** - [Fix for font issue]
 
 ------------------------------------------------------------------------
