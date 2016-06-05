@@ -32,6 +32,7 @@
 
       <Directory Id="DesktopFolder" Name="Desktop">
         <Component Id="ApplicationShortcutDesktop" Guid="*">
+          <Condition>NOT ICON</Condition>
           <Shortcut Id="ApplicationDesktopShortcut"
               Name="Markdown Edit"
               Description="Desktop Markdown Editor"
