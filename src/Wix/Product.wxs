@@ -81,8 +81,11 @@
             <Component Id="Microsoft.DwayneNeed.Win32.pdb" Guid="*">
               <File Id="Microsoft.DwayneNeed.Win32.pdb" KeyPath="yes" Source="$(var.SourceFiles)\Microsoft.DwayneNeed.Win32.pdb" />
             </Component>
-            <Component Id="WpfMouseWheelLib" Guid="*">
-              <File Id="WpfMouseWheelLib" KeyPath="yes" Source="$(var.SourceFiles)\WpfMouseWheelLib.dll" />
+            <Component Id="WpfMouseWheelLib.dll" Guid="*">
+              <File Id="WpfMouseWheelLib.dll" KeyPath="yes" Source="$(var.SourceFiles)\WpfMouseWheelLib.dll" />
+            </Component>
+            <Component Id="WpfMouseWheelLib.pdb" Guid="*">
+              <File Id="WpfMouseWheelLib.pdb" KeyPath="yes" Source="$(var.SourceFiles)\WpfMouseWheelLib.pdb" />
             </Component>
             <Component Id="mde.exe" Guid="{D8745F9D-E4D6-4682-AF42-46F38A38B27B}">
               <File Id="mde.exe" KeyPath="yes" Source="$(var.SourceFiles)\mde.exe" />
@@ -266,7 +269,8 @@
       <ComponentRef Id="Microsoft.DwayneNeed.pdb" />
       <ComponentRef Id="Microsoft.DwayneNeed.Win32.dll" />
       <ComponentRef Id="Microsoft.DwayneNeed.Win32.pdb" />
-      <ComponentRef Id="WpfMouseWheelLib" />
+      <ComponentRef Id="WpfMouseWheelLib.dll" />
+      <ComponentRef Id="WpfMouseWheelLib.pdb" />
       <ComponentRef Id="mde.exe" />
       <ComponentRef Id="mde.pdb" />
       <ComponentRef Id="mde.exe.config" />
