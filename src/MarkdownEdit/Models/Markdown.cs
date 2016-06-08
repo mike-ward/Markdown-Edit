@@ -85,14 +85,13 @@ namespace MarkdownEdit.Models
         }
 
         private static string MarkdownFormat => App.UserSettings.GitHubMarkdown
-            ? "markdown_github-emoji"
+            ? "markdown_github-emoji+tex_math_dollars"
             : "markdown_strict" +
                 "+fenced_code_blocks" +
                 "+backtick_code_blocks" +
                 "+intraword_underscores" +
                 "+strikeout" +
-                "+tex_math_dollars" +
-                "+pipe_tables";
+                "+pipe_table";
 
         private static string Reformat(string text, string options = "")
         {
