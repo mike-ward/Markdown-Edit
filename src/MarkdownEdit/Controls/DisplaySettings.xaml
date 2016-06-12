@@ -6,12 +6,14 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
   xmlns:local="clr-namespace:MarkdownEdit.Controls"
+  xmlns:markdownEdit="clr-namespace:MarkdownEdit"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:models="clr-namespace:MarkdownEdit.Models"
   xmlns:p="clr-namespace:MarkdownEdit.Properties"
   x:Name="DisplaySettingsControl"
   d:DesignHeight="1000"
   d:DesignWidth="400"
+  DataContext="{Binding Source={x:Static markdownEdit:App.UserSettings}}"
   mc:Ignorable="d">
 
   <UserControl.Resources>
@@ -154,8 +156,11 @@
             Width="150"
             HorizontalAlignment="Left"
             Style="{StaticResource AboutLabelStyle}"
-            Text="{i18N:Localize settings-line-endings}" />
-          <local:EncodingComboBox Width="160" HorizontalAlignment="Right" />
+            Text="Encoding" />
+          <local:EncodingComboBox
+            x:Name="EncodingComboBox"
+            Width="160"
+            HorizontalAlignment="Right" />
         </Grid>
       </StackPanel>
 

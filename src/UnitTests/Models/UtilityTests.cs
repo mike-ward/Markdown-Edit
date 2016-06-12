@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
 using FluentAssertions;
 using MarkdownEdit.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -61,6 +63,15 @@ A Windows Desktop Markdown Editor[Read more...](/ markdownedit)";
             var match = DateTime.Now.ToString("yyyy-MM-dd-") + "friday-links-357";
             var title = Markdown.SuggestFilenameFromTitle(text);
             title.Should().Be(match);
+        }
+
+        [TestMethod]
+        public void CreateInstanceShouldAccessInternalConstructor()
+        {
+            var autoDetect = Utility.CreateInstance<EncodingInfo>(65001, "auto-detect", "Auto Detect");
+            autoDetect.CodePage.Should().Be(65001);
+            autoDetect.Name.Should().Be("auto-detect");
+            autoDetect.DisplayName.Should().Be("Auto Detect");
         }
     }
 }

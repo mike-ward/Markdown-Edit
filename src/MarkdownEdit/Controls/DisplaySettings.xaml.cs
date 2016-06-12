@@ -14,17 +14,19 @@ namespace MarkdownEdit.Controls
         public DisplaySettings()
         {
             InitializeComponent();
-            DataContext = App.UserSettings;
             IsVisibleChanged += OnIsVisibleChanged;
         }
 
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             IsVisibleChanged -= OnIsVisibleChanged;
-            var fontFamilyBinding = new Binding("EditorFontFamily") {Source = DataContext, Mode = BindingMode.TwoWay};
+            // This should work from XAML, but doesn't
+            var fontFamilyBinding = new Binding("EditorFontFamily") { Source = DataContext, Mode = BindingMode.TwoWay };
             FontCombo.SetBinding(FontComboBox.SelectedFontFamilyProperty, fontFamilyBinding);
-            var fontSizeBinding = new Binding("EditorFontSize") {Source = DataContext, Mode = BindingMode.TwoWay};
+            var fontSizeBinding = new Binding("EditorFontSize") { Source = DataContext, Mode = BindingMode.TwoWay };
             FontCombo.SetBinding(FontComboBox.SelectedFontSizeProperty, fontSizeBinding);
+            var encodingBinding = new Binding("EditorEncoding") { Source = DataContext, Mode = BindingMode.TwoWay };
+            EncodingComboBox.SetBinding(EncodingComboBox.SelectedEncodingProperty, encodingBinding);
         }
 
         public void SaveState()

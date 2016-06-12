@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
+using MarkdownEdit.Controls;
 using Newtonsoft.Json;
 using static System.Environment;
 
@@ -21,6 +23,7 @@ namespace MarkdownEdit.Models
         private bool _editorShowTabs;
         private bool _editorShowLineNumbers;
         private bool _editorHighlightCurrentLine;
+        private MyEncodingInfo _editorEncoding = new MyEncodingInfo();
         private bool _synchronizeScrollPositions = true;
         private string _spellCheckDictionary = "en_US";
         private bool _spellCheckIgnoreCodeBlocks = true;
@@ -102,6 +105,12 @@ namespace MarkdownEdit.Models
         {
             get { return _editorHighlightCurrentLine; }
             set { Set(ref _editorHighlightCurrentLine, value); }
+        }
+
+        public MyEncodingInfo EditorEncoding
+        {
+            get { return _editorEncoding; }
+            set { Set(ref _editorEncoding, value); }
         }
 
         public bool SynchronizeScrollPositions
@@ -308,6 +317,7 @@ namespace MarkdownEdit.Models
                 ^ EditorShowSpaces.GetHashCode()
                 ^ EditorShowTabs.GetHashCode()
                 ^ EditorVerticalScrollBarVisible.GetHashCode()
+                ^ EditorEncoding.GetHashCode()
                 ^ SynchronizeScrollPositions.GetHashCode()
                 ^ SpellCheckDictionary.GetHashCode()
                 ^ SpellCheckIgnoreCodeBlocks.GetHashCode()
