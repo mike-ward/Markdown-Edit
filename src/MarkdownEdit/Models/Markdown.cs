@@ -84,19 +84,24 @@ namespace MarkdownEdit.Models
             }
         }
 
-        private static string MarkdownFormat => App.UserSettings.GitHubMarkdown
-            ? "markdown_github-emoji+tex_math_dollars"
-            : "markdown_strict" +
+        private const string GithubMarkdownFormatOptions = "markdown_github-emoji+tex_math_dollars";
+
+        private const string CommonMarkFormatOptions = 
+            "markdown_strict" +
                 "+fenced_code_blocks" +
                 "+backtick_code_blocks" +
                 "+intraword_underscores" +
                 "+strikeout" +
-                "+pipe_table";
+                "+pipe_tables";
+
+        private static string MarkdownFormat => App.UserSettings.GitHubMarkdown
+            ? GithubMarkdownFormatOptions
+            : CommonMarkFormatOptions;
 
         private static string Reformat(string text, string options = "")
         {
             var tuple = SeperateFrontMatter(text);
-            var format = MarkdownFormat;
+            const string format = CommonMarkFormatOptions;
             var result = Pandoc(tuple.Item2, $"-f {format} -t {format} {options}");
             return tuple.Item1 + result;
         }
