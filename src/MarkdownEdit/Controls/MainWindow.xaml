@@ -224,6 +224,7 @@
         FontSize="{Binding Path=EditorFontSize, Source={x:Static local:App.UserSettings}}"
         AutoSave="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}"
         HighlightCurrentLine="{Binding Path=EditorHighlightCurrentLine, Source={x:Static local:App.UserSettings}}"
+        Encoding="{Binding Path=EditorEncoding, Source={x:Static local:App.UserSettings}}"
         ShowEndOfLine="{Binding Path=EditorShowEndOfLine, Source={x:Static local:App.UserSettings}}"
         ShowLineNumbers="{Binding Path=EditorShowLineNumbers, Source={x:Static local:App.UserSettings}}"
         ShowSpaces="{Binding Path=EditorShowSpaces, Source={x:Static local:App.UserSettings}}"

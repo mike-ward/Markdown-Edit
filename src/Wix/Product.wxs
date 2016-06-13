@@ -114,6 +114,9 @@
             <Component Id="NReco.PdfGenerator.dll" Guid="{8DB6A567-ED09-430A-B9ED-C02DD8CE72B6}">
               <File Id="NReco.PdfGenerator.dll" KeyPath="yes" Source="$(var.SourceFiles)\NReco.PdfGenerator.dll" />
             </Component>
+            <Component Id="Ude.dll" Guid="{14B5139B-74EF-4172-9225-FC04ED3D8E06}">
+              <File Id="Ude.dll" KeyPath="yes" Source="$(var.SourceFiles)\Ude.dll" />
+            </Component>
             <Directory Id="SpellCheck" Name="SpellCheck">
               <Directory Id="Dictionaries" Name="Dictionaries">
                 <Component Id="en_US.aff" Guid="{F31674FA-BA11-4A52-BE3C-F3AA46178F91}">
@@ -280,6 +283,7 @@
       <ComponentRef Id="System.Windows.Interactivity.dll" />
       <ComponentRef Id="Pandoc.exe" />
       <ComponentRef Id="NReco.PdfGenerator.dll" />
+      <ComponentRef Id="Ude.dll" />
       <ComponentRef Id="en_US.aff" />
       <ComponentRef Id="en_US.dic" />
       <ComponentRef Id="Danish.aff" />

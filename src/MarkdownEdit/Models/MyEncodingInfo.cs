@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MarkdownEdit.Models
@@ -18,7 +19,7 @@ namespace MarkdownEdit.Models
 
         public int CodePage { get; set; } = 65001;
         public string Name { get; set; } = "auto-detect";
-        public string DisplayName { get; set; } = "Auto Detect";
+        public string DisplayName { get; set; } = "Automatic";
 
         public static MyEncodingInfo[] GetEncodings() => new[] {new MyEncodingInfo()}
             .Concat(Encoding.GetEncodings()
@@ -28,6 +29,17 @@ namespace MarkdownEdit.Models
 
         public static bool IsAutoDetectEncoding(MyEncodingInfo encodingInfo)
             => encodingInfo != null && encodingInfo.Name == "auto-detect";
+
+        public static Encoding DetectEncoding(string filename)
+        {
+            using (var fs = File.OpenRead(filename))
+            {
+                var cd = new Ude.CharsetDetector();
+                cd.Feed(fs);
+                cd.DataEnd();
+                return cd.Charset != null ? Encoding.GetEncoding(cd.Charset) : Encoding.UTF8;
+            }
+        }
 
         public override bool Equals(object obj)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using MarkdownEdit.Controls;
 using MarkdownEdit.Properties;
@@ -43,6 +44,7 @@ namespace MarkdownEdit.Models
                 {
                     NewFile(editor);
                     editor.EditBox.Text = Markdown.FromMicrosoftWord(filename);
+                    editor.EditBox.Encoding = Encoding.UTF8;
                     return true;
                 }
 
@@ -53,10 +55,18 @@ namespace MarkdownEdit.Models
                 {
                     NewFile(editor);
                     editor.EditBox.Text = Markdown.FromHtml(filename);
+                    editor.EditBox.Encoding = Encoding.UTF8;
                     return true;
                 }
 
-                editor.EditBox.Text = File.ReadAllText(filename);
+                var editorEncoding = App.UserSettings.EditorEncoding;
+
+                var encoding = MyEncodingInfo.IsAutoDetectEncoding(editorEncoding)
+                    ? MyEncodingInfo.DetectEncoding(filename)
+                    : Encoding.GetEncoding(editorEncoding.CodePage);
+
+                editor.EditBox.Text = File.ReadAllText(filename, encoding);
+                editor.EditBox.Encoding = encoding;
 
                 if (updateCursorPosition)
                 {
