@@ -1,4 +1,5 @@
-echo off
+@echo off
+echo.
 if EXIST MarkdownEditSetup.msi del /Q MarkdownEditSetup.msi
 if EXIST MarkdownEditSetup.zip del /Q MarkdownEditSetup.zip
 pushd src
