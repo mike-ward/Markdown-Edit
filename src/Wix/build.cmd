@@ -1,7 +1,7 @@
 @echo off
 echo.
 echo =============================
-echo ====== Build Installer ====== 
+echo ====== Build Installer ======
 echo =============================
 echo.
 if NOT EXIST out mkdir out
