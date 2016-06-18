@@ -93,8 +93,11 @@ namespace MarkdownEdit.SpellCheck
                 var textWithout = originalText;
                 if (userSettings.SpellCheckIgnoreCodeBlocks)
                 {
-                    var firstChar = originalText.FirstOrDefault(c => !char.IsWhiteSpace(c));
-                    if (firstChar != '-' && firstChar != '*' && !char.IsDigit(firstChar)) textWithout = "";
+                    if (_codeBlock.IsMatch(originalText))
+                    {
+                        var firstChar = originalText.FirstOrDefault(c => !char.IsWhiteSpace(c));
+                        if (firstChar != '-' && firstChar != '*' && !char.IsDigit(firstChar)) textWithout = "";
+                    }
                 }
                 if (userSettings.SpellCheckIgnoreMarkupTags) textWithout = _markupTag.Replace(textWithout, "");
                 textWithout = _uriFinderRegex.Replace(textWithout, "");
