@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2015 Blue Onion Software - All rights reserved
-
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 
 namespace MarkdownEdit.ImageUpload
