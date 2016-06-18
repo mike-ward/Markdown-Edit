@@ -156,7 +156,7 @@
             Width="150"
             HorizontalAlignment="Left"
             Style="{StaticResource AboutLabelStyle}"
-            Text="Encoding" />
+            Text="{i18N:Localize settings-encoding}" />
           <local:EncodingComboBox
             x:Name="EncodingComboBox"
             Width="160"

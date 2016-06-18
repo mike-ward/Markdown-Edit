@@ -70,6 +70,8 @@ settings-web:					            Web
 settings-source:				          Source
 settings-donate:				          Donate
 settings-yes-i-donated:           Yes, I Donated!
+settings-encoding:                Encoding
+settings-encode-automatic:        Automatic
 
 === Find Replace Dialog
 

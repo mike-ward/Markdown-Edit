@@ -19,7 +19,7 @@ namespace MarkdownEdit.Models
 
         public int CodePage { get; set; } = 65001;
         public string Name { get; set; } = "auto-detect";
-        public string DisplayName { get; set; } = "Automatic";
+        public string DisplayName { get; set; } = i18n.TranslationProvider.Translate("settings-encode-automatic") as string;
 
         public static MyEncodingInfo[] GetEncodings() => new[] {new MyEncodingInfo()}
             .Concat(Encoding.GetEncodings()
