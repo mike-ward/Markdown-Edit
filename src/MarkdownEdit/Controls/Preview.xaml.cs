@@ -34,7 +34,6 @@ namespace MarkdownEdit.Controls
         private int _characterCount;
         private string _documentStatistics;
         private string _documentStatisticsToolTip;
-
         private int _pageCount;
         private FileSystemWatcher _templateWatcher;
         private int _wordCount;

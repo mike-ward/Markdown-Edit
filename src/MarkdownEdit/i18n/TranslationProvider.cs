@@ -11,6 +11,7 @@ namespace MarkdownEdit.i18n
 {
     internal static class TranslationProvider
     {
+        // ReSharper disable once InconsistentNaming
         private static readonly Language _language;
         private static string _helpMarkdown;
 

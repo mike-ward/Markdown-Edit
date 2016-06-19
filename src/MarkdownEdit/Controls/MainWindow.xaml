@@ -152,7 +152,7 @@
           Command="{x:Static controls:MainWindow.ToggleDocumentStatistics}"
           Content="{Binding Path=DocumentStatisticDisplayText, ElementName=Preview}"
           ToolTip="{Binding Path=DocumentStatisticsToolTip, ElementName=Preview}" />
-        <Button
+          <Button
           Style="{StaticResource SpellCheckToggleCommandWindowButtonStyle}"
           FontFamily="Wingdings"
           Command="{x:Static controls:MainWindow.ToggleSpellCheckCommand}"
