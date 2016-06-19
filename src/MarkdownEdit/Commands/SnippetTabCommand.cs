@@ -8,8 +8,8 @@ namespace MarkdownEdit.Commands
 {
     internal sealed class SnippetTabCommand : ICommand
     {
-        private readonly TextEditor _editor;
         private readonly ICommand _baseCommand;
+        private readonly TextEditor _editor;
         private readonly ISnippetManager _snippetManager;
 
         public SnippetTabCommand(TextEditor editor, ICommand baseCommand, ISnippetManager snippetManager)
@@ -19,11 +19,7 @@ namespace MarkdownEdit.Commands
             _snippetManager = snippetManager;
         }
 
-        public event EventHandler CanExecuteChanged
-        {
-            add { }
-            remove { }
-        }
+        public event EventHandler CanExecuteChanged { add { } remove { } }
 
         public bool CanExecute(object parameter)
         {
@@ -53,7 +49,8 @@ namespace MarkdownEdit.Commands
         private static int FindPrevWordStart(ITextSource textSource, int offset)
         {
             var startOffset = offset;
-            while (startOffset > 0 && char.IsWhiteSpace((textSource.GetCharAt(startOffset - 1))) == false) startOffset -= 1;
+            while (startOffset > 0 && char.IsWhiteSpace(textSource.GetCharAt(startOffset - 1)) == false)
+                startOffset -= 1;
             return startOffset;
         }
     }
