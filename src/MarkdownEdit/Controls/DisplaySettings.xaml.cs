@@ -9,6 +9,10 @@ namespace MarkdownEdit.Controls
 {
     public partial class DisplaySettings
     {
+        public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
+            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(DisplaySettings),
+            new PropertyMetadata(default(ISpellCheckProvider)));
+
         private UserSettings _clonedSettings;
 
         public DisplaySettings()
@@ -17,22 +21,26 @@ namespace MarkdownEdit.Controls
             IsVisibleChanged += OnIsVisibleChanged;
         }
 
-        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        public ISpellCheckProvider SpellCheckProvider
+        {
+            get { return (ISpellCheckProvider)GetValue(SpellCheckProviderProperty); }
+            set { SetValue(SpellCheckProviderProperty, value); }
+        }
+
+        private void OnIsVisibleChanged(object sender,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             IsVisibleChanged -= OnIsVisibleChanged;
             // This should work from XAML, but doesn't
-            var fontFamilyBinding = new Binding("EditorFontFamily") { Source = DataContext, Mode = BindingMode.TwoWay };
+            var fontFamilyBinding = new Binding("EditorFontFamily") {Source = DataContext, Mode = BindingMode.TwoWay};
             FontCombo.SetBinding(FontComboBox.SelectedFontFamilyProperty, fontFamilyBinding);
-            var fontSizeBinding = new Binding("EditorFontSize") { Source = DataContext, Mode = BindingMode.TwoWay };
+            var fontSizeBinding = new Binding("EditorFontSize") {Source = DataContext, Mode = BindingMode.TwoWay};
             FontCombo.SetBinding(FontComboBox.SelectedFontSizeProperty, fontSizeBinding);
-            var encodingBinding = new Binding("EditorEncoding") { Source = DataContext, Mode = BindingMode.TwoWay };
+            var encodingBinding = new Binding("EditorEncoding") {Source = DataContext, Mode = BindingMode.TwoWay};
             EncodingComboBox.SetBinding(EncodingComboBox.SelectedEncodingProperty, encodingBinding);
         }
 
-        public void SaveState()
-        {
-            _clonedSettings = ((UserSettings)DataContext).Clone() as UserSettings;
-        }
+        public void SaveState() { _clonedSettings = ((UserSettings)DataContext).Clone() as UserSettings; }
 
         public void SaveIfModified()
         {
@@ -41,15 +49,6 @@ namespace MarkdownEdit.Controls
             {
                 appSettings.Save();
             }
-        }
-
-        public static readonly DependencyProperty SpellCheckProviderProperty = DependencyProperty.Register(
-            "SpellCheckProvider", typeof(ISpellCheckProvider), typeof(DisplaySettings), new PropertyMetadata(default(ISpellCheckProvider)));
-
-        public ISpellCheckProvider SpellCheckProvider
-        {
-            get { return (ISpellCheckProvider)GetValue(SpellCheckProviderProperty); }
-            set { SetValue(SpellCheckProviderProperty, value); }
         }
 
         private void HyperlinkOnRequestNavigate(object sender, RequestNavigateEventArgs e)

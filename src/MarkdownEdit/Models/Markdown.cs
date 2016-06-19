@@ -16,6 +16,19 @@ namespace MarkdownEdit.Models
 {
     public static class Markdown
     {
+        private const string GithubMarkdownFormatOptions =
+            "markdown_github"
+            + "-emoji"
+            + "+tex_math_dollars";
+
+        private const string CommonMarkFormatOptions =
+            "markdown_strict"
+            + "+fenced_code_blocks"
+            + "+backtick_code_blocks"
+            + "+intraword_underscores"
+            + "+strikeout"
+            + "+pipe_tables";
+
         private static readonly CommonMarkSettings CommonMarkSettings;
         private static readonly IMarkdownConverter CommonMarkConverter = new CommonMarkConverter();
         private static readonly IMarkdownConverter GitHubMarkdownConverter = new GitHubMarkdownConverter();
@@ -26,6 +39,10 @@ namespace MarkdownEdit.Models
             CommonMarkSettings = CommonMarkSettings.Default.Clone();
             CommonMarkSettings.TrackSourcePosition = true;
         }
+
+        private static string MarkdownFormat => App.UserSettings.GitHubMarkdown
+            ? GithubMarkdownFormatOptions
+            : CommonMarkFormatOptions;
 
         public static string Wrap(string text) => Reformat(text);
 
@@ -39,13 +56,11 @@ namespace MarkdownEdit.Models
         {
             var ast = GenerateAbstractSyntaxTree(markdown);
             markdown = markdown.ConvertEmojis(ast);
-            if (!IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter))
-            {
-                return CustomMarkdownConverter.ConvertToHtml(markdown);
-            }
-            return App.UserSettings.GitHubMarkdown
-                ? GitHubMarkdownConverter.ConvertToHtml(markdown)
-                : CommonMarkConverter.ConvertToHtml(markdown);
+            return !IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter)
+                ? CustomMarkdownConverter.ConvertToHtml(markdown)
+                : (App.UserSettings.GitHubMarkdown
+                    ? GitHubMarkdownConverter.ConvertToHtml(markdown)
+                    : CommonMarkConverter.ConvertToHtml(markdown));
         }
 
         public static string FromMicrosoftWord(string path) => Pandoc(null, $"-f docx -t {MarkdownFormat} \"{path}\"");
@@ -83,20 +98,6 @@ namespace MarkdownEdit.Models
                 return result;
             }
         }
-
-        private const string GithubMarkdownFormatOptions = "markdown_github-emoji+tex_math_dollars";
-
-        private const string CommonMarkFormatOptions = 
-            "markdown_strict" +
-                "+fenced_code_blocks" +
-                "+backtick_code_blocks" +
-                "+intraword_underscores" +
-                "+strikeout" +
-                "+pipe_tables";
-
-        private static string MarkdownFormat => App.UserSettings.GitHubMarkdown
-            ? GithubMarkdownFormatOptions
-            : CommonMarkFormatOptions;
 
         private static string Reformat(string text, string options = "")
         {
@@ -198,10 +199,7 @@ namespace MarkdownEdit.Models
             }
         }
 
-        private static string Normalize(string value)
-        {
-            return value.Replace('→', '\t').Replace('␣', ' ');
-        }
+        private static string Normalize(string value) { return value.Replace('→', '\t').Replace('␣', ' '); }
 
         public static string RemoveYamlFrontMatter(string markdown)
         {

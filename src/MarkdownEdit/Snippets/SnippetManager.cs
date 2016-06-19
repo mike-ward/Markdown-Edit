@@ -5,29 +5,32 @@ using System.Text.RegularExpressions;
 using ICSharpCode.AvalonEdit.Snippets;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
+using Clipboard = System.Windows.Clipboard;
 
 namespace MarkdownEdit.Snippets
 {
     public class SnippetManager : ISnippetManager
     {
-        private Dictionary<string, string> _snippets;
         private FileSystemWatcher _snippetFileWatcher;
+        private Dictionary<string, string> _snippets;
 
-        public SnippetManager()
-        {
-            _snippets = new Dictionary<string, string>();
-        }
-
-        public static string SnippetFile()
-        {
-            return Path.Combine(UserSettings.SettingsFolder, "snippets.txt");
-        }
+        public SnippetManager() { _snippets = new Dictionary<string, string>(); }
 
         public void Initialize()
         {
             ReadSnippetFile();
             if (_snippetFileWatcher == null) _snippetFileWatcher = SnippetFile().WatchFile(ReadSnippetFile);
         }
+
+        public Snippet FindSnippet(string word)
+        {
+            string snippetText;
+            return _snippets.TryGetValue(word, out snippetText)
+                ? BuildSnippet(snippetText)
+                : null;
+        }
+
+        public static string SnippetFile() { return Path.Combine(UserSettings.SettingsFolder, "snippets.txt"); }
 
         private void ReadSnippetFile()
         {
@@ -85,14 +88,6 @@ namespace MarkdownEdit.Snippets
             }
         }
 
-        public Snippet FindSnippet(string word)
-        {
-            string snippetText;
-            return _snippets.TryGetValue(word, out snippetText)
-                ? BuildSnippet(snippetText)
-                : null;
-        }
-
         private static Snippet BuildSnippet(string text)
         {
             var expanded = text
@@ -106,10 +101,20 @@ namespace MarkdownEdit.Snippets
             var replaceable = new Regex(@"(\$\w+\$)");
             foreach (var token in replaceable.Split(expanded))
             {
-                if (token == "$END$") snippet.Elements.Add(new SnippetCaretElement());
-                else if (token == "$CLIPBOARD$") snippet.Elements.Add(new SnippetTextElement {Text = System.Windows.Clipboard.GetText()});
-                else if (replaceable.IsMatch(token)) snippet.Elements.Add(new SnippetReplaceableTextElement {Text = token.Trim('$')});
-                else snippet.Elements.Add(new SnippetTextElement {Text = token});
+                switch (token)
+                {
+                    case "$END$":
+                        snippet.Elements.Add(new SnippetCaretElement());
+                        break;
+                    case "$CLIPBOARD$":
+                        snippet.Elements.Add(new SnippetTextElement {Text = Clipboard.GetText()});
+                        break;
+                    default:
+                        snippet.Elements.Add(replaceable.IsMatch(token)
+                            ? new SnippetReplaceableTextElement {Text = token.Trim('$')}
+                            : new SnippetTextElement {Text = token});
+                        break;
+                }
             }
 
             return snippet;

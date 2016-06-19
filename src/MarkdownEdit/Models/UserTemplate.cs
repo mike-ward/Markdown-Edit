@@ -7,6 +7,9 @@ namespace MarkdownEdit.Models
 {
     public static class UserTemplate
     {
+        public static string TemplateFile => Path.Combine(UserSettings.SettingsFolder, "user_template.html");
+        public static string EmojiSpritesFile => Path.Combine(UserSettings.SettingsFolder, "emoji-sprite.png");
+
         public static string Load()
         {
             if (File.Exists(TemplateFile) == false)
@@ -27,9 +30,6 @@ namespace MarkdownEdit.Models
             Directory.CreateDirectory(UserSettings.SettingsFolder);
             File.WriteAllText(TemplateFile, template);
         }
-
-        public static string TemplateFile => Path.Combine(UserSettings.SettingsFolder, "user_template.html");
-        public static string EmojiSpritesFile => Path.Combine(UserSettings.SettingsFolder, "emoji-sprite.png");
 
         public static string InsertContent(string content)
         {

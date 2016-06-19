@@ -1,23 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using CommonMark.Syntax;
 
 namespace MarkdownEdit.Models
 {
     internal static class Emoji
     {
         private static readonly Regex Scan = new Regex(@":[^\s]+:", RegexOptions.Compiled);
-
-        public static string ConvertEmojis(this string markdown, CommonMark.Syntax.Block ast)
-        {
-            return Scan.Replace(markdown, match =>
-            {
-                if (!AbstractSyntaxTree.PositionSafeForSmartLink(ast, match.Index, match.Length)) return match.Value;
-                string value;
-                return Emojis.TryGetValue(match.Value, out value)
-                    ? $"<i class=\"_sprite {value}\"/>"
-                    : match.Value;
-            });
-        }
 
         private static readonly Dictionary<string, string> Emojis = new Dictionary<string, string>
         {
@@ -910,5 +899,17 @@ namespace MarkdownEdit.Models
             {":zero:", "_0030-20e3"},
             {":zzz:", "_1f4a4"}
         };
+
+        public static string ConvertEmojis(this string markdown, Block ast)
+        {
+            return Scan.Replace(markdown, match =>
+            {
+                if (!AbstractSyntaxTree.PositionSafeForSmartLink(ast, match.Index, match.Length)) return match.Value;
+                string value;
+                return Emojis.TryGetValue(match.Value, out value)
+                    ? $"<i class=\"_sprite {value}\"/>"
+                    : match.Value;
+            });
+        }
     }
 }

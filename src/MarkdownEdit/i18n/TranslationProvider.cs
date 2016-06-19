@@ -16,9 +16,7 @@ namespace MarkdownEdit.i18n
 
         static TranslationProvider()
         {
-          
-
-            _language = Load(App.UserSettings == null || string.IsNullOrWhiteSpace(App.UserSettings.CultureLanguage) 
+            _language = Load(App.UserSettings == null || string.IsNullOrWhiteSpace(App.UserSettings.CultureLanguage)
                 ? Thread.CurrentThread.CurrentUICulture
                 : new CultureInfo(App.UserSettings.CultureLanguage));
 
@@ -42,7 +40,7 @@ namespace MarkdownEdit.i18n
             }
             catch (Exception)
             {
-                return Parse("en", Properties.Resources.local);
+                return Parse("en", Resources.local);
             }
         }
 
@@ -65,7 +63,7 @@ namespace MarkdownEdit.i18n
                 }
                 catch (Exception)
                 {
-                    _helpMarkdown = Properties.Resources.Help;
+                    _helpMarkdown = Resources.Help;
                 }
             }
             return _helpMarkdown;
@@ -95,16 +93,12 @@ namespace MarkdownEdit.i18n
             return language;
         }
 
-        private static string ErrorMessage(string message, string line)
-        {
-            return $"{message}: {line}";
-        }
+        private static string ErrorMessage(string message, string line) { return $"{message}: {line}"; }
 
         internal class Language
         {
-            public string TwoLetterLanguageCode { get; set; }
-
             public readonly Dictionary<string, string> Dictionary = new Dictionary<string, string>();
+            public string TwoLetterLanguageCode { get; set; }
         }
     }
 }

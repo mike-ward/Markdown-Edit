@@ -10,15 +10,26 @@ namespace MarkdownEdit.SpellCheck
 {
     public class SpellCheckProvider : ISpellCheckProvider
     {
-        private readonly Regex _mardownUri = new Regex(@"\[([^\[]+)\]\(([^\)]+)\)");
-        private readonly Regex _inlineCode = new Regex(@"`(.*?)`");
         private readonly Regex _codeBlock = new Regex(@"^(\s{4,}|\t)[^-*0..9].*");
-        private readonly Regex _wordSeparatorRegex = new Regex("-[^\\w]+|^'[^\\w]+|[^\\w]+'[^\\w]+|[^\\w]+-[^\\w]+|[^\\w]+'$|[^\\w]+-$|^-$|^'$|[^\\w'-]", RegexOptions.Compiled);
-        private readonly Regex _uriFinderRegex = new Regex("(http|ftp|https|mailto):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?", RegexOptions.Compiled);
-        private readonly Regex _markupTag = new Regex("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>", RegexOptions.Compiled);
+        private readonly Regex _inlineCode = new Regex(@"`(.*?)`");
+        private readonly Regex _mardownUri = new Regex(@"\[([^\[]+)\]\(([^\)]+)\)");
+
+        private readonly Regex _markupTag = new Regex("<(?:\"[^\"]*\"['\"]*|'[^']*'['\"]*|[^'\">])+>",
+            RegexOptions.Compiled);
+
+        private readonly SpellCheckBackgroundRenderer _spellCheckRenderer;
 
         private readonly ISpellingService _spellingService;
-        private readonly SpellCheckBackgroundRenderer _spellCheckRenderer;
+
+        private readonly Regex _uriFinderRegex =
+            new Regex(
+                "(http|ftp|https|mailto):\\/\\/[\\w\\-_]+(\\.[\\w\\-_]+)+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?",
+                RegexOptions.Compiled);
+
+        private readonly Regex _wordSeparatorRegex =
+            new Regex("-[^\\w]+|^'[^\\w]+|[^\\w]+'[^\\w]+|[^\\w]+-[^\\w]+|[^\\w]+'$|[^\\w]+-$|^-$|^'$|[^\\w'-]",
+                RegexOptions.Compiled);
+
         private Editor _editor;
         private bool _enabled;
 
@@ -45,10 +56,7 @@ namespace MarkdownEdit.SpellCheck
             }
         }
 
-        public string CustomDictionaryFile()
-        {
-            return _spellingService.CustomDictionaryFile();
-        }
+        public string CustomDictionaryFile() { return _spellingService.CustomDictionaryFile(); }
 
         public void Disconnect()
         {
@@ -59,14 +67,20 @@ namespace MarkdownEdit.SpellCheck
             _editor = null;
         }
 
-        public string[] Languages()
-        {
-            return _spellingService?.Languages() ?? new string[0];
-        }
+        public string[] Languages() { return _spellingService?.Languages() ?? new string[0]; }
 
-        public ISpellingService SpellingService()
+        public ISpellingService SpellingService() { return _spellingService; }
+
+        public IEnumerable<TextSegment> GetSpellCheckErrors() =>
+            _spellCheckRenderer == null ? Enumerable.Empty<TextSegment>() : _spellCheckRenderer.ErrorSegments;
+
+        public IEnumerable<string> GetSpellCheckSuggestions(string word) =>
+            _spellCheckRenderer == null ? Enumerable.Empty<string>() : _spellingService.Suggestions(word);
+
+        public void Add(string word)
         {
-            return _spellingService;
+            if (string.IsNullOrWhiteSpace(word) || _spellingService == null || !Enabled) return;
+            _spellingService.Add(word);
         }
 
         private void TextViewVisualLinesChanged(object sender, EventArgs e)
@@ -105,14 +119,16 @@ namespace MarkdownEdit.SpellCheck
                 if (userSettings.SpellCheckIgnoreCodeBlocks) textWithout = _inlineCode.Replace(textWithout, "");
                 var words = _wordSeparatorRegex.Split(textWithout).Where(s => !string.IsNullOrEmpty(s));
                 if (userSettings.SpellCheckIgnoreAllCaps) words = words.Where(w => w != w.ToUpper()).ToArray();
-                if (userSettings.SpellCheckIgnoreWordsWithDigits) words = words.Where(w => !Regex.Match(w, "\\d").Success).ToArray();
+                if (userSettings.SpellCheckIgnoreWordsWithDigits)
+                    words = words.Where(w => !Regex.Match(w, "\\d").Success).ToArray();
 
                 foreach (var word in words)
                 {
                     var trimmedWord = word.Trim('\'', '_', '-');
 
                     var num = currentLine.FirstDocumentLine.Offset
-                        + originalText.IndexOf(trimmedWord, startIndex, StringComparison.InvariantCultureIgnoreCase);
+                              + originalText.IndexOf(trimmedWord, startIndex,
+                                  StringComparison.InvariantCultureIgnoreCase);
 
                     if (!_spellingService.Spell(trimmedWord))
                     {
@@ -120,23 +136,12 @@ namespace MarkdownEdit.SpellCheck
                         _spellCheckRenderer.ErrorSegments.Add(textSegment);
                     }
 
-                    startIndex = originalText.IndexOf(word, startIndex, StringComparison.InvariantCultureIgnoreCase) + word.Length;
+                    startIndex = originalText.IndexOf(word, startIndex, StringComparison.InvariantCultureIgnoreCase)
+                                 + word.Length;
                 }
             }
         }
 
         private void ClearSpellCheckErrors() => _spellCheckRenderer?.ErrorSegments.Clear();
-
-        public IEnumerable<TextSegment> GetSpellCheckErrors() =>
-            (_spellCheckRenderer == null) ? Enumerable.Empty<TextSegment>() : _spellCheckRenderer.ErrorSegments;
-
-        public IEnumerable<string> GetSpellCheckSuggestions(string word) =>
-            (_spellCheckRenderer == null) ? Enumerable.Empty<string>() : _spellingService.Suggestions(word);
-
-        public void Add(string word)
-        {
-            if (string.IsNullOrWhiteSpace(word) || _spellingService == null || !Enabled) return;
-            _spellingService.Add(word);
-        }
     }
 }

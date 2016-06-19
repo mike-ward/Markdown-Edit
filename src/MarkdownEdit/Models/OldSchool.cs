@@ -9,14 +9,6 @@ namespace MarkdownEdit.Models
         [DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int uMsg, IntPtr wparam, IntPtr lparam);
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct COPYDATASTRUCT
-        {
-            public IntPtr dwData;
-            public IntPtr cbData;
-            public IntPtr lpData;
-        }
-
         public static bool IsEditingFile(Process process, string path)
         {
             var result = Send(path, process.MainWindowHandle);
@@ -55,6 +47,14 @@ namespace MarkdownEdit.Models
             var cps = (COPYDATASTRUCT)Marshal.PtrToStructure(data, typeof(COPYDATASTRUCT));
             var result = Marshal.PtrToStringAnsi(cps.lpData);
             return result;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct COPYDATASTRUCT
+        {
+            public IntPtr dwData;
+            public IntPtr cbData;
+            public IntPtr lpData;
         }
     }
 }

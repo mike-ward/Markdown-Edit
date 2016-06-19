@@ -9,20 +9,28 @@ namespace MarkdownEdit.Commands
 {
     public class LineContinuationEnterCommand : ICommand
     {
-        private readonly TextEditor _editor;
-        private readonly ICommand _baseCommand;
+        public static readonly Regex UnorderedListCheckboxPattern =
+            new Regex(@"^[ ]{0,3}[-\*\+][ ]{1,3}\[[ xX]\](?=[ ]{1,3}\S)", RegexOptions.Compiled);
 
-        public static readonly Regex UnorderedListCheckboxPattern = new Regex(@"^[ ]{0,3}[-\*\+][ ]{1,3}\[[ xX]\](?=[ ]{1,3}\S)", RegexOptions.Compiled);
-        public static readonly Regex UnorderedListCheckboxEndPattern = new Regex(@"^[ ]{0,3}[-\*\+][ ]{1,3}\[[ xX]\]\s*", RegexOptions.Compiled);
+        public static readonly Regex UnorderedListCheckboxEndPattern = new Regex(
+            @"^[ ]{0,3}[-\*\+][ ]{1,3}\[[ xX]\]\s*", RegexOptions.Compiled);
 
-        public static readonly Regex OrderedListPattern = new Regex(@"^[ ]{0,3}(\d+)\.(?=[ ]{1,3}\S)", RegexOptions.Compiled);
-        public static readonly Regex OrderedListEndPattern = new Regex(@"^[ ]{0,3}(\d+)\.(?=[ ]{1,3}\s*)", RegexOptions.Compiled);
+        public static readonly Regex OrderedListPattern = new Regex(@"^[ ]{0,3}(\d+)\.(?=[ ]{1,3}\S)",
+            RegexOptions.Compiled);
 
-        public static readonly Regex UnorderedListPattern = new Regex(@"^[ ]{0,3}[-\*\+](?=[ ]{1,3}\S)", RegexOptions.Compiled);
-        public static readonly Regex UnorderedListEndPattern = new Regex(@"^[ ]{0,3}[-\*\+](?=[ ]{1,3}\s*)", RegexOptions.Compiled);
+        public static readonly Regex OrderedListEndPattern = new Regex(@"^[ ]{0,3}(\d+)\.(?=[ ]{1,3}\s*)",
+            RegexOptions.Compiled);
+
+        public static readonly Regex UnorderedListPattern = new Regex(@"^[ ]{0,3}[-\*\+](?=[ ]{1,3}\S)",
+            RegexOptions.Compiled);
+
+        public static readonly Regex UnorderedListEndPattern = new Regex(@"^[ ]{0,3}[-\*\+](?=[ ]{1,3}\s*)",
+            RegexOptions.Compiled);
 
         public static readonly Regex BlockQuotePattern = new Regex(@"^(([ ]{0,4}>)+)[ ]{0,4}.{2}", RegexOptions.Compiled);
         public static readonly Regex BlockQuoteEndPattern = new Regex(@"^([ ]{0,4}>)+[ ]{0,4}\s*", RegexOptions.Compiled);
+        private readonly ICommand _baseCommand;
+        private readonly TextEditor _editor;
 
         public LineContinuationEnterCommand(TextEditor editor, ICommand baseCommand)
         {
@@ -35,11 +43,7 @@ namespace MarkdownEdit.Commands
             return _editor.TextArea != null && _editor.TextArea.IsKeyboardFocused;
         }
 
-        public event EventHandler CanExecuteChanged
-        {
-            add { }
-            remove { }
-        }
+        public event EventHandler CanExecuteChanged { add { } remove { } }
 
         public void Execute(object parameter)
         {
@@ -58,9 +62,11 @@ namespace MarkdownEdit.Commands
 
             var patterns = new[]
             {
-                matchDo(UnorderedListCheckboxPattern, m => document.Insert(_editor.SelectionStart, m.Groups[0].Value.TrimStart() + " ")),
+                matchDo(UnorderedListCheckboxPattern,
+                    m => document.Insert(_editor.SelectionStart, m.Groups[0].Value.TrimStart() + " ")),
                 matchDo(UnorderedListCheckboxEndPattern, m => document.Remove(line)),
-                matchDo(UnorderedListPattern, m => document.Insert(_editor.SelectionStart, m.Groups[0].Value.TrimStart() + " ")),
+                matchDo(UnorderedListPattern,
+                    m => document.Insert(_editor.SelectionStart, m.Groups[0].Value.TrimStart() + " ")),
                 matchDo(UnorderedListEndPattern, m => document.Remove(line)),
                 matchDo(OrderedListPattern, m =>
                 {
@@ -89,7 +95,8 @@ namespace MarkdownEdit.Commands
                 if (match.Success == false) break;
                 var group = match.Groups[1];
                 var currentNumber = int.Parse(group.Value);
-                if (currentNumber != number) document.Replace(line.Offset + group.Index, group.Length, number.ToString());
+                if (currentNumber != number)
+                    document.Replace(line.Offset + group.Index, group.Length, number.ToString());
             }
         }
     }

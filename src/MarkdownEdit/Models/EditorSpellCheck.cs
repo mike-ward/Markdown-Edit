@@ -14,6 +14,9 @@ namespace MarkdownEdit.Models
     {
         public static bool AppsKeyDown;
 
+        private static bool IsAlternateAppsKeyShortcut =>
+            Keyboard.IsKeyDown(Key.F10) && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift));
+
         public static void SpellCheckSuggestions(Editor editor, ContextMenu contextMenu)
         {
             if (editor.SpellCheckProvider != null)
@@ -32,7 +35,8 @@ namespace MarkdownEdit.Models
                 }
 
                 var errorSegments = editor.SpellCheckProvider.GetSpellCheckErrors();
-                var misspelledSegment = errorSegments.FirstOrDefault(segment => segment.StartOffset <= offset && segment.EndOffset >= offset);
+                var misspelledSegment =
+                    errorSegments.FirstOrDefault(segment => segment.StartOffset <= offset && segment.EndOffset >= offset);
                 if (misspelledSegment == null) return;
 
                 // check if the clicked offset is the beginning or end of line to prevent snapping to it
@@ -64,8 +68,5 @@ namespace MarkdownEdit.Models
                 CommandParameter = new Tuple<string, TextSegment>(header, segment)
             };
         }
-
-        private static bool IsAlternateAppsKeyShortcut =>
-            Keyboard.IsKeyDown(Key.F10) && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift));
     }
 }

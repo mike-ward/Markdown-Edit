@@ -10,9 +10,6 @@ namespace MarkdownEdit.Models
 {
     public class BlockBackgroundRenderer : IBackgroundRenderer
     {
-        private Block _abstractSyntaxTree;
-        private readonly Dictionary<BlockTag, Brush> _brushes = new Dictionary<BlockTag, Brush>();
-
         private readonly BlockTag[] _blockTags =
         {
             BlockTag.FencedCode,
@@ -22,6 +19,9 @@ namespace MarkdownEdit.Models
             BlockTag.HtmlBlock,
             BlockTag.BlockQuote
         };
+
+        private readonly Dictionary<BlockTag, Brush> _brushes = new Dictionary<BlockTag, Brush>();
+        private Block _abstractSyntaxTree;
 
         public KnownLayer Layer => KnownLayer.Background;
 
@@ -56,17 +56,15 @@ namespace MarkdownEdit.Models
                         Brush brush;
                         if (_brushes.TryGetValue(block.Tag, out brush) && brush != null)
                         {
-                            drawingContext.DrawRectangle(brush, null, new Rect(0, rc.Top, textView.ActualWidth, line.Height));
+                            drawingContext.DrawRectangle(brush, null,
+                                new Rect(0, rc.Top, textView.ActualWidth, line.Height));
                         }
                     }
                 }
             }
         }
 
-        public void UpdateAbstractSyntaxTree(Block ast)
-        {
-            _abstractSyntaxTree = ast;
-        }
+        public void UpdateAbstractSyntaxTree(Block ast) { _abstractSyntaxTree = ast; }
 
         public void OnThemeChanged(Theme theme)
         {

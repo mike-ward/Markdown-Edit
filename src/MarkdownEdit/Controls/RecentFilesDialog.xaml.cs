@@ -18,10 +18,7 @@ namespace MarkdownEdit.Controls
 
         public string DisplayName { get; set; }
 
-        public override string ToString()
-        {
-            return DisplayName;
-        }
+        public override string ToString() { return DisplayName; }
     }
 
     public partial class RecentFilesDialog
@@ -32,7 +29,8 @@ namespace MarkdownEdit.Controls
             IsVisibleChanged += OnIsVisibleChanged;
         }
 
-        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private void OnIsVisibleChanged(object sender,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             IsVisibleChanged -= OnIsVisibleChanged;
             FilesListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
@@ -41,7 +39,8 @@ namespace MarkdownEdit.Controls
 
         private void SetItemsSource()
         {
-            var kb = new[] {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
+            var kb = new[]
+            {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
             FilesListBox.ItemsSource = Settings.Default.RecentFiles?.Cast<string>()
                 .Select((f, i) => new RecentFile
                 {
@@ -75,10 +74,7 @@ namespace MarkdownEdit.Controls
             Close();
         }
 
-        private void OnOpen(object sender, RoutedEventArgs e)
-        {
-            OpenFile();
-        }
+        private void OnOpen(object sender, RoutedEventArgs e) { OpenFile(); }
 
         private void OpenFile()
         {

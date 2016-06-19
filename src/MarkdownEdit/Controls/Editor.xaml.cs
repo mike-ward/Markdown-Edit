@@ -122,25 +122,13 @@ namespace MarkdownEdit.Controls
         private FindReplaceDialog FindReplaceDialog
             => _findReplaceDialog ?? (_findReplaceDialog = new FindReplaceDialog(new FindReplaceSettings()));
 
-        public string Text
-        {
-            get { return EditBox.Text; }
-            set { EditBox.Text = value; }
-        }
+        public string Text { get { return EditBox.Text; } set { EditBox.Text = value; } }
 
-        public bool IsReadOnly
-        {
-            get { return EditBox.IsReadOnly; }
-            set { EditBox.IsReadOnly = value; }
-        }
+        public bool IsReadOnly { get { return EditBox.IsReadOnly; } set { EditBox.IsReadOnly = value; } }
 
         // Bindable Properties
 
-        public string FileName
-        {
-            get { return _fileName; }
-            set { Set(ref _fileName, value); }
-        }
+        public string FileName { get { return _fileName; } set { Set(ref _fileName, value); } }
 
         public string DisplayName
         {
@@ -155,11 +143,7 @@ namespace MarkdownEdit.Controls
             set { Set(ref _displayName, value); }
         }
 
-        public bool IsModified
-        {
-            get { return _isModified; }
-            set { Set(ref _isModified, value); }
-        }
+        public bool IsModified { get { return _isModified; } set { Set(ref _isModified, value); } }
 
         public bool AutoSave
         {
@@ -167,11 +151,7 @@ namespace MarkdownEdit.Controls
             set { SetValue(AutoSaveProperty, value); }
         }
 
-        public Theme Theme
-        {
-            get { return (Theme)GetValue(ThemeProperty); }
-            set { SetValue(ThemeProperty, value); }
-        }
+        public Theme Theme { get { return (Theme)GetValue(ThemeProperty); } set { SetValue(ThemeProperty, value); } }
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
@@ -571,10 +551,7 @@ namespace MarkdownEdit.Controls
 
         private bool IfNotReadOnly(Func<bool> action) => EditBox.IsReadOnly ? EditorUtilities.ErrorBeep() : action();
 
-        private void CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = !EditBox.IsReadOnly;
-        }
+        private void CanExecute(object sender, CanExecuteRoutedEventArgs e) { e.CanExecute = !EditBox.IsReadOnly; }
 
         private void FormatTextHandler(Func<string, string> converter, bool? forceAllText)
         {
@@ -679,7 +656,7 @@ namespace MarkdownEdit.Controls
             =>
                 IfNotReadOnly(
                     () =>
-                        new InsertHyperlinkDialog(EditBox.SelectedText) { Owner = Application.Current.MainWindow }
+                        new InsertHyperlinkDialog(EditBox.SelectedText) {Owner = Application.Current.MainWindow}
                             .ShowDialog());
 
         public void ExecuteInsertHyperlink(object sender, ExecutedRoutedEventArgs e)
@@ -733,7 +710,7 @@ namespace MarkdownEdit.Controls
         public static void ThemeChangedCallback(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
             var editor = (Editor)source;
-            editor.OnThemeChanged(new ThemeChangedEventArgs { Theme = editor.Theme });
+            editor.OnThemeChanged(new ThemeChangedEventArgs {Theme = editor.Theme});
         }
 
         private static void ShowEndOfLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)

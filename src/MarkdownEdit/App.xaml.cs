@@ -17,8 +17,10 @@ namespace MarkdownEdit
     public partial class App
     {
         public const string Title = "MARKDOWN EDIT";
-        private FileSystemWatcher _userSettingsWatcher;
         private ISpellingService _spellingService;
+        private FileSystemWatcher _userSettingsWatcher;
+
+        public static UserSettings UserSettings { get; private set; }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
@@ -28,8 +30,6 @@ namespace MarkdownEdit
 
         [DllImport("user32.dll")]
         private static extern bool IsIconic(IntPtr hWnd);
-
-        public static UserSettings UserSettings { get; private set; }
 
         private void OnStartup(object sender, StartupEventArgs ea)
         {
@@ -62,12 +62,13 @@ namespace MarkdownEdit
         private static bool AlreadyEditingFile()
         {
             var fileName = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
-                ?? (UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
+                           ?? (UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
 
             if (string.IsNullOrWhiteSpace(fileName)) return false;
             var currentProcess = Process.GetCurrentProcess();
 
-            foreach (var process in Process.GetProcessesByName(currentProcess.ProcessName)
+            foreach (var process in Process
+                .GetProcessesByName(currentProcess.ProcessName)
                 .Where(p => p.Id != currentProcess.Id)
                 .Where(p => OldSchool.IsEditingFile(p, fileName)))
             {
@@ -82,16 +83,16 @@ namespace MarkdownEdit
         private static void InitializeSettings()
         {
             try
-        {
-            if (Settings.Default.UpgradeSettings)
             {
-                Settings.Default.Upgrade();
-                Settings.Default.UpgradeSettings = false;
-                Settings.Default.Save();
+                if (Settings.Default.UpgradeSettings)
+                {
+                    Settings.Default.Upgrade();
+                    Settings.Default.UpgradeSettings = false;
+                    Settings.Default.Save();
 
-                // Adds new settings from this version
-                UserSettings.Load()?.Save();
-            }
+                    // Adds new settings from this version
+                    UserSettings.Load()?.Save();
+                }
             }
             catch (ConfigurationErrorsException e)
             {
@@ -115,7 +116,11 @@ namespace MarkdownEdit
             Task.Factory.StartNew(() =>
             {
                 _spellingService.Language = UserSettings.SpellCheckDictionary;
-                UserSettings.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary)) _spellingService.Language = UserSettings.SpellCheckDictionary; };
+                UserSettings.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName == nameof(UserSettings.SpellCheckDictionary))
+                        _spellingService.Language = UserSettings.SpellCheckDictionary;
+                };
                 _userSettingsWatcher = UserSettings.SettingsFile.WatchFile(UserSettings.Update);
             });
         }

@@ -10,14 +10,11 @@ namespace MarkdownEdit.Controls
             "SelectedEncoding", typeof(MyEncodingInfo), typeof(EncodingComboBox),
             new PropertyMetadata(default(MyEncodingInfo)));
 
-        public EncodingComboBox()
-        {
-            InitializeComponent();
-        }
+        public EncodingComboBox() { InitializeComponent(); }
 
         public MyEncodingInfo SelectedEncoding
         {
-            get { return (MyEncodingInfo) GetValue(SelectedEncodingProperty); }
+            get { return (MyEncodingInfo)GetValue(SelectedEncodingProperty); }
             set { SetValue(SelectedEncodingProperty, value); }
         }
 

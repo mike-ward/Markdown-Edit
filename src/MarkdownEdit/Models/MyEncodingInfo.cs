@@ -1,14 +1,14 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Text;
+using MarkdownEdit.i18n;
+using Ude;
 
 namespace MarkdownEdit.Models
 {
     public class MyEncodingInfo
     {
-        public MyEncodingInfo()
-        {
-        }
+        public MyEncodingInfo() { }
 
         public MyEncodingInfo(EncodingInfo encodingInfo)
         {
@@ -19,7 +19,7 @@ namespace MarkdownEdit.Models
 
         public int CodePage { get; set; } = 65001;
         public string Name { get; set; } = "auto-detect";
-        public string DisplayName { get; set; } = i18n.TranslationProvider.Translate("settings-encode-automatic") as string;
+        public string DisplayName { get; set; } = TranslationProvider.Translate("settings-encode-automatic") as string;
 
         public static MyEncodingInfo[] GetEncodings() => new[] {new MyEncodingInfo()}
             .Concat(Encoding.GetEncodings()
@@ -34,7 +34,7 @@ namespace MarkdownEdit.Models
         {
             using (var fs = File.OpenRead(filename))
             {
-                var cd = new Ude.CharsetDetector();
+                var cd = new CharsetDetector();
                 cd.Feed(fs);
                 cd.DataEnd();
                 return cd.Charset != null ? Encoding.GetEncoding(cd.Charset) : Encoding.UTF8;

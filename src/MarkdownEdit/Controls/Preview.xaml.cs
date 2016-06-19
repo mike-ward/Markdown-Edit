@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -22,11 +23,21 @@ namespace MarkdownEdit.Controls
 {
     public partial class Preview : INotifyPropertyChanged
     {
+        public enum StatisticMode
+        {
+            Character,
+            Word,
+            Page
+        }
+
         public readonly Action<Editor> UpdatePreview;
-        private FileSystemWatcher _templateWatcher;
-        private int _wordCount;
+        private int _characterCount;
         private string _documentStatistics;
         private string _documentStatisticsToolTip;
+
+        private int _pageCount;
+        private FileSystemWatcher _templateWatcher;
+        private int _wordCount;
 
         public Preview()
         {
@@ -41,6 +52,30 @@ namespace MarkdownEdit.Controls
             UpdatePreview = Utility.Debounce<Editor>(editor => Dispatcher.InvokeAsync(() => Update(editor.Text)));
             DocumentStatisticMode = StatisticMode.Word;
         }
+
+        public StatisticMode DocumentStatisticMode { get; set; }
+
+        public int WordCount { get { return _wordCount; } set { Set(ref _wordCount, value); } }
+
+        public int CharacterCount { get { return _characterCount; } set { Set(ref _characterCount, value); } }
+
+        public string DocumentStatisticDisplayText
+        {
+            get { return _documentStatistics; }
+            set { Set(ref _documentStatistics, value); }
+        }
+
+        public string DocumentStatisticsToolTip
+        {
+            get { return _documentStatisticsToolTip; }
+            set { Set(ref _documentStatisticsToolTip, value); }
+        }
+
+        public int PageCount { get { return _pageCount; } set { Set(ref _pageCount, value); } }
+
+        // INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
@@ -82,7 +117,6 @@ namespace MarkdownEdit.Controls
             CharacterCount = innerText.Length;
             WordCount = innerText.WordCount();
             PageCount = (int)Math.Ceiling(CharacterCount/1500m);
-
             UpdateDocumentStatisticDisplayText();
         }
 
@@ -90,7 +124,7 @@ namespace MarkdownEdit.Controls
         {
             Func<int, string, string> convert = (count, suffix) =>
                 new NumberFormatConverter().Convert(count, typeof(string), null,
-                    System.Globalization.CultureInfo.CurrentCulture) + suffix;
+                    CultureInfo.CurrentCulture) + suffix;
 
             switch (DocumentStatisticMode)
             {
@@ -107,48 +141,6 @@ namespace MarkdownEdit.Controls
                     DocumentStatisticsToolTip = $"{convert(CharacterCount, "c")}, {convert(PageCount, "p")}";
                     break;
             }
-        }
-
-        public int WordCount
-        {
-            get { return _wordCount; }
-            set { Set(ref _wordCount, value); }
-        }
-
-        public enum StatisticMode
-        {
-            Character,
-            Word,
-            Page
-        }
-
-        private int _pageCount;
-        private int _characterCount;
-
-        public int CharacterCount
-        {
-            get { return _characterCount; }
-            set { Set(ref _characterCount, value); }
-        }
-
-        public StatisticMode DocumentStatisticMode { get; set; }
-
-        public string DocumentStatisticDisplayText
-        {
-            get { return _documentStatistics; }
-            set { Set(ref _documentStatistics, value); }
-        }
-
-        public string DocumentStatisticsToolTip
-        {
-            get { return _documentStatisticsToolTip; }
-            set { Set(ref _documentStatisticsToolTip, value); }
-        }
-
-        public int PageCount
-        {
-            get { return _pageCount; }
-            set { Set(ref _pageCount, value); }
         }
 
         private void EmitFirePreviewUpdatedEvent()
@@ -211,7 +203,8 @@ namespace MarkdownEdit.Controls
             Func<string> getName = () => GetIdName(idx++);
 
             // Inject anchors at all block level elements for scroll synchronization
-            var nc = doc.DocumentNode.SelectNodes("//p|//h1|//h2|//h3|//h4|//h5|//h6|//ul|//ol|//li|//hr|//pre|//blockquote");
+            var nc = doc.DocumentNode.SelectNodes(
+                "//p|//h1|//h2|//h3|//h4|//h5|//h6|//ul|//ol|//li|//hr|//pre|//blockquote");
             each(nc, node => node.Attributes.Add("id", getName()));
 
             // Remove potentially harmful elements
@@ -219,15 +212,18 @@ namespace MarkdownEdit.Controls
             each(nc, node => node.ParentNode.RemoveChild(node, false));
 
             // Remove hrefs to java/j/vbscript URLs
-            nc = doc.DocumentNode.SelectNodes("//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
+            nc = doc.DocumentNode.SelectNodes(
+                "//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
             each(nc, node => node.SetAttributeValue("href", "#"));
 
             // Remove img with refs to java/j/vbscript URLs
-            nc = doc.DocumentNode.SelectNodes("//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
+            nc = doc.DocumentNode.SelectNodes(
+                "//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
             each(nc, node => node.SetAttributeValue("src", "#"));
 
             // Remove on<Event> handlers from all tags
-            nc = doc.DocumentNode.SelectNodes("//*[@onclick or @onmouseover or @onfocus or @onblur or @onmouseout or @ondoubleclick or @onload or @onunload]");
+            nc = doc.DocumentNode.SelectNodes(
+                "//*[@onclick or @onmouseover or @onfocus or @onblur or @onmouseout or @ondoubleclick or @onload or @onunload]");
             each(nc, node =>
             {
                 node.Attributes.Remove("onFocus");
@@ -241,7 +237,8 @@ namespace MarkdownEdit.Controls
             });
 
             // remove any style attributes that contain the word expression (IE evaluates this as script)
-            nc = doc.DocumentNode.SelectNodes("//*[contains(translate(@style, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'expression')]");
+            nc = doc.DocumentNode.SelectNodes(
+                "//*[contains(translate(@style, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'expression')]");
             each(nc, node => node.Attributes.Remove("style"));
 
             return doc.DocumentNode.WriteTo();
@@ -285,7 +282,7 @@ namespace MarkdownEdit.Controls
                 {
                     var element = document3.getElementById(GetIdName(number));
                     if (element == null) return;
-                    offsetTop = element.offsetTop + (extra*20);
+                    offsetTop = element.offsetTop + extra*20;
                 }
                 var document2 = Browser.Document as IHTMLDocument2;
                 document2?.parentWindow.scroll(0, offsetTop);
@@ -331,10 +328,6 @@ namespace MarkdownEdit.Controls
 
             return hwnd;
         }
-
-        // INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {

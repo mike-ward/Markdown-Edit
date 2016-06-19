@@ -5,11 +5,17 @@ namespace MarkdownEdit.Models
 {
     internal static class Notify
     {
-        public static void Alert(string alert, Window owner = null) => Show(alert, MessageBoxButton.OK, MessageBoxImage.Error, owner);
-        public static MessageBoxResult ConfirmYesNo(string question, Window owner = null) => Show(question, MessageBoxButton.YesNo, MessageBoxImage.Question, owner);
-        public static MessageBoxResult ConfirmYesNoCancel(string question, Window owner = null) => Show(question, MessageBoxButton.YesNoCancel, MessageBoxImage.Question, owner);
+        public static void Alert(string alert, Window owner = null)
+            => Show(alert, MessageBoxButton.OK, MessageBoxImage.Error, owner);
 
-        private static MessageBoxResult Show(string message, MessageBoxButton button, MessageBoxImage image, Window owner)
+        public static MessageBoxResult ConfirmYesNo(string question, Window owner = null)
+            => Show(question, MessageBoxButton.YesNo, MessageBoxImage.Question, owner);
+
+        public static MessageBoxResult ConfirmYesNoCancel(string question, Window owner = null)
+            => Show(question, MessageBoxButton.YesNoCancel, MessageBoxImage.Question, owner);
+
+        private static MessageBoxResult Show(string message, MessageBoxButton button, MessageBoxImage image,
+            Window owner)
         {
             var text = message ?? "null";
             var window = owner ?? Application.Current.MainWindow;

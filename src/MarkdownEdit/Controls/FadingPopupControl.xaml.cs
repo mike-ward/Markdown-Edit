@@ -7,13 +7,10 @@ namespace MarkdownEdit.Controls
 {
     public partial class FadingPopupControl
     {
-        private Window _parentWindow;
         private IInputElement _focusedElement;
+        private Window _parentWindow;
 
-        public FadingPopupControl()
-        {
-            InitializeComponent();
-        }
+        public FadingPopupControl() { InitializeComponent(); }
 
         public void ShowDialogBox(Window parentWindow, string message, double width = 400, double height = 100)
         {

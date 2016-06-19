@@ -52,7 +52,8 @@ namespace MarkdownEdit.Models
 
         public static string AssemblyFolder() => Path.GetDirectoryName(ExecutingAssembly());
 
-        public static string ExecutingAssembly() => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
+        public static string ExecutingAssembly()
+            => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
 
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
