@@ -9,18 +9,12 @@ namespace MarkdownEdit.SpellCheck
 {
     public class SpellingService : ISpellingService
     {
-        private Hunspell _speller;
         private string _language;
+        private Hunspell _speller;
 
-        public bool Spell(string word)
-        {
-            return _speller == null || _speller.Spell(word);
-        }
+        public bool Spell(string word) { return _speller == null || _speller.Spell(word); }
 
-        public IEnumerable<string> Suggestions(string word)
-        {
-            return _speller.Suggest(word);
-        }
+        public IEnumerable<string> Suggestions(string word) { return _speller.Suggest(word); }
 
         public void Add(string word)
         {
@@ -29,18 +23,30 @@ namespace MarkdownEdit.SpellCheck
             UpdateCustomDictionary(word);
         }
 
-        public void ClearLanguage()
+        public void ClearLanguage() { _speller = null; }
+
+        public string Language { get { return _language; } set { SetLanguage(value); } }
+
+        public string CustomDictionaryFile()
         {
-            _speller = null;
+            var file = Path.Combine(UserSettings.SettingsFolder, "custom_dictionary.txt");
+            if (File.Exists(file) == false)
+            {
+                Directory.CreateDirectory(UserSettings.SettingsFolder);
+                File.WriteAllText(file, string.Empty);
+            }
+            return file;
+        }
+
+        public string[] Languages()
+        {
+            return Directory
+                .GetFiles(SpellCheckFolder(), "*.dic")
+                .Select(Path.GetFileNameWithoutExtension)
+                .ToArray();
         }
 
         private static string SpellCheckFolder() => Path.Combine(Utility.AssemblyFolder(), "SpellCheck\\Dictionaries");
-
-        public string Language
-        {
-            get { return _language; }
-            set { SetLanguage(value); }
-        }
 
         private void SetLanguage(string language)
         {
@@ -82,25 +88,6 @@ namespace MarkdownEdit.SpellCheck
             {
                 Notify.Alert($"{ex.Message} while loading custom dictionary");
             }
-        }
-
-        public string CustomDictionaryFile()
-        {
-            var file = Path.Combine(UserSettings.SettingsFolder, "custom_dictionary.txt");
-            if (File.Exists(file) == false)
-            {
-                Directory.CreateDirectory(UserSettings.SettingsFolder);
-                File.WriteAllText(file, string.Empty);
-            }
-            return file;
-        }
-
-        public string[] Languages()
-        {
-            return Directory
-                .GetFiles(SpellCheckFolder(), "*.dic")
-                .Select(Path.GetFileNameWithoutExtension)
-                .ToArray();
         }
 
         private void UpdateCustomDictionary(string word)

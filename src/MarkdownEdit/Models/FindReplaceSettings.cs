@@ -8,9 +8,9 @@ namespace MarkdownEdit.Models
     public class FindReplaceSettings : INotifyPropertyChanged
     {
         private bool _caseSensitive;
-        private bool _wholeWord;
         private bool _useRegex;
         private bool _useWildcards;
+        private bool _wholeWord;
 
         public FindReplaceSettings()
         {
@@ -20,6 +20,16 @@ namespace MarkdownEdit.Models
             UseWildcards = Settings.Default.FindReplaceWildcards;
         }
 
+        public bool CaseSensitive { get { return _caseSensitive; } set { Set(ref _caseSensitive, value); } }
+
+        public bool WholeWord { get { return _wholeWord; } set { Set(ref _wholeWord, value); } }
+
+        public bool UseRegex { get { return _useRegex; } set { Set(ref _useRegex, value); } }
+
+        public bool UseWildcards { get { return _useWildcards; } set { Set(ref _useWildcards, value); } }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public void Save()
         {
             Settings.Default.FindReplaceCaseSensitive = CaseSensitive;
@@ -27,32 +37,6 @@ namespace MarkdownEdit.Models
             Settings.Default.FIndReplaceWholeWork = WholeWord;
             Settings.Default.FindReplaceWildcards = UseWildcards;
         }
-
-        public bool CaseSensitive
-        {
-            get { return _caseSensitive; }
-            set { Set(ref _caseSensitive, value); }
-        }
-
-        public bool WholeWord
-        {
-            get { return _wholeWord; }
-            set { Set(ref _wholeWord, value); }
-        }
-
-        public bool UseRegex
-        {
-            get { return _useRegex; }
-            set { Set(ref _useRegex, value); }
-        }
-
-        public bool UseWildcards
-        {
-            get { return _useWildcards; }
-            set { Set(ref _useWildcards, value); }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
         {

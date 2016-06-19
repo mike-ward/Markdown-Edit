@@ -10,20 +10,9 @@ namespace MarkdownEdit.SpellCheck
 {
     public class SpellCheckBackgroundRenderer : IBackgroundRenderer
     {
-        public SpellCheckBackgroundRenderer()
-        {
-            ErrorSegments = new TextSegmentCollection<TextSegment>();
-        }
+        public SpellCheckBackgroundRenderer() { ErrorSegments = new TextSegmentCollection<TextSegment>(); }
 
         public TextSegmentCollection<TextSegment> ErrorSegments { get; }
-
-        private static IEnumerable<Point> CreatePoints(Point start, double offset, int count)
-        {
-            for (var i = 0; i < count; i++)
-            {
-                yield return new Point(start.X + i*offset, start.Y - (((i + 1)%2 == 0) ? offset : 0.0));
-            }
-        }
 
         public void Draw(TextView textView, DrawingContext drawingContext)
         {
@@ -50,5 +39,13 @@ namespace MarkdownEdit.SpellCheck
         }
 
         public KnownLayer Layer => KnownLayer.Selection;
+
+        private static IEnumerable<Point> CreatePoints(Point start, double offset, int count)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                yield return new Point(start.X + i*offset, start.Y - ((i + 1)%2 == 0 ? offset : 0.0));
+            }
+        }
     }
 }

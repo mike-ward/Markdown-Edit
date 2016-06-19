@@ -4,7 +4,11 @@
   <Product Id="*"
            Name="Markdown Edit"
            Language="1033"
+<<<<<<< HEAD
            Version="1.27.0.0"
+=======
+           Version="1.28.0.0"
+>>>>>>> dev
            Manufacturer="Mike Ward"
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
 
@@ -32,6 +36,7 @@
 
       <Directory Id="DesktopFolder" Name="Desktop">
         <Component Id="ApplicationShortcutDesktop" Guid="*">
+          <Condition>NOT ICON</Condition>
           <Shortcut Id="ApplicationDesktopShortcut"
               Name="Markdown Edit"
               Description="Desktop Markdown Editor"
@@ -80,8 +85,11 @@
             <Component Id="Microsoft.DwayneNeed.Win32.pdb" Guid="*">
               <File Id="Microsoft.DwayneNeed.Win32.pdb" KeyPath="yes" Source="$(var.SourceFiles)\Microsoft.DwayneNeed.Win32.pdb" />
             </Component>
-            <Component Id="WpfMouseWheelLib" Guid="*">
-              <File Id="WpfMouseWheelLib" KeyPath="yes" Source="$(var.SourceFiles)\WpfMouseWheelLib.dll" />
+            <Component Id="WpfMouseWheelLib.dll" Guid="*">
+              <File Id="WpfMouseWheelLib.dll" KeyPath="yes" Source="$(var.SourceFiles)\WpfMouseWheelLib.dll" />
+            </Component>
+            <Component Id="WpfMouseWheelLib.pdb" Guid="*">
+              <File Id="WpfMouseWheelLib.pdb" KeyPath="yes" Source="$(var.SourceFiles)\WpfMouseWheelLib.pdb" />
             </Component>
             <Component Id="mde.exe" Guid="{D8745F9D-E4D6-4682-AF42-46F38A38B27B}">
               <File Id="mde.exe" KeyPath="yes" Source="$(var.SourceFiles)\mde.exe" />
@@ -109,6 +117,9 @@
             </Component>
             <Component Id="NReco.PdfGenerator.dll" Guid="{8DB6A567-ED09-430A-B9ED-C02DD8CE72B6}">
               <File Id="NReco.PdfGenerator.dll" KeyPath="yes" Source="$(var.SourceFiles)\NReco.PdfGenerator.dll" />
+            </Component>
+            <Component Id="Ude.dll" Guid="{14B5139B-74EF-4172-9225-FC04ED3D8E06}">
+              <File Id="Ude.dll" KeyPath="yes" Source="$(var.SourceFiles)\Ude.dll" />
             </Component>
             <Directory Id="SpellCheck" Name="SpellCheck">
               <Directory Id="Dictionaries" Name="Dictionaries">
@@ -265,7 +276,8 @@
       <ComponentRef Id="Microsoft.DwayneNeed.pdb" />
       <ComponentRef Id="Microsoft.DwayneNeed.Win32.dll" />
       <ComponentRef Id="Microsoft.DwayneNeed.Win32.pdb" />
-      <ComponentRef Id="WpfMouseWheelLib" />
+      <ComponentRef Id="WpfMouseWheelLib.dll" />
+      <ComponentRef Id="WpfMouseWheelLib.pdb" />
       <ComponentRef Id="mde.exe" />
       <ComponentRef Id="mde.pdb" />
       <ComponentRef Id="mde.exe.config" />
@@ -275,6 +287,7 @@
       <ComponentRef Id="System.Windows.Interactivity.dll" />
       <ComponentRef Id="Pandoc.exe" />
       <ComponentRef Id="NReco.PdfGenerator.dll" />
+      <ComponentRef Id="Ude.dll" />
       <ComponentRef Id="en_US.aff" />
       <ComponentRef Id="en_US.dic" />
       <ComponentRef Id="Danish.aff" />

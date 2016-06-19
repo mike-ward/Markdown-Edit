@@ -35,7 +35,7 @@ namespace MarkdownEdit.Models
                     if (block.Heading.Level == 1) magnify = theme.Header1Height;
                     if (block.Heading.Level == 2) magnify = theme.Header2Height;
 
-                    var length = (block.Tag == BlockTag.ListItem)
+                    var length = block.Tag == BlockTag.ListItem
                         ? Math.Min(block.SourceLength, block.ListData.Padding)
                         : block.SourceLength;
 
@@ -69,7 +69,8 @@ namespace MarkdownEdit.Models
             }
         }
 
-        private void ApplyLinePart(Highlight highlight, int sourceStart, int sourceLength, int lineStart, int lineEnd, int leadingSpaces, double magnify)
+        private void ApplyLinePart(Highlight highlight, int sourceStart, int sourceLength, int lineStart, int lineEnd,
+            int leadingSpaces, double magnify)
         {
             var start = Math.Max(sourceStart, lineStart + leadingSpaces);
             var end = Math.Min(lineEnd, sourceStart + sourceLength);
@@ -148,7 +149,7 @@ namespace MarkdownEdit.Models
             try
             {
                 // ReSharper disable once PossibleNullReferenceException
-                return (FontStyle)(new FontStyleConverter().ConvertFromString(fontStyle));
+                return (FontStyle)new FontStyleConverter().ConvertFromString(fontStyle);
             }
             catch (FormatException)
             {
@@ -160,14 +161,8 @@ namespace MarkdownEdit.Models
             }
         }
 
-        public void UpdateAbstractSyntaxTree(Block ast)
-        {
-            _abstractSyntaxTree = ast;
-        }
+        public void UpdateAbstractSyntaxTree(Block ast) { _abstractSyntaxTree = ast; }
 
-        public void OnThemeChanged(Theme theme)
-        {
-            _theme = theme;
-        }
+        public void OnThemeChanged(Theme theme) { _theme = theme; }
     }
 }

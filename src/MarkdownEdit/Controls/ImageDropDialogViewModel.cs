@@ -6,27 +6,15 @@ namespace MarkdownEdit.Controls
 {
     public class ImageDropDialogViewModel : INotifyPropertyChanged
     {
-        private bool _useClipboardImage;
-        private bool _uploading;
         private string _documentFileName;
+        private bool _uploading;
+        private bool _useClipboardImage;
 
-        public string DocumentFileName
-        {
-            get { return _documentFileName; }
-            set { Set(ref _documentFileName, value); }
-        }
+        public string DocumentFileName { get { return _documentFileName; } set { Set(ref _documentFileName, value); } }
 
-        public bool Uploading
-        {
-            get { return _uploading; }
-            set { Set(ref _uploading, value); }
-        }
+        public bool Uploading { get { return _uploading; } set { Set(ref _uploading, value); } }
 
-        public bool UseClipboardImage
-        {
-            get { return _useClipboardImage; }
-            set { Set(ref _useClipboardImage, value); }
-        }
+        public bool UseClipboardImage { get { return _useClipboardImage; } set { Set(ref _useClipboardImage, value); } }
 
         // INotifyPropertyChanged
 

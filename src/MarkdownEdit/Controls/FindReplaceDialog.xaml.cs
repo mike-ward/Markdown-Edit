@@ -13,8 +13,8 @@ namespace MarkdownEdit.Controls
 {
     public partial class FindReplaceDialog : INotifyPropertyChanged
     {
-        private string _findText;
         private FindReplaceSettings _findReplaceSettings;
+        private string _findText;
 
         public FindReplaceDialog(FindReplaceSettings findReplaceSettings)
         {
@@ -29,17 +29,15 @@ namespace MarkdownEdit.Controls
             };
         }
 
-        public string FindText
-        {
-            get { return _findText; }
-            set { Set(ref _findText, value); }
-        }
+        public string FindText { get { return _findText; } set { Set(ref _findText, value); } }
 
         public FindReplaceSettings FindReplaceSettings
         {
             get { return _findReplaceSettings; }
             set { Set(ref _findReplaceSettings, value); }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void FindNextClick(object sender, RoutedEventArgs e)
         {
@@ -113,15 +111,9 @@ namespace MarkdownEdit.Controls
             return new Regex(pattern, options);
         }
 
-        public void ShowFindDialog()
-        {
-            ShowDialog();
-        }
+        public void ShowFindDialog() { ShowDialog(); }
 
-        public void ShowReplaceDialog()
-        {
-            ShowDialog(1);
-        }
+        public void ShowReplaceDialog() { ShowDialog(1); }
 
         private void ShowDialog(int index = 0)
         {
@@ -155,10 +147,7 @@ namespace MarkdownEdit.Controls
             MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
         }
 
-        private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
-        {
-            Hide();
-        }
+        private void ExecuteClose(object sender, ExecutedRoutedEventArgs e) { Hide(); }
 
         private void TxtFindOnKeyDown(object sender, KeyEventArgs e)
         {
@@ -168,8 +157,6 @@ namespace MarkdownEdit.Controls
                 FindNextButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {

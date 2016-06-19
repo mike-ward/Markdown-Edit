@@ -5,10 +5,7 @@ namespace MarkdownEdit.Controls
 {
     public partial class Donate
     {
-        public Donate()
-        {
-            InitializeComponent();
-        }
+        public Donate() { InitializeComponent(); }
 
         private void DonateOnMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -17,19 +14,10 @@ namespace MarkdownEdit.Controls
         }
 
 
-        private void CloseOnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Close();
-        }
+        private void CloseOnMouseDown(object sender, MouseButtonEventArgs e) { Close(); }
 
-        private void OnMouseEnter(object sender, MouseEventArgs e)
-        {
-            Cursor = Cursors.Hand;
-        }
+        private void OnMouseEnter(object sender, MouseEventArgs e) { Cursor = Cursors.Hand; }
 
-        private void OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            Cursor = Cursors.Arrow;
-        }
+        private void OnMouseLeave(object sender, MouseEventArgs e) { Cursor = Cursors.Arrow; }
     }
 }

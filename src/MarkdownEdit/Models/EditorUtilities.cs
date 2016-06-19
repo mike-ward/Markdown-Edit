@@ -25,10 +25,7 @@ namespace MarkdownEdit.Models
             editor.Select(startOffset, endOffset - startOffset + 1);
         }
 
-        private static bool IsWordPart(char ch)
-        {
-            return char.IsLetterOrDigit(ch) || ch == '_' || ch == '*';
-        }
+        private static bool IsWordPart(char ch) => char.IsLetterOrDigit(ch) || ch == '_' || ch == '*';
 
         public static void SelectHeader(this TextEditor editor, bool next)
         {
@@ -62,7 +59,7 @@ namespace MarkdownEdit.Models
             }
             else
             {
-                editor.SelectedText = (selected.StartsWith(quote) && selected.EndsWith(quote))
+                editor.SelectedText = selected.StartsWith(quote) && selected.EndsWith(quote)
                     ? selected.UnsurroundWith(quote)
                     : selected.SurroundWith(quote);
             }
@@ -164,7 +161,9 @@ namespace MarkdownEdit.Models
             if (selection != null && selection.StartPosition.Line > 1)
             {
                 currentLine = Math.Max(selection.StartPosition.Line, selection.EndPosition.Line);
-                segment = document.GetLineByNumber(Math.Min(selection.StartPosition.Line, selection.EndPosition.Line)).PreviousLine;
+                segment =
+                    document.GetLineByNumber(Math.Min(selection.StartPosition.Line, selection.EndPosition.Line))
+                        .PreviousLine;
             }
             else
             {
@@ -200,10 +199,13 @@ namespace MarkdownEdit.Models
             int currentLine;
             DocumentLine segment;
             var selection = textArea.Selection;
-            if (selection != null && selection.StartPosition.Line > 0 && selection.EndPosition.Line < textEditor.LineCount)
+            if (selection != null && selection.StartPosition.Line > 0
+                && selection.EndPosition.Line < textEditor.LineCount)
             {
                 currentLine = Math.Min(selection.StartPosition.Line, selection.EndPosition.Line);
-                segment = document.GetLineByNumber(Math.Max(selection.StartPosition.Line, selection.EndPosition.Line)).NextLine;
+                segment =
+                    document.GetLineByNumber(Math.Max(selection.StartPosition.Line, selection.EndPosition.Line))
+                        .NextLine;
             }
             else
             {

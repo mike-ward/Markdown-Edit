@@ -6,15 +6,9 @@ namespace MarkdownEdit.Models
 {
     internal static class StringExtensions
     {
-        public static string SurroundWith(this string text, string quote)
-        {
-            return $"{quote}{text}{quote}";
-        }
+        public static string SurroundWith(this string text, string quote) => $"{quote}{text}{quote}";
 
-        public static string UnsurroundWith(this string text, string quote)
-        {
-            return text.Trim(quote.ToCharArray());
-        }
+        public static string UnsurroundWith(this string text, string quote) => text.Trim(quote.ToCharArray());
 
         public static string ReplaceSmartChars(this string smart)
         {
@@ -36,10 +30,10 @@ namespace MarkdownEdit.Models
             return dumb;
         }
 
-        public static int WordCount(this string text)
-        {
-            return (text == null) ? 0 : Regex.Matches(text, @"[\S]+").Count;
-        }
+        public static int WordCount(this string text) => text == null ? 0 : Regex.Matches(text, @"[\S]+").Count;
+
+        public static string AddOffsetToFileName(this string file, int offset)
+            => $"{file.StripOffsetFromFileName()}|{offset}";
 
         public static string ReplaceDate(this string text)
         {
@@ -47,16 +41,11 @@ namespace MarkdownEdit.Models
             return datePattern.Replace(text, match => DateTime.Now.ToString(match?.Groups[1].Value));
         }
 
-        public static string AddOffsetToFileName(this string file, int offset)
-        {
-            return $"{file.StripOffsetFromFileName()}|{offset}";
-        }
-
         public static string StripOffsetFromFileName(this string file)
         {
             if (string.IsNullOrWhiteSpace(file)) return file;
             var index = file.IndexOf('|');
-            return (index >= 0) ? file.Substring(0, index) : file;
+            return index >= 0 ? file.Substring(0, index) : file;
         }
 
         public static string ToSlug(this string value, bool toLower = false)

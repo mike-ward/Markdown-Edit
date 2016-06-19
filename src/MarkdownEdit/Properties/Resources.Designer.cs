@@ -127,9 +127,8 @@ namespace MarkdownEdit.Properties {
         ///tooltip-save-command:             Save - Ctrl+S
         ///tooltip-save-as-command:          Save as - Ctrl+Shift+S
         ///tooltip-toggle-settings:          Settings - Ctrl+,
-        ///tooltip-word-count:               Word Count
-        ///tooltip-spell-check:              Spell Check - Ctrl+F7
-        ///toolti [rest of string was truncated]&quot;;.
+        ///tooltip-document-statistics:      (c)haracter/(w)ord/Standard(p)age Count (1500c=1p)
+        ///tooltip-spell-check:    [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string local {
             get {
@@ -148,6 +147,9 @@ namespace MarkdownEdit.Properties {
         ///tm        &amp;trade;
         ///cp        &amp;copy;
         ///reg       &amp;reg;
+        ///
+        ///&quot;         “$END$”
+        ///&apos;         ‘$END$’
         ///.
         /// </summary>
         internal static string Snippets {

@@ -98,7 +98,8 @@ namespace MarkdownEdit.Models
                 var request = WebRequest.Create(url);
                 request.Method = "HEAD";
                 request.Timeout = 2000;
-                using (var response = request.GetResponse()) return response.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase);
+                using (var response = request.GetResponse())
+                    return response.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase);
             }
             catch (Exception)
             {

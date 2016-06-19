@@ -6,9 +6,8 @@ namespace MarkdownEdit.SpellCheck
 {
     public interface ISpellCheckProvider
     {
-        void Initialize(Editor editor);
-
         bool Enabled { get; set; }
+        void Initialize(Editor editor);
 
         IEnumerable<TextSegment> GetSpellCheckErrors();
 

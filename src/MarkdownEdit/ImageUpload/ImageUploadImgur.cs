@@ -31,7 +31,7 @@ namespace MarkdownEdit.ImageUpload
                     var response = await w.UploadValuesTaskAsync("https://api.imgur.com/3/upload.json", values);
                     var json = Encoding.UTF8.GetString(response);
                     dynamic model = JsonConvert.DeserializeObject(json);
-                    return ((bool)model.success) ? (string)model.data.link : (string)model.data.error;
+                    return (bool)model.success ? (string)model.data.link : (string)model.data.error;
                 }
                 catch (Exception e)
                 {

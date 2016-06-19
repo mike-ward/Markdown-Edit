@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using MarkdownEdit.Controls;
 using MarkdownEdit.Properties;
@@ -43,20 +44,29 @@ namespace MarkdownEdit.Models
                 {
                     NewFile(editor);
                     editor.EditBox.Text = Markdown.FromMicrosoftWord(filename);
+                    editor.EditBox.Encoding = Encoding.UTF8;
                     return true;
                 }
 
                 var isHtmlFile = pathExtension.Equals(".html", StringComparison.OrdinalIgnoreCase)
-                    || pathExtension.Equals(".htm", StringComparison.OrdinalIgnoreCase);
+                                 || pathExtension.Equals(".htm", StringComparison.OrdinalIgnoreCase);
 
                 if (isHtmlFile)
                 {
                     NewFile(editor);
                     editor.EditBox.Text = Markdown.FromHtml(filename);
+                    editor.EditBox.Encoding = Encoding.UTF8;
                     return true;
                 }
 
-                editor.EditBox.Text = File.ReadAllText(filename);
+                var editorEncoding = App.UserSettings.EditorEncoding;
+
+                var encoding = MyEncodingInfo.IsAutoDetectEncoding(editorEncoding)
+                    ? MyEncodingInfo.DetectEncoding(filename)
+                    : Encoding.GetEncoding(editorEncoding.CodePage);
+
+                editor.EditBox.Text = File.ReadAllText(filename, encoding);
+                editor.EditBox.Encoding = encoding;
 
                 if (updateCursorPosition)
                 {
@@ -94,7 +104,7 @@ namespace MarkdownEdit.Models
 
             var result = Notify.ConfirmYesNoCancel("Save your changes?");
 
-            return (result == MessageBoxResult.Yes)
+            return result == MessageBoxResult.Yes
                 ? SaveFile(editor)
                 : result == MessageBoxResult.No;
         }
@@ -118,10 +128,10 @@ namespace MarkdownEdit.Models
                 RestoreDirectory = true,
                 FileName = Markdown.SuggestFilenameFromTitle(editor.EditBox.Text),
                 Filter = "Markdown files (*.md)|*.md|"
-                    + "HTML files (*.html)|*.html|"
-                    + "PDF files (*.pdf)|*.pdf|"
-                    + "Docx files (*.docx)|*.docx|"
-                    + "All files (*.*)|*.*"
+                         + "HTML files (*.html)|*.html|"
+                         + "PDF files (*.pdf)|*.pdf|"
+                         + "Docx files (*.docx)|*.docx|"
+                         + "All files (*.*)|*.*"
             };
             if (dialog.ShowDialog() == false) return false;
 
@@ -178,9 +188,9 @@ namespace MarkdownEdit.Models
             {
                 const string fileFilter =
                     "Markdown files (*.md)|*.md|"
-                        + "Microsoft Word files (*.docx)|*.docx|"
-                        + "HTML files (*.html)|*.html|"
-                        + "All files (*.*)|*.*";
+                    + "Microsoft Word files (*.docx)|*.docx|"
+                    + "HTML files (*.html)|*.html|"
+                    + "All files (*.*)|*.*";
 
                 var dialog = new OpenFileDialog {Filter = fileFilter};
                 if (dialog.ShowDialog() == false) return;
@@ -212,7 +222,7 @@ namespace MarkdownEdit.Models
         private static int ConvertToOffset(string number)
         {
             int offset;
-            return (int.TryParse(number, out offset)) ? offset : 0;
+            return int.TryParse(number, out offset) ? offset : 0;
         }
 
         private static bool SaveAsHtml(string markdown, string filename, string filter)

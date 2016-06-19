@@ -15,21 +15,9 @@ namespace MarkdownEdit.Controls
 {
     public partial class ImageDropDialog
     {
-        public TextEditor TextEditor { get; set; }
-        public DragEventArgs DragEventArgs { get; set; }
-
-        public string DocumentFileName
-        {
-            set { _vm.DocumentFileName = value; }
-        }
-
-        public bool UseClipboardImage
-        {
-            set { _vm.UseClipboardImage = value; }
-        }
+        private readonly ImageDropDialogViewModel _vm;
 
         private bool _canceled;
-        private readonly ImageDropDialogViewModel _vm;
 
         public ImageDropDialog()
         {
@@ -37,6 +25,13 @@ namespace MarkdownEdit.Controls
             _vm = (ImageDropDialogViewModel)DataContext;
             Loaded += OnLoaded;
         }
+
+        public TextEditor TextEditor { get; set; }
+        public DragEventArgs DragEventArgs { get; set; }
+
+        public string DocumentFileName { set { _vm.DocumentFileName = value; } }
+
+        public bool UseClipboardImage { set { _vm.UseClipboardImage = value; } }
 
         private void OnLoaded(object sender, EventArgs eventArgs)
         {
@@ -47,7 +42,8 @@ namespace MarkdownEdit.Controls
             }
 
             var position = _vm.UseClipboardImage
-                ? TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position, VisualYPosition.LineBottom)
+                ? TextEditor.TextArea.TextView.GetVisualPosition(TextEditor.TextArea.Caret.Position,
+                    VisualYPosition.LineBottom)
                 : DragEventArgs.GetPosition(TextEditor);
 
             var screen = TextEditor.PointToScreen(new Point(position.X, position.Y));
@@ -58,7 +54,10 @@ namespace MarkdownEdit.Controls
             SetDocumentFoldersMenuItems();
             InsertPathMenuItem.IsEnabled = !_vm.UseClipboardImage && hasDocumentFileName;
             AsLocalFileMenuItem.IsEnabled = hasDocumentFileName;
-            ContextMenu.Closed += (o, args) => { if (!_vm.Uploading) Close(); };
+            ContextMenu.Closed += (o, args) =>
+            {
+                if (!_vm.Uploading) Close();
+            };
             Dispatcher.InvokeAsync(() => ContextMenu.IsOpen = true);
         }
 
@@ -66,11 +65,13 @@ namespace MarkdownEdit.Controls
         {
             if (string.IsNullOrWhiteSpace(_vm.DocumentFileName)) return;
             var directoryName = Path.GetDirectoryName(_vm.DocumentFileName);
-            if (string.IsNullOrWhiteSpace(directoryName)) throw new Exception("directoryName in ImageDropDialog member is invalid");
+            if (string.IsNullOrWhiteSpace(directoryName))
+                throw new Exception("directoryName in ImageDropDialog member is invalid");
 
             var documentFolder = new[] {".\\"};
 
-            var folders = Directory.EnumerateDirectories(directoryName)
+            var folders = Directory
+                .EnumerateDirectories(directoryName)
                 .Select(d => "." + d.Remove(0, directoryName.Length));
 
             AsLocalFileMenuItem.ItemsSource = documentFolder.Concat(folders).ToArray();
@@ -128,12 +129,15 @@ namespace MarkdownEdit.Controls
                 UploadProgressChangedEventHandler progress = (o, args) => TextEditor.Dispatcher.InvokeAsync(() =>
                 {
                     if (_canceled) ((WebClient)o).CancelAsync();
-                    var progressPercentage = (int)((args.BytesSent/(double)args.TotalBytesToSend)*100);
+                    var progressPercentage = (int)(args.BytesSent/(double)args.TotalBytesToSend*100);
                     ProgressBar.Value = progressPercentage;
                     if (progressPercentage == 100) ProgressBar.IsIndeterminate = true;
                 });
 
-                UploadValuesCompletedEventHandler completed = (o, args) => { if (_canceled) ((WebClient)o).CancelAsync(); };
+                UploadValuesCompletedEventHandler completed = (o, args) =>
+                {
+                    if (_canceled) ((WebClient)o).CancelAsync();
+                };
 
                 string name;
                 byte[] image;
@@ -157,7 +161,8 @@ namespace MarkdownEdit.Controls
                 var link = await new ImageUploadImgur().UploadBytesAsync(image, progress, completed);
                 ActivateClose();
 
-                if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) InsertImageTag(TextEditor, DragEventArgs, link, name);
+                if (Uri.IsWellFormedUriString(link, UriKind.Absolute))
+                    InsertImageTag(TextEditor, DragEventArgs, link, name);
                 else Notify.Alert(link);
             }
             catch (Exception ex)

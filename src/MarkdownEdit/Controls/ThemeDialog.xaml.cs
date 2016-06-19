@@ -14,8 +14,6 @@ namespace MarkdownEdit.Controls
     {
         private bool _saved;
 
-        public Theme CurrentTheme { get; set; }
-
         public ThemeDialog()
         {
             InitializeComponent();
@@ -23,7 +21,10 @@ namespace MarkdownEdit.Controls
             Closed += OnClosed;
         }
 
-        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        public Theme CurrentTheme { get; set; }
+
+        private void OnIsVisibleChanged(object sender,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             IsVisibleChanged -= OnIsVisibleChanged;
             var assemblyFolder = Utility.AssemblyFolder();
@@ -34,7 +35,11 @@ namespace MarkdownEdit.Controls
                 .Select(t => new ListBoxItem {Tag = t, Content = t?.Name ?? "Not Loaded"});
 
             ThemeListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
-            var theme = ThemeListBox.Items.Cast<ListBoxItem>().FirstOrDefault(li => ((Theme)li.Tag).Name == CurrentTheme.Name);
+            var theme = ThemeListBox
+                .Items
+                .Cast<ListBoxItem>()
+                .FirstOrDefault(li => ((Theme)li.Tag).Name == CurrentTheme.Name);
+
             if (theme != null) ThemeListBox.SelectedItem = theme;
         }
 

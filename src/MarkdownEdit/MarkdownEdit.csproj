@@ -120,6 +120,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Ude, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UDE.CSharp.1.1.0\lib\Ude.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -148,6 +152,9 @@
     </Compile>
     <Compile Include="Controls\FadingPopupControl.xaml.cs">
       <DependentUpon>FadingPopupControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EncodingComboBox.xaml.cs">
+      <DependentUpon>EncodingComboBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\FontComboBox.xaml.cs">
       <DependentUpon>FontComboBox.xaml</DependentUpon>
@@ -204,6 +211,7 @@
     <Compile Include="Models\EditorLoadSave.cs" />
     <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
     <Compile Include="Commands\SnippetTabCommand.cs" />
+    <Compile Include="Models\MyEncodingInfo.cs" />
     <Compile Include="Models\Notify.cs" />
     <Compile Include="Models\OldSchool.cs" />
     <Compile Include="Models\Version.cs" />
@@ -246,6 +254,10 @@
     <Page Include="Controls\FindReplaceDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\EncodingComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\FontComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -314,6 +326,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Lib\WpfMouseWheelLib.pdb" />
     <EmbeddedResource Include="Resources\emoji-sprites.png" />
     <Resource Include="Resources\donate.png" />
     <Resource Include="SpellCheck\Dictionaries\Russian.txt" />

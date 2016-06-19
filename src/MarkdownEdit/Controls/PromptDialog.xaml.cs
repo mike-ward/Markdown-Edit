@@ -6,14 +6,14 @@ namespace MarkdownEdit.Controls
 {
     public partial class PromptDialog
     {
-        private string Question { get; set; }
-        private string ResponseText => Response.Text;
-
         public PromptDialog()
         {
             InitializeComponent();
             Loaded += OnLoaded;
         }
+
+        private string Question { get; set; }
+        private string ResponseText => Response.Text;
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
@@ -46,6 +46,5 @@ namespace MarkdownEdit.Controls
                 OkButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
             }
         }
-
     }
 }

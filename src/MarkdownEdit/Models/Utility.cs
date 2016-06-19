@@ -52,7 +52,8 @@ namespace MarkdownEdit.Models
 
         public static string AssemblyFolder() => Path.GetDirectoryName(ExecutingAssembly());
 
-        public static string ExecutingAssembly() => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
+        public static string ExecutingAssembly()
+            => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
 
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
@@ -67,6 +68,16 @@ namespace MarkdownEdit.Models
                 if (foundElement != null) break;
             }
             return foundElement;
+        }
+
+        public static T CreateInstance<T>(params object[] args)
+        {
+            var type = typeof(T);
+            var instance = type.Assembly.CreateInstance(
+                type.FullName, false,
+                BindingFlags.Instance | BindingFlags.NonPublic,
+                null, args, null, null);
+            return (T)instance;
         }
     }
 }
