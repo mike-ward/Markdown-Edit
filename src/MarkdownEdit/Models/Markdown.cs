@@ -27,7 +27,8 @@ namespace MarkdownEdit.Models
             + "+backtick_code_blocks"
             + "+intraword_underscores"
             + "+strikeout"
-            + "+pipe_tables";
+            + "+pipe_tables"
+            + "-tex_math_dollars";
 
         private static readonly CommonMarkSettings CommonMarkSettings;
         private static readonly IMarkdownConverter CommonMarkConverter = new CommonMarkConverter();
