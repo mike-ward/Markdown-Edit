@@ -103,7 +103,7 @@ namespace MarkdownEdit.Models
         private static string Reformat(string text, string options = "")
         {
             var tuple = SeperateFrontMatter(text);
-            const string format = CommonMarkFormatOptions;
+            var format = MarkdownFormat;
             var result = Pandoc(tuple.Item2, $"-f {format} -t {format} {options}");
             return tuple.Item1 + result;
         }
