@@ -28,7 +28,7 @@ namespace MarkdownEdit.Models
             + "+intraword_underscores"
             + "+strikeout"
             + "+pipe_tables"
-            + "-tex_math_dollars";
+            + "+tex_math_dollars";
 
         private static readonly CommonMarkSettings CommonMarkSettings;
         private static readonly IMarkdownConverter CommonMarkConverter = new CommonMarkConverter();
@@ -103,8 +103,9 @@ namespace MarkdownEdit.Models
         private static string Reformat(string text, string options = "")
         {
             var tuple = SeperateFrontMatter(text);
-            var format = MarkdownFormat;
-            var result = Pandoc(tuple.Item2, $"-f {format} -t {format} {options}");
+            var fromFormat = MarkdownFormat;
+            var toFormat = fromFormat + "-escaped_line_breaks";
+            var result = Pandoc(tuple.Item2, $"-f {fromFormat} -t {toFormat} {options}").Replace(@"\$", "$");
             return tuple.Item1 + result;
         }
 
