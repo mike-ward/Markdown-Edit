@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace MarkdownEdit.Models
 {
-    internal static class StringExtensions
+    public static class StringExtensions
     {
         public static string SurroundWith(this string text, string quote) => $"{quote}{text}{quote}";
 
