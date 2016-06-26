@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Commands\LineContinuationTests.cs" />
     <Compile Include="ImageUpload\ImageUploadTests.cs" />
+    <Compile Include="Models\StringExtensionsTests.cs" />
     <Compile Include="Models\UtilityTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
