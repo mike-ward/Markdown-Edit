@@ -94,10 +94,7 @@ namespace MarkdownEdit.Controls
         private bool _isModified;
         private bool _removeSpecialCharacters;
 
-        // Event handlers
-
         public EventHandler TextChanged;
-
         public EventHandler<ThemeChangedEventArgs> ThemeChanged;
 
         public Editor()
@@ -110,13 +107,23 @@ namespace MarkdownEdit.Controls
         private FindReplaceDialog FindReplaceDialog
             => _findReplaceDialog ?? (_findReplaceDialog = new FindReplaceDialog(new FindReplaceSettings()));
 
-        public string Text { get { return EditBox.Text; } set { EditBox.Text = value; } }
+        public string Text
+        {
+            get { return EditBox.Text; }
+            set { EditBox.Text = value; }
+        }
 
-        public bool IsReadOnly { get { return EditBox.IsReadOnly; } set { EditBox.IsReadOnly = value; } }
+        public bool IsReadOnly
+        {
+            get { return EditBox.IsReadOnly; }
+            set { EditBox.IsReadOnly = value; }
+        }
 
-        // Bindable Properties
-
-        public string FileName { get { return _fileName; } set { Set(ref _fileName, value); } }
+        public string FileName
+        {
+            get { return _fileName; }
+            set { Set(ref _fileName, value); }
+        }
 
         public string DisplayName
         {
@@ -131,7 +138,11 @@ namespace MarkdownEdit.Controls
             set { Set(ref _displayName, value); }
         }
 
-        public bool IsModified { get { return _isModified; } set { Set(ref _isModified, value); } }
+        public bool IsModified
+        {
+            get { return _isModified; }
+            set { Set(ref _isModified, value); }
+        }
 
         public bool AutoSave
         {
@@ -139,7 +150,11 @@ namespace MarkdownEdit.Controls
             set { SetValue(AutoSaveProperty, value); }
         }
 
-        public Theme Theme { get { return (Theme)GetValue(ThemeProperty); } set { SetValue(ThemeProperty, value); } }
+        public Theme Theme
+        {
+            get { return (Theme)GetValue(ThemeProperty); }
+            set { SetValue(ThemeProperty, value); }
+        }
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
@@ -407,8 +422,9 @@ namespace MarkdownEdit.Controls
         private void AllowImagePaste()
         {
             // AvalonEdit only allows text paste. Hack the command to allow otherwise.
-            var cmd =
-                EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings.FirstOrDefault(cb => cb.Command == Paste);
+            var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings
+                .FirstOrDefault(cb => cb.Command == Paste);
+
             if (cmd == null) return;
 
             CanExecuteRoutedEventHandler canExecute = (sender, args) =>
