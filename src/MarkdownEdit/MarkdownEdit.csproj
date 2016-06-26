@@ -137,7 +137,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\LineContinuationEnterCommand.cs" />
     <Compile Include="Controls\DisplayDocumentStructureViewModel.cs">
       <DependentUpon>DisplayDocumentStructure.xaml</DependentUpon>
     </Compile>
@@ -202,6 +201,7 @@
     <Compile Include="Controls\GotoLineDialog.xaml.cs">
       <DependentUpon>GotoLineDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ListInputHandler.cs" />
     <Compile Include="Models\Markdown.cs" />
     <Compile Include="Models\Highlight.cs" />
     <Compile Include="Controls\RecentFilesDialog.xaml.cs">

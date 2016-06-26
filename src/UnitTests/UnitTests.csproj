@@ -96,7 +96,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Commands\LineContinuationTests.cs" />
+    <Compile Include="Models\ListInputHandlerTests.cs" />
     <Compile Include="ImageUpload\ImageUploadTests.cs" />
     <Compile Include="Models\StringExtensionsTests.cs" />
     <Compile Include="Models\UtilityTests.cs" />
@@ -110,6 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

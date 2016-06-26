@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 
-namespace MarkdownEdit.Commands
+namespace MarkdownEdit.Models
 {
-    public class LineContinuationEnterCommand : ICommand
+    // When user adds or removes items from an ordered/unorderd list, adjust by renumbering,
+    // or adding a new item depending on the user action.
+
+    public static class ListInputHandler
     {
         public static readonly Regex UnorderedListCheckboxPattern =
             new Regex(@"^[ ]{0,3}[-\*\+][ ]{1,3}\[[ xX]\](?=[ ]{1,3}\S)", RegexOptions.Compiled);
@@ -29,33 +31,8 @@ namespace MarkdownEdit.Commands
 
         public static readonly Regex BlockQuotePattern = new Regex(@"^(([ ]{0,4}>)+)[ ]{0,4}.{2}", RegexOptions.Compiled);
         public static readonly Regex BlockQuoteEndPattern = new Regex(@"^([ ]{0,4}>)+[ ]{0,4}\s*", RegexOptions.Compiled);
-        private readonly ICommand _baseCommand;
-        private readonly TextEditor _editor;
 
-        public LineContinuationEnterCommand(TextEditor editor, ICommand baseCommand)
-        {
-            _editor = editor;
-            _baseCommand = baseCommand;
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return _editor.TextArea != null && _editor.TextArea.IsKeyboardFocused;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { }
-            remove { }
-        }
-
-        public void Execute(object parameter)
-        {
-            _baseCommand.Execute(parameter);
-            ExecuteCommand(_editor, true);
-        }
-
-        public static void ExecuteCommand(TextEditor editor, bool lineCountGrowing)
+        public static void AdjustList(TextEditor editor, bool lineCountGrowing)
         {
             var document = editor.Document;
             var line = document.GetLineByOffset(editor.SelectionStart)?.PreviousLine;
@@ -95,7 +72,7 @@ namespace MarkdownEdit.Commands
             patterns.FirstOrDefault(action => action != null)?.Invoke();
         }
 
-        public static void RenumberOrderedList(
+        private static void RenumberOrderedList(
             IDocument document,
             DocumentLine line,
             int number)

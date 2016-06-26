@@ -93,6 +93,7 @@ namespace MarkdownEdit.Controls
         private FindReplaceDialog _findReplaceDialog;
         private bool _isModified;
         private bool _removeSpecialCharacters;
+        private int _previousLineCount;
 
         public EventHandler TextChanged;
         public EventHandler<ThemeChangedEventArgs> ThemeChanged;
@@ -101,6 +102,7 @@ namespace MarkdownEdit.Controls
         {
             InitializeComponent();
             DataContext = this;
+            SetupSyntaxHighlighting(); // won't paint on first load unless here.
             IsVisibleChanged += OnIsVisibleChanged;
         }
 
@@ -249,13 +251,12 @@ namespace MarkdownEdit.Controls
                 var executeAutoSave = Utility.Debounce<string>(s => Dispatcher?.Invoke(ExecuteAutoSave), 4000);
                 EditBox.TextChanged += (s, e) => executeAutoSave(null);
                 EditBox.PreviewKeyDown += (s, e) => EditorSpellCheck.AppsKeyDown = e.Key == Key.Apps && e.IsDown;
-                SetupSyntaxHighlighting();
+                EditBox.Document.PropertyChanged += OnEditBoxPropertyChanged;
                 DataObject.AddPastingHandler(EditBox, OnPaste);
                 StyleScrollBar();
                 AllowImagePaste();
                 SetupIndentationCommandBinding();
                 SetupTabSnippetHandler();
-                SetupLineContinuationEnterCommandHandler();
                 ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
                 EditBox.Focus();
 
@@ -263,6 +264,34 @@ namespace MarkdownEdit.Controls
                 ContextMenu = new ContextMenu();
                 ContextMenu.Items.Add(new MenuItem());
             });
+        }
+
+        private void SetupSyntaxHighlighting()
+        {
+            var colorizer = new MarkdownHighlightingColorizer();
+            var blockBackgroundRenderer = new BlockBackgroundRenderer();
+
+            TextChanged += (s, e) =>
+            {
+                AbstractSyntaxTree = Markdown.GenerateAbstractSyntaxTree(Text);
+                colorizer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
+                blockBackgroundRenderer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
+            };
+            ThemeChanged += (s, e) =>
+            {
+                colorizer.OnThemeChanged(e.Theme);
+                blockBackgroundRenderer.OnThemeChanged(e.Theme);
+            };
+            EditBox.TextArea.TextView.LineTransformers.Add(colorizer);
+            EditBox.TextArea.TextView.BackgroundRenderers.Add(blockBackgroundRenderer);
+        }
+
+        private void OnEditBoxPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            if (propertyChangedEventArgs.PropertyName != "LineCount") return;
+            var currentLineCount = EditBox.LineCount;
+            ListInputHandler.AdjustList(EditBox, currentLineCount > _previousLineCount);
+            _previousLineCount = currentLineCount;
         }
 
         private void StyleScrollBar()
@@ -295,36 +324,6 @@ namespace MarkdownEdit.Controls
                 tabBinding.Key, tabBinding.Modifiers);
             EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newTabBinding);
             SnippetManager.Initialize();
-        }
-
-        private void SetupLineContinuationEnterCommandHandler()
-        {
-            var editingKeyBindings = EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
-            var enterBinding = editingKeyBindings.Single(b => b.Key == Key.Enter && b.Modifiers == ModifierKeys.None);
-            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(enterBinding);
-            var newEnterBinding = new KeyBinding(new LineContinuationEnterCommand(EditBox, enterBinding.Command),
-                enterBinding.Key, enterBinding.Modifiers);
-            EditBox.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newEnterBinding);
-        }
-
-        private void SetupSyntaxHighlighting()
-        {
-            var colorizer = new MarkdownHighlightingColorizer();
-            var blockBackgroundRenderer = new BlockBackgroundRenderer();
-
-            TextChanged += (s, e) =>
-            {
-                AbstractSyntaxTree = Markdown.GenerateAbstractSyntaxTree(Text);
-                colorizer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
-                blockBackgroundRenderer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
-            };
-            ThemeChanged += (s, e) =>
-            {
-                colorizer.OnThemeChanged(e.Theme);
-                blockBackgroundRenderer.OnThemeChanged(e.Theme);
-            };
-            EditBox.TextArea.TextView.LineTransformers.Add(colorizer);
-            EditBox.TextArea.TextView.BackgroundRenderers.Add(blockBackgroundRenderer);
         }
 
         public Tuple<int, int> VisibleBlockNumber()
@@ -540,8 +539,6 @@ namespace MarkdownEdit.Controls
             element.ContextMenu = contextMenu;
         }
 
-        // Spell Check
-
         private void ExecuteSpellCheckReplace(object sender, ExecutedRoutedEventArgs ea)
         {
             var parameters = (Tuple<string, TextSegment>)ea.Parameter;
@@ -557,8 +554,6 @@ namespace MarkdownEdit.Controls
             SpellCheck = !SpellCheck;
             SpellCheck = !SpellCheck;
         }
-
-        // Command handlers and helpers
 
         private void IfNotReadOnly(Action action) => IfNotReadOnly(() =>
         {
@@ -673,7 +668,7 @@ namespace MarkdownEdit.Controls
             =>
                 IfNotReadOnly(
                     () =>
-                        new InsertHyperlinkDialog(EditBox.SelectedText) {Owner = Application.Current.MainWindow}
+                        new InsertHyperlinkDialog(EditBox.SelectedText) { Owner = Application.Current.MainWindow }
                             .ShowDialog());
 
         public void ExecuteInsertHyperlink(object sender, ExecutedRoutedEventArgs e)
@@ -727,7 +722,7 @@ namespace MarkdownEdit.Controls
         public static void ThemeChangedCallback(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {
             var editor = (Editor)source;
-            editor.OnThemeChanged(new ThemeChangedEventArgs {Theme = editor.Theme});
+            editor.OnThemeChanged(new ThemeChangedEventArgs { Theme = editor.Theme });
         }
 
         private static void ShowEndOfLineChanged(DependencyObject source, DependencyPropertyChangedEventArgs ea)
