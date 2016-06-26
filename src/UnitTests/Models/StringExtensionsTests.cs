@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using MarkdownEdit.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -16,21 +11,21 @@ namespace UnitTests.Models
         public void SurroundWithShouldReturnQuotedStringGivenQuotes()
         {
             var result = "Markdown".SurroundWith("\"");
-            result.ShouldBeEquivalentTo("\"Markdown\"");
+            result.Should().Be("\"Markdown\"");
         }
 
         [TestMethod]
         public void SurroundWithShouldReturnOriginalStringGivenEmptyString()
         {
             var result = "Markdown".SurroundWith(string.Empty);
-            result.ShouldBeEquivalentTo("Markdown");
+            result.Should().Be("Markdown");
         }
 
         [TestMethod]
         public void SurroundWithShouldReturnTwoQuotesGivenQuotesAndCalledOnEmptyString()
         {
-            var result = String.Empty.SurroundWith("\"");
-            result.ShouldBeEquivalentTo("\"\"");
+            var result = string.Empty.SurroundWith("\"");
+            result.Should().Be("\"\"");
         }
 
         [TestMethod]
@@ -38,7 +33,7 @@ namespace UnitTests.Models
         {
             string originalString = null;
             var result = originalString.SurroundWith("\"");
-            result.ShouldBeEquivalentTo("\"\"");
+            result.Should().Be("\"\"");
         }
 
         [TestMethod]
@@ -46,14 +41,14 @@ namespace UnitTests.Models
         {
             string originalString = null;
             var result = originalString.SurroundWith(null);
-            result.ShouldBeEquivalentTo(string.Empty);
+            result.Should().Be(string.Empty);
         }
 
         [TestMethod]
         public void SurroundWithShouldReturnOriginalStringGivenNull()
         {
             var result = "Markdown".SurroundWith(null);
-            result.ShouldBeEquivalentTo("Markdown");
+            result.Should().Be("Markdown");
         }
     }
 }
