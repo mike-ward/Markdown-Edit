@@ -86,7 +86,6 @@ namespace MarkdownEdit.Controls
             "Encoding", typeof(MyEncodingInfo), typeof(Editor),
             new PropertyMetadata(default(MyEncodingInfo), MyEncodingPropertyChanged));
 
-        private readonly Action<string> _executeAutoSaveLater;
         private readonly string _f1ForHelp = (string)Translate("editor-f1-for-help");
         private string _displayName = string.Empty;
         private EditorState _editorState = new EditorState();
@@ -106,17 +105,6 @@ namespace MarkdownEdit.Controls
             InitializeComponent();
             DataContext = this;
             IsVisibleChanged += OnIsVisibleChanged;
-            EditBox.Options.IndentationSize = 2;
-            EditBox.Options.EnableHyperlinks = false;
-            EditBox.Options.ConvertTabsToSpaces = true;
-            EditBox.Options.AllowScrollBelowDocument = true;
-            EditBox.Options.EnableHyperlinks = false;
-            EditBox.Options.EnableEmailHyperlinks = false;
-            EditBox.TextChanged += EditBoxOnTextChanged;
-            EditBox.TextChanged += (s, e) => _executeAutoSaveLater(null);
-            EditBox.PreviewKeyDown += (s, e) => EditorSpellCheck.AppsKeyDown = e.Key == Key.Apps && e.IsDown;
-            _executeAutoSaveLater = Utility.Debounce<string>(s => Dispatcher?.Invoke(ExecuteAutoSave), 4000);
-            SetupSyntaxHighlighting();
         }
 
         private FindReplaceDialog FindReplaceDialog
@@ -232,8 +220,21 @@ namespace MarkdownEdit.Controls
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             IsVisibleChanged -= OnIsVisibleChanged;
+
+            EditBox.Options.IndentationSize = 2;
+            EditBox.Options.EnableHyperlinks = false;
+            EditBox.Options.ConvertTabsToSpaces = true;
+            EditBox.Options.AllowScrollBelowDocument = true;
+            EditBox.Options.EnableHyperlinks = false;
+            EditBox.Options.EnableEmailHyperlinks = false;
+            EditBox.TextChanged += EditBoxOnTextChanged;
+
             Dispatcher.InvokeAsync(() =>
             {
+                var executeAutoSave = Utility.Debounce<string>(s => Dispatcher?.Invoke(ExecuteAutoSave), 4000);
+                EditBox.TextChanged += (s, e) => executeAutoSave(null);
+                EditBox.PreviewKeyDown += (s, e) => EditorSpellCheck.AppsKeyDown = e.Key == Key.Apps && e.IsDown;
+                SetupSyntaxHighlighting();
                 DataObject.AddPastingHandler(EditBox, OnPaste);
                 StyleScrollBar();
                 AllowImagePaste();
