@@ -273,9 +273,16 @@ namespace MarkdownEdit.Controls
 
             TextChanged += (s, e) =>
             {
-                AbstractSyntaxTree = Markdown.GenerateAbstractSyntaxTree(Text);
-                colorizer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
-                blockBackgroundRenderer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
+                try
+                {
+                    AbstractSyntaxTree = Markdown.GenerateAbstractSyntaxTree(Text);
+                    colorizer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
+                    blockBackgroundRenderer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
+                }
+                catch (Exception ex)
+                {
+                    Notify.Alert($"Abstract Syntax Tree generation failed: {ex.ToString()}");
+                }
             };
             ThemeChanged += (s, e) =>
             {
