@@ -93,7 +93,7 @@ namespace MarkdownEdit.Controls
         private FindReplaceDialog _findReplaceDialog;
         private bool _isModified;
         private bool _removeSpecialCharacters;
-        private int _previousLineCount;
+        private int _previousLineCount = -1;
 
         public EventHandler TextChanged;
         public EventHandler<ThemeChangedEventArgs> ThemeChanged;
@@ -281,24 +281,34 @@ namespace MarkdownEdit.Controls
                 }
                 catch (Exception ex)
                 {
+                    // See #159
                     Notify.Alert($"Abstract Syntax Tree generation failed: {ex.ToString()}");
                 }
             };
+
             ThemeChanged += (s, e) =>
             {
                 colorizer.OnThemeChanged(e.Theme);
                 blockBackgroundRenderer.OnThemeChanged(e.Theme);
             };
+
             EditBox.TextArea.TextView.LineTransformers.Add(colorizer);
             EditBox.TextArea.TextView.BackgroundRenderers.Add(blockBackgroundRenderer);
         }
 
         private void OnEditBoxPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
-            if (propertyChangedEventArgs.PropertyName != "LineCount") return;
-            var currentLineCount = EditBox.LineCount;
-            ListInputHandler.AdjustList(EditBox, currentLineCount > _previousLineCount);
-            _previousLineCount = currentLineCount;
+            if (propertyChangedEventArgs.PropertyName == "LineCount")
+            {
+
+                var currentLineCount = EditBox.LineCount;
+                // Magic number, yeah baby! -1 means the editor has never had text in it.
+                if (_previousLineCount != -1)
+                {
+                    ListInputHandler.AdjustList(EditBox, currentLineCount > _previousLineCount);
+                }
+                _previousLineCount = currentLineCount;
+            }
         }
 
         private void StyleScrollBar()
