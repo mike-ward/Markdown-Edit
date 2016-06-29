@@ -8,7 +8,14 @@ namespace MarkdownEdit.Models
     {
         public static string SurroundWith(this string text, string quote) => $"{quote}{text}{quote}";
 
-        public static string UnsurroundWith(this string text, string quote) => text.Trim(quote.ToCharArray());
+        public static string UnsurroundWith(this string text, string quote)
+        {
+            if(quote == null)
+            {
+                return text;
+            }
+            return text.Trim(quote.ToCharArray());
+        }
 
         public static string ReplaceSmartChars(this string smart)
         {
