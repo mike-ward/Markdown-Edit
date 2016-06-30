@@ -1,7 +1,7 @@
 version: 1.0.{build}
 configuration: Release
 before_build:
-- cmd: cd src & nuget restore
+- cmd: cd src & nuget restore & cd ..
 build:
   verbosity: minimal
 after_build:
