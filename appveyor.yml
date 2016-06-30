@@ -1,0 +1,26 @@
+version: 1.0.{build}
+configuration: Release
+install:
+- ps: >-
+    choco install wixtoolset
+
+    choco install 7zip.commandline
+before_build:
+- cmd: cd src & nuget restore & cd ..
+build:
+  verbosity: minimal
+after_build:
+- cmd: >-
+    cd src\Wix
+
+    build.cmd
+
+    cd ..\..
+
+    build_zip.cmd
+artifacts:
+- path: MarkdownEditSetup.msi
+  name: installer
+- path: MarkdownEdit.zip
+  name: portable
+deploy: off
