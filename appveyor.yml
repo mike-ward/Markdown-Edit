@@ -4,7 +4,7 @@ install:
 - ps: >-
     choco install wixtoolset
 
-    choco install 7zip.commandline
+    choco install 7zip
 before_build:
 - cmd: cd src & nuget restore & cd ..
 build:
