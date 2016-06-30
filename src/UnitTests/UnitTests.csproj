@@ -96,6 +96,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Models\FileExtensionTests.cs" />
     <Compile Include="Models\ListInputHandlerTests.cs" />
     <Compile Include="ImageUpload\ImageUploadTests.cs" />
     <Compile Include="Models\StringExtensionsTests.cs" />
