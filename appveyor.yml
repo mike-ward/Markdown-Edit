@@ -1,23 +1,12 @@
 version: 1.0.{build}
 configuration: Release
-install:
-- ps: >-
-    choco install wixtoolset
-
-    choco install 7zip
 before_build:
-- cmd: cd src & nuget restore & cd ..
+- cmd: cd src & nuget restore
 build:
   verbosity: minimal
 after_build:
-- cmd: >-
-    cd src\Wix
-
-    build.cmd
-
-    cd ..\..
-
-    build_zip.cmd
+- cmd: cd src\Wix & build.cmd
+- cmd: build_zip.cmd
 artifacts:
 - path: MarkdownEditSetup.msi
   name: installer
