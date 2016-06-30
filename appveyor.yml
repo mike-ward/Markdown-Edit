@@ -4,7 +4,7 @@ before_build:
 - cmd: cd src & nuget restore & cd ..
 build:
   verbosity: minimal
-after_build:
+after_test:
 - cmd: cd src\Wix & build.cmd
 - cmd: build_zip.cmd
 artifacts:
