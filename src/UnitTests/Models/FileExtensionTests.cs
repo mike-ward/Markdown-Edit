@@ -11,8 +11,8 @@ namespace UnitTests.Models
         [TestMethod]
         public void MakeRelativePathShouldReturnRelativePath()
         {
-            var path = FileExtensions.MakeRelativePath(@"file://mystuff/test.txt", @"file://log/stuff");
-            path.Should().Be(@"file://log/stuff");
+            var path = FileExtensions.MakeRelativePath(@"file://mystuff\stuff\assets\test.txt", @"file://mystuff\stuff\test.txt");
+            path.Should().Be(@"../test.txt");
         }
 
         [TestMethod]

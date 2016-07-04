@@ -4,12 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Windows;
-using System.Windows.Controls;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Rendering;
 using MarkdownEdit.i18n;
 using MarkdownEdit.ImageUpload;
 using MarkdownEdit.Models;
+using Microsoft.Win32;
 
 namespace MarkdownEdit.Controls
 {
@@ -29,9 +29,15 @@ namespace MarkdownEdit.Controls
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
 
-        public string DocumentFileName { set { _vm.DocumentFileName = value; } }
+        public string DocumentFileName
+        {
+            set { _vm.DocumentFileName = value; }
+        }
 
-        public bool UseClipboardImage { set { _vm.UseClipboardImage = value; } }
+        public bool UseClipboardImage
+        {
+            set { _vm.UseClipboardImage = value; }
+        }
 
         private void OnLoaded(object sender, EventArgs eventArgs)
         {
@@ -51,30 +57,13 @@ namespace MarkdownEdit.Controls
             Top = screen.Y;
 
             var hasDocumentFileName = !string.IsNullOrWhiteSpace(_vm.DocumentFileName);
-            SetDocumentFoldersMenuItems();
             InsertPathMenuItem.IsEnabled = !_vm.UseClipboardImage && hasDocumentFileName;
-            AsLocalFileMenuItem.IsEnabled = hasDocumentFileName;
+            SaveAsItem.IsEnabled = hasDocumentFileName;
             ContextMenu.Closed += (o, args) =>
             {
                 if (!_vm.Uploading) Close();
             };
             Dispatcher.InvokeAsync(() => ContextMenu.IsOpen = true);
-        }
-
-        private void SetDocumentFoldersMenuItems()
-        {
-            if (string.IsNullOrWhiteSpace(_vm.DocumentFileName)) return;
-            var directoryName = Path.GetDirectoryName(_vm.DocumentFileName);
-            if (string.IsNullOrWhiteSpace(directoryName))
-                throw new Exception("directoryName in ImageDropDialog member is invalid");
-
-            var documentFolder = new[] {".\\"};
-
-            var folders = Directory
-                .EnumerateDirectories(directoryName)
-                .Select(d => "." + d.Remove(0, directoryName.Length));
-
-            AsLocalFileMenuItem.ItemsSource = documentFolder.Concat(folders).ToArray();
         }
 
         private string[] DroppedFiles()
@@ -191,46 +180,54 @@ namespace MarkdownEdit.Controls
         }
 
         [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        private void FolderMenuItemClicked(object sender, RoutedEventArgs e)
+        public void OnSaveAs(object sender, RoutedEventArgs e)
         {
-            var menuItem = (MenuItem)sender;
-            OnInsertFile(menuItem.Header.ToString());
-        }
+            if (string.IsNullOrEmpty(_vm.DocumentFileName)) return;
+            Close();
 
-        [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
-        [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-        private void OnInsertFile(string documentRelativeDestinationPath)
-        {
-            TryIt(droppedFilePath =>
-            {
-                string title;
-                var image = new byte[0];
+            // Yep, you're reading this right. SaveFileDialog.ShowDialog exits immediately
+            // unless I first close this window. Something to do with nested ShowDialog()
+            // calls I suspect.
 
-                if (_vm.UseClipboardImage)
+            Application.Current.Dispatcher.InvokeAsync(() =>
+                TryIt(droppedFilePath =>
                 {
-                    var name = PromptDialog.Prompt((string)TranslationProvider.Translate("aslocalfile-save-file-as"));
-                    if (string.IsNullOrWhiteSpace(name)) return;
-                    image = Images.ClipboardDibToBitmapSource().ToPngArray();
-                    title = name + ".png";
-                }
-                else
-                {
-                    title = Path.GetFileName(droppedFilePath);
-                }
-                var link = Path.Combine(documentRelativeDestinationPath, title);
-                var destination = Path.Combine(Path.GetDirectoryName(_vm.DocumentFileName), link);
-                if (link.Contains(" ")) link = $"<{link}>";
-                if (File.Exists(destination))
-                {
-                    var message = (string)TranslationProvider.Translate("image-drop-overwrite-file");
-                    if (Notify.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
-                }
+                    var dialog = new SaveFileDialog
+                    {
+                        OverwritePrompt = true,
+                        RestoreDirectory = true,
+                        Filter = "All files (*.*)|*.*"
+                    };
 
-                if (_vm.UseClipboardImage) File.WriteAllBytes(destination, image);
-                else File.Copy(droppedFilePath, destination, true);
+                    if (dialog.ShowDialog() == false) return;
+                    if (string.IsNullOrEmpty(dialog.FileName)) return;
+                    var fileName = dialog.FileName;
 
-                InsertImageTag(TextEditor, DragEventArgs, link, title);
-            });
+                    string title;
+                    var image = new byte[0];
+
+                    if (_vm.UseClipboardImage)
+                    {
+                        image = Images.ClipboardDibToBitmapSource().ToPngArray();
+                        title = fileName + ".png";
+                    }
+                    else
+                    {
+                        title = Path.GetFileName(droppedFilePath);
+                    }
+
+                    if (File.Exists(fileName))
+                    {
+                        var message = (string)TranslationProvider.Translate("image-drop-overwrite-file");
+                        if (Notify.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
+                    }
+
+                    if (_vm.UseClipboardImage) File.WriteAllBytes(fileName, image);
+                    else File.Copy(droppedFilePath, fileName, true);
+
+                    var link = FileExtensions.MakeRelativePath(_vm.DocumentFileName, fileName);
+                    InsertImageTag(TextEditor, DragEventArgs, link, title);
+                }));
         }
 
         private void OnCancel(object sender, RoutedEventArgs e)

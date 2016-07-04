@@ -16,7 +16,8 @@ namespace MarkdownEdit.Models
                 using (var http = new HttpClient())
                 {
                     var version = await http.GetStringAsync("http://markdownedit.com/version.txt");
-                    return !version.All(c => c >= '0' && c <= '9' || c == '.') || string.IsNullOrWhiteSpace(version)
+                    return !version.All(c => c >= '0' && c <= '9' || c == '.')
+                           || string.IsNullOrWhiteSpace(version)
                            || version == VersionNumber;
                 }
             }
