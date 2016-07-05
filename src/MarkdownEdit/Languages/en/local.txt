@@ -99,6 +99,7 @@ image-drop-upload-imgur:          Upload to Imgur
 image-drop-as-data-uri:           As Data URI
 image-drop-as-local-file:         As Local File
 image-drop-overwrite-file:        File already exists. Overwrite?
+image-drop-save-as:               Save As
 
 === Recent Files Dialog
 

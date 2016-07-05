@@ -63,7 +63,7 @@
       <MenuItem
         x:Name="SaveAsItem"
         Click="OnSaveAs"
-        Header="Save As"
+        Header="{i18N:Localize image-drop-save-as}"
         StaysOpenOnClick="True">
         <MenuItem.Icon>
           <TextBlock Style="{StaticResource MenuIconStyle}">&#xe28F;;</TextBlock>

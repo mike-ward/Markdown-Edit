@@ -100,6 +100,7 @@ image-drop-upload-imgur:          Upload til Imgur
 image-drop-as-data-uri:           Som Data URI
 image-drop-as-local-file:         Som Lokal Fil
 image-drop-overwrite-file:        Fil findes allerede. Overskriv?
+image-drop-save-as:               Gem som 
 
 === Recent Files Dialog
 
