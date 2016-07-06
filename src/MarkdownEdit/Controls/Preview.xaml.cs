@@ -85,22 +85,26 @@ namespace MarkdownEdit.Controls
                 // kill popups
                 dynamic activeX = Browser.GetType().InvokeMember("ActiveXInstance",
                     BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
-                    null, Browser, new object[] {});
+                    null, Browser, new object[] { });
 
                 activeX.Silent = true;
             });
         }
 
-        private void Update(string markdown)
+        private async void Update(string markdown)
         {
             if (markdown == null) return;
             try
             {
-                var html = Markdown.ToHtml(markdown);
                 UpdateBaseTag();
                 var div = GetContentsDiv();
                 if (div == null) return;
-                div.innerHTML = ScrubHtml(html);
+
+                await Task.Run(() =>
+                {
+                    var html = Markdown.ToHtml(markdown);
+                    div.innerHTML = ScrubHtml(html);
+                });
 
                 UpdateDocumentStatistics(div.innerText ?? string.Empty);
                 EmitFirePreviewUpdatedEvent();
@@ -115,7 +119,7 @@ namespace MarkdownEdit.Controls
         {
             CharacterCount = innerText.Length;
             WordCount = innerText.WordCount();
-            PageCount = (int)Math.Ceiling(CharacterCount/1500m);
+            PageCount = (int)Math.Ceiling(CharacterCount / 1500m);
             UpdateDocumentStatisticDisplayText();
         }
 
@@ -281,7 +285,7 @@ namespace MarkdownEdit.Controls
                 {
                     var element = document3.getElementById(GetIdName(number));
                     if (element == null) return;
-                    offsetTop = element.offsetTop + extra*20;
+                    offsetTop = element.offsetTop + extra * 20;
                 }
                 var document2 = Browser.Document as IHTMLDocument2;
                 document2?.parentWindow.scroll(0, offsetTop);
