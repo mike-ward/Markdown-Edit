@@ -13,3 +13,4 @@ artifacts:
 - path: MarkdownEdit.zip
   name: portable
 deploy: off
+os: Visual Studio 2015
