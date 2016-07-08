@@ -72,8 +72,6 @@ namespace MarkdownEdit.Controls
 
         public int PageCount { get { return _pageCount; } set { Set(ref _pageCount, value); } }
 
-        // INotifyPropertyChanged
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -109,7 +107,7 @@ namespace MarkdownEdit.Controls
                 UpdateDocumentStatistics(div.innerText ?? string.Empty);
                 EmitFirePreviewUpdatedEvent();
             }
-            catch (CommonMarkException ex)
+            catch (Exception ex)
             {
                 Notify.Alert(ex.ToString());
             }
