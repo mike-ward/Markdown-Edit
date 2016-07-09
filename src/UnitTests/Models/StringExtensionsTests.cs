@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using MarkdownEdit.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -175,6 +176,42 @@ namespace UnitTests.Models
         {
             var result = "Pause\u201a for emphasis".ReplaceSmartChars();
             result.Should().Be("Pause, for emphasis");
+        }
+
+        [TestMethod]
+        public void WordcountShouldReturnZeroGivenEmptyString()
+        {
+            var result = String.Empty.WordCount();
+            result.Should().Be(0);
+        }
+
+        [TestMethod]
+        public void WordcountShouldReturn0GivenNull()
+        {
+            string subject = null;
+            var result = subject.WordCount();
+            result.Should().Be(0);
+        }
+
+        [TestMethod]
+        public void WordcountShouldReturn1GivenSingleWord()
+        {
+            var result = "Markdown".WordCount();
+            result.Should().Be(1);
+        }
+
+        [TestMethod]
+        public void WordcountShouldReturn9Given9WordSentence()
+        {
+            var result = "The quick brown fox jumps over the lazy dog.".WordCount();
+            result.Should().Be(9);
+        }
+
+        [TestMethod]
+        public void WordcountShouldReturn13Given13WordPunctuatedSentence()
+        {
+            var result = "Don't I know that I've got apotrophes, hyphenated-words and \"quotes\" in my sentence".WordCount();
+            result.Should().Be(13);
         }
     }
 }
