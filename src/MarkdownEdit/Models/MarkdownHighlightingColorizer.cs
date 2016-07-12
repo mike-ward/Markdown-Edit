@@ -38,7 +38,7 @@ namespace MarkdownEdit.Models
                     var length = block.Tag == BlockTag.ListItem
                         ? Math.Min(block.SourceLength, block.ListData.Padding)
                         : block.SourceLength;
-
+                    
                     ApplyLinePart(highlighter(theme), block.SourcePosition, length, start, end, leadingSpaces, magnify);
                 }
 
