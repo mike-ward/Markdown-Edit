@@ -9,10 +9,10 @@ msbuild MarkdownEdit\markdownedit.csproj /t:Clean;Rebuild "/p:configuration=Rele
 popd
 if ERRORLEVEL 1 goto END
 pushd src\Wix
-call build.cmd
+call build-setup.cmd
 popd
 if ERRORLEVEL 1 goto END
-call build_zip.cmd
+call build-zip.cmd
 if ERRORLEVEL 0 dir /b ma*
 if ERRORLEVEL 0 echo === Build Complete ===
 :END
