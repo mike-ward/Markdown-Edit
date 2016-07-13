@@ -5,8 +5,8 @@ before_build:
 build:
   verbosity: minimal
 after_test:
-- cmd: cd src\Wix & build.cmd
-- cmd: build_zip.cmd
+- cmd: cd src\Wix & build-setup.cmd
+- cmd: build-zip.cmd
 artifacts:
 - path: MarkdownEditSetup.msi
   name: installer
