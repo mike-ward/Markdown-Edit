@@ -5,7 +5,7 @@ if EXIST MarkdownEdit.zip del /Q MarkdownEdit.zip
 pushd src
 nuget restore MarkdownEdit.sln
 if ERRORLEVEL 1 goto END
-msbuild MarkdownEdit\markdownedit.csproj /t:Rebuild "/p:configuration=Release;platform=AnyCPU" /verbosity:minimal
+msbuild MarkdownEdit\markdownedit.csproj /t:Clean;Rebuild "/p:configuration=Release;platform=AnyCPU" /verbosity:minimal
 popd
 if ERRORLEVEL 1 goto END
 pushd src\Wix
