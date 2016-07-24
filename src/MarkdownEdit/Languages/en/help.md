@@ -31,6 +31,7 @@ Keyboard Shortcuts
     Ctrl+V         Paste
     Ctrl+X         Cut
     Ctrl+Shift+V   Paste special smart quotes and hypens as plain text
+    Alt+V          Paste from HTML to Markdown
 
     Ctrl+F         Find
     F3             Find next

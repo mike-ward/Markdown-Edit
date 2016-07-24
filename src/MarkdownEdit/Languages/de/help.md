@@ -31,6 +31,7 @@ Tastenkombinationen
     Ctrl+V         Einfügen
     Ctrl+X         Ausschneiden
     Ctrl+Shift+V   Einfügen spezialer Smartcodes und Links als reinen Text
+    Alt+V          Paste from HTML to Markdown
 
     Ctrl+F         Suchen
     F3             Weitersuchen

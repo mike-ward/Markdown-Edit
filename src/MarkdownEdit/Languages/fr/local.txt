@@ -25,6 +25,7 @@ editor-menu-redo:                 Refaire
 editor-menu-cut:                  Couper
 editor-menu-copy:                 Copier
 editor-menu-paste:                Coller
+editor-menu-paste-from-html:      Paste from HTML
 editor-menu-paste-special:        Collage spécial
 editor-menu-select-all:           Tout sélectionner
 editor-menu-delete:               Supprimer

@@ -31,6 +31,7 @@ Tastatur genveje
     Ctrl+V         Indsæt
     Ctrl+X         Klip
     Ctrl+Shift+V   Indsæt specielle smart citater og bindestreger som almindelig tekst
+    Alt+V          Paste from HTML to Markdown
 
     Ctrl+F         Søg
     F3             Søg næste

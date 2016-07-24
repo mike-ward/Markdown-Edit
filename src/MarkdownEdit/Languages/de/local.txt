@@ -26,6 +26,7 @@ editor-menu-cut:                  Ausschneiden
 editor-menu-copy:                 Kopieren
 editor-menu-paste:                Einfügen
 editor-menu-paste-special:        Einfügen spezial
+editor-menu-paste-from-html:      Paste from HTML
 editor-menu-select-all:           Alles Auswählen
 editor-menu-delete:               Löschen
 editor-menu-wrap-format:          Umbrechen & formatieren

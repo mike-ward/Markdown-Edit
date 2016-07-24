@@ -27,6 +27,7 @@ editor-menu-cut:                  Klip
 editor-menu-copy:                 Kopi
 editor-menu-paste:                Indsæt
 editor-menu-paste-special:        Indsæt speciel
+editor-menu-paste-from-html:      Paste from HTML
 editor-menu-select-all:           Vælg alle
 editor-menu-delete:               Slet
 editor-menu-wrap-format:          Ombryd & Formater

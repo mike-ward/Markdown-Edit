@@ -29,6 +29,7 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand FormatWithLinkReferencesCommand = new RoutedCommand();
         public static readonly RoutedCommand UnformatCommand = new RoutedCommand();
         public static readonly RoutedCommand PasteSpecialCommand = new RoutedCommand();
+        public static readonly RoutedCommand PasteFromHtmlCommand = new RoutedCommand();
         public static readonly RoutedCommand FindNextCommand = new RoutedCommand();
         public static readonly RoutedCommand FindPreviousCommand = new RoutedCommand();
         public static readonly RoutedCommand MoveLineUpCommand = new RoutedCommand();
@@ -97,6 +98,7 @@ namespace MarkdownEdit.Controls
 
         public EventHandler TextChanged;
         public EventHandler<ThemeChangedEventArgs> ThemeChanged;
+        private bool _convertFromHtml;
 
         public Editor()
         {
@@ -380,6 +382,19 @@ namespace MarkdownEdit.Controls
             }
         });
 
+        private void PasteFromHtml() => IfNotReadOnly(() =>
+        {
+            try
+            {
+                _convertFromHtml = true;
+                EditBox.Paste();
+            }
+            finally
+            {
+                _convertFromHtml = false;
+            }
+        });
+
         private void OnPaste(object sender, DataObjectPastingEventArgs pasteEventArgs)
         {
             var text = (string)pasteEventArgs.SourceDataObject.GetData(DataFormats.UnicodeText, true);
@@ -387,6 +402,10 @@ namespace MarkdownEdit.Controls
             if (_removeSpecialCharacters)
             {
                 text = text.ReplaceSmartChars();
+            }
+            else if (_convertFromHtml)
+            {
+                text = Markdown.FromHtmlText(text);
             }
             else if (Uri.IsWellFormedUriString(text, UriKind.Absolute)
                      && PositionSafeForSmartLink(AbstractSyntaxTree, EditBox.SelectionStart, EditBox.SelectionLength))
@@ -528,6 +547,12 @@ namespace MarkdownEdit.Controls
             });
             contextMenu.Items.Add(new MenuItem
             {
+                Header = Translate("editor-menu-paste-from-html"),
+                Command = PasteSpecialCommand,
+                InputGestureText = "Alt+V"
+            });
+            contextMenu.Items.Add(new MenuItem
+            {
                 Header = Translate("editor-menu-delete"),
                 Command = Delete,
                 InputGestureText = "Delete"
@@ -651,6 +676,8 @@ namespace MarkdownEdit.Controls
         public void CloseHelp() => _editorState.Restore(this);
 
         private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e) => PasteSpecial();
+
+        private void ExecutePasteFromHtml(object sender, ExecutedRoutedEventArgs e) => PasteFromHtml();
 
         private void ExecuteFindDialog(object sender, ExecutedRoutedEventArgs e)
             => IfNotReadOnly(() => FindReplaceDialog.ShowFindDialog());

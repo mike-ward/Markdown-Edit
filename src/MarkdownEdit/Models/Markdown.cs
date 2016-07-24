@@ -49,9 +49,11 @@ namespace MarkdownEdit.Models
 
         public static string WrapWithLinkReferences(string text) => Reformat(text, "--reference-links");
 
-        public static string Unwrap(string text) => Reformat(text, "--no-wrap --atx-headers");
+        public static string Unwrap(string text) => Reformat(text, "--wrap=none --atx-headers");
 
-        public static string FromHtml(string path) => Pandoc(null, $"-f html -t {MarkdownFormat} --no-wrap \"{path}\"");
+        public static string FromHtml(string path) => Pandoc(null, $"-f html -t {MarkdownFormat} --wrap=none \"{path}\"");
+
+        public static string FromHtmlText(string text) => Pandoc(text, $"-f html -t {MarkdownFormat} --wrap=none");
 
         public static string ToHtml(string markdown)
         {

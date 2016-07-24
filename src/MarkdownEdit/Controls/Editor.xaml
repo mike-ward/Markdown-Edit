@@ -34,6 +34,7 @@
     <CommandBinding Command="{x:Static controls:Editor.FindNextCommand}" Executed="ExecuteFindNext" />
     <CommandBinding Command="{x:Static controls:Editor.FindPreviousCommand}" Executed="ExecuteFindPrevious" />
     <CommandBinding Command="{x:Static controls:Editor.PasteSpecialCommand}" Executed="ExecutePasteSpecial" CanExecute="CanExecute" />
+    <CommandBinding Command="{x:Static controls:Editor.PasteFromHtmlCommand}" Executed="ExecutePasteFromHtml" CanExecute="CanExecute" />
     <CommandBinding Command="CorrectSpellingError" Executed="ExecuteSpellCheckReplace" CanExecute="CanExecute" />
     <CommandBinding Command="IgnoreSpellingError" Executed="ExecuteAddToDictionary" CanExecute="CanExecute" />
     <CommandBinding Command="{x:Static controls:Editor.DeselectCommand}" Executed="ExecuteDeselectCommand" />
@@ -54,6 +55,7 @@
     <KeyBinding Command="{x:Static controls:Editor.FindNextCommand}" Gesture="F3" />
     <KeyBinding Command="{x:Static controls:Editor.FindPreviousCommand}" Gesture="Shift+F3" />
     <KeyBinding Command="{x:Static controls:Editor.PasteSpecialCommand}" Gesture="Ctrl+Shift+V" />
+    <KeyBinding Command="{x:Static controls:Editor.PasteFromHtmlCommand}" Gesture="Alt+V" />
     <KeyBinding Command="{x:Static controls:Editor.DeselectCommand}" Gesture="Esc" />
     <KeyBinding Command="{x:Static controls:Editor.FormatCommand}" Gesture="Alt+F" />
     <KeyBinding Command="{x:Static controls:Editor.FormatWithLinkReferencesCommand}" Gesture="Ctrl+Shift+F" />

@@ -31,6 +31,7 @@ Keyboard Shortcuts
     Ctrl+V         Coller
     Ctrl+X         Couper
     Ctrl+Shift+V   Collage spécial (citations et tirets en tant que texte)
+    Alt+V          Paste from HTML to Markdown
 
     Ctrl+F         Chercher
     F3             Chercher le suivant

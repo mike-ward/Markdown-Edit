@@ -31,6 +31,7 @@
     Ctrl+V         Pegar
     Ctrl+X         Cortar
     Ctrl+Shift+V   Pegado especial de comillas inteligentes y guiones como texto plano
+    Alt+V          Paste from HTML to Markdown
 
     Ctrl+F         Buscar
     F3             Buscar siguiente
