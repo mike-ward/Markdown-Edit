@@ -72,7 +72,7 @@ namespace MarkdownEdit.Controls
             return files;
         }
 
-        private void TryIt(Action<string> action)
+        private void Guard(Func<string, string> action)
         {
             try
             {
@@ -82,10 +82,8 @@ namespace MarkdownEdit.Controls
                 }
                 else
                 {
-                    foreach (var droppedFile in DroppedFiles().Where(Images.IsImageUrl))
-                    {
-                        action(droppedFile);
-                    }
+                    var text = DroppedFiles().Where(Images.IsImageUrl).Select(action).Aggregate((a, c) => a + c);
+                    InsertText(TextEditor, DragEventArgs, text);
                 }
             }
             catch (Exception ex)
@@ -100,14 +98,14 @@ namespace MarkdownEdit.Controls
 
         private void OnInsertPath(object sender, RoutedEventArgs e)
         {
-            TryIt(droppedFilePath =>
+            Guard(droppedFilePath =>
             {
                 var relativePath = FileExtensions
                     .MakeRelativePath(_vm.DocumentFileName, droppedFilePath)
                     .Replace('\\', '/');
 
                 var file = Path.GetFileNameWithoutExtension(droppedFilePath);
-                InsertImageTag(TextEditor, DragEventArgs, relativePath, file);
+                return CreateImageTag(relativePath, file);
             });
         }
 
@@ -118,7 +116,7 @@ namespace MarkdownEdit.Controls
                 UploadProgressChangedEventHandler progress = (o, args) => TextEditor.Dispatcher.InvokeAsync(() =>
                 {
                     if (_canceled) ((WebClient)o).CancelAsync();
-                    var progressPercentage = (int)(args.BytesSent/(double)args.TotalBytesToSend*100);
+                    var progressPercentage = (int)(args.BytesSent / (double)args.TotalBytesToSend * 100);
                     ProgressBar.Value = progressPercentage;
                     if (progressPercentage == 100) ProgressBar.IsIndeterminate = true;
                 });
@@ -151,7 +149,7 @@ namespace MarkdownEdit.Controls
                 ActivateClose();
 
                 if (Uri.IsWellFormedUriString(link, UriKind.Absolute))
-                    InsertImageTag(TextEditor, DragEventArgs, link, name);
+                    InsertText(TextEditor, DragEventArgs, CreateImageTag(link, name));
                 else Notify.Alert(link);
             }
             catch (Exception ex)
@@ -169,14 +167,9 @@ namespace MarkdownEdit.Controls
 
         private void OnInsertDataUri(object sender, RoutedEventArgs e)
         {
-            TryIt(droppedFilePath =>
-            {
-                var dataUri = _vm.UseClipboardImage
-                    ? Images.ClipboardDibToDataUri()
-                    : Images.ImageFileToDataUri(droppedFilePath);
-
-                TextEditor.Document.Insert(GetInsertOffset(TextEditor, DragEventArgs), dataUri);
-            });
+            Guard(droppedFilePath => _vm.UseClipboardImage
+                ? Images.ClipboardDibToDataUri()
+                : Images.ImageFileToDataUri(droppedFilePath));
         }
 
         [SuppressMessage("ReSharper", "AssignNullToNotNullAttribute")]
@@ -190,7 +183,7 @@ namespace MarkdownEdit.Controls
             // calls I suspect.
 
             Application.Current.Dispatcher.InvokeAsync(() =>
-                TryIt(droppedFilePath =>
+                Guard(droppedFilePath =>
                 {
                     var dialog = new SaveFileDialog
                     {
@@ -199,8 +192,8 @@ namespace MarkdownEdit.Controls
                         Filter = "All files (*.*)|*.*"
                     };
 
-                    if (dialog.ShowDialog() == false) return;
-                    if (string.IsNullOrEmpty(dialog.FileName)) return;
+                    if (dialog.ShowDialog() == false) return string.Empty;
+                    if (string.IsNullOrEmpty(dialog.FileName)) return string.Empty;
                     var fileName = dialog.FileName;
 
                     string title;
@@ -219,14 +212,14 @@ namespace MarkdownEdit.Controls
                     if (File.Exists(fileName))
                     {
                         var message = (string)TranslationProvider.Translate("image-drop-overwrite-file");
-                        if (Notify.ConfirmYesNo(message) != MessageBoxResult.Yes) return;
+                        if (Notify.ConfirmYesNo(message) != MessageBoxResult.Yes) return string.Empty;
                     }
 
                     if (_vm.UseClipboardImage) File.WriteAllBytes(fileName, image);
                     else File.Copy(droppedFilePath, fileName, true);
 
                     var link = FileExtensions.MakeRelativePath(_vm.DocumentFileName, fileName);
-                    InsertImageTag(TextEditor, DragEventArgs, link, title);
+                    return CreateImageTag(link, title);
                 }));
         }
 
@@ -236,9 +229,11 @@ namespace MarkdownEdit.Controls
             ActivateClose();
         }
 
-        private static void InsertImageTag(TextEditor textEditor, DragEventArgs dragEventArgs, string link, string title)
+        private static string CreateImageTag(string link, string title) => $"![{title}]({link})\n";
+
+        private static void InsertText(TextEditor textEditor, DragEventArgs dragEventArgs, string tag)
         {
-            textEditor.Document.Insert(GetInsertOffset(textEditor, dragEventArgs), $"![{title}]({link})\n");
+            textEditor.Document.Insert(GetInsertOffset(textEditor, dragEventArgs), tag);
         }
 
         private static int GetInsertOffset(TextEditor textEditor, DragEventArgs dragEventArgs)
