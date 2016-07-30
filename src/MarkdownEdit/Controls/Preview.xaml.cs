@@ -278,13 +278,18 @@ namespace MarkdownEdit.Controls
                 var number = numberAndExtra.Item1;
                 var extra = numberAndExtra.Item2;
                 var offsetTop = 0;
-                if (number > 1)
+                var document2 = Browser.Document as IHTMLDocument2;
+                if (number == int.MaxValue)
+                {
+                    var body = document2?.body as IHTMLElement2;
+                    if (body != null) offsetTop = body.scrollHeight;
+                }
+                else if (number > 1)
                 {
                     var element = document3.getElementById(GetIdName(number));
                     if (element == null) return;
                     offsetTop = element.offsetTop + extra * 20;
                 }
-                var document2 = Browser.Document as IHTMLDocument2;
                 document2?.parentWindow.scroll(0, offsetTop);
             }
         }

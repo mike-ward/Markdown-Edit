@@ -2,42 +2,42 @@
   x:Class="MarkdownEdit.Controls.InsertHyperlinkDialog"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:local="clr-namespace:MarkdownEdit.Controls"
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
-  mc:Ignorable="d"
-  Title="{i18N:Localize insert-hyperlink-title}" 
-  WindowStyle="SingleBorderWindow"
-  SizeToContent="WidthAndHeight"
-  ResizeMode="NoResize"
-  ShowInTaskbar="False"
-  WindowStartupLocation="CenterOwner"
-  WindowTitleBrush="{StaticResource GrayBrush2}"
+  xmlns:local="clr-namespace:MarkdownEdit.Controls"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  Title="{i18N:Localize insert-hyperlink-title}"
+  MinWidth="400"
   GlowBrush="{StaticResource GrayBrush2}"
-  WindowTransitionsEnabled="False"
+  ResizeMode="NoResize"
   ShowCloseButton="True"
+  ShowInTaskbar="False"
   ShowMaxRestoreButton="False"
   ShowMinButton="False"
-  MinWidth="400">
+  SizeToContent="WidthAndHeight"
+  WindowStartupLocation="CenterOwner"
+  WindowStyle="SingleBorderWindow"
+  WindowTitleBrush="{StaticResource GrayBrush2}"
+  WindowTransitionsEnabled="False"
+  mc:Ignorable="d">
   <StackPanel Margin="20">
     <TextBlock Text="http://example.com/" />
     <TextBox
-        x:Name="Link"
-        Margin="10"
-        Text="http://"
-        TabIndex="1">
+      x:Name="Link"
+      Margin="10"
+      TabIndex="1"
+      Text="http://">
       <TextBox.InputBindings>
         <KeyBinding Command="{x:Static local:InsertHyperlinkDialog.AcceptLinkCommand}" Gesture="Enter" />
       </TextBox.InputBindings>
     </TextBox>
     <TextBox
-        x:Name="LinkTitle"
-        controls:TextBoxHelper.Watermark="{i18N:Localize insert-hyperlink-optional-title}"
-        controls:TextBoxHelper.UseFloatingWatermark="True"
-        Margin="10"
-        TabIndex="1">
+      x:Name="LinkTitle"
+      Margin="10"
+      controls:TextBoxHelper.UseFloatingWatermark="True"
+      controls:TextBoxHelper.Watermark="{i18N:Localize insert-hyperlink-optional-title}"
+      TabIndex="1">
       <TextBox.InputBindings>
         <KeyBinding Command="{x:Static local:InsertHyperlinkDialog.AcceptLinkCommand}" Gesture="Enter" />
       </TextBox.InputBindings>
@@ -49,7 +49,7 @@
   </Window.CommandBindings>
 
   <controls:MetroWindow.InputBindings>
-    <KeyBinding Gesture="Esc" Command="Close" />
+    <KeyBinding Command="Close" Gesture="Esc" />
   </controls:MetroWindow.InputBindings>
 
 </controls:MetroWindow>

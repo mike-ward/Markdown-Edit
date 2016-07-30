@@ -13,10 +13,7 @@
     <local:DisplayDocumentStructureViewModel />
   </UserControl.DataContext>
 
-  <ListBox
-    x:Name="Headings"
-    ItemsSource="{Binding Structure}"
-    SelectionChanged="OnSelected">
+  <ListBox x:Name="Headings" ItemsSource="{Binding Structure}" SelectionChanged="OnSelected">
     <ListBox.ItemTemplate>
       <DataTemplate>
         <StackPanel Orientation="Horizontal">

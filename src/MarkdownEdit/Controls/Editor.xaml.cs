@@ -313,6 +313,12 @@ namespace MarkdownEdit.Controls
             }
         }
 
+        private double GetScrollMax()
+        {
+            var scrollViewer = EditBox.GetDescendantByType<ScrollViewer>();
+            return scrollViewer.ScrollableHeight;
+        }
+
         private void StyleScrollBar()
         {
             // make scroll bar narrower
@@ -349,8 +355,11 @@ namespace MarkdownEdit.Controls
         {
             if (AbstractSyntaxTree == null) return new Tuple<int, int>(1, 0);
             var textView = EditBox.TextArea.TextView;
-            var line = textView.GetDocumentLineByVisualTop(textView.ScrollOffset.Y);
 
+            var max = GetScrollMax();
+            if (textView.ScrollOffset.Y >= max) return new Tuple<int, int>(int.MaxValue, 0);
+
+            var line = textView.GetDocumentLineByVisualTop(textView.ScrollOffset.Y);
             var number = 1;
             var blockOffset = line.Offset;
             var skipListItem = true;

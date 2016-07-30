@@ -5,32 +5,34 @@
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
   xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
   Title="{i18N:Localize themes-title}"
-  WindowStartupLocation="CenterOwner"
-  WindowTitleBrush="{StaticResource GrayBrush2}"
+  Width="300"
+  Height="300"
   GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="CanResizeWithGrip"
-  ShowInTaskbar="False"
-  ShowMinButton="False"
-  ShowMaxRestoreButton="False"
-  WindowTransitionsEnabled="False"
   SaveWindowPosition="True"
-  Height="300"
-  Width="300">
+  ShowInTaskbar="False"
+  ShowMaxRestoreButton="False"
+  ShowMinButton="False"
+  WindowStartupLocation="CenterOwner"
+  WindowTitleBrush="{StaticResource GrayBrush2}"
+  WindowTransitionsEnabled="False">
   <DockPanel>
-    <Button Width="100"
-            DockPanel.Dock="Bottom"
-            IsDefault="True"
-            Margin="10"
-            BorderThickness="2"
-            Click="Save"
-            Content="{i18N:Localize save}" />
-    <ListBox x:Name="ThemeListBox"
-             SelectionMode="Single"
-             Margin="10"
-             TabIndex="1"
-             BorderThickness="1"
-             SelectionChanged="OnSelectionChanged"
-             BorderBrush="{StaticResource ControlBorderBrush}" />
+    <Button
+      Width="100"
+      Margin="10"
+      BorderThickness="2"
+      Click="Save"
+      Content="{i18N:Localize save}"
+      DockPanel.Dock="Bottom"
+      IsDefault="True" />
+    <ListBox
+      x:Name="ThemeListBox"
+      Margin="10"
+      BorderBrush="{StaticResource ControlBorderBrush}"
+      BorderThickness="1"
+      SelectionChanged="OnSelectionChanged"
+      SelectionMode="Single"
+      TabIndex="1" />
   </DockPanel>
 
   <Window.CommandBindings>
@@ -38,6 +40,6 @@
   </Window.CommandBindings>
 
   <Window.InputBindings>
-    <KeyBinding Gesture="Esc" Command="Close" />
+    <KeyBinding Command="Close" Gesture="Esc" />
   </Window.InputBindings>
 </controls:MetroWindow>

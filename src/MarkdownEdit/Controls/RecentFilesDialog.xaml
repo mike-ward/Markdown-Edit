@@ -64,10 +64,7 @@
           <DockPanel>
             <TextBlock Style="{StaticResource RemoveButtonStyle}">
               <TextBlock.InputBindings>
-                <MouseBinding
-                  Command="Cut"
-                  CommandParameter="{Binding}"
-                  MouseAction="LeftClick" />
+                <MouseBinding Command="Cut" CommandParameter="{Binding}" MouseAction="LeftClick" />
               </TextBlock.InputBindings>
             </TextBlock>
             <TextBlock Text="{Binding}" />

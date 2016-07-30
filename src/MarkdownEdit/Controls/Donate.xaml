@@ -6,12 +6,12 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   Width="800"
   Height="600"
+  Background="Transparent"
   AllowsTransparency="True"
   ResizeMode="NoResize"
   ShowInTaskbar="False"
   WindowStartupLocation="CenterOwner"
   WindowStyle="None"
-  Background="Transparent"
   mc:Ignorable="d">
 
   <Canvas>

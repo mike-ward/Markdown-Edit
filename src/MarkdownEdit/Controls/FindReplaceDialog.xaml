@@ -1,74 +1,120 @@
 ﻿<controls:MetroWindow
-	x:Class="MarkdownEdit.Controls.FindReplaceDialog"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+  x:Class="MarkdownEdit.Controls.FindReplaceDialog"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
   xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
-	Title="{i18N:Localize find-replace-title}"
-	WindowStartupLocation="CenterOwner"
-	Width="300"
-	SizeToContent="Height"
-	ResizeMode="NoResize"
-	ShowInTaskbar="False"
-	WindowTitleBrush="{StaticResource GrayBrush2}"
-	GlowBrush="{StaticResource GrayBrush2}"
-	WindowTransitionsEnabled="False">
+  Title="{i18N:Localize find-replace-title}"
+  Width="300"
+  GlowBrush="{StaticResource GrayBrush2}"
+  ResizeMode="NoResize"
+  ShowInTaskbar="False"
+  SizeToContent="Height"
+  WindowStartupLocation="CenterOwner"
+  WindowTitleBrush="{StaticResource GrayBrush2}"
+  WindowTransitionsEnabled="False">
 
-	<Grid Margin="4 5 4 10">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
+  <Grid Margin="4,5,4,10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
 
-		<TabControl Name="tabMain" Height="Auto" Grid.ColumnSpan="2">
-			<TabItem Header="{i18N:Localize find-replace-tab-find}">
-				<StackPanel>
-					<TextBox Margin="3" 
-                   Name="txtFind"
-                   Text="{Binding FindText}"
-                   KeyDown="TxtFindOnKeyDown"
-                   controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-find}" />
-					<Button Margin="5" HorizontalAlignment="Right" x:Name="FindNextButton"
-					        Width="80" Content="{i18N:Localize find-replace-find-next}" Click="FindNextClick" />
-				</StackPanel>
-			</TabItem>
-			<TabItem Header="{i18N:Localize find-replace-tab-replace}">
-				<StackPanel>
-          <TextBox Margin="3" Name="txtFind2" Text="{Binding FindText}" controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-find}" />
-					<TextBox Margin="3" Name="txtReplace" controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-replace}" />
-					<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-						<Button Margin="5" HorizontalAlignment="Right"
-						        Width="80" Content="{i18N:Localize find-replace-find-next}" Click="FindNext2Click" />
-						<Button Margin="5" HorizontalAlignment="Right"
-						        Width="80" Content="{i18N:Localize find-replace-replace}" Click="ReplaceClick" />
-						<Button Margin="5" HorizontalAlignment="Right"
-						        Width="80" Content="{i18N:Localize find-replace-replace-all}" Click="ReplaceAllClick" />
-					</StackPanel>
-				</StackPanel>
-			</TabItem>
-		</TabControl>
+    <TabControl Name="tabMain" Grid.ColumnSpan="2" Height="Auto">
+      <TabItem Header="{i18N:Localize find-replace-tab-find}">
+        <StackPanel>
+          <TextBox
+            Name="txtFind"
+            Margin="3"
+            controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-find}"
+            KeyDown="TxtFindOnKeyDown"
+            Text="{Binding FindText}" />
+          <Button
+            x:Name="FindNextButton"
+            Width="80"
+            Margin="5"
+            HorizontalAlignment="Right"
+            Click="FindNextClick"
+            Content="{i18N:Localize find-replace-find-next}" />
+        </StackPanel>
+      </TabItem>
+      <TabItem Header="{i18N:Localize find-replace-tab-replace}">
+        <StackPanel>
+          <TextBox
+            Name="txtFind2"
+            Margin="3"
+            controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-find}"
+            Text="{Binding FindText}" />
+          <TextBox Name="txtReplace" Margin="3" controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-replace}" />
+          <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button
+              Width="80"
+              Margin="5"
+              HorizontalAlignment="Right"
+              Click="FindNext2Click"
+              Content="{i18N:Localize find-replace-find-next}" />
+            <Button
+              Width="80"
+              Margin="5"
+              HorizontalAlignment="Right"
+              Click="ReplaceClick"
+              Content="{i18N:Localize find-replace-replace}" />
+            <Button
+              Width="80"
+              Margin="5"
+              HorizontalAlignment="Right"
+              Click="ReplaceAllClick"
+              Content="{i18N:Localize find-replace-replace-all}" />
+          </StackPanel>
+        </StackPanel>
+      </TabItem>
+    </TabControl>
 
-    <CheckBox Grid.Row="1" Grid.Column="0" Margin="10,2" IsChecked="{Binding Path=CaseSensitive}" DataContext="{Binding Path=FindReplaceSettings}"
-		          Name="cbCaseSensitive" Content="{i18N:Localize find-replace-match-case}" />
-    <CheckBox Grid.Row="2" Grid.Column="0" Margin="10,2" IsChecked="{Binding Path=WholeWord}" DataContext="{Binding Path=FindReplaceSettings}"
-		          Name="cbWholeWord" Content="{i18N:Localize find-replace-match-whole-word}" />
-    <CheckBox Grid.Row="1" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=UseRegex}" DataContext="{Binding Path=FindReplaceSettings}"
-		          Name="cbRegex" Content="{i18N:Localize find-replace-regular-expression}" />
-    <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,2" IsChecked="{Binding Path=UseWildcards}" DataContext="{Binding Path=FindReplaceSettings}"
-		          Name="cbWildcards" Content="{i18N:Localize find-replace-wildcards}" />
-	</Grid>
+    <CheckBox
+      Name="cbCaseSensitive"
+      Grid.Row="1"
+      Grid.Column="0"
+      Margin="10,2"
+      Content="{i18N:Localize find-replace-match-case}"
+      DataContext="{Binding Path=FindReplaceSettings}"
+      IsChecked="{Binding Path=CaseSensitive}" />
+    <CheckBox
+      Name="cbWholeWord"
+      Grid.Row="2"
+      Grid.Column="0"
+      Margin="10,2"
+      Content="{i18N:Localize find-replace-match-whole-word}"
+      DataContext="{Binding Path=FindReplaceSettings}"
+      IsChecked="{Binding Path=WholeWord}" />
+    <CheckBox
+      Name="cbRegex"
+      Grid.Row="1"
+      Grid.Column="1"
+      Margin="10,2"
+      Content="{i18N:Localize find-replace-regular-expression}"
+      DataContext="{Binding Path=FindReplaceSettings}"
+      IsChecked="{Binding Path=UseRegex}" />
+    <CheckBox
+      Name="cbWildcards"
+      Grid.Row="2"
+      Grid.Column="1"
+      Margin="10,2"
+      Content="{i18N:Localize find-replace-wildcards}"
+      DataContext="{Binding Path=FindReplaceSettings}"
+      IsChecked="{Binding Path=UseWildcards}" />
+  </Grid>
 
-	<Window.CommandBindings>
-		<CommandBinding Command="Close" Executed="ExecuteClose" />
-	</Window.CommandBindings>
+  <Window.CommandBindings>
+    <CommandBinding Command="Close" Executed="ExecuteClose" />
+  </Window.CommandBindings>
 
-	<Window.InputBindings>
-		<KeyBinding Gesture="Esc" Command="Close" />
-	</Window.InputBindings>
+  <Window.InputBindings>
+    <KeyBinding Command="Close" Gesture="Esc" />
+  </Window.InputBindings>
 </controls:MetroWindow>

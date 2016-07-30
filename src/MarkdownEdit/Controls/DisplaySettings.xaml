@@ -37,10 +37,7 @@
       <Setter Property="Foreground" Value="WhiteSmoke" />
     </Style>
 
-    <Style
-      x:Key="AboutLabelStyle"
-      BasedOn="{StaticResource LabelStyle}"
-      TargetType="TextBlock">
+    <Style x:Key="AboutLabelStyle" BasedOn="{StaticResource LabelStyle}" TargetType="TextBlock">
       <Setter Property="Width" Value="75" />
     </Style>
 
@@ -157,10 +154,7 @@
             HorizontalAlignment="Left"
             Style="{StaticResource AboutLabelStyle}"
             Text="{i18N:Localize settings-encoding}" />
-          <local:EncodingComboBox
-            x:Name="EncodingComboBox"
-            Width="160"
-            HorizontalAlignment="Right" />
+          <local:EncodingComboBox x:Name="EncodingComboBox" Width="160" HorizontalAlignment="Right" />
         </Grid>
       </StackPanel>
 
@@ -235,10 +229,7 @@
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-web}" />
           <TextBlock>
-            <Hyperlink
-              Style="{StaticResource HyperlinkStyle}"
-              NavigateUri="http://markdownedit.com"
-              RequestNavigate="HyperlinkOnRequestNavigate">
+            <Hyperlink Style="{StaticResource HyperlinkStyle}" NavigateUri="http://markdownedit.com" RequestNavigate="HyperlinkOnRequestNavigate">
               http://markdownedit.com
             </Hyperlink>
           </TextBlock>
@@ -266,10 +257,7 @@
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-donate}" />
           <TextBlock>
-            <Hyperlink
-              Style="{StaticResource HyperlinkStyle}"
-              NavigateUri="http://mike-ward.net/donate"
-              RequestNavigate="HyperlinkOnRequestNavigate">
+            <Hyperlink Style="{StaticResource HyperlinkStyle}" NavigateUri="http://mike-ward.net/donate" RequestNavigate="HyperlinkOnRequestNavigate">
               PayPal
             </Hyperlink>
           </TextBlock>

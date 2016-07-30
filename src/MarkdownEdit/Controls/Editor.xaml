@@ -1,54 +1,55 @@
-﻿<UserControl x:Class="MarkdownEdit.Controls.Editor"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-             xmlns:controls="clr-namespace:MarkdownEdit.Controls"
-             xmlns:i="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib"
-             mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
-             ContextMenuOpening="EditorMenuOnContextMenuOpening"
-             AllowDrop="True">
+﻿<UserControl
+  x:Class="MarkdownEdit.Controls.Editor"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+  xmlns:controls="clr-namespace:MarkdownEdit.Controls"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:i="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  d:DesignHeight="300"
+  d:DesignWidth="300"
+  AllowDrop="True"
+  ContextMenuOpening="EditorMenuOnContextMenuOpening"
+  mc:Ignorable="d">
 
   <Border>
     <avalonedit:TextEditor
       x:Name="EditBox"
-      BorderThickness="0"
-      Foreground="{Binding Theme.EditorForeground}"
       Background="{Binding Theme.EditorBackground}"
+      Foreground="{Binding Theme.EditorForeground}"
+      BorderThickness="0"
       FontFamily="{Binding FontFamily}"
       FontSize="{Binding FontSize}"
-      VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility}"
-      WordWrap="{Binding Path=WordWrap, Mode=TwoWay}"
-      ShowLineNumbers="{Binding Path=ShowLineNumbers, Mode=TwoWay}"
+      i:MouseWheel.Enhanced="True"
+      i:MouseWheel.ScrollSmoothing="None"
       IsModified="{Binding Path=IsModified, Mode=TwoWay}"
       ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"
-      i:MouseWheel.Enhanced="True"
-      i:MouseWheel.ScrollSmoothing="None" />
+      ShowLineNumbers="{Binding Path=ShowLineNumbers, Mode=TwoWay}"
+      VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility}"
+      WordWrap="{Binding Path=WordWrap, Mode=TwoWay}" />
   </Border>
 
   <UserControl.CommandBindings>
-    <CommandBinding Command="Find" Executed="ExecuteFindDialog" CanExecute="CanExecute" />
+    <CommandBinding CanExecute="CanExecute" Command="Find" Executed="ExecuteFindDialog" />
     <CommandBinding Command="{x:Static controls:Editor.FindNextCommand}" Executed="ExecuteFindNext" />
     <CommandBinding Command="{x:Static controls:Editor.FindPreviousCommand}" Executed="ExecuteFindPrevious" />
-    <CommandBinding Command="{x:Static controls:Editor.PasteSpecialCommand}" Executed="ExecutePasteSpecial" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.PasteFromHtmlCommand}" Executed="ExecutePasteFromHtml" CanExecute="CanExecute" />
-    <CommandBinding Command="CorrectSpellingError" Executed="ExecuteSpellCheckReplace" CanExecute="CanExecute" />
-    <CommandBinding Command="IgnoreSpellingError" Executed="ExecuteAddToDictionary" CanExecute="CanExecute" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.PasteSpecialCommand}" Executed="ExecutePasteSpecial" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.PasteFromHtmlCommand}" Executed="ExecutePasteFromHtml" />
+    <CommandBinding CanExecute="CanExecute" Command="CorrectSpellingError" Executed="ExecuteSpellCheckReplace" />
+    <CommandBinding CanExecute="CanExecute" Command="IgnoreSpellingError" Executed="ExecuteAddToDictionary" />
     <CommandBinding Command="{x:Static controls:Editor.DeselectCommand}" Executed="ExecuteDeselectCommand" />
-    <CommandBinding Command="{x:Static controls:Editor.FormatCommand}" Executed="ExecuteFormatText" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.FormatWithLinkReferencesCommand}" Executed="ExecuteFormatTextWithLinkReferences" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.UnformatCommand}" Executed="ExecuteUnformatText" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.MoveLineUpCommand}" Executed="ExecuteMoveLineUp" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.MoveLineDownCommand}" Executed="ExecuteMoveLineDown" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.ConvertSelectionToListCommand}" Executed="ExecuteConvertSelectionToList" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.InsertBlockQuoteCommand}" Executed="ExecuteInsertBlockQuote" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.RevertCommand}" Executed="ExecuteRevertCommand" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.InsertHyperlinkCommand}" Executed="ExecuteInsertHyperlink" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.InsertHyperlinkDialogCommand}" Executed="ExecuteInsertHyperlinkDialog" CanExecute="CanExecute" />
-    <CommandBinding Command="{x:Static controls:Editor.ToggleOverTypeModeCommand}" Executed="ExecuteToggleOverTypeCommand" CanExecute="CanExecute" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.FormatCommand}" Executed="ExecuteFormatText" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.FormatWithLinkReferencesCommand}" Executed="ExecuteFormatTextWithLinkReferences" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.UnformatCommand}" Executed="ExecuteUnformatText" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.MoveLineUpCommand}" Executed="ExecuteMoveLineUp" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.MoveLineDownCommand}" Executed="ExecuteMoveLineDown" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.ConvertSelectionToListCommand}" Executed="ExecuteConvertSelectionToList" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.InsertBlockQuoteCommand}" Executed="ExecuteInsertBlockQuote" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.RevertCommand}" Executed="ExecuteRevertCommand" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.InsertHyperlinkCommand}" Executed="ExecuteInsertHyperlink" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.InsertHyperlinkDialogCommand}" Executed="ExecuteInsertHyperlinkDialog" />
+    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.ToggleOverTypeModeCommand}" Executed="ExecuteToggleOverTypeCommand" />
   </UserControl.CommandBindings>
 
   <UserControl.InputBindings>

@@ -1,38 +1,41 @@
-﻿<UserControl x:Class="MarkdownEdit.Controls.FadingPopupControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+﻿<UserControl
+  x:Class="MarkdownEdit.Controls.FadingPopupControl"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  d:DesignHeight="300"
+  d:DesignWidth="300"
+  mc:Ignorable="d">
   <UserControl.Resources>
-    <Storyboard x:Key="StatusFader" 
-                Completed="StatusFader_Completed">
-      <DoubleAnimation Storyboard.TargetName="PopupBackground" 
-                       Storyboard.TargetProperty="Opacity" 
-                       From="0.8" To="0" 
-                       BeginTime="0:0:0"  
-                       Duration="0:0:1.2">
+    <Storyboard x:Key="StatusFader" Completed="StatusFader_Completed">
+      <DoubleAnimation
+        BeginTime="0:0:0"
+        Duration="0:0:1.2"
+        From="0.8"
+        Storyboard.TargetName="PopupBackground"
+        Storyboard.TargetProperty="Opacity"
+        To="0">
         <DoubleAnimation.EasingFunction>
-          <ExponentialEase Exponent="20" 
-                           EasingMode="EaseIn" />
+          <ExponentialEase EasingMode="EaseIn" Exponent="20" />
         </DoubleAnimation.EasingFunction>
       </DoubleAnimation>
     </Storyboard>
   </UserControl.Resources>
-  <Popup Name="Popup" 
-         Placement="Center" 
-         PopupAnimation="Fade" 
-         AllowsTransparency="True">
-    <Border Name="PopupBackground" 
-            Background="Black">
-      <Label Name="PopupLabel" 
-             HorizontalAlignment="Center" 
-             FontSize="20"
-             FontWeight="Bold"
-             Foreground="White"
-             VerticalAlignment="Center" 
-             Background="Transparent" />
+  <Popup
+    Name="Popup"
+    AllowsTransparency="True"
+    Placement="Center"
+    PopupAnimation="Fade">
+    <Border Name="PopupBackground" Background="Black">
+      <Label
+        Name="PopupLabel"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Background="Transparent"
+        Foreground="White"
+        FontSize="20"
+        FontWeight="Bold" />
     </Border>
   </Popup>
 </UserControl>

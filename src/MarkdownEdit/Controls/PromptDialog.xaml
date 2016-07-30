@@ -24,10 +24,7 @@
       FontSize="16"
       Text="?" />
     <TextBox x:Name="Response" Margin="5" />
-    <StackPanel
-      Margin="5"
-      HorizontalAlignment="Right"
-      Orientation="Horizontal">
+    <StackPanel Margin="5" HorizontalAlignment="Right" Orientation="Horizontal">
       <Button
         x:Name="OkButton"
         Width="75"
