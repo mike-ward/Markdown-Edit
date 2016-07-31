@@ -3,8 +3,8 @@ tagline:          A full-featured Markdown Editor For Windows
 description:      A full-featured Markdown Editor for Windows with an emphasis on content and keyboard shortcuts
 canonical:        http://markdownedit.com
 url:              http://markdownedit.com
-download:         https://github.com/mike-ward/Markdown-Edit/releases/download/v1.28.2/MarkdownEditSetup.msi
-portable:         https://github.com/mike-ward/Markdown-Edit/releases/download/v1.28.2/MarkdownEdit.zip
+download:         https://github.com/mike-ward/Markdown-Edit/releases/download/v1.29/MarkdownEditSetup.msi
+portable:         https://github.com/mike-ward/Markdown-Edit/releases/download/v1.29/MarkdownEdit.zip
 
 # Owner/author information
 owner:
@@ -28,7 +28,7 @@ tools:
 # For external links add external: true
 links:
   - title: "<img src='https://img.shields.io/github/release/mike-ward/markdown-edit.svg?style=flat-square' style='vertical-align:middle;margin-top:-2px;' alt='' />&nbsp;&nbsp;Download"
-    url: https://github.com/mike-ward/Markdown-Edit/releases/download/v1.28.2/MarkdownEditSetup.msi
+    url: https://github.com/mike-ward/Markdown-Edit/releases/download/v1.29/MarkdownEditSetup.msi
     external: true
   - title: Features
     url: /features
