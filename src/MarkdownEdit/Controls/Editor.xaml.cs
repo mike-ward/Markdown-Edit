@@ -15,10 +15,8 @@ using MarkdownEdit.Commands;
 using MarkdownEdit.Models;
 using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
-using static System.Windows.Input.ApplicationCommands;
 using static MarkdownEdit.i18n.TranslationProvider;
 using static MarkdownEdit.Models.AbstractSyntaxTree;
-using Clipboard = System.Windows.Clipboard;
 
 namespace MarkdownEdit.Controls
 {
@@ -255,9 +253,9 @@ namespace MarkdownEdit.Controls
                 EditBox.PreviewKeyDown += (s, e) => EditorSpellCheck.AppsKeyDown = e.Key == Key.Apps && e.IsDown;
                 EditBox.Document.PropertyChanged += OnEditBoxPropertyChanged;
                 DataObject.AddPastingHandler(EditBox, OnPaste);
-                StyleScrollBar();
-                AllowImagePaste();
-                SetupIndentationCommandBinding();
+                RestyleScrollBar();
+                EditorUtilities.AllowImagePaste(this);
+                RemoveIndentationCommandBinding();
                 SetupTabSnippetHandler();
                 ThemeChangedCallback(this, new DependencyPropertyChangedEventArgs());
                 EditBox.Focus();
@@ -319,7 +317,7 @@ namespace MarkdownEdit.Controls
             return scrollViewer.ScrollableHeight;
         }
 
-        private void StyleScrollBar()
+        private void RestyleScrollBar()
         {
             // make scroll bar narrower
             var grid = EditBox.GetDescendantByType<Grid>();
@@ -329,7 +327,7 @@ namespace MarkdownEdit.Controls
             grid.Children[2].Opacity = 0.3;
         }
 
-        private void SetupIndentationCommandBinding()
+        private void RemoveIndentationCommandBinding()
         {
             var cmd = EditBox
                 .TextArea
@@ -467,133 +465,6 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private void AllowImagePaste()
-        {
-            // AvalonEdit only allows text paste. Hack the command to allow otherwise.
-            var cmd = EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings
-                .FirstOrDefault(cb => cb.Command == Paste);
-
-            if (cmd == null) return;
-
-            CanExecuteRoutedEventHandler canExecute = (sender, args) =>
-                args.CanExecute = EditBox.TextArea?.Document != null &&
-                                  EditBox.TextArea.ReadOnlySectionProvider.CanInsert(EditBox.TextArea.Caret.Offset);
-
-            ExecutedRoutedEventHandler execute = null;
-            execute = (sender, args) =>
-            {
-                if (Clipboard.ContainsText())
-                {
-                    // WPF won't continue routing the command if there's PreviewExecuted handler.
-                    // So, remove it, call Execute and reinstall the handler.
-                    // Hack, hack hack...
-                    try
-                    {
-                        cmd.PreviewExecuted -= execute;
-                        cmd.Command.Execute(args.Parameter);
-                    }
-                    finally
-                    {
-                        cmd.PreviewExecuted += execute;
-                    }
-                }
-                else if (Clipboard.ContainsImage())
-                {
-                    var dialog = new ImageDropDialog
-                    {
-                        Owner = Application.Current.MainWindow,
-                        TextEditor = EditBox,
-                        DocumentFileName = FileName,
-                        UseClipboardImage = true
-                    };
-                    dialog.ShowDialog();
-                    args.Handled = true;
-                }
-            };
-
-            cmd.CanExecute += canExecute;
-            cmd.PreviewExecuted += execute;
-        }
-
-        private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)
-        {
-            var contextMenu = new ContextMenu();
-            EditorSpellCheck.SpellCheckSuggestions(this, contextMenu);
-
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-undo"),
-                Command = Undo,
-                InputGestureText = "Ctrl+Z"
-            });
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-redo"),
-                Command = Redo,
-                InputGestureText = "Ctrl+Y"
-            });
-            contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-cut"),
-                Command = Cut,
-                InputGestureText = "Ctrl+X"
-            });
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-copy"),
-                Command = Copy,
-                InputGestureText = "Ctrl+C"
-            });
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-paste"),
-                Command = Paste,
-                InputGestureText = "Ctrl+V"
-            });
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-paste-special"),
-                Command = PasteSpecialCommand,
-                InputGestureText = "Ctrl+Shift+V",
-                ToolTip = "Paste smart quotes and hypens as plain text"
-            });
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-paste-from-html"),
-                Command = PasteFromHtmlCommand,
-                InputGestureText = "Alt+V"
-            });
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-delete"),
-                Command = Delete,
-                InputGestureText = "Delete"
-            });
-            contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-select-all"),
-                Command = SelectAll,
-                InputGestureText = "Ctrl+A"
-            });
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-wrap-format"),
-                Command = FormatCommand,
-                InputGestureText = "Alt+F"
-            });
-            contextMenu.Items.Add(new MenuItem
-            {
-                Header = Translate("editor-menu-unwrap-format"),
-                Command = UnformatCommand,
-                InputGestureText = "Alt+Shift+F"
-            });
-
-            var element = (FrameworkElement)ea.Source;
-            element.ContextMenu = contextMenu;
-        }
-
         private void ExecuteSpellCheckReplace(object sender, ExecutedRoutedEventArgs ea)
         {
             var parameters = (Tuple<string, TextSegment>)ea.Parameter;
@@ -616,7 +487,8 @@ namespace MarkdownEdit.Controls
             return true;
         });
 
-        private bool IfNotReadOnly(Func<bool> action) => EditBox.IsReadOnly ? EditorUtilities.ErrorBeep() : action();
+        private bool IfNotReadOnly(Func<bool> action) 
+            => EditBox.IsReadOnly ? EditorUtilities.ErrorBeep() : action();
 
         private void CanExecute(object sender, CanExecuteRoutedEventArgs e) { e.CanExecute = !EditBox.IsReadOnly; }
 
@@ -647,17 +519,23 @@ namespace MarkdownEdit.Controls
         private void ExecuteUnformatText(object sender, ExecutedRoutedEventArgs ea)
             => IfNotReadOnly(() => FormatTextHandler(Markdown.Unwrap, false));
 
-        public void NewFile() => IfNotReadOnly(() => EditorLoadSave.NewFile(this));
+        public void NewFile() => IfNotReadOnly(()
+            => EditorLoadSave.NewFile(this));
 
-        public void OpenFile(string file) => IfNotReadOnly(() => EditorLoadSave.OpenFile(this, file));
+        public void OpenFile(string file)
+            => IfNotReadOnly(() => EditorLoadSave.OpenFile(this, file));
 
-        public void InsertFile(string file) => IfNotReadOnly(() => EditorLoadSave.InsertFile(this, file));
+        public void InsertFile(string file) => IfNotReadOnly(()
+            => EditorLoadSave.InsertFile(this, file));
 
-        public bool SaveIfModified() => IfNotReadOnly(() => EditorLoadSave.SaveIfModified(this));
+        public bool SaveIfModified()
+            => IfNotReadOnly(() => EditorLoadSave.SaveIfModified(this));
 
-        public bool SaveFile() => IfNotReadOnly(() => EditorLoadSave.SaveFile(this));
+        public bool SaveFile()
+            => IfNotReadOnly(() => EditorLoadSave.SaveFile(this));
 
-        public bool SaveFileAs() => IfNotReadOnly(() => EditorLoadSave.SaveFileAs(this));
+        public bool SaveFileAs()
+            => IfNotReadOnly(() => EditorLoadSave.SaveFileAs(this));
 
         public bool LoadFile(string file, bool updateCursorPosition = true)
             => EditorLoadSave.LoadFile(this, file, updateCursorPosition);
@@ -686,11 +564,14 @@ namespace MarkdownEdit.Controls
             DisplayName = "Help";
         }
 
-        public void CloseHelp() => _editorState.Restore(this);
+        public void CloseHelp()
+            => _editorState.Restore(this);
 
-        private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e) => PasteSpecial();
+        private void ExecutePasteSpecial(object sender, ExecutedRoutedEventArgs e)
+            => PasteSpecial();
 
-        private void ExecutePasteFromHtml(object sender, ExecutedRoutedEventArgs e) => PasteFromHtml();
+        private void ExecutePasteFromHtml(object sender, ExecutedRoutedEventArgs e)
+            => PasteFromHtml();
 
         private void ExecuteFindDialog(object sender, ExecutedRoutedEventArgs e)
             => IfNotReadOnly(() => FindReplaceDialog.ShowFindDialog());
@@ -703,11 +584,14 @@ namespace MarkdownEdit.Controls
         private void ExecuteFindPrevious(object sender, ExecutedRoutedEventArgs e)
             => IfNotReadOnly(() => FindReplaceDialog.FindPrevious());
 
-        public void Bold() => IfNotReadOnly(() => EditBox.AddRemoveText("**"));
+        public void Bold() 
+            => IfNotReadOnly(() => EditBox.AddRemoveText("**"));
 
-        public void Italic() => IfNotReadOnly(() => EditBox.AddRemoveText("*"));
+        public void Italic() 
+            => IfNotReadOnly(() => EditBox.AddRemoveText("*"));
 
-        public void Code() => IfNotReadOnly(() => EditBox.AddRemoveText("`"));
+        public void Code() 
+            => IfNotReadOnly(() => EditBox.AddRemoveText("`"));
 
         public void ExecuteMoveLineUp(object sender, ExecutedRoutedEventArgs e)
             => IfNotReadOnly(() => EditorUtilities.MoveSegmentUp(EditBox));
@@ -722,11 +606,9 @@ namespace MarkdownEdit.Controls
             => IfNotReadOnly(() => EditorUtilities.InsertBlockQuote(EditBox));
 
         public void ExecuteInsertHyperlinkDialog(object sender, ExecutedRoutedEventArgs e)
-            =>
-                IfNotReadOnly(
-                    () =>
-                        new InsertHyperlinkDialog(EditBox.SelectedText) { Owner = Application.Current.MainWindow }
-                            .ShowDialog());
+            => IfNotReadOnly(()
+                => new InsertHyperlinkDialog(EditBox.SelectedText) { Owner = Application.Current.MainWindow }
+                    .ShowDialog());
 
         public void ExecuteInsertHyperlink(object sender, ExecutedRoutedEventArgs e)
             => IfNotReadOnly(() => EditorUtilities.InsertHyperlink(EditBox, e.Parameter as string));
@@ -734,47 +616,60 @@ namespace MarkdownEdit.Controls
         public void InsertHeader(int num) => IfNotReadOnly(() =>
         {
             var line = EditBox.Document.GetLineByOffset(EditBox.CaretOffset);
-            if (line != null)
-            {
-                var header = new string('#', num) + " ";
-                EditBox.Document.Insert(line.Offset, header);
-            }
+            if (line == null) return;
+            var header = new string('#', num) + " ";
+            EditBox.Document.Insert(line.Offset, header);
         });
 
-        public void IncreaseFontSize() => EditBox.FontSize = EditBox.FontSize + 1;
+        public void IncreaseFontSize() 
+            => EditBox.FontSize = EditBox.FontSize + 1;
 
         public void DecreaseFontSize()
             => EditBox.FontSize = EditBox.FontSize > 5 ? EditBox.FontSize - 1 : EditBox.FontSize;
 
-        public void RestoreFontSize() => EditBox.FontSize = App.UserSettings.EditorFontSize;
+        public void RestoreFontSize() 
+            => EditBox.FontSize = App.UserSettings.EditorFontSize;
 
-        public void OpenUserDictionary() => Utility.EditFile(SpellCheckProvider.CustomDictionaryFile());
+        public void OpenUserDictionary() 
+            => Utility.EditFile(SpellCheckProvider.CustomDictionaryFile());
 
-        public void SelectPreviousHeader() => EditBox.SelectHeader(false);
+        public void SelectPreviousHeader() 
+            => EditBox.SelectHeader(false);
 
-        public void SelectNextHeader() => EditBox.SelectHeader(true);
+        public void SelectNextHeader() 
+            => EditBox.SelectHeader(true);
 
-        public bool Find(Regex find) => IfNotReadOnly(() => EditBox.Find(find));
+        public bool Find(Regex find) 
+            => IfNotReadOnly(() => EditBox.Find(find));
 
-        public bool Replace(Regex find, string replace) => IfNotReadOnly(() => EditBox.Replace(find, replace));
+        public bool Replace(Regex find, string replace) 
+            => IfNotReadOnly(() => EditBox.Replace(find, replace));
 
-        public void ReplaceAll(Regex find, string replace) => IfNotReadOnly(() => EditBox.ReplaceAll(find, replace));
+        public void ReplaceAll(Regex find, string replace) 
+            => IfNotReadOnly(() => EditBox.ReplaceAll(find, replace));
 
-        private void ExecuteDeselectCommand(object sender, ExecutedRoutedEventArgs e) => EditBox.SelectionLength = 0;
+        private void ExecuteDeselectCommand(object sender, ExecutedRoutedEventArgs e) 
+            => EditBox.SelectionLength = 0;
 
-        private void ExecuteRevertCommand(object sender, ExecutedRoutedEventArgs e) => OpenFile(FileName);
+        private void ExecuteRevertCommand(object sender, ExecutedRoutedEventArgs e) 
+            => OpenFile(FileName);
 
         private void ExecuteToggleOverTypeCommand(object sender, ExecutedRoutedEventArgs e)
             => EditBox.TextArea.OverstrikeMode = !EditBox.TextArea.OverstrikeMode;
 
-        private void EditBoxOnTextChanged(object sender, EventArgs eventArgs) => TextChanged?.Invoke(this, eventArgs);
+        private void EditBoxOnTextChanged(object sender, EventArgs eventArgs) 
+            => TextChanged?.Invoke(this, eventArgs);
+
+        private void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs e)
+            => EditorUtilities.EditorMenuOnContextMenuOpening(sender, e);
 
         public event ScrollChangedEventHandler ScrollChanged;
 
         private void ScrollViewerOnScrollChanged(object sender, ScrollChangedEventArgs ea)
             => ScrollChanged?.Invoke(this, ea);
 
-        private void OnThemeChanged(ThemeChangedEventArgs ea) => ThemeChanged?.Invoke(this, ea);
+        private void OnThemeChanged(ThemeChangedEventArgs ea) 
+            => ThemeChanged?.Invoke(this, ea);
 
         public static void ThemeChangedCallback(DependencyObject source, DependencyPropertyChangedEventArgs ea)
         {

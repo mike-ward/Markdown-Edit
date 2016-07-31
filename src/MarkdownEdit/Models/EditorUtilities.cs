@@ -2,9 +2,14 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
+using MarkdownEdit.Controls;
+using MarkdownEdit.i18n;
 
 namespace MarkdownEdit.Models
 {
@@ -323,12 +328,140 @@ namespace MarkdownEdit.Models
         {
             if (string.IsNullOrWhiteSpace(link)) return;
 
-            var parts = link.Split(new[] {'"'}, 2);
+            var parts = link.Split(new[] { '"' }, 2);
             var text = parts.Length == 1
                 ? $"<{parts[0].Trim()}>"
                 : $"[{parts[1].Trim('"', ' ')}]({parts[0].Trim()})";
 
             editor.Document.Replace(editor.SelectionStart, editor.SelectionLength, text);
         }
+
+        public static void AllowImagePaste(Editor editor)
+        {
+            // AvalonEdit only allows text paste. Hack the command to allow otherwise.
+            var cmd = editor.EditBox.TextArea.DefaultInputHandler.Editing.CommandBindings
+                .FirstOrDefault(cb => cb.Command == ApplicationCommands.Paste);
+
+            if (cmd == null) return;
+
+            CanExecuteRoutedEventHandler canExecute = (sender, args) =>
+                args.CanExecute = editor.EditBox.TextArea?.Document != null &&
+                                  editor.EditBox.TextArea.ReadOnlySectionProvider.CanInsert(editor.EditBox.TextArea.Caret.Offset);
+
+            ExecutedRoutedEventHandler execute = null;
+            execute = (sender, args) =>
+            {
+                if (System.Windows.Clipboard.ContainsText())
+                {
+                    // WPF won't continue routing the command if there's PreviewExecuted handler.
+                    // So, remove it, call Execute and reinstall the handler.
+                    // Hack, hack hack...
+                    try
+                    {
+                        cmd.PreviewExecuted -= execute;
+                        cmd.Command.Execute(args.Parameter);
+                    }
+                    finally
+                    {
+                        cmd.PreviewExecuted += execute;
+                    }
+                }
+                else if (System.Windows.Clipboard.ContainsImage())
+                {
+                    var dialog = new ImageDropDialog
+                    {
+                        Owner = Application.Current.MainWindow,
+                        TextEditor = editor.EditBox,
+                        DocumentFileName = editor.FileName,
+                        UseClipboardImage = true
+                    };
+                    dialog.ShowDialog();
+                    args.Handled = true;
+                }
+            };
+
+            cmd.CanExecute += canExecute;
+            cmd.PreviewExecuted += execute;
+        }
+
+        public static void EditorMenuOnContextMenuOpening(object sender, ContextMenuEventArgs ea)
+        {
+            var contextMenu = new ContextMenu();
+            EditorSpellCheck.SpellCheckSuggestions(ea.Source as Editor, contextMenu);
+
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-undo"),
+                Command = ApplicationCommands.Undo,
+                InputGestureText = "Ctrl+Z"
+            });
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-redo"),
+                Command = ApplicationCommands.Redo,
+                InputGestureText = "Ctrl+Y"
+            });
+            contextMenu.Items.Add(new Separator());
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-cut"),
+                Command = ApplicationCommands.Cut,
+                InputGestureText = "Ctrl+X"
+            });
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-copy"),
+                Command = ApplicationCommands.Copy,
+                InputGestureText = "Ctrl+C"
+            });
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-paste"),
+                Command = ApplicationCommands.Paste,
+                InputGestureText = "Ctrl+V"
+            });
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-paste-special"),
+                Command = Editor.PasteSpecialCommand,
+                InputGestureText = "Ctrl+Shift+V",
+                ToolTip = "Paste smart quotes and hypens as plain text"
+            });
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-paste-from-html"),
+                Command = Editor.PasteFromHtmlCommand,
+                InputGestureText = "Alt+V"
+            });
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-delete"),
+                Command = ApplicationCommands.Delete,
+                InputGestureText = "Delete"
+            });
+            contextMenu.Items.Add(new Separator());
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-select-all"),
+                Command = ApplicationCommands.SelectAll,
+                InputGestureText = "Ctrl+A"
+            });
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-wrap-format"),
+                Command = Editor.FormatCommand,
+                InputGestureText = "Alt+F"
+            });
+            contextMenu.Items.Add(new MenuItem
+            {
+                Header = TranslationProvider.Translate("editor-menu-unwrap-format"),
+                Command = Editor.UnformatCommand,
+                InputGestureText = "Alt+Shift+F"
+            });
+
+            var element = (FrameworkElement)ea.Source;
+            element.ContextMenu = contextMenu;
+        }
+
     }
 }

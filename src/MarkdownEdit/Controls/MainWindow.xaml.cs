@@ -213,44 +213,58 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private void SettingsClosingFinished(object sender, RoutedEventArgs e) => DisplaySettings.SaveIfModified();
+        private void SettingsClosingFinished(object sender, RoutedEventArgs e) 
+            => DisplaySettings.SaveIfModified();
 
-        private string BuildTitle() => $"{App.Title} - {(Editor.IsModified ? "* " : "")}{Editor.DisplayName}";
+        private string BuildTitle() 
+            => $"{App.Title} - {(Editor.IsModified ? "* " : "")}{Editor.DisplayName}";
 
         // Commands
 
-        private void ExecuteNewFile(object sender, ExecutedRoutedEventArgs ea) => Editor.NewFile();
+        private void ExecuteNewFile(object sender, ExecutedRoutedEventArgs ea) 
+            => Editor.NewFile();
 
         private void ExecuteOpenFile(object sender, ExecutedRoutedEventArgs ea)
             => Editor.OpenFile(ea.Parameter as string);
 
-        public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea) => Editor.SaveFile();
+        public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea) 
+            => Editor.SaveFile();
 
-        public void ExecuteSaveFileAs(object sender, ExecutedRoutedEventArgs ea) => Editor.SaveFileAs();
+        public void ExecuteSaveFileAs(object sender, ExecutedRoutedEventArgs ea) 
+            => Editor.SaveFileAs();
 
         public void ExecuteToggleWordWrap(object sender, ExecutedRoutedEventArgs ea)
             => Settings.Default.WordWrapEnabled = !Settings.Default.WordWrapEnabled;
 
-        public void ExecuteHelp(object sender, ExecutedRoutedEventArgs ea) => Editor.ToggleHelp();
+        public void ExecuteHelp(object sender, ExecutedRoutedEventArgs ea) 
+            => Editor.ToggleHelp();
 
-        public void ExecuteClose(object sender, ExecutedRoutedEventArgs ea) => Close();
+        public void ExecuteClose(object sender, ExecutedRoutedEventArgs ea) 
+            => Close();
 
-        private void ExecuteEditorReplace(object sender, ExecutedRoutedEventArgs e) => Editor.ReplaceDialog();
+        private void ExecuteEditorReplace(object sender, ExecutedRoutedEventArgs e) 
+            => Editor.ReplaceDialog();
 
-        private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea) => Editor.Bold();
+        private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea) 
+            => Editor.Bold();
 
-        private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea) => Editor.Italic();
+        private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea) 
+            => Editor.Italic();
 
-        private void ExecuteCode(object sender, ExecutedRoutedEventArgs ea) => Editor.Code();
+        private void ExecuteCode(object sender, ExecutedRoutedEventArgs ea) 
+            => Editor.Code();
 
         private void ExecuteInsertHeader(object sender, ExecutedRoutedEventArgs ea)
             => Editor.InsertHeader(Convert.ToInt32(ea.Parameter));
 
-        private void ExecuteIncreaseFontSize(object sender, ExecutedRoutedEventArgs e) => Editor.IncreaseFontSize();
+        private void ExecuteIncreaseFontSize(object sender, ExecutedRoutedEventArgs e) 
+            => Editor.IncreaseFontSize();
 
-        private void ExecuteRestoreFontSize(object sender, ExecutedRoutedEventArgs e) => Editor.RestoreFontSize();
+        private void ExecuteRestoreFontSize(object sender, ExecutedRoutedEventArgs e) 
+            => Editor.RestoreFontSize();
 
-        private void ExecuteDecreaseFontSize(object sender, ExecutedRoutedEventArgs e) => Editor.DecreaseFontSize();
+        private void ExecuteDecreaseFontSize(object sender, ExecutedRoutedEventArgs e) 
+            => Editor.DecreaseFontSize();
 
         private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e)
             => Utility.EditFile(UserSettings.SettingsFile);
@@ -274,7 +288,8 @@ namespace MarkdownEdit.Controls
             SetFocus(control);
         }
 
-        private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e) => RecentFilesDialog.Display(this);
+        private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e) 
+            => RecentFilesDialog.Display(this);
 
         private void ExecuteToggleAutoSave(object sender, ExecutedRoutedEventArgs e)
             => Settings.Default.AutoSave = !Settings.Default.AutoSave;
@@ -378,7 +393,8 @@ namespace MarkdownEdit.Controls
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e)
             => new GotoLineDialog {Owner = this}.ShowDialog();
 
-        private void ExecuteToggleShowSettingsFlyout(object sender, ExecutedRoutedEventArgs e) => ToggleSettings();
+        private void ExecuteToggleShowSettingsFlyout(object sender, ExecutedRoutedEventArgs e) 
+            => ToggleSettings();
 
         private void ExecuteToggleDocumentStructureFlyout(object sender, ExecutedRoutedEventArgs e)
             => ToggleDocumentStructure();
@@ -393,11 +409,14 @@ namespace MarkdownEdit.Controls
             if (e.Parameter != null) EditorUtilities.ScrollToOffset(Editor.EditBox, (int)e.Parameter);
         }
 
-        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) => Preview.UpdatePreview(Editor);
+        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) 
+            => Preview.UpdatePreview(Editor);
 
-        private void ExecuteInsertFile(object sender, ExecutedRoutedEventArgs e) => Editor.InsertFile(null);
+        private void ExecuteInsertFile(object sender, ExecutedRoutedEventArgs e) 
+            => Editor.InsertFile(null);
 
-        private void ExecutePrintHtml(object sender, ExecutedRoutedEventArgs e) => Preview.Print();
+        private void ExecutePrintHtml(object sender, ExecutedRoutedEventArgs e) 
+            => Preview.Print();
 
         private void ToggleSettings()
         {

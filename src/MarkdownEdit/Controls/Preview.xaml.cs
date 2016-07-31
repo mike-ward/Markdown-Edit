@@ -18,6 +18,8 @@ using MarkdownEdit.Converters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 
+// ReSharper disable RedundantCaseLabel
+
 namespace MarkdownEdit.Controls
 {
     public partial class Preview : INotifyPropertyChanged
@@ -53,9 +55,17 @@ namespace MarkdownEdit.Controls
 
         public StatisticMode DocumentStatisticMode { get; set; }
 
-        public int WordCount { get { return _wordCount; } set { Set(ref _wordCount, value); } }
+        public int WordCount
+        {
+            get { return _wordCount; }
+            set { Set(ref _wordCount, value); }
+        }
 
-        public int CharacterCount { get { return _characterCount; } set { Set(ref _characterCount, value); } }
+        public int CharacterCount
+        {
+            get { return _characterCount; }
+            set { Set(ref _characterCount, value); }
+        }
 
         public string DocumentStatisticDisplayText
         {
@@ -69,7 +79,11 @@ namespace MarkdownEdit.Controls
             set { Set(ref _documentStatisticsToolTip, value); }
         }
 
-        public int PageCount { get { return _pageCount; } set { Set(ref _pageCount, value); } }
+        public int PageCount
+        {
+            get { return _pageCount; }
+            set { Set(ref _pageCount, value); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -136,6 +150,7 @@ namespace MarkdownEdit.Controls
                     DocumentStatisticDisplayText = convert(PageCount, "p");
                     DocumentStatisticsToolTip = $"{convert(WordCount, "w")}, {convert(CharacterCount, "c")}";
                     break;
+                case StatisticMode.Word:
                 default:
                     DocumentStatisticDisplayText = convert(WordCount, "w");
                     DocumentStatisticsToolTip = $"{convert(CharacterCount, "c")}, {convert(PageCount, "p")}";
@@ -203,8 +218,7 @@ namespace MarkdownEdit.Controls
             Func<string> getName = () => GetIdName(idx++);
 
             // Inject anchors at all block level elements for scroll synchronization
-            var nc = doc.DocumentNode.SelectNodes(
-                "//p|//h1|//h2|//h3|//h4|//h5|//h6|//ul|//ol|//li|//hr|//pre|//blockquote");
+            var nc = doc.DocumentNode.SelectNodes("//p|//h1|//h2|//h3|//h4|//h5|//h6|//ul|//ol|//li|//hr|//pre|//blockquote");
             each(nc, node => node.Attributes.Add("id", getName()));
 
             // Remove potentially harmful elements
@@ -212,18 +226,15 @@ namespace MarkdownEdit.Controls
             each(nc, node => node.ParentNode.RemoveChild(node, false));
 
             // Remove hrefs to java/j/vbscript URLs
-            nc = doc.DocumentNode.SelectNodes(
-                "//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
+            nc = doc.DocumentNode.SelectNodes("//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
             each(nc, node => node.SetAttributeValue("href", "#"));
 
             // Remove img with refs to java/j/vbscript URLs
-            nc = doc.DocumentNode.SelectNodes(
-                "//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
+            nc = doc.DocumentNode.SelectNodes("//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
             each(nc, node => node.SetAttributeValue("src", "#"));
 
             // Remove on<Event> handlers from all tags
-            nc = doc.DocumentNode.SelectNodes(
-                "//*[@onclick or @onmouseover or @onfocus or @onblur or @onmouseout or @ondoubleclick or @onload or @onunload]");
+            nc = doc.DocumentNode.SelectNodes("//*[@onclick or @onmouseover or @onfocus or @onblur or @onmouseout or @ondoubleclick or @onload or @onunload]");
             each(nc, node =>
             {
                 node.Attributes.Remove("onFocus");
@@ -237,8 +248,7 @@ namespace MarkdownEdit.Controls
             });
 
             // remove any style attributes that contain the word expression (IE evaluates this as script)
-            nc = doc.DocumentNode.SelectNodes(
-                "//*[contains(translate(@style, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'expression')]");
+            nc = doc.DocumentNode.SelectNodes("//*[contains(translate(@style, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'expression')]");
             each(nc, node => node.Attributes.Remove("style"));
 
             return doc.DocumentNode.WriteTo();
