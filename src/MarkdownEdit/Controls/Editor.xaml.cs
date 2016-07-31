@@ -414,6 +414,10 @@ namespace MarkdownEdit.Controls
             }
             else if (_convertFromHtml)
             {
+                if (pasteEventArgs.SourceDataObject.GetFormats(false).Contains(DataFormats.Html))
+                {
+                    text = (string)pasteEventArgs.SourceDataObject.GetData(DataFormats.Html);
+                }
                 text = Markdown.FromHtmlText(text);
             }
             else if (Uri.IsWellFormedUriString(text, UriKind.Absolute)
@@ -557,7 +561,7 @@ namespace MarkdownEdit.Controls
             contextMenu.Items.Add(new MenuItem
             {
                 Header = Translate("editor-menu-paste-from-html"),
-                Command = PasteSpecialCommand,
+                Command = PasteFromHtmlCommand,
                 InputGestureText = "Alt+V"
             });
             contextMenu.Items.Add(new MenuItem
