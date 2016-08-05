@@ -76,15 +76,11 @@ namespace MarkdownEdit.Controls
         {
             try
             {
-                if (_vm.UseClipboardImage)
-                {
-                    action(null);
-                }
-                else
-                {
-                    var text = DroppedFiles().Where(Images.IsImageUrl).Select(action).Aggregate((a, c) => a + c);
-                    InsertText(TextEditor, DragEventArgs, text);
-                }
+                var text = _vm.UseClipboardImage
+                    ? action(null)
+                    : DroppedFiles().Where(Images.IsImageUrl).Select(action).Aggregate((a, c) => a + c);
+
+                InsertText(TextEditor, DragEventArgs, text);
             }
             catch (Exception ex)
             {
