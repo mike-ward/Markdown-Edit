@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
-using MarkdownEdit.Controls;
 using Newtonsoft.Json;
 using static System.Environment;
 
