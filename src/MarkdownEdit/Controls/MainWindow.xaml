@@ -122,7 +122,7 @@
         <Button
           Style="{StaticResource CommandWindowButtonStyle}"
           FontFamily="Segoe UI Symbol"
-          Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}"
+          Command="{x:Static commands:ToggleSettingsFlyoutCommand.Command}"
           Content="&#xe115;"
           ToolTip="{i18N:Localize tooltip-toggle-settings}" />
 
@@ -176,7 +176,7 @@
         Theme="Accent">
         <controls:DisplaySettings x:Name="DisplaySettings" SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}" />
         <mah:Flyout.InputBindings>
-          <KeyBinding Key="Escape" Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" />
+          <KeyBinding Key="Escape" Command="{x:Static commands:ToggleSettingsFlyoutCommand.Command}" />
         </mah:Flyout.InputBindings>
       </mah:Flyout>
 
@@ -190,7 +190,7 @@
         Theme="Accent">
         <controls:DisplayDocumentStructure Margin="10,0,10,10" AbstractSyntaxTree="{Binding ElementName=Editor, Path=AbstractSyntaxTree}" />
         <mah:Flyout.InputBindings>
-          <KeyBinding Key="Escape" Command="{x:Static controls:MainWindow.ToggleDocumentStructureFlyoutCommand}" />
+          <KeyBinding Key="Escape" Command="{x:Static commands:ToggleDocumentStructureFlyoutCommand.Command}" />
         </mah:Flyout.InputBindings>
       </mah:Flyout>
     </mah:FlyoutsControl>
@@ -271,10 +271,7 @@
     <CommandBinding Command="{x:Static controls:MainWindow.InsertFileCommand}" Executed="ExecuteInsertFile" />
     <CommandBinding Command="{x:Static controls:MainWindow.IncreaseEditorMarginCommand}" Executed="ExecuteIncreaseEditorMargin" />
     <CommandBinding Command="{x:Static controls:MainWindow.DecreaseEditorMarginCommand}" Executed="ExecuteDecreaseEditorMargin" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" Executed="ExecuteToggleShowSettingsFlyout" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ToggleDocumentStructureFlyoutCommand}" Executed="ExecuteToggleDocumentStructureFlyout" />
     <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
-    <CommandBinding Command="{x:Static controls:MainWindow.InsertHyperlinkCommand}" Executed="ExecuteInsertHyperlinkCommand" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -318,8 +315,8 @@
     <KeyBinding Command="{x:Static controls:MainWindow.InsertFileCommand}" Gesture="Ctrl+Shift+O" />
     <KeyBinding Command="{x:Static controls:MainWindow.IncreaseEditorMarginCommand}" Gesture="Alt+Plus" />
     <KeyBinding Command="{x:Static controls:MainWindow.DecreaseEditorMarginCommand}" Gesture="Alt+Minus" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ToggleSettingsFlyoutCommand}" Gesture="Ctrl+Comma" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ToggleDocumentStructureFlyoutCommand}" Gesture="Ctrl+Period" />
+    <KeyBinding Command="{x:Static commands:ToggleSettingsFlyoutCommand.Command}" Gesture="Ctrl+Comma" />
+    <KeyBinding Command="{x:Static commands:ToggleDocumentStructureFlyoutCommand.Command}" Gesture="Ctrl+Period" />
     <KeyBinding Command="Print" Gesture="Ctrl+P" />
   </Window.InputBindings>
 </mah:MetroWindow>

@@ -58,9 +58,7 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand InsertFileCommand = new RoutedCommand();
         public static readonly RoutedCommand IncreaseEditorMarginCommand = new RoutedCommand();
         public static readonly RoutedCommand DecreaseEditorMarginCommand = new RoutedCommand();
-        public static readonly RoutedCommand ToggleSettingsFlyoutCommand = new RoutedCommand();
-        public static readonly RoutedCommand ToggleDocumentStructureFlyoutCommand = new RoutedCommand();
-        public static readonly RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
+
         private IMarkdownConverter _commonMarkConverter;
 
         private Thickness _editorMargins;
@@ -97,11 +95,14 @@ namespace MarkdownEdit.Controls
 
         private void BindCommands()
         {
-            CommandBindings.AddRange(new []
+            CommandBindings.AddRange(new[]
             {
                 ToggleWordWrapCommand.Bind,
                 LoadThemeCommand.Bind,
                 SaveThemeComand.Bind,
+                ToggleSettingsFlyoutCommand.Bind,
+                ToggleDocumentStructureFlyoutCommand.Bind,
+                InsertHyperlinkCommand.Bind,
                 GoToMarkdownEditWebSiteCommand.Bind,
                 ScrollToOffsetCommand.Bind
             });
@@ -191,7 +192,7 @@ namespace MarkdownEdit.Controls
         {
             var titleBar = GetTemplateChild("PART_TitleBar") as UIElement;
             var textBlock = titleBar?.GetDescendantByType<TextBlock>();
-            var fileNameBinding = new Binding {Path = new PropertyPath("FileName"), Source = Editor};
+            var fileNameBinding = new Binding { Path = new PropertyPath("FileName"), Source = Editor };
             textBlock?.SetBinding(ToolTipProperty, fileNameBinding);
         }
 
@@ -201,7 +202,7 @@ namespace MarkdownEdit.Controls
             DisplaySettings.SaveIfModified();
             cancelEventArgs.Cancel = !Editor.SaveIfModified();
             if (cancelEventArgs.Cancel || App.UserSettings.YesIDonated) return;
-            var donate = new Donate {Owner = Application.Current.MainWindow};
+            var donate = new Donate { Owner = Application.Current.MainWindow };
             donate.ShowDialog();
         }
 
@@ -217,54 +218,54 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private void SettingsClosingFinished(object sender, RoutedEventArgs e) 
+        private void SettingsClosingFinished(object sender, RoutedEventArgs e)
             => DisplaySettings.SaveIfModified();
 
-        private string BuildTitle() 
+        private string BuildTitle()
             => $"{App.Title} - {(Editor.IsModified ? "* " : "")}{Editor.DisplayName}";
 
         // Commands
 
-        private void ExecuteNewFile(object sender, ExecutedRoutedEventArgs ea) 
+        private void ExecuteNewFile(object sender, ExecutedRoutedEventArgs ea)
             => Editor.NewFile();
 
         private void ExecuteOpenFile(object sender, ExecutedRoutedEventArgs ea)
             => Editor.OpenFile(ea.Parameter as string);
 
-        public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea) 
+        public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea)
             => Editor.SaveFile();
 
-        public void ExecuteSaveFileAs(object sender, ExecutedRoutedEventArgs ea) 
+        public void ExecuteSaveFileAs(object sender, ExecutedRoutedEventArgs ea)
             => Editor.SaveFileAs();
 
-        public void ExecuteHelp(object sender, ExecutedRoutedEventArgs ea) 
+        public void ExecuteHelp(object sender, ExecutedRoutedEventArgs ea)
             => Editor.ToggleHelp();
 
-        public void ExecuteClose(object sender, ExecutedRoutedEventArgs ea) 
+        public void ExecuteClose(object sender, ExecutedRoutedEventArgs ea)
             => Close();
 
-        private void ExecuteEditorReplace(object sender, ExecutedRoutedEventArgs e) 
+        private void ExecuteEditorReplace(object sender, ExecutedRoutedEventArgs e)
             => Editor.ReplaceDialog();
 
-        private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea) 
+        private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea)
             => Editor.Bold();
 
-        private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea) 
+        private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea)
             => Editor.Italic();
 
-        private void ExecuteCode(object sender, ExecutedRoutedEventArgs ea) 
+        private void ExecuteCode(object sender, ExecutedRoutedEventArgs ea)
             => Editor.Code();
 
         private void ExecuteInsertHeader(object sender, ExecutedRoutedEventArgs ea)
             => Editor.InsertHeader(Convert.ToInt32(ea.Parameter));
 
-        private void ExecuteIncreaseFontSize(object sender, ExecutedRoutedEventArgs e) 
+        private void ExecuteIncreaseFontSize(object sender, ExecutedRoutedEventArgs e)
             => Editor.IncreaseFontSize();
 
-        private void ExecuteRestoreFontSize(object sender, ExecutedRoutedEventArgs e) 
+        private void ExecuteRestoreFontSize(object sender, ExecutedRoutedEventArgs e)
             => Editor.RestoreFontSize();
 
-        private void ExecuteDecreaseFontSize(object sender, ExecutedRoutedEventArgs e) 
+        private void ExecuteDecreaseFontSize(object sender, ExecutedRoutedEventArgs e)
             => Editor.DecreaseFontSize();
 
         private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e)
@@ -289,7 +290,7 @@ namespace MarkdownEdit.Controls
             SetFocus(control);
         }
 
-        private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e) 
+        private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e)
             => RecentFilesDialog.Display(this);
 
         private void ExecuteToggleAutoSave(object sender, ExecutedRoutedEventArgs e)
@@ -297,7 +298,7 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteTogglePreview(object sender, ExecutedRoutedEventArgs e)
         {
-            Settings.Default.EditPreviewHide = (Settings.Default.EditPreviewHide + 1)%3;
+            Settings.Default.EditPreviewHide = (Settings.Default.EditPreviewHide + 1) % 3;
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
         }
 
@@ -315,9 +316,6 @@ namespace MarkdownEdit.Controls
         private void ExecuteDecreaseEditorMargin(object sender, ExecutedRoutedEventArgs e)
             => App.UserSettings.SinglePaneMargin = Math.Min(App.UserSettings.SinglePaneMargin + 1, EditorMarginMax);
 
-        private void ExecuteInsertHyperlinkCommand(object sender, ExecutedRoutedEventArgs e)
-            => Editor.InsertHyperlinkCommand.Execute(e.Parameter, Editor);
-
         private void ExecuteEditorReplaceCommand(object sender, ExecutedRoutedEventArgs e)
         {
             var tuple = (Tuple<Regex, string>)e.Parameter;
@@ -331,7 +329,7 @@ namespace MarkdownEdit.Controls
         }
 
         private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e)
-            => new Process {StartInfo = {FileName = Utility.ExecutingAssembly(), Arguments = "-n"}}.Start();
+            => new Process { StartInfo = { FileName = Utility.ExecutingAssembly(), Arguments = "-n" } }.Start();
 
         private void SetFocus(IInputElement control)
         {
@@ -361,13 +359,13 @@ namespace MarkdownEdit.Controls
         }
 
         private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
-            => new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme}.ShowDialog();
+            => new ThemeDialog { Owner = this, CurrentTheme = App.UserSettings.Theme }.ShowDialog();
 
         private Thickness CalculateEditorMargins()
         {
             var singlePaneMargin = Math.Min(Math.Max(EditorMarginMin, App.UserSettings.SinglePaneMargin),
                 EditorMarginMax);
-            var margin = UniformGrid.Columns == 1 ? ActualWidth/singlePaneMargin : 0;
+            var margin = UniformGrid.Columns == 1 ? ActualWidth / singlePaneMargin : 0;
             return new Thickness(margin, 0, margin, 0);
         }
 
@@ -384,42 +382,22 @@ namespace MarkdownEdit.Controls
             => EditorLoadSave.SaveFileAs(Editor, "html-with-template");
 
         private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e)
-            => new GotoLineDialog {Owner = this}.ShowDialog();
-
-        private void ExecuteToggleShowSettingsFlyout(object sender, ExecutedRoutedEventArgs e) 
-            => ToggleSettings();
-
-        private void ExecuteToggleDocumentStructureFlyout(object sender, ExecutedRoutedEventArgs e)
-            => ToggleDocumentStructure();
+            => new GotoLineDialog { Owner = this }.ShowDialog();
 
         private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int)e.Parameter);
         }
 
-        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) 
+        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e)
             => Preview.UpdatePreview(Editor);
 
-        private void ExecuteInsertFile(object sender, ExecutedRoutedEventArgs e) 
+        private void ExecuteInsertFile(object sender, ExecutedRoutedEventArgs e)
             => Editor.InsertFile(null);
 
-        private void ExecutePrintHtml(object sender, ExecutedRoutedEventArgs e) 
+        private void ExecutePrintHtml(object sender, ExecutedRoutedEventArgs e)
             => Preview.Print();
 
-        private void ToggleSettings()
-        {
-            ((Flyout)Flyouts.Items[1]).IsOpen = false;
-            var settingsFlyout = (Flyout)Flyouts.Items[0];
-            settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
-            if (settingsFlyout.IsOpen) DisplaySettings.SaveState();
-        }
-
-        private void ToggleDocumentStructure()
-        {
-            ((Flyout)Flyouts.Items[0]).IsOpen = false;
-            var structureFlyout = (Flyout)Flyouts.Items[1];
-            structureFlyout.IsOpen = !structureFlyout.IsOpen;
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

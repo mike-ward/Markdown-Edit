@@ -155,9 +155,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\GoToMarkdownEditWebSiteCommand.cs" />
+    <Compile Include="Commands\InsertHyperlinkCommand.cs" />
     <Compile Include="Commands\LoadThemeCommand.cs" />
     <Compile Include="Commands\SaveThemeComand.cs" />
     <Compile Include="Commands\ScrollToOffsetCommand.cs" />
+    <Compile Include="Commands\ToggleDocumentStructureFlyoutCommand.cs" />
+    <Compile Include="Commands\ToggleSettingsFlyoutCommand.cs" />
     <Compile Include="Commands\ToggleWordWrapCommand.cs" />
     <Compile Include="Controls\DisplayDocumentStructureViewModel.cs">
       <DependentUpon>DisplayDocumentStructure.xaml</DependentUpon>
