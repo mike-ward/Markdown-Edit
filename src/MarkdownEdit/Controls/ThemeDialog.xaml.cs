@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using MarkdownEdit.Commands;
 using MarkdownEdit.Models;
 using Newtonsoft.Json;
 
@@ -32,7 +33,7 @@ namespace MarkdownEdit.Controls
             var files = Directory.EnumerateFiles(path, "*.json");
             ThemeListBox.ItemsSource = files
                 .Select(LoadTheme)
-                .Select(t => new ListBoxItem {Tag = t, Content = t?.Name ?? "Not Loaded"});
+                .Select(t => new ListBoxItem { Tag = t, Content = t?.Name ?? "Not Loaded" });
 
             ThemeListBox.ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
             var theme = ThemeListBox
@@ -58,7 +59,7 @@ namespace MarkdownEdit.Controls
 
         private void OnClosed(object sender, EventArgs eventArgs)
         {
-            if (_saved == false) MainWindow.LoadThemeCommand.Execute(CurrentTheme, Owner);
+            if (_saved == false) LoadThemeCommand.Command.Execute(CurrentTheme, Owner);
         }
 
         private void ItemContainerGeneratorOnStatusChanged(object sender, EventArgs eventArgs)
@@ -77,7 +78,7 @@ namespace MarkdownEdit.Controls
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var theme = ((ListBoxItem)ThemeListBox.SelectedItem).Tag;
-            if (theme != null) MainWindow.LoadThemeCommand.Execute(theme, Owner);
+            if (theme != null) LoadThemeCommand.Command.Execute(theme, Owner);
         }
 
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
@@ -89,7 +90,7 @@ namespace MarkdownEdit.Controls
         private void Save(object sender, RoutedEventArgs e)
         {
             e.Handled = true;
-            MainWindow.SaveThemeCommand.Execute(null, Owner);
+            SaveThemeComand.Command.Execute(null, Owner);
             _saved = true;
             Close();
         }

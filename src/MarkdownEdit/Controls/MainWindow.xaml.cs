@@ -12,13 +12,13 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
+using MarkdownEdit.Commands;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
 using Clipboard = MarkdownEdit.Models.Clipboard;
-using Theme = MarkdownEdit.Models.Theme;
 using Version = MarkdownEdit.Models.Version;
 
 namespace MarkdownEdit.Controls
@@ -27,7 +27,6 @@ namespace MarkdownEdit.Controls
     {
         private const int EditorMarginMin = 4;
         private const int EditorMarginMax = 16;
-        public static readonly RoutedCommand ToggleWordWrapCommand = new RoutedCommand();
         public static readonly RoutedCommand InsertHeaderCommand = new RoutedCommand();
         public static readonly RoutedCommand RestoreFontSizeCommand = new RoutedCommand();
         public static readonly RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
@@ -41,8 +40,6 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand RecentFilesCommand = new RoutedCommand();
         public static readonly RoutedCommand ToggleCodeCommand = new RoutedCommand();
         public static readonly RoutedCommand TogglePreviewCommand = new RoutedCommand();
-        public static readonly RoutedCommand LoadThemeCommand = new RoutedCommand();
-        public static readonly RoutedCommand SaveThemeCommand = new RoutedCommand();
         public static readonly RoutedCommand ShowThemeDialogCommand = new RoutedCommand();
         public static readonly RoutedCommand ExportHtmlCommand = new RoutedCommand();
         public static readonly RoutedCommand ExportHtmlTemplateCommand = new RoutedCommand();
@@ -64,8 +61,6 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand ToggleSettingsFlyoutCommand = new RoutedCommand();
         public static readonly RoutedCommand ToggleDocumentStructureFlyoutCommand = new RoutedCommand();
         public static readonly RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
-        public static readonly RoutedCommand GotToMarkdownEditWebSiteCommand = new RoutedCommand();
-        public static readonly RoutedCommand ScrollToOffsetCommand = new RoutedCommand();
         private IMarkdownConverter _commonMarkConverter;
 
         private Thickness _editorMargins;
@@ -97,6 +92,19 @@ namespace MarkdownEdit.Controls
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview((Editor)s);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(s, e);
+            BindCommands();
+        }
+
+        private void BindCommands()
+        {
+            CommandBindings.AddRange(new []
+            {
+                ToggleWordWrapCommand.Bind,
+                LoadThemeCommand.Bind,
+                SaveThemeComand.Bind,
+                GoToMarkdownEditWebSiteCommand.Bind,
+                ScrollToOffsetCommand.Bind
+            });
         }
 
         // Properites
@@ -136,10 +144,6 @@ namespace MarkdownEdit.Controls
         }
 
         public bool NewVersion { get { return _newVersion; } set { Set(ref _newVersion, value); } }
-
-        // INotifyPropertyChanged implementation
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnIsVisibleChanged(object sender,
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -232,9 +236,6 @@ namespace MarkdownEdit.Controls
 
         public void ExecuteSaveFileAs(object sender, ExecutedRoutedEventArgs ea) 
             => Editor.SaveFileAs();
-
-        public void ExecuteToggleWordWrap(object sender, ExecutedRoutedEventArgs ea)
-            => Settings.Default.WordWrapEnabled = !Settings.Default.WordWrapEnabled;
 
         public void ExecuteHelp(object sender, ExecutedRoutedEventArgs ea) 
             => Editor.ToggleHelp();
@@ -341,9 +342,6 @@ namespace MarkdownEdit.Controls
             }));
         }
 
-        public void ExecuteGotToMarkdownEditWebSite(object sender, ExecutedRoutedEventArgs e)
-            => Process.Start(new ProcessStartInfo("http://markdownedit.com"));
-
         private void OnActivated(object sender, EventArgs args)
         {
             if (Preview.Visibility == Visibility.Visible && Editor.Visibility != Visibility.Visible)
@@ -361,11 +359,6 @@ namespace MarkdownEdit.Controls
             SetFocus(state == 2 ? Preview.Browser as IInputElement : Editor.EditBox);
             EditorMargins = CalculateEditorMargins();
         }
-
-        private void ExecuteLoadTheme(object sender, ExecutedRoutedEventArgs e)
-            => App.UserSettings.Theme = e.Parameter as Theme;
-
-        private void ExecuteSaveTheme(object sender, ExecutedRoutedEventArgs e) => App.UserSettings.Save();
 
         private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
             => new ThemeDialog {Owner = this, CurrentTheme = App.UserSettings.Theme}.ShowDialog();
@@ -404,11 +397,6 @@ namespace MarkdownEdit.Controls
             if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int)e.Parameter);
         }
 
-        private void ExecuteScrollToOffset(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (e.Parameter != null) EditorUtilities.ScrollToOffset(Editor.EditBox, (int)e.Parameter);
-        }
-
         private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e) 
             => Preview.UpdatePreview(Editor);
 
@@ -432,6 +420,8 @@ namespace MarkdownEdit.Controls
             var structureFlyout = (Flyout)Flyouts.Items[1];
             structureFlyout.IsOpen = !structureFlyout.IsOpen;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {

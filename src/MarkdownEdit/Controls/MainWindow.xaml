@@ -4,6 +4,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:controls="clr-namespace:MarkdownEdit.Controls"
   xmlns:converters="clr-namespace:MarkdownEdit.Converters"
+  xmlns:commands="clr-namespace:MarkdownEdit.Commands"
   xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
   xmlns:interop="clr-namespace:Microsoft.DwayneNeed.Interop;assembly=Microsoft.DwayneNeed"
   xmlns:local="clr-namespace:MarkdownEdit"
@@ -143,7 +144,7 @@
         <Button
           Style="{StaticResource WordWrapToggleCommandWindowButtonStyle}"
           FontFamily="Segoe UI Symbol"
-          Command="{x:Static controls:MainWindow.ToggleWordWrapCommand}"
+          Command="{x:Static commands:ToggleWordWrapCommand.Command}"
           Content="&#x21A9;"
           ToolTip="{i18N:Localize tooltip-word-wrap}" />
         <Button
@@ -155,7 +156,7 @@
         <Button
           Style="{StaticResource NewVersionCommandWindowButtonStyle}"
           FontFamily="Segoe UI Symbol"
-          Command="{x:Static controls:MainWindow.GotToMarkdownEditWebSiteCommand}"
+          Command="{x:Static commands:GoToMarkdownEditWebSiteCommand.Command}"
           Content="&#xE182;"
           ToolTip="{i18N:Localize tooltip-new-version}" />
       </StackPanel>
@@ -239,7 +240,6 @@
     <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
     <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
     <CommandBinding Command="{x:Static controls:MainWindow.ToggleCodeCommand}" Executed="ExecuteCode" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ToggleWordWrapCommand}" Executed="ExecuteToggleWordWrap" />
     <CommandBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" Executed="ExecuteInsertHeader" />
     <CommandBinding Command="IncreaseFontSize" Executed="ExecuteIncreaseFontSize" />
     <CommandBinding Command="DecreaseFontSize" Executed="ExecuteDecreaseFontSize" />
@@ -254,8 +254,6 @@
     <CommandBinding Command="{x:Static controls:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" />
     <CommandBinding Command="{x:Static controls:MainWindow.TogglePreviewCommand}" Executed="ExecuteTogglePreview" />
     <CommandBinding Command="{x:Static controls:MainWindow.ShowThemeDialogCommand}" Executed="ExecuteShowThemeDialog" />
-    <CommandBinding Command="{x:Static controls:MainWindow.LoadThemeCommand}" Executed="ExecuteLoadTheme" />
-    <CommandBinding Command="{x:Static controls:MainWindow.SaveThemeCommand}" Executed="ExecuteSaveTheme" />
     <CommandBinding Command="{x:Static controls:MainWindow.ExportHtmlCommand}" Executed="ExecuteExportHtml" />
     <CommandBinding Command="{x:Static controls:MainWindow.ExportHtmlTemplateCommand}" Executed="ExecuteExportHtmlTemplate" />
     <CommandBinding Command="{x:Static controls:MainWindow.SaveAsHtmlCommand}" Executed="ExecuteSaveAsHtml" />
@@ -277,8 +275,6 @@
     <CommandBinding Command="{x:Static controls:MainWindow.ToggleDocumentStructureFlyoutCommand}" Executed="ExecuteToggleDocumentStructureFlyout" />
     <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
     <CommandBinding Command="{x:Static controls:MainWindow.InsertHyperlinkCommand}" Executed="ExecuteInsertHyperlinkCommand" />
-    <CommandBinding Command="{x:Static controls:MainWindow.GotToMarkdownEditWebSiteCommand}" Executed="ExecuteGotToMarkdownEditWebSite" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ScrollToOffsetCommand}" Executed="ExecuteScrollToOffset" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
@@ -286,7 +282,7 @@
     <KeyBinding Command="ToggleItalic" Gesture="Ctrl+I" />
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleCodeCommand}" Gesture="Ctrl+K" />
     <KeyBinding Command="SaveAs" Gesture="Ctrl+Shift+S" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ToggleWordWrapCommand}" Gesture="Ctrl+W" />
+    <KeyBinding Command="{x:Static commands:ToggleWordWrapCommand.Command}" Gesture="Ctrl+W" />
     <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" CommandParameter="1" Gesture="Ctrl+1" />
     <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" CommandParameter="2" Gesture="Ctrl+2" />
     <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" CommandParameter="3" Gesture="Ctrl+3" />

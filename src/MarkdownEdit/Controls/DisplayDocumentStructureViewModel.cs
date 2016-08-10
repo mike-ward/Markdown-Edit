@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using CommonMark.Syntax;
+using MarkdownEdit.Commands;
 using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
@@ -42,7 +43,7 @@ namespace MarkdownEdit.Controls
         public void Selected(int index)
         {
             var offset = index <= Structure.Length ? Structure[index].Offset : 0;
-            MainWindow.ScrollToOffsetCommand.Execute(offset, Application.Current.MainWindow);
+            ScrollToOffsetCommand.Command.Execute(offset, Application.Current.MainWindow);
         }
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
