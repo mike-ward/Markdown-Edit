@@ -25,7 +25,6 @@
   WindowTransitionsEnabled="False">
 
   <mah:MetroWindow.Resources>
-    <converters:NumberFormatConverter x:Key="NumberFormatConverter" />
     <converters:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
 
     <Style x:Key="CommandWindowButtonStyle" BasedOn="{StaticResource MetroBaseWindowButtonStyle}" TargetType="Button">
@@ -236,7 +235,6 @@
     <CommandBinding Command="SaveAs" Executed="ExecuteSaveFileAs" />
     <CommandBinding Command="Help" Executed="ExecuteHelp" />
     <CommandBinding Command="Close" Executed="ExecuteClose" />
-    <CommandBinding Command="Replace" Executed="ExecuteEditorReplace" />
     <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
     <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
     <CommandBinding Command="{x:Static controls:MainWindow.ToggleCodeCommand}" Executed="ExecuteCode" />
@@ -264,11 +262,6 @@
     <CommandBinding Command="{x:Static controls:MainWindow.SelectPreviousHeaderCommand}" Executed="ExecuteSelectPreviousHeader" />
     <CommandBinding Command="{x:Static controls:MainWindow.SelectNextHeaderCommand}" Executed="ExecuteSelectNextHeader" />
     <CommandBinding Command="{x:Static controls:MainWindow.EditorFindCommand}" Executed="ExecuteEditorFindCommand" />
-    <CommandBinding Command="{x:Static controls:MainWindow.EditorReplaceCommand}" Executed="ExecuteEditorReplaceCommand" />
-    <CommandBinding Command="{x:Static controls:MainWindow.EditorReplaceAllCommand}" Executed="ExecuteEditorReplaceAllCommand" />
-    <CommandBinding Command="{x:Static controls:MainWindow.OpenNewInstanceCommand}" Executed="ExecuteOpenNewInstance" />
-    <CommandBinding Command="{x:Static controls:MainWindow.UpdatePreviewCommand}" Executed="ExecuteUpdatePreview" />
-    <CommandBinding Command="{x:Static controls:MainWindow.InsertFileCommand}" Executed="ExecuteInsertFile" />
     <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
   </Window.CommandBindings>
 
@@ -309,8 +302,8 @@
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleAutoSaveCommand}" Gesture="Alt+S" />
     <KeyBinding Command="{x:Static controls:MainWindow.SelectPreviousHeaderCommand}" Gesture="Ctrl+U" />
     <KeyBinding Command="{x:Static controls:MainWindow.SelectNextHeaderCommand}" Gesture="Ctrl+J" />
-    <KeyBinding Command="{x:Static controls:MainWindow.OpenNewInstanceCommand}" Gesture="Ctrl+Shift+N" />
-    <KeyBinding Command="{x:Static controls:MainWindow.InsertFileCommand}" Gesture="Ctrl+Shift+O" />
+    <KeyBinding Command="{x:Static commands:OpenNewInstanceCommand.Command}" Gesture="Ctrl+Shift+N" />
+    <KeyBinding Command="{x:Static commands:InsertFileCommand.Command}" Gesture="Ctrl+Shift+O" />
     <KeyBinding Command="{x:Static commands:IncreaseEditorMarginCommand.Command}" Gesture="Alt+Plus" />
     <KeyBinding Command="{x:Static commands:DecreaseEditorMarginCommand.Command}" Gesture="Alt+Minus" />
     <KeyBinding Command="{x:Static commands:ToggleSettingsFlyoutCommand.Command}" Gesture="Ctrl+Comma" />

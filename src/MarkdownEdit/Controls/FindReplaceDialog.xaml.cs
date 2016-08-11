@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using MarkdownEdit.Commands;
 using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
@@ -75,7 +76,7 @@ namespace MarkdownEdit.Controls
                 var find = GetRegEx(_findText, false);
                 var replace = txtReplace.Text;
                 var tuple = new Tuple<Regex, string>(find, replace);
-                MainWindow.EditorReplaceCommand.Execute(tuple, Application.Current.MainWindow);
+                EditorReplaceCommand.Command.Execute(tuple, Application.Current.MainWindow);
             }
             catch (Exception ex)
             {
@@ -91,7 +92,7 @@ namespace MarkdownEdit.Controls
                 var find = GetRegEx(_findText, false);
                 var replace = txtReplace.Text;
                 var tuple = new Tuple<Regex, string>(find, replace);
-                MainWindow.EditorReplaceAllCommand.Execute(tuple, Application.Current.MainWindow);
+                EditorReplaceAllCommand.Command.Execute(tuple, Application.Current.MainWindow);
             }
             catch (Exception ex)
             {

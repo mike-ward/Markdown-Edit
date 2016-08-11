@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -49,11 +48,6 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand SelectPreviousHeaderCommand = new RoutedCommand();
         public static readonly RoutedCommand SelectNextHeaderCommand = new RoutedCommand();
         public static readonly RoutedCommand EditorFindCommand = new RoutedCommand();
-        public static readonly RoutedCommand EditorReplaceCommand = new RoutedCommand();
-        public static readonly RoutedCommand EditorReplaceAllCommand = new RoutedCommand();
-        public static readonly RoutedCommand OpenNewInstanceCommand = new RoutedCommand();
-        public static readonly RoutedCommand UpdatePreviewCommand = new RoutedCommand();
-        public static readonly RoutedCommand InsertFileCommand = new RoutedCommand();
 
         private IMarkdownConverter _commonMarkConverter;
 
@@ -224,9 +218,6 @@ namespace MarkdownEdit.Controls
         public void ExecuteClose(object sender, ExecutedRoutedEventArgs ea)
             => Close();
 
-        private void ExecuteEditorReplace(object sender, ExecutedRoutedEventArgs e)
-            => Editor.ReplaceDialog();
-
         private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea)
             => Editor.Bold();
 
@@ -290,21 +281,6 @@ namespace MarkdownEdit.Controls
         private void ExecuteEditorFindCommand(object sender, ExecutedRoutedEventArgs e)
             => Editor.Find(e.Parameter as Regex);
 
-        private void ExecuteEditorReplaceCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            var tuple = (Tuple<Regex, string>)e.Parameter;
-            Editor.Replace(tuple.Item1, tuple.Item2);
-        }
-
-        private void ExecuteEditorReplaceAllCommand(object sender, ExecutedRoutedEventArgs e)
-        {
-            var tuple = (Tuple<Regex, string>)e.Parameter;
-            Editor.ReplaceAll(tuple.Item1, tuple.Item2);
-        }
-
-        private void ExecuteOpenNewInstance(object sender, ExecutedRoutedEventArgs e)
-            => new Process { StartInfo = { FileName = Utility.ExecutingAssembly(), Arguments = "-n" } }.Start();
-
         private void SetFocus(IInputElement control)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
@@ -362,12 +338,6 @@ namespace MarkdownEdit.Controls
         {
             if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int)e.Parameter);
         }
-
-        private void ExecuteUpdatePreview(object sender, ExecutedRoutedEventArgs e)
-            => Preview.UpdatePreview(Editor);
-
-        private void ExecuteInsertFile(object sender, ExecutedRoutedEventArgs e)
-            => Editor.InsertFile(null);
 
         private void ExecutePrintHtml(object sender, ExecutedRoutedEventArgs e)
             => Preview.Print();

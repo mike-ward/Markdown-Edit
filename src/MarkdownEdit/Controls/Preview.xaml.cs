@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using HtmlAgilityPack;
 using mshtml;
+using MarkdownEdit.Commands;
 using MarkdownEdit.Converters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
@@ -264,7 +265,7 @@ namespace MarkdownEdit.Controls
         private void UpdateTemplate()
         {
             Browser.Refresh();
-            MainWindow.UpdatePreviewCommand.Execute(null, this);
+            UpdatePreviewCommand.Command.Execute(null, this);
         }
 
         private static void BrowserOnNavigating(object sender, NavigatingCancelEventArgs ea)

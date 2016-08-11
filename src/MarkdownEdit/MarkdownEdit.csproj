@@ -154,16 +154,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\EditorReplaceAllCommand.cs" />
+    <Compile Include="Commands\EditorReplaceCommand.cs" />
     <Compile Include="Commands\IncreaseEditorMarginCommand.cs" />
     <Compile Include="Commands\DecreaseEditorMarginCommand.cs" />
     <Compile Include="Commands\GoToMarkdownEditWebSiteCommand.cs" />
+    <Compile Include="Commands\InsertFileCommand.cs" />
     <Compile Include="Commands\InsertHyperlinkCommand.cs" />
     <Compile Include="Commands\LoadThemeCommand.cs" />
+    <Compile Include="Commands\OpenNewInstanceCommand.cs" />
     <Compile Include="Commands\SaveThemeComand.cs" />
     <Compile Include="Commands\ScrollToOffsetCommand.cs" />
     <Compile Include="Commands\ToggleDocumentStructureFlyoutCommand.cs" />
     <Compile Include="Commands\ToggleSettingsFlyoutCommand.cs" />
     <Compile Include="Commands\ToggleWordWrapCommand.cs" />
+    <Compile Include="Commands\UpdatePreviewCommand.cs" />
     <Compile Include="Controls\DisplayDocumentStructureViewModel.cs">
       <DependentUpon>DisplayDocumentStructure.xaml</DependentUpon>
     </Compile>
