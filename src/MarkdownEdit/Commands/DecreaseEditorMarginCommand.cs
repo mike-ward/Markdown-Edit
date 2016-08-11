@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using MarkdownEdit.Controls;
 
 namespace MarkdownEdit.Commands
 {
-    internal class DecreaseEditorMarginCommand
+    internal static class DecreaseEditorMarginCommand
     {
         public static readonly RoutedCommand Command = new RoutedCommand();
-        public static readonly CommandBinding Bind = new CommandBinding(Command, Execute, CanExecute);
-        private static void CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+
+        static DecreaseEditorMarginCommand()
+        {
+            Application.Current.MainWindow.CommandBindings.Add(new CommandBinding(Command, Execute));
+        }
 
         private static void Execute(object sender, ExecutedRoutedEventArgs e)
         {

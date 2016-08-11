@@ -50,7 +50,9 @@ namespace MarkdownEdit.Commands
         {
             var startOffset = offset;
             while (startOffset > 0 && char.IsWhiteSpace(textSource.GetCharAt(startOffset - 1)) == false)
+            {
                 startOffset -= 1;
+            }
             return startOffset;
         }
     }

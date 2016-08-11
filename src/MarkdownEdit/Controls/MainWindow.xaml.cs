@@ -11,7 +11,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using MarkdownEdit.Commands;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
@@ -87,24 +86,6 @@ namespace MarkdownEdit.Controls
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview((Editor)s);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(s, e);
-            BindCommands();
-        }
-
-        private void BindCommands()
-        {
-            CommandBindings.AddRange(new[]
-            {
-                ToggleWordWrapCommand.Bind,
-                LoadThemeCommand.Bind,
-                SaveThemeComand.Bind,
-                IncreaseEditorMarginCommand.Bind,
-                DecreaseEditorMarginCommand.Bind,
-                ToggleSettingsFlyoutCommand.Bind,
-                ToggleDocumentStructureFlyoutCommand.Bind,
-                InsertHyperlinkCommand.Bind,
-                GoToMarkdownEditWebSiteCommand.Bind,
-                ScrollToOffsetCommand.Bind
-            });
         }
 
         // Properites

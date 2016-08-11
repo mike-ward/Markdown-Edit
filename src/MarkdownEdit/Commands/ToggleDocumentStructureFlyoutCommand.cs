@@ -1,14 +1,18 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MarkdownEdit.Controls;
 
 namespace MarkdownEdit.Commands
 {
-    internal class ToggleDocumentStructureFlyoutCommand
+    internal static class ToggleDocumentStructureFlyoutCommand
     {
         public static readonly RoutedCommand Command = new RoutedCommand();
-        public static readonly CommandBinding Bind = new CommandBinding(Command, Execute, CanExecute);
-        private static void CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = true;
+
+        static ToggleDocumentStructureFlyoutCommand()
+        {
+            Application.Current.MainWindow.CommandBindings.Add(new CommandBinding(Command, Execute));
+        }
 
         private static void Execute(object sender, ExecutedRoutedEventArgs e)
         {
