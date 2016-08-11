@@ -11,7 +11,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using MahApps.Metro.Controls;
 using MarkdownEdit.Commands;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
@@ -25,8 +24,8 @@ namespace MarkdownEdit.Controls
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
-        private const int EditorMarginMin = 4;
-        private const int EditorMarginMax = 16;
+        public const int EditorMarginMin = 4;
+        public const int EditorMarginMax = 16;
         public static readonly RoutedCommand InsertHeaderCommand = new RoutedCommand();
         public static readonly RoutedCommand RestoreFontSizeCommand = new RoutedCommand();
         public static readonly RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
@@ -56,8 +55,6 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand OpenNewInstanceCommand = new RoutedCommand();
         public static readonly RoutedCommand UpdatePreviewCommand = new RoutedCommand();
         public static readonly RoutedCommand InsertFileCommand = new RoutedCommand();
-        public static readonly RoutedCommand IncreaseEditorMarginCommand = new RoutedCommand();
-        public static readonly RoutedCommand DecreaseEditorMarginCommand = new RoutedCommand();
 
         private IMarkdownConverter _commonMarkConverter;
 
@@ -100,6 +97,8 @@ namespace MarkdownEdit.Controls
                 ToggleWordWrapCommand.Bind,
                 LoadThemeCommand.Bind,
                 SaveThemeComand.Bind,
+                IncreaseEditorMarginCommand.Bind,
+                DecreaseEditorMarginCommand.Bind,
                 ToggleSettingsFlyoutCommand.Bind,
                 ToggleDocumentStructureFlyoutCommand.Bind,
                 InsertHyperlinkCommand.Bind,
@@ -309,12 +308,6 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteEditorFindCommand(object sender, ExecutedRoutedEventArgs e)
             => Editor.Find(e.Parameter as Regex);
-
-        private void ExecuteIncreaseEditorMargin(object sender, ExecutedRoutedEventArgs e)
-            => App.UserSettings.SinglePaneMargin = Math.Max(App.UserSettings.SinglePaneMargin - 1, EditorMarginMin);
-
-        private void ExecuteDecreaseEditorMargin(object sender, ExecutedRoutedEventArgs e)
-            => App.UserSettings.SinglePaneMargin = Math.Min(App.UserSettings.SinglePaneMargin + 1, EditorMarginMax);
 
         private void ExecuteEditorReplaceCommand(object sender, ExecutedRoutedEventArgs e)
         {

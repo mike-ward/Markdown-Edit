@@ -1,10 +1,10 @@
-﻿using System.Windows.Input;
-using MahApps.Metro.Controls;
+﻿using System;
+using System.Windows.Input;
 using MarkdownEdit.Controls;
 
 namespace MarkdownEdit.Commands
 {
-    internal class ToggleSettingsFlyoutCommand
+    internal class IncreaseEditorMarginCommand
     {
         public static readonly RoutedCommand Command = new RoutedCommand();
         public static readonly CommandBinding Bind = new CommandBinding(Command, Execute, CanExecute);
@@ -12,12 +12,8 @@ namespace MarkdownEdit.Commands
 
         private static void Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            var mainWindow = (MainWindow)sender;
-            var flyouts = mainWindow.Flyouts;
-            ((Flyout)flyouts.Items[1]).IsOpen = false;
-            var settingsFlyout = (Flyout)flyouts.Items[0];
-            settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
-            if (settingsFlyout.IsOpen) mainWindow.DisplaySettings.SaveState();
+            App.UserSettings.SinglePaneMargin =
+                Math.Max(App.UserSettings.SinglePaneMargin - 1, MainWindow.EditorMarginMin);
         }
     }
 }

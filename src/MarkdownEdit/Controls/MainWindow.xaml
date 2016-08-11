@@ -269,8 +269,6 @@
     <CommandBinding Command="{x:Static controls:MainWindow.OpenNewInstanceCommand}" Executed="ExecuteOpenNewInstance" />
     <CommandBinding Command="{x:Static controls:MainWindow.UpdatePreviewCommand}" Executed="ExecuteUpdatePreview" />
     <CommandBinding Command="{x:Static controls:MainWindow.InsertFileCommand}" Executed="ExecuteInsertFile" />
-    <CommandBinding Command="{x:Static controls:MainWindow.IncreaseEditorMarginCommand}" Executed="ExecuteIncreaseEditorMargin" />
-    <CommandBinding Command="{x:Static controls:MainWindow.DecreaseEditorMarginCommand}" Executed="ExecuteDecreaseEditorMargin" />
     <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
   </Window.CommandBindings>
 
@@ -313,8 +311,8 @@
     <KeyBinding Command="{x:Static controls:MainWindow.SelectNextHeaderCommand}" Gesture="Ctrl+J" />
     <KeyBinding Command="{x:Static controls:MainWindow.OpenNewInstanceCommand}" Gesture="Ctrl+Shift+N" />
     <KeyBinding Command="{x:Static controls:MainWindow.InsertFileCommand}" Gesture="Ctrl+Shift+O" />
-    <KeyBinding Command="{x:Static controls:MainWindow.IncreaseEditorMarginCommand}" Gesture="Alt+Plus" />
-    <KeyBinding Command="{x:Static controls:MainWindow.DecreaseEditorMarginCommand}" Gesture="Alt+Minus" />
+    <KeyBinding Command="{x:Static commands:IncreaseEditorMarginCommand.Command}" Gesture="Alt+Plus" />
+    <KeyBinding Command="{x:Static commands:DecreaseEditorMarginCommand.Command}" Gesture="Alt+Minus" />
     <KeyBinding Command="{x:Static commands:ToggleSettingsFlyoutCommand.Command}" Gesture="Ctrl+Comma" />
     <KeyBinding Command="{x:Static commands:ToggleDocumentStructureFlyoutCommand.Command}" Gesture="Ctrl+Period" />
     <KeyBinding Command="Print" Gesture="Ctrl+P" />
