@@ -154,6 +154,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\EditorFindCommand.cs" />
     <Compile Include="Commands\EditorReplaceAllCommand.cs" />
     <Compile Include="Commands\EditorReplaceCommand.cs" />
     <Compile Include="Commands\EditorReplaceDialogCommand.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Commands\OpenNewInstanceCommand.cs" />
     <Compile Include="Commands\SaveThemeComand.cs" />
     <Compile Include="Commands\ScrollToOffsetCommand.cs" />
+    <Compile Include="Commands\ShowThemeDialogCommand.cs" />
     <Compile Include="Commands\ToggleDocumentStructureFlyoutCommand.cs" />
     <Compile Include="Commands\ToggleSettingsFlyoutCommand.cs" />
     <Compile Include="Commands\ToggleWordWrapCommand.cs" />

@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using MarkdownEdit.Commands;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
@@ -38,7 +36,6 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand RecentFilesCommand = new RoutedCommand();
         public static readonly RoutedCommand ToggleCodeCommand = new RoutedCommand();
         public static readonly RoutedCommand TogglePreviewCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowThemeDialogCommand = new RoutedCommand();
         public static readonly RoutedCommand ExportHtmlCommand = new RoutedCommand();
         public static readonly RoutedCommand ExportHtmlTemplateCommand = new RoutedCommand();
         public static readonly RoutedCommand SaveAsHtmlCommand = new RoutedCommand();
@@ -48,7 +45,6 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand ToggleAutoSaveCommand = new RoutedCommand();
         public static readonly RoutedCommand SelectPreviousHeaderCommand = new RoutedCommand();
         public static readonly RoutedCommand SelectNextHeaderCommand = new RoutedCommand();
-        public static readonly RoutedCommand EditorFindCommand = new RoutedCommand();
 
         private IMarkdownConverter _commonMarkConverter;
 
@@ -81,7 +77,6 @@ namespace MarkdownEdit.Controls
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview((Editor)s);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(s, e);
-            EditorReplaceDialogCommand.Init();
         }
 
         // Properites
@@ -280,9 +275,6 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteSelectNextHeader(object sender, ExecutedRoutedEventArgs e) => Editor.SelectNextHeader();
 
-        private void ExecuteEditorFindCommand(object sender, ExecutedRoutedEventArgs e)
-            => Editor.Find(e.Parameter as Regex);
-
         private void SetFocus(IInputElement control)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
@@ -309,9 +301,6 @@ namespace MarkdownEdit.Controls
             SetFocus(state == 2 ? Preview.Browser as IInputElement : Editor.EditBox);
             EditorMargins = CalculateEditorMargins();
         }
-
-        private void ExecuteShowThemeDialog(object sender, ExecutedRoutedEventArgs e)
-            => new ThemeDialog { Owner = this, CurrentTheme = App.UserSettings.Theme }.ShowDialog();
 
         private Thickness CalculateEditorMargins()
         {

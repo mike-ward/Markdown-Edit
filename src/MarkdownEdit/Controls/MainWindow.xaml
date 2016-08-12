@@ -251,7 +251,6 @@
     <CommandBinding Command="{x:Static controls:MainWindow.ToggleFullScreenCommand}" Executed="ExecuteToggleFullScreen" />
     <CommandBinding Command="{x:Static controls:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" />
     <CommandBinding Command="{x:Static controls:MainWindow.TogglePreviewCommand}" Executed="ExecuteTogglePreview" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ShowThemeDialogCommand}" Executed="ExecuteShowThemeDialog" />
     <CommandBinding Command="{x:Static controls:MainWindow.ExportHtmlCommand}" Executed="ExecuteExportHtml" />
     <CommandBinding Command="{x:Static controls:MainWindow.ExportHtmlTemplateCommand}" Executed="ExecuteExportHtmlTemplate" />
     <CommandBinding Command="{x:Static controls:MainWindow.SaveAsHtmlCommand}" Executed="ExecuteSaveAsHtml" />
@@ -261,11 +260,12 @@
     <CommandBinding Command="{x:Static controls:MainWindow.ToggleAutoSaveCommand}" Executed="ExecuteToggleAutoSave" />
     <CommandBinding Command="{x:Static controls:MainWindow.SelectPreviousHeaderCommand}" Executed="ExecuteSelectPreviousHeader" />
     <CommandBinding Command="{x:Static controls:MainWindow.SelectNextHeaderCommand}" Executed="ExecuteSelectNextHeader" />
-    <CommandBinding Command="{x:Static controls:MainWindow.EditorFindCommand}" Executed="ExecuteEditorFindCommand" />
     <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
+    <KeyBinding Command="{x:Static commands:EditorFindCommand.Command}" />
+    <KeyBinding Command="{x:Static commands:EditorReplaceDialogCommand.Command}" />
     <KeyBinding Command="ToggleBold" Gesture="Ctrl+B" />
     <KeyBinding Command="ToggleItalic" Gesture="Ctrl+I" />
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleCodeCommand}" Gesture="Ctrl+K" />
@@ -294,7 +294,7 @@
     <KeyBinding Command="{x:Static controls:MainWindow.ToggleFullScreenCommand}" Gesture="F11" />
     <KeyBinding Command="{x:Static controls:MainWindow.TogglePreviewCommand}" Gesture="F12" />
     <KeyBinding Command="{x:Static controls:MainWindow.RecentFilesCommand}" Gesture="Ctrl+R" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ShowThemeDialogCommand}" Gesture="Ctrl+T" />
+    <KeyBinding Command="{x:Static commands:ShowThemeDialogCommand.Command}" Gesture="Ctrl+T" />
     <KeyBinding Command="{x:Static controls:MainWindow.ExportHtmlCommand}" Gesture="Ctrl+E" />
     <KeyBinding Command="{x:Static controls:MainWindow.ExportHtmlTemplateCommand}" Gesture="Ctrl+Shift+E" />
     <KeyBinding Command="{x:Static controls:MainWindow.SaveAsHtmlTemplateCommand}" Gesture="Alt+E" />

@@ -1,14 +1,15 @@
-﻿using System.Windows;
+﻿using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Input;
 using MarkdownEdit.Controls;
 
 namespace MarkdownEdit.Commands
 {
-    internal static class EditorReplaceDialogCommand
+    internal static class EditorFindCommand
     {
-        public static readonly RoutedCommand Command = ApplicationCommands.Replace;
+        public static readonly RoutedCommand Command = new RoutedCommand();
 
-        static EditorReplaceDialogCommand()
+        static EditorFindCommand()
         {
             Application.Current.MainWindow.CommandBindings.Add(new CommandBinding(Command, Execute));
         }
@@ -16,7 +17,7 @@ namespace MarkdownEdit.Commands
         private static void Execute(object sender, ExecutedRoutedEventArgs e)
         {
             var mainWindow = (MainWindow)sender;
-            mainWindow.Editor.ReplaceDialog();
+            mainWindow.Editor.Find(e.Parameter as Regex);
         }
     }
 }

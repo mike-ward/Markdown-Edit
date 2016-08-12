@@ -46,7 +46,7 @@ namespace MarkdownEdit.Controls
             {
                 _findText = FindText;
                 var find = GetRegEx(_findText, false);
-                MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
+                EditorFindCommand.Command.Execute(find, Application.Current.MainWindow);
             }
             catch (Exception ex)
             {
@@ -60,7 +60,7 @@ namespace MarkdownEdit.Controls
             {
                 _findText = FindText;
                 var find = GetRegEx(_findText, false);
-                MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
+                EditorFindCommand.Command.Execute(find, Application.Current.MainWindow);
             }
             catch (Exception ex)
             {
@@ -138,14 +138,14 @@ namespace MarkdownEdit.Controls
         {
             if (_findText == null) return;
             var find = GetRegEx(_findText, true);
-            MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
+            EditorFindCommand.Command.Execute(find, Application.Current.MainWindow);
         }
 
         public void FindNext()
         {
             if (_findText == null) return;
             var find = GetRegEx(_findText, false);
-            MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
+            EditorFindCommand.Command.Execute(find, Application.Current.MainWindow);
         }
 
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e) { Hide(); }

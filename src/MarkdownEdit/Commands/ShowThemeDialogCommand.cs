@@ -4,19 +4,18 @@ using MarkdownEdit.Controls;
 
 namespace MarkdownEdit.Commands
 {
-    internal static class EditorReplaceDialogCommand
+    internal static class ShowThemeDialogCommand
     {
-        public static readonly RoutedCommand Command = ApplicationCommands.Replace;
+        public static readonly RoutedCommand Command = new RoutedCommand();
 
-        static EditorReplaceDialogCommand()
+        static ShowThemeDialogCommand()
         {
             Application.Current.MainWindow.CommandBindings.Add(new CommandBinding(Command, Execute));
         }
 
         private static void Execute(object sender, ExecutedRoutedEventArgs e)
         {
-            var mainWindow = (MainWindow)sender;
-            mainWindow.Editor.ReplaceDialog();
+            new ThemeDialog { Owner = (MainWindow)sender, CurrentTheme = App.UserSettings.Theme }.ShowDialog();
         }
     }
 }
