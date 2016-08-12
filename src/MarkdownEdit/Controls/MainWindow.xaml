@@ -149,7 +149,7 @@
         <Button
           Style="{StaticResource AutoSaveToggleCommandWindowButtonStyle}"
           FontFamily="Segoe UI Symbol"
-          Command="{x:Static controls:MainWindow.ToggleAutoSaveCommand}"
+          Command="{x:Static commands:ToggleAutoSaveCommand.Command }"
           Content="&#xe105;"
           ToolTip="{i18N:Localize tooltip-auto-save}" />
         <Button
@@ -255,11 +255,6 @@
     <CommandBinding Command="{x:Static controls:MainWindow.ExportHtmlTemplateCommand}" Executed="ExecuteExportHtmlTemplate" />
     <CommandBinding Command="{x:Static controls:MainWindow.SaveAsHtmlCommand}" Executed="ExecuteSaveAsHtml" />
     <CommandBinding Command="{x:Static controls:MainWindow.SaveAsHtmlTemplateCommand}" Executed="ExecuteSaveAsHtmlTemplate" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ShowGotoLineDialogCommand}" Executed="ExecuteShowGotoLineDialog" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ScrollToLineCommand}" Executed="ExecuteScrollToLine" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ToggleAutoSaveCommand}" Executed="ExecuteToggleAutoSave" />
-    <CommandBinding Command="{x:Static controls:MainWindow.SelectPreviousHeaderCommand}" Executed="ExecuteSelectPreviousHeader" />
-    <CommandBinding Command="{x:Static controls:MainWindow.SelectNextHeaderCommand}" Executed="ExecuteSelectNextHeader" />
     <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
   </Window.CommandBindings>
 
@@ -298,10 +293,10 @@
     <KeyBinding Command="{x:Static controls:MainWindow.ExportHtmlCommand}" Gesture="Ctrl+E" />
     <KeyBinding Command="{x:Static controls:MainWindow.ExportHtmlTemplateCommand}" Gesture="Ctrl+Shift+E" />
     <KeyBinding Command="{x:Static controls:MainWindow.SaveAsHtmlTemplateCommand}" Gesture="Alt+E" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ShowGotoLineDialogCommand}" Gesture="Ctrl+G" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ToggleAutoSaveCommand}" Gesture="Alt+S" />
-    <KeyBinding Command="{x:Static controls:MainWindow.SelectPreviousHeaderCommand}" Gesture="Ctrl+U" />
-    <KeyBinding Command="{x:Static controls:MainWindow.SelectNextHeaderCommand}" Gesture="Ctrl+J" />
+    <KeyBinding Command="{x:Static commands:ShowGotoLineDialogCommand.Command}" Gesture="Ctrl+G" />
+    <KeyBinding Command="{x:Static commands:ToggleAutoSaveCommand.Command}" Gesture="Alt+S" />
+    <KeyBinding Command="{x:Static commands:SelectPreviousHeaderCommand.Command}" Gesture="Ctrl+U" />
+    <KeyBinding Command="{x:Static commands:SelectNextHeaderCommand.Command}" Gesture="Ctrl+J" />
     <KeyBinding Command="{x:Static commands:OpenNewInstanceCommand.Command}" Gesture="Ctrl+Shift+N" />
     <KeyBinding Command="{x:Static commands:InsertFileCommand.Command}" Gesture="Ctrl+Shift+O" />
     <KeyBinding Command="{x:Static commands:IncreaseEditorMarginCommand.Command}" Gesture="Alt+Plus" />

@@ -40,11 +40,6 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand ExportHtmlTemplateCommand = new RoutedCommand();
         public static readonly RoutedCommand SaveAsHtmlCommand = new RoutedCommand();
         public static readonly RoutedCommand SaveAsHtmlTemplateCommand = new RoutedCommand();
-        public static readonly RoutedCommand ScrollToLineCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowGotoLineDialogCommand = new RoutedCommand();
-        public static readonly RoutedCommand ToggleAutoSaveCommand = new RoutedCommand();
-        public static readonly RoutedCommand SelectPreviousHeaderCommand = new RoutedCommand();
-        public static readonly RoutedCommand SelectNextHeaderCommand = new RoutedCommand();
 
         private IMarkdownConverter _commonMarkConverter;
 
@@ -261,19 +256,11 @@ namespace MarkdownEdit.Controls
         private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e)
             => RecentFilesDialog.Display(this);
 
-        private void ExecuteToggleAutoSave(object sender, ExecutedRoutedEventArgs e)
-            => Settings.Default.AutoSave = !Settings.Default.AutoSave;
-
         private void ExecuteTogglePreview(object sender, ExecutedRoutedEventArgs e)
         {
             Settings.Default.EditPreviewHide = (Settings.Default.EditPreviewHide + 1) % 3;
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
         }
-
-        private void ExecuteSelectPreviousHeader(object sender, ExecutedRoutedEventArgs e)
-            => Editor.SelectPreviousHeader();
-
-        private void ExecuteSelectNextHeader(object sender, ExecutedRoutedEventArgs e) => Editor.SelectNextHeader();
 
         private void SetFocus(IInputElement control)
         {
@@ -321,14 +308,6 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteSaveAsHtmlTemplate(object sender, ExecutedRoutedEventArgs e)
             => EditorLoadSave.SaveFileAs(Editor, "html-with-template");
-
-        private void ExecuteShowGotoLineDialog(object sender, ExecutedRoutedEventArgs e)
-            => new GotoLineDialog { Owner = this }.ShowDialog();
-
-        private void ExecuteScrollToLine(object sender, ExecutedRoutedEventArgs e)
-        {
-            if (e.Parameter != null) EditorUtilities.ScrollToLine(Editor.EditBox, (int)e.Parameter);
-        }
 
         private void ExecutePrintHtml(object sender, ExecutedRoutedEventArgs e)
             => Preview.Print();
