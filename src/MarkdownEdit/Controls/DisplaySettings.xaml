@@ -10,6 +10,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:models="clr-namespace:MarkdownEdit.Models"
   xmlns:p="clr-namespace:MarkdownEdit.Properties"
+  xmlns:commands="clr-namespace:MarkdownEdit.Commands"
   x:Name="DisplaySettingsControl"
   d:DesignHeight="1000"
   d:DesignWidth="400"
@@ -204,17 +205,17 @@
           ToolTip="{i18N:Localize tooltip-f9}" />
         <Button
           Margin="3,2"
-          Command="{x:Static local:MainWindow.OpenUserTemplateCommand}"
+          Command="{x:Static commands:OpenUserTemplateCommand.Command}"
           Content="{i18N:Localize settings-open-html-template}"
           ToolTip="{i18N:Localize tooltip-f8}" />
         <Button
           Margin="3,2"
-          Command="{x:Static local:MainWindow.OpenUserDictionaryCommand}"
+          Command="{x:Static commands:OpenUserDictionaryCommand.Command}"
           Content="{i18N:Localize settings-open-dictionary}"
           ToolTip="{i18N:Localize tooltip-f7}" />
         <Button
           Margin="3,2"
-          Command="{x:Static local:MainWindow.OpenUserSnippetsCommand}"
+          Command="{x:Static commands:OpenUserSnippetsCommand.Command}"
           Content="{i18N:Localize settings-open-snippets}"
           ToolTip="{i18N:Localize tooltip-f6}" />
       </UniformGrid>

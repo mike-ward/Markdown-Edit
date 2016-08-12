@@ -14,7 +14,6 @@ using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
 using MarkdownEdit.Snippets;
 using MarkdownEdit.SpellCheck;
-using Clipboard = MarkdownEdit.Models.Clipboard;
 using Version = MarkdownEdit.Models.Version;
 
 namespace MarkdownEdit.Controls
@@ -26,20 +25,6 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand InsertHeaderCommand = new RoutedCommand();
         public static readonly RoutedCommand RestoreFontSizeCommand = new RoutedCommand();
         public static readonly RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
-        public static readonly RoutedCommand OpenUserTemplateCommand = new RoutedCommand();
-        public static readonly RoutedCommand OpenUserDictionaryCommand = new RoutedCommand();
-        public static readonly RoutedCommand OpenUserSnippetsCommand = new RoutedCommand();
-        public static readonly RoutedCommand ToggleSpellCheckCommand = new RoutedCommand();
-        public static readonly RoutedCommand ToggleDocumentStatistics = new RoutedCommand();
-        public static readonly RoutedCommand ToggleFullScreenCommand = new RoutedCommand();
-        public static readonly RoutedCommand WrapToColumnCommand = new RoutedCommand();
-        public static readonly RoutedCommand RecentFilesCommand = new RoutedCommand();
-        public static readonly RoutedCommand ToggleCodeCommand = new RoutedCommand();
-        public static readonly RoutedCommand TogglePreviewCommand = new RoutedCommand();
-        public static readonly RoutedCommand ExportHtmlCommand = new RoutedCommand();
-        public static readonly RoutedCommand ExportHtmlTemplateCommand = new RoutedCommand();
-        public static readonly RoutedCommand SaveAsHtmlCommand = new RoutedCommand();
-        public static readonly RoutedCommand SaveAsHtmlTemplateCommand = new RoutedCommand();
 
         private IMarkdownConverter _commonMarkConverter;
 
@@ -216,9 +201,6 @@ namespace MarkdownEdit.Controls
         private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea)
             => Editor.Italic();
 
-        private void ExecuteCode(object sender, ExecutedRoutedEventArgs ea)
-            => Editor.Code();
-
         private void ExecuteInsertHeader(object sender, ExecutedRoutedEventArgs ea)
             => Editor.InsertHeader(Convert.ToInt32(ea.Parameter));
 
@@ -234,35 +216,7 @@ namespace MarkdownEdit.Controls
         private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e)
             => Utility.EditFile(UserSettings.SettingsFile);
 
-        private void ExecuteOpenUserTemplateCommand(object sender, ExecutedRoutedEventArgs e)
-            => Utility.EditFile(UserTemplate.TemplateFile);
-
-        private void ExecuteOpenUserDictionaryCommand(object sender, ExecutedRoutedEventArgs e)
-            => Editor.OpenUserDictionary();
-
-        private void ExecuteOpenUserSnippetsCommand(object sender, ExecutedRoutedEventArgs e)
-            => Utility.EditFile(Snippets.SnippetManager.SnippetFile());
-
-        private void ExecuteToggleSpellCheck(object sender, ExecutedRoutedEventArgs e)
-            => Settings.Default.SpellCheckEnabled = !Settings.Default.SpellCheckEnabled;
-
-        private void ExecuteToggleFullScreen(object sender, ExecutedRoutedEventArgs e)
-        {
-            var control = Keyboard.FocusedElement;
-            WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-            SetFocus(control);
-        }
-
-        private void ExecuteRecentFiles(object sender, ExecutedRoutedEventArgs e)
-            => RecentFilesDialog.Display(this);
-
-        private void ExecuteTogglePreview(object sender, ExecutedRoutedEventArgs e)
-        {
-            Settings.Default.EditPreviewHide = (Settings.Default.EditPreviewHide + 1) % 3;
-            UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
-        }
-
-        private void SetFocus(IInputElement control)
+        public void SetFocus(IInputElement control)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
             {
@@ -279,7 +233,7 @@ namespace MarkdownEdit.Controls
             }
         }
 
-        private void UpdateEditorPreviewVisibility(int state)
+        public void UpdateEditorPreviewVisibility(int state)
         {
             Editor.Visibility = state == 2 ? Visibility.Collapsed : Visibility.Visible;
             PreviewAirspaceDecorator.Visibility = state == 1 ? Visibility.Collapsed : Visibility.Visible;
@@ -296,18 +250,6 @@ namespace MarkdownEdit.Controls
             var margin = UniformGrid.Columns == 1 ? ActualWidth / singlePaneMargin : 0;
             return new Thickness(margin, 0, margin, 0);
         }
-
-        private void ExecuteExportHtml(object sender, ExecutedRoutedEventArgs e)
-            => Clipboard.ExportHtmlToClipboard(Editor.Text);
-
-        private void ExecuteExportHtmlTemplate(object sender, ExecutedRoutedEventArgs e)
-            => Clipboard.ExportHtmlToClipboard(Editor.Text, true);
-
-        private void ExecuteSaveAsHtml(object sender, ExecutedRoutedEventArgs e)
-            => EditorLoadSave.SaveFileAs(Editor, "html");
-
-        private void ExecuteSaveAsHtmlTemplate(object sender, ExecutedRoutedEventArgs e)
-            => EditorLoadSave.SaveFileAs(Editor, "html-with-template");
 
         private void ExecutePrintHtml(object sender, ExecutedRoutedEventArgs e)
             => Preview.Print();
@@ -349,26 +291,6 @@ namespace MarkdownEdit.Controls
                     : IntPtr.Zero;
             }
             return IntPtr.Zero;
-        }
-
-        private void ExecuteToggleDocumentStatistics(object sender, ExecutedRoutedEventArgs e)
-        {
-            switch (Preview.DocumentStatisticMode)
-            {
-                default:
-                // ReSharper disable once RedundantCaseLabel
-                case Preview.StatisticMode.Character:
-                    Preview.DocumentStatisticMode = Preview.StatisticMode.Word;
-                    break;
-                case Preview.StatisticMode.Word:
-                    Preview.DocumentStatisticMode = Preview.StatisticMode.Page;
-                    break;
-                case Preview.StatisticMode.Page:
-                    Preview.DocumentStatisticMode = Preview.StatisticMode.Character;
-                    break;
-            }
-
-            Preview.UpdateDocumentStatisticDisplayText();
         }
     }
 }

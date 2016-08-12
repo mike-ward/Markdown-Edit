@@ -131,13 +131,13 @@
         <Button
           Style="{StaticResource SpellCheckToggleCommandWindowButtonStyle}"
           FontFamily="Arial"
-          Command="{x:Static controls:MainWindow.ToggleDocumentStatistics}"
+          Command="{x:Static commands:ToggleDocumentStatistics.Command}"
           Content="{Binding Path=DocumentStatisticDisplayText, ElementName=Preview}"
           ToolTip="{Binding Path=DocumentStatisticsToolTip, ElementName=Preview}" />
         <Button
           Style="{StaticResource SpellCheckToggleCommandWindowButtonStyle}"
           FontFamily="Wingdings"
-          Command="{x:Static controls:MainWindow.ToggleSpellCheckCommand}"
+          Command="{x:Static commands:ToggleSpellCheckCommand.Command}"
           Content="&#xfc;"
           ToolTip="{i18N:Localize tooltip-spell-check}" />
         <Button
@@ -237,33 +237,22 @@
     <CommandBinding Command="Close" Executed="ExecuteClose" />
     <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
     <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ToggleCodeCommand}" Executed="ExecuteCode" />
     <CommandBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" Executed="ExecuteInsertHeader" />
     <CommandBinding Command="IncreaseFontSize" Executed="ExecuteIncreaseFontSize" />
     <CommandBinding Command="DecreaseFontSize" Executed="ExecuteDecreaseFontSize" />
     <CommandBinding Command="{x:Static controls:MainWindow.RestoreFontSizeCommand}" Executed="ExecuteRestoreFontSize" />
     <CommandBinding Command="{x:Static controls:MainWindow.OpenUserSettingsCommand}" Executed="ExecuteOpenUserSettingsCommand" />
-    <CommandBinding Command="{x:Static controls:MainWindow.OpenUserTemplateCommand}" Executed="ExecuteOpenUserTemplateCommand" />
-    <CommandBinding Command="{x:Static controls:MainWindow.OpenUserDictionaryCommand}" Executed="ExecuteOpenUserDictionaryCommand" />
-    <CommandBinding Command="{x:Static controls:MainWindow.OpenUserSnippetsCommand}" Executed="ExecuteOpenUserSnippetsCommand" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ToggleSpellCheckCommand}" Executed="ExecuteToggleSpellCheck" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ToggleDocumentStatistics}" Executed="ExecuteToggleDocumentStatistics" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ToggleFullScreenCommand}" Executed="ExecuteToggleFullScreen" />
-    <CommandBinding Command="{x:Static controls:MainWindow.RecentFilesCommand}" Executed="ExecuteRecentFiles" />
-    <CommandBinding Command="{x:Static controls:MainWindow.TogglePreviewCommand}" Executed="ExecuteTogglePreview" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ExportHtmlCommand}" Executed="ExecuteExportHtml" />
-    <CommandBinding Command="{x:Static controls:MainWindow.ExportHtmlTemplateCommand}" Executed="ExecuteExportHtmlTemplate" />
-    <CommandBinding Command="{x:Static controls:MainWindow.SaveAsHtmlCommand}" Executed="ExecuteSaveAsHtml" />
-    <CommandBinding Command="{x:Static controls:MainWindow.SaveAsHtmlTemplateCommand}" Executed="ExecuteSaveAsHtmlTemplate" />
     <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
   </Window.CommandBindings>
 
   <Window.InputBindings>
     <KeyBinding Command="{x:Static commands:EditorFindCommand.Command}" />
     <KeyBinding Command="{x:Static commands:EditorReplaceDialogCommand.Command}" />
+    <KeyBinding Command="{x:Static commands:SaveAsHtmlCommand.Command}" />
+    
     <KeyBinding Command="ToggleBold" Gesture="Ctrl+B" />
     <KeyBinding Command="ToggleItalic" Gesture="Ctrl+I" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ToggleCodeCommand}" Gesture="Ctrl+K" />
+    <KeyBinding Command="{x:Static commands:ToggleCodeCommand.Command}" Gesture="Ctrl+K" />
     <KeyBinding Command="SaveAs" Gesture="Ctrl+Shift+S" />
     <KeyBinding Command="{x:Static commands:ToggleWordWrapCommand.Command}" Gesture="Ctrl+W" />
     <KeyBinding Command="{x:Static controls:MainWindow.InsertHeaderCommand}" CommandParameter="1" Gesture="Ctrl+1" />
@@ -281,18 +270,18 @@
     <KeyBinding Command="{x:Static controls:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+0" />
     <KeyBinding Command="{x:Static controls:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+D0" />
     <KeyBinding Command="{x:Static controls:MainWindow.RestoreFontSizeCommand}" Gesture="Ctrl+NumPad0" />
-    <KeyBinding Command="{x:Static controls:MainWindow.OpenUserSnippetsCommand}" Gesture="F6" />
-    <KeyBinding Command="{x:Static controls:MainWindow.OpenUserDictionaryCommand}" Gesture="F7" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ToggleSpellCheckCommand}" Gesture="Ctrl+F7" />
-    <KeyBinding Command="{x:Static controls:MainWindow.OpenUserTemplateCommand}" Gesture="F8" />
+    <KeyBinding Command="{x:Static commands:OpenUserSnippetsCommand.Command}" Gesture="F6" />
+    <KeyBinding Command="{x:Static commands:OpenUserDictionaryCommand.Command}" Gesture="F7" />
+    <KeyBinding Command="{x:Static commands:ToggleSpellCheckCommand.Command}" Gesture="Ctrl+F7" />
+    <KeyBinding Command="{x:Static commands:OpenUserTemplateCommand.Command}" Gesture="F8" />
     <KeyBinding Command="{x:Static controls:MainWindow.OpenUserSettingsCommand}" Gesture="F9" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ToggleFullScreenCommand}" Gesture="F11" />
-    <KeyBinding Command="{x:Static controls:MainWindow.TogglePreviewCommand}" Gesture="F12" />
-    <KeyBinding Command="{x:Static controls:MainWindow.RecentFilesCommand}" Gesture="Ctrl+R" />
+    <KeyBinding Command="{x:Static commands:ToggleFullScreenCommand.Command}" Gesture="F11" />
+    <KeyBinding Command="{x:Static commands:TogglePreviewCommand.Command}" Gesture="F12" />
+    <KeyBinding Command="{x:Static commands:RecentFilesCommand.Command}" Gesture="Ctrl+R" />
     <KeyBinding Command="{x:Static commands:ShowThemeDialogCommand.Command}" Gesture="Ctrl+T" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ExportHtmlCommand}" Gesture="Ctrl+E" />
-    <KeyBinding Command="{x:Static controls:MainWindow.ExportHtmlTemplateCommand}" Gesture="Ctrl+Shift+E" />
-    <KeyBinding Command="{x:Static controls:MainWindow.SaveAsHtmlTemplateCommand}" Gesture="Alt+E" />
+    <KeyBinding Command="{x:Static commands:ExportHtmlCommand.Command}" Gesture="Ctrl+E" />
+    <KeyBinding Command="{x:Static commands:ExportHtmlTemplateCommand.Command}" Gesture="Ctrl+Shift+E" />
+    <KeyBinding Command="{x:Static commands:SaveAsHtmlTemplateCommand.Command}" Gesture="Alt+E" />
     <KeyBinding Command="{x:Static commands:ShowGotoLineDialogCommand.Command}" Gesture="Ctrl+G" />
     <KeyBinding Command="{x:Static commands:ToggleAutoSaveCommand.Command}" Gesture="Alt+S" />
     <KeyBinding Command="{x:Static commands:SelectPreviousHeaderCommand.Command}" Gesture="Ctrl+U" />
