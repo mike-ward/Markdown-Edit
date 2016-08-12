@@ -156,6 +156,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\EditorReplaceAllCommand.cs" />
     <Compile Include="Commands\EditorReplaceCommand.cs" />
+    <Compile Include="Commands\EditorReplaceDialogCommand.cs" />
     <Compile Include="Commands\IncreaseEditorMarginCommand.cs" />
     <Compile Include="Commands\DecreaseEditorMarginCommand.cs" />
     <Compile Include="Commands\GoToMarkdownEditWebSiteCommand.cs" />

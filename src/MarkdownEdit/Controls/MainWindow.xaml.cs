@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
+using MarkdownEdit.Commands;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
@@ -80,6 +81,7 @@ namespace MarkdownEdit.Controls
             Editor.PropertyChanged += EditorOnPropertyChanged;
             Editor.TextChanged += (s, e) => Preview.UpdatePreview((Editor)s);
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(s, e);
+            EditorReplaceDialogCommand.Init();
         }
 
         // Properites
@@ -386,6 +388,7 @@ namespace MarkdownEdit.Controls
             switch (Preview.DocumentStatisticMode)
             {
                 default:
+                // ReSharper disable once RedundantCaseLabel
                 case Preview.StatisticMode.Character:
                     Preview.DocumentStatisticMode = Preview.StatisticMode.Word;
                     break;
