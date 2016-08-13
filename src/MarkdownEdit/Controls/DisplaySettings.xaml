@@ -200,7 +200,7 @@
       <UniformGrid Margin="30,5" Columns="2">
         <Button
           Margin="3,2"
-          Command="{x:Static local:MainWindow.OpenUserSettingsCommand}"
+          Command="{x:Static commands:OpenUserSettingsCommand.Command}"
           Content="{i18N:Localize settings-open-settings}"
           ToolTip="{i18N:Localize tooltip-f9}" />
         <Button

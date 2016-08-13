@@ -22,9 +22,6 @@ namespace MarkdownEdit.Controls
     {
         public const int EditorMarginMin = 4;
         public const int EditorMarginMax = 16;
-        public static readonly RoutedCommand InsertHeaderCommand = new RoutedCommand();
-        public static readonly RoutedCommand RestoreFontSizeCommand = new RoutedCommand();
-        public static readonly RoutedCommand OpenUserSettingsCommand = new RoutedCommand();
 
         private IMarkdownConverter _commonMarkConverter;
 
@@ -177,12 +174,6 @@ namespace MarkdownEdit.Controls
 
         // Commands
 
-        private void ExecuteNewFile(object sender, ExecutedRoutedEventArgs ea)
-            => Editor.NewFile();
-
-        private void ExecuteOpenFile(object sender, ExecutedRoutedEventArgs ea)
-            => Editor.OpenFile(ea.Parameter as string);
-
         public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea)
             => Editor.SaveFile();
 
@@ -201,20 +192,11 @@ namespace MarkdownEdit.Controls
         private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea)
             => Editor.Italic();
 
-        private void ExecuteInsertHeader(object sender, ExecutedRoutedEventArgs ea)
-            => Editor.InsertHeader(Convert.ToInt32(ea.Parameter));
-
         private void ExecuteIncreaseFontSize(object sender, ExecutedRoutedEventArgs e)
             => Editor.IncreaseFontSize();
 
-        private void ExecuteRestoreFontSize(object sender, ExecutedRoutedEventArgs e)
-            => Editor.RestoreFontSize();
-
         private void ExecuteDecreaseFontSize(object sender, ExecutedRoutedEventArgs e)
             => Editor.DecreaseFontSize();
-
-        private void ExecuteOpenUserSettingsCommand(object sender, ExecutedRoutedEventArgs e)
-            => Utility.EditFile(UserSettings.SettingsFile);
 
         public void SetFocus(IInputElement control)
         {
