@@ -13,7 +13,11 @@ namespace MarkdownEdit.Controls
     {
         private DocumentStructure[] _structure;
 
-        public DocumentStructure[] Structure { get { return _structure; } set { Set(ref _structure, value); } }
+        public DocumentStructure[] Structure
+        {
+            get { return _structure; }
+            set { Set(ref _structure, value); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

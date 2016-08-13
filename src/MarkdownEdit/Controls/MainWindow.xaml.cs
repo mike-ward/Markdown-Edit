@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -23,18 +21,6 @@ namespace MarkdownEdit.Controls
         public const int EditorMarginMin = 4;
         public const int EditorMarginMax = 16;
 
-        private IMarkdownConverter _commonMarkConverter;
-
-        private Thickness _editorMargins;
-        private FindReplaceDialog _findReplaceDialog;
-        private IMarkdownConverter _githubMarkdownConverter;
-
-        private bool _newVersion;
-        private ISnippetManager _snippetManager;
-        private ISpellCheckProvider _spellCheckProvider;
-
-        private string _titleName = string.Empty;
-
         public MainWindow()
         {
             // for designer
@@ -44,10 +30,11 @@ namespace MarkdownEdit.Controls
             ISpellCheckProvider spellCheckProvider,
             ISnippetManager snippetManager)
         {
-            DataContext = this;
-            InitializeComponent();
             SpellCheckProvider = spellCheckProvider;
             SnippetManager = snippetManager;
+
+            InitializeComponent();
+
             Closing += OnClosing;
             Activated += OnFirstActivation;
             IsVisibleChanged += OnIsVisibleChanged;
@@ -56,7 +43,18 @@ namespace MarkdownEdit.Controls
             Editor.ScrollChanged += (s, e) => Preview.SetScrollOffset(s, e);
         }
 
-        // Properites
+        // Properties
+        // Tried to put these in a view model. Fuck if I could get the DataContext
+        // to resolve when binding in dp's in the editor (see xaml)
+
+        private IMarkdownConverter _commonMarkConverter;
+        private string _titleName = string.Empty;
+        private Thickness _editorMargins;
+        private FindReplaceDialog _findReplaceDialog;
+        private IMarkdownConverter _githubMarkdownConverter;
+        private bool _newVersion;
+        private ISnippetManager _snippetManager;
+        private ISpellCheckProvider _spellCheckProvider;
 
         public string TitleName
         {
@@ -106,54 +104,22 @@ namespace MarkdownEdit.Controls
             set { Set(ref _newVersion, value); }
         }
 
-        private void OnIsVisibleChanged(object sender,
-            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(property, value)) return;
+            property = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        // Event Handlers
+
+        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             IsVisibleChanged -= OnIsVisibleChanged;
             UpdateEditorPreviewVisibility(Settings.Default.EditPreviewHide);
             Activate();
-        }
-
-        private void OnFirstActivation(object sender, EventArgs eventArgs)
-        {
-            Activated -= OnFirstActivation;
-            Dispatcher.InvokeAsync(async () =>
-            {
-                var updateMargins =
-                    Utility.Debounce(() => Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
-                App.UserSettings.PropertyChanged += (o, args) =>
-                {
-                    if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins();
-                    if (args.PropertyName == nameof(App.UserSettings.GitHubMarkdown)) Preview.UpdatePreview(Editor);
-                };
-                SizeChanged += (s, e) => updateMargins();
-                updateMargins();
-                LoadCommandLineOrLastFile();
-                Application.Current.Activated += OnActivated;
-                NewVersion = !await Version.IsCurrentVersion();
-                TitleBarTooltip();
-            });
-        }
-
-        private void LoadCommandLineOrLastFile()
-        {
-            var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
-                             ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
-
-            if (string.IsNullOrWhiteSpace(fileToOpen)
-                || fileToOpen == "-n"
-                || !Editor.LoadFile(fileToOpen))
-            {
-                Editor.NewFile();
-            }
-        }
-
-        private void TitleBarTooltip()
-        {
-            var titleBar = GetTemplateChild("PART_TitleBar") as UIElement;
-            var textBlock = titleBar?.GetDescendantByType<TextBlock>();
-            var fileNameBinding = new Binding { Path = new PropertyPath("FileName"), Source = Editor };
-            textBlock?.SetBinding(ToolTipProperty, fileNameBinding);
         }
 
         private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
@@ -173,24 +139,30 @@ namespace MarkdownEdit.Controls
                 case nameof(Editor.FileName):
                 case nameof(Editor.DisplayName):
                 case nameof(Editor.IsModified):
-                    TitleName = BuildTitle();
+                    TitleName = $"{App.Title} - {(Editor.IsModified ? "* " : "")}{Editor.DisplayName}";
                     break;
             }
         }
 
-        private void SettingsClosingFinished(object sender, RoutedEventArgs e)
-            => DisplaySettings.SaveIfModified();
-
-        private string BuildTitle()
-            => $"{App.Title} - {(Editor.IsModified ? "* " : "")}{Editor.DisplayName}";
-
-        public void SetFocus(IInputElement control)
+        private void OnFirstActivation(object sender, EventArgs eventArgs)
         {
-            Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
+            Activated -= OnFirstActivation;
+            Dispatcher.InvokeAsync(async () =>
             {
-                control.Focus();
-                Keyboard.Focus(control);
-            }));
+                var updateMargins = Utility.Debounce(() =>
+                    Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
+
+                App.UserSettings.PropertyChanged += (o, args) =>
+                {
+                    if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins();
+                    if (args.PropertyName == nameof(App.UserSettings.GitHubMarkdown)) Preview.UpdatePreview(Editor);
+                };
+                SizeChanged += (s, e) => updateMargins();
+                updateMargins();
+                LoadCommandLineOrLastFile();
+                Application.Current.Activated += OnActivated;
+                NewVersion = !await Version.IsCurrentVersion();
+            });
         }
 
         private void OnActivated(object sender, EventArgs args)
@@ -199,6 +171,35 @@ namespace MarkdownEdit.Controls
             {
                 SetFocus(Preview.Browser);
             }
+        }
+
+        private void SettingsClosingFinished(object sender, RoutedEventArgs e)
+        {
+            DisplaySettings.SaveIfModified();
+        }
+
+        // Stuff that should probably go elsewhere
+
+        private void LoadCommandLineOrLastFile()
+        {
+            var fileToOpen = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault()
+                ?? (App.UserSettings.EditorOpenLastFile ? Settings.Default.LastOpenFile : null);
+
+            if (string.IsNullOrWhiteSpace(fileToOpen)
+                || fileToOpen == "-n"
+                || !Editor.LoadFile(fileToOpen))
+            {
+                Editor.NewFile();
+            }
+        }
+
+        public void SetFocus(IInputElement control)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
+            {
+                control.Focus();
+                Keyboard.Focus(control);
+            }));
         }
 
         public void UpdateEditorPreviewVisibility(int state)
@@ -211,21 +212,11 @@ namespace MarkdownEdit.Controls
             EditorMargins = CalculateEditorMargins();
         }
 
-        private Thickness CalculateEditorMargins()
+        public Thickness CalculateEditorMargins()
         {
-            var singlePaneMargin = Math.Min(Math.Max(EditorMarginMin, App.UserSettings.SinglePaneMargin),
-                EditorMarginMax);
+            var singlePaneMargin = Math.Min(Math.Max(EditorMarginMin, App.UserSettings.SinglePaneMargin), EditorMarginMax);
             var margin = UniformGrid.Columns == 1 ? ActualWidth / singlePaneMargin : 0;
             return new Thickness(margin, 0, margin, 0);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(property, value)) return;
-            property = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         // Old School

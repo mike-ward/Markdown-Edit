@@ -12,6 +12,7 @@
   xmlns:p="clr-namespace:MarkdownEdit.Properties"
   Title="{Binding TitleName}"
   Background="{Binding Path=Theme.EditorBackground, Source={x:Static local:App.UserSettings}}"
+  DataContext="{Binding RelativeSource={RelativeSource Self}}"
   FocusManager.FocusedElement="{Binding ElementName=Editor}"
   GlowBrush="{StaticResource GrayBrush2}"
   IgnoreTaskbarOnMaximize="{Binding Path=IgnoreTaskbarOnMaximize, Source={x:Static local:App.UserSettings}}"
@@ -27,6 +28,7 @@
   <mah:MetroWindow.Resources>
     <converters:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
 
+    <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
     <Style x:Key="CommandWindowButtonStyle" BasedOn="{StaticResource MetroBaseWindowButtonStyle}" TargetType="Button">
       <Setter Property="Margin" Value="7,0,0,0" />
       <Style.Triggers>
