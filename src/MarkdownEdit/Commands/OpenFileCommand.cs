@@ -6,7 +6,7 @@ namespace MarkdownEdit.Commands
 {
     internal static class OpenFileCommand
     {
-        public static readonly RoutedCommand Command = new RoutedCommand();
+        public static readonly RoutedCommand Command = ApplicationCommands.Open;
 
         static OpenFileCommand()
         {
