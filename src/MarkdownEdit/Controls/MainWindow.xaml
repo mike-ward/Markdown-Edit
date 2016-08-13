@@ -229,29 +229,34 @@
     </UniformGrid>
   </Grid>
 
-  <Window.CommandBindings>
-    <CommandBinding Command="Save" Executed="ExecuteSaveFile" />
-    <CommandBinding Command="SaveAs" Executed="ExecuteSaveFileAs" />
-    <CommandBinding Command="Help" Executed="ExecuteHelp" />
-    <CommandBinding Command="Close" Executed="ExecuteClose" />
-    <CommandBinding Command="ToggleBold" Executed="ExecuteBold" />
-    <CommandBinding Command="ToggleItalic" Executed="ExecuteItalic" />
-    <CommandBinding Command="IncreaseFontSize" Executed="ExecuteIncreaseFontSize" />
-    <CommandBinding Command="DecreaseFontSize" Executed="ExecuteDecreaseFontSize" />
-    <CommandBinding Command="Print" Executed="ExecutePrintHtml" />
-  </Window.CommandBindings>
-
   <Window.InputBindings>
+    <KeyBinding Command="{x:Static commands:CloseCommand.Command}" />
+    <KeyBinding Command="{x:Static commands:PrintCommand.Command}" />
     <KeyBinding Command="{x:Static commands:NewFileCommand.Command}" />
     <KeyBinding Command="{x:Static commands:OpenFileCommand.Command}" />
+    <KeyBinding Command="{x:Static commands:SaveFileCommand.Command}" />
+    <KeyBinding Command="{x:Static commands:SaveFileAsCommand.Command}" />
+    <KeyBinding Command="{x:Static commands:HelpCommand.Command}" />
     <KeyBinding Command="{x:Static commands:EditorFindCommand.Command}" />
     <KeyBinding Command="{x:Static commands:EditorReplaceDialogCommand.Command}" />
     <KeyBinding Command="{x:Static commands:SaveAsHtmlCommand.Command}" />
+    <KeyBinding Command="{x:Static commands:ToggleBoldCommand.Command}" />
+    <KeyBinding Command="{x:Static commands:ToggleItalicCommand.Command}" />
+    <KeyBinding Command="{x:Static commands:IncreaseFontSizeCommand.Command}" />
+    <KeyBinding Command="{x:Static commands:DecreaseFontSizeCommand.Command}" />
 
+    <KeyBinding Command="SaveAs" Gesture="Ctrl+Shift+S" />
+    <KeyBinding Command="Print" Gesture="Ctrl+P" />
     <KeyBinding Command="ToggleBold" Gesture="Ctrl+B" />
     <KeyBinding Command="ToggleItalic" Gesture="Ctrl+I" />
+    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Plus" />
+    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Add" />
+    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+OemPlus" />
+    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Minus" />
+    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Subtract" />
+    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+OemMinus" />
+
     <KeyBinding Command="{x:Static commands:ToggleCodeCommand.Command}" Gesture="Ctrl+K" />
-    <KeyBinding Command="SaveAs" Gesture="Ctrl+Shift+S" />
     <KeyBinding Command="{x:Static commands:ToggleWordWrapCommand.Command}" Gesture="Ctrl+W" />
     <KeyBinding Command="{x:Static commands:InsertHeaderCommand.Command}" CommandParameter="1" Gesture="Ctrl+1" />
     <KeyBinding Command="{x:Static commands:InsertHeaderCommand.Command}" CommandParameter="2" Gesture="Ctrl+2" />
@@ -259,12 +264,6 @@
     <KeyBinding Command="{x:Static commands:InsertHeaderCommand.Command}" CommandParameter="4" Gesture="Ctrl+4" />
     <KeyBinding Command="{x:Static commands:InsertHeaderCommand.Command}" CommandParameter="5" Gesture="Ctrl+5" />
     <KeyBinding Command="{x:Static commands:InsertHeaderCommand.Command}" CommandParameter="6" Gesture="Ctrl+6" />
-    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Plus" />
-    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Add" />
-    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+OemPlus" />
-    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Minus" />
-    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Subtract" />
-    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+OemMinus" />
     <KeyBinding Command="{x:Static commands:RestoreFontSizeCommand.Command}" Gesture="Ctrl+0" />
     <KeyBinding Command="{x:Static commands:RestoreFontSizeCommand.Command}" Gesture="Ctrl+D0" />
     <KeyBinding Command="{x:Static commands:RestoreFontSizeCommand.Command}" Gesture="Ctrl+NumPad0" />
@@ -290,6 +289,5 @@
     <KeyBinding Command="{x:Static commands:DecreaseEditorMarginCommand.Command}" Gesture="Alt+Minus" />
     <KeyBinding Command="{x:Static commands:ToggleSettingsFlyoutCommand.Command}" Gesture="Ctrl+Comma" />
     <KeyBinding Command="{x:Static commands:ToggleDocumentStructureFlyoutCommand.Command}" Gesture="Ctrl+Period" />
-    <KeyBinding Command="Print" Gesture="Ctrl+P" />
   </Window.InputBindings>
 </mah:MetroWindow>

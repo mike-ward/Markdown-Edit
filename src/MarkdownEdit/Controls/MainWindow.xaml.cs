@@ -58,9 +58,17 @@ namespace MarkdownEdit.Controls
 
         // Properites
 
-        public string TitleName { get { return _titleName; } set { Set(ref _titleName, value); } }
+        public string TitleName
+        {
+            get { return _titleName; }
+            set { Set(ref _titleName, value); }
+        }
 
-        public Thickness EditorMargins { get { return _editorMargins; } set { Set(ref _editorMargins, value); } }
+        public Thickness EditorMargins
+        {
+            get { return _editorMargins; }
+            set { Set(ref _editorMargins, value); }
+        }
 
         public IMarkdownConverter CommonMarkConverter
         {
@@ -92,7 +100,11 @@ namespace MarkdownEdit.Controls
             set { Set(ref _snippetManager, value); }
         }
 
-        public bool NewVersion { get { return _newVersion; } set { Set(ref _newVersion, value); } }
+        public bool NewVersion
+        {
+            get { return _newVersion; }
+            set { Set(ref _newVersion, value); }
+        }
 
         private void OnIsVisibleChanged(object sender,
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -172,32 +184,6 @@ namespace MarkdownEdit.Controls
         private string BuildTitle()
             => $"{App.Title} - {(Editor.IsModified ? "* " : "")}{Editor.DisplayName}";
 
-        // Commands
-
-        public void ExecuteSaveFile(object sender, ExecutedRoutedEventArgs ea)
-            => Editor.SaveFile();
-
-        public void ExecuteSaveFileAs(object sender, ExecutedRoutedEventArgs ea)
-            => Editor.SaveFileAs();
-
-        public void ExecuteHelp(object sender, ExecutedRoutedEventArgs ea)
-            => Editor.ToggleHelp();
-
-        public void ExecuteClose(object sender, ExecutedRoutedEventArgs ea)
-            => Close();
-
-        private void ExecuteBold(object sender, ExecutedRoutedEventArgs ea)
-            => Editor.Bold();
-
-        private void ExecuteItalic(object sender, ExecutedRoutedEventArgs ea)
-            => Editor.Italic();
-
-        private void ExecuteIncreaseFontSize(object sender, ExecutedRoutedEventArgs e)
-            => Editor.IncreaseFontSize();
-
-        private void ExecuteDecreaseFontSize(object sender, ExecutedRoutedEventArgs e)
-            => Editor.DecreaseFontSize();
-
         public void SetFocus(IInputElement control)
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
@@ -232,10 +218,6 @@ namespace MarkdownEdit.Controls
             var margin = UniformGrid.Columns == 1 ? ActualWidth / singlePaneMargin : 0;
             return new Thickness(margin, 0, margin, 0);
         }
-
-        private void ExecutePrintHtml(object sender, ExecutedRoutedEventArgs e)
-            => Preview.Print();
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
