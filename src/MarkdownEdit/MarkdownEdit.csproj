@@ -519,7 +519,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\github.template.html.txt" />
+    <EmbeddedResource Include="Resources\template.html.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Help.txt" />

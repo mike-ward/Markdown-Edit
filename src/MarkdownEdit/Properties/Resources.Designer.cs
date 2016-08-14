@@ -71,24 +71,6 @@ namespace MarkdownEdit.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;html&gt;
-        ///&lt;head&gt;
-        ///	&lt;title&gt;Markdown Edit Preview&lt;/title&gt;
-        ///	&lt;!-- Must have base tag with id of &quot;base-tag-id&quot; --&gt;
-        ///	&lt;base id=&quot;base-tag-id&quot;&gt;
-        ///	&lt;!-- Don&apos;t delete this X-UA tag. The browser control behaves like IE8 otherwise --&gt;
-        ///	&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=Edge&quot;&gt;
-        ///	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=utf-8&quot;/&gt;
-        ///	&lt;style type=&quot;text/css&quot;&gt;
-        ///		@font-face{ font-family: octicons-anchor; src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAAAYcAA0AAAAACjQAAQAAAAAAAAAAAAAAAAAAA [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string GithubTemplateHtml {
-            get {
-                return ResourceManager.GetString("GithubTemplateHtml", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Keyboard Shortcuts
         ///------------------
         ///
@@ -155,6 +137,25 @@ namespace MarkdownEdit.Properties {
         internal static string Snippets {
             get {
                 return ResourceManager.GetString("Snippets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;html&gt;
+        ///&lt;head&gt;
+        ///	&lt;title&gt;Markdown Edit Preview&lt;/title&gt;
+        ///	&lt;!-- Must have base tag with id of &quot;base-tag-id&quot; --&gt;
+        ///	&lt;base id=&quot;base-tag-id&quot;&gt;
+        ///	&lt;!-- Don&apos;t delete this X-UA tag. The browser control behaves like IE8 otherwise --&gt;
+        ///	&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=Edge&quot;&gt;
+        ///	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=utf-8&quot;/&gt;
+        ///	&lt;style type=&quot;text/css&quot;&gt;
+        ///          body { font-family: &apos;segoe ui&apos;, sans-serif; line-height: 1.4; padding-left: 12pt; font-size: 12pt; }
+        ///          code { font-fami [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string TemplateHtml {
+            get {
+                return ResourceManager.GetString("TemplateHtml", resourceCulture);
             }
         }
     }
