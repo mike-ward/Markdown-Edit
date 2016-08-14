@@ -30,10 +30,6 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand PasteFromHtmlCommand = new RoutedCommand();
         public static readonly RoutedCommand FindNextCommand = new RoutedCommand();
         public static readonly RoutedCommand FindPreviousCommand = new RoutedCommand();
-        public static readonly RoutedCommand MoveLineUpCommand = new RoutedCommand();
-        public static readonly RoutedCommand MoveLineDownCommand = new RoutedCommand();
-        public static readonly RoutedCommand ConvertSelectionToListCommand = new RoutedCommand();
-        public static readonly RoutedCommand InsertBlockQuoteCommand = new RoutedCommand();
 
         public static readonly DependencyProperty AutoSaveProperty = DependencyProperty.Register(
             "AutoSave", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
@@ -587,18 +583,6 @@ namespace MarkdownEdit.Controls
 
         public void Code() 
             => IfNotReadOnly(() => EditBox.AddRemoveText("`"));
-
-        public void ExecuteMoveLineUp(object sender, ExecutedRoutedEventArgs e)
-            => IfNotReadOnly(() => EditorUtilities.MoveSegmentUp(EditBox));
-
-        public void ExecuteMoveLineDown(object sender, ExecutedRoutedEventArgs e)
-            => IfNotReadOnly(() => EditorUtilities.MoveSegmentDown(EditBox));
-
-        public void ExecuteConvertSelectionToList(object sender, ExecutedRoutedEventArgs e)
-            => IfNotReadOnly(() => EditorUtilities.ConvertSelectionToList(EditBox));
-
-        public void ExecuteInsertBlockQuote(object sender, ExecutedRoutedEventArgs e)
-            => IfNotReadOnly(() => EditorUtilities.InsertBlockQuote(EditBox));
 
         public void InsertHeader(int num) => IfNotReadOnly(() =>
         {

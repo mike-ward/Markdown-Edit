@@ -44,10 +44,6 @@
     <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.FormatCommand}" Executed="ExecuteFormatText" />
     <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.FormatWithLinkReferencesCommand}" Executed="ExecuteFormatTextWithLinkReferences" />
     <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.UnformatCommand}" Executed="ExecuteUnformatText" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.MoveLineUpCommand}" Executed="ExecuteMoveLineUp" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.MoveLineDownCommand}" Executed="ExecuteMoveLineDown" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.ConvertSelectionToListCommand}" Executed="ExecuteConvertSelectionToList" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.InsertBlockQuoteCommand}" Executed="ExecuteInsertBlockQuote" />
   </UserControl.CommandBindings>
 
   <UserControl.InputBindings>
@@ -59,10 +55,10 @@
     <KeyBinding Command="{x:Static controls:Editor.FormatCommand}" Gesture="Alt+F" />
     <KeyBinding Command="{x:Static controls:Editor.FormatWithLinkReferencesCommand}" Gesture="Ctrl+Shift+F" />
     <KeyBinding Command="{x:Static controls:Editor.UnformatCommand}" Gesture="Alt+Shift+F" />
-    <KeyBinding Command="{x:Static controls:Editor.MoveLineUpCommand}" Gesture="Alt+Up" />
-    <KeyBinding Command="{x:Static controls:Editor.MoveLineDownCommand}" Gesture="Alt+Down" />
-    <KeyBinding Command="{x:Static controls:Editor.ConvertSelectionToListCommand}" Gesture="Alt+L" />
-    <KeyBinding Command="{x:Static controls:Editor.InsertBlockQuoteCommand}" Gesture="Ctrl+Q" />
+    <KeyBinding Command="{x:Static commands:MoveLineUpCommand.Command}" Gesture="Alt+Up" />
+    <KeyBinding Command="{x:Static commands:MoveLineDownCommand.Command}" Gesture="Alt+Down" />
+    <KeyBinding Command="{x:Static commands:ConvertSelectionToListCommand.Command}" Gesture="Alt+L" />
+    <KeyBinding Command="{x:Static commands:InsertBlockQuoteCommand.Command}" Gesture="Ctrl+Q" />
     <KeyBinding Command="{x:Static commands:RevertCommand.Command}" Gesture="F5" />
     <KeyBinding Command="{x:Static commands:InsertHyperlinkDialogCommand.Command}" Gesture="Ctrl+L" />
     <KeyBinding Command="{x:Static commands:ToggleOverTypeModeCommand.Command}" Gesture="Insert" />

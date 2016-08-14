@@ -10,18 +10,20 @@ namespace MarkdownEdit.Commands
 
         static InsertHyperlinkDialogCommand()
         {
-            Application.Current.MainWindow.CommandBindings.Add(new CommandBinding(Command, Execute));
+            Application.Current.MainWindow.CommandBindings.Add(new CommandBinding(Command, Execute, CanExecute));
         }
 
         private static void Execute(object sender, ExecutedRoutedEventArgs e)
         {
             var editor = ((MainWindow)sender).Editor;
+            var dialog = new InsertHyperlinkDialog(editor.EditBox.SelectedText) { Owner = Application.Current.MainWindow };
+            dialog.ShowDialog();
+        }
 
-            editor.IfNotReadOnly(() =>
-            {
-                var dialog = new InsertHyperlinkDialog(editor.EditBox.SelectedText) {Owner = Application.Current.MainWindow};
-                dialog.ShowDialog();
-            });
+        private static void CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            var editor = ((MainWindow)sender).Editor;
+            e.CanExecute = !editor.EditBox.IsReadOnly;
         }
     }
 }

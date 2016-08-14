@@ -155,6 +155,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\CloseCommand.cs" />
+    <Compile Include="Commands\ConvertSelectionToListCommand.cs" />
     <Compile Include="Commands\EditorFindCommand.cs" />
     <Compile Include="Commands\EditorReplaceAllCommand.cs" />
     <Compile Include="Commands\EditorReplaceCommand.cs" />
@@ -166,11 +167,14 @@
     <Compile Include="Commands\DecreaseEditorMarginCommand.cs" />
     <Compile Include="Commands\GoToMarkdownEditWebSiteCommand.cs" />
     <Compile Include="Commands\IncreaseFontSizeCommand.cs" />
+    <Compile Include="Commands\InsertBlockQuoteCommand.cs" />
     <Compile Include="Commands\InsertFileCommand.cs" />
     <Compile Include="Commands\InsertHeaderCommand.cs" />
     <Compile Include="Commands\InsertHyperlinkCommand.cs" />
     <Compile Include="Commands\InsertHyperlinkDialogCommand.cs" />
     <Compile Include="Commands\LoadThemeCommand.cs" />
+    <Compile Include="Commands\MoveLineDownCommand.cs" />
+    <Compile Include="Commands\MoveLineUpCommand.cs" />
     <Compile Include="Commands\NewFileCommand.cs" />
     <Compile Include="Commands\OpenFileCommand.cs" />
     <Compile Include="Commands\OpenNewInstanceCommand.cs" />
