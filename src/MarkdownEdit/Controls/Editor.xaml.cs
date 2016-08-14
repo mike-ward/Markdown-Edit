@@ -34,10 +34,6 @@ namespace MarkdownEdit.Controls
         public static readonly RoutedCommand MoveLineDownCommand = new RoutedCommand();
         public static readonly RoutedCommand ConvertSelectionToListCommand = new RoutedCommand();
         public static readonly RoutedCommand InsertBlockQuoteCommand = new RoutedCommand();
-        public static readonly RoutedCommand RevertCommand = new RoutedCommand();
-        public static readonly RoutedCommand InsertHyperlinkCommand = new RoutedCommand();
-        public static readonly RoutedCommand InsertHyperlinkDialogCommand = new RoutedCommand();
-        public static readonly RoutedCommand ToggleOverTypeModeCommand = new RoutedCommand();
 
         public static readonly DependencyProperty AutoSaveProperty = DependencyProperty.Register(
             "AutoSave", typeof(bool), typeof(Editor), new PropertyMetadata(default(bool)));
@@ -101,7 +97,6 @@ namespace MarkdownEdit.Controls
         public Editor()
         {
             InitializeComponent();
-            DataContext = this;
             SetupSyntaxHighlighting(); // won't paint on first load unless here.
             IsVisibleChanged += OnIsVisibleChanged;
         }
@@ -481,13 +476,13 @@ namespace MarkdownEdit.Controls
             SpellCheck = !SpellCheck;
         }
 
-        private void IfNotReadOnly(Action action) => IfNotReadOnly(() =>
+        public void IfNotReadOnly(Action action) => IfNotReadOnly(() =>
         {
             action();
             return true;
         });
 
-        private bool IfNotReadOnly(Func<bool> action) 
+        public bool IfNotReadOnly(Func<bool> action) 
             => EditBox.IsReadOnly ? EditorUtilities.ErrorBeep() : action();
 
         private void CanExecute(object sender, CanExecuteRoutedEventArgs e) { e.CanExecute = !EditBox.IsReadOnly; }
@@ -605,14 +600,6 @@ namespace MarkdownEdit.Controls
         public void ExecuteInsertBlockQuote(object sender, ExecutedRoutedEventArgs e)
             => IfNotReadOnly(() => EditorUtilities.InsertBlockQuote(EditBox));
 
-        public void ExecuteInsertHyperlinkDialog(object sender, ExecutedRoutedEventArgs e)
-            => IfNotReadOnly(()
-                => new InsertHyperlinkDialog(EditBox.SelectedText) { Owner = Application.Current.MainWindow }
-                    .ShowDialog());
-
-        public void ExecuteInsertHyperlink(object sender, ExecutedRoutedEventArgs e)
-            => IfNotReadOnly(() => EditorUtilities.InsertHyperlink(EditBox, e.Parameter as string));
-
         public void InsertHeader(int num) => IfNotReadOnly(() =>
         {
             var line = EditBox.Document.GetLineByOffset(EditBox.CaretOffset);
@@ -650,12 +637,6 @@ namespace MarkdownEdit.Controls
 
         private void ExecuteDeselectCommand(object sender, ExecutedRoutedEventArgs e) 
             => EditBox.SelectionLength = 0;
-
-        private void ExecuteRevertCommand(object sender, ExecutedRoutedEventArgs e) 
-            => OpenFile(FileName);
-
-        private void ExecuteToggleOverTypeCommand(object sender, ExecutedRoutedEventArgs e)
-            => EditBox.TextArea.OverstrikeMode = !EditBox.TextArea.OverstrikeMode;
 
         private void EditBoxOnTextChanged(object sender, EventArgs eventArgs) 
             => TextChanged?.Invoke(this, eventArgs);

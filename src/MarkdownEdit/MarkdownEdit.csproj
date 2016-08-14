@@ -169,6 +169,7 @@
     <Compile Include="Commands\InsertFileCommand.cs" />
     <Compile Include="Commands\InsertHeaderCommand.cs" />
     <Compile Include="Commands\InsertHyperlinkCommand.cs" />
+    <Compile Include="Commands\InsertHyperlinkDialogCommand.cs" />
     <Compile Include="Commands\LoadThemeCommand.cs" />
     <Compile Include="Commands\NewFileCommand.cs" />
     <Compile Include="Commands\OpenFileCommand.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Commands\PrintCommand.cs" />
     <Compile Include="Commands\RecentFilesCommand.cs" />
     <Compile Include="Commands\RestoreFontSizeCommand.cs" />
+    <Compile Include="Commands\RevertCommand.cs" />
     <Compile Include="Commands\SaveAsHtmlCommand.cs" />
     <Compile Include="Commands\SaveAsHtmlTemplateCommand.cs" />
     <Compile Include="Commands\SaveFileAsCommand.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="Commands\ToggleDocumentStructureFlyoutCommand.cs" />
     <Compile Include="Commands\ToggleFullScreenCommand.cs" />
     <Compile Include="Commands\ToggleItalicCommand.cs" />
+    <Compile Include="Commands\ToggleOverTypeModeCommand.cs" />
     <Compile Include="Commands\TogglePreviewCommand.cs" />
     <Compile Include="Commands\ToggleSettingsFlyoutCommand.cs" />
     <Compile Include="Commands\ToggleSpellCheckCommand.cs" />
