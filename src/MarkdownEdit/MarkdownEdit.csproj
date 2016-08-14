@@ -156,12 +156,17 @@
     </ApplicationDefinition>
     <Compile Include="Commands\CloseCommand.cs" />
     <Compile Include="Commands\ConvertSelectionToListCommand.cs" />
+    <Compile Include="Commands\DeselectCommand.cs" />
     <Compile Include="Commands\EditorFindCommand.cs" />
     <Compile Include="Commands\EditorReplaceAllCommand.cs" />
     <Compile Include="Commands\EditorReplaceCommand.cs" />
     <Compile Include="Commands\EditorReplaceDialogCommand.cs" />
     <Compile Include="Commands\ExportHtmlCommand.cs" />
     <Compile Include="Commands\ExportHtmlTemplateCommand.cs" />
+    <Compile Include="Commands\FindNextCommand.cs" />
+    <Compile Include="Commands\FindPreviousCommand.cs" />
+    <Compile Include="Commands\FormatCommand.cs" />
+    <Compile Include="Commands\FormatWithLinkReferencesCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\IncreaseEditorMarginCommand.cs" />
     <Compile Include="Commands\DecreaseEditorMarginCommand.cs" />
@@ -182,6 +187,8 @@
     <Compile Include="Commands\OpenUserSettingsCommand.cs" />
     <Compile Include="Commands\OpenUserSnippetsCommand.cs" />
     <Compile Include="Commands\OpenUserTemplateCommand.cs" />
+    <Compile Include="Commands\PasteFromHtmlCommand.cs" />
+    <Compile Include="Commands\PasteSpecialCommand.cs" />
     <Compile Include="Commands\PrintCommand.cs" />
     <Compile Include="Commands\RecentFilesCommand.cs" />
     <Compile Include="Commands\RestoreFontSizeCommand.cs" />
@@ -209,6 +216,7 @@
     <Compile Include="Commands\ToggleSettingsFlyoutCommand.cs" />
     <Compile Include="Commands\ToggleSpellCheckCommand.cs" />
     <Compile Include="Commands\ToggleWordWrapCommand.cs" />
+    <Compile Include="Commands\UnformatCommand.cs" />
     <Compile Include="Commands\UpdatePreviewCommand.cs" />
     <Compile Include="Controls\DisplayDocumentStructureViewModel.cs">
       <DependentUpon>DisplayDocumentStructure.xaml</DependentUpon>

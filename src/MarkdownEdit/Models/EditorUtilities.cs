@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
+using MarkdownEdit.Commands;
 using MarkdownEdit.Controls;
 using MarkdownEdit.i18n;
 
@@ -423,14 +424,14 @@ namespace MarkdownEdit.Models
             contextMenu.Items.Add(new MenuItem
             {
                 Header = TranslationProvider.Translate("editor-menu-paste-special"),
-                Command = Editor.PasteSpecialCommand,
+                Command = PasteSpecialCommand.Command,
                 InputGestureText = "Ctrl+Shift+V",
                 ToolTip = "Paste smart quotes and hypens as plain text"
             });
             contextMenu.Items.Add(new MenuItem
             {
                 Header = TranslationProvider.Translate("editor-menu-paste-from-html"),
-                Command = Editor.PasteFromHtmlCommand,
+                Command = PasteFromHtmlCommand.Command,
                 InputGestureText = "Alt+V"
             });
             contextMenu.Items.Add(new MenuItem
@@ -449,13 +450,13 @@ namespace MarkdownEdit.Models
             contextMenu.Items.Add(new MenuItem
             {
                 Header = TranslationProvider.Translate("editor-menu-wrap-format"),
-                Command = Editor.FormatCommand,
+                Command = FormatCommand.Command,
                 InputGestureText = "Alt+F"
             });
             contextMenu.Items.Add(new MenuItem
             {
                 Header = TranslationProvider.Translate("editor-menu-unwrap-format"),
-                Command = Editor.UnformatCommand,
+                Command = UnformatCommand.Command,
                 InputGestureText = "Alt+Shift+F"
             });
 
