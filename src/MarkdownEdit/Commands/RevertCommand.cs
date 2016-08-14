@@ -16,7 +16,7 @@ namespace MarkdownEdit.Commands
         private static void Execute(object sender, ExecutedRoutedEventArgs e)
         {
             var editor = ((MainWindow)sender).Editor;
-            editor.OpenFile(editor.FileName);
+            OpenFileCommand.Command.Execute(editor.FileName, editor);
         }
 
         private static void CanExecute(object sender, CanExecuteRoutedEventArgs e)

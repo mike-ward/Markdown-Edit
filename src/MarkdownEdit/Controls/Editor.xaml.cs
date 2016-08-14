@@ -213,8 +213,6 @@ namespace MarkdownEdit.Controls
         }
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void OnIsVisibleChanged(object sender,
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
@@ -416,7 +414,7 @@ namespace MarkdownEdit.Controls
                 }
                 else
                 {
-                    Dispatcher.InvokeAsync(() => OpenFile(files[0]));
+                    Dispatcher.InvokeAsync(() => OpenFileCommand.Command.Execute(files[0], this));
                 }
             }
         }
@@ -437,15 +435,6 @@ namespace MarkdownEdit.Controls
             SpellCheck = !SpellCheck;
         }
 
-        //private void IfNotReadOnly(Action action) => IfNotReadOnly(() =>
-        //{
-        //    action();
-        //    return true;
-        //});
-
-        //private bool IfNotReadOnly(Func<bool> action) 
-        //    => EditBox.IsReadOnly ? EditorUtilities.ErrorBeep() : action();
-
         private void CanExecute(object sender, CanExecuteRoutedEventArgs e) { e.CanExecute = !EditBox.IsReadOnly; }
 
         public void FormatTextHandler(Func<string, string> converter, bool? forceAllText)
@@ -465,15 +454,6 @@ namespace MarkdownEdit.Controls
                 EditBox.SelectionStart = Math.Min(start, formattedText.Length);
             }
         }
-
-        public void NewFile() => 
-            EditorLoadSave.NewFile(this);
-
-        public void OpenFile(string file)
-            => EditorLoadSave.OpenFile(this, file);
-
-        public void InsertFile(string file) 
-            => EditorLoadSave.InsertFile(this, file);
 
         public bool SaveIfModified()
             => EditorLoadSave.SaveIfModified(this);
@@ -632,16 +612,13 @@ namespace MarkdownEdit.Controls
             editor.EditBox.Encoding = encoding;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(property, value)) return;
             property = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public class ThemeChangedEventArgs : EventArgs
-        {
-            public Theme Theme { get; set; }
         }
     }
 }

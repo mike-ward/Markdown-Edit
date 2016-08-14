@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using MarkdownEdit.Controls;
+using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Commands
 {
@@ -16,8 +17,7 @@ namespace MarkdownEdit.Commands
         private static void Execute(object sender, ExecutedRoutedEventArgs e)
         {
             var mainWindow = (MainWindow)sender;
-            mainWindow.Editor.InsertFile(null);
+            EditorLoadSave.InsertFile(mainWindow.Editor, null);
         }
-
     }
 }

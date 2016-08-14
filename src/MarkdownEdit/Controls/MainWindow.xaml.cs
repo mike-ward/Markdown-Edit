@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
+using MarkdownEdit.Commands;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
@@ -189,7 +190,7 @@ namespace MarkdownEdit.Controls
                 || fileToOpen == "-n"
                 || !Editor.LoadFile(fileToOpen))
             {
-                Editor.NewFile();
+                NewFileCommand.Command.Execute(null, this);
             }
         }
 

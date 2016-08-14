@@ -251,6 +251,7 @@
     <Compile Include="Controls\PromptDialog.xaml.cs">
       <DependentUpon>PromptDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ThemeChangedEventArgs.cs" />
     <Compile Include="Converters\BooleanToVisiblityConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToBooleanConverter.cs" />
