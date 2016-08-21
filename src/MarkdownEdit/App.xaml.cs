@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,6 +31,15 @@ namespace MarkdownEdit
 
         [DllImport("user32.dll")]
         private static extern bool IsIconic(IntPtr hWnd);
+
+        public App()
+        {
+            // Enable Multi-JIT startup
+            var profileRoot = UserSettings.SettingsFolder;
+            Directory.CreateDirectory(profileRoot);
+            ProfileOptimization.SetProfileRoot(profileRoot);
+            ProfileOptimization.StartProfile("Startup.profile");
+        }
 
         private void OnStartup(object sender, StartupEventArgs ea)
         {
