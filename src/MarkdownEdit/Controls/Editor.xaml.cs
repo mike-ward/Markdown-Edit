@@ -258,6 +258,9 @@ namespace MarkdownEdit.Controls
                     AbstractSyntaxTree = Markdown.GenerateAbstractSyntaxTree(Text);
                     colorizer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
                     blockBackgroundRenderer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
+                    // The block nature of markdown causes edge cases in the syntax hightlighting.
+                    // This is the nuclear option but it doesn't seem to cause issues.
+                    EditBox.TextArea.TextView.Redraw();
                 }
                 catch (Exception ex)
                 {
