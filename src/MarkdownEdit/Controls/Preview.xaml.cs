@@ -18,6 +18,7 @@ using MarkdownEdit.Commands;
 using MarkdownEdit.Converters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
+using System.Linq;
 
 // ReSharper disable RedundantCaseLabel
 
@@ -268,11 +269,27 @@ namespace MarkdownEdit.Controls
             UpdatePreviewCommand.Command.Execute(null, this);
         }
 
-        private static void BrowserOnNavigating(object sender, NavigatingCancelEventArgs ea)
+        private void BrowserOnNavigating(object sender, NavigatingCancelEventArgs ea)
         {
             ea.Cancel = true;
             var url = ea.Uri?.ToString();
-            if (url?.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
+            if (url?.StartsWith("file://", StringComparison.OrdinalIgnoreCase) == true) NavigateToElement(ea.Uri.OriginalString);
+            else if (url?.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
+        }
+
+        private void NavigateToElement(string url)
+        {
+            var lastIndex = url.LastIndexOf("#", StringComparison.Ordinal);
+            if (lastIndex == -1) return;
+            var id = url.Substring(lastIndex + 1);
+            var document3 = Browser.Document as IHTMLDocument3;
+            if (document3 == null) return;
+            var element = 
+                document3.getElementById(id) ??
+                document3.getElementsByName("a").Cast<IHTMLElement>().FirstOrDefault(e => e.getAttribute("name") == id);
+            if (element == null) return;
+            var document2 = Browser.Document as IHTMLDocument2;
+            document2?.parentWindow.scroll(0, element.offsetTop);
         }
 
         public void SetScrollOffset(object sender, ScrollChangedEventArgs ea)
