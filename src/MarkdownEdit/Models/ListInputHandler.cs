@@ -40,9 +40,17 @@ namespace MarkdownEdit.Models
                 firstMatch?.Action(firstMatch.Match);
             };
 
-            Action<Action> onlyIfIncreased = func =>
+            Action<Action> ifIncreased = func =>
             {
                 if (lineCountIncreased) func();
+            };
+
+            Action<string, Action> atEndOfList = (symbol, action) =>
+            {
+                var previous = line.PreviousLine;
+                if (previous == null || previous.Length == 0) return;
+                var previousText = document.GetText(previous.Offset, previous.Length);
+                if (previousText.StartsWith(symbol)) action();
             };
 
             document.BeginUpdate();
@@ -50,16 +58,16 @@ namespace MarkdownEdit.Models
             match(text, new[]
             {
                 new PM(UnorderedListCheckboxPattern,
-                    m => onlyIfIncreased(() => document.Insert(editor.SelectionStart, m.Groups[0].Value.TrimStart() + " "))),
+                    m => ifIncreased(() => document.Insert(editor.SelectionStart, m.Groups[0].Value.TrimStart() + " "))),
 
                 new PM(UnorderedListCheckboxEndPattern,
-                    m => document.Remove(line)),
+                    m => atEndOfList(m.Groups[0].Value , () => document.Remove(line))),
 
                 new PM(UnorderedListPattern,
-                    m => onlyIfIncreased(() => document.Insert(editor.SelectionStart, m.Groups[0].Value.TrimStart() + " "))),
+                    m => ifIncreased(() => document.Insert(editor.SelectionStart, m.Groups[0].Value.TrimStart() + " "))),
 
                 new PM(UnorderedListEndPattern,
-                    m => document.Remove(line)),
+                    m =>  atEndOfList(m.Groups[0].Value , () => document.Remove(line))),
 
                 new PM(OrderedListPattern, m =>
                 {
@@ -74,13 +82,13 @@ namespace MarkdownEdit.Models
                 }),
 
                 new PM(OrderedListEndPattern,
-                    m => document.Remove(line)),
+                    m =>  atEndOfList(m.Groups[0].Value , () => document.Remove(line))),
 
                 new PM(BlockQuotePattern,
-                    m => onlyIfIncreased(() => document.Insert(editor.SelectionStart, m.Groups[1].Value.TrimStart()))),
+                    m => ifIncreased(() => document.Insert(editor.SelectionStart, m.Groups[1].Value.TrimStart()))),
 
                 new PM(BlockQuoteEndPattern,
-                    m => document.Remove(line))
+                    m =>  atEndOfList(m.Groups[0].Value , () => document.Remove(line)))
             });
 
             document.EndUpdate();
