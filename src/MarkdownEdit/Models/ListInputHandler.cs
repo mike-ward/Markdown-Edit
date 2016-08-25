@@ -34,20 +34,41 @@ namespace MarkdownEdit.Models
             Action<string, IEnumerable<PM>> match = (txt, patterns) =>
             {
                 var firstMatch = patterns
-                    .Select(pattern => new {Match = pattern.Item1.Match(txt), Action = pattern.Item2})
+                    .Select(pattern => new { Match = pattern.Item1.Match(txt), Action = pattern.Item2 })
                     .FirstOrDefault(ma => ma.Match.Success);
 
                 firstMatch?.Action(firstMatch.Match);
+            };
+
+            Action<Action> ifIncreased = func =>
+            {
+                if (lineCountIncreased) func();
+            };
+
+            Action<string, Action> atEndOfList = (symbol, action) =>
+            {
+                var previous = line.PreviousLine;
+                if (previous == null || previous.Length == 0) return;
+                var previousText = document.GetText(previous.Offset, previous.Length);
+                if (previousText.StartsWith(symbol)) action();
             };
 
             document.BeginUpdate();
 
             match(text, new[]
             {
-                new PM(UnorderedListCheckboxPattern, m => document.Insert(editor.SelectionStart, m.Groups[0].Value.TrimStart() + " ")),
-                new PM(UnorderedListCheckboxEndPattern, m => document.Remove(line)),
-                new PM(UnorderedListPattern, m => document.Insert(editor.SelectionStart, m.Groups[0].Value.TrimStart() + " ")),
-                new PM(UnorderedListEndPattern, m => document.Remove(line)),
+                new PM(UnorderedListCheckboxPattern,
+                    m => ifIncreased(() => document.Insert(editor.SelectionStart, m.Groups[0].Value.TrimStart() + " "))),
+
+                new PM(UnorderedListCheckboxEndPattern,
+                    m => atEndOfList(m.Groups[0].Value , () => document.Remove(line))),
+
+                new PM(UnorderedListPattern,
+                    m => ifIncreased(() => document.Insert(editor.SelectionStart, m.Groups[0].Value.TrimStart() + " "))),
+
+                new PM(UnorderedListEndPattern,
+                    m =>  atEndOfList(m.Groups[0].Value , () => document.Remove(line))),
+
                 new PM(OrderedListPattern, m =>
                 {
                     var number = int.Parse(m.Groups[1].Value);
@@ -59,9 +80,15 @@ namespace MarkdownEdit.Models
                     }
                     RenumberOrderedList(document, line, number);
                 }),
-                new PM(OrderedListEndPattern, m => document.Remove(line)),
-                new PM(BlockQuotePattern, m => document.Insert(editor.SelectionStart, m.Groups[1].Value.TrimStart())),
-                new PM(BlockQuoteEndPattern, m => document.Remove(line))
+
+                new PM(OrderedListEndPattern,
+                    m =>  atEndOfList(m.Groups[0].Value , () => document.Remove(line))),
+
+                new PM(BlockQuotePattern,
+                    m => ifIncreased(() => document.Insert(editor.SelectionStart, m.Groups[1].Value.TrimStart()))),
+
+                new PM(BlockQuoteEndPattern,
+                    m =>  atEndOfList(m.Groups[0].Value , () => document.Remove(line)))
             });
 
             document.EndUpdate();

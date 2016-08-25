@@ -82,6 +82,9 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonMark.NET.0.13.4\lib\net45\CommonMark.dll</HintPath>
@@ -154,6 +157,70 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CloseCommand.cs" />
+    <Compile Include="Commands\ConvertSelectionToListCommand.cs" />
+    <Compile Include="Commands\DeselectCommand.cs" />
+    <Compile Include="Commands\EditorFindCommand.cs" />
+    <Compile Include="Commands\EditorReplaceAllCommand.cs" />
+    <Compile Include="Commands\EditorReplaceCommand.cs" />
+    <Compile Include="Commands\EditorReplaceDialogCommand.cs" />
+    <Compile Include="Commands\ExportHtmlCommand.cs" />
+    <Compile Include="Commands\ExportHtmlTemplateCommand.cs" />
+    <Compile Include="Commands\FindNextCommand.cs" />
+    <Compile Include="Commands\FindPreviousCommand.cs" />
+    <Compile Include="Commands\FormatCommand.cs" />
+    <Compile Include="Commands\FormatWithLinkReferencesCommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\IncreaseEditorMarginCommand.cs" />
+    <Compile Include="Commands\DecreaseEditorMarginCommand.cs" />
+    <Compile Include="Commands\GoToMarkdownEditWebSiteCommand.cs" />
+    <Compile Include="Commands\IncreaseFontSizeCommand.cs" />
+    <Compile Include="Commands\InsertBlockQuoteCommand.cs" />
+    <Compile Include="Commands\InsertFileCommand.cs" />
+    <Compile Include="Commands\InsertHeaderCommand.cs" />
+    <Compile Include="Commands\InsertHyperlinkCommand.cs" />
+    <Compile Include="Commands\InsertHyperlinkDialogCommand.cs" />
+    <Compile Include="Commands\LoadThemeCommand.cs" />
+    <Compile Include="Commands\MoveLineDownCommand.cs" />
+    <Compile Include="Commands\MoveLineUpCommand.cs" />
+    <Compile Include="Commands\NewFileCommand.cs" />
+    <Compile Include="Commands\OpenFileCommand.cs" />
+    <Compile Include="Commands\OpenNewInstanceCommand.cs" />
+    <Compile Include="Commands\OpenUserDictionaryCommand.cs" />
+    <Compile Include="Commands\OpenUserSettingsCommand.cs" />
+    <Compile Include="Commands\OpenUserSnippetsCommand.cs" />
+    <Compile Include="Commands\OpenUserTemplateCommand.cs" />
+    <Compile Include="Commands\PasteFromHtmlCommand.cs" />
+    <Compile Include="Commands\PasteSpecialCommand.cs" />
+    <Compile Include="Commands\PrintCommand.cs" />
+    <Compile Include="Commands\RecentFilesCommand.cs" />
+    <Compile Include="Commands\RestoreFontSizeCommand.cs" />
+    <Compile Include="Commands\RevertCommand.cs" />
+    <Compile Include="Commands\SaveAsHtmlCommand.cs" />
+    <Compile Include="Commands\SaveAsHtmlTemplateCommand.cs" />
+    <Compile Include="Commands\SaveFileAsCommand.cs" />
+    <Compile Include="Commands\SaveFileCommand.cs" />
+    <Compile Include="Commands\SaveThemeComand.cs" />
+    <Compile Include="Commands\ScrollToLineCommand.cs" />
+    <Compile Include="Commands\ScrollToOffsetCommand.cs" />
+    <Compile Include="Commands\SelectNextHeaderCommand.cs" />
+    <Compile Include="Commands\SelectPreviousHeaderCommand.cs" />
+    <Compile Include="Commands\ShowGotoLineDialogCommand.cs" />
+    <Compile Include="Commands\ShowThemeDialogCommand.cs" />
+    <Compile Include="Commands\ToggleAutoSaveCommand.cs" />
+    <Compile Include="Commands\ToggleBoldCommand.cs" />
+    <Compile Include="Commands\ToggleCodeCommand.cs" />
+    <Compile Include="Commands\ToggleDocumentStatistics.cs" />
+    <Compile Include="Commands\ToggleDocumentStructureFlyoutCommand.cs" />
+    <Compile Include="Commands\ToggleFullScreenCommand.cs" />
+    <Compile Include="Commands\ToggleItalicCommand.cs" />
+    <Compile Include="Commands\ToggleOverTypeModeCommand.cs" />
+    <Compile Include="Commands\TogglePreviewCommand.cs" />
+    <Compile Include="Commands\ToggleSettingsFlyoutCommand.cs" />
+    <Compile Include="Commands\ToggleSpellCheckCommand.cs" />
+    <Compile Include="Commands\ToggleWordWrapCommand.cs" />
+    <Compile Include="Commands\UnformatCommand.cs" />
+    <Compile Include="Commands\UpdatePreviewCommand.cs" />
     <Compile Include="Controls\DisplayDocumentStructureViewModel.cs">
       <DependentUpon>DisplayDocumentStructure.xaml</DependentUpon>
     </Compile>
@@ -187,6 +254,7 @@
     <Compile Include="Controls\PromptDialog.xaml.cs">
       <DependentUpon>PromptDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ThemeChangedEventArgs.cs" />
     <Compile Include="Converters\BooleanToVisiblityConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\NullOrEmptyToBooleanConverter.cs" />
@@ -195,6 +263,7 @@
     </Compile>
     <Compile Include="Converters\BooleanToScrollBarVisibilityConverter.cs" />
     <Compile Include="Converters\NumberFormatConverter.cs" />
+    <Compile Include="Commands\DecreaseFontSizeCommand.cs" />
     <Compile Include="i18n\LocalizeExtension.cs" />
     <Compile Include="i18n\TranslationProvider.cs" />
     <Compile Include="ImageUpload\IImageUpload.cs" />
@@ -361,6 +430,7 @@
     <Content Include="Languages\da\help.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="app.manifest" />
     <None Include="Languages\es\local.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -453,7 +523,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\github.template.html.txt" />
+    <EmbeddedResource Include="Resources\template.html.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Help.txt" />

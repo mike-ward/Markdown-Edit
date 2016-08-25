@@ -14,9 +14,13 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using HtmlAgilityPack;
 using mshtml;
+using MarkdownEdit.Commands;
 using MarkdownEdit.Converters;
 using MarkdownEdit.Models;
 using MarkdownEdit.Properties;
+using System.Linq;
+
+// ReSharper disable RedundantCaseLabel
 
 namespace MarkdownEdit.Controls
 {
@@ -53,9 +57,17 @@ namespace MarkdownEdit.Controls
 
         public StatisticMode DocumentStatisticMode { get; set; }
 
-        public int WordCount { get { return _wordCount; } set { Set(ref _wordCount, value); } }
+        public int WordCount
+        {
+            get { return _wordCount; }
+            set { Set(ref _wordCount, value); }
+        }
 
-        public int CharacterCount { get { return _characterCount; } set { Set(ref _characterCount, value); } }
+        public int CharacterCount
+        {
+            get { return _characterCount; }
+            set { Set(ref _characterCount, value); }
+        }
 
         public string DocumentStatisticDisplayText
         {
@@ -69,7 +81,11 @@ namespace MarkdownEdit.Controls
             set { Set(ref _documentStatisticsToolTip, value); }
         }
 
-        public int PageCount { get { return _pageCount; } set { Set(ref _pageCount, value); } }
+        public int PageCount
+        {
+            get { return _pageCount; }
+            set { Set(ref _pageCount, value); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -136,6 +152,7 @@ namespace MarkdownEdit.Controls
                     DocumentStatisticDisplayText = convert(PageCount, "p");
                     DocumentStatisticsToolTip = $"{convert(WordCount, "w")}, {convert(CharacterCount, "c")}";
                     break;
+                case StatisticMode.Word:
                 default:
                     DocumentStatisticDisplayText = convert(WordCount, "w");
                     DocumentStatisticsToolTip = $"{convert(CharacterCount, "c")}, {convert(PageCount, "p")}";
@@ -203,8 +220,7 @@ namespace MarkdownEdit.Controls
             Func<string> getName = () => GetIdName(idx++);
 
             // Inject anchors at all block level elements for scroll synchronization
-            var nc = doc.DocumentNode.SelectNodes(
-                "//p|//h1|//h2|//h3|//h4|//h5|//h6|//ul|//ol|//li|//hr|//pre|//blockquote");
+            var nc = doc.DocumentNode.SelectNodes("//p|//h1|//h2|//h3|//h4|//h5|//h6|//ul|//ol|//li|//hr|//pre|//blockquote");
             each(nc, node => node.Attributes.Add("id", getName()));
 
             // Remove potentially harmful elements
@@ -212,18 +228,15 @@ namespace MarkdownEdit.Controls
             each(nc, node => node.ParentNode.RemoveChild(node, false));
 
             // Remove hrefs to java/j/vbscript URLs
-            nc = doc.DocumentNode.SelectNodes(
-                "//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
+            nc = doc.DocumentNode.SelectNodes("//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//a[starts-with(translate(@href, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
             each(nc, node => node.SetAttributeValue("href", "#"));
 
             // Remove img with refs to java/j/vbscript URLs
-            nc = doc.DocumentNode.SelectNodes(
-                "//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
+            nc = doc.DocumentNode.SelectNodes("//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'javascript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'jscript')]|//img[starts-with(translate(@src, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'vbscript')]");
             each(nc, node => node.SetAttributeValue("src", "#"));
 
             // Remove on<Event> handlers from all tags
-            nc = doc.DocumentNode.SelectNodes(
-                "//*[@onclick or @onmouseover or @onfocus or @onblur or @onmouseout or @ondoubleclick or @onload or @onunload]");
+            nc = doc.DocumentNode.SelectNodes("//*[@onclick or @onmouseover or @onfocus or @onblur or @onmouseout or @ondoubleclick or @onload or @onunload]");
             each(nc, node =>
             {
                 node.Attributes.Remove("onFocus");
@@ -237,8 +250,7 @@ namespace MarkdownEdit.Controls
             });
 
             // remove any style attributes that contain the word expression (IE evaluates this as script)
-            nc = doc.DocumentNode.SelectNodes(
-                "//*[contains(translate(@style, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'expression')]");
+            nc = doc.DocumentNode.SelectNodes("//*[contains(translate(@style, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'expression')]");
             each(nc, node => node.Attributes.Remove("style"));
 
             return doc.DocumentNode.WriteTo();
@@ -254,14 +266,30 @@ namespace MarkdownEdit.Controls
         private void UpdateTemplate()
         {
             Browser.Refresh();
-            MainWindow.UpdatePreviewCommand.Execute(null, this);
+            UpdatePreviewCommand.Command.Execute(null, this);
         }
 
-        private static void BrowserOnNavigating(object sender, NavigatingCancelEventArgs ea)
+        private void BrowserOnNavigating(object sender, NavigatingCancelEventArgs ea)
         {
             ea.Cancel = true;
             var url = ea.Uri?.ToString();
-            if (url?.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
+            if (url?.StartsWith("file://", StringComparison.OrdinalIgnoreCase) == true) NavigateToElement(ea.Uri.OriginalString);
+            else if (url?.StartsWith("about:", StringComparison.OrdinalIgnoreCase) == false) Process.Start(url);
+        }
+
+        private void NavigateToElement(string url)
+        {
+            var lastIndex = url.LastIndexOf("#", StringComparison.Ordinal);
+            if (lastIndex == -1) return;
+            var id = url.Substring(lastIndex + 1);
+            var document3 = Browser.Document as IHTMLDocument3;
+            if (document3 == null) return;
+            var element = 
+                document3.getElementById(id) ??
+                document3.getElementsByName("a").Cast<IHTMLElement>().FirstOrDefault(e => e.getAttribute("name") == id);
+            if (element == null) return;
+            var document2 = Browser.Document as IHTMLDocument2;
+            document2?.parentWindow.scroll(0, element.offsetTop);
         }
 
         public void SetScrollOffset(object sender, ScrollChangedEventArgs ea)

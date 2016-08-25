@@ -41,6 +41,13 @@ namespace MarkdownEdit.Commands
                         snippet.Insert(_editor.TextArea);
                         return;
                     }
+
+                    var list = StartOfListOffset(_editor.Document, _editor.CaretOffset);
+                    if (list > 0)
+                    {
+                        _editor.Document.Insert(list, "  ");
+                        return;
+                    }
                 }
             }
             _baseCommand.Execute(parameter);
@@ -50,8 +57,21 @@ namespace MarkdownEdit.Commands
         {
             var startOffset = offset;
             while (startOffset > 0 && char.IsWhiteSpace(textSource.GetCharAt(startOffset - 1)) == false)
+            {
                 startOffset -= 1;
+            }
             return startOffset;
+        }
+
+        private static int StartOfListOffset(ITextSource textSource, int offset)
+        {
+            var startOffset = offset - 1;
+            while (startOffset > 0 && char.IsWhiteSpace(textSource.GetCharAt(startOffset)))
+            {
+                startOffset -= 1;
+            }
+            var c = textSource.GetCharAt(startOffset);
+            return (c == '-' || c == '*') ? startOffset : -1;
         }
     }
 }

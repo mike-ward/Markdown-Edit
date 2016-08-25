@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using MarkdownEdit.Commands;
 
 namespace MarkdownEdit.Controls
 {
@@ -24,7 +25,7 @@ namespace MarkdownEdit.Controls
                 {
                     linkText = $"{linkText} \"{LinkTitle.Text}\"";
                 }
-                MainWindow.InsertHyperlinkCommand.Execute(linkText, Owner);
+                InsertHyperlinkCommand.Command.Execute(linkText, Owner);
             }
             Close();
         }

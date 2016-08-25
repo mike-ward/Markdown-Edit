@@ -14,7 +14,7 @@ namespace MarkdownEdit.Models
         {
             if (File.Exists(TemplateFile) == false)
             {
-                var userTemplate = Resources.GithubTemplateHtml;
+                var userTemplate = Resources.TemplateHtml;
                 Save(userTemplate);
             }
             if (File.Exists(EmojiSpritesFile) == false)

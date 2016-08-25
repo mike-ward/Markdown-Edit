@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using MarkdownEdit.Commands;
 using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
@@ -19,7 +20,7 @@ namespace MarkdownEdit.Controls
             int number;
             if (int.TryParse(Line.Text, out number))
             {
-                MainWindow.ScrollToLineCommand.Execute(number, Owner);
+                ScrollToLineCommand.Command.Execute(number, Owner);
                 Close();
             }
             else

@@ -3,7 +3,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-  xmlns:controls="clr-namespace:MarkdownEdit.Controls"
+  xmlns:commands="clr-namespace:MarkdownEdit.Commands"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:i="clr-namespace:Logitech.Windows.Input;assembly=WpfMouseWheelLib"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,6 +11,7 @@
   d:DesignWidth="300"
   AllowDrop="True"
   ContextMenuOpening="EditorMenuOnContextMenuOpening"
+  DataContext="{Binding RelativeSource={RelativeSource Self}}"
   mc:Ignorable="d">
 
   <Border>
@@ -32,41 +33,25 @@
 
   <UserControl.CommandBindings>
     <CommandBinding CanExecute="CanExecute" Command="Find" Executed="ExecuteFindDialog" />
-    <CommandBinding Command="{x:Static controls:Editor.FindNextCommand}" Executed="ExecuteFindNext" />
-    <CommandBinding Command="{x:Static controls:Editor.FindPreviousCommand}" Executed="ExecuteFindPrevious" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.PasteSpecialCommand}" Executed="ExecutePasteSpecial" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.PasteFromHtmlCommand}" Executed="ExecutePasteFromHtml" />
     <CommandBinding CanExecute="CanExecute" Command="CorrectSpellingError" Executed="ExecuteSpellCheckReplace" />
     <CommandBinding CanExecute="CanExecute" Command="IgnoreSpellingError" Executed="ExecuteAddToDictionary" />
-    <CommandBinding Command="{x:Static controls:Editor.DeselectCommand}" Executed="ExecuteDeselectCommand" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.FormatCommand}" Executed="ExecuteFormatText" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.FormatWithLinkReferencesCommand}" Executed="ExecuteFormatTextWithLinkReferences" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.UnformatCommand}" Executed="ExecuteUnformatText" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.MoveLineUpCommand}" Executed="ExecuteMoveLineUp" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.MoveLineDownCommand}" Executed="ExecuteMoveLineDown" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.ConvertSelectionToListCommand}" Executed="ExecuteConvertSelectionToList" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.InsertBlockQuoteCommand}" Executed="ExecuteInsertBlockQuote" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.RevertCommand}" Executed="ExecuteRevertCommand" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.InsertHyperlinkCommand}" Executed="ExecuteInsertHyperlink" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.InsertHyperlinkDialogCommand}" Executed="ExecuteInsertHyperlinkDialog" />
-    <CommandBinding CanExecute="CanExecute" Command="{x:Static controls:Editor.ToggleOverTypeModeCommand}" Executed="ExecuteToggleOverTypeCommand" />
   </UserControl.CommandBindings>
 
   <UserControl.InputBindings>
-    <KeyBinding Command="{x:Static controls:Editor.FindNextCommand}" Gesture="F3" />
-    <KeyBinding Command="{x:Static controls:Editor.FindPreviousCommand}" Gesture="Shift+F3" />
-    <KeyBinding Command="{x:Static controls:Editor.PasteSpecialCommand}" Gesture="Ctrl+Shift+V" />
-    <KeyBinding Command="{x:Static controls:Editor.PasteFromHtmlCommand}" Gesture="Alt+V" />
-    <KeyBinding Command="{x:Static controls:Editor.DeselectCommand}" Gesture="Esc" />
-    <KeyBinding Command="{x:Static controls:Editor.FormatCommand}" Gesture="Alt+F" />
-    <KeyBinding Command="{x:Static controls:Editor.FormatWithLinkReferencesCommand}" Gesture="Ctrl+Shift+F" />
-    <KeyBinding Command="{x:Static controls:Editor.UnformatCommand}" Gesture="Alt+Shift+F" />
-    <KeyBinding Command="{x:Static controls:Editor.MoveLineUpCommand}" Gesture="Alt+Up" />
-    <KeyBinding Command="{x:Static controls:Editor.MoveLineDownCommand}" Gesture="Alt+Down" />
-    <KeyBinding Command="{x:Static controls:Editor.ConvertSelectionToListCommand}" Gesture="Alt+L" />
-    <KeyBinding Command="{x:Static controls:Editor.InsertBlockQuoteCommand}" Gesture="Ctrl+Q" />
-    <KeyBinding Command="{x:Static controls:Editor.RevertCommand}" Gesture="F5" />
-    <KeyBinding Command="{x:Static controls:Editor.InsertHyperlinkDialogCommand}" Gesture="Ctrl+L" />
-    <KeyBinding Command="{x:Static controls:Editor.ToggleOverTypeModeCommand}" Gesture="Insert" />
+    <KeyBinding Command="{x:Static commands:FindNextCommand.Command}" Gesture="F3" />
+    <KeyBinding Command="{x:Static commands:FindPreviousCommand.Command}" Gesture="Shift+F3" />
+    <KeyBinding Command="{x:Static commands:PasteSpecialCommand.Command}" Gesture="Ctrl+Shift+V" />
+    <KeyBinding Command="{x:Static commands:PasteFromHtmlCommand.Command}" Gesture="Alt+V" />
+    <KeyBinding Command="{x:Static commands:DeselectCommand.Command}" Gesture="Esc" />
+    <KeyBinding Command="{x:Static commands:FormatCommand.Command}" Gesture="Alt+F" />
+    <KeyBinding Command="{x:Static commands:FormatWithLinkReferencesCommand.Command}" Gesture="Ctrl+Shift+F" />
+    <KeyBinding Command="{x:Static commands:UnformatCommand.Command}" Gesture="Alt+Shift+F" />
+    <KeyBinding Command="{x:Static commands:MoveLineUpCommand.Command}" Gesture="Alt+Up" />
+    <KeyBinding Command="{x:Static commands:MoveLineDownCommand.Command}" Gesture="Alt+Down" />
+    <KeyBinding Command="{x:Static commands:ConvertSelectionToListCommand.Command}" Gesture="Alt+L" />
+    <KeyBinding Command="{x:Static commands:InsertBlockQuoteCommand.Command}" Gesture="Ctrl+Q" />
+    <KeyBinding Command="{x:Static commands:RevertCommand.Command}" Gesture="F5" />
+    <KeyBinding Command="{x:Static commands:InsertHyperlinkDialogCommand.Command}" Gesture="Ctrl+L" />
+    <KeyBinding Command="{x:Static commands:ToggleOverTypeModeCommand.Command}" Gesture="Insert" />
   </UserControl.InputBindings>
 </UserControl>

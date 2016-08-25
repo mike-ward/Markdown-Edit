@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using MarkdownEdit.Commands;
 using MarkdownEdit.Controls;
 using MarkdownEdit.Properties;
 using Microsoft.Win32;
@@ -158,7 +159,7 @@ namespace MarkdownEdit.Models
         {
             try
             {
-                if (App.UserSettings.FormatOnSave) Editor.FormatCommand.Execute(true, editor);
+                if (App.UserSettings.FormatOnSave) FormatCommand.Command.Execute(true, editor);
 
                 var lineEnd = "\r\n";
                 if (App.UserSettings.LineEnding.Equals("cr", StringComparison.OrdinalIgnoreCase)) lineEnd = "\r";

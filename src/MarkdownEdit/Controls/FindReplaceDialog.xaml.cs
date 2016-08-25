@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using MarkdownEdit.Commands;
 using MarkdownEdit.Models;
 
 namespace MarkdownEdit.Controls
@@ -45,7 +46,7 @@ namespace MarkdownEdit.Controls
             {
                 _findText = FindText;
                 var find = GetRegEx(_findText, false);
-                MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
+                EditorFindCommand.Command.Execute(find, Application.Current.MainWindow);
             }
             catch (Exception ex)
             {
@@ -59,7 +60,7 @@ namespace MarkdownEdit.Controls
             {
                 _findText = FindText;
                 var find = GetRegEx(_findText, false);
-                MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
+                EditorFindCommand.Command.Execute(find, Application.Current.MainWindow);
             }
             catch (Exception ex)
             {
@@ -75,7 +76,7 @@ namespace MarkdownEdit.Controls
                 var find = GetRegEx(_findText, false);
                 var replace = txtReplace.Text;
                 var tuple = new Tuple<Regex, string>(find, replace);
-                MainWindow.EditorReplaceCommand.Execute(tuple, Application.Current.MainWindow);
+                EditorReplaceCommand.Command.Execute(tuple, Application.Current.MainWindow);
             }
             catch (Exception ex)
             {
@@ -91,7 +92,7 @@ namespace MarkdownEdit.Controls
                 var find = GetRegEx(_findText, false);
                 var replace = txtReplace.Text;
                 var tuple = new Tuple<Regex, string>(find, replace);
-                MainWindow.EditorReplaceAllCommand.Execute(tuple, Application.Current.MainWindow);
+                EditorReplaceAllCommand.Command.Execute(tuple, Application.Current.MainWindow);
             }
             catch (Exception ex)
             {
@@ -137,14 +138,14 @@ namespace MarkdownEdit.Controls
         {
             if (_findText == null) return;
             var find = GetRegEx(_findText, true);
-            MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
+            EditorFindCommand.Command.Execute(find, Application.Current.MainWindow);
         }
 
         public void FindNext()
         {
             if (_findText == null) return;
             var find = GetRegEx(_findText, false);
-            MainWindow.EditorFindCommand.Execute(find, Application.Current.MainWindow);
+            EditorFindCommand.Command.Execute(find, Application.Current.MainWindow);
         }
 
         private void ExecuteClose(object sender, ExecutedRoutedEventArgs e) { Hide(); }
