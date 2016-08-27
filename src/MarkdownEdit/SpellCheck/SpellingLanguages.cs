@@ -21,7 +21,5 @@ namespace MarkdownEdit.SpellCheck
         [Description("Danish (Denmark)")] Denmark
     
         [Description("Swedish (Sweden)")] Sweden
-   
-        [Description("Swedish (Finland)")] Finland
     }
 }
