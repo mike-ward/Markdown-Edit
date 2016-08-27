@@ -1,0 +1,138 @@
+=======================================================
+= Swedish
+=======================================================
+
+=== Main Window
+
+tooltip-new-command:              Nytt - Ctrl+N
+tooltip-open-command:             Öppna - Ctrl+O
+tooltip-save-command:             Spara - Ctrl+S
+tooltip-save-as-command:          Spara som - Ctrl+Shift+S
+tooltip-toggle-settings:          Inställningar - Ctrl+,
+tooltip-document-statistics:      (t)ecken/(o)rd/Standard(s)idor (1500t=1s)
+tooltip-spell-check:              Stavningskontroll - Ctrl+F7
+tooltip-word-wrap:                Radbrytning - Ctrl+W
+tooltip-auto-save:                Autospara - Alt+S
+tooltip-new-version:              Ny version tillgänglig
+settings-flyout-header:           Inställningar
+
+=== Editor
+
+editor-f1-for-help:               - F1 för hjälp
+editor-new-document:              Nytt dokument
+editor-menu-undo:                 Ångra
+editor-menu-redo:                 Upprepa
+editor-menu-cut:                  Klipp ut
+editor-menu-copy:                 Kopiera
+editor-menu-paste:                Klistra in
+editor-menu-paste-special:        Klistra in special
+editor-menu-paste-from-html:      Klistra in från HTML
+editor-menu-select-all:           Markera alla
+editor-menu-delete:               Ta bort
+editor-menu-wrap-format:          Radbryt & formatera
+editor-menu-unwrap-format:        Ta bort radbrytning & formatera
+editor-menu-add-to-dictionary:    Lägg till i ordboken
+
+=== Settings Dialog
+
+settings-editor-section:          Redigerare
+settings-word-wrap:               Radbrytning
+settings-auto-save:               Autospara
+settings-line-numbers:            Radnummer
+settings-open-last-file:          Öppna senaste filen
+settings-remember-cursor-pos:     Kom ihåg markörposition
+settings-highlight-current:       Belys aktuell rad
+settings-show-scroll-bar:         Visa vertikal rullningslist
+settings-show-tabs:               Visa flikar
+settings-show-spaces:             Visa mellanslag
+settings-show-end-of-line:        Visa radslut
+settings-sync-scroll-pos:         Synkronisera rullningspositioner
+settings-format-on-save:          Formatera text vid spara
+settings-github-markdown:         GitHub Markdown
+settings-line-endings:            Radslut
+
+settings-spell-check-section:     Stavningskontroll
+settings-spell-checking:          Stavningskontroll
+settings-ignore-all-caps:         Ignorera versaler
+settings-ignore-code-blocks:      Ignorera kodblock
+settings-ignore-markup:           Ignorera markup-taggar
+settings-ignore-words-digits:     Ignorera ord med siffror
+
+settings-advanced:                Avancerat
+settings-open-settings:           Inställningar
+settings-open-html-template:      HTML-mall
+settings-open-dictionary:         Användarordbok
+settings-open-snippets:           Utdrag
+settings-open-key-bindings:       Tangentbindningar
+
+settings-about:                   Om
+settings-version:				          Version
+settings-web:					            Webb
+settings-source:				          Källa
+settings-donate:				          Donera
+settings-yes-i-donated:           Ja, jag har donerat!
+settings-encoding:                Teckentabell
+settings-encode-automatic:        Automatiskt
+
+=== Find Replace Dialog
+
+find-replace-title:               Sök och ersätt
+find-replace-tab-find:            Sök
+find-replace-tab-replace:         Ersätt
+find-replace-watermark-find:      Sök
+find-replace-watermark-replace:   Ersätt
+find-replace-find-next:           Sök nästa
+find-replace-replace:             Ersätt
+find-replace-replace-all:         Ersätt alla
+find-replace-match-case:          Skiftlägeskänslig
+find-replace-match-whole-word:    Sök hela ord
+find-replace-regular-expression:  Regular expression
+find-replace-wildcards:           Jokertecken
+
+=== Goto Line Dialog
+
+goto-line-title:                  Gå till rad
+
+=== Image Drop Progress Dialog
+
+image-drop-insert-path:           Infoga sökväg
+image-drop-upload-imgur:          Ladda upp till Imgur
+image-drop-as-data-uri:           Som data-URI
+image-drop-as-local-file:         Som lokal fil
+image-drop-overwrite-file:        Filen finns redan. Vill di skriva över den?
+image-drop-save-as:               Spara som
+
+=== Recent Files Dialog
+
+recent-files-title:               Tidigare filer
+recent-file-not-found:            Filen finns inte längre
+
+=== Themes Dialog
+
+themes-title:                     Teman
+
+=== Tooltips
+
+tooltip-f6:                       F6
+tooltip-f7:                       F7
+tooltip-f8:                       F8
+tooltip-f9:                       F9
+tooltip-f10:                      F10
+tooltip-alt-s:                    Alt+S
+tooltip-ctrl-f7:                  Ctrl+F7
+tooltip-ctrl-w:                   Ctrl+W
+
+=== Insert Hyperlink Dialog
+
+insert-hyperlink-title:           Infoga hyperlänk
+insert-hyperlink-optional-title:  frivilligt namn
+
+=== Generic
+
+ok:                               OK
+open:                             Öppna
+save:                             Spara
+cancel:                           Avbryt
+message-html-clipboard:		        HTML kopierat till Urklipp
+aslocalfile-save-file-as:         Spara fil som (.png läggs till namnet)?
+table-of-contents:                Innehållstabell
