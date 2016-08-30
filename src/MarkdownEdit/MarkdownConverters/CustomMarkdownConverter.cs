@@ -17,7 +17,7 @@ namespace MarkdownEdit.MarkdownConverters
         {
             var separator = converter.StartsWith("\"") ? new[] {'"'} : null;
             var split = converter.Split(separator, 2);
-            var fileName = split[0];
+            var fileName = FileExtensions.GetShortPathName(split[0]); // Process.Start barfs on long names
             var args = split.Length == 2 ? split[1] : "";
             var program = StartInfo(fileName, args, text != null);
 
