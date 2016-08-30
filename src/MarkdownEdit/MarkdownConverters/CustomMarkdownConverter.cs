@@ -10,22 +10,20 @@ namespace MarkdownEdit.MarkdownConverters
         public string ConvertToHtml(string markdown)
         {
             var converter = App.UserSettings.CustomMarkdownConverter;
-            return RunConverter(converter, markdown);
+            var converterArgs = App.UserSettings.CustomMarkdownConverterArgs;
+            return RunConverter(converter, converterArgs, markdown);
         }
 
-        private static string RunConverter(string converter, string text)
+        private static string RunConverter(string converter, string convertArguments, string text)
         {
-            var separator = converter.StartsWith("\"") ? new[] {'"'} : null;
-            var split = converter.Split(separator, 2);
-            var fileName = FileExtensions.GetShortPathName(split[0]); // Process.Start barfs on long names
-            var args = split.Length == 2 ? split[1] : "";
-            var program = StartInfo(fileName, args, text != null);
+            var args = convertArguments ?? "";
+            var program = StartInfo(converter, args, text != null);
 
             using (var process = Process.Start(program))
             {
                 if (process == null)
                 {
-                    Notify.Alert($"Error starting {fileName}");
+                    Notify.Alert($"Error starting {converter}");
                     return text;
                 }
                 if (text != null)
