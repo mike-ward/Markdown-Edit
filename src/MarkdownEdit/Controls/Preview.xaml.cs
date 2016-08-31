@@ -221,7 +221,7 @@ namespace MarkdownEdit.Controls
 
             // Inject anchors at all block level elements for scroll synchronization
             var nc = doc.DocumentNode.SelectNodes("//p|//h1|//h2|//h3|//h4|//h5|//h6|//ul|//ol|//li|//hr|//pre|//blockquote");
-            each(nc, node => node.Attributes.Add("id", getName()));
+            each(nc, node => { if (node.Name != "blockquote" || node.ParentNode.Name != "li") node.Attributes.Add("id", getName()); });
 
             // Remove potentially harmful elements
             nc = doc.DocumentNode.SelectNodes("//script|//link|//iframe|//frameset|//frame|//applet|//object|//embed");
