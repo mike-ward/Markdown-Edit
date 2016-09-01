@@ -34,6 +34,7 @@ namespace MarkdownEdit.Models
         private bool _githubMarkdown;
         private string _lineEnding = "crlf";
         private string _customMarkdownConverter = "";
+        private string _customMarkdownConverterArgs = "";
         private bool _useDefaultEditor;
         private bool _yesIDonated;
         private bool _insertImagePathsOnly;
@@ -191,6 +192,12 @@ namespace MarkdownEdit.Models
             set { Set(ref _customMarkdownConverter, value); }
         }
 
+        public string CustomMarkdownConverterArgs
+        {
+            get { return _customMarkdownConverterArgs; }
+            set { Set(ref _customMarkdownConverterArgs, value); }
+        }
+
         public bool UseDefaultEditor
         {
             get { return _useDefaultEditor; }
@@ -305,33 +312,34 @@ namespace MarkdownEdit.Models
         public override int GetHashCode()
         {
             return 17
-                ^ EditorFontFamily.GetHashCode()
-                ^ EditorFontSize.GetHashCode()
-                ^ EditorHighlightCurrentLine.GetHashCode()
-                ^ EditorOpenLastCursorPosition.GetHashCode()
-                ^ EditorOpenLastFile.GetHashCode()
-                ^ EditorShowEndOfLine.GetHashCode()
-                ^ EditorShowLineNumbers.GetHashCode()
-                ^ EditorShowSpaces.GetHashCode()
-                ^ EditorShowTabs.GetHashCode()
-                ^ EditorVerticalScrollBarVisible.GetHashCode()
-                ^ EditorEncoding.GetHashCode()
-                ^ SynchronizeScrollPositions.GetHashCode()
-                ^ SpellCheckDictionary.GetHashCode()
-                ^ SpellCheckIgnoreCodeBlocks.GetHashCode()
-                ^ SpellCheckIgnoreMarkupTags.GetHashCode()
-                ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
-                ^ IgnoreTaskbarOnMaximize.GetHashCode()
-                ^ FormatOnSave.GetHashCode()
-                ^ GitHubMarkdown.GetHashCode()
-                ^ Theme.GetHashCode()
-                ^ SinglePaneMargin.GetHashCode()
-                ^ LineEnding.GetHashCode()
-                ^ CustomMarkdownConverter.GetHashCode()
-                ^ UseDefaultEditor.GetHashCode()
-                ^ YesIDonated.GetHashCode()
-                ^ InsertImagePathsOnly.GetHashCode()
-                ^ CultureLanguage.GetHashCode();
+                   ^ EditorFontFamily.GetHashCode()
+                   ^ EditorFontSize.GetHashCode()
+                   ^ EditorHighlightCurrentLine.GetHashCode()
+                   ^ EditorOpenLastCursorPosition.GetHashCode()
+                   ^ EditorOpenLastFile.GetHashCode()
+                   ^ EditorShowEndOfLine.GetHashCode()
+                   ^ EditorShowLineNumbers.GetHashCode()
+                   ^ EditorShowSpaces.GetHashCode()
+                   ^ EditorShowTabs.GetHashCode()
+                   ^ EditorVerticalScrollBarVisible.GetHashCode()
+                   ^ EditorEncoding.GetHashCode()
+                   ^ SynchronizeScrollPositions.GetHashCode()
+                   ^ SpellCheckDictionary.GetHashCode()
+                   ^ SpellCheckIgnoreCodeBlocks.GetHashCode()
+                   ^ SpellCheckIgnoreMarkupTags.GetHashCode()
+                   ^ SpellCheckIgnoreWordsWithDigits.GetHashCode()
+                   ^ IgnoreTaskbarOnMaximize.GetHashCode()
+                   ^ FormatOnSave.GetHashCode()
+                   ^ GitHubMarkdown.GetHashCode()
+                   ^ Theme.GetHashCode()
+                   ^ SinglePaneMargin.GetHashCode()
+                   ^ LineEnding.GetHashCode()
+                   ^ CustomMarkdownConverter.GetHashCode()
+                   ^ CustomMarkdownConverterArgs.GetHashCode()
+                   ^ UseDefaultEditor.GetHashCode()
+                   ^ YesIDonated.GetHashCode()
+                   ^ InsertImagePathsOnly.GetHashCode()
+                   ^ CultureLanguage.GetHashCode();
         }
     }
 }

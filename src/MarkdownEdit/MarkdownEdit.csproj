@@ -308,7 +308,6 @@
     <Compile Include="SpellCheck\ISpellingService.cs" />
     <Compile Include="SpellCheck\SpellCheckBackgroundRenderer.cs" />
     <Compile Include="SpellCheck\SpellCheckProvider.cs" />
-    <Compile Include="SpellCheck\SpellingLanguages.cs" />
     <Compile Include="SpellCheck\SpellingService.cs" />
     <Compile Include="Models\Theme.cs" />
     <Compile Include="Controls\ThemeDialog.xaml.cs">
@@ -412,6 +411,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Languages\sv\local.txt" />
     <Content Include="Lib\WpfMouseWheelLib.pdb" />
     <EmbeddedResource Include="Resources\emoji-sprites.png" />
     <Resource Include="Resources\donate.png" />
@@ -443,6 +443,7 @@
     <Content Include="Languages\de\help.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Languages\sv\help.md" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -489,6 +490,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SpellCheck\Dictionaries\Spanish.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\sv_SE.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\sv_SE.dic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\sv_FI.aff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SpellCheck\Dictionaries\sv_FI.dic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Themes\brain-salad-surgery.json">
