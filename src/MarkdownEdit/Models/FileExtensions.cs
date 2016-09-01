@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 
 namespace MarkdownEdit.Models
@@ -88,5 +90,14 @@ namespace MarkdownEdit.Models
             var relativePath = relativeUri.ToString();
             return relativePath;
         }
+
+        public static string GetShortPathName(string longPath)
+        {
+            var shortPath = new StringBuilder(longPath.Length + 1);
+            return GetShortPathName(longPath, shortPath, shortPath.Capacity) == 0 ? longPath : shortPath.ToString();
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern int GetShortPathName(String path, StringBuilder shortPath, int shortPathLength);
     }
 }

@@ -126,6 +126,7 @@
           OffLabel="{i18N:Localize settings-sync-scroll-pos}"
           OnLabel="{i18N:Localize settings-sync-scroll-pos}" />
         <controls:ToggleSwitch
+          x:Name="MarkdownEngine"
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding GitHubMarkdown}"
           OffLabel="{i18N:Localize settings-github-markdown}"

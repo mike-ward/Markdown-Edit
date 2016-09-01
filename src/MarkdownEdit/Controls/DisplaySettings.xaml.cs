@@ -38,6 +38,7 @@ namespace MarkdownEdit.Controls
             FontCombo.SetBinding(FontComboBox.SelectedFontSizeProperty, fontSizeBinding);
             var encodingBinding = new Binding("EditorEncoding") {Source = DataContext, Mode = BindingMode.TwoWay};
             EncodingComboBox.SetBinding(EncodingComboBox.SelectedEncodingProperty, encodingBinding);
+            MarkdownEngine.IsEnabled = string.IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter);
         }
 
         public void SaveState() { _clonedSettings = ((UserSettings)DataContext).Clone() as UserSettings; }
