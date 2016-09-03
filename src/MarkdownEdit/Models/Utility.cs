@@ -46,11 +46,13 @@ namespace MarkdownEdit.Models
             };
         }
 
-        public static Process EditFile(string file) => App.UserSettings.UseDefaultEditor
-            ? Process.Start(file)
-            : Process.Start("Notepad.exe", file);
+        public static Process EditFile(string file)
+            => App.UserSettings.UseDefaultEditor
+                ? Process.Start(file)
+                : Process.Start("Notepad.exe", file);
 
-        public static string AssemblyFolder() => Path.GetDirectoryName(ExecutingAssembly());
+        public static string AssemblyFolder()
+            => Path.GetDirectoryName(ExecutingAssembly());
 
         public static string ExecutingAssembly()
             => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');

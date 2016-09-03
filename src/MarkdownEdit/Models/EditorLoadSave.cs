@@ -95,9 +95,10 @@ namespace MarkdownEdit.Models
             }
         }
 
-        public static bool SaveFile(Editor editor) => string.IsNullOrWhiteSpace(editor.FileName)
-            ? SaveFileAs(editor)
-            : Save(editor);
+        public static bool SaveFile(Editor editor) 
+            => string.IsNullOrWhiteSpace(editor.FileName)
+                ? SaveFileAs(editor)
+                : Save(editor);
 
         public static bool SaveIfModified(Editor editor)
         {

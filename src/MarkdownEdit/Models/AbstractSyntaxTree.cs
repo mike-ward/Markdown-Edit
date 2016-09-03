@@ -1,14 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using CommonMark;
 using CommonMark.Syntax;
 
 namespace MarkdownEdit.Models
 {
     public static class AbstractSyntaxTree
     {
-        public static readonly Dictionary<BlockTag, Func<Theme, Highlight>> BlockHighlighter = new Dictionary
-            <BlockTag, Func<Theme, Highlight>>
+        private static readonly CommonMarkSettings CommonMarkSettings;
+
+        static AbstractSyntaxTree()
+        {
+            CommonMarkSettings = CommonMarkSettings.Default.Clone();
+            CommonMarkSettings.TrackSourcePosition = true;
+        }
+
+        public static Block GenerateAbstractSyntaxTree(string text)
+        {
+            using (var reader = new StringReader(Normalize(text)))
+            {
+                var ast = CommonMarkConverter.ProcessStage1(reader, CommonMarkSettings);
+                CommonMarkConverter.ProcessStage2(ast, CommonMarkSettings);
+                return ast;
+            }
+        }
+
+        private static string Normalize(string value) { return value.Replace('→', '\t').Replace('␣', ' '); }
+
+        public static readonly Dictionary<BlockTag, Func<Theme, Highlight>> BlockHighlighter = new Dictionary<BlockTag, Func<Theme, Highlight>>
         {
             {BlockTag.AtxHeading, t => t.HighlightHeading},
             {BlockTag.SetextHeading, t => t.HighlightHeading},
@@ -20,8 +41,7 @@ namespace MarkdownEdit.Models
             {BlockTag.ReferenceDefinition, t => t.HighlightLink}
         };
 
-        public static readonly Dictionary<InlineTag, Func<Theme, Highlight>> InlineHighlighter = new Dictionary
-            <InlineTag, Func<Theme, Highlight>>
+        public static readonly Dictionary<InlineTag, Func<Theme, Highlight>> InlineHighlighter = new Dictionary<InlineTag, Func<Theme, Highlight>>
         {
             {InlineTag.Code, t => t.HighlightInlineCode},
             {InlineTag.Emphasis, t => t.HighlightEmphasis},
@@ -72,7 +92,7 @@ namespace MarkdownEdit.Models
             var end = start + length;
             var blockTags = new[]
             {BlockTag.FencedCode, BlockTag.HtmlBlock, BlockTag.IndentedCode, BlockTag.ReferenceDefinition};
-            var inlineTags = new[] {InlineTag.Code, InlineTag.Link, InlineTag.RawHtml, InlineTag.Image};
+            var inlineTags = new[] { InlineTag.Code, InlineTag.Link, InlineTag.RawHtml, InlineTag.Image };
             var lastBlockTag = BlockTag.Document;
 
             foreach (var block in EnumerateBlocks(ast.FirstChild))

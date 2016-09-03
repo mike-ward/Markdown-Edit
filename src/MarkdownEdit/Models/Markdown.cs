@@ -3,19 +3,20 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using CommonMark;
-using CommonMark.Syntax;
 using HtmlAgilityPack;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Properties;
 using NReco.PdfGenerator;
 using static System.String;
-using CommonMarkConverter = MarkdownEdit.MarkdownConverters.CommonMarkConverter;
 
 namespace MarkdownEdit.Models
 {
     public static class Markdown
     {
+        private static readonly IMarkdownConverter CommonMarkConverter = new CommonMarkConverter();
+        private static readonly IMarkdownConverter GitHubMarkdownConverter = new GitHubMarkdownConverter();
+        private static readonly IMarkdownConverter CustomMarkdownConverter = new CustomMarkdownConverter();
+
         private const string GithubMarkdownFormatOptions =
             "markdown_github"
             + "-emoji"
@@ -30,43 +31,42 @@ namespace MarkdownEdit.Models
             + "+pipe_tables"
             + "+tex_math_dollars";
 
-        private static readonly CommonMarkSettings CommonMarkSettings;
-        private static readonly IMarkdownConverter CommonMarkConverter = new CommonMarkConverter();
-        private static readonly IMarkdownConverter GitHubMarkdownConverter = new GitHubMarkdownConverter();
-        private static readonly IMarkdownConverter CustomMarkdownConverter = new CustomMarkdownConverter();
-
-        static Markdown()
-        {
-            CommonMarkSettings = CommonMarkSettings.Default.Clone();
-            CommonMarkSettings.TrackSourcePosition = true;
-        }
-
-        private static string MarkdownFormat => App.UserSettings.GitHubMarkdown
-            ? GithubMarkdownFormatOptions
-            : CommonMarkFormatOptions;
-
-        public static string Wrap(string text) => Reformat(text);
-
-        public static string WrapWithLinkReferences(string text) => Reformat(text, "--reference-links");
-
-        public static string Unwrap(string text) => Reformat(text, "--wrap=none --atx-headers");
-
-        public static string FromHtml(string path) => Pandoc(null, $"-f html -t {MarkdownFormat} --wrap=none \"{path}\"");
-
-        public static string FromHtmlText(string text) => Pandoc(text, $"-f html -t {MarkdownFormat} --wrap=none");
+        private static string MarkdownFormat
+            => App.UserSettings.GitHubMarkdown
+                ? GithubMarkdownFormatOptions
+                : CommonMarkFormatOptions;
 
         public static string ToHtml(string markdown)
         {
-            var ast = GenerateAbstractSyntaxTree(markdown);
+            var ast = AbstractSyntaxTree.GenerateAbstractSyntaxTree(markdown);
             markdown = markdown.ConvertEmojis(ast);
-            return !IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter)
-                ? CustomMarkdownConverter.ConvertToHtml(markdown)
-                : (App.UserSettings.GitHubMarkdown
-                    ? GitHubMarkdownConverter.ConvertToHtml(markdown)
-                    : CommonMarkConverter.ConvertToHtml(markdown));
+            var converter = GetMarkdownConverter();
+            return converter.ConvertToHtml(markdown);
         }
 
-        public static string FromMicrosoftWord(string path) => Pandoc(null, $"-f docx -t {MarkdownFormat} \"{path}\"");
+        public static string Wrap(string text)
+            => Reformat(text);
+
+        public static string WrapWithLinkReferences(string text)
+            => Reformat(text, "--reference-links");
+
+        public static string Unwrap(string text)
+            => Reformat(text, "--wrap=none --atx-headers");
+
+        public static string FromHtml(string path)
+            => Pandoc(null, $"-f html -t {MarkdownFormat} --wrap=none \"{path}\"");
+
+        public static string FromHtmlText(string text) => Pandoc(text, $"-f html -t {MarkdownFormat} --wrap=none");
+
+        private static IMarkdownConverter GetMarkdownConverter()
+        {
+            return IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter)
+                ? (App.UserSettings.GitHubMarkdown ? GitHubMarkdownConverter : CommonMarkConverter)
+                : CustomMarkdownConverter;
+        }
+
+        public static string FromMicrosoftWord(string path)
+            => Pandoc(null, $"-f docx -t {MarkdownFormat} \"{path}\"");
 
         public static string ToMicrosoftWord(string markdown, string path) =>
             Pandoc(ResolveImageUrls(ToHtml(markdown)), $"-f html -t docx -o \"{path}\"");
@@ -136,7 +136,7 @@ namespace MarkdownEdit.Models
                 if (matches.Count < 2) return Tuple.Create(Empty, text);
                 var match = matches[1];
                 var index = match.Index + match.Groups[0].Value.Length + 1;
-                while (index < (text.Length) && char.IsWhiteSpace(text[index])) index += 1;
+                while (index < text.Length && char.IsWhiteSpace(text[index])) index += 1;
                 index = Math.Min(text.Length, index);
                 return Tuple.Create(text.Substring(0, index), text.Substring(index));
             }
@@ -193,18 +193,6 @@ namespace MarkdownEdit.Models
 
             return modified ? doc.DocumentNode.WriteTo() : html;
         }
-
-        public static Block GenerateAbstractSyntaxTree(string text)
-        {
-            using (var reader = new StringReader(Normalize(text)))
-            {
-                var ast = CommonMark.CommonMarkConverter.ProcessStage1(reader, CommonMarkSettings);
-                CommonMark.CommonMarkConverter.ProcessStage2(ast, CommonMarkSettings);
-                return ast;
-            }
-        }
-
-        private static string Normalize(string value) { return value.Replace('→', '\t').Replace('␣', ' '); }
 
         public static string RemoveYamlFrontMatter(string markdown)
         {
