@@ -29,12 +29,6 @@ namespace MarkdownEdit.Models
             return ImageBytesToDataUri(bytes, "png");
         }
 
-        private static ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            var codecs = ImageCodecInfo.GetImageDecoders();
-            return codecs.FirstOrDefault(codec => codec.FormatID == format.Guid);
-        }
-
         private static string ImageBytesToDataUri(byte[] bytes, string imageType)
         {
             return $"<img src=\"data:image/{imageType};base64,{Convert.ToBase64String(bytes)}\" />";

@@ -110,6 +110,7 @@ namespace MarkdownEdit.Controls
             try
             {
                 UpdateBaseTag();
+                ScrollSync();
                 var div = GetContentsDiv();
                 if (div == null) return;
 
@@ -126,6 +127,12 @@ namespace MarkdownEdit.Controls
             {
                 Notify.Alert(ex.ToString());
             }
+        }
+
+        private void ScrollSync()
+        {
+            var document = Browser.Document as IHTMLDocument2;
+            document.parentWindow.onscroll = new Action<object, IHTMLEventObj>((s, e) => Console.WriteLine("scroll"));
         }
 
         public void UpdateDocumentStatistics(string innerText)
@@ -321,6 +328,17 @@ namespace MarkdownEdit.Controls
                 document2?.parentWindow.scroll(0, offsetTop);
             }
         }
+
+        //public void SmoothScroll(int offset)
+        //{
+        //    var document = (HTMLDocument)Browser.Document;
+        //    var window = ((IHTMLDocument2)Browser.Document).parentWindow;
+        //    var scrollTop = (int)document.getElementsByTagName("HTML").item(0).ScrollTop;
+        //    for (var i = scrollTop; i <= offset; ++i)
+        //    {
+        //        window.scroll(0, i);
+        //    }
+        //}
 
         private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
         {

@@ -1,0 +1,138 @@
+﻿=======================================================
+= Russian
+=======================================================
+
+=== Main Window
+
+tooltip-new-command:              Новый - Ctrl+N
+tooltip-open-command:             Открыть - Ctrl+O
+tooltip-save-command:             Сохранить - Ctrl+S
+tooltip-save-as-command:          Сохранить как - Ctrl+Shift+S
+tooltip-toggle-settings:          Настройки - Ctrl+,
+tooltip-document-statistics:      (c)Символ/(w)Слово/(p)Кол-во стандартных страниц (1500с=1стр.)
+tooltip-spell-check:              Проверка орфографии - Ctrl+F7
+tooltip-word-wrap:                Перенос по словам - Ctrl+W
+tooltip-auto-save:                Автосохранение - Alt+S
+tooltip-new-version:              Доступна новая версия
+settings-flyout-header:           Настройки
+
+=== Editor
+
+editor-f1-for-help:               - F1 для вызова справки
+editor-new-document:              Новый документ
+editor-menu-undo:                 Отменить
+editor-menu-redo:                 Повторить
+editor-menu-cut:                  Вырезать
+editor-menu-copy:                 Копировать
+editor-menu-paste:                Вставить
+editor-menu-paste-special:        Специальная вставка
+editor-menu-paste-from-html:      Вставить из HTML
+editor-menu-select-all:           Выделить все
+editor-menu-delete:               Удалить
+editor-menu-wrap-format:          Перенести по строкам и отформатировать
+editor-menu-unwrap-format:        Убрать перенос по строкам и отформатировать
+editor-menu-add-to-dictionary:    Добавить в словарь
+
+=== Settings Dialog
+
+settings-editor-section:          Редактор
+settings-word-wrap:               Перенос по словам
+settings-auto-save:               Автосхранение
+settings-line-numbers:            Номера строк
+settings-open-last-file:          Открыть последний файл
+settings-remember-cursor-pos:     Запоминать позицию курсора
+settings-highlight-current:       Подсветить текущую строку
+settings-show-scroll-bar:         Показать вертикальную полосу прокрутки
+settings-show-tabs:               Показать табуляции
+settings-show-spaces:             Показать пробелы
+settings-show-end-of-line:        Показать окончания строк
+settings-sync-scroll-pos:         Синхронизировать позиции прокрутки
+settings-format-on-save:          Отформатировать текст при сохранении
+settings-github-markdown:         GitHub Markdown
+settings-line-endings:            Окончания строк
+
+settings-spell-check-section:     Проверка орфографии
+settings-spell-checking:          Проверка орфографии
+settings-ignore-all-caps:         Игнорировать ВСЕ ЗАГЛАВНЫЕ
+settings-ignore-code-blocks:      Игнорировать блоки кода
+settings-ignore-markup:           Игнорировать тэги разметки
+settings-ignore-words-digits:     Игнорировать слова с цифрами
+
+settings-advanced:                Расширенные
+settings-open-settings:           Настройки
+settings-open-html-template:      HTML шаблон
+settings-open-dictionary:         Словарь пользователя
+settings-open-snippets:           Фрагменты
+settings-open-key-bindings:       Настройка горячих клавиш
+
+settings-about:                   О программе
+settings-version:				          Версия
+settings-web:					            Веб-сайт
+settings-source:				          Исходники
+settings-donate:				          Пожертвовать
+settings-yes-i-donated:           Да, я пожертвовал!
+settings-encoding:                Кодировка
+settings-encode-automatic:        Автоматически
+
+=== Find Replace Dialog
+
+find-replace-title:               Найти и заменить
+find-replace-tab-find:            Найти
+find-replace-tab-replace:         Заменить
+find-replace-watermark-find:      Найти
+find-replace-watermark-replace:   Заменить
+find-replace-find-next:           Найти далее
+find-replace-replace:             Заменить
+find-replace-replace-all:         Заменить все
+find-replace-match-case:          С учетом регистра
+find-replace-match-whole-word:    Только слово целиком
+find-replace-regular-expression:  Регулярное выражение
+find-replace-wildcards:           Маски символов
+
+=== Goto Line Dialog
+
+goto-line-title:                  Перейти к строке
+
+=== Image Drop Progress Dialog
+
+image-drop-insert-path:           Вставить путь
+image-drop-upload-imgur:          Закачать на Imgur
+image-drop-as-data-uri:           Как ссылку на данные
+image-drop-as-local-file:         Как локальный файл
+image-drop-overwrite-file:        Файл уже существует. Перезаписать?
+image-drop-save-as:               Сохранить как
+
+=== Recent Files Dialog
+
+recent-files-title:               Недавние файлы
+recent-file-not-found:            Файл больше не существует
+
+=== Themes Dialog
+
+themes-title:                     Темы
+
+=== Tooltips
+
+tooltip-f6:                       F6
+tooltip-f7:                       F7
+tooltip-f8:                       F8
+tooltip-f9:                       F9
+tooltip-f10:                      F10
+tooltip-alt-s:                    Alt+S
+tooltip-ctrl-f7:                  Ctrl+F7
+tooltip-ctrl-w:                   Ctrl+W
+
+=== Insert Hyperlink Dialog
+
+insert-hyperlink-title:           Вставить гиперссылку
+insert-hyperlink-optional-title:  дополнительный заголовок
+
+=== Generic
+
+ok:                               OK
+open:                             Открыть
+save:                             Сохранить
+cancel:                           Отмена
+message-html-clipboard:		        HTML скопирован в буфер обмена
+aslocalfile-save-file-as:         Сохранить файл как (.png будет добавлено к имени)?
+table-of-contents:                Оглавление

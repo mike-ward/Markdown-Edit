@@ -212,7 +212,6 @@ namespace MarkdownEdit.Controls
             set { SetValue(MyEncodingInfoProperty, value); }
         }
 
-
         private void OnIsVisibleChanged(object sender,
             DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
@@ -255,7 +254,7 @@ namespace MarkdownEdit.Controls
             {
                 try
                 {
-                    AbstractSyntaxTree = Markdown.GenerateAbstractSyntaxTree(Text);
+                    AbstractSyntaxTree = GenerateAbstractSyntaxTree(Text);
                     colorizer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
                     blockBackgroundRenderer.UpdateAbstractSyntaxTree(AbstractSyntaxTree);
                     // The block nature of markdown causes edge cases in the syntax hightlighting.
