@@ -12,7 +12,6 @@
   xmlns:p="clr-namespace:MarkdownEdit.Properties"
   Title="{Binding TitleName}"
   Background="{Binding Path=Theme.EditorBackground, Source={x:Static local:App.UserSettings}}"
-  DataContext="{Binding RelativeSource={RelativeSource Self}}"
   FocusManager.FocusedElement="{Binding ElementName=Editor}"
   GlowBrush="{StaticResource GrayBrush2}"
   IgnoreTaskbarOnMaximize="{Binding Path=IgnoreTaskbarOnMaximize, Source={x:Static local:App.UserSettings}}"
@@ -25,6 +24,10 @@
   WindowTitleBrush="{StaticResource GrayBrush2}"
   WindowTransitionsEnabled="False">
 
+  <mah:MetroWindow.DataContext>
+        <controls:MainWindowViewModel />
+  </mah:MetroWindow.DataContext>
+    
   <mah:MetroWindow.Resources>
     <converters:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
 
@@ -175,7 +178,7 @@
         IsModal="True"
         Position="Right"
         Theme="Accent">
-        <controls:DisplaySettings x:Name="DisplaySettings" SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}" />
+        <controls:DisplaySettings x:Name="DisplaySettings" SpellCheckProvider="{Binding Path=DataContext.SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}" />
         <mah:Flyout.InputBindings>
           <KeyBinding Key="Escape" Command="{x:Static commands:ToggleSettingsFlyoutCommand.Command}" />
         </mah:Flyout.InputBindings>
@@ -201,7 +204,7 @@
     <UniformGrid x:Name="UniformGrid" Columns="2">
       <controls:Editor
         x:Name="Editor"
-        Margin="{Binding Path=EditorMargins, RelativeSource={RelativeSource AncestorType=Window}}"
+        Margin="{Binding Path=DataContext.EditorMargins, RelativeSource={RelativeSource AncestorType=Window}}"
         Padding="5,10,5,3"
         Background="{Binding Path=Theme.EditorBackground, Source={x:Static local:App.UserSettings}}"
         FontFamily="{Binding Path=EditorFontFamily, Source={x:Static local:App.UserSettings}}"
@@ -213,9 +216,9 @@
         ShowLineNumbers="{Binding Path=EditorShowLineNumbers, Source={x:Static local:App.UserSettings}}"
         ShowSpaces="{Binding Path=EditorShowSpaces, Source={x:Static local:App.UserSettings}}"
         ShowTabs="{Binding Path=EditorShowTabs, Source={x:Static local:App.UserSettings}}"
-        SnippetManager="{Binding Path=SnippetManager, RelativeSource={RelativeSource AncestorType=Window}}"
+        SnippetManager="{Binding Path=DataContext.SnippetManager, RelativeSource={RelativeSource AncestorType=Window}}"
         SpellCheck="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}"
-        SpellCheckProvider="{Binding Path=SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}"
+        SpellCheckProvider="{Binding Path=DataContext.SpellCheckProvider, RelativeSource={RelativeSource AncestorType=Window}}"
         Theme="{Binding Path=Theme, Source={x:Static local:App.UserSettings}}"
         VerticalScrollBarVisibility="{Binding Path=EditorVerticalScrollBarVisible, Source={x:Static local:App.UserSettings}, Converter={StaticResource ScrollbarVisibilityConverter}}"
         WordWrap="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}" />

@@ -253,6 +253,10 @@
     <Compile Include="Controls\InsertHyperlinkDialog.xaml.cs">
       <DependentUpon>InsertHyperlinkDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MainWindow.vm.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controls\PromptDialog.xaml.cs">
       <DependentUpon>PromptDialog.xaml</DependentUpon>
     </Compile>
