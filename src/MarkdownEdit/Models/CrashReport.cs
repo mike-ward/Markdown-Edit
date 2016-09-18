@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using Microsoft.Win32;
 
 namespace MarkdownEdit.Models
@@ -7,6 +9,20 @@ namespace MarkdownEdit.Models
     internal class CrashReport
     {
         private readonly string _divider = new string('-', 65);
+
+        public static void Initialize(Application application)
+        {
+            application.DispatcherUnhandledException += (o, args) => ShowCrashReport(args.Exception);
+            AppDomain.CurrentDomain.UnhandledException += (o, args) => ShowCrashReport((Exception)args.ExceptionObject);
+            TaskScheduler.UnobservedTaskException += (o, args) => ShowCrashReport(args.Exception);
+        }
+
+        private static void ShowCrashReport(Exception exception)
+        {
+            var crashReport = new CrashReport(exception);
+            MessageBox.Show(crashReport.Report);
+            Environment.Exit(110);
+        }
 
         public CrashReport(Exception exception)
         {
