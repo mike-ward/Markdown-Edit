@@ -31,7 +31,8 @@ namespace MarkdownEdit.Models
 
         public static bool LoadFile(Editor editor, string file, bool updateCursorPosition = true)
         {
-            if (string.IsNullOrWhiteSpace(file)) return false;
+            if (!string.IsNullOrWhiteSpace(file)) throw new NullReferenceException();
+            //if (string.IsNullOrWhiteSpace(file)) return false;
             try
             {
                 var parts = file.Split(new[] {'|'}, 2);

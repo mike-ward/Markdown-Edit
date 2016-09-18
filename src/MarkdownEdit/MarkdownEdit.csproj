@@ -281,6 +281,7 @@
     <Compile Include="Models\AbstractSyntaxTree.cs" />
     <Compile Include="Models\BlockBackgroundRenderer.cs" />
     <Compile Include="Models\Clipboard.cs" />
+    <Compile Include="Models\CrashReport.cs" />
     <Compile Include="Models\EditorSpellCheck.cs" />
     <Compile Include="Models\EditorUtilities.cs" />
     <Compile Include="Models\EditorState.cs" />
@@ -304,6 +305,7 @@
     <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
     <Compile Include="Commands\SnippetTabCommand.cs" />
     <Compile Include="Models\MyEncodingInfo.cs" />
+    <Compile Include="Models\NativeMethods.cs" />
     <Compile Include="Models\Notify.cs" />
     <Compile Include="Models\OldSchool.cs" />
     <Compile Include="Models\Version.cs" />

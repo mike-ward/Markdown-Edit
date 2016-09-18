@@ -43,6 +43,10 @@ namespace MarkdownEdit
 
         private void OnStartup(object sender, StartupEventArgs ea)
         {
+            AppDomain.CurrentDomain.UnhandledException += (o, args) => ShowCrashReport((Exception)args.ExceptionObject);
+            Current.DispatcherUnhandledException += (o, args) => ShowCrashReport(args.Exception);
+            TaskScheduler.UnobservedTaskException += (o, args) => ShowCrashReport(args.Exception);
+
             InitializeSettings();
 
             if (UserSettings == null || AlreadyEditingFile())
@@ -88,6 +92,13 @@ namespace MarkdownEdit
             }
 
             return false;
+        }
+
+        private static void ShowCrashReport(Exception exception)
+        {
+            var crashReport = new CrashReport(exception);
+            MessageBox.Show(crashReport.Report);
+            Environment.Exit(110);
         }
 
         private static void InitializeSettings()
