@@ -50,7 +50,6 @@ settings-show-end-of-line:        Vis linje endelser
 settings-sync-scroll-pos:         Synkroniser rullepanel positioner
 settings-format-on-save:          Formater tekst når der gemmes
 settings-github-markdown:         GitHub Markdown
-settings-line-endings:            Linjeafslutninger
 
 settings-spell-check-section:     Stavekontrol
 settings-spell-checking:          Stavekontrol
@@ -58,6 +57,11 @@ settings-ignore-all-caps:         Ignorer store versaler
 settings-ignore-code-blocks:      Ignorer kode blokke
 settings-ignore-markup:           Ignorer Markup mærkater
 settings-ignore-words-digits:     Ignorer ord med cifre
+
+settings-format-section:          Format
+settings-line-endings:            Linjeafslutninger
+settings-encoding:                Kodning
+settings-encode-automatic:        Automatisk
 
 settings-advanced:                Avanceret
 settings-open-settings:           Indstillinger
@@ -67,13 +71,11 @@ settings-open-snippets:           Kodestumper
 settings-open-key-bindings:       Tastatur bindinger
 
 settings-about:                   Om
-settings-version:				          Version
-settings-web:					            Web
-settings-source:				          Kildekode
-settings-donate:				          Donér
+settings-version:				  Version
+settings-web:					  Web
+settings-source:				  Kildekode
+settings-donate:				  Donér
 settings-yes-i-donated:           Yes, I Donated!
-settings-encoding:                Encoding
-settings-encode-automatic:        Automatic
 
 === Find Replace Dialog
 

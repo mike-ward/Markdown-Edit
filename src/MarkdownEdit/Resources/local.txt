@@ -49,7 +49,6 @@ settings-show-end-of-line:        Show Line Endings
 settings-sync-scroll-pos:         Synchronize Scroll Positions
 settings-format-on-save:          Format Text on Save
 settings-github-markdown:         GitHub Markdown
-settings-line-endings:            Line Endings
 
 settings-spell-check-section:     Spell Checking
 settings-spell-checking:          Spell Checking
@@ -57,6 +56,11 @@ settings-ignore-all-caps:         Ignore All Caps
 settings-ignore-code-blocks:      Ignore Code Blocks
 settings-ignore-markup:           Ignore Markup Tags
 settings-ignore-words-digits:     Ignore Words with Digits
+
+settings-format-section:          Format
+settings-line-endings:            Line Endings
+settings-encoding:                Encoding
+settings-encode-automatic:        Automatic
 
 settings-advanced:                Advanced
 settings-open-settings:           Settings
@@ -66,13 +70,11 @@ settings-open-snippets:           Snippets
 settings-open-key-bindings:       Key Bindings
 
 settings-about:                   About
-settings-version:				          Version
-settings-web:					            Web
-settings-source:				          Source
-settings-donate:				          Donate
+settings-version:				  Version
+settings-web:					  Web
+settings-source:				  Source
+settings-donate:				  Donate
 settings-yes-i-donated:           Yes, I Donated!
-settings-encoding:                Encoding
-settings-encode-automatic:        Automatic
 
 === Find Replace Dialog
 

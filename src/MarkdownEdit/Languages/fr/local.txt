@@ -49,7 +49,6 @@ settings-show-end-of-line:        Montrer les fins de ligne
 settings-sync-scroll-pos:         Synchroniser le défilement
 settings-format-on-save:          Formater à l'enregistrement
 settings-github-markdown:         GitHub Markdown
-settings-line-endings:            Les Fins de Ligne
 
 settings-spell-check-section:     Correction orthographique
 settings-spell-checking:          Correction orthographique
@@ -57,6 +56,11 @@ settings-ignore-all-caps:         Ignorer les mots en majuscules
 settings-ignore-code-blocks:      Ignorer les blocs de code
 settings-ignore-markup:           Ignorer les mot-clefs Markup
 settings-ignore-words-digits:     Ignorer les mots avec des chiffres
+
+settings-format-section:          Format
+settings-encoding:                Codage
+settings-encode-automatic:        Automatique
+settings-line-endings:            Les Fins de Ligne
 
 settings-advanced:                Avancé
 settings-open-settings:           Réglages
@@ -66,13 +70,11 @@ settings-open-snippets:           Snippets
 settings-open-key-bindings:       Raccourcis clavier
 
 settings-about:                   Sur
-settings-version:				          Version
-settings-web:					            Web
-settings-source:				          Source
-settings-donate:				          Faire don
+settings-version:				  Version
+settings-web:					  Web
+settings-source:				  Source
+settings-donate:				  Faire don
 settings-yes-i-donated:           Yes, I Donated!
-settings-encoding:                Encoding
-settings-encode-automatic:        Automatic
 
 === Find Replace Dialog
 
