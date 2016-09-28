@@ -18,20 +18,20 @@
   ResizeMode="CanResizeWithGrip"
   SaveWindowPosition="True"
   TextOptions.TextFormattingMode="Display"
-  TitleCaps="False"
+  TitleCharacterCasing="Normal"
   UseLayoutRounding="True"
   WindowButtonCommandsOverlayBehavior="Never"
   WindowTitleBrush="{StaticResource GrayBrush2}"
   WindowTransitionsEnabled="False">
 
   <mah:MetroWindow.DataContext>
-        <controls:MainWindowViewModel />
+    <controls:MainWindowViewModel />
   </mah:MetroWindow.DataContext>
-    
+
   <mah:MetroWindow.Resources>
     <converters:BooleanToScrollBarVisibilityConverter x:Key="ScrollbarVisibilityConverter" />
 
-    <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
+    <!--  ReSharper disable once Xaml.StaticResourceNotResolved  -->
     <Style x:Key="CommandWindowButtonStyle" BasedOn="{StaticResource MetroBaseWindowButtonStyle}" TargetType="Button">
       <Setter Property="Margin" Value="7,0,0,0" />
       <Style.Triggers>
@@ -139,6 +139,11 @@
           Command="{x:Static commands:ToggleDocumentStatistics.Command}"
           Content="{Binding Path=DocumentStatisticDisplayText, ElementName=Preview}"
           ToolTip="{Binding Path=DocumentStatisticsToolTip, ElementName=Preview}" />
+        <Button
+          Style="{StaticResource SpellCheckToggleCommandWindowButtonStyle}"
+          FontFamily="Arial"
+          Content="{Binding Clock}"
+          Visibility="{Binding ClockIsVisible}" />
         <Button
           Style="{StaticResource SpellCheckToggleCommandWindowButtonStyle}"
           FontFamily="Wingdings"

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Threading;
 using MarkdownEdit.Commands;
 using MarkdownEdit.MarkdownConverters;
 using MarkdownEdit.Models;
@@ -27,6 +28,8 @@ namespace MarkdownEdit.Controls
         private bool _newVersion;
         private ISnippetManager _snippetManager;
         private ISpellCheckProvider _spellCheckProvider;
+        private string _clock;
+        private Visibility _clockIsVisible;
 
         public MainWindow MainWindow { get; set; }
 
@@ -78,6 +81,18 @@ namespace MarkdownEdit.Controls
             set { Set(ref _newVersion, value); }
         }
 
+        public string Clock
+        {
+            get { return _clock; }
+            set { Set(ref _clock, value); }
+        }
+
+        public Visibility ClockIsVisible
+        {
+            get { return _clockIsVisible; }
+            set { Set(ref _clockIsVisible, value); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void Set<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
@@ -105,13 +120,23 @@ namespace MarkdownEdit.Controls
                 var updateMargins = Utility.Debounce(() =>
                     MainWindow.Dispatcher.Invoke(() => EditorMargins = CalculateEditorMargins()), 50);
 
+                Func<Visibility> isVisible = () => MainWindow.WindowState == WindowState.Maximized
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+
                 App.UserSettings.PropertyChanged += (o, args) =>
                 {
                     if (args.PropertyName == nameof(App.UserSettings.SinglePaneMargin)) updateMargins();
                     if (args.PropertyName == nameof(App.UserSettings.GitHubMarkdown)) MainWindow.Preview.UpdatePreview(MainWindow.Editor);
                 };
-                MainWindow.SizeChanged += (s, e) => updateMargins();
+
+                StartClock();
+                ClockIsVisible = isVisible();
+                MainWindow.SizeChanged += (s, e) => ClockIsVisible = isVisible();
+
                 updateMargins();
+                MainWindow.SizeChanged += (s, e) => updateMargins();
+
                 LoadCommandLineOrLastFile();
                 Application.Current.Activated += OnActivated;
                 NewVersion = !await Version.IsCurrentVersion();
@@ -172,6 +197,14 @@ namespace MarkdownEdit.Controls
                     TitleName = $"{App.Title} - {(MainWindow.Editor.IsModified ? "* " : "")}{MainWindow.Editor.DisplayName}";
                     break;
             }
+        }
+
+        private void StartClock()
+        {
+            Clock = DateTime.Now.ToShortTimeString();
+            var timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 15) };
+            timer.Tick += (s, e) => Clock = DateTime.Now.ToShortTimeString();
+            timer.Start();
         }
     }
 }
