@@ -21,7 +21,7 @@ namespace MarkdownEdit.i18n
                 ? Thread.CurrentThread.CurrentUICulture
                 : new CultureInfo(App.UserSettings.CultureLanguage));
 
-            //_language = Load(CultureInfo.GetCultureInfo("de"));
+            //_language = Load(CultureInfo.GetCultureInfo("ru"));
         }
 
         private static string LanguageFolder(CultureInfo cultureInfo)

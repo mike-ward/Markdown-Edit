@@ -5,7 +5,7 @@
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
   xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
   Title="{i18N:Localize find-replace-title}"
-  Width="300"
+  Width="360"
   GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="NoResize"
   ShowInTaskbar="False"
@@ -13,6 +13,14 @@
   WindowStartupLocation="CenterOwner"
   WindowTitleBrush="{StaticResource GrayBrush2}"
   WindowTransitionsEnabled="False">
+
+  <controls:MetroWindow.Resources>
+    <Style x:Key="ButtonStyle" TargetType="Button">
+      <Setter Property="Width" Value="92" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+      <Setter Property="Margin" Value="5" />
+    </Style>
+  </controls:MetroWindow.Resources>
 
   <Grid Margin="4,5,4,10">
     <Grid.RowDefinitions>
@@ -37,9 +45,7 @@
             Text="{Binding FindText}" />
           <Button
             x:Name="FindNextButton"
-            Width="80"
-            Margin="5"
-            HorizontalAlignment="Right"
+            Style="{StaticResource ButtonStyle}"
             Click="FindNextClick"
             Content="{i18N:Localize find-replace-find-next}" />
         </StackPanel>
@@ -53,24 +59,9 @@
             Text="{Binding FindText}" />
           <TextBox Name="txtReplace" Margin="3" controls:TextBoxHelper.Watermark="{i18N:Localize find-replace-watermark-replace}" />
           <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button
-              Width="80"
-              Margin="5"
-              HorizontalAlignment="Right"
-              Click="FindNext2Click"
-              Content="{i18N:Localize find-replace-find-next}" />
-            <Button
-              Width="80"
-              Margin="5"
-              HorizontalAlignment="Right"
-              Click="ReplaceClick"
-              Content="{i18N:Localize find-replace-replace}" />
-            <Button
-              Width="80"
-              Margin="5"
-              HorizontalAlignment="Right"
-              Click="ReplaceAllClick"
-              Content="{i18N:Localize find-replace-replace-all}" />
+            <Button Style="{StaticResource ButtonStyle}" Click="FindNext2Click" Content="{i18N:Localize find-replace-find-next}" />
+            <Button Style="{StaticResource ButtonStyle}" Click="ReplaceClick" Content="{i18N:Localize find-replace-replace}" />
+            <Button Style="{StaticResource ButtonStyle}" Click="ReplaceAllClick" Content="{i18N:Localize find-replace-replace-all}" />
           </StackPanel>
         </StackPanel>
       </TabItem>
