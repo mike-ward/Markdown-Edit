@@ -21,7 +21,8 @@ namespace MarkdownEdit.SpellCheck
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var pen = new Pen(new SolidColorBrush(Colors.Red), 0.6);
+            var color = GetSpellCheckColor();
+            var pen = new Pen(new SolidColorBrush(color), 0.6);
             pen.Freeze();
 
             foreach (var current in ErrorSegments)
@@ -47,6 +48,20 @@ namespace MarkdownEdit.SpellCheck
             }
 
             stopwatch.Stop();
+        }
+
+        private static Color GetSpellCheckColor()
+        {
+            Color color;
+            try
+            {
+                color = (Color)(ColorConverter.ConvertFromString(App.UserSettings.Theme.SpellCheckError ?? "#f00") ?? Colors.Red);
+            }
+            catch (FormatException)
+            {
+                color = Colors.Red;
+            }
+            return color;
         }
 
         public KnownLayer Layer => KnownLayer.Selection;

@@ -9,17 +9,18 @@ namespace MarkdownEdit.Models
         private string _name = "Zenburn";
         private string _editorBackground = "#404040";
         private string _editorForeground = "#ccc";
+        private string _spellCheckError = "#f00";
         private double _header1Height = 1.3;
         private double _header2Height = 1.2;
 
-        private Highlight _highlightHeading = new Highlight {Name = "Heading", FontWeight = "bold", Foreground = "#6c71c4"};
-        private Highlight _highlightEmphasis = new Highlight {Name = "Emphasis", FontStyle = "italic", Foreground = "#cb4b16"};
-        private Highlight _highlightStrongEmphasis = new Highlight {Name = "StrongEmphasis", FontWeight = "bold", Foreground = "orange"};
-        private Highlight _highlightInlineCode = new Highlight {Name = "InlineCode", Foreground = "#7F9F7F"};
-        private Highlight _highlightBlockCode = new Highlight {Name = "BlockCode", Foreground = "#7F9F7F"};
-        private Highlight _highlightBlockQuote = new Highlight {Name = "BlockQuote", Foreground = "#8ACCCF"};
-        private Highlight _highlightLink = new Highlight {Name = "Link", Foreground = "#2aa198", Underline = true};
-        private Highlight _highlightImage = new Highlight {Name = "Image", Foreground = "#6F8F3F", FontWeight = "bold"};
+        private Highlight _highlightHeading = new Highlight { Name = "Heading", FontWeight = "bold", Foreground = "#6c71c4" };
+        private Highlight _highlightEmphasis = new Highlight { Name = "Emphasis", FontStyle = "italic", Foreground = "#cb4b16" };
+        private Highlight _highlightStrongEmphasis = new Highlight { Name = "StrongEmphasis", FontWeight = "bold", Foreground = "orange" };
+        private Highlight _highlightInlineCode = new Highlight { Name = "InlineCode", Foreground = "#7F9F7F" };
+        private Highlight _highlightBlockCode = new Highlight { Name = "BlockCode", Foreground = "#7F9F7F" };
+        private Highlight _highlightBlockQuote = new Highlight { Name = "BlockQuote", Foreground = "#8ACCCF" };
+        private Highlight _highlightLink = new Highlight { Name = "Link", Foreground = "#2aa198", Underline = true };
+        private Highlight _highlightImage = new Highlight { Name = "Image", Foreground = "#6F8F3F", FontWeight = "bold" };
 
         public string Name
         {
@@ -97,6 +98,12 @@ namespace MarkdownEdit.Models
         {
             get { return _highlightImage; }
             set { Set(ref _highlightImage, value); }
+        }
+
+        public string SpellCheckError
+        {
+            get { return _spellCheckError; }
+            set { Set(ref _spellCheckError, value); }
         }
 
         // INotifyPropertyChanged
