@@ -168,6 +168,7 @@
     <Compile Include="Commands\EditorReplaceDialogCommand.cs" />
     <Compile Include="Commands\ExportHtmlCommand.cs" />
     <Compile Include="Commands\ExportHtmlTemplateCommand.cs" />
+    <Compile Include="Commands\ExportThemeCommand.cs" />
     <Compile Include="Commands\FindNextCommand.cs" />
     <Compile Include="Commands\FindPreviousCommand.cs" />
     <Compile Include="Commands\FormatCommand.cs" />
