@@ -49,7 +49,6 @@ settings-show-end-of-line:        Показать окончания строк
 settings-sync-scroll-pos:         Синхронизировать позиции прокрутки
 settings-format-on-save:          Отформатировать текст при сохранении
 settings-github-markdown:         GitHub Markdown
-settings-line-endings:            Окончания строк
 
 settings-spell-check-section:     Проверка орфографии
 settings-spell-checking:          Проверка орфографии
@@ -57,6 +56,11 @@ settings-ignore-all-caps:         Игнорировать ВСЕ ЗАГЛАВН
 settings-ignore-code-blocks:      Игнорировать блоки кода
 settings-ignore-markup:           Игнорировать тэги разметки
 settings-ignore-words-digits:     Игнорировать слова с цифрами
+
+settings-format-section:          Формат
+settings-encoding:                Кодировка
+settings-encode-automatic:        Автоматически
+settings-line-endings:            Окончания строк
 
 settings-advanced:                Расширенные
 settings-open-settings:           Настройки
@@ -66,13 +70,11 @@ settings-open-snippets:           Фрагменты
 settings-open-key-bindings:       Настройка горячих клавиш
 
 settings-about:                   О программе
-settings-version:				          Версия
-settings-web:					            Веб-сайт
-settings-source:				          Исходники
-settings-donate:				          Пожертвовать
+settings-version:				  Версия
+settings-web:					  Веб-сайт
+settings-source:				  Исходники
+settings-donate:				  Пожертвовать
 settings-yes-i-donated:           Да, я пожертвовал!
-settings-encoding:                Кодировка
-settings-encode-automatic:        Автоматически
 
 === Find Replace Dialog
 

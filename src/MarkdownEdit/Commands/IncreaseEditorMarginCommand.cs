@@ -17,7 +17,7 @@ namespace MarkdownEdit.Commands
         private static void Execute(object sender, ExecutedRoutedEventArgs e)
         {
             App.UserSettings.SinglePaneMargin =
-                Math.Max(App.UserSettings.SinglePaneMargin - 1, MainWindow.EditorMarginMin);
+                Math.Max(App.UserSettings.SinglePaneMargin - 1, MainWindowViewModel.EditorMarginMin);
         }
     }
 }

@@ -2,7 +2,9 @@
   x:Class="MarkdownEdit.Controls.DisplaySettings"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:commands="clr-namespace:MarkdownEdit.Commands"
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+  xmlns:converters="clr-namespace:MarkdownEdit.Converters"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:i18N="clr-namespace:MarkdownEdit.i18n"
   xmlns:local="clr-namespace:MarkdownEdit.Controls"
@@ -10,7 +12,6 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:models="clr-namespace:MarkdownEdit.Models"
   xmlns:p="clr-namespace:MarkdownEdit.Properties"
-  xmlns:commands="clr-namespace:MarkdownEdit.Commands"
   x:Name="DisplaySettingsControl"
   d:DesignHeight="1000"
   d:DesignWidth="400"
@@ -18,9 +19,11 @@
   mc:Ignorable="d">
 
   <UserControl.Resources>
-    <Style x:Key="ToggleSwitchStyle" TargetType="controls:ToggleSwitch">
+    <converters:PadWithSpaceConverter x:Key="Pad" />
+
+    <Style x:Key="ToggleSwitchStyle" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}" TargetType="controls:ToggleSwitch">
       <Setter Property="Foreground" Value="WhiteSmoke" />
-      <Setter Property="Height" Value="30" />
+      <Setter Property="Margin" Value="0,5" />
     </Style>
 
     <Style x:Key="SectionHeader" TargetType="TextBlock">
@@ -55,6 +58,7 @@
         </Setter.Value>
       </Setter>
     </Style>
+
   </UserControl.Resources>
 
   <ScrollViewer>
@@ -62,80 +66,85 @@
       <TextBlock Style="{StaticResource SectionHeader}" Text="{i18N:Localize settings-editor-section}" />
       <Separator Style="{StaticResource SeparatorStyle}" />
       <StackPanel Margin="30,5">
-        <local:FontComboBox x:Name="FontCombo" Margin="0,0,0,3" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding Path=WordWrapEnabled, Source={x:Static p:Settings.Default}}"
-          OffLabel="{i18N:Localize settings-word-wrap}"
-          OnLabel="{i18N:Localize settings-word-wrap}"
+          OffLabel="{Binding Source={i18N:Localize settings-word-wrap}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-word-wrap}, Converter={StaticResource Pad}}"
           ToolTip="{i18N:Localize tooltip-ctrl-w}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding Path=AutoSave, Source={x:Static p:Settings.Default}}"
-          OffLabel="{i18N:Localize settings-auto-save}"
-          OnLabel="{i18N:Localize settings-auto-save}"
+          OffLabel="{Binding Source={i18N:Localize settings-auto-save}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-auto-save}, Converter={StaticResource Pad}}"
           ToolTip="{i18N:Localize tooltip-alt-s}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding EditorShowLineNumbers}"
-          OffLabel="{i18N:Localize settings-line-numbers}"
-          OnLabel="{i18N:Localize settings-line-numbers}" />
+          OffLabel="{Binding Source={i18N:Localize settings-line-numbers}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-line-numbers}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding EditorOpenLastFile}"
-          OffLabel="{i18N:Localize settings-open-last-file}"
-          OnLabel="{i18N:Localize settings-open-last-file}" />
+          OffLabel="{Binding Source={i18N:Localize settings-open-last-file}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-open-last-file}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding FormatOnSave}"
-          OffLabel="{i18N:Localize settings-format-on-save}"
-          OnLabel="{i18N:Localize settings-format-on-save}" />
+          OffLabel="{Binding Source={i18N:Localize settings-format-on-save}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-format-on-save}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding EditorOpenLastCursorPosition}"
-          OffLabel="{i18N:Localize settings-remember-cursor-pos}"
-          OnLabel="{i18N:Localize settings-remember-cursor-pos}" />
+          OffLabel="{Binding Source={i18N:Localize settings-remember-cursor-pos}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-remember-cursor-pos}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding EditorHighlightCurrentLine}"
-          OffLabel="{i18N:Localize settings-highlight-current}"
-          OnLabel="{i18N:Localize settings-highlight-current}" />
+          OffLabel="{Binding Source={i18N:Localize settings-highlight-current}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-highlight-current}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding EditorVerticalScrollBarVisible}"
-          OffLabel="{i18N:Localize settings-show-scroll-bar}"
-          OnLabel="{i18N:Localize settings-show-scroll-bar}" />
+          OffLabel="{Binding Source={i18N:Localize settings-show-scroll-bar}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-show-scroll-bar}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding EditorShowTabs}"
-          OffLabel="{i18N:Localize settings-show-tabs}"
-          OnLabel="{i18N:Localize settings-show-tabs}" />
+          OffLabel="{Binding Source={i18N:Localize settings-show-tabs}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-show-tabs}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding EditorShowSpaces}"
-          OffLabel="{i18N:Localize settings-show-spaces}"
-          OnLabel="{i18N:Localize settings-show-spaces}" />
+          OffLabel="{Binding Source={i18N:Localize settings-show-spaces}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-show-spaces}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding EditorShowEndOfLine}"
-          OffLabel="{i18N:Localize settings-show-end-of-line}"
-          OnLabel="{i18N:Localize settings-show-end-of-line}" />
+          OffLabel="{Binding Source={i18N:Localize settings-show-end-of-line}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-show-end-of-line}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding SynchronizeScrollPositions}"
-          OffLabel="{i18N:Localize settings-sync-scroll-pos}"
-          OnLabel="{i18N:Localize settings-sync-scroll-pos}" />
+          OffLabel="{Binding Source={i18N:Localize settings-sync-scroll-pos}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-sync-scroll-pos}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           x:Name="MarkdownEngine"
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding GitHubMarkdown}"
-          OffLabel="{i18N:Localize settings-github-markdown}"
-          OnLabel="{i18N:Localize settings-github-markdown}" />
+          OffLabel="{Binding Source={i18N:Localize settings-github-markdown}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-github-markdown}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding YesIDonated}"
-          OffLabel="{i18N:Localize settings-yes-i-donated}"
-          OnLabel="{i18N:Localize settings-yes-i-donated}" />
+          OffLabel="{Binding Source={i18N:Localize settings-yes-i-donated}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-yes-i-donated}, Converter={StaticResource Pad}}" />
+      </StackPanel>
+
+      <TextBlock Style="{StaticResource SectionHeader}" Text="{i18N:Localize settings-format-section}" />
+      <Separator Style="{StaticResource SeparatorStyle}" />
+      <StackPanel Margin="30,7">
+        <local:FontComboBox x:Name="FontCombo" Margin="0,10,0,3" />
         <Grid Margin="0,5,0,0" HorizontalAlignment="Stretch">
           <TextBlock
             Width="150"
@@ -171,29 +180,29 @@
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding Path=SpellCheckEnabled, Source={x:Static p:Settings.Default}}"
-          OffLabel="{i18N:Localize settings-spell-checking}"
-          OnLabel="{i18N:Localize settings-spell-checking}"
+          OffLabel="{Binding Source={i18N:Localize settings-spell-checking}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-spell-checking}, Converter={StaticResource Pad}}"
           ToolTip="{i18N:Localize tooltip-ctrl-f7}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding SpellCheckIgnoreAllCaps}"
-          OffLabel="{i18N:Localize settings-ignore-all-caps}"
-          OnLabel="{i18N:Localize settings-ignore-all-caps}" />
+          OffLabel="{Binding Source={i18N:Localize settings-ignore-all-caps}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-ignore-all-caps}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding SpellCheckIgnoreCodeBlocks}"
-          OffLabel="{i18N:Localize settings-ignore-code-blocks}"
-          OnLabel="{i18N:Localize settings-ignore-code-blocks}" />
+          OffLabel="{Binding Source={i18N:Localize settings-ignore-code-blocks}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-ignore-code-blocks}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding SpellCheckIgnoreMarkupTags}"
-          OffLabel="{i18N:Localize settings-ignore-markup}"
-          OnLabel="{i18N:Localize settings-ignore-markup}" />
+          OffLabel="{Binding Source={i18N:Localize settings-ignore-markup}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-ignore-markup}, Converter={StaticResource Pad}}" />
         <controls:ToggleSwitch
           Style="{StaticResource ToggleSwitchStyle}"
           IsChecked="{Binding SpellCheckIgnoreWordsWithDigits}"
-          OffLabel="{i18N:Localize settings-ignore-words-digits}"
-          OnLabel="{i18N:Localize settings-ignore-words-digits}" />
+          OffLabel="{Binding Source={i18N:Localize settings-ignore-words-digits}, Converter={StaticResource Pad}}"
+          OnLabel="{Binding Source={i18N:Localize settings-ignore-words-digits}, Converter={StaticResource Pad}}" />
       </StackPanel>
 
       <TextBlock Style="{StaticResource SectionHeader}" Text="{i18N:Localize settings-advanced}" />

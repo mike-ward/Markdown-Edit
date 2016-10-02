@@ -49,7 +49,11 @@ settings-show-end-of-line:        Zeilenende anzeigen
 settings-sync-scroll-pos:         Synchronisiertes Scrollen
 settings-format-on-save:          Formatieren beim Speichern
 settings-github-markdown:         GitHub Markdown
+
+settings-format-section:          Format
 settings-line-endings:            Zeilenende
+settings-encoding:                Codierung
+settings-encode-automatic:        Automatisch
 
 settings-spell-check-section:     Rechtschreibüberprüfung
 settings-spell-checking:          Rechtschreibüberprüfung
@@ -71,8 +75,6 @@ settings-web:                     Website
 settings-source:                  Sourcecode
 settings-donate:                  Spenden
 settings-yes-i-donated:           Yes, I Donated!
-settings-encoding:                Encoding
-settings-encode-automatic:        Automatic
 
 === Find Replace Dialog
 

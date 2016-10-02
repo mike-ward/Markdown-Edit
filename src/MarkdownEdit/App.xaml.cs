@@ -43,6 +43,7 @@ namespace MarkdownEdit
 
         private void OnStartup(object sender, StartupEventArgs ea)
         {
+            CrashReport.Initialize(this);
             InitializeSettings();
 
             if (UserSettings == null || AlreadyEditingFile())

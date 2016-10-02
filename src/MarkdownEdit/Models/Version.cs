@@ -7,7 +7,7 @@ namespace MarkdownEdit.Models
 {
     internal static class Version
     {
-        public const string VersionNumber = "1.30.2";
+        public const string VersionNumber = "1.31";
 
         public static async Task<bool> IsCurrentVersion()
         {
