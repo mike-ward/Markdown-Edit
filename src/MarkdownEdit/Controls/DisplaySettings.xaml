@@ -42,7 +42,7 @@
     </Style>
 
     <Style x:Key="AboutLabelStyle" BasedOn="{StaticResource LabelStyle}" TargetType="TextBlock">
-      <Setter Property="Width" Value="75" />
+      <Setter Property="Width" Value="125" />
     </Style>
 
     <Style x:Key="HyperlinkStyle" TargetType="Hyperlink">
@@ -245,26 +245,6 @@
             </Hyperlink>
           </TextBlock>
         </StackPanel>
-        <!--<StackPanel Orientation="Horizontal">
-          <TextBlock Style="{StaticResource AboutLabelStyle}">Twitter</TextBlock>
-          <TextBlock>
-            <Hyperlink NavigateUri="https://twitter.com/mikeward_aa"
-                       Style="{StaticResource HyperlinkStyle}"
-                       RequestNavigate="HyperlinkOnRequestNavigate">
-              mikeward_aa
-            </Hyperlink>
-          </TextBlock>
-        </StackPanel>-->
-        <!--<StackPanel Orientation="Horizontal">
-          <TextBlock Style="{StaticResource AboutLabelStyle}"  Text="{i18N:Localize settings-source}" />
-          <TextBlock>
-            <Hyperlink NavigateUri="https://github.com/mike-ward/Markdown-Edit"
-                       Style="{StaticResource HyperlinkStyle}"
-                       RequestNavigate="HyperlinkOnRequestNavigate">
-              GitHub
-            </Hyperlink>
-          </TextBlock>
-        </StackPanel>-->
         <StackPanel Orientation="Horizontal">
           <TextBlock Style="{StaticResource AboutLabelStyle}" Text="{i18N:Localize settings-donate}" />
           <TextBlock>
