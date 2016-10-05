@@ -65,6 +65,7 @@ namespace MarkdownEdit.Commands
 
         private static int StartOfListOffset(ITextSource textSource, int offset)
         {
+            if (offset == 0) return -1;
             var startOffset = offset - 1;
             while (startOffset > 0 && char.IsWhiteSpace(textSource.GetCharAt(startOffset)))
             {
