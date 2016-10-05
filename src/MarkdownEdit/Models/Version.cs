@@ -20,7 +20,7 @@ namespace MarkdownEdit.Models
                            || string.IsNullOrWhiteSpace(version)
                            || version == VersionNumber;
                 }
-            }
+            }   
             catch (Exception)
             {
                 return true;

@@ -176,7 +176,7 @@
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\IncreaseEditorMarginCommand.cs" />
     <Compile Include="Commands\DecreaseEditorMarginCommand.cs" />
-    <Compile Include="Commands\GoToMarkdownEditWebSiteCommand.cs" />
+    <Compile Include="Commands\GoToLatestReleaseCommand.cs" />
     <Compile Include="Commands\IncreaseFontSizeCommand.cs" />
     <Compile Include="Commands\InsertBlockQuoteCommand.cs" />
     <Compile Include="Commands\InsertFileCommand.cs" />

@@ -165,7 +165,7 @@
         <Button
           Style="{StaticResource NewVersionCommandWindowButtonStyle}"
           FontFamily="Segoe UI Symbol"
-          Command="{x:Static commands:GoToMarkdownEditWebSiteCommand.Command}"
+          Command="{x:Static commands:GoToLatestReleaseCommand.Command}"
           Content="&#xE182;"
           ToolTip="{i18N:Localize tooltip-new-version}" />
       </StackPanel>
