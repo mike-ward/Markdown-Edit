@@ -90,8 +90,7 @@ namespace MarkdownEdit.Models
         {
             if (ast == null) return true;
             var end = start + length;
-            var blockTags = new[]
-            {BlockTag.FencedCode, BlockTag.HtmlBlock, BlockTag.IndentedCode, BlockTag.ReferenceDefinition};
+            var blockTags = new[] {BlockTag.FencedCode, BlockTag.HtmlBlock, BlockTag.IndentedCode, BlockTag.ReferenceDefinition};
             var inlineTags = new[] { InlineTag.Code, InlineTag.Link, InlineTag.RawHtml, InlineTag.Image };
             var lastBlockTag = BlockTag.Document;
 
