@@ -109,7 +109,12 @@ namespace MarkdownEdit.SpellCheck
                 var textWithout = originalText;
                 if (userSettings.SpellCheckIgnoreCodeBlocks)
                 {
-                    if (!AbstractSyntaxTree.PositionSafeForSmartLink(_editor.AbstractSyntaxTree, startOfLine, lengthOfLine)) continue;;
+                    if (!AbstractSyntaxTree.PositionSafeForSmartLink(_editor.AbstractSyntaxTree, startOfLine, lengthOfLine))
+                    {
+                        // Generally speaking, if it's not safe to insert a link, it's probably something we don't
+                        // want spell checked.
+                        continue;
+                    };
                     if (_codeBlock.IsMatch(originalText))
                     {
                         var firstChar = originalText.FirstOrDefault(c => !char.IsWhiteSpace(c));
