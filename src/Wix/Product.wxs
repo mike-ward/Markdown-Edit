@@ -4,7 +4,7 @@
   <Product Id="*"
            Name="Markdown Edit"
            Language="1033"
-           Version="1.31.0"
+           Version="1.32.0"
            Manufacturer="Mike Ward"
            UpgradeCode="77d4d41b-4443-42c6-87dd-20771c9bb031">
 
