@@ -7,7 +7,7 @@ namespace MarkdownEdit.Models
 {
     internal static class Version
     {
-        public const string VersionNumber = "1.31";
+        public const string VersionNumber = "1.32";
 
         public static async Task<bool> IsCurrentVersion()
         {
@@ -20,7 +20,7 @@ namespace MarkdownEdit.Models
                            || string.IsNullOrWhiteSpace(version)
                            || version == VersionNumber;
                 }
-            }
+            }   
             catch (Exception)
             {
                 return true;

@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 using MarkdownEdit.Controls;
+using MarkdownEdit.Models;
 
 namespace MarkdownEdit.SpellCheck
 {
@@ -99,14 +100,21 @@ namespace MarkdownEdit.SpellCheck
             foreach (var currentLine in visualLines)
             {
                 var startIndex = 0;
+                var startOfLine = currentLine.FirstDocumentLine.Offset;
+                var lengthOfLine = currentLine.LastDocumentLine.EndOffset - startOfLine;
 
-                var originalText = _editor.EditBox.Document.GetText(currentLine.FirstDocumentLine.Offset,
-                    currentLine.LastDocumentLine.EndOffset - currentLine.FirstDocumentLine.Offset);
+                var originalText = _editor.EditBox.Document.GetText(startOfLine, lengthOfLine);
 
                 originalText = Regex.Replace(originalText, "[\\u2018\\u2019\\u201A\\u201B\\u2032\\u2035]", "'");
                 var textWithout = originalText;
                 if (userSettings.SpellCheckIgnoreCodeBlocks)
                 {
+                    if (!AbstractSyntaxTree.PositionSafeForSmartLink(_editor.AbstractSyntaxTree, startOfLine, lengthOfLine))
+                    {
+                        // Generally speaking, if it's not safe to insert a link, it's probably something we don't
+                        // want spell checked.
+                        continue;
+                    };
                     if (_codeBlock.IsMatch(originalText))
                     {
                         var firstChar = originalText.FirstOrDefault(c => !char.IsWhiteSpace(c));
@@ -119,11 +127,12 @@ namespace MarkdownEdit.SpellCheck
                 if (userSettings.SpellCheckIgnoreCodeBlocks) textWithout = _inlineCode.Replace(textWithout, "");
                 var words = _wordSeparatorRegex.Split(textWithout).Where(s => !string.IsNullOrEmpty(s));
                 if (userSettings.SpellCheckIgnoreAllCaps) words = words.Where(w => w != w.ToUpper()).ToArray();
-                if (userSettings.SpellCheckIgnoreWordsWithDigits)
-                    words = words.Where(w => !Regex.Match(w, "\\d").Success).ToArray();
+                if (userSettings.SpellCheckIgnoreWordsWithDigits) words = words.Where(w => !Regex.Match(w, "\\d").Success).ToArray();
+                var errors = 0;
 
                 foreach (var word in words)
                 {
+                    if (errors >= 20) break;
                     var trimmedWord = word.Trim('\'', '_', '-');
 
                     var num = currentLine.FirstDocumentLine.Offset
@@ -134,6 +143,7 @@ namespace MarkdownEdit.SpellCheck
                     {
                         var textSegment = new TextSegment {StartOffset = num, Length = word.Length};
                         _spellCheckRenderer.ErrorSegments.Add(textSegment);
+                        errors += 1;
                     }
 
                     startIndex = originalText.IndexOf(word, startIndex, StringComparison.InvariantCultureIgnoreCase)

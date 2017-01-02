@@ -50,9 +50,19 @@ namespace MarkdownEdit.Controls
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
             Browser.MessageHook += BrowserOnMessageHook;
-            Browser.Unloaded += (s, e) => ApplicationCommands.Close.Execute(null, Application.Current.MainWindow);
             UpdatePreview = Utility.Debounce<Editor>(editor => Dispatcher.InvokeAsync(() => Update(editor.Text)));
             DocumentStatisticMode = StatisticMode.Word;
+
+            Browser.Unloaded += (s, e) =>
+            {
+                try
+                {
+                    ApplicationCommands.Close.Execute(null, Application.Current.MainWindow);
+                }
+                catch (NullReferenceException)
+                {
+                }
+            };
         }
 
         public StatisticMode DocumentStatisticMode { get; set; }
@@ -110,7 +120,6 @@ namespace MarkdownEdit.Controls
             try
             {
                 UpdateBaseTag();
-                ScrollSync();
                 var div = GetContentsDiv();
                 if (div == null) return;
 
@@ -127,12 +136,6 @@ namespace MarkdownEdit.Controls
             {
                 Notify.Alert(ex.ToString());
             }
-        }
-
-        private void ScrollSync()
-        {
-            var document = Browser.Document as IHTMLDocument2;
-            document.parentWindow.onscroll = new Action<object, IHTMLEventObj>((s, e) => Console.WriteLine("scroll"));
         }
 
         public void UpdateDocumentStatistics(string innerText)

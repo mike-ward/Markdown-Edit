@@ -51,7 +51,13 @@ namespace MarkdownEdit.Models
                 }
                 finally
                 {
-                    fileWatcher.EnableRaisingEvents = true;
+                    try
+                    {
+                        fileWatcher.EnableRaisingEvents = true;
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                    }
                 }
             };
             fileWatcher.EnableRaisingEvents = true;
