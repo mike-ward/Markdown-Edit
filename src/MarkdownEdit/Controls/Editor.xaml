@@ -28,7 +28,27 @@
       ScrollViewer.ScrollChanged="ScrollViewerOnScrollChanged"
       ShowLineNumbers="{Binding Path=ShowLineNumbers, Mode=TwoWay}"
       VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility}"
-      WordWrap="{Binding Path=WordWrap, Mode=TwoWay}" />
+      WordWrap="{Binding Path=WordWrap, Mode=TwoWay}">
+      <avalonedit:TextEditor.Resources>
+        <Style TargetType="{x:Type avalonedit:TextArea}">
+          <Setter Property="FocusVisualStyle"      Value="{x:Null}" />
+          <Setter Property="SelectionForeground"   Value="{x:Null}" />
+          <Setter Property="SelectionCornerRadius" Value="0.0" />
+
+          <Setter Property="SelectionBrush">
+            <Setter.Value>
+              <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HighlightColorKey}}" Opacity="0.3" />
+            </Setter.Value>
+          </Setter>
+
+          <Setter Property="SelectionBorder">
+            <Setter.Value>
+              <Pen Brush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Thickness="0" />
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </avalonedit:TextEditor.Resources>
+    </avalonedit:TextEditor>
   </Border>
 
   <UserControl.CommandBindings>
