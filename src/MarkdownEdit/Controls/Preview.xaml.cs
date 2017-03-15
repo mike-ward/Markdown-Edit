@@ -46,23 +46,11 @@ namespace MarkdownEdit.Controls
             InitializeComponent();
             Browser.Navigate(new Uri(UserTemplate.Load()));
             Loaded += OnLoaded;
-            Unloaded += (sender, args) => _templateWatcher?.Dispose();
             Browser.Navigating += BrowserOnNavigating;
             Browser.PreviewKeyDown += BrowserPreviewKeyDown;
             Browser.MessageHook += BrowserOnMessageHook;
             UpdatePreview = Utility.Debounce<Editor>(editor => Dispatcher.InvokeAsync(() => Update(editor.Text)));
             DocumentStatisticMode = StatisticMode.Word;
-
-            Browser.Unloaded += (s, e) =>
-            {
-                try
-                {
-                    ApplicationCommands.Close.Execute(null, Application.Current.MainWindow);
-                }
-                catch (NullReferenceException)
-                {
-                }
-            };
         }
 
         public StatisticMode DocumentStatisticMode { get; set; }

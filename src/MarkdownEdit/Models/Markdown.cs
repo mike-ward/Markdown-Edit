@@ -17,12 +17,12 @@ namespace MarkdownEdit.Models
         private static readonly IMarkdownConverter GitHubMarkdownConverter = new GitHubMarkdownConverter();
         private static readonly IMarkdownConverter CustomMarkdownConverter = new CustomMarkdownConverter();
 
-        private const string GithubMarkdownFormatOptions =
+        private const string PandocGithubMarkdownFormatOptions =
             "markdown_github"
             + "-emoji"
             + "+tex_math_dollars";
 
-        private const string CommonMarkFormatOptions =
+        private const string PandocCommonMarkFormatOptions =
             "markdown_strict"
             + "+fenced_code_blocks"
             + "+backtick_code_blocks"
@@ -31,10 +31,10 @@ namespace MarkdownEdit.Models
             + "+pipe_tables"
             + "+tex_math_dollars";
 
-        private static string MarkdownFormat
+        private static string PandocMarkdownFormat
             => App.UserSettings.GitHubMarkdown
-                ? GithubMarkdownFormatOptions
-                : CommonMarkFormatOptions;
+                ? PandocGithubMarkdownFormatOptions
+                : PandocCommonMarkFormatOptions;
 
         public static string ToHtml(string markdown)
         {
@@ -54,9 +54,9 @@ namespace MarkdownEdit.Models
             => Reformat(text, "--wrap=none --atx-headers");
 
         public static string FromHtml(string path)
-            => Pandoc(null, $"-f html -t {MarkdownFormat} --wrap=none \"{path}\"");
+            => Pandoc(null, $"-f html -t {PandocMarkdownFormat} --wrap=none \"{path}\"");
 
-        public static string FromHtmlText(string text) => Pandoc(text, $"-f html -t {MarkdownFormat} --wrap=none");
+        public static string FromHtmlText(string text) => Pandoc(text, $"-f html -t {PandocMarkdownFormat} --wrap=none");
 
         private static IMarkdownConverter GetMarkdownConverter()
         {
@@ -66,7 +66,7 @@ namespace MarkdownEdit.Models
         }
 
         public static string FromMicrosoftWord(string path)
-            => Pandoc(null, $"-f docx -t {MarkdownFormat} \"{path}\"");
+            => Pandoc(null, $"-f docx -t {PandocMarkdownFormat} \"{path}\"");
 
         public static string ToMicrosoftWord(string markdown, string path) =>
             Pandoc(ResolveImageUrls(ToHtml(markdown)), $"-f html -t docx -o \"{path}\"");
@@ -113,7 +113,7 @@ namespace MarkdownEdit.Models
         private static string Reformat(string text, string options = "")
         {
             var tuple = SeperateFrontMatter(text);
-            var fromFormat = MarkdownFormat;
+            var fromFormat = PandocMarkdownFormat;
             var toFormat = fromFormat + "-escaped_line_breaks";
             var result = Pandoc(tuple.Item2, $"-f {fromFormat} -t {toFormat} {options}").Replace(@"\$", "$");
             return tuple.Item1 + result;
