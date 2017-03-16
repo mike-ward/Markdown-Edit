@@ -112,6 +112,8 @@ namespace MarkdownEdit.Models
                 var replaced = false;
                 if (match.Success && match.Index == 0 && match.Length == input.Length)
                 {
+                    // see https://msdn.microsoft.com/en-us/library/ewy2t5e0(v=vs.110).aspx#DollarSign
+                    replace = replace.Replace("$", "$$");
                     var replaceWith = match.Result(replace);
                     editor.Document.Replace(editor.SelectionStart, editor.SelectionLength, replaceWith);
                     replaced = true;
