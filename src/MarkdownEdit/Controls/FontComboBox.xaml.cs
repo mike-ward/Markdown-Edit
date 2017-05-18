@@ -15,14 +15,14 @@ namespace MarkdownEdit.Controls
 
         public FontFamily SelectedFontFamily
         {
-            get { return (FontFamily)GetValue(SelectedFontFamilyProperty); }
-            set { SetValue(SelectedFontFamilyProperty, value); }
+            get => (FontFamily)GetValue(SelectedFontFamilyProperty);
+            set => SetValue(SelectedFontFamilyProperty, value);
         }
 
         public double SelectedFontSize
         {
-            get { return (double)GetValue(SelectedFontSizeProperty); }
-            set { SetValue(SelectedFontSizeProperty, value); }
+            get => (double)GetValue(SelectedFontSizeProperty);
+            set => SetValue(SelectedFontSizeProperty, value);
         }
     }
 }

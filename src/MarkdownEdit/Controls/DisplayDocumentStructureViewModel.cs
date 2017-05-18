@@ -15,8 +15,8 @@ namespace MarkdownEdit.Controls
 
         public DocumentStructure[] Structure
         {
-            get { return _structure; }
-            set { Set(ref _structure, value); }
+            get => _structure;
+            set => Set(ref _structure, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -14,8 +14,8 @@ namespace MarkdownEdit.Controls
 
         public MyEncodingInfo SelectedEncoding
         {
-            get { return (MyEncodingInfo)GetValue(SelectedEncodingProperty); }
-            set { SetValue(SelectedEncodingProperty, value); }
+            get => (MyEncodingInfo)GetValue(SelectedEncodingProperty);
+            set => SetValue(SelectedEncodingProperty, value);
         }
 
         public ICollection<MyEncodingInfo> SystemEncodings => MyEncodingInfo.GetEncodings();

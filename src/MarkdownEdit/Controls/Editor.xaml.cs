@@ -93,123 +93,120 @@ namespace MarkdownEdit.Controls
 
         public string Text
         {
-            get { return EditBox.Text; }
-            set { EditBox.Text = value; }
+            get => EditBox.Text;
+            set => EditBox.Text = value;
         }
 
         public bool IsReadOnly
         {
-            get { return EditBox.IsReadOnly; }
-            set { EditBox.IsReadOnly = value; }
+            get => EditBox.IsReadOnly;
+            set => EditBox.IsReadOnly = value;
         }
 
         public string FileName
         {
-            get { return _fileName; }
-            set { Set(ref _fileName, value); }
+            get => _fileName;
+            set => Set(ref _fileName, value);
         }
 
         public string DisplayName
         {
-            get
-            {
-                return string.IsNullOrWhiteSpace(_displayName) == false
-                    ? _displayName
-                    : string.IsNullOrWhiteSpace(FileName)
-                        ? $"{Translate("editor-new-document")} {_f1ForHelp}"
-                        : Path.GetFileName(FileName);
-            }
-            set { Set(ref _displayName, value); }
+            get => string.IsNullOrWhiteSpace(_displayName) == false
+                ? _displayName
+                : string.IsNullOrWhiteSpace(FileName)
+                    ? $"{Translate("editor-new-document")} {_f1ForHelp}"
+                    : Path.GetFileName(FileName);
+            set => Set(ref _displayName, value);
         }
 
         public bool IsModified
         {
-            get { return _isModified; }
-            set { Set(ref _isModified, value); }
+            get => _isModified;
+            set => Set(ref _isModified, value);
         }
 
         public bool AutoSave
         {
-            get { return (bool)GetValue(AutoSaveProperty); }
-            set { SetValue(AutoSaveProperty, value); }
+            get => (bool)GetValue(AutoSaveProperty);
+            set => SetValue(AutoSaveProperty, value);
         }
 
         public Theme Theme
         {
-            get { return (Theme)GetValue(ThemeProperty); }
-            set { SetValue(ThemeProperty, value); }
+            get => (Theme)GetValue(ThemeProperty);
+            set => SetValue(ThemeProperty, value);
         }
 
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
-            get { return (ScrollBarVisibility)GetValue(VerticalScrollBarVisibilityProperty); }
-            set { SetValue(VerticalScrollBarVisibilityProperty, value); }
+            get => (ScrollBarVisibility)GetValue(VerticalScrollBarVisibilityProperty);
+            set => SetValue(VerticalScrollBarVisibilityProperty, value);
         }
 
         public bool ShowEndOfLine
         {
-            get { return (bool)GetValue(ShowEndOfLineProperty); }
-            set { SetValue(ShowEndOfLineProperty, value); }
+            get => (bool)GetValue(ShowEndOfLineProperty);
+            set => SetValue(ShowEndOfLineProperty, value);
         }
 
         public bool ShowSpaces
         {
-            get { return (bool)GetValue(ShowSpacesProperty); }
-            set { SetValue(ShowSpacesProperty, value); }
+            get => (bool)GetValue(ShowSpacesProperty);
+            set => SetValue(ShowSpacesProperty, value);
         }
 
         public bool ShowLineNumbers
         {
-            get { return (bool)GetValue(ShowLineNumbersProperty); }
-            set { SetValue(ShowLineNumbersProperty, value); }
+            get => (bool)GetValue(ShowLineNumbersProperty);
+            set => SetValue(ShowLineNumbersProperty, value);
         }
 
         public bool ShowTabs
         {
-            get { return (bool)GetValue(ShowTabsProperty); }
-            set { SetValue(ShowTabsProperty, value); }
+            get => (bool)GetValue(ShowTabsProperty);
+            set => SetValue(ShowTabsProperty, value);
         }
 
         public ISpellCheckProvider SpellCheckProvider
         {
-            get { return (ISpellCheckProvider)GetValue(SpellCheckProviderProperty); }
-            set { SetValue(SpellCheckProviderProperty, value); }
+            get => (ISpellCheckProvider)GetValue(SpellCheckProviderProperty);
+            set => SetValue(SpellCheckProviderProperty, value);
         }
 
         public bool HighlightCurrentLine
         {
-            get { return (bool)GetValue(HighlightCurrentLineProperty); }
-            set { SetValue(HighlightCurrentLineProperty, value); }
+            get => (bool)GetValue(HighlightCurrentLineProperty);
+            set => SetValue(HighlightCurrentLineProperty, value);
         }
 
         public ISnippetManager SnippetManager
         {
-            get { return (ISnippetManager)GetValue(SnippetManagerProperty); }
-            set { SetValue(SnippetManagerProperty, value); }
+            get => (ISnippetManager)GetValue(SnippetManagerProperty);
+            set => SetValue(SnippetManagerProperty, value);
         }
 
         public bool WordWrap
         {
-            get { return (bool)GetValue(WordWrapProperty); }
-            set { SetValue(WordWrapProperty, value); }
+            get => (bool)GetValue(WordWrapProperty);
+            set => SetValue(WordWrapProperty, value);
         }
 
         public bool SpellCheck
         {
-            get { return (bool)GetValue(SpellCheckProperty); }
-            set { SetValue(SpellCheckProperty, value); }
+            get => (bool)GetValue(SpellCheckProperty);
+            set => SetValue(SpellCheckProperty, value);
         }
 
         public Block AbstractSyntaxTree
         {
-            get { return (Block)GetValue(AbstractSyntaxTreeProperty); }
-            set { SetValue(AbstractSyntaxTreeProperty, value); }
+            get => (Block)GetValue(AbstractSyntaxTreeProperty);
+            set => SetValue(AbstractSyntaxTreeProperty, value);
         }
 
         public MyEncodingInfo Encoding
         {
-            get { return (MyEncodingInfo)GetValue(MyEncodingInfoProperty); }
-            set { SetValue(MyEncodingInfoProperty, value); }
+            get => (MyEncodingInfo)GetValue(MyEncodingInfoProperty);
+            set => SetValue(MyEncodingInfoProperty, value);
         }
 
         private void OnIsVisibleChanged(object sender,

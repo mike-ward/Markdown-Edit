@@ -23,8 +23,8 @@ namespace MarkdownEdit.Controls
 
         public ISpellCheckProvider SpellCheckProvider
         {
-            get { return (ISpellCheckProvider)GetValue(SpellCheckProviderProperty); }
-            set { SetValue(SpellCheckProviderProperty, value); }
+            get => (ISpellCheckProvider)GetValue(SpellCheckProviderProperty);
+            set => SetValue(SpellCheckProviderProperty, value);
         }
 
         private void OnIsVisibleChanged(object sender,

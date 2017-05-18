@@ -49,7 +49,7 @@ namespace MarkdownEdit.SpellCheck
 
         public bool Enabled
         {
-            get { return _enabled; }
+            get => _enabled;
             set
             {
                 _enabled = value;

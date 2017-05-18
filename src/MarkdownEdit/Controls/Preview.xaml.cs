@@ -57,32 +57,32 @@ namespace MarkdownEdit.Controls
 
         public int WordCount
         {
-            get { return _wordCount; }
-            set { Set(ref _wordCount, value); }
+            get => _wordCount;
+            set => Set(ref _wordCount, value);
         }
 
         public int CharacterCount
         {
-            get { return _characterCount; }
-            set { Set(ref _characterCount, value); }
+            get => _characterCount;
+            set => Set(ref _characterCount, value);
         }
 
         public string DocumentStatisticDisplayText
         {
-            get { return _documentStatistics; }
-            set { Set(ref _documentStatistics, value); }
+            get => _documentStatistics;
+            set => Set(ref _documentStatistics, value);
         }
 
         public string DocumentStatisticsToolTip
         {
-            get { return _documentStatisticsToolTip; }
-            set { Set(ref _documentStatisticsToolTip, value); }
+            get => _documentStatisticsToolTip;
+            set => Set(ref _documentStatisticsToolTip, value);
         }
 
         public int PageCount
         {
-            get { return _pageCount; }
-            set { Set(ref _pageCount, value); }
+            get => _pageCount;
+            set => Set(ref _pageCount, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

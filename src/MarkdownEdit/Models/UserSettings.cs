@@ -42,140 +42,140 @@ namespace MarkdownEdit.Models
 
         public Theme Theme
         {
-            get { return _theme; }
-            set { Set(ref _theme, value); }
+            get => _theme;
+            set => Set(ref _theme, value);
         }
 
         public string EditorFontFamily
         {
-            get { return _editorFontFamily; }
-            set { Set(ref _editorFontFamily, value); }
+            get => _editorFontFamily;
+            set => Set(ref _editorFontFamily, value);
         }
 
         public double EditorFontSize
         {
-            get { return _editorFontSize; }
-            set { Set(ref _editorFontSize, value); }
+            get => _editorFontSize;
+            set => Set(ref _editorFontSize, value);
         }
 
         public bool EditorOpenLastFile
         {
-            get { return _editorOpenLastFile; }
-            set { Set(ref _editorOpenLastFile, value); }
+            get => _editorOpenLastFile;
+            set => Set(ref _editorOpenLastFile, value);
         }
 
         public bool EditorOpenLastCursorPosition
         {
-            get { return _editorOpenLastCursorPosition; }
-            set { Set(ref _editorOpenLastCursorPosition, value); }
+            get => _editorOpenLastCursorPosition;
+            set => Set(ref _editorOpenLastCursorPosition, value);
         }
 
         public bool EditorVerticalScrollBarVisible
         {
-            get { return _editorVerticalScrollBarVisible; }
-            set { Set(ref _editorVerticalScrollBarVisible, value); }
+            get => _editorVerticalScrollBarVisible;
+            set => Set(ref _editorVerticalScrollBarVisible, value);
         }
 
         public bool EditorShowEndOfLine
         {
-            get { return _editorShowEndOfLine; }
-            set { Set(ref _editorShowEndOfLine, value); }
+            get => _editorShowEndOfLine;
+            set => Set(ref _editorShowEndOfLine, value);
         }
 
         public bool EditorShowSpaces
         {
-            get { return _editorShowSpaces; }
-            set { Set(ref _editorShowSpaces, value); }
+            get => _editorShowSpaces;
+            set => Set(ref _editorShowSpaces, value);
         }
 
         public bool EditorShowTabs
         {
-            get { return _editorShowTabs; }
-            set { Set(ref _editorShowTabs, value); }
+            get => _editorShowTabs;
+            set => Set(ref _editorShowTabs, value);
         }
 
         public bool EditorShowLineNumbers
         {
-            get { return _editorShowLineNumbers; }
-            set { Set(ref _editorShowLineNumbers, value); }
+            get => _editorShowLineNumbers;
+            set => Set(ref _editorShowLineNumbers, value);
         }
 
         public bool EditorHighlightCurrentLine
         {
-            get { return _editorHighlightCurrentLine; }
-            set { Set(ref _editorHighlightCurrentLine, value); }
+            get => _editorHighlightCurrentLine;
+            set => Set(ref _editorHighlightCurrentLine, value);
         }
 
         public MyEncodingInfo EditorEncoding
         {
-            get { return _editorEncoding; }
-            set { Set(ref _editorEncoding, value); }
+            get => _editorEncoding;
+            set => Set(ref _editorEncoding, value);
         }
 
         public bool SynchronizeScrollPositions
         {
-            get { return _synchronizeScrollPositions; }
-            set { Set(ref _synchronizeScrollPositions, value); }
+            get => _synchronizeScrollPositions;
+            set => Set(ref _synchronizeScrollPositions, value);
         }
 
         public string SpellCheckDictionary
         {
-            get { return _spellCheckDictionary; }
-            set { Set(ref _spellCheckDictionary, value); }
+            get => _spellCheckDictionary;
+            set => Set(ref _spellCheckDictionary, value);
         }
 
         public bool SpellCheckIgnoreCodeBlocks
         {
-            get { return _spellCheckIgnoreCodeBlocks; }
-            set { Set(ref _spellCheckIgnoreCodeBlocks, value); }
+            get => _spellCheckIgnoreCodeBlocks;
+            set => Set(ref _spellCheckIgnoreCodeBlocks, value);
         }
 
         public bool SpellCheckIgnoreAllCaps
         {
-            get { return _spellCheckIgnoreAllCaps; }
-            set { Set(ref _spellCheckIgnoreAllCaps, value); }
+            get => _spellCheckIgnoreAllCaps;
+            set => Set(ref _spellCheckIgnoreAllCaps, value);
         }
 
         public bool SpellCheckIgnoreMarkupTags
         {
-            get { return _spellCheckIgnoreMarkupTags; }
-            set { Set(ref _spellCheckIgnoreMarkupTags, value); }
+            get => _spellCheckIgnoreMarkupTags;
+            set => Set(ref _spellCheckIgnoreMarkupTags, value);
         }
 
         public bool SpellCheckIgnoreWordsWithDigits
         {
-            get { return _spellCheckIgnoreWordsWithDigits; }
-            set { Set(ref _spellCheckIgnoreWordsWithDigits, value); }
+            get => _spellCheckIgnoreWordsWithDigits;
+            set => Set(ref _spellCheckIgnoreWordsWithDigits, value);
         }
 
         public int SinglePaneMargin
         {
-            get { return _singlePaneMargin; }
-            set { Set(ref _singlePaneMargin, value); }
+            get => _singlePaneMargin;
+            set => Set(ref _singlePaneMargin, value);
         }
 
         public bool IgnoreTaskbarOnMaximize
         {
-            get { return _ignoreTaskbarOnMaximize; }
-            set { Set(ref _ignoreTaskbarOnMaximize, value); }
+            get => _ignoreTaskbarOnMaximize;
+            set => Set(ref _ignoreTaskbarOnMaximize, value);
         }
 
         public bool FormatOnSave
         {
-            get { return _formatOnSave; }
-            set { Set(ref _formatOnSave, value); }
+            get => _formatOnSave;
+            set => Set(ref _formatOnSave, value);
         }
 
         public bool GitHubMarkdown
         {
-            get { return _githubMarkdown; }
-            set { Set(ref _githubMarkdown, value); }
+            get => _githubMarkdown;
+            set => Set(ref _githubMarkdown, value);
         }
 
         public string LineEnding
         {
-            get { return _lineEnding; }
-            set { Set(ref _lineEnding, value); }
+            get => _lineEnding;
+            set => Set(ref _lineEnding, value);
         }
 
         [JsonIgnore]
@@ -188,38 +188,38 @@ namespace MarkdownEdit.Models
 
         public string CustomMarkdownConverter
         {
-            get { return _customMarkdownConverter; }
-            set { Set(ref _customMarkdownConverter, value); }
+            get => _customMarkdownConverter;
+            set => Set(ref _customMarkdownConverter, value);
         }
 
         public string CustomMarkdownConverterArgs
         {
-            get { return _customMarkdownConverterArgs; }
-            set { Set(ref _customMarkdownConverterArgs, value); }
+            get => _customMarkdownConverterArgs;
+            set => Set(ref _customMarkdownConverterArgs, value);
         }
 
         public bool UseDefaultEditor
         {
-            get { return _useDefaultEditor; }
-            set { Set(ref _useDefaultEditor, value); }
+            get => _useDefaultEditor;
+            set => Set(ref _useDefaultEditor, value);
         }
 
         public bool YesIDonated
         {
-            get { return _yesIDonated; }
-            set { Set(ref _yesIDonated, value); }
+            get => _yesIDonated;
+            set => Set(ref _yesIDonated, value);
         }
 
         public bool InsertImagePathsOnly
         {
-            get { return _insertImagePathsOnly; }
-            set { Set(ref _insertImagePathsOnly, value); }
+            get => _insertImagePathsOnly;
+            set => Set(ref _insertImagePathsOnly, value);
         }
 
         public string CultureLanguage
         {
-            get { return _cultureLanguage; }
-            set { Set(ref _cultureLanguage, value); }
+            get => _cultureLanguage;
+            set => Set(ref _cultureLanguage, value);
         }
 
         public void Update()

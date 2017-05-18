@@ -24,86 +24,86 @@ namespace MarkdownEdit.Models
 
         public string Name
         {
-            get { return _name; }
-            set { Set(ref _name, value); }
+            get => _name;
+            set => Set(ref _name, value);
         }
 
         public string EditorBackground
         {
-            get { return _editorBackground; }
-            set { Set(ref _editorBackground, value); }
+            get => _editorBackground;
+            set => Set(ref _editorBackground, value);
         }
 
         public string EditorForeground
         {
-            get { return _editorForeground; }
-            set { Set(ref _editorForeground, value); }
+            get => _editorForeground;
+            set => Set(ref _editorForeground, value);
         }
 
         public double Header1Height
         {
-            get { return _header1Height; }
-            set { Set(ref _header1Height, value); }
+            get => _header1Height;
+            set => Set(ref _header1Height, value);
         }
 
         public double Header2Height
         {
-            get { return _header2Height; }
-            set { Set(ref _header2Height, value); }
+            get => _header2Height;
+            set => Set(ref _header2Height, value);
         }
 
         public Highlight HighlightHeading
         {
-            get { return _highlightHeading; }
-            set { Set(ref _highlightHeading, value); }
+            get => _highlightHeading;
+            set => Set(ref _highlightHeading, value);
         }
 
         public Highlight HighlightEmphasis
         {
-            get { return _highlightEmphasis; }
-            set { Set(ref _highlightEmphasis, value); }
+            get => _highlightEmphasis;
+            set => Set(ref _highlightEmphasis, value);
         }
 
         public Highlight HighlightStrongEmphasis
         {
-            get { return _highlightStrongEmphasis; }
-            set { Set(ref _highlightStrongEmphasis, value); }
+            get => _highlightStrongEmphasis;
+            set => Set(ref _highlightStrongEmphasis, value);
         }
 
         public Highlight HighlightInlineCode
         {
-            get { return _highlightInlineCode; }
-            set { Set(ref _highlightInlineCode, value); }
+            get => _highlightInlineCode;
+            set => Set(ref _highlightInlineCode, value);
         }
 
         public Highlight HighlightBlockCode
         {
-            get { return _highlightBlockCode; }
-            set { Set(ref _highlightBlockCode, value); }
+            get => _highlightBlockCode;
+            set => Set(ref _highlightBlockCode, value);
         }
 
         public Highlight HighlightBlockQuote
         {
-            get { return _highlightBlockQuote; }
-            set { Set(ref _highlightBlockQuote, value); }
+            get => _highlightBlockQuote;
+            set => Set(ref _highlightBlockQuote, value);
         }
 
         public Highlight HighlightLink
         {
-            get { return _highlightLink; }
-            set { Set(ref _highlightLink, value); }
+            get => _highlightLink;
+            set => Set(ref _highlightLink, value);
         }
 
         public Highlight HighlightImage
         {
-            get { return _highlightImage; }
-            set { Set(ref _highlightImage, value); }
+            get => _highlightImage;
+            set => Set(ref _highlightImage, value);
         }
 
         public string SpellCheckError
         {
-            get { return _spellCheckError; }
-            set { Set(ref _spellCheckError, value); }
+            get => _spellCheckError;
+            set => Set(ref _spellCheckError, value);
         }
 
         // INotifyPropertyChanged

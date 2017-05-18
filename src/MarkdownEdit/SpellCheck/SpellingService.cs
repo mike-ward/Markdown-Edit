@@ -25,7 +25,9 @@ namespace MarkdownEdit.SpellCheck
 
         public void ClearLanguage() { _speller = null; }
 
-        public string Language { get { return _language; } set { SetLanguage(value); } }
+        public string Language { get => _language;
+            set => SetLanguage(value);
+        }
 
         public string CustomDictionaryFile()
         {
