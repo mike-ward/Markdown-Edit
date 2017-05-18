@@ -223,30 +223,56 @@ namespace MarkdownEdit.Models
 
         private static int ConvertToOffset(string number)
         {
-            int offset;
-            return int.TryParse(number, out offset) ? offset : 0;
+            return int.TryParse(number, out int offset) ? offset : 0;
         }
 
         private static bool SaveAsHtml(string markdown, string filename, string filter)
         {
-            var html = Markdown.ToHtml(Markdown.RemoveYamlFrontMatter(markdown));
-            if (filter == "html-with-template") html = UserTemplate.InsertContent(html);
-            File.WriteAllText(filename, html);
-            return true;
+            try
+            {
+                var html = Markdown.ToHtml(Markdown.RemoveYamlFrontMatter(markdown));
+                if (filter == "html-with-template") html = UserTemplate.InsertContent(html);
+                File.WriteAllText(filename, html);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Notify.Alert(ex.Message);
+                return false;
+            }
         }
 
         private static bool SaveAsPdf(string markdown, string filename)
         {
-            var html = UserTemplate.InsertContent(Markdown.ToHtml(Markdown.RemoveYamlFrontMatter(markdown)));
-            var pdf = Markdown.HtmlToPdf(html);
-            File.WriteAllBytes(filename, pdf);
-            return true;
+            try
+            {
+                var html = UserTemplate.InsertContent(Markdown.ToHtml(Markdown.RemoveYamlFrontMatter(markdown)));
+                var pdf = Markdown.HtmlToPdf(html);
+                File.WriteAllBytes(filename, pdf);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Notify.Alert(ex.Message);
+                return false;
+            }
         }
 
         private static bool SaveAsDocx(string markdown, string filename)
         {
-            Markdown.ToMicrosoftWord(Markdown.RemoveYamlFrontMatter(markdown), filename);
-            return true;
+            try
+            {
+                Markdown.ToMicrosoftWord(Markdown.RemoveYamlFrontMatter(markdown), filename);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Notify.Alert(ex.Message);
+                return false;
+            }
         }
     }
 }
