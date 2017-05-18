@@ -49,6 +49,9 @@ namespace MarkdownEdit.Models
                     fileWatcher.EnableRaisingEvents = false;
                     onChange();
                 }
+                catch (ObjectDisposedException)
+                {
+                }
                 finally
                 {
                     try

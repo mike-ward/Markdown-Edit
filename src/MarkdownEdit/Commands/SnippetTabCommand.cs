@@ -69,7 +69,7 @@ namespace MarkdownEdit.Commands
             var startOffset = offset - 1;
             while (startOffset > 0 && char.IsWhiteSpace(textSource.GetCharAt(startOffset)))
             {
-                startOffset -= 1;
+                startOffset = Math.Min(0, startOffset - 1);
             }
             var c = textSource.GetCharAt(startOffset);
             return (c == '-' || c == '*') ? startOffset : -1;
