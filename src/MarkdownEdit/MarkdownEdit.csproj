@@ -422,9 +422,8 @@
     <Content Include="Languages\ru\local.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="cmark.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Lib\cmark-gfm.dll" />
+    <Content Include="Lib\cmark-gfm.exe" />
     <Content Include="Lib\WpfMouseWheelLib.pdb" />
     <EmbeddedResource Include="Resources\emoji-sprites.png" />
     <Resource Include="Resources\donate.png" />
@@ -603,5 +602,9 @@
     <Copy SourceFiles="../packages\NHunspell.1.2.5554.16953\content\Hunspellx64.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="../packages\NHunspell.1.2.5554.16953\content\Hunspellx86.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="Lib/pandoc.exe" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="Lib/pandoc.exe" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="Lib/pandoc.exe" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="Lib/cmark-gfm.exe" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="Lib/cmark-gfm.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
   </Target>
 </Project>

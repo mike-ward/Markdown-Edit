@@ -15,6 +15,7 @@ namespace MarkdownEdit.Models
     {
         private static readonly IMarkdownConverter CommonMarkConverter = new CommonMarkConverter();
         private static readonly IMarkdownConverter GitHubMarkdownConverter = new GitHubMarkdownConverter();
+        //private static readonly IMarkdownConverter GitHubMarkdownConverter = new CMarkGitHub();
         private static readonly IMarkdownConverter CustomMarkdownConverter = new CustomMarkdownConverter();
 
         private const string PandocGithubMarkdownFormatOptions =
@@ -84,13 +85,18 @@ namespace MarkdownEdit.Models
 
         public static string Pandoc(string text, string args)
         {
-            var pandoc = PandocStartInfo(args, text != null);
+            var pandoc = ProcessStartInfo("pandoc.exe", args, text != null);
 
-            using (var process = Process.Start(pandoc))
+            return ResultFromExecuteProcess(text, pandoc);
+        }
+
+        public static string ResultFromExecuteProcess(string text, ProcessStartInfo startInfo)
+        {
+            using (var process = Process.Start(startInfo))
             {
                 if (process == null)
                 {
-                    Notify.Alert("Error starting Pandoc");
+                    Notify.Alert("Error starting process");
                     return text;
                 }
                 if (text != null)
@@ -119,11 +125,11 @@ namespace MarkdownEdit.Models
             return tuple.Item1 + result;
         }
 
-        private static ProcessStartInfo PandocStartInfo(string arguments, bool redirectInput)
+        public static ProcessStartInfo ProcessStartInfo(string fileName, string arguments, bool redirectInput)
         {
             return new ProcessStartInfo
             {
-                FileName = "pandoc.exe",
+                FileName = fileName,
                 Arguments = arguments,
                 RedirectStandardInput = redirectInput,
                 RedirectStandardOutput = true,
