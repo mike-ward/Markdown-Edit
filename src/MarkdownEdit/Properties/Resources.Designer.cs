@@ -132,7 +132,7 @@ namespace MarkdownEdit.Properties {
         ///
         ///&quot;         “$END$”
         ///&apos;         ‘$END$’
-        ///.
+        ///--		  —.
         /// </summary>
         internal static string Snippets {
             get {
@@ -150,8 +150,9 @@ namespace MarkdownEdit.Properties {
         ///	&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=Edge&quot;&gt;
         ///	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=utf-8&quot;/&gt;
         ///	&lt;style type=&quot;text/css&quot;&gt;
-        ///          body { font-family: &apos;segoe ui&apos;, sans-serif; line-height: 1.4; padding-left: 12pt; font-size: 12pt; }
-        ///          code { font-fami [rest of string was truncated]&quot;;.
+        ///		body { font-family: &apos;segoe ui&apos;, sans-serif; line-height: 1.4; padding-left: 12pt; font-size: 12pt; }
+        ///		code { white-space: pre }
+        ///		ul, [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TemplateHtml {
             get {

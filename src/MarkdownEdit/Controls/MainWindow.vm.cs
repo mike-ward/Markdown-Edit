@@ -35,62 +35,62 @@ namespace MarkdownEdit.Controls
 
         public string TitleName
         {
-            get { return _titleName; }
-            set { Set(ref _titleName, value); }
+            get => _titleName;
+            set => Set(ref _titleName, value);
         }
 
         public Thickness EditorMargins
         {
-            get { return _editorMargins; }
-            set { Set(ref _editorMargins, value); }
+            get => _editorMargins;
+            set => Set(ref _editorMargins, value);
         }
 
         public IMarkdownConverter CommonMarkConverter
         {
-            get { return _commonMarkConverter; }
-            set { Set(ref _commonMarkConverter, value); }
+            get => _commonMarkConverter;
+            set => Set(ref _commonMarkConverter, value);
         }
 
         public IMarkdownConverter GitHubMarkdownConverter
         {
-            get { return _githubMarkdownConverter; }
-            set { Set(ref _githubMarkdownConverter, value); }
+            get => _githubMarkdownConverter;
+            set => Set(ref _githubMarkdownConverter, value);
         }
 
         public ISpellCheckProvider SpellCheckProvider
         {
-            get { return _spellCheckProvider; }
-            set { Set(ref _spellCheckProvider, value); }
+            get => _spellCheckProvider;
+            set => Set(ref _spellCheckProvider, value);
         }
 
         public FindReplaceDialog FindReplaceDialog
         {
-            get { return _findReplaceDialog; }
-            set { Set(ref _findReplaceDialog, value); }
+            get => _findReplaceDialog;
+            set => Set(ref _findReplaceDialog, value);
         }
 
         public ISnippetManager SnippetManager
         {
-            get { return _snippetManager; }
-            set { Set(ref _snippetManager, value); }
+            get => _snippetManager;
+            set => Set(ref _snippetManager, value);
         }
 
         public bool NewVersion
         {
-            get { return _newVersion; }
-            set { Set(ref _newVersion, value); }
+            get => _newVersion;
+            set => Set(ref _newVersion, value);
         }
 
         public string Clock
         {
-            get { return _clock; }
-            set { Set(ref _clock, value); }
+            get => _clock;
+            set => Set(ref _clock, value);
         }
 
         public Visibility ClockIsVisible
         {
-            get { return _clockIsVisible; }
-            set { Set(ref _clockIsVisible, value); }
+            get => _clockIsVisible;
+            set => Set(ref _clockIsVisible, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

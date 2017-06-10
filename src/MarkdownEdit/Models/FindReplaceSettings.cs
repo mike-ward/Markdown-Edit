@@ -20,13 +20,21 @@ namespace MarkdownEdit.Models
             UseWildcards = Settings.Default.FindReplaceWildcards;
         }
 
-        public bool CaseSensitive { get { return _caseSensitive; } set { Set(ref _caseSensitive, value); } }
+        public bool CaseSensitive { get => _caseSensitive;
+            set => Set(ref _caseSensitive, value);
+        }
 
-        public bool WholeWord { get { return _wholeWord; } set { Set(ref _wholeWord, value); } }
+        public bool WholeWord { get => _wholeWord;
+            set => Set(ref _wholeWord, value);
+        }
 
-        public bool UseRegex { get { return _useRegex; } set { Set(ref _useRegex, value); } }
+        public bool UseRegex { get => _useRegex;
+            set => Set(ref _useRegex, value);
+        }
 
-        public bool UseWildcards { get { return _useWildcards; } set { Set(ref _useWildcards, value); } }
+        public bool UseWildcards { get => _useWildcards;
+            set => Set(ref _useWildcards, value);
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

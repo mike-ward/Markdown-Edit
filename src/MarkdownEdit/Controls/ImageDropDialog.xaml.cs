@@ -31,12 +31,12 @@ namespace MarkdownEdit.Controls
 
         public string DocumentFileName
         {
-            set { _vm.DocumentFileName = value; }
+            set => _vm.DocumentFileName = value;
         }
 
         public bool UseClipboardImage
         {
-            set { _vm.UseClipboardImage = value; }
+            set => _vm.UseClipboardImage = value;
         }
 
         private void OnLoaded(object sender, EventArgs eventArgs)

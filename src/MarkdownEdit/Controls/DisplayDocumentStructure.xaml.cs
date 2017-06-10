@@ -16,8 +16,8 @@ namespace MarkdownEdit.Controls
 
         public Block AbstractSyntaxTree
         {
-            get { return (Block)GetValue(AbstractSyntaxTreeProperty); }
-            set { SetValue(AbstractSyntaxTreeProperty, value); }
+            get => (Block)GetValue(AbstractSyntaxTreeProperty);
+            set => SetValue(AbstractSyntaxTreeProperty, value);
         }
 
         private void OnIsVisibleChanged(

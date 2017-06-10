@@ -30,12 +30,14 @@ namespace MarkdownEdit.Controls
             };
         }
 
-        public string FindText { get { return _findText; } set { Set(ref _findText, value); } }
+        public string FindText { get => _findText;
+            set => Set(ref _findText, value);
+        }
 
         public FindReplaceSettings FindReplaceSettings
         {
-            get { return _findReplaceSettings; }
-            set { Set(ref _findReplaceSettings, value); }
+            get => _findReplaceSettings;
+            set => Set(ref _findReplaceSettings, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

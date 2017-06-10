@@ -15,8 +15,8 @@ namespace MarkdownEdit.Controls
 
         public DocumentStructure[] Structure
         {
-            get { return _structure; }
-            set { Set(ref _structure, value); }
+            get => _structure;
+            set => Set(ref _structure, value);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -46,7 +46,7 @@ namespace MarkdownEdit.Controls
 
         public void Selected(int index)
         {
-            var offset = index <= Structure.Length ? Structure[index].Offset : 0;
+            var offset = index >= 0 && index < Structure.Length ? Structure[index].Offset : 0;
             ScrollToOffsetCommand.Command.Execute(offset, Application.Current.MainWindow);
         }
 

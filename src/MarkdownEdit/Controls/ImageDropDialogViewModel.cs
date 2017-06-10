@@ -12,20 +12,20 @@ namespace MarkdownEdit.Controls
 
         public string DocumentFileName
         {
-            get { return _documentFileName; }
-            set { Set(ref _documentFileName, value); }
+            get => _documentFileName;
+            set => Set(ref _documentFileName, value);
         }
 
         public bool Uploading
         {
-            get { return _uploading; }
-            set { Set(ref _uploading, value); }
+            get => _uploading;
+            set => Set(ref _uploading, value);
         }
 
         public bool UseClipboardImage
         {
-            get { return _useClipboardImage; }
-            set { Set(ref _useClipboardImage, value); }
+            get => _useClipboardImage;
+            set => Set(ref _useClipboardImage, value);
         }
 
         // INotifyPropertyChanged
