@@ -1,4 +1,4 @@
-﻿namespace MarkdownEdit.Views
+﻿namespace EditModule.Views
 {
     public partial class EditControl
     {

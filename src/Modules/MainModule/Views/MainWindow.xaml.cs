@@ -1,6 +1,6 @@
 ﻿using Prism.Regions;
 
-namespace MarkdownEdit.Views
+namespace MainModule.Views
 {
     public partial class MainWindow 
     {

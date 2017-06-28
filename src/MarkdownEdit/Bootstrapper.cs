@@ -1,6 +1,8 @@
-﻿using System.Windows;
-using MarkdownEdit.Views;
+﻿using System;
+using System.Windows;
+using MainModule.Views;
 using Microsoft.Practices.Unity;
+using Prism.Modularity;
 using Prism.Unity;
 
 namespace MarkdownEdit
@@ -15,6 +17,24 @@ namespace MarkdownEdit
         protected override void InitializeShell()
         {
             Application.Current.MainWindow.Show();
+        }
+
+        protected override void ConfigureModuleCatalog()
+        {
+            base.ConfigureModuleCatalog();
+            AddModule(typeof(MainModule.MainModule));
+            AddModule(typeof(EditModule.EditModule));
+            AddModule(typeof(PreviewModule.PreviewModule));
+        }
+
+        private void AddModule(Type moduleType)
+        {
+            ModuleCatalog.AddModule(new ModuleInfo
+            {
+                ModuleName = moduleType.Name,
+                ModuleType = moduleType.AssemblyQualifiedName,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
         }
     }
 }

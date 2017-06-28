@@ -1,4 +1,4 @@
-﻿namespace MarkdownEdit.Views
+﻿namespace PreviewModule.Views
 {
     public partial class PreviewControl
     {
