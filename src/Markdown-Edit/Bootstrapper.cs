@@ -5,7 +5,7 @@ using Prism.Unity;
 
 namespace MarkdownEdit
 {
-    class Bootstrapper : UnityBootstrapper
+    internal class Bootstrapper : UnityBootstrapper
     {
         protected override DependencyObject CreateShell()
         {

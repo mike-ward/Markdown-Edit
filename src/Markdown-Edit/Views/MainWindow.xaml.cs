@@ -7,6 +7,7 @@ namespace MarkdownEdit.Views
         public MainWindow(IRegionManager regionManager)
         {
             InitializeComponent();
+            regionManager.RegisterViewWithRegion("ContentRegion", typeof(MainView));
         }
     }
 }
