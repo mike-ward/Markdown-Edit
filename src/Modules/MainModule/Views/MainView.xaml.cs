@@ -1,6 +1,8 @@
-﻿using Prism.Regions;
+﻿using EditModule.Views;
+using PreviewModule.Views;
+using Prism.Regions;
 
-namespace MarkdownEdit.Views
+namespace MainModule.Views
 {
     public partial class MainView
     {

@@ -1,6 +1,6 @@
 ﻿using Prism.Mvvm;
 
-namespace MarkdownEdit.ViewModels
+namespace MainModule.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
