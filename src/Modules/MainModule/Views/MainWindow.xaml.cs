@@ -1,4 +1,5 @@
-﻿using Prism.Regions;
+﻿using Microsoft.Practices.Unity;
+using Prism.Regions;
 
 namespace MainModule.Views
 {

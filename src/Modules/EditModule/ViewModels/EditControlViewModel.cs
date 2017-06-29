@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Windows.Media;
+using ICSharpCode.AvalonEdit;
 using Prism.Mvvm;
 
 namespace EditModule.ViewModels
 {
     public class EditControlViewModel : BindableBase
     {
+        public EditControlViewModel(/*ITextEditorComponent textEditor*/)
+        {
+            
+        }
+
         private FontFamily _fontFamily = new FontFamily("Consolas");
 
         public FontFamily Font
