@@ -25,10 +25,8 @@ namespace EditModule.Views
 
         private void AddBindings(DependencyObject textEditor)
         {
-            void SetBinding(DependencyProperty dp, string property, BindingMode mode = BindingMode.OneWay)
-            {
-                BindingOperations.SetBinding(textEditor, dp, new Binding(property) { Source = DataContext, Mode = mode });
-            }
+            void SetBinding(DependencyProperty dp, string property, BindingMode mode = BindingMode.OneWay) 
+                => BindingOperations.SetBinding(textEditor, dp, new Binding(property) { Source = DataContext, Mode = mode });
 
             SetBinding(FontFamilyProperty, "Font");
             SetBinding(FontSizeProperty, "FontSize");
@@ -37,7 +35,7 @@ namespace EditModule.Views
 
         private void AddEventHandlers(TextEditor textEditor)
         {
-            IsVisibleChanged += (sd, ea) => Dispatcher.InvokeAsync(textEditor.Focus);
+            IsVisibleChanged += (sd, ea) => { if (IsVisible) Dispatcher.InvokeAsync(textEditor.Focus); };
         }
     }
 }
