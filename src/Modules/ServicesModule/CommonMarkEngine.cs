@@ -1,5 +1,4 @@
-﻿using System;
-using Infrastructure;
+﻿using Infrastructure;
 
 namespace ServicesModule
 {
@@ -7,7 +6,7 @@ namespace ServicesModule
     {
         public string ToHtml(string text)
         {
-            throw new NotImplementedException();
+            return CommonMark.CommonMarkConverter.Convert(text);
         }
     }
 }
