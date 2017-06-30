@@ -1,14 +1,12 @@
-﻿using Microsoft.Practices.Unity;
-using Prism.Regions;
+﻿using Prism.Regions;
 
 namespace MainModule.Views
 {
     public partial class MainWindow 
     {
-        public MainWindow(IRegionManager regionManager)
+        public MainWindow()
         {
             InitializeComponent();
-            regionManager.RegisterViewWithRegion("ContentRegion", typeof(MainView));
         }
     }
 }

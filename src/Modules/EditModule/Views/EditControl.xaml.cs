@@ -1,4 +1,6 @@
-﻿using System.Windows.Data;
+﻿using System;
+using System.Windows;
+using System.Windows.Data;
 using ICSharpCode.AvalonEdit;
 
 namespace EditModule.Views
@@ -8,17 +10,25 @@ namespace EditModule.Views
         public EditControl()
         {
             InitializeComponent();
-            var textEditor = InitializeTextEditor();
+
+            var textEditor = (TextEditor)DataContext.GetType().GetProperty("TextEditor")?.GetValue(DataContext, null);
+            if (textEditor == null) throw new NullReferenceException("TextEditor not created in view model");
+            InitializeTextEditor(textEditor);
             _border.Child = textEditor;
             Dispatcher.InvokeAsync(() => textEditor.Focus());
         }
 
-        private TextEditor InitializeTextEditor()
+        private void InitializeTextEditor(DependencyObject textEditor)
         {
-            var textEditor = new TextEditor();
-            textEditor.SetBinding(FontFamilyProperty, new Binding("Font") {Source = DataContext, Mode = BindingMode.OneWay});
-            textEditor.SetBinding(FontSizeProperty, new Binding("FontSize") {Source = DataContext, Mode = BindingMode.OneWay});
-            return textEditor;
+            void SetBinding(DependencyProperty dp, string property, BindingMode mode = BindingMode.OneWay)
+            {
+                BindingOperations.SetBinding(textEditor, dp, new Binding(property) { Source = DataContext, Mode = mode });
+            }
+
+            SetBinding(FontFamilyProperty, "Font");
+            SetBinding(FontSizeProperty, "FontSize");
+            SetBinding(TextEditor.WordWrapProperty, "WordWrap", BindingMode.TwoWay);
         }
+
     }
 }

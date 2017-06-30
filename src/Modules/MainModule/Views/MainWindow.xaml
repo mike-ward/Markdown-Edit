@@ -16,7 +16,10 @@
     UseLayoutRounding="True"
     WindowButtonCommandsOverlayBehavior="Never" 
     WindowTitleBrush="{StaticResource GrayBrush2}">
-  <Grid>
-    <ContentControl prism:RegionManager.RegionName="ContentRegion" />
-  </Grid>
+  
+  <UniformGrid Rows="1" Columns="2">
+    <ContentControl prism:RegionManager.RegionName="EditRegion" />
+    <ContentControl prism:RegionManager.RegionName="PreviewRegion" />
+  </UniformGrid>
+
 </controls:MetroWindow>

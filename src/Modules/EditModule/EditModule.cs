@@ -1,21 +1,26 @@
-﻿using ICSharpCode.AvalonEdit;
+﻿using EditModule.Views;
+using ICSharpCode.AvalonEdit;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
+using Prism.Regions;
 
 namespace EditModule
 {
     public class EditModule : IModule
     {
-        private readonly IUnityContainer _container;
+        public IUnityContainer Container { get; }
+        public IRegionManager RegionManager { get; }
 
-        public EditModule(IUnityContainer container)
+        public EditModule(IUnityContainer container, IRegionManager regionManager)
         {
-            _container = container;
+            Container = container;
+            RegionManager = regionManager;
         }
 
         public void Initialize()
         {
-            _container.RegisterType<ITextEditorComponent, TextEditor>();
+            Container.RegisterType<ITextEditorComponent, TextEditor>();
+            RegionManager.RegisterViewWithRegion("EditRegion", typeof(EditControl));
         }
     }
 }
