@@ -90,6 +90,9 @@
     <Compile Include="Bootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -122,16 +125,17 @@
       <Project>{6d50da51-72a2-45ff-8a9e-101ed2525ebe}</Project>
       <Name>EditModule</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\MainModule\MainModule.csproj">
-      <Project>{c4f16a0c-cc7f-49c5-bcea-81189396132d}</Project>
-      <Name>MainModule</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Modules\PreviewModule\PreviewModule.csproj">
       <Project>{569d1b6c-0038-4725-9a5c-461c4408ae81}</Project>
       <Name>PreviewModule</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Shell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

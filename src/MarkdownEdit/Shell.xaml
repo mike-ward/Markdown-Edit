@@ -1,0 +1,25 @@
+﻿<controls:MetroWindow
+  x:Class="MarkdownEdit.Shell"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+  xmlns:prism="http://prismlibrary.com/"
+  Title="MARKDOWN EDIT"
+  Width="800"
+  Height="600"
+  prism:ViewModelLocator.AutoWireViewModel="True"
+  GlowBrush="{StaticResource GrayBrush2}"
+  ResizeMode="CanResizeWithGrip"
+  SaveWindowPosition="True"
+  TextOptions.TextFormattingMode="Display"
+  TitleCharacterCasing="Normal"
+  UseLayoutRounding="True"
+  WindowButtonCommandsOverlayBehavior="Never"
+  WindowTitleBrush="{StaticResource GrayBrush2}">
+
+  <UniformGrid Columns="2" Rows="1">
+    <ContentControl prism:RegionManager.RegionName="EditRegion" />
+    <ContentControl prism:RegionManager.RegionName="PreviewRegion" />
+  </UniformGrid>
+
+</controls:MetroWindow>

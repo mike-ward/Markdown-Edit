@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using MainModule.Views;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Unity;
@@ -11,7 +10,7 @@ namespace MarkdownEdit
     {
         protected override DependencyObject CreateShell()
         {
-            return Container.Resolve<MainWindow>();
+            return Container.Resolve<Shell>();
         }
 
         protected override void InitializeShell()
@@ -22,7 +21,6 @@ namespace MarkdownEdit
         protected override void ConfigureModuleCatalog()
         {
             base.ConfigureModuleCatalog();
-            AddModule(typeof(MainModule.MainModule));
             AddModule(typeof(EditModule.EditModule));
             AddModule(typeof(PreviewModule.PreviewModule));
         }
