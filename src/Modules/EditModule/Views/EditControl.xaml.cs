@@ -10,15 +10,20 @@ namespace EditModule.Views
         public EditControl()
         {
             InitializeComponent();
-
-            var textEditor = (TextEditor)DataContext.GetType().GetProperty("TextEditor")?.GetValue(DataContext, null);
-            if (textEditor == null) throw new NullReferenceException("TextEditor not created in view model");
-            InitializeTextEditor(textEditor);
-            _border.Child = textEditor;
-            Dispatcher.InvokeAsync(() => textEditor.Focus());
         }
 
-        private void InitializeTextEditor(DependencyObject textEditor)
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+
+            var textEditor = (TextEditor)DataContext.GetType().GetProperty("TextEditor")?.GetValue(DataContext, null);
+            _border.Child = textEditor ?? throw new NullReferenceException("TextEditor not created in view model");
+
+            AddBindings(textEditor);
+            AddEventHandlers(textEditor);
+        }
+
+        private void AddBindings(DependencyObject textEditor)
         {
             void SetBinding(DependencyProperty dp, string property, BindingMode mode = BindingMode.OneWay)
             {
@@ -30,5 +35,9 @@ namespace EditModule.Views
             SetBinding(TextEditor.WordWrapProperty, "WordWrap", BindingMode.TwoWay);
         }
 
+        private void AddEventHandlers(TextEditor textEditor)
+        {
+            IsVisibleChanged += (sd, ea) => Dispatcher.InvokeAsync(textEditor.Focus);
+        }
     }
 }
