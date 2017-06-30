@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditModule", "Modules\EditM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreviewModule", "Modules\PreviewModule\PreviewModule.csproj", "{569D1B6C-0038-4725-9A5C-461C4408AE81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{115F8F8C-6530-43AE-ACA6-275BA8FB639A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServicesModule", "Modules\ServicesModule\ServicesModule.csproj", "{EE07CD31-3D0E-4575-BD01-D92118319FF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,14 @@ Global
 		{569D1B6C-0038-4725-9A5C-461C4408AE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{569D1B6C-0038-4725-9A5C-461C4408AE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{569D1B6C-0038-4725-9A5C-461C4408AE81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{115F8F8C-6530-43AE-ACA6-275BA8FB639A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{115F8F8C-6530-43AE-ACA6-275BA8FB639A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{115F8F8C-6530-43AE-ACA6-275BA8FB639A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{115F8F8C-6530-43AE-ACA6-275BA8FB639A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE07CD31-3D0E-4575-BD01-D92118319FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE07CD31-3D0E-4575-BD01-D92118319FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE07CD31-3D0E-4575-BD01-D92118319FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE07CD31-3D0E-4575-BD01-D92118319FF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,5 +48,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6D50DA51-72A2-45FF-8A9E-101ED2525EBE} = {5E4F8C45-0433-4128-9B04-73139F3D1351}
 		{569D1B6C-0038-4725-9A5C-461C4408AE81} = {5E4F8C45-0433-4128-9B04-73139F3D1351}
+		{EE07CD31-3D0E-4575-BD01-D92118319FF7} = {5E4F8C45-0433-4128-9B04-73139F3D1351}
 	EndGlobalSection
 EndGlobal

@@ -21,6 +21,7 @@ namespace MarkdownEdit
         protected override void ConfigureModuleCatalog()
         {
             base.ConfigureModuleCatalog();
+            AddModule(typeof(ServicesModule.ServicesModule));
             AddModule(typeof(EditModule.EditModule));
             AddModule(typeof(PreviewModule.PreviewModule));
         }
