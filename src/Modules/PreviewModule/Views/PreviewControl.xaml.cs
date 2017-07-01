@@ -7,8 +7,10 @@ namespace PreviewModule.Views
         public PreviewControl()
         {
             InitializeComponent();
-            ((PreviewControlViewModel)DataContext).UpdateBrowserDelegate = UpdateBrowser;
+            ViewModel.UpdateBrowserDelegate = UpdateBrowser;
         }
+
+        private PreviewControlViewModel ViewModel => (PreviewControlViewModel)DataContext;
 
         public void UpdateBrowser(string html)
         {

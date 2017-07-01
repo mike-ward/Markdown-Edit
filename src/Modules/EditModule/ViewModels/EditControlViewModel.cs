@@ -9,7 +9,15 @@ namespace EditModule.ViewModels
 {
     public class EditControlViewModel : BindableBase
     {
-        public EditControlViewModel(ITextEditorComponent textEditor, IMarkdownEngine markdownEngine, IEventAggregator eventAggregator)
+        public ITextEditorComponent TextEditor { get; set; }
+        public IMarkdownEngine MarkdownEngine { get; }
+        public IEventAggregator EventAggregator { get; }
+        public DelegateCommand<string> UpdateTextCommand { get; set; }
+
+        public EditControlViewModel(
+            ITextEditorComponent textEditor, 
+            IMarkdownEngine markdownEngine, 
+            IEventAggregator eventAggregator)
         {
             TextEditor = textEditor;
             MarkdownEngine = markdownEngine;
@@ -17,11 +25,6 @@ namespace EditModule.ViewModels
 
             UpdateTextCommand = new DelegateCommand<string>(text => EventAggregator.GetEvent<TextUpdatedEvent>().Publish(text));
         }
-
-        public ITextEditorComponent TextEditor { get; set; }
-        public IMarkdownEngine MarkdownEngine { get; }
-        public IEventAggregator EventAggregator { get; }
-        public DelegateCommand<string> UpdateTextCommand { get; set; }
 
         private FontFamily _fontFamily = new FontFamily("Consolas");
         public FontFamily Font
