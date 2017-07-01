@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Data;
 using ICSharpCode.AvalonEdit;
+using Infrastructure;
+using Prism.Commands;
 
 namespace EditModule.Views
 {
@@ -12,11 +14,13 @@ namespace EditModule.Views
             InitializeComponent();
         }
 
+        private T GetViewModelProperty<T>(string name) => (T)DataContext.GetType().GetProperty(name)?.GetValue(DataContext, null);
+
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
 
-            var textEditor = (TextEditor)DataContext.GetType().GetProperty("TextEditor")?.GetValue(DataContext, null);
+            var textEditor =  GetViewModelProperty<TextEditor>("TextEditor");
             _border.Child = textEditor ?? throw new NullReferenceException("TextEditor not created in view model");
 
             AddBindings(textEditor);
@@ -36,6 +40,12 @@ namespace EditModule.Views
         private void AddEventHandlers(TextEditor textEditor)
         {
             IsVisibleChanged += (sd, ea) => { if (IsVisible) Dispatcher.InvokeAsync(textEditor.Focus); };
+
+            // Debounce text updates for performance
+            var updateTextCommand = GetViewModelProperty<DelegateCommand<string>>("UpdateTextCommand");
+            void ExecuteUpdateTextCommand() => Dispatcher.InvokeAsync(() => updateTextCommand.Execute(textEditor.Text));
+            var executeUpdateTextCommand = Utility.Debounce(ExecuteUpdateTextCommand);
+            textEditor.TextChanged += (sd, ea) => executeUpdateTextCommand();
         }
     }
 }

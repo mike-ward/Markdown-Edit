@@ -1,4 +1,4 @@
-﻿using System;
+﻿using PreviewModule.ViewModels;
 
 namespace PreviewModule.Views
 {
@@ -7,7 +7,12 @@ namespace PreviewModule.Views
         public PreviewControl()
         {
             InitializeComponent();
-            _browser.Navigate(new Uri("http://example.com"));
+            ((PreviewControlViewModel)DataContext).UpdateBrowserDelegate = UpdateBrowser;
+        }
+
+        public void UpdateBrowser(string html)
+        {
+            _browser.NavigateToString(html);
         }
     }
 }
