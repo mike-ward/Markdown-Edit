@@ -23,6 +23,5 @@ namespace EditModule.Commands
         {
             return true;
         }
-
     }
 }

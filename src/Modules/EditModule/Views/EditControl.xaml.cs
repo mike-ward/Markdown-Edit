@@ -4,7 +4,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
-using Infrastructure;
 using Prism.Regions;
 
 namespace EditModule.Views
@@ -28,6 +27,7 @@ namespace EditModule.Views
             var textEditor = ViewModel.TextEditor as TextEditor;
             _border.Child = textEditor ?? throw new NullReferenceException("TextEditor not created in view model");
 
+            ViewModel.Dispatcher = Dispatcher;
             AddPropertyBindings(textEditor);
             AddEventHandlers(textEditor);
             AddKeyboardBindings();
@@ -46,16 +46,6 @@ namespace EditModule.Views
         private void AddEventHandlers(TextEditor textEditor)
         {
             IsVisibleChanged += (sd, ea) => { if (IsVisible) Dispatcher.InvokeAsync(textEditor.Focus); };
-
-            var executeUpdateTextCommand = UpdateTextCommandAction(textEditor);
-            textEditor.TextChanged += (sd, ea) => executeUpdateTextCommand();
-        }
-
-        private Action UpdateTextCommandAction(TextEditor textEditor)
-        {
-            var updateTextCommand = ViewModel.UpdateTextCommand;
-            void ExecuteUpdateTextCommand() => Dispatcher.InvokeAsync(() => updateTextCommand.Execute(textEditor.Text));
-            return Utility.Debounce(ExecuteUpdateTextCommand);
         }
 
         private void AddKeyboardBindings()

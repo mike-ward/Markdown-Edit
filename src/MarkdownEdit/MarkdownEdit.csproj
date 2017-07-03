@@ -88,6 +88,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Shell.xaml.cs">
@@ -121,6 +122,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{115F8F8C-6530-43AE-ACA6-275BA8FB639A}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\EditModule\EditModule.csproj">
       <Project>{6d50da51-72a2-45ff-8a9e-101ed2525ebe}</Project>
       <Name>EditModule</Name>

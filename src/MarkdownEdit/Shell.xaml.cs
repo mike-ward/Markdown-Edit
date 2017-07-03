@@ -3,7 +3,7 @@ using Prism.Regions;
 
 namespace MarkdownEdit
 {
-    public partial class Shell 
+    public partial class Shell
     {
         public IRegionManager RegionManager { get; }
 
@@ -19,6 +19,7 @@ namespace MarkdownEdit
             Activated -= OnActivated;
             RegionManager.Regions["EditRegion"].Context = this;
             RegionManager.Regions["PreviewRegion"].Context = this;
+
         }
     }
 }

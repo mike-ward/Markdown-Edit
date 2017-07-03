@@ -1,4 +1,5 @@
 ﻿using System.Windows.Media;
+using System.Windows.Threading;
 using EditModule.Commands;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
@@ -14,6 +15,8 @@ namespace EditModule.ViewModels
         public IMarkdownEngine MarkdownEngine { get; }
         public IEventAggregator EventAggregator { get; }
         public IFileActions FileActions { get; }
+        public Dispatcher Dispatcher { get; set; }
+
         public DelegateCommand<string> UpdateTextCommand { get; set; }
         public OpenCommand OpenCommand { get; private set; }
         public OpenDialogCommand OpenDialogCommand { get; private set; }
@@ -30,6 +33,7 @@ namespace EditModule.ViewModels
             FileActions = fileActions;
 
             TextEditorOptions();
+            AddEventHandlers();
             InstantiateCommands();
         }
 
@@ -44,6 +48,14 @@ namespace EditModule.ViewModels
             options.ConvertTabsToSpaces = true;
             options.AllowScrollBelowDocument = true;
             options.EnableRectangularSelection = true;
+        }
+
+        private void AddEventHandlers()
+        {
+            void ExecuteUpdateTextCommand() => Dispatcher.InvokeAsync(() => UpdateTextCommand.Execute(TextEditor.Document.Text));
+            var debounceUpdateTextCommand = Utility.Debounce(ExecuteUpdateTextCommand);
+            TextEditor.Document.TextChanged += (sd, ea) => debounceUpdateTextCommand();
+            TextEditor.Document.FileNameChanged += (sd, ea) => EventAggregator.GetEvent<FileNameChangedEvent>().Publish(TextEditor.Document.FileName);
         }
 
         private void InstantiateCommands()
