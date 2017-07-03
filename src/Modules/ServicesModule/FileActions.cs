@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Infrastructure;
+using Microsoft.Win32;
 
 namespace ServicesModule
 {
@@ -17,13 +18,15 @@ namespace ServicesModule
         {
             try
             {
-                return File.ReadAllText(file.ToString());
+                return file != null 
+                    ? File.ReadAllText(file.AbsolutePath) 
+                    : string.Empty;
 
             }
             catch (Exception ex)
             {
                 MessageBox.Alert(ex.Message);
-                return null;
+                return string.Empty;
             }
         }
 
@@ -34,7 +37,11 @@ namespace ServicesModule
 
         public Uri OpenDialog()
         {
-            throw new NotImplementedException();
+            var dialog = new OpenFileDialog();
+            var result = dialog.ShowDialog();
+            return result != null && result.Value 
+                ? new Uri(dialog.FileName) 
+                : null;
         }
 
         public void SaveAs(string text)
