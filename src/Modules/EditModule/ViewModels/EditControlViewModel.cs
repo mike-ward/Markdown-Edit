@@ -1,4 +1,6 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
+using EditModule.Commands;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using Prism.Commands;
@@ -12,18 +14,30 @@ namespace EditModule.ViewModels
         public ITextEditorComponent TextEditor { get; set; }
         public IMarkdownEngine MarkdownEngine { get; }
         public IEventAggregator EventAggregator { get; }
+        public IFileActions FileActions { get; }
         public DelegateCommand<string> UpdateTextCommand { get; set; }
+        public OpenCommand OpenCommand { get; private set; }
+        public OpenDialogCommand OpenDialogCommand { get; private set; }
 
         public EditControlViewModel(
             ITextEditorComponent textEditor, 
             IMarkdownEngine markdownEngine, 
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator,
+            IFileActions fileActions)
         {
             TextEditor = textEditor;
             MarkdownEngine = markdownEngine;
             EventAggregator = eventAggregator;
+            FileActions = fileActions;
 
+            InstantiateCommands();
+        }
+
+        private void InstantiateCommands()
+        {
             UpdateTextCommand = new DelegateCommand<string>(text => EventAggregator.GetEvent<TextUpdatedEvent>().Publish(text));
+            OpenCommand = new OpenCommand(TextEditor, FileActions);
+            OpenDialogCommand = new OpenDialogCommand(OpenCommand, FileActions);
         }
 
         private FontFamily _fontFamily = new FontFamily("Consolas");

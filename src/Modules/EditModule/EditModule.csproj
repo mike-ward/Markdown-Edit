@@ -68,6 +68,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\OpenCommand.cs" />
+    <Compile Include="Commands\OpenDialogCommand.cs" />
     <Compile Include="EditModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

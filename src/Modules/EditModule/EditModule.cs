@@ -1,4 +1,5 @@
-﻿using EditModule.Views;
+﻿using EditModule.Commands;
+using EditModule.Views;
 using ICSharpCode.AvalonEdit;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;

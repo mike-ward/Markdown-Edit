@@ -74,6 +74,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonMarkEngine.cs" />
+    <Compile Include="FileActions.cs" />
+    <Compile Include="IMessageBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

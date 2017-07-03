@@ -15,7 +15,9 @@ namespace ServicesModule
 
         public void Initialize()
         {
+            Container.RegisterType<IFileActions, FileActions>();
             Container.RegisterType<IMarkdownEngine, CommonMarkEngine>();
+            Container.RegisterType<IMessageBox, MessageBox>();
         }
     }
 }
