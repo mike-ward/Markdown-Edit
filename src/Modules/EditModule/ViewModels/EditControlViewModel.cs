@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using EditModule.Commands;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
@@ -20,8 +19,8 @@ namespace EditModule.ViewModels
         public OpenDialogCommand OpenDialogCommand { get; private set; }
 
         public EditControlViewModel(
-            ITextEditorComponent textEditor, 
-            IMarkdownEngine markdownEngine, 
+            ITextEditorComponent textEditor,
+            IMarkdownEngine markdownEngine,
             IEventAggregator eventAggregator,
             IFileActions fileActions)
         {
@@ -30,7 +29,21 @@ namespace EditModule.ViewModels
             EventAggregator = eventAggregator;
             FileActions = fileActions;
 
+            TextEditorOptions();
             InstantiateCommands();
+        }
+
+        private void TextEditorOptions()
+        {
+            var options = TextEditor.Options;
+            options.IndentationSize = 2;
+            options.AllowToggleOverstrikeMode = true;
+            options.EnableHyperlinks = false;
+            options.EnableEmailHyperlinks = false;
+            options.CutCopyWholeLine = true;
+            options.ConvertTabsToSpaces = true;
+            options.AllowScrollBelowDocument = true;
+            options.EnableRectangularSelection = true;
         }
 
         private void InstantiateCommands()
@@ -41,6 +54,7 @@ namespace EditModule.ViewModels
         }
 
         private FontFamily _fontFamily = new FontFamily("Consolas");
+
         public FontFamily Font
         {
             get => _fontFamily;
@@ -48,6 +62,7 @@ namespace EditModule.ViewModels
         }
 
         private double _fontSize = 16;
+
         public double FontSize
         {
             get => _fontSize;
@@ -55,6 +70,7 @@ namespace EditModule.ViewModels
         }
 
         private bool _wordWrap = true;
+
         public bool WordWrap
         {
             get => _wordWrap;
