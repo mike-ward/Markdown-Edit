@@ -1,5 +1,5 @@
 ﻿using System;
-using ICSharpCode.AvalonEdit;
+using EditModule.ViewModels;
 using Infrastructure;
 using Prism.Commands;
 
@@ -7,16 +7,17 @@ namespace EditModule.Commands
 {
     public class OpenCommand : DelegateCommand<Uri>
     {
-        public OpenCommand(ITextEditorComponent textEditor, IFileActions fileActions)
-            : base(uri => Execute(uri, textEditor, fileActions), uri => CanExecute())
+        public OpenCommand(EditControlViewModel editControlViewModel, IFileActions fileActions)
+            : base(uri => Execute(uri, editControlViewModel, fileActions), uri => CanExecute())
         {
         }
 
-        private static void Execute(Uri file, ITextEditorComponent textEdtior, IFileActions fileActions)
+        private static void Execute(Uri file, EditControlViewModel editControlViewModel, IFileActions fileActions)
         {
             var text = fileActions.Open(file);
-            textEdtior.Document.Text = text;
-            textEdtior.Document.FileName = file.ToString();
+            editControlViewModel.TextEditor.Document.Text = text;
+            editControlViewModel.TextEditor.Document.FileName = file.ToString();
+            editControlViewModel.IsDocumentModified = false;
         }
 
         private static bool CanExecute()

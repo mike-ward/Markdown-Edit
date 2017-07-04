@@ -55,13 +55,14 @@ namespace EditModule.ViewModels
             void ExecuteUpdateTextCommand() => Dispatcher.InvokeAsync(() => UpdateTextCommand.Execute(TextEditor.Document.Text));
             var debounceUpdateTextCommand = Utility.Debounce(ExecuteUpdateTextCommand);
             TextEditor.Document.TextChanged += (sd, ea) => debounceUpdateTextCommand();
+            TextEditor.Document.TextChanged += (sd, ea) => IsDocumentModified = true;
             TextEditor.Document.FileNameChanged += (sd, ea) => EventAggregator.GetEvent<FileNameChangedEvent>().Publish(TextEditor.Document.FileName);
         }
 
         private void InstantiateCommands()
         {
             UpdateTextCommand = new DelegateCommand<string>(text => EventAggregator.GetEvent<TextUpdatedEvent>().Publish(text));
-            OpenCommand = new OpenCommand(TextEditor, FileActions);
+            OpenCommand = new OpenCommand(this, FileActions);
             OpenDialogCommand = new OpenDialogCommand(OpenCommand, FileActions);
         }
 
@@ -87,6 +88,14 @@ namespace EditModule.ViewModels
         {
             get => _wordWrap;
             set => SetProperty(ref _wordWrap, value);
+        }
+
+        private bool _isDocumentModified;
+
+        public bool IsDocumentModified
+        {
+            get => _isDocumentModified;
+            set => SetProperty(ref _isDocumentModified, value, () => EventAggregator.GetEvent<DocumentModifiedChangedEvent>().Publish(value));
         }
     }
 }
