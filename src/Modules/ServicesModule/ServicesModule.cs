@@ -1,4 +1,5 @@
 ﻿using Infrastructure;
+using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 
@@ -18,6 +19,7 @@ namespace ServicesModule
             Container.RegisterType<IFileActions, FileActions>();
             Container.RegisterType<IMarkdownEngine, CommonMarkEngine>();
             Container.RegisterType<IMessageBox, MessageBox>();
+            Container.RegisterType<ISettings, Settings>(new ContainerControlledLifetimeManager());
         }
     }
 }

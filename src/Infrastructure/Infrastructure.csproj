@@ -58,6 +58,7 @@
     <Compile Include="IMessageBox.cs" />
     <Compile Include="IFileActions.cs" />
     <Compile Include="IMarkdownEngine.cs" />
+    <Compile Include="ISettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

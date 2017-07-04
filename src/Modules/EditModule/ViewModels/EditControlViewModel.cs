@@ -15,6 +15,7 @@ namespace EditModule.ViewModels
         public IMarkdownEngine MarkdownEngine { get; }
         public IEventAggregator EventAggregator { get; }
         public IFileActions FileActions { get; }
+        public ISettings Settings { get; }
         public Dispatcher Dispatcher { get; set; }
 
         public DelegateCommand<string> UpdateTextCommand { get; set; }
@@ -25,12 +26,14 @@ namespace EditModule.ViewModels
             ITextEditorComponent textEditor,
             IMarkdownEngine markdownEngine,
             IEventAggregator eventAggregator,
-            IFileActions fileActions)
+            IFileActions fileActions,
+            ISettings settings)
         {
             TextEditor = textEditor;
             MarkdownEngine = markdownEngine;
             EventAggregator = eventAggregator;
             FileActions = fileActions;
+            Settings = settings;
 
             TextEditorOptions();
             AddEventHandlers();
@@ -52,6 +55,10 @@ namespace EditModule.ViewModels
 
         private void AddEventHandlers()
         {
+            // ReSharper disable once ExplicitCallerInfoArgument
+            // This ties changes from the Settings singleton to notifications to the UI
+            Settings.PropertyChanged += (sd, ea) => RaisePropertyChanged(ea.PropertyName);
+
             void ExecuteUpdateTextCommand() => Dispatcher.InvokeAsync(() => UpdateTextCommand.Execute(TextEditor.Document.Text));
             var debounceUpdateTextCommand = Utility.Debounce(ExecuteUpdateTextCommand);
             TextEditor.Document.TextChanged += (sd, ea) => debounceUpdateTextCommand();
@@ -66,28 +73,14 @@ namespace EditModule.ViewModels
             OpenDialogCommand = new OpenDialogCommand(OpenCommand, FileActions);
         }
 
-        private FontFamily _fontFamily = new FontFamily("Consolas");
+        public FontFamily Font => Settings.Font;
 
-        public FontFamily Font
-        {
-            get => _fontFamily;
-            set => SetProperty(ref _fontFamily, value);
-        }
-
-        private double _fontSize = 16;
-
-        public double FontSize
-        {
-            get => _fontSize;
-            set => SetProperty(ref _fontSize, value);
-        }
-
-        private bool _wordWrap = true;
+        public double FontSize => Settings.FontSize;
 
         public bool WordWrap
         {
-            get => _wordWrap;
-            set => SetProperty(ref _wordWrap, value);
+            get => Settings.WordWrap;
+            set => Settings.WordWrap = value;
         }
 
         private bool _isDocumentModified;
