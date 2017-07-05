@@ -13,10 +13,10 @@ namespace MarkdownEdit
         {
             eventAggregator.GetEvent<FileNameChangedEvent>().Subscribe(fileName => DocumentName = Path.GetFileName(fileName));
             eventAggregator.GetEvent<DocumentModifiedChangedEvent>().Subscribe(flag => DocoumentModified = flag ? "*" : "");
+            UpdateAppTitle();
         }
 
-
-        private string _appTitle = ProgramName;
+        private string _appTitle;
 
         public string AppTitle
         {
@@ -42,7 +42,7 @@ namespace MarkdownEdit
 
         private void UpdateAppTitle()
         {
-            AppTitle = $"{ProgramName} - {DocoumentModified}{DocumentName}";
+            AppTitle = $"{ProgramName} - {DocoumentModified} {(string.IsNullOrEmpty(DocumentName) ? "New Document" : DocumentName)}";
         }
     }
 }
