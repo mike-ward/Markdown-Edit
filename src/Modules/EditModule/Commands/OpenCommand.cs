@@ -1,5 +1,6 @@
 ﻿using System;
 using EditModule.ViewModels;
+using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using Prism.Commands;
 
@@ -17,6 +18,7 @@ namespace EditModule.Commands
             var text = openSaveActions.Open(file);
             editControlViewModel.TextEditor.Document.Text = text;
             editControlViewModel.TextEditor.Document.FileName = file.ToString();
+            ((TextEditor)editControlViewModel.TextEditor).ScrollToHome();
             editControlViewModel.IsDocumentModified = false;
         }
 
