@@ -74,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonMarkEngine.cs" />
-    <Compile Include="FileActions.cs" />
+    <Compile Include="OpenSaveActions.cs" />
     <Compile Include="MessageBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="ServicesModule.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="TemplateLoader.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

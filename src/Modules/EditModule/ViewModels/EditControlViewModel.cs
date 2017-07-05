@@ -14,26 +14,30 @@ namespace EditModule.ViewModels
         public ITextEditorComponent TextEditor { get; set; }
         public IMarkdownEngine MarkdownEngine { get; }
         public IEventAggregator EventAggregator { get; }
-        public IFileActions FileActions { get; }
+        public IOpenSaveActions OpenSaveActions { get; }
         public ISettings Settings { get; }
+        public IMessageBox MessageBox { get; }
         public Dispatcher Dispatcher { get; set; }
 
         public DelegateCommand<string> UpdateTextCommand { get; set; }
         public OpenCommand OpenCommand { get; private set; }
         public OpenDialogCommand OpenDialogCommand { get; private set; }
+        public SaveCommand SaveCommand { get; private set; }
 
         public EditControlViewModel(
             ITextEditorComponent textEditor,
             IMarkdownEngine markdownEngine,
             IEventAggregator eventAggregator,
-            IFileActions fileActions,
-            ISettings settings)
+            IOpenSaveActions openSaveActions,
+            ISettings settings,
+            IMessageBox messageBox)
         {
             TextEditor = textEditor;
             MarkdownEngine = markdownEngine;
             EventAggregator = eventAggregator;
-            FileActions = fileActions;
+            OpenSaveActions = openSaveActions;
             Settings = settings;
+            MessageBox = messageBox;
 
             TextEditorOptions();
             AddEventHandlers();
@@ -69,8 +73,9 @@ namespace EditModule.ViewModels
         private void InstantiateCommands()
         {
             UpdateTextCommand = new DelegateCommand<string>(text => EventAggregator.GetEvent<TextUpdatedEvent>().Publish(text));
-            OpenCommand = new OpenCommand(this, FileActions);
-            OpenDialogCommand = new OpenDialogCommand(OpenCommand, FileActions);
+            OpenCommand = new OpenCommand(this, OpenSaveActions);
+            OpenDialogCommand = new OpenDialogCommand(OpenCommand, OpenSaveActions);
+            SaveCommand = new SaveCommand(this, OpenSaveActions, MessageBox);
         }
 
         public FontFamily Font => Settings.Font;

@@ -1,5 +1,4 @@
 ﻿using Infrastructure;
-using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 
@@ -16,10 +15,11 @@ namespace ServicesModule
 
         public void Initialize()
         {
-            Container.RegisterType<IFileActions, FileActions>();
             Container.RegisterType<IMarkdownEngine, CommonMarkEngine>();
             Container.RegisterType<IMessageBox, MessageBox>();
+            Container.RegisterType<IOpenSaveActions, OpenSaveActions>();
             Container.RegisterType<ISettings, Settings>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ITemplateLoader, TemplateLoader>();
         }
     }
 }

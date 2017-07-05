@@ -56,9 +56,10 @@
   <ItemGroup>
     <Compile Include="Events.cs" />
     <Compile Include="IMessageBox.cs" />
-    <Compile Include="IFileActions.cs" />
+    <Compile Include="IOpenSaveActions.cs" />
     <Compile Include="IMarkdownEngine.cs" />
     <Compile Include="ISettings.cs" />
+    <Compile Include="ITemplateLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

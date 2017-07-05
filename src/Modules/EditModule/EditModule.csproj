@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Commands\OpenCommand.cs" />
     <Compile Include="Commands\OpenDialogCommand.cs" />
+    <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="EditModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

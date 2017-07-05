@@ -5,14 +5,14 @@ namespace EditModule.Commands
 {
     public class OpenDialogCommand : DelegateCommand
     {
-        public OpenDialogCommand(OpenCommand openCommand, IFileActions fileActions)
-            : base(() => Execute(openCommand, fileActions))
+        public OpenDialogCommand(OpenCommand openCommand, IOpenSaveActions openSaveActions)
+            : base(() => Execute(openCommand, openSaveActions))
         {
         }
 
-        public static void Execute(OpenCommand openCommand, IFileActions fileActions)
+        public static void Execute(OpenCommand openCommand, IOpenSaveActions openSaveActions)
         {
-            var file = fileActions.OpenDialog();
+            var file = openSaveActions.OpenDialog();
             if (file != null) openCommand.Execute(file);
         }
     }

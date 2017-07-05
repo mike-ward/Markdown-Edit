@@ -52,6 +52,8 @@ namespace EditModule.Views
         {
             var shell = (Window)RegionManager.Regions["EditRegion"].Context;
             shell.InputBindings.Add(new KeyBinding {Key = Key.O, Modifiers = ModifierKeys.Control, Command = ViewModel.OpenDialogCommand});
+            shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control, Command = ViewModel.SaveCommand});
+            shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control | ModifierKeys.Shift, Command = ViewModel.SaveCommand});
         }
     }
 }

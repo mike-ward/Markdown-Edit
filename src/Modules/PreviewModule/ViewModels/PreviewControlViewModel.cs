@@ -9,6 +9,7 @@ namespace PreviewModule.ViewModels
     {
         public IEventAggregator EventAggregator { get; }
         public IMarkdownEngine MarkdownEngine { get; }
+        public Action<string> UpdateBrowserDelegate { get; set; }
 
         public PreviewControlViewModel(IEventAggregator eventAggregator, IMarkdownEngine markdownEngine)
         {
@@ -17,8 +18,6 @@ namespace PreviewModule.ViewModels
 
             eventAggregator.GetEvent<TextUpdatedEvent>().Subscribe(OnTextUpdated);
         }
-
-        public Action<string> UpdateBrowserDelegate { get; set; }
 
         private void OnTextUpdated(string text)
         {

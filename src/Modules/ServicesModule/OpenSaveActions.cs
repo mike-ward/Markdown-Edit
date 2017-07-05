@@ -5,11 +5,11 @@ using Microsoft.Win32;
 
 namespace ServicesModule
 {
-    public class FileActions : IFileActions
+    public class OpenSaveActions : IOpenSaveActions
     {
         public IMessageBox MessageBox { get; }
 
-        public FileActions(IMessageBox messageBox)
+        public OpenSaveActions(IMessageBox messageBox)
         {
             MessageBox = messageBox;
         }
@@ -20,19 +20,19 @@ namespace ServicesModule
             {
                 return file != null 
                     ? File.ReadAllText(file.AbsolutePath) 
-                    : string.Empty;
+                    : null;
 
             }
             catch (Exception ex)
             {
                 MessageBox.Alert(ex.Message);
-                return string.Empty;
+                return null;
             }
         }
 
         public void Save(Uri file, string text)
         {
-            throw new NotImplementedException();
+            File.WriteAllText(file.AbsolutePath, text);
         }
 
         public Uri OpenDialog()
@@ -44,9 +44,13 @@ namespace ServicesModule
                 : null;
         }
 
-        public void SaveAs(string text)
+        public Uri SaveAsDialog()
         {
-            throw new NotImplementedException();
+            var dialog = new SaveFileDialog {OverwritePrompt = true};
+            var result = dialog.ShowDialog();
+            return result != null && result.Value
+                ? new Uri(dialog.FileName)
+                : null;
         }
     }
 }
