@@ -16,7 +16,7 @@ namespace EditModule.ViewModels
         public IEventAggregator EventAggregator { get; }
         public IOpenSaveActions OpenSaveActions { get; }
         public ISettings Settings { get; }
-        public IMessageBox MessageBox { get; }
+        public INotify Notify { get; }
         public Dispatcher Dispatcher { get; set; }
 
         public DelegateCommand<string> UpdateTextCommand { get; set; }
@@ -30,14 +30,14 @@ namespace EditModule.ViewModels
             IEventAggregator eventAggregator,
             IOpenSaveActions openSaveActions,
             ISettings settings,
-            IMessageBox messageBox)
+            INotify notify)
         {
             TextEditor = textEditor;
             MarkdownEngine = markdownEngine;
             EventAggregator = eventAggregator;
             OpenSaveActions = openSaveActions;
             Settings = settings;
-            MessageBox = messageBox;
+            Notify = notify;
 
             TextEditorOptions();
             AddEventHandlers();
@@ -73,9 +73,9 @@ namespace EditModule.ViewModels
         private void InstantiateCommands()
         {
             UpdateTextCommand = new DelegateCommand<string>(text => EventAggregator.GetEvent<TextUpdatedEvent>().Publish(text));
-            OpenCommand = new OpenCommand(this, OpenSaveActions);
+            OpenCommand = new OpenCommand(this, OpenSaveActions, Notify);
             OpenDialogCommand = new OpenDialogCommand(OpenCommand, OpenSaveActions);
-            SaveCommand = new SaveCommand(this, OpenSaveActions, MessageBox);
+            SaveCommand = new SaveCommand(this, OpenSaveActions, Notify);
         }
 
         public FontFamily Font => Settings.Font;

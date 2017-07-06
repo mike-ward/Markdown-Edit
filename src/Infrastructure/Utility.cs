@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,5 +42,11 @@ namespace Infrastructure
                 }
             };
         }
+
+        public static string AssemblyFolder()
+            => Path.GetDirectoryName(ExecutingAssembly());
+
+        public static string ExecutingAssembly()
+            => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
     }
 }

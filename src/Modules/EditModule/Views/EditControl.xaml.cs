@@ -4,6 +4,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
+using Infrastructure;
 using Prism.Regions;
 
 namespace EditModule.Views
@@ -50,7 +51,7 @@ namespace EditModule.Views
 
         private void AddKeyboardBindings()
         {
-            var shell = (Window)RegionManager.Regions["EditRegion"].Context;
+            var shell = (Window)RegionManager.Regions[Constants.EditRegion].Context;
             shell.InputBindings.Add(new KeyBinding {Key = Key.O, Modifiers = ModifierKeys.Control, Command = ViewModel.OpenDialogCommand});
             shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control, Command = ViewModel.SaveCommand});
             shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control | ModifierKeys.Shift, Command = ViewModel.SaveCommand});

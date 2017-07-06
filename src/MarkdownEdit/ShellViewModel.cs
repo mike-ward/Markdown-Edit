@@ -7,8 +7,6 @@ namespace MarkdownEdit
 {
     public class ShellViewModel : BindableBase
     {
-        private const string ProgramName = "MARKDOWN EDIT";
-
         public ShellViewModel(IEventAggregator eventAggregator)
         {
             eventAggregator.GetEvent<FileNameChangedEvent>().Subscribe(fileName => DocumentName = Path.GetFileName(fileName));
@@ -42,7 +40,7 @@ namespace MarkdownEdit
 
         private void UpdateAppTitle()
         {
-            AppTitle = $"{ProgramName} - {DocoumentModified} {(string.IsNullOrEmpty(DocumentName) ? "New Document" : DocumentName)}";
+            AppTitle = $"{Constants.ProgramName} - {DocoumentModified} {(string.IsNullOrEmpty(DocumentName) ? "New Document" : DocumentName)}";
         }
     }
 }

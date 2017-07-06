@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
+using Infrastructure;
 using mshtml;
 using PreviewModule.ViewModels;
 
@@ -12,9 +13,10 @@ namespace PreviewModule.Views
 {
     public partial class PreviewControl
     {
-        public PreviewControl()
+        public PreviewControl(ITemplateLoader templateLoader)
         {
             InitializeComponent();
+            _browser.Navigate(templateLoader.DefaultTemplate());
             ViewModel.UpdateBrowserDelegate = UpdateBrowser;
             Loaded += OnLoaded;
             //_browser.Navigating += BrowserOnNavigating;
@@ -36,7 +38,15 @@ namespace PreviewModule.Views
 
         public void UpdateBrowser(string html)
         {
-            _browser.NavigateToString(string.IsNullOrEmpty(html) ? "&nbsp" : html);
+            var div = GetContentsDiv();
+            div.innerHTML = html;
+        }
+
+        private IHTMLElement GetContentsDiv()
+        {
+            var document = _browser.Document as IHTMLDocument3;
+            var element = document?.getElementById("content");
+            return element;
         }
 
         private void BrowserOnNavigating(object sender, NavigatingCancelEventArgs ea)

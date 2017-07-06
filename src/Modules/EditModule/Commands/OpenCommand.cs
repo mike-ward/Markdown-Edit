@@ -8,18 +8,26 @@ namespace EditModule.Commands
 {
     public class OpenCommand : DelegateCommand<Uri>
     {
-        public OpenCommand(EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions)
-            : base(uri => Execute(uri, editControlViewModel, openSaveActions), uri => CanExecute())
+        public OpenCommand(EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions, INotify notify)
+            : base(uri => Execute(uri, editControlViewModel, openSaveActions, notify), uri => CanExecute())
         {
         }
 
-        private static void Execute(Uri file, EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions)
+        private static void Execute(Uri file, EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions, INotify notify)
         {
-            var text = openSaveActions.Open(file);
-            editControlViewModel.TextEditor.Document.Text = text;
-            editControlViewModel.TextEditor.Document.FileName = file.ToString();
-            ((TextEditor)editControlViewModel.TextEditor).ScrollToHome();
-            editControlViewModel.IsDocumentModified = false;
+            try
+            {
+                var text = openSaveActions.Open(file);
+                editControlViewModel.TextEditor.Document.Text = text;
+                editControlViewModel.TextEditor.Document.FileName = file.ToString();
+                ((TextEditor)editControlViewModel.TextEditor).ScrollToHome();
+                editControlViewModel.IsDocumentModified = false;
+
+            }
+            catch (Exception ex)
+            {
+                notify.Alert(ex.Message);
+            }
         }
 
         private static bool CanExecute()

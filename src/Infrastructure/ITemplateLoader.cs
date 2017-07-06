@@ -1,7 +1,9 @@
-﻿namespace Infrastructure
+﻿using System;
+
+namespace Infrastructure
 {
     public interface ITemplateLoader
     {
-        string DefaultTemplate();
+        Uri DefaultTemplate();
     }
 }

@@ -7,12 +7,12 @@ namespace EditModule.Commands
 {
     public class SaveCommand : DelegateCommand
     {
-        public SaveCommand(EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions, IMessageBox messageBox)
-            : base(() => Execute(editControlViewModel, openSaveActions, messageBox), () => CanExecute(editControlViewModel))
+        public SaveCommand(EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions, INotify notify)
+            : base(() => Execute(editControlViewModel, openSaveActions, notify), () => CanExecute(editControlViewModel))
         {
         }
 
-        private static void Execute(EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions, IMessageBox messageBox)
+        private static void Execute(EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions, INotify notify)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace EditModule.Commands
             }
             catch (Exception ex)
             {
-                messageBox.Alert(ex.Message);
+                notify.Alert(ex.Message);
             }
         }
 

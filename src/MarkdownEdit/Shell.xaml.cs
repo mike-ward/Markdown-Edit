@@ -1,4 +1,5 @@
 ﻿using System;
+using Infrastructure;
 using Prism.Regions;
 
 namespace MarkdownEdit
@@ -17,9 +18,8 @@ namespace MarkdownEdit
         private void OnActivated(object sender, EventArgs eventArgs)
         {
             Activated -= OnActivated;
-            RegionManager.Regions["EditRegion"].Context = this;
-            RegionManager.Regions["PreviewRegion"].Context = this;
-
+            RegionManager.Regions[Constants.EditRegion].Context = this;
+            RegionManager.Regions[Constants.PreviewRegion].Context = this;
         }
     }
 }

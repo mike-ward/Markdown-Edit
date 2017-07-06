@@ -3,6 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:prism="http://prismlibrary.com/"
+                      xmlns:infrastructure="clr-namespace:Infrastructure;assembly=mde-infrastructure"
                       Title="{Binding AppTitle}"
                       Width="800"
                       Height="600"
@@ -17,8 +18,8 @@
                       WindowTitleBrush="{StaticResource GrayBrush2}">
   
   <UniformGrid Columns="2" Rows="1">
-    <ContentControl prism:RegionManager.RegionName="EditRegion" />
-    <ContentControl prism:RegionManager.RegionName="PreviewRegion" />
+    <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:Constants.EditRegion}" />
+    <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:Constants.PreviewRegion}" />
   </UniformGrid>
 
 </controls:MetroWindow> 

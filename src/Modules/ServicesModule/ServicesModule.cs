@@ -16,7 +16,7 @@ namespace ServicesModule
         public void Initialize()
         {
             Container.RegisterType<IMarkdownEngine, CommonMarkEngine>();
-            Container.RegisterType<IMessageBox, MessageBox>();
+            Container.RegisterType<INotify, Notify>();
             Container.RegisterType<IOpenSaveActions, OpenSaveActions>();
             Container.RegisterType<ISettings, Settings>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ITemplateLoader, TemplateLoader>();

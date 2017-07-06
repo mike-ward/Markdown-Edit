@@ -1,4 +1,5 @@
-﻿using PreviewModule.Views;
+﻿using Infrastructure;
+using PreviewModule.Views;
 using Prism.Modularity;
 using Prism.Regions;
 
@@ -15,7 +16,7 @@ namespace PreviewModule
 
         public void Initialize()
         {
-            RegionManager.RegisterViewWithRegion("PreviewRegion", typeof(PreviewControl));
+            RegionManager.RegisterViewWithRegion(Constants.PreviewRegion, typeof(PreviewControl));
         }
     }
 }

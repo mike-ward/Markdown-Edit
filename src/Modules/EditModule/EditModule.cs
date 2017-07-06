@@ -1,6 +1,7 @@
 ﻿using EditModule.Commands;
 using EditModule.Views;
 using ICSharpCode.AvalonEdit;
+using Infrastructure;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
@@ -21,7 +22,7 @@ namespace EditModule
         public void Initialize()
         {
             Container.RegisterType<ITextEditorComponent, TextEditor>();
-            RegionManager.RegisterViewWithRegion("EditRegion", typeof(EditControl));
+            RegionManager.RegisterViewWithRegion(Constants.EditRegion, typeof(EditControl));
         }
     }
 }
