@@ -42,6 +42,7 @@ namespace EditModule.Views
             AddBinding(FontFamilyProperty, "Font");
             AddBinding(FontSizeProperty, "FontSize");
             AddBinding(TextEditor.WordWrapProperty, "WordWrap", BindingMode.TwoWay);
+            AddBinding(TextEditor.IsModifiedProperty, "IsDocumentModified", BindingMode.TwoWay);
         }
 
         private void AddEventHandlers(TextEditor textEditor)

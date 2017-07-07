@@ -66,7 +66,6 @@ namespace EditModule.ViewModels
             void ExecuteUpdateTextCommand() => Dispatcher.InvokeAsync(() => UpdateTextCommand.Execute(TextEditor.Document.Text));
             var debounceUpdateTextCommand = Utility.Debounce(ExecuteUpdateTextCommand);
             TextEditor.Document.TextChanged += (sd, ea) => debounceUpdateTextCommand();
-            TextEditor.Document.TextChanged += (sd, ea) => IsDocumentModified = true;
             TextEditor.Document.FileNameChanged += (sd, ea) => EventAggregator.GetEvent<FileNameChangedEvent>().Publish(TextEditor.Document.FileName);
         }
 

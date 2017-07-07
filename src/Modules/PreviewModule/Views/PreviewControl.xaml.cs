@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
 using Infrastructure;
 using mshtml;
@@ -9,19 +8,21 @@ namespace PreviewModule.Views
 {
     public partial class PreviewControl
     {
+        public ITemplateLoader TemplateLoader { get; }
+        private PreviewControlViewModel ViewModel => (PreviewControlViewModel)DataContext;
+
         public PreviewControl(ITemplateLoader templateLoader)
         {
+            TemplateLoader = templateLoader;
             InitializeComponent();
-            _browser.Navigate(templateLoader.DefaultTemplate());
             ViewModel.UpdateBrowserDelegate = UpdateBrowser;
             Loaded += KillPopups;
+            Loaded += LoadTemplate;
         }
-
-        private PreviewControlViewModel ViewModel => (PreviewControlViewModel) DataContext;
 
         private void KillPopups(object sender, RoutedEventArgs routedEventArgs)
         {
-            Task.Factory.StartNew(() =>
+            Dispatcher.InvokeAsync(() =>
             {
                 dynamic activeX = _browser.GetType().InvokeMember("ActiveXInstance",
                     BindingFlags.GetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
@@ -30,19 +31,31 @@ namespace PreviewModule.Views
             });
         }
 
+        private void LoadTemplate(object sender, RoutedEventArgs routedEventArgs)
+        {
+            Dispatcher.InvokeAsync(() => _browser.Navigate(TemplateLoader.DefaultTemplate()));
+        }
+
         public void UpdateBrowser(string html)
         {
             var div = (_browser.Document as IHTMLDocument3)?.getElementById("content");
             if (div == null)
             {
-                _browser.NavigateToString(
-                    "<h1 style=\"margin: 40% 25%; text-align: center\">" +
-                    "Content element not found<br/>" +
-                    "Preview unavailable" +
-                    "</h1>");
-                return;
+                ShowTemplateError();
             }
-            div.innerHTML = html;
+            else
+            {
+                div.innerHTML = html;
+            }
+        }
+
+        private void ShowTemplateError()
+        {
+            _browser.NavigateToString(
+                "<h1 style=\"margin: 40% 25%; text-align: center\">" +
+                "Content element not found<br/>" +
+                "Preview unavailable" +
+                "</h1>");
         }
     }
 }
