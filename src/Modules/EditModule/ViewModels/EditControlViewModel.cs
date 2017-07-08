@@ -23,6 +23,7 @@ namespace EditModule.ViewModels
         public OpenCommand OpenCommand { get; private set; }
         public OpenDialogCommand OpenDialogCommand { get; private set; }
         public SaveCommand SaveCommand { get; private set; }
+        public NewCommand NewCommand { get; private set; }
 
         public EditControlViewModel(
             ITextEditorComponent textEditor,
@@ -72,9 +73,10 @@ namespace EditModule.ViewModels
         private void InstantiateCommands()
         {
             UpdateTextCommand = new DelegateCommand<string>(text => EventAggregator.GetEvent<TextUpdatedEvent>().Publish(text));
-            OpenCommand = new OpenCommand(this, OpenSaveActions, Notify);
-            OpenDialogCommand = new OpenDialogCommand(OpenCommand, OpenSaveActions);
-            SaveCommand = new SaveCommand(this, OpenSaveActions, Notify);
+            OpenCommand = new OpenCommand(TextEditor, OpenSaveActions, Notify);
+            OpenDialogCommand = new OpenDialogCommand(TextEditor, OpenCommand, OpenSaveActions);
+            SaveCommand = new SaveCommand(TextEditor, OpenSaveActions, Notify);
+            NewCommand = new NewCommand(OpenSaveActions, TextEditor);
         }
 
         public FontFamily Font => Settings.Font;

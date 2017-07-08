@@ -53,6 +53,7 @@ namespace EditModule.Views
         private void AddKeyboardBindings()
         {
             var shell = (Window)RegionManager.Regions[Constants.EditRegion].Context;
+            shell.InputBindings.Add(new KeyBinding {Key = Key.N, Modifiers = ModifierKeys.Control, Command = ViewModel.NewCommand});
             shell.InputBindings.Add(new KeyBinding {Key = Key.O, Modifiers = ModifierKeys.Control, Command = ViewModel.OpenDialogCommand});
             shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control, Command = ViewModel.SaveCommand});
             shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control | ModifierKeys.Shift, Command = ViewModel.SaveCommand});

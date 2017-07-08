@@ -1,27 +1,27 @@
 ﻿using System;
-using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using Prism.Commands;
 
 namespace EditModule.Commands
 {
-    public class OpenCommand : DelegateCommand<Uri>
+    public class OpenCommand : DelegateCommand<string>
     {
-        public OpenCommand(EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions, INotify notify)
-            : base(uri => Execute(uri, editControlViewModel, openSaveActions, notify), uri => CanExecute())
+        public OpenCommand(ITextEditorComponent textEditor, IOpenSaveActions openSaveActions, INotify notify)
+            : base(file => Execute(file, textEditor, openSaveActions, notify), uri => CanExecute())
         {
         }
 
-        private static void Execute(Uri file, EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions, INotify notify)
+        private static void Execute(string file, ITextEditorComponent textEditor, IOpenSaveActions openSaveActions, INotify notify)
         {
             try
             {
+                var te = (TextEditor)textEditor;
                 var text = openSaveActions.Open(file);
-                editControlViewModel.TextEditor.Document.Text = text;
-                editControlViewModel.TextEditor.Document.FileName = file.ToString();
-                ((TextEditor)editControlViewModel.TextEditor).ScrollToHome();
-                editControlViewModel.IsDocumentModified = false;
+                te.Document.Text = text;
+                te.Document.FileName = file.ToString();
+                te.ScrollToHome();
+                te.IsModified = false;
 
             }
             catch (Exception ex)

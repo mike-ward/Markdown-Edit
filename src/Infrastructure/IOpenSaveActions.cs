@@ -1,13 +1,13 @@
-﻿using System;
-using System.IO;
+﻿using System.Windows;
 
 namespace Infrastructure
 {
     public interface IOpenSaveActions
     {
-        string Open(Uri file);
-        void Save(Uri file, string text);
-        Uri OpenDialog();
-        Uri SaveAsDialog();
+        string Open(string file);
+        void Save(string file, string text);
+        string OpenDialog();
+        string SaveAsDialog();
+        MessageBoxResult PromptToSave(string file, string text);
     }
 }

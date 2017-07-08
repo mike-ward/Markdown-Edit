@@ -1,5 +1,6 @@
 ﻿using System;
 using EditModule.ViewModels;
+using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using Prism.Commands;
 
@@ -7,23 +8,23 @@ namespace EditModule.Commands
 {
     public class SaveCommand : DelegateCommand
     {
-        public SaveCommand(EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions, INotify notify)
-            : base(() => Execute(editControlViewModel, openSaveActions, notify), () => CanExecute(editControlViewModel))
+        public SaveCommand(ITextEditorComponent textEditor, IOpenSaveActions openSaveActions, INotify notify)
+            : base(() => Execute(textEditor, openSaveActions, notify), () => CanExecute(textEditor))
         {
         }
 
-        private static void Execute(EditControlViewModel editControlViewModel, IOpenSaveActions openSaveActions, INotify notify)
+        private static void Execute(ITextEditorComponent textEditor, IOpenSaveActions openSaveActions, INotify notify)
         {
             try
             {
-                if (string.IsNullOrEmpty(editControlViewModel.TextEditor.Document.FileName))
+                if (string.IsNullOrEmpty(textEditor.Document.FileName))
                 {
-                    var saveAsUri = openSaveActions.SaveAsDialog();
-                    if (saveAsUri == null) return;
-                    editControlViewModel.TextEditor.Document.FileName = saveAsUri.AbsolutePath;
+                    var fileName = openSaveActions.SaveAsDialog();
+                    if (string.IsNullOrEmpty(fileName)) return;
+                    textEditor.Document.FileName = fileName;
                 }
-                openSaveActions.Save(new Uri(editControlViewModel.TextEditor.Document.FileName), editControlViewModel.TextEditor.Document.Text);
-                editControlViewModel.IsDocumentModified = false;
+                openSaveActions.Save(textEditor.Document.FileName, textEditor.Document.Text);
+                ((TextEditor)textEditor).IsModified = false;
             }
             catch (Exception ex)
             {
@@ -31,9 +32,9 @@ namespace EditModule.Commands
             }
         }
 
-        private static bool CanExecute(EditControlViewModel editControlViewModel)
+        private static bool CanExecute(ITextEditorComponent textEditor)
         {
-            return editControlViewModel.IsDocumentModified || string.IsNullOrEmpty(editControlViewModel.TextEditor.Document.FileName);
+            return ((TextEditor)textEditor).IsModified || string.IsNullOrEmpty(textEditor.Document.FileName);
         }
     }
 }

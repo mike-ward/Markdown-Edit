@@ -1,5 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
+using System.Windows;
 using Infrastructure;
 using Microsoft.Win32;
 
@@ -7,34 +7,46 @@ namespace ServicesModule
 {
     public class OpenSaveActions : IOpenSaveActions
     {
-        public string Open(Uri file)
+        public INotify Notify { get; }
+
+        public OpenSaveActions(INotify notify)
         {
-            return file != null
-                ? File.ReadAllText(file.LocalPath)
-                : null;
+            Notify = notify;
         }
 
-        public void Save(Uri file, string text)
+        public string Open(string file)
         {
-            File.WriteAllText(file.AbsolutePath, text);
+            return File.ReadAllText(file);
         }
 
-        public Uri OpenDialog()
+        public void Save(string file, string text)
+        {
+            File.WriteAllText(file, text);
+        }
+
+        public string OpenDialog()
         {
             var dialog = new OpenFileDialog();
             var result = dialog.ShowDialog();
             return result != null && result.Value
-                ? new Uri(dialog.FileName)
+                ? dialog.FileName
                 : null;
         }
 
-        public Uri SaveAsDialog()
+        public string SaveAsDialog()
         {
             var dialog = new SaveFileDialog { OverwritePrompt = true };
             var result = dialog.ShowDialog();
             return result != null && result.Value
-                ? new Uri(dialog.FileName)
+                ? dialog.FileName
                 : null;
+        }
+
+        public MessageBoxResult PromptToSave(string file, string text)
+        {
+            var result = Notify.ConfirmYesNoCancel("Save your changes");
+            if (result == MessageBoxResult.Yes) Save(file, text);
+            return result;
         }
     }
 }
