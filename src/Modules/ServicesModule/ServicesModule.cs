@@ -19,6 +19,7 @@ namespace ServicesModule
             Container.RegisterType<INotify, Notify>();
             Container.RegisterType<IOpenSaveActions, OpenSaveActions>();
             Container.RegisterType<ISettings, Settings>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IStrings, Strings>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ITemplateLoader, TemplateLoader>();
         }
     }

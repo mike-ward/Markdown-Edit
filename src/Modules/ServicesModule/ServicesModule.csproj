@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="ServicesModule.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Strings.cs" />
     <Compile Include="TemplateLoader.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

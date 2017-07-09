@@ -1,21 +1,26 @@
 ﻿using System.Reflection;
 using System.Windows;
+using System.Windows.Input;
 using Infrastructure;
 using mshtml;
 using PreviewModule.ViewModels;
+using Prism.Events;
 
 namespace PreviewModule.Views
 {
     public partial class PreviewControl
     {
         public ITemplateLoader TemplateLoader { get; }
+        public IEventAggregator EventAggregator { get; }
         private PreviewControlViewModel ViewModel => (PreviewControlViewModel)DataContext;
 
-        public PreviewControl(ITemplateLoader templateLoader)
+        public PreviewControl(ITemplateLoader templateLoader, IEventAggregator eventAggregator)
         {
             TemplateLoader = templateLoader;
+            EventAggregator = eventAggregator;
             InitializeComponent();
             ViewModel.UpdateBrowserDelegate = UpdateBrowser;
+            _browser.PreviewKeyDown += BrowserPreviewKeyDown;
             Loaded += KillPopups;
             Loaded += LoadTemplate;
         }
@@ -56,6 +61,33 @@ namespace PreviewModule.Views
                 "Content element not found<br/>" +
                 "Preview unavailable" +
                 "</h1>");
+        }
+
+        private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.O:
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                    {
+                        EventAggregator.GetEvent<OpenCommandEvent>().Publish();
+                        e.Handled = true;
+                    }
+                    break;
+
+                case Key.N:
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                    {
+                        EventAggregator.GetEvent<NewCommandEvent>().Publish();
+                        e.Handled = true;
+                    }
+                    break;
+
+                case Key.F1:
+                    EventAggregator.GetEvent<HelpCommandEvent>().Publish();
+                    e.Handled = true;
+                    break;
+            }
         }
     }
 }

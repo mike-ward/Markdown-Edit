@@ -43,6 +43,7 @@ namespace EditModule.ViewModels
             TextEditorOptions();
             AddEventHandlers();
             InstantiateCommands();
+            AddEventSubscribers();
         }
 
         private void TextEditorOptions()
@@ -77,6 +78,12 @@ namespace EditModule.ViewModels
             OpenDialogCommand = new OpenDialogCommand(TextEditor, OpenCommand, OpenSaveActions);
             SaveCommand = new SaveCommand(TextEditor, OpenSaveActions, Notify);
             NewCommand = new NewCommand(OpenSaveActions, TextEditor);
+        }
+
+        private void AddEventSubscribers()
+        {
+            EventAggregator.GetEvent<OpenCommandEvent>().Subscribe(() => OpenDialogCommand.Execute());
+            EventAggregator.GetEvent<NewCommandEvent>().Subscribe(() => NewCommand.Execute());
         }
 
         public FontFamily Font => Settings.Font;

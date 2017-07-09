@@ -8,10 +8,12 @@ namespace ServicesModule
     public class OpenSaveActions : IOpenSaveActions
     {
         public INotify Notify { get; }
+        public IStrings Strings { get; }
 
-        public OpenSaveActions(INotify notify)
+        public OpenSaveActions(INotify notify, IStrings strings)
         {
             Notify = notify;
+            Strings = strings;
         }
 
         public string Open(string file)
@@ -44,7 +46,7 @@ namespace ServicesModule
 
         public MessageBoxResult PromptToSave(string file, string text)
         {
-            var result = Notify.ConfirmYesNoCancel("Save your changes");
+            var result = Notify.ConfirmYesNoCancel(Strings.SaveYourChanges);
             if (result == MessageBoxResult.Yes) Save(file, text);
             return result;
         }

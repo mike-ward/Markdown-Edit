@@ -19,7 +19,7 @@ namespace EditModule.Commands
                 var te = (TextEditor)textEditor;
                 var text = openSaveActions.Open(file);
                 te.Document.Text = text;
-                te.Document.FileName = file.ToString();
+                te.Document.FileName = file;
                 te.ScrollToHome();
                 te.IsModified = false;
 
