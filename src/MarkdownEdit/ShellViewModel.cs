@@ -1,5 +1,7 @@
 ﻿using System.IO;
+using System.Windows;
 using Infrastructure;
+using Microsoft.Practices.Unity;
 using Prism.Events;
 using Prism.Mvvm;
 
@@ -7,11 +9,16 @@ namespace MarkdownEdit
 {
     public class ShellViewModel : BindableBase
     {
-        public ShellViewModel(IEventAggregator eventAggregator)
+        public IUnityContainer Container { get; }
+        public IEventAggregator EventAggregator { get; }
+
+        public ShellViewModel(IUnityContainer container, IEventAggregator eventAggregator)
         {
-            eventAggregator.GetEvent<FileNameChangedEvent>().Subscribe(fileName => DocumentName = Path.GetFileName(fileName));
-            eventAggregator.GetEvent<DocumentModifiedChangedEvent>().Subscribe(flag => DocoumentModified = flag ? "*" : "");
-            UpdateAppTitle();
+            Container = container;
+            EventAggregator = eventAggregator;
+            AppTitle = Constants.ProgramName;
+            EventAggregator.GetEvent<FileNameChangedEvent>().Subscribe(fileName => DocumentName = Path.GetFileName(fileName));
+            EventAggregator.GetEvent<DocumentModifiedChangedEvent>().Subscribe(flag => DocoumentModified = flag ? "*" : "");
         }
 
         private string _appTitle;
@@ -38,9 +45,22 @@ namespace MarkdownEdit
             set => SetProperty(ref _docoumentModified, value, UpdateAppTitle);
         }
 
-        private void UpdateAppTitle()
+        public void UpdateAppTitle()
         {
-            AppTitle = $"{Constants.ProgramName} - {DocoumentModified} {(string.IsNullOrEmpty(DocumentName) ? "New Document" : DocumentName)}";
+            var strings = Container.Resolve<IStrings>();
+            AppTitle = $"{Constants.ProgramName} - {DocoumentModified} {(string.IsNullOrEmpty(DocumentName) ? strings.NewDocumentName : DocumentName)}";
+        }
+
+        public bool AskToSaveIfModified()
+        {
+            if (string.IsNullOrEmpty(DocoumentModified)) return true;
+            var notify = Container.Resolve<INotify>();
+            var strings = Container.Resolve<IStrings>();
+            var result = notify.ConfirmYesNoCancel(strings.SaveYourChanges);
+            if (result == MessageBoxResult.Cancel) return false;
+            if (result == MessageBoxResult.No) return true;
+            EventAggregator.GetEvent<SaveCommandEvent>().Publish();
+            return !string.IsNullOrEmpty(DocumentName);
         }
     }
 }

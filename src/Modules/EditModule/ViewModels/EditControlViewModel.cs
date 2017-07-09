@@ -84,6 +84,7 @@ namespace EditModule.ViewModels
         {
             EventAggregator.GetEvent<OpenCommandEvent>().Subscribe(() => OpenDialogCommand.Execute());
             EventAggregator.GetEvent<NewCommandEvent>().Subscribe(() => NewCommand.Execute());
+            EventAggregator.GetEvent<SaveCommandEvent>().Subscribe(() => SaveCommand.Execute());
         }
 
         public FontFamily Font => Settings.Font;

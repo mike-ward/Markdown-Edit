@@ -1,5 +1,4 @@
 ﻿using System;
-using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using Prism.Commands;

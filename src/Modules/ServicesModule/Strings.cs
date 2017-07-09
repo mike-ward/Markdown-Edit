@@ -6,9 +6,11 @@ namespace ServicesModule
     {
         public Strings()
         {
+            NewDocumentName = "New Document";
             SaveYourChanges = "Save your changes?";
         }
 
+        public string NewDocumentName { get; }
         public string SaveYourChanges { get; }
     }
 }
