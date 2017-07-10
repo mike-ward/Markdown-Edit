@@ -2,6 +2,7 @@
 _Chutzpah.*
 out/
 MarkdownEdit.zip
+*.msi
 
 
 ## Ignore Visual Studio temporary files, build results, and
