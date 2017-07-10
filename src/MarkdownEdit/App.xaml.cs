@@ -1,9 +1,21 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Runtime;
+using System.Windows;
+using ServicesModule;
 
 namespace MarkdownEdit
 {
     public partial class App
     {
+        public App()
+        {
+            // Enable Multi-JIT startup
+            var profileRoot = Settings.UserSettingsFolder;
+            Directory.CreateDirectory(profileRoot);
+            ProfileOptimization.SetProfileRoot(profileRoot);
+            ProfileOptimization.StartProfile("Startup.profile");
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);

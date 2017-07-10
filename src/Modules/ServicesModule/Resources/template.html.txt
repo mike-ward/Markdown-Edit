@@ -1167,8 +1167,9 @@
 <div id="content"></div>
 <!-- Adds some scroll space to the bottom of the doucment -->
 <div style="height: 1pc">&nbsp;</div>
-<!-- Scripts to handle MathJax -->
+<!-- Scripts to handle MathJax 
 <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script async src="http://markdownedit.com/assets/js/mathjax-scripts.js"></script>
+-->
 </body>
 </html>
