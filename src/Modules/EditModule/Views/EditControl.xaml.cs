@@ -25,12 +25,13 @@ namespace EditModule.Views
         {
             base.OnInitialized(e);
 
-            var textEditor = ViewModel.TextEditor as TextEditor;
+            var textEditor = ViewModel.TextEditor;
             _border.Child = textEditor ?? throw new NullReferenceException("TextEditor not created in view model");
 
             ViewModel.Dispatcher = Dispatcher;
             AddPropertyBindings(textEditor);
             AddEventHandlers(textEditor);
+            AddCommandBindings();
             AddKeyboardBindings();
         }
 
@@ -50,13 +51,23 @@ namespace EditModule.Views
             IsVisibleChanged += (sd, ea) => { if (IsVisible) Dispatcher.InvokeAsync(textEditor.Focus); };
         }
 
+        private void AddCommandBindings()
+        {
+            var shell = (Window)RegionManager.Regions[Constants.EditRegion].Context;
+            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.New, ViewModel.NewCommandExecutedHandler));
+            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.Open, ViewModel.OpenCommandExecuteHandler));
+            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.Save, ViewModel.SaveCommandExecuteHandler));
+            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.SaveAs, ViewModel.SaveAsCommandExecuteHandler));
+        }
+
         private void AddKeyboardBindings()
         {
             var shell = (Window)RegionManager.Regions[Constants.EditRegion].Context;
-            shell.InputBindings.Add(new KeyBinding {Key = Key.N, Modifiers = ModifierKeys.Control, Command = ViewModel.NewCommand});
-            shell.InputBindings.Add(new KeyBinding {Key = Key.O, Modifiers = ModifierKeys.Control, Command = ViewModel.OpenDialogCommand});
-            shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control, Command = ViewModel.SaveCommand});
-            shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control | ModifierKeys.Shift, Command = ViewModel.SaveCommand});
+
+            shell.InputBindings.Add(new KeyBinding {Key = Key.N, Modifiers = ModifierKeys.Control, Command = ApplicationCommands.New});
+            shell.InputBindings.Add(new KeyBinding {Key = Key.O, Modifiers = ModifierKeys.Control, Command = ApplicationCommands.Open});
+            shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control, Command = ApplicationCommands.Save});
+            shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control | ModifierKeys.Shift, Command = ApplicationCommands.SaveAs});
         }
     }
 }

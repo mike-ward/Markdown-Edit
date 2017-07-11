@@ -70,7 +70,7 @@ namespace PreviewModule.Views
                 case Key.O:
                     if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
                     {
-                        EventAggregator.GetEvent<OpenCommandEvent>().Publish();
+                        ApplicationCommands.Open.Execute(null, Application.Current.MainWindow);
                         e.Handled = true;
                     }
                     break;
@@ -78,13 +78,13 @@ namespace PreviewModule.Views
                 case Key.N:
                     if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
                     {
-                        EventAggregator.GetEvent<NewCommandEvent>().Publish();
+                        ApplicationCommands.New.Execute(null, Application.Current.MainWindow);
                         e.Handled = true;
                     }
                     break;
 
                 case Key.F1:
-                    EventAggregator.GetEvent<HelpCommandEvent>().Publish();
+                    ApplicationCommands.Help.Execute(null, Application.Current.MainWindow);
                     e.Handled = true;
                     break;
             }

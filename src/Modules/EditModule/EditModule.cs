@@ -1,5 +1,4 @@
-﻿using EditModule.Commands;
-using EditModule.Views;
+﻿using EditModule.Views;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using Microsoft.Practices.Unity;

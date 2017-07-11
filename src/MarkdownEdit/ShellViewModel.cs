@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using Infrastructure;
 using Microsoft.Practices.Unity;
 using Prism.Events;
@@ -17,7 +18,7 @@ namespace MarkdownEdit
             Container = container;
             EventAggregator = eventAggregator;
             AppTitle = Constants.ProgramName;
-            EventAggregator.GetEvent<FileNameChangedEvent>().Subscribe(fileName => DocumentName = Path.GetFileName(fileName));
+            EventAggregator.GetEvent<DocumentNameChangedEvent>().Subscribe(fileName => DocumentName = Path.GetFileName(fileName));
             EventAggregator.GetEvent<DocumentModifiedChangedEvent>().Subscribe(flag => DocoumentModified = flag ? "*" : "");
         }
 
@@ -59,7 +60,7 @@ namespace MarkdownEdit
             var result = notify.ConfirmYesNoCancel(strings.SaveYourChanges);
             if (result == MessageBoxResult.Cancel) return false;
             if (result == MessageBoxResult.No) return true;
-            EventAggregator.GetEvent<SaveCommandEvent>().Publish();
+            ApplicationCommands.Save.Execute(null, Application.Current.MainWindow);
             return !string.IsNullOrEmpty(DocumentName);
         }
     }

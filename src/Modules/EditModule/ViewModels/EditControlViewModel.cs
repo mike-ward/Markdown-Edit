@@ -1,6 +1,8 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
-using EditModule.Commands;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using Prism.Commands;
@@ -11,7 +13,7 @@ namespace EditModule.ViewModels
 {
     public class EditControlViewModel : BindableBase
     {
-        public ITextEditorComponent TextEditor { get; set; }
+        public TextEditor TextEditor { get; set; }
         public IMarkdownEngine MarkdownEngine { get; }
         public IEventAggregator EventAggregator { get; }
         public IOpenSaveActions OpenSaveActions { get; }
@@ -20,10 +22,6 @@ namespace EditModule.ViewModels
         public Dispatcher Dispatcher { get; set; }
 
         public DelegateCommand<string> UpdateTextCommand { get; set; }
-        public OpenCommand OpenCommand { get; private set; }
-        public OpenDialogCommand OpenDialogCommand { get; private set; }
-        public SaveCommand SaveCommand { get; private set; }
-        public NewCommand NewCommand { get; private set; }
 
         public EditControlViewModel(
             ITextEditorComponent textEditor,
@@ -33,7 +31,7 @@ namespace EditModule.ViewModels
             ISettings settings,
             INotify notify)
         {
-            TextEditor = textEditor;
+            TextEditor = textEditor as TextEditor;
             MarkdownEngine = markdownEngine;
             EventAggregator = eventAggregator;
             OpenSaveActions = openSaveActions;
@@ -43,7 +41,6 @@ namespace EditModule.ViewModels
             TextEditorOptions();
             AddEventHandlers();
             InstantiateCommands();
-            AddEventSubscribers();
         }
 
         private void TextEditorOptions()
@@ -68,23 +65,12 @@ namespace EditModule.ViewModels
             void ExecuteUpdateTextCommand() => Dispatcher.InvokeAsync(() => UpdateTextCommand.Execute(TextEditor.Document.Text));
             var debounceUpdateTextCommand = Utility.Debounce(ExecuteUpdateTextCommand);
             TextEditor.Document.TextChanged += (sd, ea) => debounceUpdateTextCommand();
-            TextEditor.Document.FileNameChanged += (sd, ea) => EventAggregator.GetEvent<FileNameChangedEvent>().Publish(TextEditor.Document.FileName);
+            TextEditor.Document.FileNameChanged += (sd, ea) => EventAggregator.GetEvent<DocumentNameChangedEvent>().Publish(TextEditor.Document.FileName);
         }
 
         private void InstantiateCommands()
         {
             UpdateTextCommand = new DelegateCommand<string>(text => EventAggregator.GetEvent<TextUpdatedEvent>().Publish(text));
-            OpenCommand = new OpenCommand(TextEditor, OpenSaveActions, Notify);
-            OpenDialogCommand = new OpenDialogCommand(TextEditor, OpenCommand, OpenSaveActions);
-            SaveCommand = new SaveCommand(TextEditor, OpenSaveActions, Notify);
-            NewCommand = new NewCommand(OpenSaveActions, TextEditor);
-        }
-
-        private void AddEventSubscribers()
-        {
-            EventAggregator.GetEvent<OpenCommandEvent>().Subscribe(() => OpenDialogCommand.Execute());
-            EventAggregator.GetEvent<NewCommandEvent>().Subscribe(() => NewCommand.Execute());
-            EventAggregator.GetEvent<SaveCommandEvent>().Subscribe(() => SaveCommand.Execute());
         }
 
         public FontFamily Font => Settings.Font;
@@ -103,6 +89,67 @@ namespace EditModule.ViewModels
         {
             get => _isDocumentModified;
             set => SetProperty(ref _isDocumentModified, value, () => EventAggregator.GetEvent<DocumentModifiedChangedEvent>().Publish(value));
+        }
+
+        public void NewCommandExecutedHandler(object sender, ExecutedRoutedEventArgs ea)
+        {
+            if (TextEditor.IsModified)
+            {
+                if (OpenSaveActions.PromptToSave(TextEditor.Document.FileName, TextEditor.Text) == MessageBoxResult.Cancel) return;
+            }
+            TextEditor.Document.Text = string.Empty;
+            TextEditor.Document.FileName = string.Empty;
+            TextEditor.IsModified = false;
+        }
+
+        public void OpenCommandExecuteHandler(object sender, ExecutedRoutedEventArgs ea)
+        {
+            if (TextEditor.IsModified)
+            {
+                if (OpenSaveActions.PromptToSave(TextEditor.Document.FileName, TextEditor.Text) == MessageBoxResult.Cancel) return;
+            }
+
+            var file = ea.Parameter as string ?? OpenSaveActions.OpenDialog();
+
+            try
+            {
+                var text = OpenSaveActions.Open(file);
+                TextEditor.Document.Text = text;
+                TextEditor.Document.FileName = file;
+                TextEditor.ScrollToHome();
+                TextEditor.IsModified = false;
+
+            }
+            catch (Exception ex)
+            {
+                Notify.Alert(ex.Message);
+            }
+        }
+
+        public void SaveCommandExecuteHandler(object sender, ExecutedRoutedEventArgs ea)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(TextEditor.Document.FileName))
+                {
+                    SaveAsCommandExecuteHandler(sender, ea);
+                    return;
+                }
+                OpenSaveActions.Save(TextEditor.Document.FileName, TextEditor.Document.Text);
+                TextEditor.IsModified = false;
+            }
+            catch (Exception ex)
+            {
+                Notify.Alert(ex.Message);
+            }
+        }
+
+        public void SaveAsCommandExecuteHandler(object sender, ExecutedRoutedEventArgs ea)
+        {
+            var fileName = OpenSaveActions.SaveAsDialog();
+            if (string.IsNullOrEmpty(fileName)) return;
+            TextEditor.Document.FileName = fileName;
+            SaveCommandExecuteHandler(sender, ea);
         }
     }
 }

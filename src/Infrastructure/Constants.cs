@@ -5,5 +5,7 @@
         public const string ProgramName = "MARKDOWN EDIT";
         public const string EditRegion = "EditRegion";
         public const string PreviewRegion = "PreviewRegion";
+
+        public const string SymbolFont = "Segoe UI Symbol";
     }
 }
