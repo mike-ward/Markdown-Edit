@@ -21,8 +21,6 @@ namespace EditModule.ViewModels
         public INotify Notify { get; }
         public Dispatcher Dispatcher { get; set; }
 
-        public DelegateCommand<string> UpdateTextCommand { get; set; }
-
         public EditControlViewModel(
             ITextEditorComponent textEditor,
             IMarkdownEngine markdownEngine,
@@ -38,12 +36,11 @@ namespace EditModule.ViewModels
             Settings = settings;
             Notify = notify;
 
-            TextEditorOptions();
+            SetTextEditorOptions();
             AddEventHandlers();
-            InstantiateCommands();
         }
 
-        private void TextEditorOptions()
+        private void SetTextEditorOptions()
         {
             var options = TextEditor.Options;
             options.IndentationSize = 2;
@@ -62,15 +59,11 @@ namespace EditModule.ViewModels
             // This ties changes from the Settings singleton to notifications to the UI
             Settings.PropertyChanged += (sd, ea) => RaisePropertyChanged(ea.PropertyName);
 
-            void ExecuteUpdateTextCommand() => Dispatcher.InvokeAsync(() => UpdateTextCommand.Execute(TextEditor.Document.Text));
+            TextEditor.Document.FileNameChanged += (sd, ea) => EventAggregator.GetEvent<DocumentNameChangedEvent>().Publish(TextEditor.Document.FileName);
+
+            void ExecuteUpdateTextCommand() => Dispatcher.InvokeAsync(() => EventAggregator.GetEvent<TextUpdatedEvent>().Publish(TextEditor.Document.Text));
             var debounceUpdateTextCommand = Utility.Debounce(ExecuteUpdateTextCommand);
             TextEditor.Document.TextChanged += (sd, ea) => debounceUpdateTextCommand();
-            TextEditor.Document.FileNameChanged += (sd, ea) => EventAggregator.GetEvent<DocumentNameChangedEvent>().Publish(TextEditor.Document.FileName);
-        }
-
-        private void InstantiateCommands()
-        {
-            UpdateTextCommand = new DelegateCommand<string>(text => EventAggregator.GetEvent<TextUpdatedEvent>().Publish(text));
         }
 
         public FontFamily Font => Settings.Font;
@@ -100,6 +93,7 @@ namespace EditModule.ViewModels
             TextEditor.Document.Text = string.Empty;
             TextEditor.Document.FileName = string.Empty;
             TextEditor.IsModified = false;
+            TextEditor.Focus();
         }
 
         public void OpenCommandExecuteHandler(object sender, ExecutedRoutedEventArgs ea)
@@ -118,6 +112,7 @@ namespace EditModule.ViewModels
                 TextEditor.Document.FileName = file;
                 TextEditor.ScrollToHome();
                 TextEditor.IsModified = false;
+                TextEditor.Focus();
 
             }
             catch (Exception ex)
@@ -137,6 +132,7 @@ namespace EditModule.ViewModels
                 }
                 OpenSaveActions.Save(TextEditor.Document.FileName, TextEditor.Document.Text);
                 TextEditor.IsModified = false;
+                TextEditor.Focus();
             }
             catch (Exception ex)
             {
