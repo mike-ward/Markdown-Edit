@@ -1,4 +1,5 @@
-﻿using EditModule.Views;
+﻿using EditModule.Models;
+using EditModule.Views;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using Microsoft.Practices.Unity;
@@ -20,6 +21,7 @@ namespace EditModule
 
         public void Initialize()
         {
+            Container.RegisterType<IEditModel, EditModel>();
             Container.RegisterType<ITextEditorComponent, TextEditor>();
             RegionManager.RegisterViewWithRegion(Constants.EditRegion, typeof(EditControl));
         }

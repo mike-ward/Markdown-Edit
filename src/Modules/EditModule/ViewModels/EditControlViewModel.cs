@@ -3,9 +3,9 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using EditModule.Models;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
-using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 
@@ -14,6 +14,7 @@ namespace EditModule.ViewModels
     public class EditControlViewModel : BindableBase
     {
         public TextEditor TextEditor { get; set; }
+        public IEditModel EditModel { get; }
         public IMarkdownEngine MarkdownEngine { get; }
         public IEventAggregator EventAggregator { get; }
         public IOpenSaveActions OpenSaveActions { get; }
@@ -22,6 +23,7 @@ namespace EditModule.ViewModels
         public Dispatcher Dispatcher { get; set; }
 
         public EditControlViewModel(
+            IEditModel editModel,
             ITextEditorComponent textEditor,
             IMarkdownEngine markdownEngine,
             IEventAggregator eventAggregator,
@@ -29,6 +31,7 @@ namespace EditModule.ViewModels
             ISettings settings,
             INotify notify)
         {
+            EditModel = editModel;
             TextEditor = textEditor as TextEditor;
             MarkdownEngine = markdownEngine;
             EventAggregator = eventAggregator;
@@ -86,66 +89,22 @@ namespace EditModule.ViewModels
 
         public void NewCommandExecutedHandler(object sender, ExecutedRoutedEventArgs ea)
         {
-            if (TextEditor.IsModified)
-            {
-                if (OpenSaveActions.PromptToSave(TextEditor.Document.FileName, TextEditor.Text) == MessageBoxResult.Cancel) return;
-            }
-            TextEditor.Document.Text = string.Empty;
-            TextEditor.Document.FileName = string.Empty;
-            TextEditor.IsModified = false;
-            TextEditor.Focus();
+            EditModel.NewCommandHandler(TextEditor);
         }
 
         public void OpenCommandExecuteHandler(object sender, ExecutedRoutedEventArgs ea)
         {
-            if (TextEditor.IsModified)
-            {
-                if (OpenSaveActions.PromptToSave(TextEditor.Document.FileName, TextEditor.Text) == MessageBoxResult.Cancel) return;
-            }
-
-            var file = ea.Parameter as string ?? OpenSaveActions.OpenDialog();
-
-            try
-            {
-                var text = OpenSaveActions.Open(file);
-                TextEditor.Document.Text = text;
-                TextEditor.Document.FileName = file;
-                TextEditor.ScrollToHome();
-                TextEditor.IsModified = false;
-                TextEditor.Focus();
-
-            }
-            catch (Exception ex)
-            {
-                Notify.Alert(ex.Message);
-            }
+            EditModel.OpenCommandHandler(TextEditor, ea.Parameter as string);
         }
 
         public void SaveCommandExecuteHandler(object sender, ExecutedRoutedEventArgs ea)
         {
-            try
-            {
-                if (string.IsNullOrEmpty(TextEditor.Document.FileName))
-                {
-                    SaveAsCommandExecuteHandler(sender, ea);
-                    return;
-                }
-                OpenSaveActions.Save(TextEditor.Document.FileName, TextEditor.Document.Text);
-                TextEditor.IsModified = false;
-                TextEditor.Focus();
-            }
-            catch (Exception ex)
-            {
-                Notify.Alert(ex.Message);
-            }
+           EditModel.SaveCommandHandler(TextEditor);
         }
 
         public void SaveAsCommandExecuteHandler(object sender, ExecutedRoutedEventArgs ea)
         {
-            var fileName = OpenSaveActions.SaveAsDialog();
-            if (string.IsNullOrEmpty(fileName)) return;
-            TextEditor.Document.FileName = fileName;
-            SaveCommandExecuteHandler(sender, ea);
+            EditModel.SaveAsCommandHandler(TextEditor);
         }
     }
 }

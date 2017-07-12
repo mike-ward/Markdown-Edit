@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EditModule.cs" />
+    <Compile Include="Models\EditModel.cs" />
+    <Compile Include="Models\IEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
