@@ -54,6 +54,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MarkdownEdit\Properties\AssemblyVersion.cs">
+      <Link>AssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="INotify.cs" />

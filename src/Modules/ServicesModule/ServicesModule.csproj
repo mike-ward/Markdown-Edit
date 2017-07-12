@@ -80,6 +80,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MarkdownEdit\Properties\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="CommonMarkEngine.cs" />
     <Compile Include="OpenSaveActions.cs" />
     <Compile Include="Notify.cs" />

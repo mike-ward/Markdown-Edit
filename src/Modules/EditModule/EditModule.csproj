@@ -68,6 +68,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\MarkdownEdit\Properties\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="EditModule.cs" />
     <Compile Include="Models\EditModel.cs" />
     <Compile Include="Models\IEditModel.cs" />
