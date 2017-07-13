@@ -43,12 +43,5 @@ namespace ServicesModule
                 ? dialog.FileName
                 : null;
         }
-
-        public MessageBoxResult PromptToSave(string file, string text)
-        {
-            var result = Notify.ConfirmYesNoCancel(Strings.SaveYourChanges);
-            if (result == MessageBoxResult.Yes) Save(file, text);
-            return result;
-        }
     }
 }

@@ -35,4 +35,12 @@
     </controls:FlyoutsControl>
   </controls:MetroWindow.Flyouts>
 
+  <controls:MetroWindow.InputBindings>
+    <KeyBinding Command="New" Gesture="Ctrl+N" />
+    <KeyBinding Command="Open" Gesture="Ctrl+O" />
+    <KeyBinding Command="Save" Gesture="Ctrl+S" />
+    <KeyBinding Command="SaveAs" Gesture="Ctrl+Shift+S" />
+    <KeyBinding Command="Print" Gesture="Ctrl+P" />
+  </controls:MetroWindow.InputBindings>
+  
 </controls:MetroWindow> 

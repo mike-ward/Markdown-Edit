@@ -31,7 +31,6 @@ namespace EditModule.Views
 
             AddPropertyBindings(textEditor);
             AddCommandBindings();
-            AddKeyboardBindings();
             AddEventHandlers(textEditor);
         }
 
@@ -53,16 +52,6 @@ namespace EditModule.Views
             shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.Open, ViewModel.OpenCommandExecuteHandler));
             shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.Save, ViewModel.SaveCommandExecuteHandler));
             shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.SaveAs, ViewModel.SaveAsCommandExecuteHandler));
-        }
-
-        private void AddKeyboardBindings()
-        {
-            var shell = (Window)RegionManager.Regions[Constants.EditRegion].Context;
-
-            shell.InputBindings.Add(new KeyBinding {Key = Key.N, Modifiers = ModifierKeys.Control, Command = ApplicationCommands.New});
-            shell.InputBindings.Add(new KeyBinding {Key = Key.O, Modifiers = ModifierKeys.Control, Command = ApplicationCommands.Open});
-            shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control, Command = ApplicationCommands.Save});
-            shell.InputBindings.Add(new KeyBinding {Key = Key.S, Modifiers = ModifierKeys.Control | ModifierKeys.Shift, Command = ApplicationCommands.SaveAs});
         }
 
         private void AddEventHandlers(TextEditor textEditor)

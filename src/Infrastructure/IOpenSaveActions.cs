@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
     public interface IOpenSaveActions
     {
@@ -8,6 +6,5 @@ namespace Infrastructure
         void Save(string file, string text);
         string OpenDialog();
         string SaveAsDialog();
-        MessageBoxResult PromptToSave(string file, string text);
     }
 }

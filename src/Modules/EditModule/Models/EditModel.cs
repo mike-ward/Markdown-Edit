@@ -8,11 +8,13 @@ namespace EditModule.Models
     internal class EditModel : IEditModel
     {
         public IOpenSaveActions OpenSaveActions { get; }
+        public IStrings Strings { get; }
         public INotify Notify { get; }
 
-        public EditModel(IOpenSaveActions openSaveActions, INotify notify)
+        public EditModel(IOpenSaveActions openSaveActions, IStrings strings, INotify notify)
         {
             OpenSaveActions = openSaveActions;
+            Strings = strings;
             Notify = notify;
         }
 
@@ -20,7 +22,13 @@ namespace EditModule.Models
         {
             if (textEditor.IsModified)
             {
-                if (OpenSaveActions.PromptToSave(textEditor.Document.FileName, textEditor.Text) == MessageBoxResult.Cancel) return;
+                var result = Notify.ConfirmYesNoCancel(Strings.SaveYourChanges);
+                if (result == MessageBoxResult.Cancel) return;
+                if (result == MessageBoxResult.Yes)
+                {
+                    SaveCommandHandler(textEditor);
+                    if (textEditor.IsModified) return;
+                }
             }
             textEditor.Document.Text = string.Empty;
             textEditor.Document.FileName = string.Empty;
@@ -32,10 +40,17 @@ namespace EditModule.Models
         {
             if (textEditor.IsModified)
             {
-                if (OpenSaveActions.PromptToSave(textEditor.Document.FileName, textEditor.Text) == MessageBoxResult.Cancel) return;
+                var result = Notify.ConfirmYesNoCancel(Strings.SaveYourChanges);
+                if (result == MessageBoxResult.Cancel) return;
+                if (result == MessageBoxResult.Yes)
+                {
+                    SaveCommandHandler(textEditor);
+                    if (textEditor.IsModified) return;
+                }
             }
 
             var file = fileName ?? OpenSaveActions.OpenDialog();
+            if (string.IsNullOrEmpty(file)) return;
 
             try
             {
@@ -45,7 +60,6 @@ namespace EditModule.Models
                 textEditor.ScrollToHome();
                 textEditor.IsModified = false;
                 textEditor.Focus();
-
             }
             catch (Exception ex)
             {

@@ -112,6 +112,10 @@
       <Project>{115F8F8C-6530-43AE-ACA6-275BA8FB639A}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServicesModule\ServicesModule.csproj">
+      <Project>{EE07CD31-3D0E-4575-BD01-D92118319FF7}</Project>
+      <Name>ServicesModule</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

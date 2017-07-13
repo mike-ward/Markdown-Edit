@@ -9,4 +9,16 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
   <Border x:Name="_border" Margin="10" />
+  
+  <UserControl.InputBindings>
+    <KeyBinding Command="ToggleBold" Gesture="Ctrl+B" />
+    <KeyBinding Command="ToggleItalic" Gesture="Ctrl+I" />
+    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Plus" />
+    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Add" />
+    <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+OemPlus" />
+    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Minus" />
+    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+Subtract" />
+    <KeyBinding Command="DecreaseFontSize" Gesture="Ctrl+OemMinus" />
+  </UserControl.InputBindings>
+  
 </UserControl>
