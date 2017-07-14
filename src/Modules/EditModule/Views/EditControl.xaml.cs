@@ -12,14 +12,13 @@ namespace EditModule.Views
     public partial class EditControl
     {
         public IRegionManager RegionManager { get; }
+        private EditControlViewModel ViewModel => (EditControlViewModel)DataContext;
 
         public EditControl(IRegionManager regionManager)
         {
             RegionManager = regionManager;
             InitializeComponent();
         }
-
-        private EditControlViewModel ViewModel => (EditControlViewModel)DataContext;
 
         protected override void OnInitialized(EventArgs e)
         {
@@ -57,6 +56,21 @@ namespace EditModule.Views
         private void AddEventHandlers(TextEditor textEditor)
         {
             IsVisibleChanged += (sd, ea) => { if (IsVisible) Dispatcher.InvokeAsync(textEditor.Focus); };
+        }
+
+        protected override void OnDragEnter(DragEventArgs dea)
+        {
+            if (dea.Data.GetDataPresent(DataFormats.FileDrop) == false) dea.Effects = DragDropEffects.None;
+        }
+
+        protected override void OnDrop(DragEventArgs dea)
+        {
+            if (dea.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = dea.Data.GetData(DataFormats.FileDrop) as string[];
+                if (files == null) return;
+                Dispatcher.InvokeAsync(() => ApplicationCommands.Open.Execute(files[0], this));
+            }
         }
     }
 }
