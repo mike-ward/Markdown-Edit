@@ -59,11 +59,13 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Events.cs" />
+    <Compile Include="IHighlight.cs" />
     <Compile Include="INotify.cs" />
     <Compile Include="IOpenSaveActions.cs" />
     <Compile Include="IMarkdownEngine.cs" />
     <Compile Include="ISettings.cs" />
     <Compile Include="ITemplateLoader.cs" />
+    <Compile Include="ITheme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

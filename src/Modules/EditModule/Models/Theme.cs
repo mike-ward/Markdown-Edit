@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Infrastructure;
+using ServicesModule;
 
 namespace EditModule.Models
 {
-    public class Theme : INotifyPropertyChanged
+   
+    public class Theme : INotifyPropertyChanged, ITheme
     {
         private string _name = "Zenburn";
         private string _editorBackground = "#404040";
@@ -13,14 +16,14 @@ namespace EditModule.Models
         private double _header1Height = 1.3;
         private double _header2Height = 1.2;
 
-        private Highlight _highlightHeading = new Highlight { Name = "Heading", FontWeight = "bold", Foreground = "#6c71c4" };
-        private Highlight _highlightEmphasis = new Highlight { Name = "Emphasis", FontStyle = "italic", Foreground = "#cb4b16" };
-        private Highlight _highlightStrongEmphasis = new Highlight { Name = "StrongEmphasis", FontWeight = "bold", Foreground = "orange" };
-        private Highlight _highlightInlineCode = new Highlight { Name = "InlineCode", Foreground = "#7F9F7F" };
-        private Highlight _highlightBlockCode = new Highlight { Name = "BlockCode", Foreground = "#7F9F7F" };
-        private Highlight _highlightBlockQuote = new Highlight { Name = "BlockQuote", Foreground = "#8ACCCF" };
-        private Highlight _highlightLink = new Highlight { Name = "Link", Foreground = "#2aa198", Underline = true };
-        private Highlight _highlightImage = new Highlight { Name = "Image", Foreground = "#6F8F3F", FontWeight = "bold" };
+        private IHighlight _highlightHeading = new Highlight { Name = "Heading", FontWeight = "bold", Foreground = "#6c71c4" };
+        private IHighlight _highlightEmphasis = new Highlight { Name = "Emphasis", FontStyle = "italic", Foreground = "#cb4b16" };
+        private IHighlight _highlightStrongEmphasis = new Highlight { Name = "StrongEmphasis", FontWeight = "bold", Foreground = "orange" };
+        private IHighlight _highlightInlineCode = new Highlight { Name = "InlineCode", Foreground = "#7F9F7F" };
+        private IHighlight _highlightBlockCode = new Highlight { Name = "BlockCode", Foreground = "#7F9F7F" };
+        private IHighlight _highlightBlockQuote = new Highlight { Name = "BlockQuote", Foreground = "#8ACCCF" };
+        private IHighlight _highlightLink = new Highlight { Name = "Link", Foreground = "#2aa198", Underline = true };
+        private IHighlight _highlightImage = new Highlight { Name = "Image", Foreground = "#6F8F3F", FontWeight = "bold" };
 
         public string Name
         {
@@ -52,49 +55,49 @@ namespace EditModule.Models
             set => Set(ref _header2Height, value);
         }
 
-        public Highlight HighlightHeading
+        public IHighlight HighlightHeading
         {
             get => _highlightHeading;
             set => Set(ref _highlightHeading, value);
         }
 
-        public Highlight HighlightEmphasis
+        public IHighlight HighlightEmphasis
         {
             get => _highlightEmphasis;
             set => Set(ref _highlightEmphasis, value);
         }
 
-        public Highlight HighlightStrongEmphasis
+        public IHighlight HighlightStrongEmphasis
         {
             get => _highlightStrongEmphasis;
             set => Set(ref _highlightStrongEmphasis, value);
         }
 
-        public Highlight HighlightInlineCode
+        public IHighlight HighlightInlineCode
         {
             get => _highlightInlineCode;
             set => Set(ref _highlightInlineCode, value);
         }
 
-        public Highlight HighlightBlockCode
+        public IHighlight HighlightBlockCode
         {
             get => _highlightBlockCode;
             set => Set(ref _highlightBlockCode, value);
         }
 
-        public Highlight HighlightBlockQuote
+        public IHighlight HighlightBlockQuote
         {
             get => _highlightBlockQuote;
             set => Set(ref _highlightBlockQuote, value);
         }
 
-        public Highlight HighlightLink
+        public IHighlight HighlightLink
         {
             get => _highlightLink;
             set => Set(ref _highlightLink, value);
         }
 
-        public Highlight HighlightImage
+        public IHighlight HighlightImage
         {
             get => _highlightImage;
             set => Set(ref _highlightImage, value);

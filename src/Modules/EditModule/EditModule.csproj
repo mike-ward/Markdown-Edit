@@ -79,7 +79,9 @@
     <Compile Include="Models\EditModel.cs" />
     <Compile Include="Models\Highlight.cs" />
     <Compile Include="Models\IEditModel.cs" />
+    <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
     <Compile Include="Models\Theme.cs" />
+    <Compile Include="Models\ThemeChangedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using EditModule.Models;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
@@ -12,7 +13,7 @@ namespace EditModule.Views
     public partial class EditControl
     {
         public IRegionManager RegionManager { get; }
-        private EditControlViewModel ViewModel => (EditControlViewModel)DataContext;
+        public EditControlViewModel ViewModel => (EditControlViewModel)DataContext;
 
         public EditControl(IRegionManager regionManager)
         {
