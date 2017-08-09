@@ -21,6 +21,7 @@ namespace EditModule
 
         public void Initialize()
         {
+            Container.RegisterType<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
             Container.RegisterType<IEditModel, EditModel>();
             Container.RegisterType<ITextEditorComponent, TextEditor>();
             RegionManager.RegisterViewWithRegion(Constants.EditRegion, typeof(EditControl));

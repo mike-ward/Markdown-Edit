@@ -83,7 +83,9 @@
     <Compile Include="..\..\MarkdownEdit\Properties\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="AbstractSyntaxTree.cs" />
     <Compile Include="CommonMarkEngine.cs" />
+    <Compile Include="ColorService.cs" />
     <Compile Include="OpenSaveActions.cs" />
     <Compile Include="Notify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

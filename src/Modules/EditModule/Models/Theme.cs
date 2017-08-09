@@ -6,7 +6,6 @@ using ServicesModule;
 
 namespace EditModule.Models
 {
-   
     public class Theme : INotifyPropertyChanged, ITheme
     {
         private string _name = "Zenburn";

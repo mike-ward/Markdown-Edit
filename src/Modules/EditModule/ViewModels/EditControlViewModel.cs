@@ -7,7 +7,6 @@ using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using Prism.Events;
 using Prism.Mvvm;
-using ServicesModule;
 
 namespace EditModule.ViewModels
 {
@@ -15,10 +14,13 @@ namespace EditModule.ViewModels
     {
         public TextEditor TextEditor { get; set; }
         public IEditModel EditModel { get; }
+        public IAbstractSyntaxTree AbstractSyntaxTree { get; }
+        public IBlockBackgroundRenderer BlockBackgroundRenderer { get; }
         public IEventAggregator EventAggregator { get; }
         public IOpenSaveActions OpenSaveActions { get; }
         public ISettings Settings { get; }
         public INotify Notify { get; }
+        public IColorService ColorService { get; }
         public Dispatcher Dispatcher { get; set; }
 
         private Theme _theme;
@@ -26,17 +28,23 @@ namespace EditModule.ViewModels
         public EditControlViewModel(
             IEditModel editModel,
             ITextEditorComponent textEditor,
+            IAbstractSyntaxTree abstractSyntaxTree,
+            IBlockBackgroundRenderer blockBackgroundRenderer,
             IEventAggregator eventAggregator,
             IOpenSaveActions openSaveActions,
             ISettings settings,
-            INotify notify)
+            INotify notify,
+            IColorService colorService)
         {
             EditModel = editModel;
+            AbstractSyntaxTree = abstractSyntaxTree;
+            BlockBackgroundRenderer = blockBackgroundRenderer;
             TextEditor = textEditor as TextEditor;
             EventAggregator = eventAggregator;
             OpenSaveActions = openSaveActions;
             Settings = settings;
             Notify = notify;
+            ColorService = colorService;
 
             TextEditorOptions();
             EventHandlers();
@@ -72,17 +80,15 @@ namespace EditModule.ViewModels
 
         public void SyntaxHighlighting()
         {
-            var abstractSyntaxTree = new AbstractSyntaxTree();
-            var colorizer = new MarkdownHighlightingColorizer(abstractSyntaxTree);
-            //var blockBackgroundRenderer = new BlockBackgroundRenderer();
+            var colorizer = new MarkdownHighlightingColorizer(AbstractSyntaxTree);
 
             TextEditor.TextChanged += (s, e) =>
             {
                 try
                 {
-                    var abs = abstractSyntaxTree.GenerateAbstractSyntaxTree(TextEditor.Text);
+                    var abs = AbstractSyntaxTree.GenerateAbstractSyntaxTree(TextEditor.Text);
                     colorizer.UpdateAbstractSyntaxTree(abs);
-                    //blockBackgroundRenderer.UpdateAbstractSyntaxTree(abs);
+                    BlockBackgroundRenderer.UpdateAbstractSyntaxTree(abs);
                     // The block nature of markdown causes edge cases in the syntax hightlighting.
                     // This is the nuclear option but it doesn't seem to cause issues.
                     TextEditor.TextArea.TextView.Redraw();
@@ -97,11 +103,13 @@ namespace EditModule.ViewModels
             ThemeChanged += (s, e) =>
             {
                 colorizer.OnThemeChanged(e.Theme);
-                //blockBackgroundRenderer.OnThemeChanged(e.Theme);
+                BlockBackgroundRenderer.OnThemeChanged(e.Theme);
+                TextEditor.Foreground = ColorService.CreateBrush(e.Theme.EditorForeground);
+                TextEditor.Background = ColorService.CreateBrush(e.Theme.EditorBackground);
             };
 
             TextEditor.TextArea.TextView.LineTransformers.Add(colorizer);
-            //EditBox.TextArea.TextView.BackgroundRenderers.Add(blockBackgroundRenderer);
+            TextEditor.TextArea.TextView.BackgroundRenderers.Add(BlockBackgroundRenderer);
         }
 
         public FontFamily Font => Settings.Font;

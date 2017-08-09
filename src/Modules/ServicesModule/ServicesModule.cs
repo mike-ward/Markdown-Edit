@@ -15,6 +15,8 @@ namespace ServicesModule
 
         public void Initialize()
         {
+            Container.RegisterType<IAbstractSyntaxTree, AbstractSyntaxTree>();
+            Container.RegisterType<IColorService, ColorService>();
             Container.RegisterType<IMarkdownEngine, CommonMarkEngine>();
             Container.RegisterType<INotify, Notify>();
             Container.RegisterType<IOpenSaveActions, OpenSaveActions>();

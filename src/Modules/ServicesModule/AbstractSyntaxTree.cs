@@ -5,11 +5,10 @@ using System.Linq;
 using CommonMark;
 using CommonMark.Syntax;
 using Infrastructure;
-using ServicesModule;
 
-namespace EditModule.Models
+namespace ServicesModule
 {
-    public class AbstractSyntaxTree
+    public class AbstractSyntaxTree : IAbstractSyntaxTree
     {
         private CommonMarkSettings CommonMarkSettings { get; }
 
@@ -31,7 +30,7 @@ namespace EditModule.Models
 
         private static string Normalize(string value) { return value.Replace('→', '\t').Replace('␣', ' '); }
 
-        public readonly Dictionary<BlockTag, Func<Theme, IHighlight>> BlockHighlighter = new Dictionary<BlockTag, Func<Theme, IHighlight>>
+        public Dictionary<BlockTag, Func<ITheme, IHighlight>> BlockHighlighter { get; } = new Dictionary<BlockTag, Func<ITheme, IHighlight>>
         {
             {BlockTag.AtxHeading, t => t.HighlightHeading},
             {BlockTag.SetextHeading, t => t.HighlightHeading},
@@ -43,7 +42,7 @@ namespace EditModule.Models
             {BlockTag.ReferenceDefinition, t => t.HighlightLink}
         };
 
-        public readonly Dictionary<InlineTag, Func<Theme, IHighlight>> InlineHighlighter = new Dictionary<InlineTag, Func<Theme, IHighlight>>
+        public Dictionary<InlineTag, Func<ITheme, IHighlight>> InlineHighlighter { get; } = new Dictionary<InlineTag, Func<ITheme, IHighlight>>
         {
             {InlineTag.Code, t => t.HighlightInlineCode},
             {InlineTag.Emphasis, t => t.HighlightEmphasis},

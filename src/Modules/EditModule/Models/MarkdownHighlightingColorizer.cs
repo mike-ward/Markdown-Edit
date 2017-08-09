@@ -6,17 +6,16 @@ using CommonMark.Syntax;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 using Infrastructure;
-using ServicesModule;
 
 namespace EditModule.Models
 {
     public class MarkdownHighlightingColorizer : DocumentColorizingTransformer
     {
-        public AbstractSyntaxTree AbstractSyntaxTree { get; }
+        public IAbstractSyntaxTree AbstractSyntaxTree { get; }
         private Block _abstractSyntaxTree;
         private Theme _theme;
 
-        public MarkdownHighlightingColorizer(AbstractSyntaxTree abstractSyntaxTree)
+        public MarkdownHighlightingColorizer(IAbstractSyntaxTree abstractSyntaxTree)
         {
             AbstractSyntaxTree = abstractSyntaxTree;
         }
@@ -32,7 +31,7 @@ namespace EditModule.Models
             var start = line.Offset;
             var end = line.EndOffset;
             var leadingSpaces = CurrentContext.GetText(start, end - start).Text.TakeWhile(char.IsWhiteSpace).Count();
-            Func<Theme, IHighlight> highlighter;
+            Func<ITheme, IHighlight> highlighter;
 
             foreach (var block in AbstractSyntaxTree.EnumerateSpanningBlocks(ast, start, end))
             {
