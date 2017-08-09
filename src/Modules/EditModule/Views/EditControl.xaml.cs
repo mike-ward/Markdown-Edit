@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using EditModule.Models;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;

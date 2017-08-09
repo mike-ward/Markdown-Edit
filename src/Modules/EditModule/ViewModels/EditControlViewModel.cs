@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -7,6 +8,7 @@ using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 
 namespace EditModule.ViewModels
 {
@@ -21,6 +23,7 @@ namespace EditModule.ViewModels
         public ISettings Settings { get; }
         public INotify Notify { get; }
         public IColorService ColorService { get; }
+        public IRegionManager RegionManager { get; }
         public Dispatcher Dispatcher { get; set; }
 
         private Theme _theme;
@@ -34,7 +37,8 @@ namespace EditModule.ViewModels
             IOpenSaveActions openSaveActions,
             ISettings settings,
             INotify notify,
-            IColorService colorService)
+            IColorService colorService,
+            IRegionManager regionManager)
         {
             EditModel = editModel;
             AbstractSyntaxTree = abstractSyntaxTree;
@@ -45,6 +49,7 @@ namespace EditModule.ViewModels
             Settings = settings;
             Notify = notify;
             ColorService = colorService;
+            RegionManager = regionManager;
 
             TextEditorOptions();
             EventHandlers();
@@ -81,6 +86,8 @@ namespace EditModule.ViewModels
         public void SyntaxHighlighting()
         {
             var colorizer = new MarkdownHighlightingColorizer(AbstractSyntaxTree);
+            TextEditor.TextArea.TextView.LineTransformers.Add(colorizer);
+            TextEditor.TextArea.TextView.BackgroundRenderers.Add(BlockBackgroundRenderer);
 
             TextEditor.TextChanged += (s, e) =>
             {
@@ -105,11 +112,10 @@ namespace EditModule.ViewModels
                 colorizer.OnThemeChanged(e.Theme);
                 BlockBackgroundRenderer.OnThemeChanged(e.Theme);
                 TextEditor.Foreground = ColorService.CreateBrush(e.Theme.EditorForeground);
-                TextEditor.Background = ColorService.CreateBrush(e.Theme.EditorBackground);
+                var background = ColorService.CreateBrush(e.Theme.EditorBackground);
+                TextEditor.Background = background;
+                ((Window)RegionManager.Regions[Constants.EditRegion].Context).Background = background;
             };
-
-            TextEditor.TextArea.TextView.LineTransformers.Add(colorizer);
-            TextEditor.TextArea.TextView.BackgroundRenderers.Add(BlockBackgroundRenderer);
         }
 
         public FontFamily Font => Settings.Font;
