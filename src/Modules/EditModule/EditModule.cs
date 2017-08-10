@@ -1,4 +1,7 @@
-﻿using EditModule.Models;
+﻿using System.Collections;
+using System.Collections.Generic;
+using EditModule.Features;
+using EditModule.Models;
 using EditModule.Views;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
@@ -24,6 +27,11 @@ namespace EditModule
             Container.RegisterType<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
             Container.RegisterType<IEditModel, EditModel>();
             Container.RegisterType<ITextEditorComponent, TextEditor>();
+
+            Container.RegisterType<IEditFeature, SyntaxHighlighting>("SyntaxHighlighting");
+            Container.RegisterType<IEditFeature, Features.TextEditorOptions>("TextEditorOptions");
+            Container.RegisterType<IEnumerable<IEditFeature>, IEditFeature[]>();
+
             RegionManager.RegisterViewWithRegion(Constants.EditRegion, typeof(EditControl));
         }
     }

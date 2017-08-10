@@ -24,13 +24,13 @@ namespace EditModule.Views
         {
             base.OnInitialized(e);
 
-            var textEditor = ViewModel.TextEditor;
-            _border.Child = textEditor ?? throw new NullReferenceException("TextEditor not created in view model");
+            _border.Child = ViewModel.TextEditor;
+            Background = ViewModel.TextEditor.Background;
             ViewModel.Dispatcher = Dispatcher;
 
-            AddPropertyBindings(textEditor);
+            AddPropertyBindings(ViewModel.TextEditor);
             AddCommandBindings();
-            AddEventHandlers(textEditor);
+            AddEventHandlers(ViewModel.TextEditor);
         }
 
         private void AddPropertyBindings(DependencyObject textEditor)
@@ -56,6 +56,7 @@ namespace EditModule.Views
         private void AddEventHandlers(TextEditor textEditor)
         {
             IsVisibleChanged += (sd, ea) => { if (IsVisible) Dispatcher.InvokeAsync(textEditor.Focus); };
+            ViewModel.ThemeChanged += (sd, ea) => Background = ViewModel.TextEditor.Background;
         }
 
         protected override void OnDragEnter(DragEventArgs dea)
