@@ -4,9 +4,9 @@ namespace EditModule.Models
 {
     public interface IEditModel
     {
-        void NewCommandHandler(TextEditor textEditor);
-        void OpenCommandHandler(TextEditor textEditor, string fileName = null);
-        void SaveCommandHandler(TextEditor textEditor);
-        void SaveAsCommandHandler(TextEditor textEditor);
+        void NewCommandExecuted(TextEditor textEditor);
+        void OpenCommandExecuted(TextEditor textEditor, string fileName = null);
+        void SaveCommandExecuted(TextEditor textEditor);
+        void SaveAsCommandExecuted(TextEditor textEditor);
     }
 }

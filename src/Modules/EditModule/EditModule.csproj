@@ -77,14 +77,14 @@
     </Compile>
     <Compile Include="EditModule.cs" />
     <Compile Include="Features\IEditFeature.cs" />
-    <Compile Include="Features\SyntaxHighlighting.cs" />
+    <Compile Include="Features\SyntaxHighlighting\SyntaxHighlighting.cs" />
     <Compile Include="Features\TextEditorOptions.cs" />
-    <Compile Include="Models\BlockBackgroundRenderer.cs" />
+    <Compile Include="Features\SyntaxHighlighting\BlockBackgroundRenderer.cs" />
     <Compile Include="Models\EditModel.cs" />
     <Compile Include="Models\Highlight.cs" />
     <Compile Include="Models\IBlockBackgroundRenderer.cs" />
     <Compile Include="Models\IEditModel.cs" />
-    <Compile Include="Models\MarkdownHighlightingColorizer.cs" />
+    <Compile Include="Features\SyntaxHighlighting\MarkdownHighlightingColorizer.cs" />
     <Compile Include="Models\Theme.cs" />
     <Compile Include="Models\ThemeChangedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

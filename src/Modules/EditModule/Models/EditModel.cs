@@ -7,26 +7,26 @@ namespace EditModule.Models
 {
     internal class EditModel : IEditModel
     {
-        public IOpenSaveActions OpenSaveActions { get; }
-        public IStrings Strings { get; }
-        public INotify Notify { get; }
+        private readonly IOpenSaveActions _openSaveActions;
+        private readonly IStrings _strings;
+        private readonly INotify _notify;
 
         public EditModel(IOpenSaveActions openSaveActions, IStrings strings, INotify notify)
         {
-            OpenSaveActions = openSaveActions;
-            Strings = strings;
-            Notify = notify;
+            _openSaveActions = openSaveActions;
+            _strings = strings;
+            _notify = notify;
         }
 
-        public void NewCommandHandler(TextEditor textEditor)
+        public void NewCommandExecuted(TextEditor textEditor)
         {
             if (textEditor.IsModified)
             {
-                var result = Notify.ConfirmYesNoCancel(Strings.SaveYourChanges);
+                var result = _notify.ConfirmYesNoCancel(_strings.SaveYourChanges);
                 if (result == MessageBoxResult.Cancel) return;
                 if (result == MessageBoxResult.Yes)
                 {
-                    SaveCommandHandler(textEditor);
+                    SaveCommandExecuted(textEditor);
                     if (textEditor.IsModified) return;
                 }
             }
@@ -36,25 +36,25 @@ namespace EditModule.Models
             textEditor.Focus();
         }
 
-        public void OpenCommandHandler(TextEditor textEditor, string fileName = null)
+        public void OpenCommandExecuted(TextEditor textEditor, string fileName = null)
         {
             if (textEditor.IsModified)
             {
-                var result = Notify.ConfirmYesNoCancel(Strings.SaveYourChanges);
+                var result = _notify.ConfirmYesNoCancel(_strings.SaveYourChanges);
                 if (result == MessageBoxResult.Cancel) return;
                 if (result == MessageBoxResult.Yes)
                 {
-                    SaveCommandHandler(textEditor);
+                    SaveCommandExecuted(textEditor);
                     if (textEditor.IsModified) return;
                 }
             }
 
-            var file = fileName ?? OpenSaveActions.OpenDialog();
+            var file = fileName ?? _openSaveActions.OpenDialog();
             if (string.IsNullOrEmpty(file)) return;
 
             try
             {
-                var text = OpenSaveActions.Open(file);
+                var text = _openSaveActions.Open(file);
                 textEditor.Document.Text = text;
                 textEditor.Document.FileName = file;
                 textEditor.ScrollToHome();
@@ -63,35 +63,35 @@ namespace EditModule.Models
             }
             catch (Exception ex)
             {
-                Notify.Alert(ex.Message);
+                _notify.Alert(ex.Message);
             }
         }
 
-        public void SaveCommandHandler(TextEditor textEditor)
+        public void SaveCommandExecuted(TextEditor textEditor)
         {
             try
             {
                 if (string.IsNullOrEmpty(textEditor.Document.FileName))
                 {
-                    SaveAsCommandHandler(textEditor);
+                    SaveAsCommandExecuted(textEditor);
                     return;
                 }
-                OpenSaveActions.Save(textEditor.Document.FileName, textEditor.Document.Text);
+                _openSaveActions.Save(textEditor.Document.FileName, textEditor.Document.Text);
                 textEditor.IsModified = false;
                 textEditor.Focus();
             }
             catch (Exception ex)
             {
-                Notify.Alert(ex.Message);
+                _notify.Alert(ex.Message);
             }
         }
 
-        public void SaveAsCommandHandler(TextEditor textEditor)
+        public void SaveAsCommandExecuted(TextEditor textEditor)
         {
-            var fileName = OpenSaveActions.SaveAsDialog();
+            var fileName = _openSaveActions.SaveAsDialog();
             if (string.IsNullOrEmpty(fileName)) return;
             textEditor.Document.FileName = fileName;
-            SaveCommandHandler(textEditor);
+            SaveCommandExecuted(textEditor);
         }
     }
 }

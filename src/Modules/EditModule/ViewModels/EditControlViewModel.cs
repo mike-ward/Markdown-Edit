@@ -50,14 +50,23 @@ namespace EditModule.ViewModels
         {
             // ReSharper disable once ExplicitCallerInfoArgument
             // This ties changes from the Settings singleton to notifications to the UI
+            // The editor and settings property name must be the same for this to work  
             Settings.PropertyChanged += (sd, ea) => RaisePropertyChanged(ea.PropertyName);
 
-            TextEditor.Document.FileNameChanged += (sd, ea) => EventAggregator.GetEvent<DocumentNameChangedEvent>().Publish(TextEditor.Document.FileName);
+            TextEditor.Document.FileNameChanged += (sd, ea) => EventAggregator
+                .GetEvent<DocumentNameChangedEvent>()
+                .Publish(TextEditor.Document.FileName);
 
-            void ExecuteUpdateTextCommand() => Dispatcher.InvokeAsync(() => EventAggregator.GetEvent<TextUpdatedEvent>().Publish(TextEditor.Document.Text));
-            var debounceUpdateTextCommand = Utility.Debounce(ExecuteUpdateTextCommand);
+            void UpdateTextCommand() => Dispatcher.InvokeAsync(
+                () => EventAggregator
+                    .GetEvent<TextUpdatedEvent>()
+                    .Publish(TextEditor.Document.Text));
+
+            var debounceUpdateTextCommand = Utility.Debounce(UpdateTextCommand);
             TextEditor.Document.TextChanged += (sd, ea) => debounceUpdateTextCommand();
         }
+
+        // Properties
 
         public FontFamily Font => Settings.Font;
 
@@ -77,25 +86,15 @@ namespace EditModule.ViewModels
             set => SetProperty(ref _isDocumentModified, value, () => EventAggregator.GetEvent<DocumentModifiedChangedEvent>().Publish(value));
         }
 
-        public void NewCommandExecutedHandler(object sender, ExecutedRoutedEventArgs ea)
-        {
-            EditModel.NewCommandHandler(TextEditor);
-        }
+        // Command Handlers
 
-        public void OpenCommandExecuteHandler(object sender, ExecutedRoutedEventArgs ea)
-        {
-            EditModel.OpenCommandHandler(TextEditor, ea.Parameter as string);
-        }
+        public void NewCommandExecuted(object sender, ExecutedRoutedEventArgs ea) => EditModel.NewCommandExecuted(TextEditor);
 
-        public void SaveCommandExecuteHandler(object sender, ExecutedRoutedEventArgs ea)
-        {
-           EditModel.SaveCommandHandler(TextEditor);
-        }
+        public void OpenCommandExecuted(object sender, ExecutedRoutedEventArgs ea) => EditModel.OpenCommandExecuted(TextEditor, ea.Parameter as string);
 
-        public void SaveAsCommandExecuteHandler(object sender, ExecutedRoutedEventArgs ea)
-        {
-            EditModel.SaveAsCommandHandler(TextEditor);
-        }
+        public void SaveCommandExecuted(object sender, ExecutedRoutedEventArgs ea) => EditModel.SaveCommandExecuted(TextEditor);
+
+        public void SaveAsCommandExecuted(object sender, ExecutedRoutedEventArgs ea) => EditModel.SaveAsCommandExecuted(TextEditor);
 
         // Theme
 

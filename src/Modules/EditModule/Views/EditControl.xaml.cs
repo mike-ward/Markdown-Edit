@@ -47,16 +47,16 @@ namespace EditModule.Views
         private void AddCommandBindings()
         {
             var shell = (Window)RegionManager.Regions[Constants.EditRegion].Context;
-            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.New, ViewModel.NewCommandExecutedHandler));
-            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.Open, ViewModel.OpenCommandExecuteHandler));
-            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.Save, ViewModel.SaveCommandExecuteHandler));
-            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.SaveAs, ViewModel.SaveAsCommandExecuteHandler));
+            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.New, ViewModel.NewCommandExecuted));
+            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.Open, ViewModel.OpenCommandExecuted));
+            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.Save, ViewModel.SaveCommandExecuted));
+            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.SaveAs, ViewModel.SaveAsCommandExecuted));
         }
 
         private void AddEventHandlers(TextEditor textEditor)
         {
             IsVisibleChanged += (sd, ea) => { if (IsVisible) Dispatcher.InvokeAsync(textEditor.Focus); };
-            ViewModel.ThemeChanged += (sd, ea) => Background = ViewModel.TextEditor.Background;
+            ViewModel.ThemeChanged += (sd, ea) => Dispatcher.InvokeAsync(() => Background = ViewModel.TextEditor.Background);
         }
 
         protected override void OnDragEnter(DragEventArgs dea)

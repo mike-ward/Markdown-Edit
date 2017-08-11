@@ -3,7 +3,7 @@ using EditModule.Models;
 using EditModule.ViewModels;
 using Infrastructure;
 
-namespace EditModule.Features
+namespace EditModule.Features.SyntaxHighlighting
 {
     public class SyntaxHighlighting : IEditFeature
     {

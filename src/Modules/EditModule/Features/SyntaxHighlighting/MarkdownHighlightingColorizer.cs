@@ -3,11 +3,12 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using CommonMark.Syntax;
+using EditModule.Models;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 using Infrastructure;
 
-namespace EditModule.Models
+namespace EditModule.Features.SyntaxHighlighting
 {
     public class MarkdownHighlightingColorizer : DocumentColorizingTransformer
     {

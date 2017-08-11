@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using EditModule.Features;
+using EditModule.Features.SyntaxHighlighting;
 using EditModule.Models;
 using EditModule.Views;
 using ICSharpCode.AvalonEdit;
@@ -28,8 +29,8 @@ namespace EditModule
             Container.RegisterType<IEditModel, EditModel>();
             Container.RegisterType<ITextEditorComponent, TextEditor>();
 
-            Container.RegisterType<IEditFeature, SyntaxHighlighting>("SyntaxHighlighting");
             Container.RegisterType<IEditFeature, Features.TextEditorOptions>("TextEditorOptions");
+            Container.RegisterType<IEditFeature, SyntaxHighlighting>("SyntaxHighlighting");
             Container.RegisterType<IEnumerable<IEditFeature>, IEditFeature[]>();
 
             RegionManager.RegisterViewWithRegion(Constants.EditRegion, typeof(EditControl));
