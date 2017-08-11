@@ -7,21 +7,18 @@ namespace PreviewModule.ViewModels
 {
     internal class PreviewControlViewModel : BindableBase
     {
-        public IEventAggregator EventAggregator { get; }
-        public IMarkdownEngine MarkdownEngine { get; }
+        private readonly IMarkdownEngine _markdownEngine;
         public Action<string> UpdateBrowserDelegate { get; set; }
 
-        public PreviewControlViewModel(IEventAggregator eventAggregator, IMarkdownEngine markdownEngine)
+        public PreviewControlViewModel(IEventAggregator eventAggregator, IMarkdownEngine[] markdownEngines)
         {
-            EventAggregator = eventAggregator;
-            MarkdownEngine = markdownEngine;
-
+            _markdownEngine = markdownEngines[0];
             eventAggregator.GetEvent<TextUpdatedEvent>().Subscribe(OnTextUpdated);
         }
 
         private void OnTextUpdated(string text)
         {
-            var html = MarkdownEngine.ToHtml(text);
+            var html = _markdownEngine.ToHtml(text);
             UpdateBrowserDelegate(html);
         }
     }

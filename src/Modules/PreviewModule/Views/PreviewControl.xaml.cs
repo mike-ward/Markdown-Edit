@@ -63,7 +63,7 @@ namespace PreviewModule.Views
                 "</h1>");
         }
 
-        private void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
+        private static void BrowserPreviewKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
