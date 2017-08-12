@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using EditModule.Commands;
 using EditModule.Features;
 using EditModule.Features.SyntaxHighlighting;
 using EditModule.Models;
@@ -26,12 +27,17 @@ namespace EditModule
         public void Initialize()
         {
             Container.RegisterType<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
-            Container.RegisterType<IEditModel, EditModel>();
             Container.RegisterType<ITextEditorComponent, TextEditor>();
 
-            Container.RegisterType<IEditFeature, Features.TextEditorOptions>("TextEditorOptions");
-            Container.RegisterType<IEditFeature, SyntaxHighlighting>("SyntaxHighlighting");
+            Container.RegisterType<IEditFeature, Features.TextEditorOptions>(nameof(Features.TextEditorOptions));
+            Container.RegisterType<IEditFeature, SyntaxHighlighting>(nameof(SyntaxHighlighting));
             Container.RegisterType<IEnumerable<IEditFeature>, IEditFeature[]>();
+
+            Container.RegisterType<IEditCommandHandler, NewCommandHandler>(nameof(NewCommandHandler));
+            Container.RegisterType<IEditCommandHandler, OpenCommandHandler>(nameof(OpenCommandHandler));
+            Container.RegisterType<IEditCommandHandler, SaveCommandHandler>(nameof(SaveCommandHandler));
+            Container.RegisterType<IEditCommandHandler, SaveAsCommandHandler>(nameof(SaveAsCommandHandler));
+            Container.RegisterType<IEnumerable<IEditCommandHandler>, IEditCommandHandler[]>();
 
             RegionManager.RegisterViewWithRegion(Constants.EditRegion, typeof(EditControl));
         }

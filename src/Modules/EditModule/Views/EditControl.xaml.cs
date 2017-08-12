@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using EditModule.Commands;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
@@ -11,11 +13,13 @@ namespace EditModule.Views
 {
     public partial class EditControl
     {
+        private readonly IEditCommandHandler[] _commandHandlers;
         public IRegionManager RegionManager { get; }
         public EditControlViewModel ViewModel => (EditControlViewModel)DataContext;
 
-        public EditControl(IRegionManager regionManager)
+        public EditControl(IRegionManager regionManager, IEditCommandHandler[] commandHandlers)
         {
+            _commandHandlers = commandHandlers;
             RegionManager = regionManager;
             InitializeComponent();
         }
@@ -28,9 +32,18 @@ namespace EditModule.Views
             Background = ViewModel.TextEditor.Background;
             ViewModel.Dispatcher = Dispatcher;
 
+            InitializeCommandHandlers();
             AddPropertyBindings(ViewModel.TextEditor);
             AddCommandBindings();
             AddEventHandlers(ViewModel.TextEditor);
+        }
+
+        private void InitializeCommandHandlers()
+        { 
+            foreach (var commandHandler in _commandHandlers)
+            {
+                commandHandler.Initialize(ViewModel);
+            }
         }
 
         private void AddPropertyBindings(DependencyObject textEditor)
@@ -47,10 +60,13 @@ namespace EditModule.Views
         private void AddCommandBindings()
         {
             var shell = (Window)RegionManager.Regions[Constants.EditRegion].Context;
-            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.New, ViewModel.NewCommandExecuted));
-            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.Open, ViewModel.OpenCommandExecuted));
-            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.Save, ViewModel.SaveCommandExecuted));
-            shell.CommandBindings.Add(new CommandBinding(ApplicationCommands.SaveAs, ViewModel.SaveAsCommandExecuted));
+            ExecutedRoutedEventHandler Cmd(string name) => _commandHandlers.First(ch => ch.Name == name).Execute;
+            void Bind(ICommand command, string handler) => shell.CommandBindings.Add(new CommandBinding(command, Cmd(handler)));
+
+            Bind(ApplicationCommands.New, nameof(NewCommandHandler));
+            Bind(ApplicationCommands.Open, nameof(OpenCommandHandler));
+            Bind(ApplicationCommands.Save, nameof(SaveCommandHandler));
+            Bind(ApplicationCommands.SaveAs, nameof(SaveAsCommandHandler));
         }
 
         private void AddEventHandlers(TextEditor textEditor)

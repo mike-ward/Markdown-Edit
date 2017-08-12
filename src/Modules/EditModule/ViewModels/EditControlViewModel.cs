@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using EditModule.Features;
@@ -14,36 +13,36 @@ namespace EditModule.ViewModels
 {
     public class EditControlViewModel : BindableBase
     {
-        public TextEditor TextEditor { get; set; }
-        public IEditModel EditModel { get; }
-        public IEventAggregator EventAggregator { get; }
-        public IOpenSaveActions OpenSaveActions { get; }
-        public ISettings Settings { get; }
+        private Theme _theme;
+        private readonly IEnumerable<IEditFeature> _editFeatures;
+        private readonly IEventAggregator _eventAggregator;
+        private readonly ISettings _settings;
+        public TextEditor TextEditor { get; }
         public Dispatcher Dispatcher { get; set; }
 
-        private Theme _theme;
 
         public EditControlViewModel(
-            IEditModel editModel,
             ITextEditorComponent textEditor,
+            IEnumerable<IEditFeature> editFeatures,
             IEventAggregator eventAggregator,
-            IOpenSaveActions openSaveActions,
-            ISettings settings,
-            IEnumerable<IEditFeature> editFeatures)
+            ISettings settings)
         {
-            EditModel = editModel;
             TextEditor = textEditor as TextEditor;
-            EventAggregator = eventAggregator;
-            OpenSaveActions = openSaveActions;
-            Settings = settings;
+            _editFeatures = editFeatures;
+            _eventAggregator = eventAggregator;
+            _settings = settings;
 
-            foreach (var editFeature in editFeatures)
+            InitializeEditFeatures();
+            EventHandlers();
+            Theme = new Theme();
+        }
+
+        private void InitializeEditFeatures()
+        {
+            foreach (var editFeature in _editFeatures)
             {
                 editFeature.Initialize(this);
             }
-
-            EventHandlers();
-            Theme = new Theme();
         }
 
         private void EventHandlers()
@@ -51,14 +50,14 @@ namespace EditModule.ViewModels
             // ReSharper disable once ExplicitCallerInfoArgument
             // This ties changes from the Settings singleton to notifications to the UI
             // The editor and settings property name must be the same for this to work  
-            Settings.PropertyChanged += (sd, ea) => RaisePropertyChanged(ea.PropertyName);
+            _settings.PropertyChanged += (sd, ea) => RaisePropertyChanged(ea.PropertyName);
 
-            TextEditor.Document.FileNameChanged += (sd, ea) => EventAggregator
+            TextEditor.Document.FileNameChanged += (sd, ea) => _eventAggregator
                 .GetEvent<DocumentNameChangedEvent>()
                 .Publish(TextEditor.Document.FileName);
 
             void UpdateTextCommand() => Dispatcher.InvokeAsync(
-                () => EventAggregator
+                () => _eventAggregator
                     .GetEvent<TextUpdatedEvent>()
                     .Publish(TextEditor.Document.Text));
 
@@ -68,14 +67,14 @@ namespace EditModule.ViewModels
 
         // Properties
 
-        public FontFamily Font => Settings.Font;
+        public FontFamily Font => _settings.Font;
 
-        public double FontSize => Settings.FontSize;
+        public double FontSize => _settings.FontSize;
 
         public bool WordWrap
         {
-            get => Settings.WordWrap;
-            set => Settings.WordWrap = value;
+            get => _settings.WordWrap;
+            set => _settings.WordWrap = value;
         }
 
         private bool _isDocumentModified;
@@ -83,18 +82,8 @@ namespace EditModule.ViewModels
         public bool IsDocumentModified
         {
             get => _isDocumentModified;
-            set => SetProperty(ref _isDocumentModified, value, () => EventAggregator.GetEvent<DocumentModifiedChangedEvent>().Publish(value));
+            set => SetProperty(ref _isDocumentModified, value, () => _eventAggregator.GetEvent<DocumentModifiedChangedEvent>().Publish(value));
         }
-
-        // Command Handlers
-
-        public void NewCommandExecuted(object sender, ExecutedRoutedEventArgs ea) => EditModel.NewCommandExecuted(TextEditor);
-
-        public void OpenCommandExecuted(object sender, ExecutedRoutedEventArgs ea) => EditModel.OpenCommandExecuted(TextEditor, ea.Parameter as string);
-
-        public void SaveCommandExecuted(object sender, ExecutedRoutedEventArgs ea) => EditModel.SaveCommandExecuted(TextEditor);
-
-        public void SaveAsCommandExecuted(object sender, ExecutedRoutedEventArgs ea) => EditModel.SaveAsCommandExecuted(TextEditor);
 
         // Theme
 
