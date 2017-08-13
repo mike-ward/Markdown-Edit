@@ -38,7 +38,9 @@ namespace EditModule
             Container.RegisterType<IEditCommandHandler, SaveCommandHandler>(nameof(SaveCommandHandler));
             Container.RegisterType<IEditCommandHandler, SaveAsCommandHandler>(nameof(SaveAsCommandHandler));
 
+            Container.RegisterType<IEditCommandHandler, ToggleCodeCommandHandler>(nameof(ToggleCodeCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleBoldCommandHandler>(nameof(ToggleBoldCommandHandler));
+            Container.RegisterType<IEditCommandHandler, ToggleItalicCommandHandler>(nameof(ToggleItalicCommandHandler));
             Container.RegisterType<IEnumerable<IEditCommandHandler>, IEditCommandHandler[]>();
 
             RegionManager.RegisterViewWithRegion(Constants.EditRegion, typeof(EditControl));

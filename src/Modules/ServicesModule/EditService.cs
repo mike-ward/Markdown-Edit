@@ -39,7 +39,7 @@ namespace ServicesModule
             else
             {
                 editor.SelectedText = selected.StartsWith(quote) && selected.EndsWith(quote)
-                    ? selected.Remove(selected.Length -1).Remove(0, 1)
+                    ? selected.Remove(selected.Length - 1).Remove(0, 1)
                     : $"{quote}{selected}{quote}";
             }
         }
