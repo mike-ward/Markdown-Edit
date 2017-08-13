@@ -18,10 +18,9 @@ namespace EditModule.Commands
             _notify = notify;
         }
 
-        public string Name { get; } = nameof(NewCommandHandler);
-
-        public void Initialize(EditControlViewModel viewModel)
+        public void Initialize(UIElement uiElement, EditControlViewModel viewModel)
         {
+            uiElement.CommandBindings.Add(new CommandBinding(ApplicationCommands.New, Execute));
             _textEditor = viewModel.TextEditor;
         }
 

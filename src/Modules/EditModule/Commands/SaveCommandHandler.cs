@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
@@ -18,10 +19,9 @@ namespace EditModule.Commands
             _notify = notify;
         }
 
-        public string Name { get; } = nameof(SaveCommandHandler);
-
-        public void Initialize(EditControlViewModel viewModel)
+        public void Initialize(UIElement uiElement, EditControlViewModel viewModel)
         {
+            uiElement.CommandBindings.Add(new CommandBinding(ApplicationCommands.Save, Execute));
             _textEditor = viewModel.TextEditor;
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
@@ -15,10 +16,9 @@ namespace EditModule.Commands
             _openSaveActions = openSaveActions;
         }
 
-        public string Name { get; } = nameof(SaveAsCommandHandler);
-
-        public void Initialize(EditControlViewModel viewModel)
+        public void Initialize(UIElement uiElement, EditControlViewModel viewModel)
         {
+            uiElement.CommandBindings.Add(new CommandBinding(ApplicationCommands.SaveAs, Execute));
             _textEditor = viewModel.TextEditor;
         }
 

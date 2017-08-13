@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -32,17 +31,17 @@ namespace EditModule.Views
             Background = ViewModel.TextEditor.Background;
             ViewModel.Dispatcher = Dispatcher;
 
-            InitializeCommandHandlers();
+            AddCommandHandlers();
             AddPropertyBindings(ViewModel.TextEditor);
-            AddCommandBindings();
             AddEventHandlers(ViewModel.TextEditor);
         }
 
-        private void InitializeCommandHandlers()
-        { 
+        private void AddCommandHandlers()
+        {
+            var shell = (Window)RegionManager.Regions[Constants.EditRegion].Context;
             foreach (var commandHandler in _commandHandlers)
             {
-                commandHandler.Initialize(ViewModel);
+                commandHandler.Initialize(shell, ViewModel);
             }
         }
 
@@ -55,18 +54,6 @@ namespace EditModule.Views
             AddBinding(FontSizeProperty, nameof(ViewModel.FontSize));
             AddBinding(TextEditor.WordWrapProperty, nameof(ViewModel.WordWrap), BindingMode.TwoWay);
             AddBinding(TextEditor.IsModifiedProperty, nameof(ViewModel.IsDocumentModified), BindingMode.TwoWay);
-        }
-
-        private void AddCommandBindings()
-        {
-            var shell = (Window)RegionManager.Regions[Constants.EditRegion].Context;
-            ExecutedRoutedEventHandler Cmd(string name) => _commandHandlers.First(ch => ch.Name == name).Execute;
-            void Bind(ICommand command, string handler) => shell.CommandBindings.Add(new CommandBinding(command, Cmd(handler)));
-
-            Bind(ApplicationCommands.New, nameof(NewCommandHandler));
-            Bind(ApplicationCommands.Open, nameof(OpenCommandHandler));
-            Bind(ApplicationCommands.Save, nameof(SaveCommandHandler));
-            Bind(ApplicationCommands.SaveAs, nameof(SaveAsCommandHandler));
         }
 
         private void AddEventHandlers(TextEditor textEditor)

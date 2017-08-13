@@ -21,10 +21,9 @@ namespace EditModule.Commands
             _strings = strings;
         }
 
-        public string Name { get; } = nameof(OpenCommandHandler);
-
-        public void Initialize(EditControlViewModel viewModel)
+        public void Initialize(UIElement uiElement, EditControlViewModel viewModel)
         {
+            uiElement.CommandBindings.Add(new CommandBinding(ApplicationCommands.Open, Execute));
             _textEditor = viewModel.TextEditor;
         }
 
