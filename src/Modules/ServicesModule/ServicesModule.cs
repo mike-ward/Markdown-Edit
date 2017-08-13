@@ -16,16 +16,17 @@ namespace ServicesModule
 
         public void Initialize()
         {
-            Container.RegisterType<IAbstractSyntaxTree, AbstractSyntaxTree>();
-            Container.RegisterType<IColorService, ColorService>();
-            Container.RegisterType<INotify, Notify>();
-            Container.RegisterType<IOpenSaveActions, OpenSaveActions>();
+            Container.RegisterType<IAbstractSyntaxTree, AbstractSyntaxTree>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IColorService, ColorService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IEditService, EditService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<INotify, Notify>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IOpenSaveActions, OpenSaveActions>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ISettings, Settings>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStrings, Strings>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<ITemplateLoader, TemplateLoader>();
+            Container.RegisterType<ITemplateLoader, TemplateLoader>(new ContainerControlledLifetimeManager());
 
-            Container.RegisterType<IMarkdownEngine, CommonMarkEngine>("CommonMark");
-            Container.RegisterType<IEnumerable<IMarkdownEngine>, IMarkdownEngine[]>();
+            Container.RegisterType<IMarkdownEngine, CommonMarkEngine>("CommonMark", new ContainerControlledLifetimeManager());
+            Container.RegisterType<IEnumerable<IMarkdownEngine>, IMarkdownEngine[]>(new ContainerControlledLifetimeManager());
         }
     }
 }
