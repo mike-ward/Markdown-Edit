@@ -80,6 +80,7 @@
     <Compile Include="Commands\OpenCommandHandler.cs" />
     <Compile Include="Commands\SaveAsCommandHandler.cs" />
     <Compile Include="Commands\SaveCommandHandler.cs" />
+    <Compile Include="Commands\ToggleBoldCommandHandler.cs" />
     <Compile Include="EditModule.cs" />
     <Compile Include="Features\IEditFeature.cs" />
     <Compile Include="Features\SyntaxHighlighting\SyntaxHighlighting.cs" />
