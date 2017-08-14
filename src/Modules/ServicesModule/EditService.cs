@@ -1,4 +1,6 @@
-﻿using ICSharpCode.AvalonEdit;
+﻿using System;
+using System.Linq;
+using ICSharpCode.AvalonEdit;
 using Infrastructure;
 
 namespace ServicesModule
@@ -41,6 +43,32 @@ namespace ServicesModule
                 editor.SelectedText = selected.StartsWith(quote) && selected.EndsWith(quote)
                     ? selected.Remove(selected.Length - 1).Remove(0, 1)
                     : $"{quote}{selected}{quote}";
+            }
+        }
+
+        public void InsertBlockQuote(TextEditor textEditor)
+        {
+            var textArea = textEditor.TextArea;
+            var document = textEditor.Document;
+            var selection = textEditor.TextArea.Selection;
+
+            var start = Math.Min(selection.StartPosition.Line, selection.EndPosition.Line);
+            if (start == 0) start = textArea.Caret.Line;
+            var end = Math.Max(selection.StartPosition.Line, selection.EndPosition.Line);
+            if (end == 0) end = textArea.Caret.Line;
+
+            textEditor.BeginChange();
+            try
+            {
+                foreach (var line in Enumerable.Range(start, end - start + 1))
+                {
+                    var offset = document.GetOffset(line, 0);
+                    document.Insert(offset, "> ");
+                }
+            }
+            finally
+            {
+                textEditor.EndChange();
             }
         }
     }

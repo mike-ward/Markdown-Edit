@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using EditModule.Commands;
 using EditModule.Features;
 using EditModule.Features.SyntaxHighlighting;
@@ -10,6 +9,7 @@ using Infrastructure;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
+using TextEditorOptions = EditModule.Features.TextEditorOptions;
 
 namespace EditModule
 {
@@ -29,7 +29,7 @@ namespace EditModule
             Container.RegisterType<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
             Container.RegisterType<ITextEditorComponent, TextEditor>();
 
-            Container.RegisterType<IEditFeature, Features.TextEditorOptions>(nameof(Features.TextEditorOptions));
+            Container.RegisterType<IEditFeature, TextEditorOptions>(nameof(TextEditorOptions));
             Container.RegisterType<IEditFeature, SyntaxHighlighting>(nameof(SyntaxHighlighting));
             Container.RegisterType<IEnumerable<IEditFeature>, IEditFeature[]>();
 
@@ -38,6 +38,7 @@ namespace EditModule
             Container.RegisterType<IEditCommandHandler, SaveCommandHandler>(nameof(SaveCommandHandler));
             Container.RegisterType<IEditCommandHandler, SaveAsCommandHandler>(nameof(SaveAsCommandHandler));
 
+            Container.RegisterType<IEditCommandHandler, InsertBlockQuoteCommandHandler>(nameof(InsertBlockQuoteCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleCodeCommandHandler>(nameof(ToggleCodeCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleBoldCommandHandler>(nameof(ToggleBoldCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleItalicCommandHandler>(nameof(ToggleItalicCommandHandler));

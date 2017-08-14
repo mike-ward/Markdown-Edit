@@ -81,6 +81,7 @@
     <Compile Include="Commands\SaveAsCommandHandler.cs" />
     <Compile Include="Commands\SaveCommandHandler.cs" />
     <Compile Include="Commands\ToggleBoldCommandHandler.cs" />
+    <Compile Include="Commands\InsertBlockQuoteCommandHander.cs" />
     <Compile Include="Commands\ToggleCodeCommandHandler.cs" />
     <Compile Include="Commands\ToggleItalicCommandHandler.cs" />
     <Compile Include="EditModule.cs" />
