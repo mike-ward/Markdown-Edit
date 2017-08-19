@@ -7,10 +7,12 @@ namespace EditModule.Features
     public class FileNameChangedEventHandler : IEditFeature
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly ISettings _settings;
 
-        public FileNameChangedEventHandler(IEventAggregator eventAggregator)
+        public FileNameChangedEventHandler(IEventAggregator eventAggregator, ISettings settings)
         {
             _eventAggregator = eventAggregator;
+            _settings = settings;
         }
 
         public void Initialize(EditControlViewModel viewModel)
@@ -18,6 +20,9 @@ namespace EditModule.Features
             viewModel.TextEditor.Document.FileNameChanged += (sd, ea) => _eventAggregator
                 .GetEvent<DocumentNameChangedEvent>()
                 .Publish(viewModel.TextEditor.Document.FileName);
+
+            viewModel.TextEditor.Document.FileNameChanged += (sd, ea) => _settings
+                .CurrentFileName = viewModel.TextEditor.Document.FileName;
         }
     }
 }

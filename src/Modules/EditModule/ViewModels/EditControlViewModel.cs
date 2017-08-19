@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using EditModule.Features;
@@ -51,6 +52,14 @@ namespace EditModule.ViewModels
             // The editor and settings property name must be the same for this to work  
             // ReSharper disable once ExplicitCallerInfoArgument
             _settings.PropertyChanged += (sd, ea) => RaisePropertyChanged(ea.PropertyName);
+        }
+
+        public void LoadLastFile()
+        {
+            if (!string.IsNullOrWhiteSpace(_settings.CurrentFileName))
+            {
+                ApplicationCommands.Open.Execute(_settings.CurrentFileName, null);
+            }    
         }
 
         // Properties

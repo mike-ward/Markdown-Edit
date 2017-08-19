@@ -34,6 +34,7 @@ namespace EditModule.Views
             AddCommandHandlers();
             AddPropertyBindings(ViewModel.TextEditor);
             AddEventHandlers(ViewModel.TextEditor);
+            Dispatcher.InvokeAsync(ViewModel.LoadLastFile);
         }
 
         private void AddCommandHandlers()

@@ -1,11 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using Infrastructure;
-using MahApps.Metro.Controls;
 using Prism.Regions;
 using ServicesModule;
 
