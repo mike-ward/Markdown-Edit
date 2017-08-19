@@ -85,11 +85,13 @@
     <Compile Include="Commands\ToggleCodeCommandHandler.cs" />
     <Compile Include="Commands\ToggleItalicCommandHandler.cs" />
     <Compile Include="EditModule.cs" />
+    <Compile Include="Features\FileNameChangedEventHandler.cs" />
     <Compile Include="Features\IEditFeature.cs" />
     <Compile Include="Features\SynchronizedScroll.cs" />
     <Compile Include="Features\SyntaxHighlighting\SyntaxHighlighting.cs" />
     <Compile Include="Features\TextEditorOptions.cs" />
     <Compile Include="Features\SyntaxHighlighting\BlockBackgroundRenderer.cs" />
+    <Compile Include="Features\TextUpdatedEventHandler.cs" />
     <Compile Include="Models\Highlight.cs" />
     <Compile Include="Models\IBlockBackgroundRenderer.cs" />
     <Compile Include="Features\SyntaxHighlighting\MarkdownHighlightingColorizer.cs" />

@@ -29,6 +29,8 @@ namespace EditModule
             Container.RegisterType<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
             Container.RegisterType<ITextEditorComponent, TextEditor>();
 
+            Container.RegisterType<IEditFeature, TextUpdatedEventHandler>(nameof(TextUpdatedEventHandler));
+            Container.RegisterType<IEditFeature, FileNameChangedEventHandler>(nameof(FileNameChangedEventHandler));
             Container.RegisterType<IEditFeature, TextEditorOptions>(nameof(TextEditorOptions));
             Container.RegisterType<IEditFeature, SyntaxHighlighting>(nameof(SyntaxHighlighting));
             Container.RegisterType<IEditFeature, SynchronizedScroll>(nameof(SynchronizedScroll));

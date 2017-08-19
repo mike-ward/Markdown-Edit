@@ -47,22 +47,10 @@ namespace EditModule.ViewModels
 
         private void EventHandlers()
         {
-            // ReSharper disable once ExplicitCallerInfoArgument
-            // This ties changes from the Settings singleton to notifications to the UI
+            // This ties changes from the Settings singleton to listeners in the UI
             // The editor and settings property name must be the same for this to work  
+            // ReSharper disable once ExplicitCallerInfoArgument
             _settings.PropertyChanged += (sd, ea) => RaisePropertyChanged(ea.PropertyName);
-
-            TextEditor.Document.FileNameChanged += (sd, ea) => _eventAggregator
-                .GetEvent<DocumentNameChangedEvent>()
-                .Publish(TextEditor.Document.FileName);
-
-            void UpdateTextCommand() => Dispatcher.InvokeAsync(
-                () => _eventAggregator
-                    .GetEvent<TextUpdatedEvent>()
-                    .Publish(TextEditor.Document.Text));
-
-            var debounceUpdateTextCommand = Utility.Debounce(UpdateTextCommand);
-            TextEditor.Document.TextChanged += (sd, ea) => debounceUpdateTextCommand();
         }
 
         // Properties

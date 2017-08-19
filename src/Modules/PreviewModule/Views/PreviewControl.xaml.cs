@@ -4,7 +4,6 @@ using System.Windows.Input;
 using Infrastructure;
 using mshtml;
 using PreviewModule.ViewModels;
-using Prism.Events;
 
 namespace PreviewModule.Views
 {
@@ -18,7 +17,7 @@ namespace PreviewModule.Views
             TemplateLoader = templateLoader;
             InitializeComponent();
             ViewModel.UpdateBrowserDelegate = UpdateBrowser;
-            ViewModel.ScrollToOffsetDelegate = ScrollToOffset;
+            ViewModel.ScrollToOffsetDelegate = ScrollToAnchor;
             _browser.PreviewKeyDown += BrowserPreviewKeyDown;
             Loaded += KillPopups;
             Loaded += LoadTemplate;
@@ -91,7 +90,7 @@ namespace PreviewModule.Views
 
         private static string GetIdName(int number) => $"mde-{number}";
 
-        private void ScrollToOffset(int number, int extra)  
+        private void ScrollToAnchor(int number, int extra)  
         {
             var document3 = _browser.Document as IHTMLDocument3;
             if (document3?.documentElement != null)
