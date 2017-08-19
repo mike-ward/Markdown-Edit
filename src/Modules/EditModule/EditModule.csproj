@@ -86,6 +86,7 @@
     <Compile Include="Commands\ToggleItalicCommandHandler.cs" />
     <Compile Include="EditModule.cs" />
     <Compile Include="Features\IEditFeature.cs" />
+    <Compile Include="Features\SynchronizedScroll.cs" />
     <Compile Include="Features\SyntaxHighlighting\SyntaxHighlighting.cs" />
     <Compile Include="Features\TextEditorOptions.cs" />
     <Compile Include="Features\SyntaxHighlighting\BlockBackgroundRenderer.cs" />

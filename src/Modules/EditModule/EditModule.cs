@@ -31,6 +31,7 @@ namespace EditModule
 
             Container.RegisterType<IEditFeature, TextEditorOptions>(nameof(TextEditorOptions));
             Container.RegisterType<IEditFeature, SyntaxHighlighting>(nameof(SyntaxHighlighting));
+            Container.RegisterType<IEditFeature, SynchronizedScroll>(nameof(SynchronizedScroll));
             Container.RegisterType<IEnumerable<IEditFeature>, IEditFeature[]>();
 
             Container.RegisterType<IEditCommandHandler, NewCommandHandler>(nameof(NewCommandHandler));

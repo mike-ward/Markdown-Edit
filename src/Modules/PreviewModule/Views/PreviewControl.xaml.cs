@@ -11,15 +11,14 @@ namespace PreviewModule.Views
     public partial class PreviewControl
     {
         public ITemplateLoader TemplateLoader { get; }
-        public IEventAggregator EventAggregator { get; }
         private PreviewControlViewModel ViewModel => (PreviewControlViewModel)DataContext;
 
-        public PreviewControl(ITemplateLoader templateLoader, IEventAggregator eventAggregator)
+        public PreviewControl(ITemplateLoader templateLoader)
         {
             TemplateLoader = templateLoader;
-            EventAggregator = eventAggregator;
             InitializeComponent();
             ViewModel.UpdateBrowserDelegate = UpdateBrowser;
+            ViewModel.ScrollToOffsetDelegate = ScrollToOffset;
             _browser.PreviewKeyDown += BrowserPreviewKeyDown;
             Loaded += KillPopups;
             Loaded += LoadTemplate;
@@ -87,6 +86,30 @@ namespace PreviewModule.Views
                     ApplicationCommands.Help.Execute(null, Application.Current.MainWindow);
                     e.Handled = true;
                     break;
+            }
+        }
+
+        private static string GetIdName(int number) => $"mde-{number}";
+
+        private void ScrollToOffset(int number, int extra)  
+        {
+            var document3 = _browser.Document as IHTMLDocument3;
+            if (document3?.documentElement != null)
+            {
+                var offsetTop = 0;
+                var document2 = _browser.Document as IHTMLDocument2;
+                if (number == int.MaxValue)
+                {
+                    var body = document2?.body as IHTMLElement2;
+                    if (body != null) offsetTop = body.scrollHeight;
+                }
+                else if (number > 1)
+                {
+                    var element = document3.getElementById(GetIdName(number));
+                    if (element == null) return;
+                    offsetTop = element.offsetTop + extra * 20;
+                }
+                document2?.parentWindow.scroll(0, offsetTop);
             }
         }
     }
