@@ -22,8 +22,7 @@ namespace EditModule.Features
         public void Initialize(EditControlViewModel viewModel)
         {
             _viewModel = viewModel;
-            var debouncedVisibleBlockNumber = Utility.Debounce(() => _viewModel.Dispatcher.Invoke(PublishVisibleBlockNumber));
-            viewModel.TextEditor.TextArea.TextView.ScrollOffsetChanged += (s, ea) => debouncedVisibleBlockNumber();
+            viewModel.TextEditor.TextArea.TextView.ScrollOffsetChanged += (s, ea) => _viewModel.Dispatcher.Invoke(PublishVisibleBlockNumber);
         }
 
         private void PublishVisibleBlockNumber()

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:commands="clr-namespace:EditModule.Commands"
              xmlns:mvvm="http://prismlibrary.com/"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
@@ -11,6 +12,7 @@
   <Border x:Name="_border" Margin="10" />
   
   <UserControl.InputBindings>
+    <KeyBinding Command="{x:Static commands:ConvertSelectionToListCommandHandler.Command}" Gesture="Alt+L" />
     <KeyBinding Command="ToggleBold" Gesture="Ctrl+B" />
     <KeyBinding Command="ToggleItalic" Gesture="Ctrl+I" />
     <KeyBinding Command="IncreaseFontSize" Gesture="Ctrl+Plus" />

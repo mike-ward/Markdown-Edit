@@ -75,6 +75,7 @@
     <Compile Include="..\..\MarkdownEdit\Properties\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Commands\ConvertSelectionToListCommandHandler.cs" />
     <Compile Include="Commands\IEditCommandHandler.cs" />
     <Compile Include="Commands\NewCommandHandler.cs" />
     <Compile Include="Commands\OpenCommandHandler.cs" />
