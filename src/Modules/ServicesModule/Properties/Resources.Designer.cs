@@ -74,15 +74,14 @@ namespace ServicesModule.Properties {
         ///   Looks up a localized string similar to &lt;html&gt;
         ///&lt;head&gt;
         ///	&lt;title&gt;Markdown Edit Preview&lt;/title&gt;
+        ///  &lt;!-- saved from url=(0016)http://localhost --&gt;
         ///	&lt;!-- Must have base tag with id of &quot;base-tag-id&quot; --&gt;
         ///	&lt;base id=&quot;base-tag-id&quot;&gt;
         ///	&lt;!-- Don&apos;t delete this X-UA tag. The browser control behaves like IE8 otherwise --&gt;
         ///	&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=Edge&quot;&gt;
         ///	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=utf-8&quot;/&gt;
         ///	&lt;style type=&quot;text/css&quot;&gt;
-        ///		body { font-family: &apos;segoe ui&apos;, sans-serif; line-height: 1.4; padding-left: 12pt; font-size: 12pt; }
-        ///		code { white-space: pre }
-        ///		ul, [rest of string was truncated]&quot;;.
+        ///		body { font-family: &apos;segoe ui&apos;, sans-serif; line-height: 1.4; padding-left: 12pt; font [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string template_html_txt {
             get {
