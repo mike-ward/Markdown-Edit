@@ -98,7 +98,7 @@
     <Compile Include="Commands\InsertBlockQuoteCommandHander.cs" />
     <Compile Include="Commands\ToggleCodeCommandHandler.cs" />
     <Compile Include="Commands\ToggleItalicCommandHandler.cs" />
-    <Compile Include="Dialogs\HelpDialog.xaml.cs">
+    <Compile Include="Views\HelpDialog.xaml.cs">
       <DependentUpon>HelpDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditModule.cs" />
@@ -142,7 +142,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Dialogs\HelpDialog.xaml">
+    <Page Include="Views\HelpDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

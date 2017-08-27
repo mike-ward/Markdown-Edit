@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using EditModule.Dialogs;
 using EditModule.ViewModels;
+using EditModule.Views;
 using Infrastructure;
 
 namespace EditModule.Commands
