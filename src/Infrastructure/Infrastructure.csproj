@@ -68,6 +68,7 @@
     <Compile Include="IAbstractSyntaxTree.cs" />
     <Compile Include="IColorService.cs" />
     <Compile Include="IEditService.cs" />
+    <Compile Include="IFormatMarkdown.cs" />
     <Compile Include="IHighlight.cs" />
     <Compile Include="INotify.cs" />
     <Compile Include="IOpenSaveActions.cs" />

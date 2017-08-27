@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CliWrap, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CliWrap.1.5.0\lib\net45\CliWrap.dll</HintPath>
+    </Reference>
     <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonMark.NET.0.15.1\lib\net45\CommonMark.dll</HintPath>
     </Reference>
@@ -86,6 +89,7 @@
     <Compile Include="CommonMarkEngine.cs" />
     <Compile Include="ColorService.cs" />
     <Compile Include="EditService.cs" />
+    <Compile Include="FormatMarkdown.cs" />
     <Compile Include="OpenSaveActions.cs" />
     <Compile Include="Notify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -130,6 +134,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Help.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Apps\pandoc.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

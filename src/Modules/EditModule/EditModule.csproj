@@ -90,6 +90,7 @@
     <Compile Include="Commands\ConvertSelectionToListCommandHandler.cs" />
     <Compile Include="Commands\HelpCommandHandler.cs" />
     <Compile Include="Commands\IEditCommandHandler.cs" />
+    <Compile Include="Commands\FormatTextCommandHandler.cs" />
     <Compile Include="Commands\NewCommandHandler.cs" />
     <Compile Include="Commands\OpenCommandHandler.cs" />
     <Compile Include="Commands\SaveAsCommandHandler.cs" />
