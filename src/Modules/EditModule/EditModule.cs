@@ -29,11 +29,11 @@ namespace EditModule
             Container.RegisterType<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
             Container.RegisterType<ITextEditorComponent, TextEditor>();
 
-            Container.RegisterType<IEditFeature, TextUpdatedEventHandler>(nameof(TextUpdatedEventHandler));
             Container.RegisterType<IEditFeature, FileNameChangedEventHandler>(nameof(FileNameChangedEventHandler));
             Container.RegisterType<IEditFeature, TextEditorOptions>(nameof(TextEditorOptions));
             Container.RegisterType<IEditFeature, SyntaxHighlighting>(nameof(SyntaxHighlighting));
             Container.RegisterType<IEditFeature, SynchronizedScroll>(nameof(SynchronizedScroll));
+            Container.RegisterType<IEditFeature, TextUpdatedEventHandler>(nameof(TextUpdatedEventHandler));
             Container.RegisterType<IEnumerable<IEditFeature>, IEditFeature[]>();
 
             Container.RegisterType<IEditCommandHandler, NewCommandHandler>(nameof(NewCommandHandler));
@@ -45,9 +45,11 @@ namespace EditModule
             Container.RegisterType<IEditCommandHandler, FormatTextCommandHandler>(nameof(FormatTextCommandHandler));
             Container.RegisterType<IEditCommandHandler, HelpCommandHandler>(nameof(HelpCommandHandler));
             Container.RegisterType<IEditCommandHandler, InsertBlockQuoteCommandHandler>(nameof(InsertBlockQuoteCommandHandler));
+            Container.RegisterType<IEditCommandHandler, RedoEditCommandHander>(nameof(RedoEditCommandHander));
             Container.RegisterType<IEditCommandHandler, ToggleCodeCommandHandler>(nameof(ToggleCodeCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleBoldCommandHandler>(nameof(ToggleBoldCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleItalicCommandHandler>(nameof(ToggleItalicCommandHandler));
+            Container.RegisterType<IEditCommandHandler, UndoEditCommandHander>(nameof(UndoEditCommandHander));
             Container.RegisterType<IEnumerable<IEditCommandHandler>, IEditCommandHandler[]>();
 
             RegionManager.RegisterViewWithRegion(Constants.EditRegion, typeof(EditControl));

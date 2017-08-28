@@ -50,6 +50,7 @@ namespace EditModule.Commands
                 _textEditor.Document.FileName = file;
                 _textEditor.ScrollToHome();
                 _textEditor.IsModified = false;
+                _textEditor.Document.UndoStack.ClearAll();
                 _textEditor.Focus();
             }
             catch (Exception ex)
