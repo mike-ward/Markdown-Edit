@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Events.cs" />
+    <Compile Include="FindReplaceOptions.cs" />
     <Compile Include="IAbstractSyntaxTree.cs" />
     <Compile Include="IColorService.cs" />
     <Compile Include="IEditService.cs" />

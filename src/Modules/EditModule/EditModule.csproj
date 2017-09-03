@@ -101,6 +101,10 @@
     <Compile Include="Commands\ToggleItalicCommandHandler.cs" />
     <Compile Include="Commands\RecoEditCommandHandler.cs" />
     <Compile Include="Commands\UndoEditCommandHander.cs" />
+    <Compile Include="ViewModels\FindReplaceDialogViewModel.cs" />
+    <Compile Include="Views\FindReplaceDialog.xaml.cs">
+      <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HelpDialog.xaml.cs">
       <DependentUpon>HelpDialog.xaml</DependentUpon>
     </Compile>
@@ -145,6 +149,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\FindReplaceDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HelpDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

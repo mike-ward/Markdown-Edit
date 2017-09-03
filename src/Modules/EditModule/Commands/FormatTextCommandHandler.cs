@@ -28,7 +28,7 @@ namespace EditModule.Commands
         public void Execute(object sender, ExecutedRoutedEventArgs ea)
         {
             var result = _formatMarkdown.Format(_textEditor.Text);
-            if (result != null) _textEditor.Text = result;
+            if (result != null) _textEditor.Document.Text = result;
         }
     }
 }
