@@ -1,5 +1,7 @@
 ﻿using System.Media;
 using System.Windows;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
 
@@ -8,7 +10,7 @@ namespace EditModule.Views
     public partial class FindReplaceDialog
     {
         private readonly TextEditor _textEditor;
-        private static FindReplaceDialog _theDialog;
+        private static FindReplaceDialog _dialog;
 
         private FindReplaceDialogViewModel ViewModel => (FindReplaceDialogViewModel)DataContext;
 
@@ -19,7 +21,7 @@ namespace EditModule.Views
 
             Loaded += ViewModel.OnLoad;
             Closed += ViewModel.OnClose;
-            Closed += (sd, ea) => _theDialog = null;
+            Closed += (sd, ea) => _dialog = null;
         }
 
         private void FindNextClick(object sender, RoutedEventArgs e)
@@ -37,13 +39,30 @@ namespace EditModule.Views
             ViewModel.ReplaceAll(_textEditor);
         }
 
-        public static void ShowFindReplace(TextEditor editor)
+        private void ExecuteClose(object sender, ExecutedRoutedEventArgs e)
         {
-            _theDialog = _theDialog ?? new FindReplaceDialog(editor) { Owner = Application.Current.MainWindow };
-            _theDialog._tabMain.SelectedIndex = 0;
-            _theDialog.Show();
-            _theDialog.Activate();
-            _theDialog._textFind.Focus();
+            e.Handled = true;
+            Close();
+        }
+
+        private void TextFindOnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                e.Handled = true;
+                _findNextButton.Focus();
+                _findNextButton.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            }
+        }
+
+        public static void ShowFindReplace(TextEditor editor, bool replace = false)
+        {
+            _dialog = _dialog ?? new FindReplaceDialog(editor) { Owner = Application.Current.MainWindow };
+            _dialog._tabMain.SelectedIndex = replace ? 1 : 0;
+            _dialog.Show();
+            _dialog.Activate();
+            if (replace) _dialog._textFind.Focus();
+            else _dialog._textFind.Focus();
         }
     }
 }

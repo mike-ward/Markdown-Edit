@@ -14,7 +14,6 @@ namespace EditModule.ViewModels
         private bool _wholeWord;
         private bool _useRegex;
         private bool _wildcards;
-        private bool _searchUp;
 
         // ReSharper disable once InconsistentNaming
 
@@ -30,7 +29,6 @@ namespace EditModule.ViewModels
             WholeWord = _editService.FindReplaceOptions.WholeWord;
             UseRegEx = _editService.FindReplaceOptions.Regex;
             Wildcards = _editService.FindReplaceOptions.Wildcards;
-            SearchUp = _editService.FindReplaceOptions.SearchUp;
         }
 
         private void UpdateFindReplaceOptions()
@@ -40,7 +38,6 @@ namespace EditModule.ViewModels
             _editService.FindReplaceOptions.WholeWord = WholeWord;
             _editService.FindReplaceOptions.Regex = UseRegEx;
             _editService.FindReplaceOptions.Wildcards = Wildcards;
-            _editService.FindReplaceOptions.SearchUp = SearchUp;
         }
 
         public void OnClose(object sender, EventArgs ea)
@@ -102,12 +99,6 @@ namespace EditModule.ViewModels
         {
             get => _wildcards;
             set => SetProperty(ref _wildcards, value);
-        }
-
-        public bool SearchUp
-        {
-            get => _searchUp;
-            set => SetProperty(ref _searchUp, value);
         }
     }
 }

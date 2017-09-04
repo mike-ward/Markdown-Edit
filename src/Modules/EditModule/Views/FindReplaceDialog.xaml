@@ -6,13 +6,12 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:mvvm="http://prismlibrary.com/"
-  Title="Find and Relace"
   Width="300"
-  Height="300"
   mvvm:ViewModelLocator.AutoWireViewModel="True"
   GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="NoResize"
   ShowInTaskbar="False"
+  SizeToContent="Height"
   TextOptions.TextFormattingMode="Display"
   TitleCharacterCasing="Normal"
   WindowStartupLocation="CenterOwner"
@@ -20,7 +19,16 @@
   WindowTitleBrush="{StaticResource GrayBrush2}"
   WindowTransitionsEnabled="False"
   mc:Ignorable="d">
-  <Grid Margin="0,4">
+
+  <Window.CommandBindings>
+    <CommandBinding Command="Close" Executed="ExecuteClose" />
+  </Window.CommandBindings>
+
+  <Window.InputBindings>
+    <KeyBinding Command="Close" Gesture="Esc" />
+  </Window.InputBindings>
+
+  <Grid Margin="4,10">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -35,15 +43,18 @@
     <TabControl
       Name="_tabMain"
       Grid.ColumnSpan="2"
-      Height="Auto">
+      Height="Auto"
+      Margin="3,0,0,10">
       <TabItem Header="Find">
         <StackPanel>
           <TextBlock Margin="3">Text to Find:</TextBlock>
           <TextBox
             Name="_textFind"
             Margin="3"
+            KeyDown="TextFindOnKeyDown"
             Text="{Binding FindText}" />
           <Button
+            x:Name="_findNextButton"
             Width="80"
             Margin="5"
             HorizontalAlignment="Right"
@@ -108,11 +119,5 @@
       Margin="10,2"
       Content="Wildcards"
       IsChecked="{Binding Wildcards}" />
-    <CheckBox
-      Grid.Row="3"
-      Grid.Column="1"
-      Margin="10,2"
-      Content="Search up"
-      IsChecked="{Binding SearchUp}" />
   </Grid>
 </controls:MetroWindow>

@@ -2,8 +2,8 @@
 {
     public class FindReplaceOptions
     {
-        public string FindText { get; set; }
-        public string ReplaceText { get; set; }
+        public string FindText { get; set; } = string.Empty;
+        public string ReplaceText { get; set; } = string.Empty;
         public bool CaseSensitive { get; set; }
         public bool WholeWord { get; set; }
         public bool Regex { get; set; }
