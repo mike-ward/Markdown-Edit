@@ -39,25 +39,11 @@ namespace EditModule.Views
 
         public static void ShowFindReplace(TextEditor editor)
         {
-            if (_theDialog == null)
-            {
-                _theDialog = new FindReplaceDialog(editor) { _tabMain = { SelectedIndex = 1 } };
-                _theDialog.Show();
-                _theDialog.Activate();
-            }
-            else
-            {
-                _theDialog._tabMain.SelectedIndex = 1;
-                _theDialog.Activate();
-            }
-
-            if (!editor.TextArea.Selection.IsMultiline)
-            {
-                _theDialog.ViewModel.FindText = editor.TextArea.Selection.GetText();
-                _theDialog._textFind.SelectAll();
-                _theDialog._textFind2.SelectAll();
-                _theDialog._textFind2.Focus();
-            }
+            _theDialog = _theDialog ?? new FindReplaceDialog(editor) { Owner = Application.Current.MainWindow };
+            _theDialog._tabMain.SelectedIndex = 0;
+            _theDialog.Show();
+            _theDialog.Activate();
+            _theDialog._textFind.Focus();
         }
     }
 }

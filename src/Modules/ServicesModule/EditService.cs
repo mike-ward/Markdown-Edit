@@ -19,6 +19,8 @@ namespace ServicesModule
 
         private static bool IsWordPart(char ch) => char.IsLetterOrDigit(ch) || ch == '_' || ch == '*';
 
+        public FindReplaceOptions FindReplaceOptions { get; } = new FindReplaceOptions();
+
         public void SelectWordAt(TextEditor editor, int offset)
         {
             if (offset < 0 || offset >= editor.Document.TextLength || !IsWordPart(editor.Document.GetCharAt(offset)))

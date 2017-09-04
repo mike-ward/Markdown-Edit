@@ -17,7 +17,6 @@ namespace EditModule.ViewModels
         private bool _searchUp;
 
         // ReSharper disable once InconsistentNaming
-        private static readonly FindReplaceOptions _findReplaceOptions = new FindReplaceOptions();
 
         public FindReplaceDialogViewModel(IEditService editService)
         {
@@ -26,27 +25,22 @@ namespace EditModule.ViewModels
 
         public void OnLoad(object sender, EventArgs ea)
         {
-            LoadDialogFields();
-        }
-
-        private  void LoadDialogFields()
-        {
-            FindText = _findReplaceOptions.FindText;
-            CaseSensitive = _findReplaceOptions.CaseSensitive;
-            WholeWord = _findReplaceOptions.WholeWord;
-            UseRegEx = _findReplaceOptions.Regex;
-            Wildcards = _findReplaceOptions.Wildcards;
-            SearchUp = _findReplaceOptions.SearchUp;
+            FindText = _editService.FindReplaceOptions.FindText;
+            CaseSensitive = _editService.FindReplaceOptions.CaseSensitive;
+            WholeWord = _editService.FindReplaceOptions.WholeWord;
+            UseRegEx = _editService.FindReplaceOptions.Regex;
+            Wildcards = _editService.FindReplaceOptions.Wildcards;
+            SearchUp = _editService.FindReplaceOptions.SearchUp;
         }
 
         private void UpdateFindReplaceOptions()
         {
-            _findReplaceOptions.FindText = FindText;
-            _findReplaceOptions.CaseSensitive = CaseSensitive;
-            _findReplaceOptions.WholeWord = WholeWord;
-            _findReplaceOptions.Regex = UseRegEx;
-            _findReplaceOptions.Wildcards = Wildcards;
-            _findReplaceOptions.SearchUp = SearchUp;
+            _editService.FindReplaceOptions.FindText = FindText;
+            _editService.FindReplaceOptions.CaseSensitive = CaseSensitive;
+            _editService.FindReplaceOptions.WholeWord = WholeWord;
+            _editService.FindReplaceOptions.Regex = UseRegEx;
+            _editService.FindReplaceOptions.Wildcards = Wildcards;
+            _editService.FindReplaceOptions.SearchUp = SearchUp;
         }
 
         public void OnClose(object sender, EventArgs ea)
@@ -57,19 +51,19 @@ namespace EditModule.ViewModels
         public bool FindNext(TextEditor textEditor)
         {
             UpdateFindReplaceOptions();
-            return _editService.FindNext(textEditor, _findReplaceOptions);
+            return _editService.FindNext(textEditor, _editService.FindReplaceOptions);
         }
 
         public void Replace(TextEditor textEditor)
         {
             UpdateFindReplaceOptions();
-            _editService.Replace(textEditor, _findReplaceOptions);
+            _editService.Replace(textEditor, _editService.FindReplaceOptions);
         }
 
         public void ReplaceAll(TextEditor textEditor)
         {
             UpdateFindReplaceOptions();
-            _editService.ReplaceAll(textEditor, _findReplaceOptions);
+            _editService.ReplaceAll(textEditor, _editService.FindReplaceOptions);
         }
 
         // Properties

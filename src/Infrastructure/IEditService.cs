@@ -4,6 +4,7 @@ namespace Infrastructure
 {
     public interface IEditService
     {
+        FindReplaceOptions FindReplaceOptions { get; }
         void SelectWordAt(TextEditor editor, int offset);
         void AddRemoveText(TextEditor editor, string quote);
         void InsertBlockQuote(TextEditor textEditor);
