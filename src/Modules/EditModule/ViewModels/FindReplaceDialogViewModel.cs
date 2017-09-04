@@ -9,6 +9,7 @@ namespace EditModule.ViewModels
     {
         private readonly IEditService _editService;
         private string _findText;
+        private string _replaceText;
         private bool _caseSensitive;
         private bool _wholeWord;
         private bool _useRegex;
@@ -31,7 +32,7 @@ namespace EditModule.ViewModels
         private  void LoadDialogFields()
         {
             FindText = _findReplaceOptions.FindText;
-            CaseInsensitive = _findReplaceOptions.CaseSensitive;
+            CaseSensitive = _findReplaceOptions.CaseSensitive;
             WholeWord = _findReplaceOptions.WholeWord;
             UseRegEx = _findReplaceOptions.Regex;
             Wildcards = _findReplaceOptions.Wildcards;
@@ -41,7 +42,7 @@ namespace EditModule.ViewModels
         private void UpdateFindReplaceOptions()
         {
             _findReplaceOptions.FindText = FindText;
-            _findReplaceOptions.CaseSensitive = CaseInsensitive;
+            _findReplaceOptions.CaseSensitive = CaseSensitive;
             _findReplaceOptions.WholeWord = WholeWord;
             _findReplaceOptions.Regex = UseRegEx;
             _findReplaceOptions.Wildcards = Wildcards;
@@ -79,7 +80,13 @@ namespace EditModule.ViewModels
             set => SetProperty(ref _findText, value);
         }
 
-        public bool CaseInsensitive
+        public string ReplaceText
+        {
+            get => _replaceText;
+            set => SetProperty(ref _replaceText, value);
+        }
+
+        public bool CaseSensitive
         {
             get => _caseSensitive;
             set => SetProperty(ref _caseSensitive, value);

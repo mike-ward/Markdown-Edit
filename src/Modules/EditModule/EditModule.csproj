@@ -88,6 +88,7 @@
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Commands\ConvertSelectionToListCommandHandler.cs" />
+    <Compile Include="Commands\FindDialogCommandHandler.cs" />
     <Compile Include="Commands\HelpCommandHandler.cs" />
     <Compile Include="Commands\IEditCommandHandler.cs" />
     <Compile Include="Commands\FormatTextCommandHandler.cs" />

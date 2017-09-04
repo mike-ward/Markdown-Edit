@@ -10,10 +10,15 @@
   Width="300"
   Height="300"
   mvvm:ViewModelLocator.AutoWireViewModel="True"
+  GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="NoResize"
   ShowInTaskbar="False"
+  TextOptions.TextFormattingMode="Display"
+  TitleCharacterCasing="Normal"
   WindowStartupLocation="CenterOwner"
   WindowStyle="ToolWindow"
+  WindowTitleBrush="{StaticResource GrayBrush2}"
+  WindowTransitionsEnabled="False"
   mc:Ignorable="d">
   <Grid Margin="0,4">
     <Grid.RowDefinitions>
@@ -83,33 +88,31 @@
       Grid.Row="1"
       Grid.Column="0"
       Margin="10,2"
-      Checked="{Binding CaseInsensitive}"
       Content="Match case"
-      IsChecked="true" />
+      IsChecked="{Binding CaseSensitive}" />
     <CheckBox
       Grid.Row="2"
       Grid.Column="0"
       Margin="10,2"
-      Checked="{Binding WholeWord}"
       Content="Match whole word"
-      IsChecked="true" />
+      IsChecked="{Binding WholeWord}" />
     <CheckBox
       Grid.Row="1"
       Grid.Column="1"
       Margin="10,2"
-      Checked="{Binding UseRegEx}"
-      Content="Regular Expression" />
+      Content="Regular Expression"
+      IsChecked="{Binding UseRegEx}" />
     <CheckBox
       Grid.Row="2"
       Grid.Column="1"
       Margin="10,2"
-      Checked="{Binding Wildcards}"
-      Content="Wildcards" />
+      Content="Wildcards"
+      IsChecked="{Binding Wildcards}" />
     <CheckBox
       Grid.Row="3"
       Grid.Column="1"
       Margin="10,2"
-      Checked="{Binding SearchUp}"
-      Content="Search up" />
+      Content="Search up"
+      IsChecked="{Binding SearchUp}" />
   </Grid>
 </controls:MetroWindow>
