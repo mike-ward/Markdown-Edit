@@ -47,6 +47,7 @@ namespace EditModule
             Container.RegisterType<IEditCommandHandler, HelpCommandHandler>(nameof(HelpCommandHandler));
             Container.RegisterType<IEditCommandHandler, InsertBlockQuoteCommandHandler>(nameof(InsertBlockQuoteCommandHandler));
             Container.RegisterType<IEditCommandHandler, RedoEditCommandHander>(nameof(RedoEditCommandHander));
+            Container.RegisterType<IEditCommandHandler, ReplaceDialogCommandHandler>(nameof(ReplaceDialogCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleCodeCommandHandler>(nameof(ToggleCodeCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleBoldCommandHandler>(nameof(ToggleBoldCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleItalicCommandHandler>(nameof(ToggleItalicCommandHandler));

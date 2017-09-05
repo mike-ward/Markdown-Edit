@@ -61,7 +61,7 @@ namespace EditModule.Views
             _dialog._tabMain.SelectedIndex = replace ? 1 : 0;
             _dialog.Show();
             _dialog.Activate();
-            if (replace) _dialog._textFind.Focus();
+            if (replace) _dialog._textFind2.Focus();
             else _dialog._textFind.Focus();
         }
     }
