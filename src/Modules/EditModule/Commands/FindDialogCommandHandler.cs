@@ -3,12 +3,19 @@ using System.Windows.Input;
 using EditModule.ViewModels;
 using EditModule.Views;
 using ICSharpCode.AvalonEdit;
+using Infrastructure;
 
 namespace EditModule.Commands
 {
     public class FindDialogCommandHandler : IEditCommandHandler
     {
+        private readonly IStrings _strings;
         private TextEditor _textEditor;
+
+        public FindDialogCommandHandler(IStrings strings)
+        {
+            _strings = strings;
+        }
 
         public void Initialize(UIElement uiElement, EditControlViewModel viewModel)
         {
@@ -19,7 +26,7 @@ namespace EditModule.Commands
 
         public void Execute(object sender, ExecutedRoutedEventArgs ea)
         {
-            FindReplaceDialog.ShowFindReplace(_textEditor);
+            FindReplaceDialog.ShowFindReplace(_textEditor, _strings);
         }
     }
 }

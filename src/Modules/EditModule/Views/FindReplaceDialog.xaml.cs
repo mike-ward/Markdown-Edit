@@ -4,6 +4,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
+using Infrastructure;
 
 namespace EditModule.Views
 {
@@ -14,14 +15,22 @@ namespace EditModule.Views
 
         private FindReplaceDialogViewModel ViewModel => (FindReplaceDialogViewModel)DataContext;
 
-        public FindReplaceDialog(TextEditor textEditor)
+        public FindReplaceDialog(TextEditor textEditor, IStrings strings)
         {
             _textEditor = textEditor;
             InitializeComponent();
+            Localize(strings);
 
             Loaded += ViewModel.OnLoad;
             Closed += ViewModel.OnClose;
             Closed += (sd, ea) => _dialog = null;
+        }
+
+        private void Localize(IStrings strings)
+        {
+            _findLabel.Text = strings.FindReplaceWatermarkFind;
+            _findLabel2.Text = strings.FindReplaceWatermarkFind;
+            _replaceLabel.Text = strings.FindReplaceWatermarkReplace;
         }
 
         private void FindNextClick(object sender, RoutedEventArgs e)
@@ -55,9 +64,9 @@ namespace EditModule.Views
             }
         }
 
-        public static void ShowFindReplace(TextEditor editor, bool replace = false)
+        public static void ShowFindReplace(TextEditor editor, IStrings strings, bool replace = false)
         {
-            _dialog = _dialog ?? new FindReplaceDialog(editor) { Owner = Application.Current.MainWindow };
+            _dialog = _dialog ?? new FindReplaceDialog(editor, strings) { Owner = Application.Current.MainWindow };
             _dialog._tabMain.SelectedIndex = replace ? 1 : 0;
             _dialog.Show();
             _dialog.Activate();

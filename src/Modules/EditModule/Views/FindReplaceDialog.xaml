@@ -47,7 +47,7 @@
       Margin="3,0,0,10">
       <TabItem Header="Find">
         <StackPanel>
-          <TextBlock Margin="3">Text to Find:</TextBlock>
+          <TextBlock Name="_findLabel" Margin="3">Text to Find:</TextBlock>
           <TextBox
             Name="_textFind"
             Margin="3"
@@ -64,12 +64,15 @@
       </TabItem>
       <TabItem Header="Replace">
         <StackPanel>
-          <TextBlock Margin="3">Text to Find:</TextBlock>
+          <TextBlock Name="_findLabel2" Margin="3">Text to Find:</TextBlock>
           <TextBox
             Name="_textFind2"
             Margin="3"
             Text="{Binding FindText}" />
-          <TextBlock Margin="3" Text="Replace with:" />
+          <TextBlock
+            Name="_replaceLabel"
+            Margin="3"
+            Text="Replace with:" />
           <TextBox Margin="3" Text="{Binding ReplaceText}" />
           <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
             <Button
