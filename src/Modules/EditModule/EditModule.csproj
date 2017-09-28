@@ -101,7 +101,7 @@
     <Compile Include="Commands\InsertBlockQuoteCommandHander.cs" />
     <Compile Include="Commands\ToggleCodeCommandHandler.cs" />
     <Compile Include="Commands\ToggleItalicCommandHandler.cs" />
-    <Compile Include="Commands\RecoEditCommandHandler.cs" />
+    <Compile Include="Commands\RedoEditCommandHandler.cs" />
     <Compile Include="Commands\UndoEditCommandHander.cs" />
     <Compile Include="ViewModels\FindReplaceDialogViewModel.cs" />
     <Compile Include="Views\FindReplaceDialog.xaml.cs">
@@ -131,11 +131,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <Compile Include="ViewModels\EditControlViewModel.cs" />
     <Compile Include="Views\EditControl.xaml.cs">
       <DependentUpon>EditControl.xaml</DependentUpon>
@@ -145,10 +140,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\FindReplaceDialog.xaml">

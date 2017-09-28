@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Infrastructure;
 
-namespace ServicesModule
+namespace ServicesModule.Services
 {
     public class Strings : IStrings
     {

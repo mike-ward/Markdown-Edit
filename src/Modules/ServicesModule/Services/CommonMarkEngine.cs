@@ -1,6 +1,6 @@
 ﻿using Infrastructure;
 
-namespace ServicesModule
+namespace ServicesModule.Services
 {
     public class CommonMarkEngine : IMarkdownEngine
     {

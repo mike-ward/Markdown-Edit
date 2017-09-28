@@ -3,7 +3,7 @@ using System.IO;
 using Infrastructure;
 using ServicesModule.Properties;
 
-namespace ServicesModule
+namespace ServicesModule.Services
 {
     public class TemplateLoader : ITemplateLoader
     {

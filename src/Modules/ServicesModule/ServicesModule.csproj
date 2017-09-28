@@ -85,13 +85,13 @@
     <Compile Include="..\..\MarkdownEdit\Properties\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="AbstractSyntaxTree.cs" />
-    <Compile Include="CommonMarkEngine.cs" />
-    <Compile Include="ColorService.cs" />
-    <Compile Include="EditService.cs" />
-    <Compile Include="FormatMarkdown.cs" />
-    <Compile Include="OpenSaveActions.cs" />
-    <Compile Include="Notify.cs" />
+    <Compile Include="Services\AbstractSyntaxTree.cs" />
+    <Compile Include="Services\CommonMarkEngine.cs" />
+    <Compile Include="Services\ColorService.cs" />
+    <Compile Include="Services\EditService.cs" />
+    <Compile Include="Services\FormatMarkdown.cs" />
+    <Compile Include="Services\OpenSaveActions.cs" />
+    <Compile Include="Services\Notify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,9 +106,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ServicesModule.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Strings.cs" />
-    <Compile Include="TemplateLoader.cs" />
+    <Compile Include="Services\Settings.cs" />
+    <Compile Include="Services\Strings.cs" />
+    <Compile Include="Services\TemplateLoader.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>

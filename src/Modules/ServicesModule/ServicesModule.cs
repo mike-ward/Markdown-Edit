@@ -2,6 +2,7 @@
 using Infrastructure;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
+using ServicesModule.Services;
 
 namespace ServicesModule
 {

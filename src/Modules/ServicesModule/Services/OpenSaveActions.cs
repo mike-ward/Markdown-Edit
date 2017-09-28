@@ -1,9 +1,8 @@
 ﻿using System.IO;
-using System.Windows;
 using Infrastructure;
 using Microsoft.Win32;
 
-namespace ServicesModule
+namespace ServicesModule.Services
 {
     public class OpenSaveActions : IOpenSaveActions
     {

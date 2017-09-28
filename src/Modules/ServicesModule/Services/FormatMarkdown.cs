@@ -2,7 +2,7 @@
 using CliWrap.Models;
 using Infrastructure;
 
-namespace ServicesModule
+namespace ServicesModule.Services
 {
     public class FormatMarkdown : IFormatMarkdown
     {

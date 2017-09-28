@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Infrastructure;
 
-namespace ServicesModule
+namespace ServicesModule.Services
 {
     public class Notify : INotify
     {

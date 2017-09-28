@@ -7,7 +7,7 @@ using Jot.DefaultInitializer;
 using Jot.Storage;
 using Prism.Mvvm;
 
-namespace ServicesModule
+namespace ServicesModule.Services
 {
     public class Settings : BindableBase, ISettings
     {

@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using Infrastructure;
 using ServicesModule;
+using ServicesModule.Services;
 
 namespace EditModule.Views
 {

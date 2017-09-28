@@ -6,7 +6,7 @@ using CommonMark;
 using CommonMark.Syntax;
 using Infrastructure;
 
-namespace ServicesModule
+namespace ServicesModule.Services
 {
     public class AbstractSyntaxTree : IAbstractSyntaxTree
     {

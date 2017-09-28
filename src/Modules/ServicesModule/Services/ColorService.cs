@@ -1,8 +1,8 @@
 ﻿using System;
-using Infrastructure;
 using System.Windows.Media;
+using Infrastructure;
 
-namespace ServicesModule
+namespace ServicesModule.Services
 {
     public class ColorService : IColorService
     {

@@ -6,7 +6,7 @@ using System.Windows;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
 
-namespace ServicesModule
+namespace ServicesModule.Services
 {
     public class EditService : IEditService
     {
