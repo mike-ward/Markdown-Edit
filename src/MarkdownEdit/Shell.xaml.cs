@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using Infrastructure;
 using Prism.Regions;
-using ServicesModule;
 using ServicesModule.Services;
 
 namespace MarkdownEdit

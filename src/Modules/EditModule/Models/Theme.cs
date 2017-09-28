@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Infrastructure;
-using ServicesModule;
 
 namespace EditModule.Models
 {
