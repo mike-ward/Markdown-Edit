@@ -19,7 +19,7 @@ namespace ServicesModule.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -67,6 +67,28 @@ namespace ServicesModule.Properties {
             get {
                 object obj = ResourceManager.GetObject("emoji_sprites", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to now       $DATE(&quot;f&quot;)$ $END$
+        ///date      $DATE(&quot;d&quot;)$ $END$
+        ///time      $DATE(&quot;t&quot;)$ $END$
+        ///
+        ///img       ![$alt_text$]($image_url$) $END$
+        ///link      [$link_text$]($link_url$) $END$
+        ///
+        ///tm        &amp;trade;
+        ///cp        &amp;copy;
+        ///reg       &amp;reg;
+        ///
+        ///&quot;         “$END$”
+        ///&apos;         ‘$END$’
+        ///--		  —.
+        /// </summary>
+        internal static string Snippets {
+            get {
+                return ResourceManager.GetString("Snippets", resourceCulture);
             }
         }
         

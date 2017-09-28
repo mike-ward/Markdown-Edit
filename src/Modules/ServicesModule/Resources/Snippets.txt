@@ -1,0 +1,14 @@
+﻿now       $DATE("f")$ $END$
+date      $DATE("d")$ $END$
+time      $DATE("t")$ $END$
+
+img       ![$alt_text$]($image_url$) $END$
+link      [$link_text$]($link_url$) $END$
+
+tm        &trade;
+cp        &copy;
+reg       &reg;
+
+"         “$END$”
+'         ‘$END$’
+--		  —
