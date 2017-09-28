@@ -28,9 +28,19 @@ namespace EditModule.Views
 
         private void Localize(IStrings strings)
         {
+            _findTab.Header = strings.FindReplaceTabFind;
+            _replaceTab.Header = strings.FindReplaceTabReplace;
             _findLabel.Text = strings.FindReplaceWatermarkFind;
             _findLabel2.Text = strings.FindReplaceWatermarkFind;
             _replaceLabel.Text = strings.FindReplaceWatermarkReplace;
+            _findNextButton.Content = strings.FindReplaceFind;
+            _replaceButton.Content = strings.FindReplaceReplace;
+            _replaceAllButton.Content = strings.FindReplaceReplaceAll;
+            _matchCaseCheckBox.Content = strings.FindReplaceMatchCase;
+            _wholeWordCheckBox.Content = strings.FindReplaceWholeWord;
+            _regularExpressonCheckBox.Content = strings.FindReplaceRegularExpression;
+            _wildCardsCheckBox.Content = strings.FindReplaceWildCards;
+
         }
 
         private void FindNextClick(object sender, RoutedEventArgs e)

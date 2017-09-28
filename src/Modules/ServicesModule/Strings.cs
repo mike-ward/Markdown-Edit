@@ -11,7 +11,7 @@ namespace ServicesModule
     public class Strings : IStrings
     {
         private readonly INotify _notify;
-        private readonly Dictionary<string, string> _lookup;
+        private readonly Dictionary<string, string> _strings;
 
         // Editor
 
@@ -20,21 +20,27 @@ namespace ServicesModule
 
         // Find Replace Dialog
 
-        public string FindReplaceTitle => Get("find-replace-title", "Find and Replace");
         public string FindReplaceTabFind => Get("find-replace-tab-find", "Find");
         public string FindReplaceTabReplace => Get("find-replace-tab-replace", "Replace");
         public string FindReplaceWatermarkFind => Get("find-replace-watermark-find", "Find");
         public string FindReplaceWatermarkReplace => Get("find-replace-watermark-replace", "Replace with");
+        public string FindReplaceFind => Get("find-replace-find", "Find Next");
+        public string FindReplaceReplace => Get("find-replace-replace", "Replace");
+        public string FindReplaceReplaceAll => Get("find-replace-replace-all", "Replace All");
+        public string FindReplaceMatchCase => Get("find-replace-match-case", "Match case");
+        public string FindReplaceWholeWord => Get("find-replace-match-whole-word", "Match whole word");
+        public string FindReplaceRegularExpression => Get("find-replace-regular-expression", "Regular expression");
+        public string FindReplaceWildCards => Get("find-replace-wildcards", "Wild cards");
 
         public Strings(INotify notify)
         {
             _notify = notify;
-            _lookup = Load(Thread.CurrentThread.CurrentUICulture);
+            _strings = Load(Thread.CurrentThread.CurrentUICulture);
         }
 
         private string Get(string key, string fallback)
         {
-            return _lookup.TryGetValue(key, out string value) ? value : fallback;
+            return _strings.TryGetValue(key, out var value) ? value : fallback;
         }
 
         private static string LanguageFolder(CultureInfo cultureInfo)

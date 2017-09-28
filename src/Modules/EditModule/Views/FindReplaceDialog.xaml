@@ -4,8 +4,10 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:infrastructure="clr-namespace:Infrastructure;assembly=mde-infrastructure"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:mvvm="http://prismlibrary.com/"
+  Title="{x:Static infrastructure:Constants.ProgramName}"
   Width="300"
   mvvm:ViewModelLocator.AutoWireViewModel="True"
   GlowBrush="{StaticResource GrayBrush2}"
@@ -45,7 +47,7 @@
       Grid.ColumnSpan="2"
       Height="Auto"
       Margin="3,0,0,10">
-      <TabItem Header="Find">
+      <TabItem Name="_findTab" Header="Find">
         <StackPanel>
           <TextBlock Name="_findLabel" Margin="3">Text to Find:</TextBlock>
           <TextBox
@@ -54,7 +56,7 @@
             KeyDown="TextFindOnKeyDown"
             Text="{Binding FindText}" />
           <Button
-            x:Name="_findNextButton"
+            Name="_findNextButton"
             Width="80"
             Margin="5"
             HorizontalAlignment="Right"
@@ -62,7 +64,7 @@
             Content="Find Next" />
         </StackPanel>
       </TabItem>
-      <TabItem Header="Replace">
+      <TabItem Name="_replaceTab" Header="Replace">
         <StackPanel>
           <TextBlock Name="_findLabel2" Margin="3">Text to Find:</TextBlock>
           <TextBox
@@ -76,18 +78,21 @@
           <TextBox Margin="3" Text="{Binding ReplaceText}" />
           <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
             <Button
+              Name="_findNextButton2"
               Width="80"
               Margin="5"
               HorizontalAlignment="Right"
               Click="FindNextClick"
               Content="Find Next" />
             <Button
+              Name="_replaceButton"
               Width="80"
               Margin="5"
               HorizontalAlignment="Right"
               Click="ReplaceClick"
               Content="Replace" />
             <Button
+              Name="_replaceAllButton"
               Width="80"
               Margin="5"
               HorizontalAlignment="Right"
@@ -99,28 +104,32 @@
     </TabControl>
 
     <CheckBox
+      Name="_matchCaseCheckBox"
       Grid.Row="1"
       Grid.Column="0"
       Margin="10,2"
       Content="Match case"
       IsChecked="{Binding CaseSensitive}" />
     <CheckBox
+      Name="_wholeWordCheckBox"
       Grid.Row="2"
       Grid.Column="0"
       Margin="10,2"
       Content="Match whole word"
       IsChecked="{Binding WholeWord}" />
     <CheckBox
+      Name="_regularExpressonCheckBox"
       Grid.Row="1"
       Grid.Column="1"
       Margin="10,2"
       Content="Regular Expression"
       IsChecked="{Binding UseRegEx}" />
     <CheckBox
+      Name="_wildCardsCheckBox"
       Grid.Row="2"
       Grid.Column="1"
       Margin="10,2"
-      Content="Wildcards"
+      Content="Wild Cards"
       IsChecked="{Binding Wildcards}" />
   </Grid>
 </controls:MetroWindow>
