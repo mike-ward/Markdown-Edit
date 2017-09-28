@@ -24,6 +24,8 @@ namespace EditModule.Views
             Loaded += ViewModel.OnLoad;
             Closed += ViewModel.OnClose;
             Closed += (sd, ea) => _dialog = null;
+            Closed += (sd, ea) => Globals.Tracker.Configure(this).Persist();
+            Globals.Tracker.Configure(this).Apply();
         }
 
         private void Localize(IStrings strings)

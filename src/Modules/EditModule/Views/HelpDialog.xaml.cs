@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using Infrastructure;
-using ServicesModule.Services;
 
 namespace EditModule.Views
 {
@@ -19,7 +18,8 @@ namespace EditModule.Views
             InitializeComponent();
             Loaded += KillPopups;
             Loaded += OnLoaded;
-            Closed += (sd, ea) => Settings.Tracker.Configure(this).Persist();
+            SourceInitialized += (sd, ea) =>  Globals.Tracker.Configure(this).Apply();
+            Closed += (sd, ea) => Globals.Tracker.Configure(this).Persist();
             KeyDown += (sd, ea) => { if (ea.Key == Key.F1) Close(); };
         }
 
@@ -29,12 +29,6 @@ namespace EditModule.Views
             var html = _markdownEngine.ToHtml(helpText);
             Browser.NavigateToString(html);
             Dispatcher.InvokeAsync(() => Browser.Navigating += BrowserOnNavigating);
-        }
-
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
-            Settings.Tracker.Configure(this).Apply();
         }
 
         private void KillPopups(object sender, RoutedEventArgs routedEventArgs)

@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using Infrastructure;
 using Prism.Regions;
-using ServicesModule.Services;
 
 namespace MarkdownEdit
 {
@@ -16,6 +15,7 @@ namespace MarkdownEdit
             RegionManager = regionManager;
             InitializeComponent();
             Activated += OnActivated;
+            SourceInitialized += (sd, ea) => Globals.Tracker.Configure(this).Apply();
         }
 
         private void OnActivated(object sender, EventArgs eventArgs)
@@ -24,12 +24,6 @@ namespace MarkdownEdit
             RegionManager.Regions[Constants.EditRegion].Context = this;
             RegionManager.Regions[Constants.PreviewRegion].Context = this;
             Dispatcher.InvokeAsync(() => ViewModel.UpdateAppTitle());
-        }
-
-        protected override void OnSourceInitialized(EventArgs e)
-        {
-            base.OnSourceInitialized(e);
-            Settings.Tracker.Configure(this).Apply();
         }
 
         protected override void OnClosing(CancelEventArgs e)

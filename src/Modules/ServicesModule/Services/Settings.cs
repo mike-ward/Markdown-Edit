@@ -1,19 +1,13 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using Infrastructure;
-using Jot;
 using Jot.DefaultInitializer;
-using Jot.Storage;
 using Prism.Mvvm;
 
 namespace ServicesModule.Services
 {
     public class Settings : BindableBase, ISettings
     {
-        public static readonly string UserSettingsFolder = Path.Combine(Utility.AssemblyFolder(), "user-settings");
-        public static StateTracker Tracker = new StateTracker { StoreFactory = new JsonFileStoreFactory(UserSettingsFolder) };
-
         private FontFamily _font = new FontFamily("Consolas");
         private double _fontSize = 16;
         private bool _wordWrap = true;
@@ -21,8 +15,8 @@ namespace ServicesModule.Services
 
         public Settings()
         {
-            Tracker.Configure(this).Apply();
-            Application.Current.MainWindow.Closed += (sd, ea) => Tracker.Configure(this).Persist();
+            Globals.Tracker.Configure(this).Apply();
+            Application.Current.MainWindow.Closed += (sd, ea) => Globals.Tracker.Configure(this).Persist();
         }
 
         [Trackable]

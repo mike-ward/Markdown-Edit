@@ -16,7 +16,6 @@
   SizeToContent="Height"
   TextOptions.TextFormattingMode="Display"
   TitleCharacterCasing="Normal"
-  WindowStartupLocation="CenterOwner"
   WindowStyle="ToolWindow"
   WindowTitleBrush="{StaticResource GrayBrush2}"
   WindowTransitionsEnabled="False"

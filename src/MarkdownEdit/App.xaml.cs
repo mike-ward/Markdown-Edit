@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Runtime;
 using System.Windows;
-using ServicesModule.Services;
+using Infrastructure;
 
 namespace MarkdownEdit
 {
@@ -10,7 +10,7 @@ namespace MarkdownEdit
         public App()
         {
             // Enable Multi-JIT startup
-            var profileRoot = Settings.UserSettingsFolder;
+            var profileRoot = Globals.UserSettingsFolder;
             Directory.CreateDirectory(profileRoot);
             ProfileOptimization.SetProfileRoot(profileRoot);
             ProfileOptimization.StartProfile("Startup.profile");

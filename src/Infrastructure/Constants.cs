@@ -1,4 +1,6 @@
-﻿namespace Infrastructure
+﻿using System.IO;
+
+namespace Infrastructure
 {
     public static class Constants
     {
