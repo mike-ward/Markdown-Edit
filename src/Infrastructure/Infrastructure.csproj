@@ -75,6 +75,7 @@
     <Compile Include="IOpenSaveActions.cs" />
     <Compile Include="IMarkdownEngine.cs" />
     <Compile Include="ISettings.cs" />
+    <Compile Include="ISnippetService.cs" />
     <Compile Include="ITemplateLoader.cs" />
     <Compile Include="ITheme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

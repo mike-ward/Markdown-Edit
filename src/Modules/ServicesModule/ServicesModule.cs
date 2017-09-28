@@ -24,6 +24,7 @@ namespace ServicesModule
             Container.RegisterType<INotify, Notify>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IOpenSaveActions, OpenSaveActions>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ISettings, Settings>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ISnippetService, SnippetService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStrings, Strings>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ITemplateLoader, TemplateLoader>(new ContainerControlledLifetimeManager());
 

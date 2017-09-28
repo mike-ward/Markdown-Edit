@@ -103,7 +103,7 @@ namespace ServicesModule.Services
                     continue;
                 }
 
-                if (block.SourcePosition >= end) return !blockTags.Any(tag => tag == lastBlockTag);
+                if (block.SourcePosition >= end) return blockTags.All(tag => tag != lastBlockTag);
                 if (blockTags.Any(tag => tag == block.Tag)) return false;
 
                 return !EnumerateInlines(block.InlineContent)
