@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Runtime;
 using System.Windows;
-using ServicesModule;
 using ServicesModule.Services;
 
 namespace MarkdownEdit
