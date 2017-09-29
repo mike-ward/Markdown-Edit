@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownEdit", "MarkdownEdit\MarkdownEdit.csproj", "{99C9E82C-C594-446D-AA59-8FFBC43AD226}"
 EndProject
@@ -55,5 +55,8 @@ Global
 		{6D50DA51-72A2-45FF-8A9E-101ED2525EBE} = {5E4F8C45-0433-4128-9B04-73139F3D1351}
 		{569D1B6C-0038-4725-9A5C-461C4408AE81} = {5E4F8C45-0433-4128-9B04-73139F3D1351}
 		{EE07CD31-3D0E-4575-BD01-D92118319FF7} = {5E4F8C45-0433-4128-9B04-73139F3D1351}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01C5460E-6F16-4F55-BE64-DF5475DCE64D}
 	EndGlobalSection
 EndGlobal
