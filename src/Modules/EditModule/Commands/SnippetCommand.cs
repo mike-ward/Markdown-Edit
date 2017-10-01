@@ -9,12 +9,11 @@ using Infrastructure;
 
 namespace EditModule.Commands
 {
-    public class SnippetCommand : ICommand, IEditCommandHandler
+    public class SnippetCommand : IEditCommandHandler
     {
         private readonly ISnippetService _snippetService;
         private TextEditor _textEditor;
-        private KeyBinding _oldTabBinding;
-        public event EventHandler CanExecuteChanged { add { } remove { } }
+        private KeyBinding _keyBinding;
 
         public SnippetCommand(ISnippetService snippetService)
         {
@@ -26,26 +25,26 @@ namespace EditModule.Commands
             _textEditor = viewModel.TextEditor;
 
             var editingKeyBindings = _textEditor.TextArea.DefaultInputHandler.Editing.InputBindings.OfType<KeyBinding>();
-            _oldTabBinding = editingKeyBindings.Single(b => b.Key == Key.Tab && b.Modifiers == ModifierKeys.None);
-            var newTabBinding = new KeyBinding(this, _oldTabBinding.Key, _oldTabBinding.Modifiers);
-            _textEditor.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(_oldTabBinding);
-            _textEditor.TextArea.DefaultInputHandler.Editing.InputBindings.Add(newTabBinding);
+            _keyBinding = editingKeyBindings.Single(b => b.Key == Key.Tab && b.Modifiers == ModifierKeys.None);
+
+            var command = new RoutedCommand();
+            _textEditor.CommandBindings.Add(new CommandBinding(command, Execute, CanExecute));
+            var keyBinding = new KeyBinding(command, _keyBinding.Key, _keyBinding.Modifiers);
+
+            _textEditor.TextArea.DefaultInputHandler.Editing.InputBindings.Remove(_keyBinding);
+            _textEditor.TextArea.DefaultInputHandler.Editing.InputBindings.Add(keyBinding);
             _snippetService.Initialize();
+        }
+
+
+        public void CanExecute(object sender, CanExecuteRoutedEventArgs ea)
+        {
+            ea.CanExecute = _textEditor.TextArea != null;
         }
 
         public void Execute(object sender, ExecutedRoutedEventArgs ea)
         {
-            Execute(ea.Parameter);
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return _textEditor.TextArea != null;
-        }
-
-        public void Execute(object parameter)
-        {
-            if (_textEditor.SelectionLength == 0)
+        if (_textEditor.SelectionLength == 0)
             {
                 var wordStart = FindPrevWordStart(_textEditor.Document, _textEditor.CaretOffset);
                 if (wordStart >= 0)
@@ -62,14 +61,14 @@ namespace EditModule.Commands
                     var list = StartOfListOffset(_textEditor.Document, _textEditor.CaretOffset);
                     if (list > 0)
                     {
-                        _textEditor.Document.Insert(list, "  ");
+                        _textEditor.Document.Insert(list, "  "); // 2 spaces
                         return;
                     }
                 }
             }
 
             // Chain to original tab command handler when snippet not found
-            _oldTabBinding.Command.Execute(parameter);
+            _keyBinding.Command.Execute(ea.Parameter);
         }
 
         private static int FindPrevWordStart(ITextSource textSource, int offset)
