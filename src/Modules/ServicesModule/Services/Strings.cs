@@ -17,6 +17,7 @@ namespace ServicesModule.Services
 
         public string NewDocumentName => Get("editor-new-document", "New Document");
         public string SaveYourChanges => Get("editor-save-changes", "Save your changes?");
+        public string NoFileExtensionFound => Get("editor-no-file-extension", "No file extension found");
 
         // Find Replace Dialog
 

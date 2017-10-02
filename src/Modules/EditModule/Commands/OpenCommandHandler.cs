@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using EditModule.ViewModels;
@@ -45,10 +46,11 @@ namespace EditModule.Commands
 
             try
             {
-                var text = _openSaveActions.Open(file);
+                var text = Read(file);
                 _textEditor.Document.Text = text;
                 _textEditor.Document.FileName = file;
                 _textEditor.ScrollToHome();
+                _textEditor.SelectionStart = 0;
                 _textEditor.IsModified = false;
                 _textEditor.Document.UndoStack.ClearAll();
                 _textEditor.Focus();
@@ -57,6 +59,21 @@ namespace EditModule.Commands
             {
                 _notify.Alert(ex.Message);
             }
+        }
+
+        private string Read(string file)
+        {
+            var pathExtension = Path.GetExtension(file) ?? throw new ArgumentException(_strings.NoFileExtensionFound, file);
+
+            var isWordDoc = pathExtension.Equals(".docx", StringComparison.OrdinalIgnoreCase);
+
+            var isHtmlFile =
+                pathExtension.Equals(".htm", StringComparison.OrdinalIgnoreCase) ||
+                pathExtension.Equals(".html", StringComparison.OrdinalIgnoreCase);
+
+            if (isHtmlFile) return _openSaveActions.FromHtml(file);
+            if (isWordDoc) return _openSaveActions.FromMicrosoftWord(file);    
+            return _openSaveActions.Open(file);
         }
     }
 }

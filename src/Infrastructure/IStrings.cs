@@ -5,6 +5,7 @@
         // Editor
         string NewDocumentName { get; }
         string SaveYourChanges { get; }
+        string NoFileExtensionFound { get; }
 
         // Find Replace dialog
         string FindReplaceTabFind { get; }

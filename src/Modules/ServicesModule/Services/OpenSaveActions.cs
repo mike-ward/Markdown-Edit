@@ -42,5 +42,15 @@ namespace ServicesModule.Services
                 ? dialog.FileName
                 : null;
         }
+
+        public string FromHtml(string file)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public string FromMicrosoftWord(string file)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
