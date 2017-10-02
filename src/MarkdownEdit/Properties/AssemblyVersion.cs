@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Windows;
 
 [assembly: AssemblyDescription("Markdown Editor with Preview")]
 [assembly: AssemblyConfiguration("")]

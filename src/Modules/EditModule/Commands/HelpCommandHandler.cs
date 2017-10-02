@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using EditModule.ViewModels;
-using EditModule.Views;
 using Infrastructure;
+using UserModule.Views;
 
 namespace EditModule.Commands
 {

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using Infrastructure;
 
-namespace EditModule.Views
+namespace UserModule.Views
 {
     public partial class HelpDialog
     {

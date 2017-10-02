@@ -22,6 +22,7 @@ namespace MarkdownEdit
         {
             base.ConfigureModuleCatalog();
             AddModule(typeof(ServicesModule.ServicesModule));
+            AddModule(typeof(UserModule.UserModule));
             AddModule(typeof(EditModule.EditModule));
             AddModule(typeof(PreviewModule.PreviewModule));
         }

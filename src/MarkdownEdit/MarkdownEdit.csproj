@@ -151,6 +151,10 @@
       <Project>{EE07CD31-3D0E-4575-BD01-D92118319FF7}</Project>
       <Name>ServicesModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\UserModule\UserModule.csproj">
+      <Project>{ab8b448c-dd74-4d60-a041-3e5d03a32180}</Project>
+      <Name>UserModule</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Shell.xaml">

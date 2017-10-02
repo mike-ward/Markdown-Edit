@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EditModule.Properties {
+namespace UserModule.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace EditModule.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EditModule.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UserModule.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,33 @@ namespace EditModule.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keyboard Shortcuts
+        ///------------------
+        ///
+        ///    F1             Show/Hide this help
+        ///
+        ///    Ctrl+N         New file
+        ///    Ctrl+Shift+N   Open new instance
+        ///    Ctrl+O         Open file
+        ///    Ctrl+Shift+O   Insert file
+        ///    Ctrl+S         Save file
+        ///    Ctrl+Shift+S   Save file As
+        ///    Ctrl+R         Recent files
+        ///    Ctrl+E         Export HTML to clipboard
+        ///    Ctrl+Shift+E   Export HTML with template to clipboard
+        ///    Alt+E          Save As HTML
+        ///    F5             Reload file
+        ///    Alt+F4         Exit
+        ///
+        ///    Ctr [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
             }
         }
     }
