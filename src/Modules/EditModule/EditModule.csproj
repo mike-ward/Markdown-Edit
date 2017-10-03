@@ -90,7 +90,6 @@
     <Compile Include="Commands\ConvertSelectionToListCommandHandler.cs" />
     <Compile Include="Commands\ReplaceDialogCommandHandler.cs" />
     <Compile Include="Commands\FindDialogCommandHandler.cs" />
-    <Compile Include="Commands\HelpCommandHandler.cs" />
     <Compile Include="Commands\IEditCommandHandler.cs" />
     <Compile Include="Commands\FormatTextCommandHandler.cs" />
     <Compile Include="Commands\NewCommandHandler.cs" />
@@ -164,7 +163,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Help.txt" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

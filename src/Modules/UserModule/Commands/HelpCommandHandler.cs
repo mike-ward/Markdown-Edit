@@ -1,12 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Input;
-using EditModule.ViewModels;
 using Infrastructure;
 using UserModule.Views;
 
-namespace EditModule.Commands
+namespace UserModule.Commands
 {
-    public class HelpCommandHandler : IEditCommandHandler
+    public class HelpCommandHandler : IUserCommandHandler
     {
         private HelpDialog _helpDialog;
         private readonly IMarkdownEngine[] _markdownEngines;
@@ -16,7 +15,7 @@ namespace EditModule.Commands
             _markdownEngines = markdownEngines;
         }
 
-        public void Initialize(UIElement uiElement, EditControlViewModel viewModel)
+        public void Initialize(UIElement uiElement)
         {
             uiElement.CommandBindings.Add(new CommandBinding(ApplicationCommands.Help, Execute));
         }

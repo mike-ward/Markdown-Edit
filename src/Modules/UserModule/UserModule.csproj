@@ -79,6 +79,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\HelpCommandHandler.cs" />
+    <Compile Include="Commands\IUserCommandHandler.cs" />
     <Compile Include="UserModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
