@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
 using UserModule.Commands;
+using UserModule.Views;
 
 namespace UserModule
 {
@@ -23,6 +24,7 @@ namespace UserModule
         {
             RegisterTypes();
             AddCommandHandlers();
+            AddViews();
         }
 
         private void RegisterTypes()
@@ -41,6 +43,11 @@ namespace UserModule
             {
                 commandHandler.Initialize(shell);
             }
+        }
+
+        private void AddViews()
+        {
+            _regionManager.RegisterViewWithRegion(Constants.WindowCommandsRegion, typeof(CommandPanel));
         }
     }
 }
