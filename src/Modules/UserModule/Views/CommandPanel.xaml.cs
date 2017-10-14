@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using MahApps.Metro.IconPacks;
+using UserModule.Commands;
 
 namespace UserModule.Views
 {
@@ -21,7 +22,7 @@ namespace UserModule.Views
             Panel.Children.Add(ButtonMaker(ApplicationCommands.Open, GetMaterialIcon(PackIconMaterialKind.OpenInApp)));
             Panel.Children.Add(ButtonMaker(ApplicationCommands.Save, GetMaterialIcon(PackIconMaterialKind.ContentSave)));
             Panel.Children.Add(ButtonMaker(ApplicationCommands.SaveAs, GetMaterialIcon(PackIconMaterialKind.FileDocument)));
-            Panel.Children.Add(ButtonMaker(new RoutedCommand(), GetMaterialIcon(PackIconMaterialKind.Settings)));
+            Panel.Children.Add(ButtonMaker(DisplaySettingsCommandHandler.Command, GetMaterialIcon(PackIconMaterialKind.Settings)));
 
             Panel.Children.Add(new Rectangle
             {

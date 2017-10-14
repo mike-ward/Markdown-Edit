@@ -7,4 +7,5 @@ namespace Infrastructure
     public class TextScrollOffsetChanged: PubSubEvent<Tuple<int, int>> { }
     public class DocumentNameChangedEvent: PubSubEvent<string> { }
     public class DocumentModifiedChangedEvent: PubSubEvent<bool> { }
+    public class DisplaySettingsEvent: PubSubEvent<bool> { }
 }

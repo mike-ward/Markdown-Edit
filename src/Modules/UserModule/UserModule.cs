@@ -30,6 +30,7 @@ namespace UserModule
 
         private void RegisterTypes()
         {
+            _container.RegisterType<IUserCommandHandler, DisplaySettingsCommandHandler>(nameof(DisplaySettingsCommandHandler));
             _container.RegisterType<IUserCommandHandler, HelpCommandHandler>(nameof(HelpCommandHandler));
 
             _container.RegisterType<IEnumerable<IUserCommandHandler>, IUserCommandHandler[]>();

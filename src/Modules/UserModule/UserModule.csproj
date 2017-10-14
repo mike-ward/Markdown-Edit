@@ -82,6 +82,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\DisplaySettingsCommandHandler.cs" />
     <Compile Include="Commands\HelpCommandHandler.cs" />
     <Compile Include="Commands\IUserCommandHandler.cs" />
     <Compile Include="UserModule.cs" />

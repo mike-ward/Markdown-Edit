@@ -8,7 +8,7 @@ namespace UserModule.Views
         {
             Name = "DocumentStructureFlyout";
             AnimateOpacity = true;
-            Header = "Table of Contents";
+            Header = "Table of Contents"; // todo: localize
             Position = Position.Right;
             Theme = FlyoutTheme.Accent;
             IsModal = true;
