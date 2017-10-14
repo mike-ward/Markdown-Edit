@@ -101,8 +101,13 @@
     <Compile Include="Views\CommandPanel.xaml.cs">
       <DependentUpon>CommandPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DocumentStructureFlyout.cs" />
     <Compile Include="Views\HelpDialog.xaml.cs">
       <DependentUpon>HelpDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsFlyout.cs" />
+    <Compile Include="Views\SettingsPanel.xaml.cs">
+      <DependentUpon>SettingsPanel.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -132,6 +137,10 @@
     <Page Include="Views\HelpDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SettingsPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using Infrastructure;
+using MahApps.Metro.Controls;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
@@ -48,6 +49,8 @@ namespace UserModule
         private void AddViews()
         {
             _regionManager.RegisterViewWithRegion(Constants.WindowCommandsRegion, typeof(CommandPanel));
+            _regionManager.RegisterViewWithRegion(Constants.FlyoutControlsRegion, typeof(SettingsFlyout));
+            _regionManager.RegisterViewWithRegion(Constants.FlyoutControlsRegion, typeof(DocumentStructureFlyout));
         }
     }
 }

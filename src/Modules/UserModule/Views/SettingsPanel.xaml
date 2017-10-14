@@ -1,0 +1,10 @@
+﻿<UserControl
+  x:Class="UserModule.Views.SettingsPanel"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:prism="http://prismlibrary.com/"
+  prism:ViewModelLocator.AutoWireViewModel="True">
+  <Grid>
+    <TextBlock>I'm a settings panel</TextBlock>
+  </Grid>
+</UserControl>

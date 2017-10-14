@@ -1,10 +1,11 @@
-﻿<controls:MetroWindow 
+﻿<controls:MetroWindow
   x:Class="MarkdownEdit.Shell"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-  xmlns:prism="http://prismlibrary.com/"
   xmlns:infrastructure="clr-namespace:Infrastructure;assembly=mde-infrastructure"
+  xmlns:interop="clr-namespace:Microsoft.DwayneNeed.Interop;assembly=Microsoft.DwayneNeed"
+  xmlns:prism="http://prismlibrary.com/"
   Title="{Binding AppTitle}"
   Width="800"
   Height="600"
@@ -20,7 +21,13 @@
 
   <UniformGrid Columns="2" Rows="1">
     <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:Constants.EditRegion}" />
-    <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:Constants.PreviewRegion}" />
+    <interop:AirspaceDecorator
+      Name="PreviewAirspaceDecorator"
+      AirspaceMode="Redirect"
+      IsInputRedirectionEnabled="True"
+      IsOutputRedirectionEnabled="True">
+      <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:Constants.PreviewRegion}" />
+    </interop:AirspaceDecorator>
   </UniformGrid>
 
   <controls:MetroWindow.RightWindowCommands>
@@ -30,13 +37,11 @@
   </controls:MetroWindow.RightWindowCommands>
 
   <controls:MetroWindow.Flyouts>
-    <controls:FlyoutsControl>
-      <ItemsControl prism:RegionManager.RegionName="{x:Static infrastructure:Constants.FlyoutControlsRegion}" />
-    </controls:FlyoutsControl>
+    <controls:FlyoutsControl prism:RegionManager.RegionName="{x:Static infrastructure:Constants.FlyoutControlsRegion}" />
   </controls:MetroWindow.Flyouts>
 
   <controls:MetroWindow.InputBindings>
     <KeyBinding Command="SaveAs" Gesture="Ctrl+Shift+S" />
   </controls:MetroWindow.InputBindings>
-  
+
 </controls:MetroWindow> 
