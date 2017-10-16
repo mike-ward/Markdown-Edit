@@ -35,7 +35,6 @@ namespace EditModule.Views
             AddCommandHandlers();
             AddPropertyBindings(ViewModel.TextEditor);
             AddEventHandlers(ViewModel.TextEditor);
-            Dispatcher.InvokeAsync(ViewModel.LoadLastFile);
         }
 
         private void AddCommandHandlers()
@@ -60,6 +59,7 @@ namespace EditModule.Views
 
         private void AddEventHandlers(TextEditor textEditor)
         {
+            Loaded += (sd, ea) => Dispatcher.InvokeAsync(ViewModel.LoadLastFile);
             IsVisibleChanged += (sd, ea) => { if (IsVisible) Dispatcher.InvokeAsync(textEditor.Focus); };
             ViewModel.ThemeChanged += (sd, ea) => Dispatcher.InvokeAsync(() => Background = ViewModel.TextEditor.Background);
         }
