@@ -10,6 +10,7 @@
   Width="800"
   Height="600"
   prism:ViewModelLocator.AutoWireViewModel="True"
+  FocusManager.FocusedElement="{Binding ElementName=EditRegion}"
   GlowBrush="{StaticResource GrayBrush2}"
   ResizeMode="CanResizeWithGrip"
   TextOptions.TextFormattingMode="Display"
@@ -20,7 +21,7 @@
   WindowTransitionsEnabled="False">
 
   <UniformGrid Columns="2" Rows="1">
-    <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:Constants.EditRegion}" />
+    <ContentControl Name="EditRegion" prism:RegionManager.RegionName="{x:Static infrastructure:Constants.EditRegion}" />
     <interop:AirspaceDecorator
       Name="PreviewAirspaceDecorator"
       AirspaceMode="Redirect"
