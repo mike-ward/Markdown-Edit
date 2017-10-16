@@ -1,0 +1,24 @@
+﻿<UserControl
+  x:Class="UserModule.Views.EncodingChooser"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:prism="http://prismlibrary.com/"
+  prism:ViewModelLocator.AutoWireViewModel="True">
+  <Border>
+    <ComboBox ItemTemplate="{DynamicResource EncodingTemplate}" SelectedItem="{Binding SelectedEncoding}">
+      <ComboBox.Resources>
+        <CollectionViewSource x:Key="MyEncodings" Source="{Binding SystemEncodings}" />
+
+        <DataTemplate x:Key="EncodingTemplate">
+          <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
+            <TextBlock Text="{Binding DisplayName}" ToolTip="{Binding Name}" />
+          </StackPanel>
+        </DataTemplate>
+      </ComboBox.Resources>
+
+      <ComboBox.ItemsSource>
+        <Binding Source="{StaticResource MyEncodings}" />
+      </ComboBox.ItemsSource>
+    </ComboBox>
+  </Border>
+</UserControl>

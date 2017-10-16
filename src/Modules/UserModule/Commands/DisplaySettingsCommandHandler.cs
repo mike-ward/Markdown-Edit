@@ -18,6 +18,7 @@ namespace UserModule.Commands
         public void Initialize(UIElement uiElement)
         {
             uiElement.CommandBindings.Add(new CommandBinding(Command, Execute));
+            uiElement.InputBindings.Add(new KeyBinding(Command, new KeyGesture(Key.OemComma, ModifierKeys.Control)));
         }
 
         public void Execute(object sender, ExecutedRoutedEventArgs ea)

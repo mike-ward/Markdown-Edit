@@ -77,6 +77,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Ude, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\UDE.CSharp.1.1.0\lib\Ude.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -85,6 +88,7 @@
     <Compile Include="Commands\DisplaySettingsCommandHandler.cs" />
     <Compile Include="Commands\HelpCommandHandler.cs" />
     <Compile Include="Commands\IUserCommandHandler.cs" />
+    <Compile Include="Models\MyEncodingInfo.cs" />
     <Compile Include="UserModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -103,6 +107,12 @@
       <DependentUpon>CommandPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DocumentStructureFlyout.cs" />
+    <Compile Include="Views\EncodingChooser.xaml.cs">
+      <DependentUpon>EncodingChooser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FontChooser.xaml.cs">
+      <DependentUpon>FontChooser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HelpDialog.xaml.cs">
       <DependentUpon>HelpDialog.xaml</DependentUpon>
     </Compile>
@@ -132,6 +142,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CommandPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EncodingChooser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FontChooser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

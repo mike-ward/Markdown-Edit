@@ -4,7 +4,7 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:prism="http://prismlibrary.com/"
   prism:ViewModelLocator.AutoWireViewModel="True">
-  <Grid>
-    <TextBlock>I'm a settings panel</TextBlock>
-  </Grid>
+  <ScrollViewer>
+    <StackPanel Name="Panel" Margin="10,0" />
+  </ScrollViewer>
 </UserControl>
