@@ -54,7 +54,7 @@ namespace UserModule.Views
             };
         }
 
-        private ToggleButton ToggleButtonMaker(object context, string prop, object content, string tooltip)
+        private static ToggleButton ToggleButtonMaker(object context, string prop, object content, string tooltip)
         {
             var toggle = new ToggleButton
             {
