@@ -52,6 +52,7 @@ namespace EditModule
             Container.RegisterType<IEditCommandHandler, ToggleCodeCommandHandler>(nameof(ToggleCodeCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleBoldCommandHandler>(nameof(ToggleBoldCommandHandler));
             Container.RegisterType<IEditCommandHandler, ToggleItalicCommandHandler>(nameof(ToggleItalicCommandHandler));
+            Container.RegisterType<IEditCommandHandler, ToggleWordWrapCommandHandler>(nameof(ToggleWordWrapCommandHandler));
             Container.RegisterType<IEditCommandHandler, UndoEditCommandHander>(nameof(UndoEditCommandHander));
             Container.RegisterType<IEnumerable<IEditCommandHandler>, IEditCommandHandler[]>();
 

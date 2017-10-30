@@ -105,6 +105,7 @@
     <Compile Include="Commands\ToggleCodeCommandHandler.cs" />
     <Compile Include="Commands\ToggleItalicCommandHandler.cs" />
     <Compile Include="Commands\RedoEditCommandHandler.cs" />
+    <Compile Include="Commands\ToggleWordWrapCommandHandler.cs" />
     <Compile Include="Commands\UndoEditCommandHander.cs" />
     <Compile Include="Features\EditorContextMenu.cs" />
     <Compile Include="ViewModels\FindReplaceDialogViewModel.cs" />
