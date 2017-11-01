@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Media;
 using System.Text.RegularExpressions;
-using System.Windows;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
 
@@ -10,13 +9,6 @@ namespace ServicesModule.Services
 {
     public class EditService : IEditService
     {
-        private readonly INotify _notify;
-
-        public EditService(INotify notify)
-        {
-            _notify = notify;
-        }
-
         private static bool IsWordPart(char ch) => char.IsLetterOrDigit(ch) || ch == '_' || ch == '*';
 
         public FindReplaceOptions FindReplaceOptions { get; } = new FindReplaceOptions();
@@ -129,22 +121,17 @@ namespace ServicesModule.Services
 
         public void ReplaceAll(TextEditor editor, FindReplaceOptions findReplaceOptions)
         {
-            if(_notify.ConfirmYesNo(
-                  $"Are you sure you want to Replace All occurences of \"{findReplaceOptions.FindText}" +
-                  $"\" with \"{findReplaceOptions.ReplaceText}\"?") == MessageBoxResult.Yes)
+            var regex = GetRegEx(findReplaceOptions);
+            var offset = 0;
+            editor.BeginChange();
+
+            foreach (Match match in regex.Matches(editor.Text))
             {
-                var regex = GetRegEx(findReplaceOptions);
-                var offset = 0;
-                editor.BeginChange();
-
-                foreach (Match match in regex.Matches(editor.Text))
-                {
-                    editor.Document.Replace(offset + match.Index, match.Length, findReplaceOptions.FindText);
-                    offset += findReplaceOptions.ReplaceText.Length - match.Length;
-                }
-
-                editor.EndChange();
+                editor.Document.Replace(offset + match.Index, match.Length, findReplaceOptions.FindText);
+                offset += findReplaceOptions.ReplaceText.Length - match.Length;
             }
+
+            editor.EndChange();
         }
 
         private Regex GetRegEx(FindReplaceOptions findReplaceOptions)

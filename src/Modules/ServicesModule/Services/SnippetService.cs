@@ -39,7 +39,7 @@ namespace ServicesModule.Services
                 : null;
         }
 
-        private void ReadSnippetFile()
+        private async void ReadSnippetFile()
         {
             try
             {
@@ -89,7 +89,7 @@ namespace ServicesModule.Services
             }
             catch (Exception ex)
             {
-                _notify.Alert($"{ex.Message} in {SnippetFile}");
+                await _notify.Alert($"{ex.Message} in {SnippetFile}");
             }
         }
 

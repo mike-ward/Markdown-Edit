@@ -28,11 +28,11 @@ namespace EditModule.Commands
             _textEditor = viewModel.TextEditor;
         }
 
-        public void Execute(object sender, ExecutedRoutedEventArgs ea)
+        public async void Execute(object sender, ExecutedRoutedEventArgs ea)
         {
             if (_textEditor.IsModified)
             {
-                var result = _notify.ConfirmYesNoCancel(_strings.SaveYourChanges);
+                var result = await _notify.ConfirmYesNoCancel(_strings.SaveYourChanges);
                 if (result == MessageBoxResult.Cancel) return;
                 if (result == MessageBoxResult.Yes)
                 {
@@ -40,7 +40,11 @@ namespace EditModule.Commands
                     if (_textEditor.IsModified) return;
                 }
             }
+            Open(ea);
+        }
 
+        private async void Open(ExecutedRoutedEventArgs ea)
+        {
             var file = ea.Parameter as string ?? _openSaveActions.OpenDialog();
             if (string.IsNullOrEmpty(file)) return;
 
@@ -57,7 +61,7 @@ namespace EditModule.Commands
             }
             catch (Exception ex)
             {
-                _notify.Alert(ex.Message);
+                await _notify.Alert(ex.Message);
             }
         }
 
@@ -72,7 +76,7 @@ namespace EditModule.Commands
                 pathExtension.Equals(".html", StringComparison.OrdinalIgnoreCase);
 
             if (isHtmlFile) return _openSaveActions.FromHtml(file);
-            if (isWordDoc) return _openSaveActions.FromMicrosoftWord(file);    
+            if (isWordDoc) return _openSaveActions.FromMicrosoftWord(file);
             return _openSaveActions.Open(file);
         }
     }

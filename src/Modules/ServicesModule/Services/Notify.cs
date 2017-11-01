@@ -1,34 +1,53 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using Infrastructure;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace ServicesModule.Services
 {
     public class Notify : INotify
     {
-        public void Alert(string alert, Window owner = null)
+        private static MetroDialogSettings Settings()
         {
-            Show(alert, MessageBoxButton.OK, MessageBoxImage.Error, owner);
+            return new MetroDialogSettings
+            {
+                DialogMessageFontSize = 20,
+                AffirmativeButtonText = "Yes",
+                NegativeButtonText = "No",
+                FirstAuxiliaryButtonText = "Cancel",
+                AnimateShow = false,
+                AnimateHide = false
+            };
         }
 
-        public MessageBoxResult ConfirmYesNo(string question, Window owner = null)
+        public async Task<bool> Alert(string alert)
         {
-            return Show(question, MessageBoxButton.YesNo, MessageBoxImage.Question, owner);
+            var settings = Settings();
+            settings.AffirmativeButtonText = "Close";
+            await Show(alert, MessageDialogStyle.Affirmative, settings);
+            return true;
         }
 
-        public MessageBoxResult ConfirmYesNoCancel(string question, Window owner = null)
+        public async Task<MessageBoxResult> ConfirmYesNo(string question)
         {
-            return Show(question, MessageBoxButton.YesNoCancel, MessageBoxImage.Question, owner);
+            var result = await Show(question, MessageDialogStyle.AffirmativeAndNegative, Settings());
+            return result == MessageDialogResult.Affirmative ? MessageBoxResult.Yes : MessageBoxResult.No;
         }
 
-        private MessageBoxResult Show(string message, MessageBoxButton button, MessageBoxImage image, Window owner)
+        public async Task<MessageBoxResult> ConfirmYesNoCancel(string question)
+        {
+            var result = await Show(question, MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, Settings());
+            if (result == MessageDialogResult.Affirmative) return MessageBoxResult.Yes;
+            if (result == MessageDialogResult.Negative) return MessageBoxResult.No;
+            return MessageBoxResult.Cancel;
+        }
+
+        private static async Task<MessageDialogResult> Show(string message, MessageDialogStyle buttons, MetroDialogSettings settings)
         {
             var text = message ?? "null";
-            var window = owner ?? Application.Current.MainWindow;
-            Application.Current.MainWindow.Activate();
-
-            return Application.Current.Dispatcher.Invoke(() => window != null
-                ? MessageBox.Show(window, text, Constants.ProgramName, button, image)
-                : MessageBox.Show(text, Constants.ProgramName, button, image));
+            var window = (MetroWindow)Application.Current.MainWindow;
+            return await window.ShowMessageAsync(string.Empty, text, buttons, settings);
         }
     }
 }

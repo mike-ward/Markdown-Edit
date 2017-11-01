@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Infrastructure;
@@ -52,14 +53,14 @@ namespace MarkdownEdit
             AppTitle = $"{Constants.ProgramName} - {DocoumentModified} {(string.IsNullOrEmpty(DocumentName) ? strings.NewDocumentName : DocumentName)}";
         }
 
-        public bool AskToSaveIfModified()
+        public async Task<bool> AskToSaveIfModified()
         {
             if (string.IsNullOrEmpty(DocoumentModified)) return true;
             var notify = Container.Resolve<INotify>();
             var strings = Container.Resolve<IStrings>();
-            var result = notify.ConfirmYesNoCancel(strings.SaveYourChanges);
-            if (result == MessageBoxResult.Cancel) return false;
+            var result = await notify.ConfirmYesNoCancel(strings.SaveYourChanges);
             if (result == MessageBoxResult.No) return true;
+            if (result == MessageBoxResult.Cancel) return false;
             ApplicationCommands.Save.Execute(null, Application.Current.MainWindow);
             return !string.IsNullOrEmpty(DocumentName);
         }

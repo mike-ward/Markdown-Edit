@@ -1,11 +1,12 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace Infrastructure
 {
     public interface INotify
     {
-        void Alert(string message, Window owner = null);
-        MessageBoxResult ConfirmYesNo(string question, Window owner = null);
-        MessageBoxResult ConfirmYesNoCancel(string question, Window owner = null);
+        Task<bool> Alert(string message);
+        Task<MessageBoxResult> ConfirmYesNo(string question);
+        Task<MessageBoxResult> ConfirmYesNoCancel(string question);
     }
 }

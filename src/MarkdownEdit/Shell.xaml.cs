@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows;
 using Infrastructure;
 using Prism.Regions;
 
@@ -9,6 +10,7 @@ namespace MarkdownEdit
     {
         public IRegionManager RegionManager { get; }
         private ShellViewModel ViewModel => (ShellViewModel)DataContext;
+        private bool _shutdown;
 
         public Shell(IRegionManager regionManager)
         {
@@ -26,9 +28,12 @@ namespace MarkdownEdit
             Dispatcher.InvokeAsync(() => ViewModel.UpdateAppTitle());
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        protected override async void OnClosing(CancelEventArgs e)
         {
-            e.Cancel = !ViewModel.AskToSaveIfModified();
+            if (_shutdown) return;
+            e.Cancel = true;
+            _shutdown = await ViewModel.AskToSaveIfModified();
+            if (_shutdown) Application.Current.Shutdown();
         }
     }
 }

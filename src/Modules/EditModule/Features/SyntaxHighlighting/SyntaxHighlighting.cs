@@ -30,7 +30,7 @@ namespace EditModule.Features.SyntaxHighlighting
             viewModel.TextEditor.TextArea.TextView.LineTransformers.Add(colorizer);
             viewModel.TextEditor.TextArea.TextView.BackgroundRenderers.Add(_blockBackgroundRenderer);
 
-            viewModel.TextEditor.TextChanged += (s, e) =>
+            viewModel.TextEditor.TextChanged += async (s, e) =>
             {
                 try
                 {
@@ -44,7 +44,7 @@ namespace EditModule.Features.SyntaxHighlighting
                 catch (Exception ex)
                 {
                     // See #159
-                    _notify.Alert($"Abstract Syntax Tree generation failed: {ex.ToString()}");
+                    await _notify.Alert($"Abstract Syntax Tree generation failed: {ex.ToString()}");
                 }
             };
 

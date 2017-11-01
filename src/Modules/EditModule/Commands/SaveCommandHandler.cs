@@ -25,7 +25,7 @@ namespace EditModule.Commands
             _textEditor = viewModel.TextEditor;
         }
 
-        public void Execute(object sender, ExecutedRoutedEventArgs ea)
+        public async void Execute(object sender, ExecutedRoutedEventArgs ea)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace EditModule.Commands
             }
             catch (Exception ex)
             {
-                _notify.Alert(ex.Message);
+                await _notify.Alert(ex.Message);
             }
         }
     }

@@ -24,18 +24,23 @@ namespace EditModule.Commands
             _textEditor = viewModel.TextEditor;
         }
 
-        public void Execute(object sender, ExecutedRoutedEventArgs ea)
+        public async void Execute(object sender, ExecutedRoutedEventArgs ea)
         {
             if (_textEditor.IsModified)
             {
-                var result = _notify.ConfirmYesNoCancel(_strings.SaveYourChanges);
+                var result = await _notify.ConfirmYesNoCancel(_strings.SaveYourChanges);
                 if (result == MessageBoxResult.Cancel) return;
                 if (result == MessageBoxResult.Yes)
                 {
                     ApplicationCommands.Save.Execute(null, null);
                     if (_textEditor.IsModified) return;
                 }
+                SetToNew();
             }
+        }
+
+        private void SetToNew()
+        {
             _textEditor.Document.Text = string.Empty;
             _textEditor.Document.FileName = string.Empty;
             _textEditor.IsModified = false;
