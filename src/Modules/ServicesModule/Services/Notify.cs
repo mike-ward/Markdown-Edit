@@ -17,7 +17,8 @@ namespace ServicesModule.Services
                 NegativeButtonText = "No",
                 FirstAuxiliaryButtonText = "Cancel",
                 AnimateShow = false,
-                AnimateHide = false
+                AnimateHide = false,
+                ColorScheme = MetroDialogColorScheme.Accented
             };
         }
 
