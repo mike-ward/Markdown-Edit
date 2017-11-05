@@ -29,6 +29,7 @@ namespace EditModule
             Container.RegisterType<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
             Container.RegisterType<ITextEditorComponent, TextEditor>();
 
+            Container.RegisterType<IEditFeature, DragAndDropSupport>(nameof(DragAndDropSupport));
             Container.RegisterType<IEditFeature, EditorContextMenu>(nameof(EditorContextMenu));
             Container.RegisterType<IEditFeature, FileNameChangedEventHandler>(nameof(FileNameChangedEventHandler));
             Container.RegisterType<IEditFeature, TextEditorOptions>(nameof(TextEditorOptions));

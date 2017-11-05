@@ -107,6 +107,7 @@
     <Compile Include="Commands\RedoEditCommandHandler.cs" />
     <Compile Include="Commands\ToggleWordWrapCommandHandler.cs" />
     <Compile Include="Commands\UndoEditCommandHander.cs" />
+    <Compile Include="Features\DragAndDropSupport.cs" />
     <Compile Include="Features\EditorContextMenu.cs" />
     <Compile Include="ViewModels\FindReplaceDialogViewModel.cs" />
     <Compile Include="Views\FindReplaceDialog.xaml.cs">

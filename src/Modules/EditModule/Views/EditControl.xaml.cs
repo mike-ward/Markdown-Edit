@@ -60,8 +60,6 @@ namespace EditModule.Views
             Loaded += (sd, ea) => Dispatcher.InvokeAsync(ViewModel.LoadLastFile);
             IsVisibleChanged += (sd, ea) => { if (IsVisible) Dispatcher.InvokeAsync(textEditor.Focus); };
             ViewModel.ThemeChanged += (sd, ea) => Dispatcher.InvokeAsync(() => Background = ViewModel.TextEditor.Background);
-            DragEnter += ViewModel.OnDragEnter;
-            Drop += ViewModel.OnDrop;
         }
     }
 }

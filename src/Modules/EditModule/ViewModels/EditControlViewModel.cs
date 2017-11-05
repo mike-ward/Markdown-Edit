@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -19,7 +18,6 @@ namespace EditModule.ViewModels
         private readonly IEnumerable<IEditFeature> _editFeatures;
         private readonly IEventAggregator _eventAggregator;
         private readonly ISettings _settings;
-        private readonly IImageService _imageService;
         public TextEditor TextEditor { get; }
         public Dispatcher Dispatcher { get; set; }
 
@@ -28,14 +26,13 @@ namespace EditModule.ViewModels
             ITextEditorComponent textEditor,
             IEnumerable<IEditFeature> editFeatures,
             IEventAggregator eventAggregator,
-            ISettings settings,
-            IImageService imageService)
+            ISettings settings)
+            
         {
             TextEditor = textEditor as TextEditor;
             _editFeatures = editFeatures;
             _eventAggregator = eventAggregator;
             _settings = settings;
-            _imageService = imageService;
 
             InitializeEditFeatures();
             EventHandlers();
@@ -94,38 +91,6 @@ namespace EditModule.ViewModels
         {
             get => _theme;
             set => SetProperty(ref _theme, value, () => ThemeChanged?.Invoke(this, new ThemeChangedEventArgs {Theme = value}));
-        }
-
-        // Drag and Drop
-
-        public void OnDragEnter(object sender, DragEventArgs dea)
-        {
-            if (dea.Data.GetDataPresent(DataFormats.FileDrop) == false) dea.Effects = DragDropEffects.None;
-        }
-
-        public void OnDrop(object sender, DragEventArgs dea)
-        {
-            if (dea.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                if (!(dea.Data.GetData(DataFormats.FileDrop) is string[] files)) return;
-
-                if (_imageService.HasImageExtension(files[0]))
-                {
-                    //var dialog = new ImageDropDialog
-                    //{
-                    //    Owner = Application.Current.MainWindow,
-                    //    TextEditor = ViewModel.TextEditor,
-                    //    DocumentFileName = FileName,
-                    //    DragEventArgs = dea
-                    //};
-                    //dialog.ShowDialog();
-                }
-
-                else
-                {
-                    Dispatcher.InvokeAsync(() => ApplicationCommands.Open.Execute(files[0], sender as IInputElement));
-                }
-            }
         }
     }
 }
