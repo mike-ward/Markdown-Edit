@@ -10,6 +10,7 @@ namespace ServicesModule.Services
     {
         private static MetroDialogSettings Settings()
         {
+            // todo: localize
             return new MetroDialogSettings
             {
                 DialogMessageFontSize = 20,

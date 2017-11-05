@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
 using EditModule.Commands;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
@@ -57,26 +55,13 @@ namespace EditModule.Views
             AddBinding(TextEditor.IsModifiedProperty, nameof(ViewModel.IsDocumentModified), BindingMode.TwoWay);
         }
 
-        private void AddEventHandlers(TextEditor textEditor)
+        private void AddEventHandlers(IInputElement textEditor)
         {
             Loaded += (sd, ea) => Dispatcher.InvokeAsync(ViewModel.LoadLastFile);
             IsVisibleChanged += (sd, ea) => { if (IsVisible) Dispatcher.InvokeAsync(textEditor.Focus); };
             ViewModel.ThemeChanged += (sd, ea) => Dispatcher.InvokeAsync(() => Background = ViewModel.TextEditor.Background);
-        }
-
-        protected override void OnDragEnter(DragEventArgs dea)
-        {
-            if (dea.Data.GetDataPresent(DataFormats.FileDrop) == false) dea.Effects = DragDropEffects.None;
-        }
-
-        protected override void OnDrop(DragEventArgs dea)
-        {
-            if (dea.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                var files = dea.Data.GetData(DataFormats.FileDrop) as string[];
-                if (files == null) return;
-                Dispatcher.InvokeAsync(() => ApplicationCommands.Open.Execute(files[0], this));
-            }
+            DragEnter += ViewModel.OnDragEnter;
+            Drop += ViewModel.OnDrop;
         }
     }
 }
