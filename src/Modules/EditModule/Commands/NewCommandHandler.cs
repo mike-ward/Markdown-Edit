@@ -32,7 +32,7 @@ namespace EditModule.Commands
                 if (result == MessageBoxResult.Cancel) return;
                 if (result == MessageBoxResult.Yes)
                 {
-                    ApplicationCommands.Save.Execute(null, null);
+                    ApplicationCommands.Save.Execute(null, (Window)sender);
                     if (_textEditor.IsModified) return;
                 }
                 SetToNew();

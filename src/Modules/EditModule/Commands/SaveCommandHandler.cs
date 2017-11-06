@@ -31,7 +31,7 @@ namespace EditModule.Commands
             {
                 if (string.IsNullOrEmpty(_textEditor.Document.FileName))
                 {
-                    ApplicationCommands.SaveAs.Execute(null, null);
+                    ApplicationCommands.SaveAs.Execute(null, (Window)sender);
                     return;
                 }
                 _openSaveActions.Save(_textEditor.Document.FileName, _textEditor.Document.Text);
