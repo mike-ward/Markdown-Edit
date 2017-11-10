@@ -25,7 +25,11 @@ namespace MarkdownEdit
             Activated -= OnActivated;
             RegionManager.Regions[Constants.EditRegion].Context = this;
             RegionManager.Regions[Constants.PreviewRegion].Context = this;
-            Dispatcher.InvokeAsync(() => ViewModel.UpdateAppTitle());
+            Dispatcher.InvokeAsync(() =>
+            {
+                ViewModel.UpdateAppTitle();
+                PreviewAirspaceDecorator.Visibility = Visibility.Visible;
+            });
         }
 
         protected override async void OnClosing(CancelEventArgs e)
