@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\MarkdownEdit\Properties\AssemblyVersion.cs">
-      <Link>AssemblyVersion.cs</Link>
+      <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Infrastructure\StringExtensionTests.cs" />
     <Compile Include="Infrastructure\UtilityTests.cs" />

@@ -110,6 +110,7 @@
     <Compile Include="Features\DragAndDropSupport.cs" />
     <Compile Include="Features\EditorContextMenu.cs" />
     <Compile Include="ViewModels\FindReplaceDialogViewModel.cs" />
+    <Compile Include="ViewModels\ImageDropDialogViewModel.cs" />
     <Compile Include="Views\FindReplaceDialog.xaml.cs">
       <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
     </Compile>
@@ -138,6 +139,9 @@
     <Compile Include="Views\EditControl.xaml.cs">
       <DependentUpon>EditControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ImageDropDialog.xaml.cs">
+      <DependentUpon>ImageDropDialog.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -150,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ImageDropDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
