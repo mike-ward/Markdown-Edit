@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using EditModule.ViewModels;
+using EditModule.Views;
 using Infrastructure;
 
 namespace EditModule.Features
@@ -8,6 +9,7 @@ namespace EditModule.Features
     public class DragAndDropSupport : IEditFeature
     {
         private readonly IImageService _imageService;
+        private EditControlViewModel _viewModel;
 
         public DragAndDropSupport(IImageService imageService)
         {
@@ -16,6 +18,7 @@ namespace EditModule.Features
 
         public void Initialize(EditControlViewModel viewModel)
         {
+            _viewModel = viewModel;
             viewModel.TextEditor.DragEnter += OnDragEnter;
             viewModel.TextEditor.Drop += OnDrop;
         }
@@ -33,14 +36,8 @@ namespace EditModule.Features
 
                 if (_imageService.HasImageExtension(files[0]))
                 {
-                    //var dialog = new ImageDropDialog
-                    //{
-                    //    Owner = Application.Current.MainWindow,
-                    //    TextEditor = ViewModel.TextEditor,
-                    //    DocumentFileName = FileName,
-                    //    DragEventArgs = dea
-                    //};
-                    //dialog.ShowDialog();
+                    var dialog = new ImageDropDialog(_viewModel.TextEditor, dea) { Owner = Application.Current.MainWindow };
+                    dialog.ShowDialog();
                 }
 
                 else
