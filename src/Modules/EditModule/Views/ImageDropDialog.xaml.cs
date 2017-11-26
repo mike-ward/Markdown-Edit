@@ -18,6 +18,7 @@ namespace EditModule.Views
         {
             ViewModel.TextEditor = textEditor;
             ViewModel.DragEventArgs = dea;
+            ViewModel.ProgressBar = ProgressBar;
             ContextMenu = ViewModel.CreateContextMenu();
 
             ViewModel.CloseAction = () =>
@@ -25,6 +26,16 @@ namespace EditModule.Views
                 if (ContextMenu != null) ContextMenu.IsOpen = false;
                 Close();
             };
+
+            var position = dea.GetPosition(textEditor);
+            var screen = textEditor.PointToScreen(new Point(position.X, position.Y));
+            Left = screen.X;
+            Top = screen.Y;
+        }
+
+        private void CancelOnClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CancelUpload = true;
         }
     }
 }

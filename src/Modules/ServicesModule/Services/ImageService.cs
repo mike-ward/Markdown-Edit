@@ -3,23 +3,44 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Infrastructure;
-
-// ReSharper disable InconsistentNaming
-// ReSharper disable FieldCanBeMadeReadOnly.Local
-// ReSharper disable MemberCanBePrivate.Local
 
 namespace ServicesModule.Services
 {
     public class ImageService : IImageService
     {
-        public string ImageFileToDataUri(string imageFile)
+        private readonly INotify _notify;
+        private readonly IImageUpload _imageUpload;
+
+        public ImageService(INotify notify, IImageUpload imageUpload)
         {
-            var ext = Path.GetExtension(imageFile)?.Replace(".", "");
-            var bytes = File.ReadAllBytes(imageFile);
-            return ImageBytesToDataUri(bytes, ext);
+            _notify = notify;
+            _imageUpload = imageUpload;
+        }
+
+        public async Task<string> UploadToImgur(Stream stream, UploadProgressChangedEventHandler progress, UploadValuesCompletedEventHandler completed)
+        {
+            try
+            {
+                var image = stream.ReadToArray();
+                var link = await _imageUpload.UploadBytesAsync(image, progress, completed);
+                if (Uri.IsWellFormedUriString(link, UriKind.Absolute)) return link;
+                await _notify.Alert(link);
+            }
+            catch (Exception ex)
+            {
+                await _notify.Alert(ex.Message);
+            }
+            return null;
+        }
+
+        public async Task<string> ImageFileToDataUri(Stream stream, string imageType, string name)
+        {
+            var bytes = stream.ReadToArray();
+            return await new Task<string>(() => ImageBytesToDataUri(bytes, imageType, name));
         }
 
         public string ClipboardDibToDataUri()
@@ -27,12 +48,12 @@ namespace ServicesModule.Services
             var bitmapSource = ClipboardDibToBitmapSource();
             if (bitmapSource == null) return null;
             var bytes = ToPngArray(bitmapSource);
-            return ImageBytesToDataUri(bytes, "png");
+            return ImageBytesToDataUri(bytes, "png", "clipboard");
         }
 
-        private static string ImageBytesToDataUri(byte[] bytes, string imageType)
+        private static string ImageBytesToDataUri(byte[] bytes, string imageType, string name)
         {
-            return $"<img src=\"data:image/{imageType};base64,{Convert.ToBase64String(bytes)}\" />";
+            return $"<img src=\"data:image/{imageType};base64,{Convert.ToBase64String(bytes)}\" alt=\"{name ?? string.Empty}\" />";
         }
 
         public BitmapSource ClipboardDibToBitmapSource()
@@ -100,6 +121,10 @@ namespace ServicesModule.Services
                 return false;
             }
         }
+
+        // ReSharper disable InconsistentNaming
+        // ReSharper disable FieldCanBeMadeReadOnly.Local
+        // ReSharper disable MemberCanBePrivate.Local
 
         [StructLayout(LayoutKind.Sequential, Pack = 2)]
         private struct BITMAPFILEHEADER

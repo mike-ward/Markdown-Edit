@@ -103,6 +103,7 @@
     <Compile Include="Services\EditService.cs" />
     <Compile Include="Services\FormatMarkdown.cs" />
     <Compile Include="Services\ImageService.cs" />
+    <Compile Include="Services\ImageUploadImgur.cs" />
     <Compile Include="Services\OpenSaveActions.cs" />
     <Compile Include="Services\Notify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -80,6 +80,7 @@
     <Compile Include="IFormatMarkdown.cs" />
     <Compile Include="IHighlight.cs" />
     <Compile Include="IImageService.cs" />
+    <Compile Include="IImageUpload.cs" />
     <Compile Include="INotify.cs" />
     <Compile Include="IOpenSaveActions.cs" />
     <Compile Include="IMarkdownEngine.cs" />
@@ -101,6 +102,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="IStrings.cs" />
+    <Compile Include="StreamExtensions.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="Utility.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

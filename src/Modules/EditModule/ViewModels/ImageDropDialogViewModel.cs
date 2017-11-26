@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using ICSharpCode.AvalonEdit;
@@ -14,9 +17,12 @@ namespace EditModule.ViewModels
         private readonly ImageService _imageService;
         private readonly INotify _notify;
         private bool _uploading;
+        private ContextMenu _contextMenu;
 
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
+        public ProgressBar ProgressBar { get; set; }
+        public bool CancelUpload { get; set; }
         public bool UseClipboardImage { get; set; }
         public Action CloseAction { get; set; }
 
@@ -34,23 +40,63 @@ namespace EditModule.ViewModels
 
         public ContextMenu CreateContextMenu()
         {
-            var contextMenu = new ContextMenu { IsOpen = true, StaysOpen = true };
-            var items = contextMenu.Items;
+            _contextMenu = new ContextMenu { IsOpen = true, StaysOpen = true };
+            var items = _contextMenu.Items;
 
             // todo: localize
             items.Add(MenuFactory("Insert Path", PackIconMaterialKind.Image, OnClose));
-            items.Add(MenuFactory("Upload to Imgur", PackIconMaterialKind.CloudUpload, OnClose));
+            items.Add(MenuFactory("Upload to Imgur", PackIconMaterialKind.CloudUpload, OnUploadToImgur));
             items.Add(MenuFactory("As Data URI", PackIconMaterialKind.Xml, OnInsertDataUri));
             items.Add(MenuFactory("Save As", PackIconMaterialKind.FileDocument, OnClose));
             items.Add(new Separator());
             items.Add(MenuFactory("Cancel", PackIconMaterialKind.Close, OnClose));
 
-            return contextMenu;
+            return _contextMenu;
         }
 
-        private void OnInsertDataUri(object sender, RoutedEventArgs e)
+        private async void OnUploadToImgur(object sender, RoutedEventArgs e)
         {
-            GuardedAction(() => _imageService.ImageFileToDataUri(DroppedFiles()[0]));
+            await GuardedAction(async () =>
+            {
+                var tuple = DropData();
+                using (tuple.stream)
+                {
+                    void Progress(object o, UploadProgressChangedEventArgs args) => TextEditor.Dispatcher.InvokeAsync(() =>
+                    {
+                        if (CancelUpload) ((WebClient)o).CancelAsync();
+                        var progressPercentage = (int)(args.BytesSent / (double)args.TotalBytesToSend * 100);
+                        ProgressBar.Value = progressPercentage;
+                        if (progressPercentage == 100) ProgressBar.IsIndeterminate = true;
+                    });
+
+                    void Completed(object o, UploadValuesCompletedEventArgs args)
+                    {
+                        if (CancelUpload) ((WebClient)o).CancelAsync();
+                    }
+
+
+                    _contextMenu.IsOpen = false;
+                    Uploading = true;
+                    var link = await _imageService.UploadToImgur(tuple.stream, Progress, Completed);
+                    Uploading = false;
+
+                    return Uri.IsWellFormedUriString(link, UriKind.Absolute) 
+                        ? CreateImageTag(link, tuple.name) 
+                        : throw new InvalidProgramException(link);
+                }
+            });
+        }
+
+        private async void OnInsertDataUri(object sender, RoutedEventArgs e)
+        {
+            await GuardedAction(() =>
+            {
+                (var stream, var imageType, var name) = DropData();
+                using (stream)
+                {
+                    return _imageService.ImageFileToDataUri(stream, imageType, name);
+                }
+            });
         }
 
         private void OnClose(object sender, RoutedEventArgs e)
@@ -81,17 +127,18 @@ namespace EditModule.ViewModels
             };
         }
 
-        private void GuardedAction(Func<string> action)
+        private async Task GuardedAction(Func<Task<string>> action)
         {
             try
             {
-                var text = action();
+                var text = await action();
                 InsertText(TextEditor, DragEventArgs, text);
-                OnClose(null, null);
             }
             catch (Exception ex)
             {
-                _notify.Alert(ex.Message);
+                 #pragma warning disable 4014
+                _notify.Alert(ex.Message); // using await hangs UI here
+                #pragma warning restore 4014
             }
             finally
             {
@@ -104,10 +151,15 @@ namespace EditModule.ViewModels
             return $"![{title}]({link})\n";
         }
 
-        private string[] DroppedFiles()
+        private (Stream stream, string imageType, string name) DropData()
         {
             var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
-            return files;
+            if (files == null) return (null, null, null);
+
+            var file = files[0];
+            var stream = new FileStream(file, FileMode.Open);
+            var imageType = Path.GetExtension(file);
+            return (stream, imageType, Path.GetFileName(file));
         }
 
         private static void InsertText(TextEditor textEditor, DragEventArgs dragEventArgs, string tag)
