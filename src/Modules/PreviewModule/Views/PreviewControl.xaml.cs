@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -13,11 +14,13 @@ namespace PreviewModule.Views
 {
     public partial class PreviewControl
     {
+        private readonly ISettings _settings;
         public ITemplateLoader TemplateLoader { get; }
         private PreviewControlViewModel ViewModel => (PreviewControlViewModel)DataContext;
 
-        public PreviewControl(ITemplateLoader templateLoader)
+        public PreviewControl(ITemplateLoader templateLoader, ISettings settings)
         {
+            _settings = settings;
             TemplateLoader = templateLoader;
             InitializeComponent();
             ViewModel.UpdateBrowserDelegate = UpdateBrowser;
@@ -52,6 +55,7 @@ namespace PreviewModule.Views
             }
             else
             {
+                UpdateBaseTag();
                 div.innerHTML = html;
             }
         }
@@ -63,6 +67,27 @@ namespace PreviewModule.Views
                 "Content element not found<br/>" +
                 "Preview unavailable" +
                 "</h1>");
+        }
+
+        private void UpdateBaseTag()
+        {
+            const string basetTagId = "base-tag-id";
+            var lastOpen = _settings.CurrentFileName.StripOffsetFromFileName();
+            if (string.IsNullOrWhiteSpace(lastOpen)) return;
+            var folder = Path.GetDirectoryName(lastOpen);
+            if (string.IsNullOrWhiteSpace(folder)) return;
+            var document = _browser.Document as IHTMLDocument3;
+            var baseElement = document?.getElementById(basetTagId);
+            if (baseElement == null)
+            {
+                var doc2 = _browser.Document as IHTMLDocument2;
+                baseElement = doc2?.createElement("base");
+                if (baseElement == null) return;
+                baseElement.id = basetTagId;
+                var head = document?.getElementsByTagName("head").item(0);
+                head?.appendChild(baseElement);
+            }
+            baseElement.setAttribute("href", "file:///" + folder.Replace('\\', '/') + "/");
         }
 
         private static void BrowserPreviewKeyDown(object sender, KeyEventArgs e)

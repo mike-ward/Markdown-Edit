@@ -44,7 +44,7 @@ namespace EditModule.ViewModels
             var items = _contextMenu.Items;
 
             // todo: localize
-            items.Add(MenuFactory("Insert Path", PackIconMaterialKind.Image, OnClose));
+            items.Add(MenuFactory("Insert Path", PackIconMaterialKind.Image, OnInsertPath));
             items.Add(MenuFactory("Upload to Imgur", PackIconMaterialKind.CloudUpload, OnUploadToImgur));
             items.Add(MenuFactory("As Data URI", PackIconMaterialKind.Xml, OnInsertDataUri));
             items.Add(MenuFactory("Save As", PackIconMaterialKind.FileDocument, OnClose));
@@ -52,6 +52,16 @@ namespace EditModule.ViewModels
             items.Add(MenuFactory("Cancel", PackIconMaterialKind.Close, OnClose));
 
             return _contextMenu;
+        }
+
+        private async void OnInsertPath(object sender, RoutedEventArgs e)
+        {
+            await GuardedAction(() =>
+            {
+                if (!(DragEventArgs.Data.GetData(DataFormats.FileDrop) is string[] files)) throw new InvalidProgramException("no file selected");
+                var relativePath = FileExtensions.MakeRelativePath(TextEditor.Document.FileName, files[0]).Replace('\\', '/');
+                return Task.FromResult(CreateImageTag(relativePath, Path.GetFileNameWithoutExtension(files[0])));
+            });
         }
 
         private async void OnUploadToImgur(object sender, RoutedEventArgs e)

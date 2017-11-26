@@ -10,9 +10,9 @@ namespace ServicesModule.Services
 {
     public class Notify : INotify
     {
-        private readonly double _fontSize = 18;
-        private readonly double _buttonWidth = 100;
-        private readonly double _buttonColumnWidth = 110;
+        private const double FontSize = 18;
+        private const double ButtonWidth = 100;
+        private const double ButtonColumnWidth = 110;
         private readonly Thickness _buttonMargin = new Thickness(0, 10, 0, 0);
 
         public async Task<bool> Alert(string alert)
@@ -25,9 +25,9 @@ namespace ServicesModule.Services
 
             buttons.SetValue(Grid.RowProperty, 2);
             buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(_buttonColumnWidth) });
+            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ButtonColumnWidth) });
 
-            var ok = new Button { Content = "OK", Width = _buttonWidth };
+            var ok = new Button { Content = "OK", Width = ButtonWidth };
             ok.SetValue(Grid.RowProperty, 2);
             ok.SetValue(Grid.ColumnProperty, 1);
             ok.Click += (sd, ea) => dialog.Close();
@@ -52,10 +52,10 @@ namespace ServicesModule.Services
             var buttons = ButtonBlock();
 
             buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(_buttonColumnWidth) });
-            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(_buttonColumnWidth) });
+            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ButtonColumnWidth) });
+            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ButtonColumnWidth) });
 
-            var yes = new Button { Content = "_Yes", Width = _buttonWidth };
+            var yes = new Button { Content = "_Yes", Width = ButtonWidth };
             yes.SetValue(Grid.RowProperty, 2);
             yes.SetValue(Grid.ColumnProperty, 1);
             yes.Click += (sd, ea) =>
@@ -63,7 +63,7 @@ namespace ServicesModule.Services
                 result = MessageBoxResult.Yes;
                 dialog.Close();
             };
-            var no = new Button { Content = "_No", Width = _buttonWidth };
+            var no = new Button { Content = "_No", Width = ButtonWidth };
             no.SetValue(Grid.RowProperty, 2);
             no.SetValue(Grid.ColumnProperty, 2);
             no.Click += (sd, ea) =>
@@ -94,11 +94,11 @@ namespace ServicesModule.Services
             var buttons = ButtonBlock();
 
             buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(_buttonColumnWidth) });
-            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(_buttonColumnWidth) });
-            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(_buttonColumnWidth) });
+            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ButtonColumnWidth) });
+            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ButtonColumnWidth) });
+            buttons.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(ButtonColumnWidth) });
 
-            var yes = new Button { Content = "_Yes", Width = _buttonWidth };
+            var yes = new Button { Content = "_Yes", Width = ButtonWidth };
             yes.SetValue(Grid.RowProperty, 2);
             yes.SetValue(Grid.ColumnProperty, 1);
             yes.Click += (sd, ea) =>
@@ -106,7 +106,7 @@ namespace ServicesModule.Services
                 result = MessageBoxResult.Yes;
                 dialog.Close();
             };
-            var no = new Button { Content = "_No", Width = _buttonWidth };
+            var no = new Button { Content = "_No", Width = ButtonWidth };
             no.SetValue(Grid.RowProperty, 2);
             no.SetValue(Grid.ColumnProperty, 2);
             no.Click += (sd, ea) =>
@@ -114,7 +114,7 @@ namespace ServicesModule.Services
                 result = MessageBoxResult.No;
                 dialog.Close();
             };
-            var cancel = new Button { Content = "_Cancel", Width = _buttonWidth };
+            var cancel = new Button { Content = "_Cancel", Width = ButtonWidth };
             cancel.SetValue(Grid.ColumnProperty, 3);
             cancel.Click += (sd, ea) =>
             {
@@ -159,7 +159,6 @@ namespace ServicesModule.Services
                 Content = grid,
                 OverlayBrush = overlay,
                 ShowTitleBar = false
-                
             };
 
             return dialog;
@@ -190,7 +189,7 @@ namespace ServicesModule.Services
 
         private TextBlock MessageBlock(string text)
         {
-            var message = new TextBlock { Text = text, FontSize = _fontSize };
+            var message = new TextBlock { Text = text, FontSize = FontSize };
             message.SetValue(Grid.RowProperty, 0);
             message.SetValue(Grid.ColumnProperty, 2);
             return message;
