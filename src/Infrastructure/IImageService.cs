@@ -9,6 +9,7 @@ namespace Infrastructure
     {
         Task<string> UploadToImgur(Stream stream, UploadProgressChangedEventHandler progress, UploadValuesCompletedEventHandler completed);
         Task<string> ImageFileToDataUri(Stream stream, string imageType, string name);
+        Task<string> SaveAs(Stream stream);
         string ClipboardDibToDataUri();
         BitmapSource ClipboardDibToBitmapSource();
         byte[] ToPngArray(BitmapSource bitmapsource);

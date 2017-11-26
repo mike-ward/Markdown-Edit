@@ -1,11 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using Infrastructure;
 using mshtml;
 using PreviewModule.ViewModels;
@@ -128,8 +124,7 @@ namespace PreviewModule.Views
                 var document2 = _browser.Document as IHTMLDocument2;
                 if (number == int.MaxValue)
                 {
-                    var body = document2?.body as IHTMLElement2;
-                    if (body != null) offsetTop = body.scrollHeight;
+                    if (document2?.body is IHTMLElement2 body) offsetTop = body.scrollHeight;
                 }
                 else if (number > 1)
                 {

@@ -47,7 +47,7 @@ namespace EditModule.ViewModels
             items.Add(MenuFactory("Insert Path", PackIconMaterialKind.Image, OnInsertPath));
             items.Add(MenuFactory("Upload to Imgur", PackIconMaterialKind.CloudUpload, OnUploadToImgur));
             items.Add(MenuFactory("As Data URI", PackIconMaterialKind.Xml, OnInsertDataUri));
-            items.Add(MenuFactory("Save As", PackIconMaterialKind.FileDocument, OnClose));
+            items.Add(MenuFactory("Save As", PackIconMaterialKind.FileDocument, SaveAs));
             items.Add(new Separator());
             items.Add(MenuFactory("Cancel", PackIconMaterialKind.Close, OnClose));
 
@@ -60,7 +60,7 @@ namespace EditModule.ViewModels
             {
                 if (!(DragEventArgs.Data.GetData(DataFormats.FileDrop) is string[] files)) throw new InvalidProgramException("no file selected");
                 var relativePath = FileExtensions.MakeRelativePath(TextEditor.Document.FileName, files[0]).Replace('\\', '/');
-                return Task.FromResult(CreateImageTag(relativePath, Path.GetFileNameWithoutExtension(files[0])));
+                return Task.FromResult(CreateImageTag(relativePath, Path.GetFileName(files[0])));
             });
         }
 
@@ -84,7 +84,6 @@ namespace EditModule.ViewModels
                         if (CancelUpload) ((WebClient)o).CancelAsync();
                     }
 
-
                     _contextMenu.IsOpen = false;
                     Uploading = true;
                     var link = await _imageService.UploadToImgur(tuple.stream, Progress, Completed);
@@ -105,6 +104,21 @@ namespace EditModule.ViewModels
                 using (stream)
                 {
                     return _imageService.ImageFileToDataUri(stream, imageType, name);
+                }
+            });
+        }
+
+        private async void SaveAs(object sender, RoutedEventArgs e)
+        {
+            await GuardedAction(async () =>
+            {
+                var tuple = DropData();
+                using (tuple.stream)
+                {
+                    var fileName = await _imageService.SaveAs(tuple.stream);
+                    if (string.IsNullOrWhiteSpace(fileName)) return string.Empty;
+                    var relativePath = FileExtensions.MakeRelativePath(TextEditor.Document.FileName, fileName).Replace('\\', '/');
+                    return CreateImageTag(relativePath, Path.GetFileName(fileName));
                 }
             });
         }

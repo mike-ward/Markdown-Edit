@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Infrastructure;
+using Microsoft.Win32;
 
 namespace ServicesModule.Services
 {
@@ -41,6 +42,30 @@ namespace ServicesModule.Services
         {
             var bytes = stream.ReadToArray();
             return await new Task<string>(() => ImageBytesToDataUri(bytes, imageType, name));
+        }
+
+        public async Task<string> SaveAs(Stream stream)
+        {
+            var dialog = new SaveFileDialog
+            {
+                OverwritePrompt = true,
+                RestoreDirectory = true,
+                Filter = "All files (*.*)|*.*"
+            };
+
+            if (dialog.ShowDialog() == false) return string.Empty;
+            if (string.IsNullOrEmpty(dialog.FileName)) return string.Empty;
+            var fileName = dialog.FileName;
+
+            if (File.Exists(fileName))
+            {
+                // todo: localize
+                var message = "Overwrite?";
+                if (await _notify.ConfirmYesNo(message) != MessageBoxResult.Yes) return string.Empty;
+            }
+
+            File.WriteAllBytes(fileName, stream.ReadToArray());
+            return fileName;
         }
 
         public string ClipboardDibToDataUri()
