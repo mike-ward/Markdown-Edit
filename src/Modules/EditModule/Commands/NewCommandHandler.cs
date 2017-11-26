@@ -35,8 +35,8 @@ namespace EditModule.Commands
                     ApplicationCommands.Save.Execute(null, (Window)sender);
                     if (_textEditor.IsModified) return;
                 }
-                SetToNew();
             }
+            SetToNew();
         }
 
         private void SetToNew()

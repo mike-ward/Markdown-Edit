@@ -42,14 +42,20 @@ namespace EditModule.ViewModels
         {
             _contextMenu = new ContextMenu { IsOpen = true, StaysOpen = true };
             var items = _contextMenu.Items;
+            var hasDocumentName = !string.IsNullOrWhiteSpace(TextEditor.Document.FileName);
 
             // todo: localize
-            items.Add(MenuFactory("Insert Path", PackIconMaterialKind.Image, OnInsertPath));
+            items.Add(MenuFactory("Insert Path", PackIconMaterialKind.Image, OnInsertPath, hasDocumentName));
             items.Add(MenuFactory("Upload to Imgur", PackIconMaterialKind.CloudUpload, OnUploadToImgur));
             items.Add(MenuFactory("As Data URI", PackIconMaterialKind.Xml, OnInsertDataUri));
-            items.Add(MenuFactory("Save As", PackIconMaterialKind.FileDocument, SaveAs));
+            items.Add(MenuFactory("Save As", PackIconMaterialKind.FileDocument, SaveAs, hasDocumentName));
             items.Add(new Separator());
             items.Add(MenuFactory("Cancel", PackIconMaterialKind.Close, OnClose));
+
+            _contextMenu.Closed += (sd, ea) =>
+            {
+                if (!Uploading) OnClose(sd, ea);
+            };
 
             return _contextMenu;
         }
@@ -128,7 +134,7 @@ namespace EditModule.ViewModels
             CloseAction?.Invoke();
         }
 
-        private static MenuItem MenuFactory(string header, PackIconMaterialKind icon, RoutedEventHandler onClick)
+        private static MenuItem MenuFactory(string header, PackIconMaterialKind icon, RoutedEventHandler onClick, bool isEnabled = true)
         {
             var menu = new MenuItem
             {
@@ -137,6 +143,7 @@ namespace EditModule.ViewModels
                 Icon = GetMaterialIcon(icon)
             };
             menu.Click += onClick;
+            menu.IsEnabled = isEnabled;
             return menu;
         }
 
