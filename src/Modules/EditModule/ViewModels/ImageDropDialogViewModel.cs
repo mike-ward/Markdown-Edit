@@ -121,6 +121,7 @@ namespace EditModule.ViewModels
                 var tuple = DropData();
                 using (tuple.stream)
                 {
+                    OnClose(sender, e); // Yep, gotta close it or the save dialog wont' work.
                     var fileName = await _imageService.SaveAs(tuple.stream);
                     if (string.IsNullOrWhiteSpace(fileName)) return string.Empty;
                     var relativePath = FileExtensions.MakeRelativePath(TextEditor.Document.FileName, fileName).Replace('\\', '/');
