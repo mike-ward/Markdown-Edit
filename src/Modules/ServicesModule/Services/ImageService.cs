@@ -38,10 +38,11 @@ namespace ServicesModule.Services
             return null;
         }
 
-        public async Task<string> ImageFileToDataUri(Stream stream, string imageType, string name)
+        public Task<string> ImageFileToDataUri(Stream stream, string imageType, string name)
         {
             var bytes = stream.ReadToArray();
-            return await new Task<string>(() => ImageBytesToDataUri(bytes, imageType, name));
+            var dataUri = ImageBytesToDataUri(bytes, imageType, name);
+            return Task.FromResult(dataUri);
         }
 
         public async Task<string> SaveAs(Stream stream)
@@ -53,9 +54,10 @@ namespace ServicesModule.Services
                 Filter = "All files (*.*)|*.*"
             };
 
-            if (dialog.ShowDialog() == false) return string.Empty;
-            if (string.IsNullOrEmpty(dialog.FileName)) return string.Empty;
+            var result = await Application.Current.Dispatcher.InvokeAsync(() => dialog.ShowDialog());
+            if (result.HasValue && result.Value == false) return string.Empty;
             var fileName = dialog.FileName;
+            if (string.IsNullOrEmpty(fileName)) return string.Empty;
 
             if (File.Exists(fileName))
             {
