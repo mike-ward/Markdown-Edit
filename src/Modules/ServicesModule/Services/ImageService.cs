@@ -22,7 +22,10 @@ namespace ServicesModule.Services
             _imageUpload = imageUpload;
         }
 
-        public async Task<string> UploadToImgur(Stream stream, UploadProgressChangedEventHandler progress, UploadValuesCompletedEventHandler completed)
+        public async Task<string> UploadToImgur(
+            Stream stream, 
+            UploadProgressChangedEventHandler progress, 
+            UploadValuesCompletedEventHandler completed)
         {
             try
             {
@@ -68,6 +71,11 @@ namespace ServicesModule.Services
 
             File.WriteAllBytes(fileName, stream.ReadToArray());
             return fileName;
+        }
+
+        public string CreateImageTag(string link, string title)
+        {
+            return $"![{title}]({link})\n";
         }
 
         public string ClipboardDibToDataUri()

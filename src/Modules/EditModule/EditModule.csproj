@@ -109,6 +109,7 @@
     <Compile Include="Commands\UndoEditCommandHander.cs" />
     <Compile Include="Features\DragAndDropSupport.cs" />
     <Compile Include="Features\EditorContextMenu.cs" />
+    <Compile Include="Features\PasteEnhancements.cs" />
     <Compile Include="ViewModels\FindReplaceDialogViewModel.cs" />
     <Compile Include="ViewModels\ImageDropDialogViewModel.cs" />
     <Compile Include="Views\FindReplaceDialog.xaml.cs">

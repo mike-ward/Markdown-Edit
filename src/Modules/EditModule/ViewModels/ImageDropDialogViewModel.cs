@@ -66,7 +66,7 @@ namespace EditModule.ViewModels
             {
                 if (!(DragEventArgs.Data.GetData(DataFormats.FileDrop) is string[] files)) throw new InvalidProgramException("no file selected");
                 var relativePath = FileExtensions.MakeRelativePath(TextEditor.Document.FileName, files[0]).Replace('\\', '/');
-                return Task.FromResult(CreateImageTag(relativePath, Path.GetFileName(files[0])));
+                return Task.FromResult(_imageService.CreateImageTag(relativePath, Path.GetFileName(files[0])));
             });
         }
 
@@ -96,7 +96,7 @@ namespace EditModule.ViewModels
                     Uploading = false;
 
                     return Uri.IsWellFormedUriString(link, UriKind.Absolute) 
-                        ? CreateImageTag(link, tuple.name) 
+                        ? _imageService.CreateImageTag(link, tuple.name) 
                         : throw new InvalidProgramException(link);
                 }
             });
@@ -125,7 +125,7 @@ namespace EditModule.ViewModels
                     var fileName = await _imageService.SaveAs(tuple.stream);
                     if (string.IsNullOrWhiteSpace(fileName)) return string.Empty;
                     var relativePath = FileExtensions.MakeRelativePath(TextEditor.Document.FileName, fileName).Replace('\\', '/');
-                    return CreateImageTag(relativePath, Path.GetFileName(fileName));
+                    return _imageService.CreateImageTag(relativePath, Path.GetFileName(fileName));
                 }
             });
         }
@@ -176,11 +176,6 @@ namespace EditModule.ViewModels
             {
                 OnClose(null, null);
             }
-        }
-
-        private static string CreateImageTag(string link, string title)
-        {
-            return $"![{title}]({link})\n";
         }
 
         private (Stream stream, string imageType, string name) DropData()
