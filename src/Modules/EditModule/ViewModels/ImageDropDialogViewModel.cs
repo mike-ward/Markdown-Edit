@@ -167,6 +167,7 @@ namespace EditModule.ViewModels
                 var text = await action();
                 Uploading = false;
                 InsertText(TextEditor, DragEventArgs, text);
+                TextEditor.TextArea.Focus();
             }
             catch (Exception ex)
             {
