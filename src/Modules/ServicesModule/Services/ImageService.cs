@@ -41,11 +41,11 @@ namespace ServicesModule.Services
             return null;
         }
 
-        public Task<string> ImageFileToDataUri(Stream stream, string imageType, string name)
+        public async Task<string> ImageFileToDataUri(Stream stream, string imageType, string name)
         {
             var bytes = stream.ReadToArray();
-            var dataUri = ImageBytesToDataUri(bytes, imageType, name);
-            return Task.FromResult(dataUri);
+            var dataUri = await Task.Factory.StartNew(() => ImageBytesToDataUri(bytes, imageType, name));
+            return dataUri;
         }
 
         public async Task<string> SaveAs(Stream stream)

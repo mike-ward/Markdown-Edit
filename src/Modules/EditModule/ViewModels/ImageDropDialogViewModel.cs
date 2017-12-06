@@ -8,25 +8,25 @@ using ICSharpCode.AvalonEdit;
 using Infrastructure;
 using MahApps.Metro.IconPacks;
 using Prism.Mvvm;
-using ServicesModule.Services;
 
 namespace EditModule.ViewModels
 {
     public class ImageDropDialogViewModel : BindableBase
     {
-        private readonly ImageService _imageService;
+        private readonly IImageService _imageService;
         private readonly INotify _notify;
         private bool _uploading;
         private ContextMenu _contextMenu;
 
         public TextEditor TextEditor { get; set; }
         public DragEventArgs DragEventArgs { get; set; }
+        public bool UseClipboard { get; set; }
         public ProgressBar ProgressBar { get; set; }
         public bool CancelUpload { get; set; }
         public bool UseClipboardImage { get; set; }
         public Action CloseAction { get; set; }
 
-        public ImageDropDialogViewModel(ImageService imageService, INotify notify)
+        public ImageDropDialogViewModel(IImageService imageService, INotify notify)
         {
             _imageService = imageService;
             _notify = notify;
@@ -74,7 +74,8 @@ namespace EditModule.ViewModels
         {
             await GuardedAction(async () =>
             {
-                var tuple = DropData();
+                Uploading = true;
+                var tuple = GetImageData();
                 using (tuple.stream)
                 {
                     void Progress(object o, UploadProgressChangedEventArgs args) => TextEditor.Dispatcher.InvokeAsync(() =>
@@ -90,13 +91,10 @@ namespace EditModule.ViewModels
                         if (CancelUpload) ((WebClient)o).CancelAsync();
                     }
 
-                    _contextMenu.IsOpen = false;
-                    Uploading = true;
                     var link = await _imageService.UploadToImgur(tuple.stream, Progress, Completed);
-                    Uploading = false;
 
-                    return Uri.IsWellFormedUriString(link, UriKind.Absolute) 
-                        ? _imageService.CreateImageTag(link, tuple.name) 
+                    return Uri.IsWellFormedUriString(link, UriKind.Absolute)
+                        ? _imageService.CreateImageTag(link, tuple.name)
                         : throw new InvalidProgramException(link);
                 }
             });
@@ -104,12 +102,14 @@ namespace EditModule.ViewModels
 
         private async void OnInsertDataUri(object sender, RoutedEventArgs e)
         {
-            await GuardedAction(() =>
+            await GuardedAction(async () =>
             {
-                (var stream, var imageType, var name) = DropData();
+                (var stream, var imageType, var name) = GetImageData();
                 using (stream)
                 {
-                    return _imageService.ImageFileToDataUri(stream, imageType, name);
+                    Uploading = true;
+                    ProgressBar.IsIndeterminate = true;
+                    return await _imageService.ImageFileToDataUri(stream, imageType, name);
                 }
             });
         }
@@ -118,7 +118,7 @@ namespace EditModule.ViewModels
         {
             await GuardedAction(async () =>
             {
-                var tuple = DropData();
+                var tuple = GetImageData();
                 using (tuple.stream)
                 {
                     OnClose(sender, e); // Yep, gotta close it or the save dialog wont' work.
@@ -163,12 +163,17 @@ namespace EditModule.ViewModels
         {
             try
             {
+                _contextMenu.IsOpen = false;
                 var text = await action();
+                Uploading = false;
+                // Insert large blocks of text can take a long time.
+                // Give the UI a chance to catchup first.
+                await Task.Delay(50);
                 InsertText(TextEditor, DragEventArgs, text);
             }
             catch (Exception ex)
             {
-                 #pragma warning disable 4014
+                #pragma warning disable 4014
                 _notify.Alert(ex.Message); // using await hangs UI here
                 #pragma warning restore 4014
             }
@@ -178,10 +183,16 @@ namespace EditModule.ViewModels
             }
         }
 
-        private (Stream stream, string imageType, string name) DropData()
+        private (Stream stream, string imageType, string name) GetImageData()
         {
-            var files = DragEventArgs.Data.GetData(DataFormats.FileDrop) as string[];
-            if (files == null) return (null, null, null);
+            if (UseClipboard)
+            {
+                var bitmapSource = _imageService.ClipboardDibToBitmapSource();
+                var png = _imageService.ToPngArray(bitmapSource);
+                return (new MemoryStream(png), "png", "Clipboard");
+            }
+
+            if (!(DragEventArgs.Data.GetData(DataFormats.FileDrop) is string[] files)) return (null, null, null);
 
             var file = files[0];
             var stream = new FileStream(file, FileMode.Open);
@@ -189,9 +200,10 @@ namespace EditModule.ViewModels
             return (stream, imageType, Path.GetFileName(file));
         }
 
-        private static void InsertText(TextEditor textEditor, DragEventArgs dragEventArgs, string tag)
+        private static void InsertText(TextEditor textEditor, DragEventArgs dragEventArgs, string text)
         {
-            textEditor.Document.Insert(GetInsertOffset(textEditor, dragEventArgs), tag);
+            var position = GetInsertOffset(textEditor, dragEventArgs);
+            textEditor.Document.Insert(position, text);
         }
 
         private static int GetInsertOffset(TextEditor textEditor, DragEventArgs dragEventArgs)

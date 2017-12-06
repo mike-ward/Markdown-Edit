@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Rendering;
 
 namespace EditModule.Views
 {
@@ -27,7 +28,10 @@ namespace EditModule.Views
                 Close();
             };
 
-            var position = dea.GetPosition(textEditor);
+            var position = dea
+                ?.GetPosition(textEditor) 
+                ?? textEditor.TextArea.TextView.GetVisualPosition(textEditor.TextArea.Caret.Position, VisualYPosition.LineBottom);
+
             var screen = textEditor.PointToScreen(new Point(position.X, position.Y));
             Left = screen.X;
             Top = screen.Y;
@@ -36,6 +40,12 @@ namespace EditModule.Views
         private void CancelOnClick(object sender, RoutedEventArgs e)
         {
             ViewModel.CancelUpload = true;
+        }
+
+        public bool UseClipboard
+        {
+            get => ViewModel.UseClipboard;
+            set => ViewModel.UseClipboard = value;
         }
     }
 }

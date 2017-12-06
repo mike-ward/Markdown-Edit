@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using EditModule.ViewModels;
+using EditModule.Views;
 using ICSharpCode.AvalonEdit;
 using Infrastructure;
 
@@ -22,6 +25,7 @@ namespace EditModule.Features
         {
             _textEditor = viewModel.TextEditor;
             DataObject.AddPastingHandler(_textEditor, OnPaste);
+            AllowImagePaste(_textEditor, _imageService);
         }
 
         private void OnPaste(object sender, DataObjectPastingEventArgs pasteEventArgs)
@@ -47,6 +51,51 @@ namespace EditModule.Features
                 dataObject.SetData(DataFormats.UnicodeText, updatedText);
                 pasteEventArgs.DataObject = dataObject;
             }
+        }
+
+        private static void AllowImagePaste(TextEditor editor, IImageService imageService)
+        {
+            // AvalonEdit only allows text paste. Hack the command to allow otherwise.
+            var cmd = editor.TextArea.DefaultInputHandler.Editing.CommandBindings
+                .FirstOrDefault(cb => cb.Command == ApplicationCommands.Paste);
+
+            if (cmd == null) return;
+
+            void CanExecute(object sender, CanExecuteRoutedEventArgs args) => 
+                args.CanExecute = editor.TextArea?.Document != null && 
+                editor.TextArea.ReadOnlySectionProvider.CanInsert(editor.TextArea.Caret.Offset);
+
+            void Execute(object sender, ExecutedRoutedEventArgs args)
+            {
+                if (Clipboard.ContainsText())
+                {
+                    // WPF won't continue routing the command if there's PreviewExecuted handler.
+                    // So, remove it, call Execute and reinstall the handler.
+                    // Hack, hack hack...
+                    try
+                    {
+                        cmd.PreviewExecuted -= Execute;
+                        cmd.Command.Execute(args.Parameter);
+                    }
+                    finally
+                    {
+                        cmd.PreviewExecuted += Execute;
+                    }
+                }
+                else if (Clipboard.ContainsImage())
+                {
+                    var dialog = new ImageDropDialog(editor, null)
+                    {
+                        Owner = Application.Current.MainWindow,
+                        UseClipboard = true
+                    };
+                    dialog.ShowDialog();
+                    args.Handled = true;
+                }
+            }
+
+            cmd.CanExecute += CanExecute;
+            cmd.PreviewExecuted += Execute;
         }
     }
 }
