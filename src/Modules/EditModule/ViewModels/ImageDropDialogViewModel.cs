@@ -102,14 +102,14 @@ namespace EditModule.ViewModels
 
         private async void OnInsertDataUri(object sender, RoutedEventArgs e)
         {
-            await GuardedAction(async () =>
+            await GuardedAction(() =>
             {
                 (var stream, var imageType, var name) = GetImageData();
                 using (stream)
                 {
                     Uploading = true;
                     ProgressBar.IsIndeterminate = true;
-                    return await _imageService.ImageFileToDataUri(stream, imageType, name);
+                    return _imageService.ImageFileToDataUri(stream, imageType, name);
                 }
             });
         }
@@ -166,9 +166,6 @@ namespace EditModule.ViewModels
                 _contextMenu.IsOpen = false;
                 var text = await action();
                 Uploading = false;
-                // Insert large blocks of text can take a long time.
-                // Give the UI a chance to catchup first.
-                await Task.Delay(50);
                 InsertText(TextEditor, DragEventArgs, text);
             }
             catch (Exception ex)
@@ -196,7 +193,7 @@ namespace EditModule.ViewModels
 
             var file = files[0];
             var stream = new FileStream(file, FileMode.Open);
-            var imageType = Path.GetExtension(file);
+            var imageType = Path.GetExtension(file).Trim('.');
             return (stream, imageType, Path.GetFileName(file));
         }
 
