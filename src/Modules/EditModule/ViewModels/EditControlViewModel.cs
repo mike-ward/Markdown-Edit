@@ -60,6 +60,7 @@ namespace EditModule.ViewModels
             if (!string.IsNullOrWhiteSpace(_settings.CurrentFileName))
             {
                 ApplicationCommands.Open.Execute(_settings.CurrentFileName, null);
+                _settings.CurrentFileName = TextEditor.Document.FileName;
             }    
         }
 
