@@ -76,6 +76,7 @@
     <Compile Include="Globals.cs" />
     <Compile Include="IAbstractSyntaxTree.cs" />
     <Compile Include="IColorService.cs" />
+    <Compile Include="IDocumentConverters.cs" />
     <Compile Include="IEditService.cs" />
     <Compile Include="IFormatMarkdown.cs" />
     <Compile Include="IHighlight.cs" />

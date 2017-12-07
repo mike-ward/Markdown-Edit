@@ -20,6 +20,7 @@ namespace ServicesModule
             Container.RegisterType<IAbstractSyntaxTree, AbstractSyntaxTree>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IColorService, ColorService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IEditService, EditService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IDocumentConverters, DocumentConverters>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IFormatMarkdown, FormatMarkdown>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IImageService, ImageService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IImageUpload, ImageUploadImgur>(new ContainerControlledLifetimeManager());

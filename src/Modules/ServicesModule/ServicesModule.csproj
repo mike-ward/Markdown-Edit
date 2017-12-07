@@ -100,6 +100,7 @@
     <Compile Include="Services\AbstractSyntaxTree.cs" />
     <Compile Include="Services\CommonMarkEngine.cs" />
     <Compile Include="Services\ColorService.cs" />
+    <Compile Include="Services\DocumentConverters.cs" />
     <Compile Include="Services\EditService.cs" />
     <Compile Include="Services\FormatMarkdown.cs" />
     <Compile Include="Services\ImageService.cs" />
