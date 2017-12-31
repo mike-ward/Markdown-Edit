@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using EditModule.Commands;
 using EditModule.Features;
+using EditModule.Features.SpellCheck;
 using EditModule.Features.SyntaxHighlighting;
 using EditModule.Models;
 using EditModule.Views;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Rendering;
 using Infrastructure;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
@@ -27,6 +29,7 @@ namespace EditModule
         public void Initialize()
         {
             Container.RegisterType<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
+            Container.RegisterType<ISpellCheckBackgroundRenderer, SpellCheckBackgroundRenderer>();
             Container.RegisterType<ITextEditorComponent, TextEditor>();
 
             Container.RegisterType<IEditFeature, DragAndDropSupport>(nameof(DragAndDropSupport));
@@ -34,6 +37,7 @@ namespace EditModule
             Container.RegisterType<IEditFeature, FileNameChangedEventHandler>(nameof(FileNameChangedEventHandler));
             Container.RegisterType<IEditFeature, PasteEnhancements>(nameof(PasteEnhancements));
             Container.RegisterType<IEditFeature, TextEditorOptions>(nameof(TextEditorOptions));
+            Container.RegisterType<IEditFeature, SpellCheck>(nameof(SpellCheck));
             Container.RegisterType<IEditFeature, SyntaxHighlighting>(nameof(SyntaxHighlighting));
             Container.RegisterType<IEditFeature, SynchronizedScroll>(nameof(SynchronizedScroll));
             Container.RegisterType<IEditFeature, TextUpdatedEventHandler>(nameof(TextUpdatedEventHandler));

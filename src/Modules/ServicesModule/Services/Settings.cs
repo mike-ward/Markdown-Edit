@@ -12,6 +12,10 @@ namespace ServicesModule.Services
         private double _fontSize = 16;
         private bool _wordWrap = true;
         private string _currentFileName = string.Empty;
+        private bool _spellCheckIgnoreCodeBlocks = true;
+        private bool _spellCheckIgnoreMarkupTags = true;
+        private bool _spellCheckIgnoreAllCaps = true;
+        private bool _spellCheckIgnoreWordsWithDigits = true;
 
         public Settings()
         {
@@ -45,6 +49,34 @@ namespace ServicesModule.Services
         {
             get => _wordWrap;
             set => SetProperty(ref _wordWrap, value);
+        }
+
+        [Trackable]
+        public bool SpellCheckIgnoreCodeBlocks
+        {
+            get => _spellCheckIgnoreCodeBlocks;
+            set => SetProperty(ref _spellCheckIgnoreCodeBlocks, value);
+        }
+
+        [Trackable]
+        public bool SpellCheckIgnoreMarkupTags
+        {
+            get => _spellCheckIgnoreMarkupTags;
+            set => SetProperty(ref _spellCheckIgnoreMarkupTags,value);
+        }
+
+        [Trackable]
+        public bool SpellCheckIgnoreAllCaps
+        {
+            get => _spellCheckIgnoreAllCaps;
+            set => SetProperty(ref _spellCheckIgnoreAllCaps,value);
+        }
+
+        [Trackable]
+        public bool SpellCheckIgnoreWordsWithDigits
+        {
+            get => _spellCheckIgnoreWordsWithDigits;
+            set => SetProperty(ref _spellCheckIgnoreWordsWithDigits,value);
         }
     }
 }
