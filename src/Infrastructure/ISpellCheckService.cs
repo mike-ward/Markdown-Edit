@@ -4,7 +4,8 @@ namespace Infrastructure
 {
     public interface ISpellCheckService
     {
-        bool Spell(string word);
+        bool Check(string word);
         IEnumerable<string> Suggestions(string word);
+        string[] Languages();
     }
 }

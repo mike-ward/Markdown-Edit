@@ -45,14 +45,18 @@ namespace Infrastructure
             };
         }
 
+        private static string _assemblyFolder;
+
         public static string AssemblyFolder()
         {
-            return Path.GetDirectoryName(ExecutingAssembly());
+            return _assemblyFolder ?? (_assemblyFolder = Path.GetDirectoryName(ExecutingAssembly()));
         }
+
+        private static string _assemblyName;
 
         public static string ExecutingAssembly()
         {
-            return Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\');
+            return _assemblyName ?? (_assemblyName = Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\'));
         }
 
         public static T GetDescendantByType<T>(this Visual element) where T : class

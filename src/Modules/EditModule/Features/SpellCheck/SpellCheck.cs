@@ -107,7 +107,7 @@ namespace EditModule.Features.SpellCheck
                               + originalText.IndexOf(trimmedWord, startIndex,
                                   StringComparison.InvariantCultureIgnoreCase);
 
-                    if (!_spellCheckService.Spell(trimmedWord))
+                    if (!_spellCheckService.Check(trimmedWord))
                     {
                         var textSegment = new TextSegment {StartOffset = num, Length = word.Length};
                         _spellCheckRenderer.ErrorSegments.Add(textSegment);
