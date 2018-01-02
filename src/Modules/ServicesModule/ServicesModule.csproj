@@ -127,6 +127,7 @@
     <Compile Include="Services\Settings.cs" />
     <Compile Include="Services\SnippetService.cs" />
     <Compile Include="Services\SpellCheckService.cs" />
+    <Compile Include="Services\SpellCheckUserDictionaryService.cs" />
     <Compile Include="Services\Strings.cs" />
     <Compile Include="Services\TemplateLoader.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -140,10 +141,10 @@
     <None Include="Dictionaries\Danish.dic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Dictionaries\en_US.aff">
+    <None Include="Dictionaries\English %28United States%29.aff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Dictionaries\en_US.dic">
+    <None Include="Dictionaries\English %28United States%29.dic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Dictionaries\French.aff">

@@ -13,40 +13,47 @@ namespace ServicesModule.Services
         private readonly Hunspell _speller;
         private static string SpellCheckFolder() => Path.Combine(Utility.AssemblyFolder(), "Dictionaries");
 
-        public SpellCheckService(INotify notify)
+        public SpellCheckService(INotify notify, ISettings settings)
         {
             try
             {
-                _speller = CreateSpeller(CultureInfo.CurrentUICulture.Name);
+                _speller = SpellFactory(settings.SpellCheckDictionary);
             }
-            catch
+            catch (Exception ex)
             {
-                try
-                {
-                    _speller = CreateSpeller("en_US");
-                }
-                catch (Exception ex)
-                {
-                    notify.Alert($"{ex.Message}");
-                }
+                notify.Alert($"{ex.Message}");
             }
         }
 
-        private static Hunspell CreateSpeller(string language)
+        private static Hunspell SpellFactory(string language)
         {
             var speller = new Hunspell();
-            var path = SpellCheckFolder();
+            try
+            {
+                var path = SpellCheckFolder();
 
-            var aff = Path.Combine(path, language + ".aff");
-            var dic = Path.Combine(path, language + ".dic");
+                var aff = Path.Combine(path, language + ".aff");
+                var dic = Path.Combine(path, language + ".dic");
 
-            speller.Load(aff, dic);
-            return speller;
+                speller.Load(aff, dic);
+                return speller;
+
+            }
+            catch
+            {
+                speller.Dispose();
+                throw;
+            }
         }
 
         public bool Check(string word)
         {
             return _speller?.Spell(word) ?? true;
+        }
+
+        public void Add(string word)
+        {
+            _speller?.Add(word);
         }
 
         public IEnumerable<string> Suggestions(string word)

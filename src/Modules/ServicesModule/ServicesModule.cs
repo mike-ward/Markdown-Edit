@@ -29,6 +29,7 @@ namespace ServicesModule
             Container.RegisterType<ISettings, Settings>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ISnippetService, SnippetService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ISpellCheckService, SpellCheckService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ISpellCheckUserDictionaryService, SpellCheckUserDictionaryService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IStrings, Strings>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ITemplateLoader, TemplateLoader>(new ContainerControlledLifetimeManager());
 

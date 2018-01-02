@@ -12,6 +12,7 @@ namespace Infrastructure
         bool WordWrap { get; set; }
 
         // Spell Check
+        string SpellCheckDictionary { get; set; }
         bool SpellCheckIgnoreCodeBlocks { get; set; }
         bool SpellCheckIgnoreMarkupTags { get; set; }
         bool SpellCheckIgnoreAllCaps { get; set; }

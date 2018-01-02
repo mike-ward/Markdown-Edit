@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Windows.Input;
 using Jot;
 using Jot.Storage;
 

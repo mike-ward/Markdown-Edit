@@ -13,6 +13,7 @@ namespace EditModule.Features.SpellCheck
     public class SpellCheck : IEditFeature
     {
         private readonly ISpellCheckService _spellCheckService;
+        private readonly ISpellCheckUserDictionaryService _spellCheckUserDictionaryService;
         private readonly ISpellCheckBackgroundRenderer _spellCheckRenderer;
         private readonly ISettings _userSettings;
         private readonly IAbstractSyntaxTree _abstractSyntaxTree;
@@ -33,11 +34,13 @@ namespace EditModule.Features.SpellCheck
 
         public SpellCheck(
             ISpellCheckService spellCheckService, 
+            ISpellCheckUserDictionaryService spellCheckUserDictionaryService,
             ISpellCheckBackgroundRenderer spellCheckRenderer, 
             ISettings userSettings,
             IAbstractSyntaxTree abstractSyntaxTree)
         {
             _spellCheckService = spellCheckService;
+            _spellCheckUserDictionaryService = spellCheckUserDictionaryService;
             _spellCheckRenderer = spellCheckRenderer;
             _userSettings = userSettings;
             _abstractSyntaxTree = abstractSyntaxTree;

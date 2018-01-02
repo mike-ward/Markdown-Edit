@@ -16,6 +16,7 @@ namespace ServicesModule.Services
         private bool _spellCheckIgnoreMarkupTags = true;
         private bool _spellCheckIgnoreAllCaps = true;
         private bool _spellCheckIgnoreWordsWithDigits = true;
+        private string _spellCheckDictionary = "English (United States)";
 
         public Settings()
         {
@@ -49,6 +50,13 @@ namespace ServicesModule.Services
         {
             get => _wordWrap;
             set => SetProperty(ref _wordWrap, value);
+        }
+
+        [Trackable]
+        public string SpellCheckDictionary
+        {
+            get => _spellCheckDictionary;
+            set => SetProperty(ref _spellCheckDictionary, value);
         }
 
         [Trackable]
