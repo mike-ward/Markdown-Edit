@@ -32,11 +32,10 @@ namespace EditModule.Features.SyntaxHighlighting
             var start = line.Offset;
             var end = line.EndOffset;
             var leadingSpaces = CurrentContext.GetText(start, end - start).Text.TakeWhile(char.IsWhiteSpace).Count();
-            Func<ITheme, IHighlight> highlighter;
 
             foreach (var block in AbstractSyntaxTree.EnumerateSpanningBlocks(ast, start, end))
             {
-                if (AbstractSyntaxTree.BlockHighlighter.TryGetValue(block.Tag, out highlighter))
+                if (AbstractSyntaxTree.BlockHighlighter.TryGetValue(block.Tag, out var highlighter))
                 {
                     var magnify = double.NaN;
                     if (block.Heading.Level == 1) magnify = theme.Header1Height;

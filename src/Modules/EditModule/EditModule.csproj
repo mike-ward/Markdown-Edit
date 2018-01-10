@@ -91,6 +91,7 @@
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
     <Compile Include="Commands\ConvertSelectionToListCommandHandler.cs" />
+    <Compile Include="Commands\IgnoreSpellingErrorCommandHandler.cs" />
     <Compile Include="Commands\ReplaceDialogCommandHandler.cs" />
     <Compile Include="Commands\FindDialogCommandHandler.cs" />
     <Compile Include="Commands\IEditCommandHandler.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Commands\SaveAsCommandHandler.cs" />
     <Compile Include="Commands\SaveCommandHandler.cs" />
     <Compile Include="Commands\SnippetCommand.cs" />
+    <Compile Include="Commands\CorrectSpellingErrorCommandHandler.cs" />
     <Compile Include="Commands\ToggleBoldCommandHandler.cs" />
     <Compile Include="Commands\InsertBlockQuoteCommandHander.cs" />
     <Compile Include="Commands\ToggleCodeCommandHandler.cs" />
