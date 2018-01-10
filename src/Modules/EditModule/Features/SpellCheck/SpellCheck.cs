@@ -48,6 +48,7 @@ namespace EditModule.Features.SpellCheck
 
         public void Initialize(EditControlViewModel viewModel)
         {
+            viewModel.SpellCheckRenderer = _spellCheckRenderer;
             _textEditor = viewModel.TextEditor;
             _textEditor.TextArea.TextView.BackgroundRenderers.Add(_spellCheckRenderer);
             _textEditor.TextArea.TextView.VisualLinesChanged += TextViewVisualLinesChanged;

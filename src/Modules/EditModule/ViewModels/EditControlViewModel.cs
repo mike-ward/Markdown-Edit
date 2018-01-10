@@ -84,6 +84,8 @@ namespace EditModule.ViewModels
             set => SetProperty(ref _isDocumentModified, value, () => _eventAggregator.GetEvent<DocumentModifiedChangedEvent>().Publish(value));
         }
 
+        public ISpellCheckBackgroundRenderer SpellCheckRenderer { get; set; }
+
         // Theme
 
         public EventHandler<ThemeChangedEventArgs> ThemeChanged;

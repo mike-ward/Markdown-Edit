@@ -1,19 +1,78 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using EditModule.ViewModels;
+using ICSharpCode.AvalonEdit.Document;
+using Infrastructure;
 using MahApps.Metro.IconPacks;
 
 namespace EditModule.Features
 {
     public class EditorContextMenu : IEditFeature
     {
+        private readonly ISpellCheckService _spellCheckService;
+        private EditControlViewModel _viewModel;
+
+        public EditorContextMenu(ISpellCheckService spellCheckService)
+        {
+            _spellCheckService = spellCheckService;
+        }
 
         public void Initialize(EditControlViewModel viewModel)
         {
-            var control = viewModel.TextEditor;
-            control.ContextMenu = new ContextMenu();
-            AddEditMenuItems(control.ContextMenu);
+            _viewModel = viewModel;
+            _viewModel.TextEditor.ContextMenu = new ContextMenu();
+            _viewModel.TextEditor.ContextMenuOpening += OnOpen;
+        }
+
+        private void OnOpen(object sender, ContextMenuEventArgs e)
+        {
+            var contextMenu = _viewModel.TextEditor.ContextMenu;
+            contextMenu?.Items.Clear();
+            AddSpellCheckSuggestions();
+            AddEditMenuItems(contextMenu);
+        }
+
+        private void AddSpellCheckSuggestions()
+        {
+            var editor = _viewModel.TextEditor;
+            var contextMenu = _viewModel.TextEditor.ContextMenu;
+            if (contextMenu == null) return;
+
+            var editorPosition = editor.GetPositionFromPoint(Mouse.GetPosition(editor));
+            if (!editorPosition.HasValue) return;
+            var offset = editor.Document.GetOffset(editorPosition.Value.Line, editorPosition.Value.Column);
+
+            var errorSegments = _viewModel.SpellCheckRenderer.ErrorSegments;
+            var misspelledSegment = errorSegments?.FirstOrDefault(segment => segment.StartOffset <= offset && segment.EndOffset >= offset);
+            if (misspelledSegment == null) return;
+
+            // check if the clicked offset is the beginning or end of line to prevent snapping to it
+            // (like in text selection) with GetPositionFromPoint
+            // in practice makes context menu not show when clicking on the first character of a line
+            var currentLine = editor.Document.GetLineByOffset(offset);
+            if (offset == currentLine.Offset || offset == currentLine.EndOffset) return;
+
+            var misspelledText = editor.Document.GetText(misspelledSegment);
+            var suggestions = _spellCheckService.Suggestions(misspelledText);
+
+            foreach (var suggestion in suggestions)
+            {
+                contextMenu.Items.Add(SpellSuggestMenuItem(suggestion, misspelledSegment));
+            }
+
+            contextMenu.Items.Add(new MenuItem
+            {
+                // Header = TranslationProvider.Translate("editor-menu-add-to-dictionary"),
+                Header = "Add to Dictiionary",
+                Command = EditingCommands.IgnoreSpellingError,
+                CommandParameter = misspelledText
+            });
+
+            contextMenu.Items.Add(new Separator());
         }
 
         private static void AddEditMenuItems(ItemsControl contextMenu)
@@ -111,6 +170,17 @@ namespace EditModule.Features
                 Margin = new Thickness(10, 0, 0, 0),
                 Width = 12,
                 Height = 12
+            };
+        }
+
+        private static MenuItem SpellSuggestMenuItem(string header, TextSegment segment)
+        {
+            return new MenuItem
+            {
+                Header = header,
+                FontWeight = FontWeights.Bold,
+                Command = EditingCommands.CorrectSpellingError,
+                CommandParameter = new Tuple<string, TextSegment>(header, segment)
             };
         }
     }
