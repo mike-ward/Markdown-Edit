@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using Infrastructure;
-using MahApps.Metro.Controls;
 using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
