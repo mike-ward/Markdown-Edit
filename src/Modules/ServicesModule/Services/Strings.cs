@@ -47,7 +47,7 @@ namespace ServicesModule.Services
         private static string LanguageFolder(CultureInfo cultureInfo)
         {
             var name = cultureInfo.TwoLetterISOLanguageName;
-            var path = Path.Combine(Utility.AssemblyFolder(), "Languages", name);
+            var path = Path.Combine(Globals.AssemblyFolder, "Languages", name);
             return path;
         }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using Infrastructure;
@@ -11,7 +10,7 @@ namespace ServicesModule.Services
     public class SpellCheckService : ISpellCheckService
     {
         private readonly Hunspell _speller;
-        private static string SpellCheckFolder() => Path.Combine(Utility.AssemblyFolder(), "Dictionaries");
+        private static string SpellCheckFolder() => Path.Combine(Globals.AssemblyFolder, "Dictionaries");
 
         public SpellCheckService(INotify notify, ISettings settings)
         {

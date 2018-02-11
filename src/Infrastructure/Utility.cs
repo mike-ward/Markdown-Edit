@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -44,21 +42,7 @@ namespace Infrastructure
                 }
             };
         }
-
-        private static string _assemblyFolder;
-
-        public static string AssemblyFolder()
-        {
-            return _assemblyFolder ?? (_assemblyFolder = Path.GetDirectoryName(ExecutingAssembly()));
-        }
-
-        private static string _assemblyName;
-
-        public static string ExecutingAssembly()
-        {
-            return _assemblyName ?? (_assemblyName = Assembly.GetExecutingAssembly().GetName().CodeBase.Substring(8).Replace('/', '\\'));
-        }
-
+       
         public static T GetDescendantByType<T>(this Visual element) where T : class
         {
             if (element == null) return default(T);

@@ -7,7 +7,7 @@ namespace ServicesModule.Services
 {
     public class TemplateLoader : ITemplateLoader
     {
-        private static readonly string UserSettingsFolder = Path.Combine(Utility.AssemblyFolder(), "user-settings");
+        private static readonly string UserSettingsFolder = Path.Combine(Globals.AssemblyFolder, "user-settings");
         private readonly string _templateFile = Path.Combine(UserSettingsFolder, "user_template.html");
         private readonly string _emojiSpritesFile = Path.Combine(UserSettingsFolder, "emoji-sprite.png");
 
