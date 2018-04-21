@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using CommonMark.Syntax;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 using MarkdownEdit.Controls;
@@ -109,7 +110,7 @@ namespace MarkdownEdit.SpellCheck
                 var textWithout = originalText;
                 if (userSettings.SpellCheckIgnoreCodeBlocks)
                 {
-                    if (!AbstractSyntaxTree.PositionSafeForSmartLink(_editor.AbstractSyntaxTree, startOfLine, lengthOfLine))
+                    if (!AbstractSyntaxTree.PositionSafeForSmartLink(_editor.AbstractSyntaxTree, startOfLine, lengthOfLine, new InlineTag[] { InlineTag.Code }))
                     {
                         // Generally speaking, if it's not safe to insert a link, it's probably something we don't
                         // want spell checked.

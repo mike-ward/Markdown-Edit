@@ -86,7 +86,7 @@ namespace MarkdownEdit.Models
             }
         }
 
-        public static bool PositionSafeForSmartLink(Block ast, int start, int length)
+        public static bool PositionSafeForSmartLink(Block ast, int start, int length, InlineTag[] ignoreInlines = null)
         {
             if (ast == null) return true;
             var end = start + length;
@@ -108,7 +108,7 @@ namespace MarkdownEdit.Models
                 return !EnumerateInlines(block.InlineContent)
                     .TakeWhile(il => il.SourcePosition < end)
                     .Where(il => il.SourcePosition + il.SourceLength > start)
-                    .Any(il => inlineTags.Any(tag => tag == il.Tag));
+                    .Any(il => inlineTags.Any(tag => tag == il.Tag && (!ignoreInlines?.Contains(tag) ?? true)));
             }
             return true;
         }
