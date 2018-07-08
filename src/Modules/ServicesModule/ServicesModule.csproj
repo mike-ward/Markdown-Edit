@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CliWrap, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\CliWrap.1.8.4\lib\net45\CliWrap.dll</HintPath>
+    <Reference Include="CliWrap, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CliWrap.1.8.5\lib\net45\CliWrap.dll</HintPath>
     </Reference>
     <Reference Include="CommonMark, Version=0.1.0.0, Culture=neutral, PublicKeyToken=001ef8810438905d, processorArchitecture=MSIL">
       <HintPath>..\..\packages\CommonMark.NET.0.15.1\lib\net45\CommonMark.dll</HintPath>
@@ -47,11 +47,11 @@
     <Reference Include="Jot, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Jot.1.4.1\lib\net45\Jot.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MahApps.Metro.1.6.4\lib\net47\MahApps.Metro.dll</HintPath>
+    <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MahApps.Metro.1.6.5\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
-    <Reference Include="MahApps.Metro.IconPacks.Material, Version=2.2.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\MahApps.Metro.IconPacks.Material.2.2.0\lib\net46\MahApps.Metro.IconPacks.Material.dll</HintPath>
+    <Reference Include="MahApps.Metro.IconPacks.Material, Version=2.3.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MahApps.Metro.IconPacks.Material.2.3.0\lib\net46\MahApps.Metro.IconPacks.Material.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro.SimpleChildWindow, Version=1.5.0.16, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MahApps.Metro.SimpleChildWindow.1.5.0\lib\net45\MahApps.Metro.SimpleChildWindow.dll</HintPath>
