@@ -1,4 +1,7 @@
 @echo off
+echo =================================
+echo ====== Build Markdown Edit ======
+echo =================================
 echo.
 if EXIST MarkdownEditSetup.msi del /Q MarkdownEditSetup.msi
 if EXIST MarkdownEdit.zip del /Q MarkdownEdit.zip
@@ -13,6 +16,11 @@ call build-setup.cmd
 popd
 if ERRORLEVEL 1 goto END
 call build-zip.cmd
-if ERRORLEVEL 0 dir /b ma*
-if ERRORLEVEL 0 echo === Build Complete ===
+if ERRORLEVEL 1 goto END
+echo.
+echo ===========================
+echo ====== Build Summary ======
+echo ===========================
+echo.
+dir ma*
 :END
