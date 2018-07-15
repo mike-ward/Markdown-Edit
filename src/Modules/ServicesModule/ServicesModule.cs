@@ -3,40 +3,31 @@ using Infrastructure;
 using Prism.Ioc;
 using Prism.Modularity;
 using ServicesModule.Services;
-using Unity;
-using Unity.Lifetime;
 
 namespace ServicesModule
 {
     public class ServicesModule : IModule
     {
-        public IUnityContainer Container { get; }
-
-        public ServicesModule(IUnityContainer container)
-        {
-            Container = container;
-        }
-
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            Container.RegisterType<IAbstractSyntaxTree, AbstractSyntaxTree>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IColorService, ColorService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IEditService, EditService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IDocumentConverters, DocumentConverters>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IFormatMarkdown, FormatMarkdown>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IImageService, ImageService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IImageUpload, ImageUploadImgur>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<INotify, Notify>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IOpenSaveActions, OpenSaveActions>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<ISettings, Settings>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<ISnippetService, SnippetService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<ISpellCheckService, SpellCheckService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<ISpellCheckUserDictionaryService, SpellCheckUserDictionaryService>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IStrings, Strings>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<ITemplateLoader, TemplateLoader>(new ContainerControlledLifetimeManager());
+            containerRegistry.RegisterSingleton<IAbstractSyntaxTree, AbstractSyntaxTree>();
+            containerRegistry.RegisterSingleton<IColorService, ColorService>();
+            containerRegistry.RegisterSingleton<IEditService, EditService>();
+            containerRegistry.RegisterSingleton<IDocumentConverters, DocumentConverters>();
+            containerRegistry.RegisterSingleton<IFormatMarkdown, FormatMarkdown>();
+            containerRegistry.RegisterSingleton<IImageService, ImageService>();
+            containerRegistry.RegisterSingleton<IImageUpload, ImageUploadImgur>();
+            containerRegistry.RegisterSingleton<INotify, Notify>();
+            containerRegistry.RegisterSingleton<IOpenSaveActions, OpenSaveActions>();
+            containerRegistry.RegisterSingleton<ISettings, Settings>();
+            containerRegistry.RegisterSingleton<ISnippetService, SnippetService>();
+            containerRegistry.RegisterSingleton<ISpellCheckService, SpellCheckService>();
+            containerRegistry.RegisterSingleton<ISpellCheckUserDictionaryService, SpellCheckUserDictionaryService>();
+            containerRegistry.RegisterSingleton<IStrings, Strings>();
+            containerRegistry.RegisterSingleton<ITemplateLoader, TemplateLoader>();
 
-            Container.RegisterType<IMarkdownEngine, CommonMarkEngine>("CommonMark", new ContainerControlledLifetimeManager());
-            Container.RegisterType<IEnumerable<IMarkdownEngine>, IMarkdownEngine[]>(new ContainerControlledLifetimeManager());
+            containerRegistry.Register<IMarkdownEngine, CommonMarkEngine>("CommonMark");
+            containerRegistry.RegisterSingleton<IEnumerable<IMarkdownEngine>, IMarkdownEngine[]>();
         }
 
         public void OnInitialized(IContainerProvider containerProvider)

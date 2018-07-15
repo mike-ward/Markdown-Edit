@@ -10,59 +10,56 @@ using Infrastructure;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
-using Unity;
 using TextEditorOptions = EditModule.Features.TextEditorOptions;
 
 namespace EditModule
 {
     public class EditModule : IModule
     {
-        public IUnityContainer Container { get; }
         public IRegionManager RegionManager { get; }
 
-        public EditModule(IUnityContainer container, IRegionManager regionManager)
+        public EditModule(IRegionManager regionManager)
         {
-            Container = container;
             RegionManager = regionManager;
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            Container.RegisterType<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
-            Container.RegisterType<ISpellCheckBackgroundRenderer, SpellCheckBackgroundRenderer>();
-            Container.RegisterType<ITextEditorComponent, TextEditor>();
+            containerRegistry.Register<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
+            containerRegistry.Register<ISpellCheckBackgroundRenderer, SpellCheckBackgroundRenderer>();
+            containerRegistry.Register<ITextEditorComponent, TextEditor>();
 
-            Container.RegisterType<IEditFeature, DragAndDropSupport>(nameof(DragAndDropSupport));
-            Container.RegisterType<IEditFeature, EditorContextMenu>(nameof(EditorContextMenu));
-            Container.RegisterType<IEditFeature, FileNameChangedEventHandler>(nameof(FileNameChangedEventHandler));
-            Container.RegisterType<IEditFeature, PasteEnhancements>(nameof(PasteEnhancements));
-            Container.RegisterType<IEditFeature, TextEditorOptions>(nameof(TextEditorOptions));
-            Container.RegisterType<IEditFeature, SpellCheck>(nameof(SpellCheck));
-            Container.RegisterType<IEditFeature, SyntaxHighlighting>(nameof(SyntaxHighlighting));
-            Container.RegisterType<IEditFeature, SynchronizedScroll>(nameof(SynchronizedScroll));
-            Container.RegisterType<IEditFeature, TextUpdatedEventHandler>(nameof(TextUpdatedEventHandler));
-            Container.RegisterType<IEnumerable<IEditFeature>, IEditFeature[]>();
+            containerRegistry.Register<IEditFeature, DragAndDropSupport>(nameof(DragAndDropSupport));
+            containerRegistry.Register<IEditFeature, EditorContextMenu>(nameof(EditorContextMenu));
+            containerRegistry.Register<IEditFeature, FileNameChangedEventHandler>(nameof(FileNameChangedEventHandler));
+            containerRegistry.Register<IEditFeature, PasteEnhancements>(nameof(PasteEnhancements));
+            containerRegistry.Register<IEditFeature, TextEditorOptions>(nameof(TextEditorOptions));
+            containerRegistry.Register<IEditFeature, SpellCheck>(nameof(SpellCheck));
+            containerRegistry.Register<IEditFeature, SyntaxHighlighting>(nameof(SyntaxHighlighting));
+            containerRegistry.Register<IEditFeature, SynchronizedScroll>(nameof(SynchronizedScroll));
+            containerRegistry.Register<IEditFeature, TextUpdatedEventHandler>(nameof(TextUpdatedEventHandler));
+            containerRegistry.Register<IEnumerable<IEditFeature>, IEditFeature[]>();
 
-            Container.RegisterType<IEditCommandHandler, NewCommandHandler>(nameof(NewCommandHandler));
-            Container.RegisterType<IEditCommandHandler, OpenCommandHandler>(nameof(OpenCommandHandler));
-            Container.RegisterType<IEditCommandHandler, SaveCommandHandler>(nameof(SaveCommandHandler));
-            Container.RegisterType<IEditCommandHandler, SaveAsCommandHandler>(nameof(SaveAsCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, NewCommandHandler>(nameof(NewCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, OpenCommandHandler>(nameof(OpenCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, SaveCommandHandler>(nameof(SaveCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, SaveAsCommandHandler>(nameof(SaveAsCommandHandler));
 
-            Container.RegisterType<IEditCommandHandler, ConvertSelectionToListCommandHandler>(nameof(ConvertSelectionToListCommandHandler));
-            Container.RegisterType<IEditCommandHandler, CorrectSpellingErrorCommandHandler>(nameof(CorrectSpellingErrorCommandHandler));
-            Container.RegisterType<IEditCommandHandler, FindDialogCommandHandler>(nameof(FindDialogCommandHandler));
-            Container.RegisterType<IEditCommandHandler, FormatTextCommandHandler>(nameof(FormatTextCommandHandler));
-            Container.RegisterType<IEditCommandHandler, IgnoreSpellingErrorCommandHandler>(nameof(IgnoreSpellingErrorCommandHandler));
-            Container.RegisterType<IEditCommandHandler, InsertBlockQuoteCommandHandler>(nameof(InsertBlockQuoteCommandHandler));
-            Container.RegisterType<IEditCommandHandler, RedoEditCommandHander>(nameof(RedoEditCommandHander));
-            Container.RegisterType<IEditCommandHandler, ReplaceDialogCommandHandler>(nameof(ReplaceDialogCommandHandler));
-            Container.RegisterType<IEditCommandHandler, SnippetCommand>(nameof(SnippetCommand));
-            Container.RegisterType<IEditCommandHandler, ToggleCodeCommandHandler>(nameof(ToggleCodeCommandHandler));
-            Container.RegisterType<IEditCommandHandler, ToggleBoldCommandHandler>(nameof(ToggleBoldCommandHandler));
-            Container.RegisterType<IEditCommandHandler, ToggleItalicCommandHandler>(nameof(ToggleItalicCommandHandler));
-            Container.RegisterType<IEditCommandHandler, ToggleWordWrapCommandHandler>(nameof(ToggleWordWrapCommandHandler));
-            Container.RegisterType<IEditCommandHandler, UndoEditCommandHander>(nameof(UndoEditCommandHander));
-            Container.RegisterType<IEnumerable<IEditCommandHandler>, IEditCommandHandler[]>();
+            containerRegistry.Register<IEditCommandHandler, ConvertSelectionToListCommandHandler>(nameof(ConvertSelectionToListCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, CorrectSpellingErrorCommandHandler>(nameof(CorrectSpellingErrorCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, FindDialogCommandHandler>(nameof(FindDialogCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, FormatTextCommandHandler>(nameof(FormatTextCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, IgnoreSpellingErrorCommandHandler>(nameof(IgnoreSpellingErrorCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, InsertBlockQuoteCommandHandler>(nameof(InsertBlockQuoteCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, RedoEditCommandHander>(nameof(RedoEditCommandHander));
+            containerRegistry.Register<IEditCommandHandler, ReplaceDialogCommandHandler>(nameof(ReplaceDialogCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, SnippetCommand>(nameof(SnippetCommand));
+            containerRegistry.Register<IEditCommandHandler, ToggleCodeCommandHandler>(nameof(ToggleCodeCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, ToggleBoldCommandHandler>(nameof(ToggleBoldCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, ToggleItalicCommandHandler>(nameof(ToggleItalicCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, ToggleWordWrapCommandHandler>(nameof(ToggleWordWrapCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, UndoEditCommandHander>(nameof(UndoEditCommandHander));
+            containerRegistry.Register<IEnumerable<IEditCommandHandler>, IEditCommandHandler[]>();
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
