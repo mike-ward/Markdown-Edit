@@ -6,11 +6,11 @@ using EditModule.Features.SyntaxHighlighting;
 using EditModule.Models;
 using EditModule.Views;
 using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Rendering;
 using Infrastructure;
-using Microsoft.Practices.Unity;
+using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using Unity;
 using TextEditorOptions = EditModule.Features.TextEditorOptions;
 
 namespace EditModule
@@ -26,7 +26,7 @@ namespace EditModule
             RegionManager = regionManager;
         }
 
-        public void Initialize()
+        public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             Container.RegisterType<IBlockBackgroundRenderer, BlockBackgroundRenderer>();
             Container.RegisterType<ISpellCheckBackgroundRenderer, SpellCheckBackgroundRenderer>();
@@ -63,7 +63,10 @@ namespace EditModule
             Container.RegisterType<IEditCommandHandler, ToggleWordWrapCommandHandler>(nameof(ToggleWordWrapCommandHandler));
             Container.RegisterType<IEditCommandHandler, UndoEditCommandHander>(nameof(UndoEditCommandHander));
             Container.RegisterType<IEnumerable<IEditCommandHandler>, IEditCommandHandler[]>();
+        }
 
+        public void OnInitialized(IContainerProvider containerProvider)
+        {
             RegionManager.RegisterViewWithRegion(Constants.EditRegion, typeof(EditControl));
         }
     }

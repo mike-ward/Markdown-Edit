@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Infrastructure;
-using Microsoft.Practices.Unity;
 using Prism.Events;
 using Prism.Mvvm;
+using Unity;
 
 namespace MarkdownEdit
 {

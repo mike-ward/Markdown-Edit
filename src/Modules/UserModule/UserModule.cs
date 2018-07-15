@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using Infrastructure;
-using Microsoft.Practices.Unity;
+using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using Unity;
 using UserModule.Commands;
 using UserModule.Views;
 
@@ -18,13 +19,6 @@ namespace UserModule
         {
             _container = container;
             _regionManager = regionManager;
-        }
-
-        public void Initialize()
-        {
-            RegisterTypes();
-            AddCommandHandlers();
-            AddViews();
         }
 
         private void RegisterTypes()
@@ -51,6 +45,17 @@ namespace UserModule
             _regionManager.RegisterViewWithRegion(Constants.WindowCommandsRegion, typeof(CommandPanel));
             _regionManager.RegisterViewWithRegion(Constants.FlyoutControlsRegion, typeof(SettingsFlyout));
             _regionManager.RegisterViewWithRegion(Constants.FlyoutControlsRegion, typeof(DocumentStructureFlyout));
+        }
+
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            RegisterTypes();
+        }
+
+        public void OnInitialized(IContainerProvider containerProvider)
+        {
+            AddCommandHandlers();
+            AddViews();
         }
     }
 }

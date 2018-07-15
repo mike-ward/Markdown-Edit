@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Infrastructure;
-using Microsoft.Practices.Unity;
+using Prism.Ioc;
 using Prism.Modularity;
 using ServicesModule.Services;
+using Unity;
+using Unity.Lifetime;
 
 namespace ServicesModule
 {
@@ -15,7 +17,7 @@ namespace ServicesModule
             Container = container;
         }
 
-        public void Initialize()
+        public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             Container.RegisterType<IAbstractSyntaxTree, AbstractSyntaxTree>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IColorService, ColorService>(new ContainerControlledLifetimeManager());
@@ -35,6 +37,10 @@ namespace ServicesModule
 
             Container.RegisterType<IMarkdownEngine, CommonMarkEngine>("CommonMark", new ContainerControlledLifetimeManager());
             Container.RegisterType<IEnumerable<IMarkdownEngine>, IMarkdownEngine[]>(new ContainerControlledLifetimeManager());
+        }
+
+        public void OnInitialized(IContainerProvider containerProvider)
+        {
         }
     }
 }

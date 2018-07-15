@@ -1,5 +1,6 @@
 ﻿using Infrastructure;
 using PreviewModule.Views;
+using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 
@@ -13,8 +14,12 @@ namespace PreviewModule
         {
             RegionManager = regionManager;
         }
+            
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+        }
 
-        public void Initialize()
+        public void OnInitialized(IContainerProvider containerProvider)
         {
             RegionManager.RegisterViewWithRegion(Constants.PreviewRegion, typeof(PreviewControl));
         }

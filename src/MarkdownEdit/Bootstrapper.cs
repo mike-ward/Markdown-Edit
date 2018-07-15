@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Unity;
 
@@ -10,7 +9,7 @@ namespace MarkdownEdit
     {
         protected override DependencyObject CreateShell()
         {
-            return Container.Resolve<Shell>();
+            return Container.TryResolve<Shell>();
         }
 
         protected override void InitializeShell()
