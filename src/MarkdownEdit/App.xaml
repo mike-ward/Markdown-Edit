@@ -1,7 +1,8 @@
-﻿<Application
+﻿<unity:PrismApplication
   x:Class="MarkdownEdit.App"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:unity="http://prismlibrary.com/">
 
   <Application.Resources>
 
@@ -16,4 +17,5 @@
     </ResourceDictionary>
 
   </Application.Resources>
-</Application>
+</unity:PrismApplication>
+

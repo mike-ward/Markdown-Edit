@@ -33,7 +33,7 @@ namespace UserModule
 
         private void AddCommandHandlers(IContainerProvider containerProvider)
         {
-            var shell = (Window)_regionManager.Regions[Constants.EditRegion].Context;
+            var shell = Application.Current.MainWindow;
             var commandHandlers = containerProvider.Resolve<IUserCommandHandler[]>();
 
             foreach (var commandHandler in commandHandlers)

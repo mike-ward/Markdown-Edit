@@ -37,7 +37,7 @@ namespace EditModule.Views
 
         private void AddCommandHandlers()
         {
-            var shell = (Window)RegionManager.Regions[Constants.EditRegion].Context;
+            var shell = Application.Current.MainWindow;
             foreach (var commandHandler in _commandHandlers)
             {
                 commandHandler.Initialize(shell, ViewModel);
