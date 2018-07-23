@@ -39,7 +39,7 @@ namespace PreviewModule.Views
 
         private void LoadTemplate(object sender, RoutedEventArgs routedEventArgs)
         {
-            Dispatcher.InvokeAsync(() => _browser.Navigate(TemplateLoader.DefaultTemplate()));
+            Dispatcher.Invoke(() => _browser.Navigate(TemplateLoader.DefaultTemplate()));
         }
 
         public void UpdateBrowser(string html)
