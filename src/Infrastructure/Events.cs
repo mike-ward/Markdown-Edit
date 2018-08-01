@@ -8,4 +8,5 @@ namespace Infrastructure
     public class DocumentNameChangedEvent: PubSubEvent<string> { }
     public class DocumentModifiedChangedEvent: PubSubEvent<bool> { }
     public class DisplaySettingsEvent: PubSubEvent<bool> { }
+    public class FlyoutClosedEvent: PubSubEvent<bool> { }
 }

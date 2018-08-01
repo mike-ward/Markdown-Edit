@@ -19,6 +19,7 @@ namespace UserModule.Views
             Content = panel;
 
             KeyUp += (sender, args) => { if (args.Key == Key.Escape) IsOpen = false; };
+            ClosingFinished += (sender, args) =>  eventAggregator.GetEvent<FlyoutClosedEvent>().Publish(true);
             eventAggregator.GetEvent<DisplaySettingsEvent>().Subscribe(_ => IsOpen = !IsOpen);
         }
     }

@@ -28,7 +28,6 @@ namespace MarkdownEdit
             Dispatcher.InvokeAsync(() =>
             {
                 ViewModel.UpdateAppTitle();
-                PreviewAirspaceDecorator.Visibility = Visibility.Visible;
             });
         }
 

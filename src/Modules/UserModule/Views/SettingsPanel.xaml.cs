@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Infrastructure;
+using MahApps.Metro.Actions;
 using MahApps.Metro.Controls;
 
 namespace UserModule.Views

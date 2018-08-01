@@ -27,7 +27,7 @@
       AirspaceMode="Redirect"
       IsInputRedirectionEnabled="True"
       IsOutputRedirectionEnabled="True"
-      Visibility="Collapsed">
+      Visibility="Visible">
       <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:Constants.PreviewRegion}" />
     </interop:AirspaceDecorator>
   </UniformGrid>

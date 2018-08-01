@@ -32,6 +32,7 @@ namespace EditModule
             containerRegistry.Register<IEditFeature, DragAndDropSupport>(nameof(DragAndDropSupport));
             containerRegistry.Register<IEditFeature, EditorContextMenu>(nameof(EditorContextMenu));
             containerRegistry.Register<IEditFeature, FileNameChangedEventHandler>(nameof(FileNameChangedEventHandler));
+            containerRegistry.Register<IEditFeature, GetFocusOnFlyoutClosed>(nameof(GetFocusOnFlyoutClosed));
             containerRegistry.Register<IEditFeature, PasteEnhancements>(nameof(PasteEnhancements));
             containerRegistry.Register<IEditFeature, TextEditorOptions>(nameof(TextEditorOptions));
             containerRegistry.Register<IEditFeature, SpellCheck>(nameof(SpellCheck));
