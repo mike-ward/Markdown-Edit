@@ -11,6 +11,7 @@ cov-int/
 .idea/
 *.iml
 /uwa
+.vs
 
 # Build results
 
