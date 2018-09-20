@@ -895,6 +895,49 @@
 		code { font-family: consolas, monospace; background-color: #f7f7f7; padding: .2pt; border-radius: 2pt; line-height: 1.3; }
 		pre { background-color: transparent; }
 		pre code { font-size: 95%; padding: 12pt; display: block; border-radius: 2pt; }
+
+		/**** chen toc START ****/
+		#d1 {
+			border-left:1px dashed #bbb;
+			position: fixed; top: 0px; right: 0px;
+			background: #eee;
+			padding: 10px 15px;
+		}
+		#d1 h1,
+		#d1 h2,
+		#d1 h3 {
+			font: 12px/24px verdana,consolas;
+			margin: 0px;
+			padding: 0px 5px;
+			padding-right: 10px;
+			cursor: pointer;
+		}
+		#d1 h1 { padding-left: 0em;}
+		#d1 h2 { padding-left: 1em;}
+		#d1 h3 { padding-left: 2em;}
+
+		#d1 *:hover {
+			background: #ddd;
+		}
+		#msg {position: fixed; bottom:0px; right:0px; }
+		#spacer {
+			border-top: 1px solid lightgray;
+			color: lightgray;
+			width:200px;
+			text-align: center;
+		}
+		#spacer:before {
+			content:'EOF';
+			font:12px consolas,verdana;
+			position: relative;
+			top: -1.2em;
+			background: white;
+			padding: 8px;
+		}
+		#content {
+			/*border-top: 1px dashed gray;*/
+		}
+		/**** chen toc END ****/
 	</style>
 	
 	<!-- pygments -->
@@ -1163,12 +1206,148 @@
   -->
   </head>
 <body>
+<div id="d1">d1</div>
+<div id="msg"></div>
+
 <!-- Content goes here. The div must have an id of "content" -->
 <div id="content"></div>
+<div id='spacer' ></div>
 <!-- Adds some scroll space to the bottom of the doucment -->
 <div style="height: 1pc">&nbsp;</div>
 <!-- Scripts to handle MathJax -->
 <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script async src="http://markdownedit.com/assets/js/mathjax-scripts.js"></script>
+<script type="text/javascript">
+<!--
+//d1.innerHTML=navigator.userAgent;
+
+(function(){
+	///------------------------- generate TOC
+	var hds=[];//headers in content
+	var ofs=[];//headers offset of content
+	var tcs=[];//TOCs
+
+	//var content=document.getElementById('content');
+	//content.onpropertychange=update_toc;
+	content.attachEvent('onpropertychange', update_toc);
+	//var c_count=0;
+	function update_toc(){
+		//d1.innerText=c_count++;
+		hds=[];
+		ofs=[];
+		tcs=[];
+
+		var arr=[];
+		var es=content.children, es_len=es.length;
+		for(var i=0;i<es_len;i++){
+			var e=es[i];
+			switch(e.tagName){
+				case 'H1':
+				case 'H2':
+				case 'H3':
+					ofs.push(e.offsetTop);
+					arr.push(createHTML(e.tagName, e.innerText, hds.length));
+					hds.push(e);
+				break;
+			}
+		}
+		d1.innerHTML=arr.join('');
+		//d1.innerText=arr.join('');
+
+		var es=d1.children, es_len=es.length;
+		for(var i=0;i<es_len;i++) tcs.push(es[i]);//js_array is faster than ele.children collection
+
+		adjust_spacer_height();
+	}
+	function createHTML(tag,innerHTML,index){
+		//return '<'+tag+' onclick="scroll_to_hds('+index+');" >'+innerHTML+'</'+tag+'>';
+		return '<'+tag+' onclick="window.scroll(0, '+ofs[index]+');" >'+innerHTML+'</'+tag+'>';
+	}
+
+	/*window.scroll_to_hds=function(i){
+		//alert('scroll to:'+i);
+		//hds[i].scrollIntoView();//will do horizon scroll
+		window.scroll(0, ofs[i]);
+	}*/
+
+
+	///------------------------- apend spacer to allow last header scroll to 0px
+	window.attachEvent('onload',adjust_spacer_height);
+	window.attachEvent('onresize',adjust_spacer_height);
+	var de=document.documentElement;
+	function adjust_spacer_height(){
+		var last=hds[hds.length-1];
+		if(!last)return;
+		de=de||document.documentElement;
+		var lack_height = de.clientHeight - (spacer.offsetTop - last.offsetTop);
+		lack_height -= 24; //padding
+		spacer.style.height=lack_height+'px';
+		//msg.innerText= [de.clientHeight, lack_height, spacer.offsetTop, de.scrollHeight, content.offsetTop];
+		//msg.innerText= [de.clientHeight, lack_height];
+	}
+
+	///------------------------- hightlight current TOC when scroll
+	/*var timeout;
+	function my_scroll_wrap(){
+		if (timeout) clearTimeout(timeout);
+		timeout = setTimeout(my_scroll, 100);
+	}*/
+	window.attachEvent('onscroll', my_scroll);
+	//var s_count=0;
+	function my_scroll(){
+		var scrollTop=de.scrollTop;
+		scrollTop+=20;// padding_top
+		//msg.innerText=s_count++;
+		var ofs_len=ofs.length;
+		for(var i=0;i<ofs_len; i++){
+			if(scrollTop<ofs[i])break;
+		}
+		if(i>0)i--;
+		//msg.innerText= scrollTop+' : '+i+' :'+ofs;
+		if(i!=highlight_old)
+			highlight_hds(i);
+	}
+
+	var highlight_old=-1;
+	function highlight_hds(i){
+		//var es=d1.children;
+		var es=tcs;
+		if(highlight_old>-1) es[highlight_old].style.color='';
+		es[i].style.color='red';
+		highlight_old=i;
+	}
+
+	///------------------------- toggle TOC: key 't'
+	de.attachEvent('onkeypress', my_keydown);
+	function my_keydown(){
+		if(event.keyCode=='t'.charCodeAt(0))
+			toggle_toc();
+		//if(event.altKey)
+	}
+	function toggle_toc(){
+		d1.style.display=(d1.style.display=='none')?'':'none';
+	}
+
+	window.tcs=tcs;
+})();
+
+
+
+/* test access speed of ele.children[i] and js_arr[i], js_arr is fast
+window.onkeypress=function(){
+	//alert(typeof(toggle_toc));
+	var t1=new Date();
+	for(var i=0;i<10000;i++){
+		//var es=d1.children;//slow
+		var es=tcs;//fast
+
+		var x=es[1];
+		var y=es[3];
+	}
+	var t2=new Date();
+	alert(t2-t1);
+}*/
+//-->
+</script>
 </body>
 </html>
