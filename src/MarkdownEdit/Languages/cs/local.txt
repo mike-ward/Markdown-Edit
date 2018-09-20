@@ -1,0 +1,140 @@
+﻿=======================================================
+= Česky
+=======================================================
+
+=== Main Window
+
+tooltip-new-command:              Nový - Ctrl+N
+tooltip-open-command:             Otevřít - Ctrl+O
+tooltip-save-command:             Uložit - Ctrl+S
+tooltip-save-as-command:          Uložit jako - Ctrl+Shift+S
+tooltip-toggle-settings:          Nastavení - Ctrl+,
+tooltip-document-statistics:      Počet(c)znaků/(w)slov/(p)stran (1500c=1p)
+tooltip-spell-check:              Kontrola pravopisu - Ctrl+F7
+tooltip-word-wrap:                Zalamovat slova - Ctrl+W
+tooltip-auto-save:                Auto ukládání - Alt+S
+tooltip-new-version:              Je k dispozici nová verze
+settings-flyout-header:           Nastavení
+
+=== Editor
+
+editor-f1-for-help:               F1 pro pomoc
+editor-new-document:              Nový dokument
+editor-menu-undo:                 Úprava zpět
+editor-menu-redo:                 Úprava vpřed
+editor-menu-cut:                  Vystřihnout
+editor-menu-copy:                 Kopírovat
+editor-menu-paste:                Vložit
+editor-menu-paste-special:        Vložit speciálně
+editor-menu-paste-from-html:      Vložit z HTML
+editor-menu-select-all:           Vybrat vše
+editor-menu-delete:               Smazat
+editor-menu-wrap-format:          Zalomit a formátovat
+editor-menu-unwrap-format:        Nezalomit a formátovat
+editor-menu-add-to-dictionary:    Přidat do slovníku
+
+=== Settings Dialog
+
+settings-editor-section:          Editor
+settings-word-wrap:               Zalamovat slova
+settings-auto-save:               Auto ukládání
+settings-line-numbers:            Číslování řádek
+settings-open-last-file:          Otevřít poslední soubor
+settings-remember-cursor-pos:     Pamatovat si pozici kurzoru
+settings-highlight-current:       Zvýraznit stávající řádku
+settings-show-scroll-bar:         Zobrazit vertikální posuvník
+settings-show-tabs:               Zobrazit tabulátory
+settings-show-spaces:             Zobrazit mezery
+settings-show-end-of-line:        Zobrazit ukončení řádek
+settings-sync-scroll-pos:         Synchronizovat posouvání
+settings-format-on-save:          Při ukládání souboru zformátovat text
+settings-github-markdown:         GitHub Markdown
+
+settings-format-section:          Formátovat
+settings-line-endings:            Ukončení řádek
+settings-encoding:                Kódování
+settings-encode-automatic:        Auto kódování
+
+settings-spell-check-section:     Kontrola pravopisu
+settings-spell-checking:          Kontrola pravopisu
+settings-ignore-all-caps:         Ignorovat slova s velkými písmeny
+settings-ignore-code-blocks:      Ignorovat bloky kódu
+settings-ignore-markup:           Ignorovat Markup tagy
+settings-ignore-words-digits:     Ignorovat slova s číslovkami
+
+settings-advanced:                Pokročilé
+settings-open-settings:           Nastavení uživatele
+settings-open-html-template:      HTML šablona
+settings-open-dictionary:         Slovník uživatele
+settings-open-snippets:           Ústřižky
+settings-open-key-bindings:       Klávesové zkratky
+
+settings-about:                   O projektu
+settings-version:                 Verze
+settings-web:                     Web
+settings-source:                  Zdroj
+settings-donate:                  Přispějte
+settings-yes-i-donated:           Ano, už jsem přispěl(a)!
+
+=== Find Replace Dialog
+
+find-replace-title:               Hledat a nahradit
+find-replace-tab-find:            Hledat
+find-replace-tab-replace:         Nahradit
+find-replace-watermark-find:      Hledat
+find-replace-watermark-replace:   Nahradit
+find-replace-find-next:           Hledat další výskyt
+find-replace-replace:             Nahradit
+find-replace-replace-all:         Nahradit vše
+find-replace-match-case:          Ztotožnit velikost písmen
+find-replace-match-whole-word:    Ztotožnit celá slova
+find-replace-regular-expression:  Regulární výraz
+find-replace-wildcards:           Divoké karty
+
+=== Goto Line Dialog
+
+goto-line-title:                  Jít na řádku
+
+=== Image Drop Progress Dialog
+
+image-drop-insert-path:           Vložit cestu
+image-drop-upload-imgur:          Nahrát na Imgur
+image-drop-as-data-uri:           Jako data URI
+image-drop-as-local-file:         Jako lokální soubor
+image-drop-overwrite-file:        Soubor již existuje. Přepsat?
+image-drop-save-as:               Uložit jako
+
+=== Recent Files Dialog
+
+recent-files-title:               Poslední soubory
+recent-file-not-found:            Soubor již neexistuje
+
+=== Themes Dialog
+
+themes-title:                     Témata
+
+=== Tooltips
+
+tooltip-f6:                       F6
+tooltip-f7:                       F7
+tooltip-f8:                       F8
+tooltip-f9:                       F9
+tooltip-f10:                      F10
+tooltip-alt-s:                    Alt+S
+tooltip-ctrl-f7:                  Ctrl+F7
+tooltip-ctrl-w:                   Ctrl+W
+
+=== Insert Hyperlink Dialog
+
+insert-hyperlink-title:           Vložit hyperlink
+insert-hyperlink-optional-title:  Volitelný titulek
+
+=== Generic
+
+ok:                               OK
+open:                             Otevřít
+save:                             Uložit
+cancel:                           Zrušit
+message-html-clipboard:           HTML kód byl zkopírován do schránky
+aslocalfile-save-file-as:         Uložit soubor jako (s .png příponou k názvu souboru)?
+table-of-contents:                Tabulka obsahu
