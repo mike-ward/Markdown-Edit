@@ -8,7 +8,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MarkdownEdit")]
-[assembly: AssemblyCopyright("Copyright ©  2016, Mike Ward")]
+[assembly: AssemblyCopyright("Copyright ©  2018, Mike Ward")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
@@ -17,6 +17,6 @@ using System.Windows;
     ResourceDictionaryLocation.None,
     ResourceDictionaryLocation.SourceAssembly
     )]
-[assembly: AssemblyVersion("1.33.0")]
-[assembly: AssemblyFileVersion("1.33.0")]
+[assembly: AssemblyVersion("1.34.0")]
+[assembly: AssemblyFileVersion("1.34.0")]
 [assembly: Guid("A9A0AE86-ED91-498F-A9F9-DB669C9879CE")]
