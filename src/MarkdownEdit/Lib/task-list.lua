@@ -87,6 +87,9 @@ end
 
 --- Replace the todo marker in the given block, if any.
 function M.replace_todo_markers (blk, format)
+  if blk == nil then
+    return blk;
+  end
   if blk.t ~= 'Para' and blk.t ~= 'Plain' then
     return blk
   end
