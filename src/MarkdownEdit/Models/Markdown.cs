@@ -19,7 +19,7 @@ namespace MarkdownEdit.Models
         private static readonly IMarkdownConverter CustomMarkdownConverter = new CustomMarkdownConverter();
 
         private const string PandocGithubMarkdownFormatOptions =
-            "markdown_github"
+            "gfm"
             + "-emoji"
             + "+tex_math_dollars";
 

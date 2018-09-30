@@ -273,7 +273,6 @@
     <Compile Include="i18n\TranslationProvider.cs" />
     <Compile Include="ImageUpload\IImageUpload.cs" />
     <Compile Include="ImageUpload\ImageUploadImgur.cs" />
-    <Compile Include="MarkdownConverters\CMarkGitHub.cs" />
     <Compile Include="MarkdownConverters\CommonMarkConverter.cs" />
     <Compile Include="MarkdownConverters\CustomMarkdownConverter.cs" />
     <Compile Include="MarkdownConverters\GitHubMarkdownConverter.cs" />
@@ -429,8 +428,6 @@
     <Content Include="Languages\ru\local.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Lib\cmark-gfm.dll" />
-    <Content Include="Lib\cmark-gfm.exe" />
     <Content Include="Lib\WpfMouseWheelLib.pdb" />
     <EmbeddedResource Include="Resources\emoji-sprites.png" />
     <Resource Include="Resources\donate.png" />
@@ -472,6 +469,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Languages\sv\help.md" />
+    <Content Include="Lib\task-list.lua" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -628,9 +626,6 @@
     <Copy SourceFiles="../packages\NHunspell.1.2.5554.16953\content\Hunspellx64.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="../packages\NHunspell.1.2.5554.16953\content\Hunspellx86.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="Lib/pandoc.exe" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="Lib/pandoc.exe" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="Lib/pandoc.exe" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="Lib/cmark-gfm.exe" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="Lib/cmark-gfm.dll" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="Lib/task-list.lua" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
   </Target>
 </Project>
