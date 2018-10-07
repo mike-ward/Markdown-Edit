@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Infrastructure;
+﻿using Infrastructure;
 using Prism.Ioc;
 using Prism.Modularity;
 using ServicesModule.Services;
@@ -27,7 +26,6 @@ namespace ServicesModule
             containerRegistry.RegisterSingleton<ITemplateLoader, TemplateLoader>();
 
             containerRegistry.Register<IMarkdownEngine, CommonMarkEngine>("CommonMark");
-            containerRegistry.RegisterSingleton<IEnumerable<IMarkdownEngine>, IMarkdownEngine[]>();
         }
 
         public void OnInitialized(IContainerProvider containerProvider)

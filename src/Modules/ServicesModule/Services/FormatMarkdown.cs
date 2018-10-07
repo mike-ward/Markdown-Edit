@@ -1,5 +1,4 @@
 ﻿using CliWrap;
-using CliWrap.Models;
 using Infrastructure;
 
 namespace ServicesModule.Services
@@ -38,11 +37,13 @@ namespace ServicesModule.Services
 
         private string Execute(string options, string text)
         {
-            var cli = new Cli("Apps\\pandoc.exe");
-            var input = new ExecutionInput(options, text);
-            var result = cli.Execute(input);
+            var cli = new Cli("Apps\\pandoc.exe")
+                .SetArguments(options)
+                .SetStandardInput(text);
 
-            if (result.HasError)
+            var result = cli.Execute();
+
+            if (result.ExitCode > 0)
             {
                 _notify.Alert(string.IsNullOrWhiteSpace(result.StandardError) 
                     ? "empty error response" 

@@ -173,7 +173,7 @@
     <Content Include="Lib\Microsoft.DwayneNeed.Win32.pdb" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Infrastructure\bin\$(Configuration)\CommonServiceLocator.dll">
+    <Content Include="..\Infrastructure\bin\Debug\CommonServiceLocator.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

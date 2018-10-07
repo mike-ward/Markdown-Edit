@@ -1,5 +1,4 @@
 ﻿using CliWrap;
-using CliWrap.Models;
 using Infrastructure;
 
 namespace ServicesModule.Services
@@ -24,11 +23,13 @@ namespace ServicesModule.Services
 
         public string FromMicrosoftWord(string filename)
         {
-            var cli = new Cli("Apps\\pandoc.exe");
-            var input = new ExecutionInput($"-f docx -t {PandocCommonMarkFormatOptions}", filename);
-            var result = cli.Execute(input);
+            var cli = new Cli("Apps\\pandoc.exe")
+                .SetArguments($"-f docx -t {PandocCommonMarkFormatOptions}")
+                .SetStandardInput(filename);
 
-            if (result.HasError)
+            var result = cli.Execute();
+
+            if (result.ExitCode > 0)
             {
                 _notify.Alert(string.IsNullOrWhiteSpace(result.StandardError)
                     ? "empty error response"
