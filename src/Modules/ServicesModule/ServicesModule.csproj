@@ -92,6 +92,7 @@
     <Compile Include="..\..\MarkdownEdit\Properties\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="Services\GithubFlavoredMarkdownEngine.cs" />
     <Compile Include="Services\AbstractSyntaxTree.cs" />
     <Compile Include="Services\CommonMarkEngine.cs" />
     <Compile Include="Services\ColorService.cs" />
@@ -116,6 +117,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ServicesModule.cs" />
+    <Compile Include="Services\Pandoc.cs" />
     <Compile Include="Services\Settings.cs" />
     <Compile Include="Services\SnippetService.cs" />
     <Compile Include="Services\SpellCheckService.cs" />

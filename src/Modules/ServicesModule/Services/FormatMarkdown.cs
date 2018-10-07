@@ -6,6 +6,7 @@ namespace ServicesModule.Services
     public class FormatMarkdown : IFormatMarkdown
     {
         private readonly INotify _notify;
+        private readonly IPandoc _pandoc;
 
         private const string CommonMarkFormatOptions = "markdown_strict"
                                                        + "+fenced_code_blocks"
@@ -16,9 +17,10 @@ namespace ServicesModule.Services
 
         private const string EscapedLineBreaksOption = "-escaped_line_breaks";
 
-        public FormatMarkdown(INotify notify)
+        public FormatMarkdown(INotify notify, IPandoc pandoc)
         {
             _notify = notify;
+            _pandoc = pandoc;
         }
 
         public string Format(string text)
@@ -37,22 +39,15 @@ namespace ServicesModule.Services
 
         private string Execute(string options, string text)
         {
-            var cli = new Cli("Apps\\pandoc.exe")
-                .SetArguments(options)
-                .SetStandardInput(text);
-
-            var result = cli.Execute();
+            var result = _pandoc.Execute(options, text);
 
             if (result.ExitCode > 0)
             {
-                _notify.Alert(string.IsNullOrWhiteSpace(result.StandardError) 
-                    ? "empty error response" 
-                    : result.StandardError);
-
+                _notify.Alert(result.Output);
                 return null;
             }
 
-            return result.StandardOutput.Replace(@"\$", "$");
+            return result.Output.Replace(@"\$", "$");
         }
     }
 }

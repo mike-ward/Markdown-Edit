@@ -17,6 +17,7 @@ namespace ServicesModule
             containerRegistry.RegisterSingleton<IImageService, ImageService>();
             containerRegistry.RegisterSingleton<IImageUpload, ImageUploadImgur>();
             containerRegistry.RegisterSingleton<INotify, Notify>();
+            containerRegistry.RegisterSingleton<IPandoc, Pandoc>();
             containerRegistry.RegisterSingleton<IOpenSaveActions, OpenSaveActions>();
             containerRegistry.RegisterSingleton<ISettings, Settings>();
             containerRegistry.RegisterSingleton<ISnippetService, SnippetService>();

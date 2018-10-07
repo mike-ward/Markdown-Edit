@@ -6,6 +6,7 @@ namespace ServicesModule.Services
     public class DocumentConverters : IDocumentConverters
     {
         private readonly INotify _notify;
+        private readonly IPandoc _pandoc;
 
         private const string PandocCommonMarkFormatOptions =
             "markdown_strict"
@@ -16,29 +17,23 @@ namespace ServicesModule.Services
             + "+pipe_tables"
             + "+tex_math_dollars";
 
-        public DocumentConverters(INotify notify)
+        public DocumentConverters(INotify notify, IPandoc pandoc)
         {
             _notify = notify;
+            _pandoc = pandoc;
         }
 
         public string FromMicrosoftWord(string filename)
         {
-            var cli = new Cli("Apps\\pandoc.exe")
-                .SetArguments($"-f docx -t {PandocCommonMarkFormatOptions}")
-                .SetStandardInput(filename);
-
-            var result = cli.Execute();
+            var result = _pandoc.Execute($"-f docx -t {PandocCommonMarkFormatOptions}", filename);
 
             if (result.ExitCode > 0)
             {
-                _notify.Alert(string.IsNullOrWhiteSpace(result.StandardError)
-                    ? "empty error response"
-                    : result.StandardError);
-
+                _notify.Alert(result.Output);
                 return null;
             }
 
-            return result.StandardOutput;
+            return result.Output;
         }
     }
 }

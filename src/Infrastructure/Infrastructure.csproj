@@ -95,6 +95,7 @@
     <Compile Include="INotify.cs" />
     <Compile Include="IOpenSaveActions.cs" />
     <Compile Include="IMarkdownEngine.cs" />
+    <Compile Include="IPandoc.cs" />
     <Compile Include="ISettings.cs" />
     <Compile Include="ISnippetService.cs" />
     <Compile Include="ISpellCheckBackgroundRenderer.cs" />
