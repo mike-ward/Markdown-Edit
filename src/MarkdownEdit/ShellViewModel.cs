@@ -2,19 +2,19 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using DryIoc;
 using Infrastructure;
 using Prism.Events;
 using Prism.Mvvm;
-using Unity;
 
 namespace MarkdownEdit
 {
     public class ShellViewModel : BindableBase
     {
-        public IUnityContainer Container { get; }
+        public IContainer Container { get; }
         public IEventAggregator EventAggregator { get; }
 
-        public ShellViewModel(IUnityContainer container, IEventAggregator eventAggregator)
+        public ShellViewModel(IContainer container, IEventAggregator eventAggregator)
         {
             Container = container;
             EventAggregator = eventAggregator;

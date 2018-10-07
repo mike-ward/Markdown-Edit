@@ -3,9 +3,9 @@ using System.IO;
 using System.Runtime;
 using System.Windows;
 using Infrastructure;
+using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
-using Prism.Unity;
 
 namespace MarkdownEdit
 {

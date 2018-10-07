@@ -4,7 +4,6 @@ using System.Windows.Data;
 using EditModule.Commands;
 using EditModule.ViewModels;
 using ICSharpCode.AvalonEdit;
-using Infrastructure;
 using Prism.Regions;
 
 namespace EditModule.Views

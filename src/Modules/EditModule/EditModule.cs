@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using EditModule.Commands;
+﻿using EditModule.Commands;
 using EditModule.Features;
 using EditModule.Features.SpellCheck;
 using EditModule.Features.SyntaxHighlighting;
@@ -39,12 +38,10 @@ namespace EditModule
             containerRegistry.Register<IEditFeature, SyntaxHighlighting>(nameof(SyntaxHighlighting));
             containerRegistry.Register<IEditFeature, SynchronizedScroll>(nameof(SynchronizedScroll));
             containerRegistry.Register<IEditFeature, TextUpdatedEventHandler>(nameof(TextUpdatedEventHandler));
-            containerRegistry.Register<IEnumerable<IEditFeature>, IEditFeature[]>();
 
             containerRegistry.Register<IEditCommandHandler, NewCommandHandler>(nameof(NewCommandHandler));
             containerRegistry.Register<IEditCommandHandler, OpenCommandHandler>(nameof(OpenCommandHandler));
             containerRegistry.Register<IEditCommandHandler, SaveCommandHandler>(nameof(SaveCommandHandler));
-            containerRegistry.Register<IEditCommandHandler, SaveAsCommandHandler>(nameof(SaveAsCommandHandler));
 
             containerRegistry.Register<IEditCommandHandler, ConvertSelectionToListCommandHandler>(nameof(ConvertSelectionToListCommandHandler));
             containerRegistry.Register<IEditCommandHandler, CorrectSpellingErrorCommandHandler>(nameof(CorrectSpellingErrorCommandHandler));
@@ -60,7 +57,6 @@ namespace EditModule
             containerRegistry.Register<IEditCommandHandler, ToggleItalicCommandHandler>(nameof(ToggleItalicCommandHandler));
             containerRegistry.Register<IEditCommandHandler, ToggleWordWrapCommandHandler>(nameof(ToggleWordWrapCommandHandler));
             containerRegistry.Register<IEditCommandHandler, UndoEditCommandHander>(nameof(UndoEditCommandHander));
-            containerRegistry.Register<IEnumerable<IEditCommandHandler>, IEditCommandHandler[]>();
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
