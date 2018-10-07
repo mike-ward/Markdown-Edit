@@ -1,8 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Runtime;
 using System.Windows;
-using Infrastructure;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -11,15 +8,6 @@ namespace MarkdownEdit
 {
     public partial class App : PrismApplication
     {
-        public App()
-        {
-            // Enable Multi-JIT startup
-            var profileRoot = Globals.UserSettingsFolder;
-            Directory.CreateDirectory(profileRoot);
-            ProfileOptimization.SetProfileRoot(profileRoot);
-            ProfileOptimization.StartProfile("Startup.profile");
-        }
-
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<Shell>();
