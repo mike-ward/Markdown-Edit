@@ -172,7 +172,7 @@
     <Content Include="Lib\Microsoft.DwayneNeed.Win32.dll" />
     <Content Include="Lib\Microsoft.DwayneNeed.Win32.pdb" />
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' != 'Debug'">
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <Content Include="..\Infrastructure\bin\Debug\CommonServiceLocator.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
