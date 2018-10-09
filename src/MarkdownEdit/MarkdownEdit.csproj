@@ -42,6 +42,9 @@
     <StartupObject>MarkdownEdit.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
@@ -171,16 +174,6 @@
     <Content Include="Lib\Microsoft.DwayneNeed.pdb" />
     <Content Include="Lib\Microsoft.DwayneNeed.Win32.dll" />
     <Content Include="Lib\Microsoft.DwayneNeed.Win32.pdb" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <Content Include="..\Infrastructure\bin\Debug\CommonServiceLocator.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Release'">
-    <Content Include="..\Infrastructure\bin\Release\CommonServiceLocator.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
