@@ -26,7 +26,8 @@ namespace ServicesModule
             containerRegistry.RegisterSingleton<IStrings, Strings>();
             containerRegistry.RegisterSingleton<ITemplateLoader, TemplateLoader>();
 
-            containerRegistry.Register<IMarkdownEngine, CommonMarkEngine>("CommonMark");
+            containerRegistry.Register<IMarkdownEngine, CommonMarkEngine>("CommonMark"); // default markdown engine is first
+            containerRegistry.Register<IMarkdownEngine, GithubFlavoredMarkdownEngine>("GitHubMarkdown");
         }
 
         public void OnInitialized(IContainerProvider containerProvider)

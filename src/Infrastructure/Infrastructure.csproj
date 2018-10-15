@@ -103,6 +103,7 @@
     <Compile Include="ISpellCheckUserDictionaryService.cs" />
     <Compile Include="ITemplateLoader.cs" />
     <Compile Include="ITheme.cs" />
+    <Compile Include="MarkdownEngines.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -5,18 +5,19 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Infrastructure;
-using MahApps.Metro.Actions;
 using MahApps.Metro.Controls;
 
 namespace UserModule.Views
 {
     public partial class SettingsPanel
     {
+        private readonly ISettings _settings;
         private Brush _textBrush;
         private Style _toggleSwitchStyle;
 
-        public SettingsPanel()
+        public SettingsPanel(ISettings settings)
         {
+            _settings = settings;
             InitializeComponent();
             SetupResources();
             AddControls();
@@ -36,20 +37,20 @@ namespace UserModule.Views
         {
             //todo: localize
             var editorSection = SectionHeader("Editor");
-            editorSection.Children.Add(ToggleSwitch("Word Wrap", "Ctrl+W"));
-            editorSection.Children.Add(ToggleSwitch("Auto Save", "Alt+S"));
-            editorSection.Children.Add(ToggleSwitch("Line Numbers", null));
-            editorSection.Children.Add(ToggleSwitch("Open Last File", null));
-            editorSection.Children.Add(ToggleSwitch("Format Text on Save", null));
-            editorSection.Children.Add(ToggleSwitch("Remember Cursor Position", null));
-            editorSection.Children.Add(ToggleSwitch("Highlight Current Line", null));
-            editorSection.Children.Add(ToggleSwitch("Show Vertical Scrollbar", null));
-            editorSection.Children.Add(ToggleSwitch("Show Tabs", null));
-            editorSection.Children.Add(ToggleSwitch("Show Space", null));
-            editorSection.Children.Add(ToggleSwitch("Show Line Endings", null));
-            editorSection.Children.Add(ToggleSwitch("Sychronize Scroll Positions", null));
-            editorSection.Children.Add(ToggleSwitch("Github Markdown", null));
-            editorSection.Children.Add(ToggleSwitch("Yes, I Donated!", null));
+            editorSection.Children.Add(ToggleSwitch("Word Wrap", "Ctrl+W", nameof(ISettings.WordWrap)));
+            editorSection.Children.Add(ToggleSwitch("Auto Save", "Alt+S", nameof(ISettings.AutoSave)));
+            editorSection.Children.Add(ToggleSwitch("Line Numbers", null, nameof(ISettings.ShowLineNumbers)));
+            editorSection.Children.Add(ToggleSwitch("Open Last File", null, nameof(ISettings.OpenLastFile)));
+            editorSection.Children.Add(ToggleSwitch("Format Text on Save", null, nameof(ISettings.FormatTextOnSave)));
+            editorSection.Children.Add(ToggleSwitch("Remember Cursor Position", null, nameof(ISettings.RememberLastPosition)));
+            editorSection.Children.Add(ToggleSwitch("Highlight Current Line", null, nameof(ISettings.HighlightCurrentLine)));
+            editorSection.Children.Add(ToggleSwitch("Show Vertical Scrollbar", null, nameof(ISettings.ShowVerticalScrollbar)));
+            editorSection.Children.Add(ToggleSwitch("Show Tabs", null, nameof(ISettings.ShowTabs)));
+            editorSection.Children.Add(ToggleSwitch("Show Spaces", null, nameof(ISettings.ShowSpaces)));
+            editorSection.Children.Add(ToggleSwitch("Show Line Endings", null, nameof(ISettings.ShowLineEndings)));
+            editorSection.Children.Add(ToggleSwitch("Synchronize Scroll Positions", null, nameof(ISettings.SynchronizeScrollPositions)));
+            editorSection.Children.Add(ToggleSwitch("GitHub Markdown", null, nameof(ISettings.MarkdownEngines)));
+            editorSection.Children.Add(ToggleSwitch("Yes, I Donated!", null, nameof(ISettings.Donated)));
 
             var formatSection = SectionHeader("Format");
             formatSection.Children.Add(new FontChooser());
@@ -57,7 +58,7 @@ namespace UserModule.Views
             formatSection.Children.Add(Encodings());
 
             var spellCheckSection = SectionHeader("Spell Checking");
-            spellCheckSection.Children.Add(ToggleSwitch("Spell Checking", "Ctrl+F7"));
+            spellCheckSection.Children.Add(ToggleSwitch("Spell Checking", "Ctrl+F7", nameof(ISettings.SpellCheckEnable)));
 
             var advancedSection = SectionHeader("Advanced");
 
@@ -76,10 +77,11 @@ namespace UserModule.Views
             return stackPanel;
         }
 
-        private ToggleSwitch ToggleSwitch(string label, string tooltip)
+        private ToggleSwitch ToggleSwitch(string label, string tooltip, string property)
         {
             var toggle = new ToggleSwitch
             {
+                DataContext = _settings,
                 OnLabel = $" {label}",
                 OffLabel = $" {label}",
                 Foreground = _textBrush,
@@ -87,6 +89,8 @@ namespace UserModule.Views
                 ToolTip = tooltip,
                 Style = _toggleSwitchStyle
             };
+
+            toggle.SetBinding(MahApps.Metro.Controls.ToggleSwitch.IsCheckedProperty, property);
             return toggle;
         }
 

@@ -40,7 +40,7 @@ namespace UserModule.Views
             });
 
             Panel.Children.Add(ButtonMaker(new RoutedCommand(), GetMaterialIcon(PackIconMaterialKind.Spellcheck), "Spell Check - Ctrl+F7"));
-            Panel.Children.Add(ToggleButtonMaker(_settings, "WordWrap", GetMaterialIcon(PackIconMaterialKind.Wrap), "Word Wrap - Ctrl+W"));
+            Panel.Children.Add(ToggleButtonMaker(_settings, nameof(ISettings.WordWrap), GetMaterialIcon(PackIconMaterialKind.Wrap), "Word Wrap - Ctrl+W"));
             Panel.Children.Add(ButtonMaker(new RoutedCommand(), GetMaterialIcon(PackIconMaterialKind.BackupRestore), "Autosave - Alt+S"));
         }
 

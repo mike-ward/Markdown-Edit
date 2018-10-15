@@ -12,9 +12,9 @@ namespace PreviewModule.ViewModels
         public Action<string> UpdateBrowserDelegate { get; set; }
         public Action<int, int> ScrollToOffsetDelegate { get; set; }
 
-        public PreviewControlViewModel(IEventAggregator eventAggregator, IMarkdownEngine[] markdownEngines)
+        public PreviewControlViewModel(IEventAggregator eventAggregator, IMarkdownEngine[] markdownEngines, ISettings settings)
         {
-            _markdownEngine = markdownEngines[0];
+            _markdownEngine = markdownEngines[(int)settings.MarkdownEngines];
             eventAggregator.GetEvent<TextUpdatedEvent>().Subscribe(OnTextUpdated);
             eventAggregator.GetEvent<TextScrollOffsetChanged>().Subscribe(OnTextScrollOffsetChanged);
         }
