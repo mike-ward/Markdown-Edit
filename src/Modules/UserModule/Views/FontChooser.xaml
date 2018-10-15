@@ -6,47 +6,43 @@
   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
   xmlns:prism="http://prismlibrary.com/"
   prism:ViewModelLocator.AutoWireViewModel="True">
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="100" />
-    </Grid.ColumnDefinitions>
+  <Grid Width="350">
+    <ComboBox
+      Width="250"
+      HorizontalAlignment="Left"
+      ItemTemplate="{DynamicResource FontTemplate}"
+      SelectedItem="{Binding SelectedFontFamily}">
+      <ComboBox.Resources>
+        <CollectionViewSource x:Key="MyFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+          <CollectionViewSource.SortDescriptions>
+            <componentModel:SortDescription PropertyName="Source" />
+          </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
 
-    <Border Grid.Column="0">
-      <ComboBox ItemTemplate="{DynamicResource FontTemplate}" SelectedItem="{Binding SelectedFontFamily}">
-        <ComboBox.Resources>
-          <CollectionViewSource x:Key="MyFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
-            <CollectionViewSource.SortDescriptions>
-              <componentModel:SortDescription PropertyName="Source" />
-            </CollectionViewSource.SortDescriptions>
-          </CollectionViewSource>
+        <Style x:Key="FontStyle">
+          <Setter Property="Control.FontFamily" Value="{Binding Source}" />
+          <Setter Property="Control.FontSize" Value="18" />
+        </Style>
 
-          <Style x:Key="FontStyle">
-            <Setter Property="Control.FontFamily" Value="{Binding Source}" />
-            <Setter Property="Control.FontSize" Value="18" />
-          </Style>
+        <DataTemplate x:Key="FontTemplate">
+          <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
+            <TextBlock
+              Style="{StaticResource FontStyle}"
+              Text="{Binding Source}"
+              ToolTip="{Binding Source}" />
+          </StackPanel>
+        </DataTemplate>
+      </ComboBox.Resources>
 
-          <DataTemplate x:Key="FontTemplate">
-            <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
-              <TextBlock
-                Style="{StaticResource FontStyle}"
-                Text="{Binding Source}"
-                ToolTip="{Binding Source}" />
-            </StackPanel>
-          </DataTemplate>
-        </ComboBox.Resources>
+      <ComboBox.ItemsSource>
+        <Binding Source="{StaticResource MyFonts}" />
+      </ComboBox.ItemsSource>
+    </ComboBox>
 
-        <ComboBox.ItemsSource>
-          <Binding Source="{StaticResource MyFonts}" />
-        </ComboBox.ItemsSource>
-      </ComboBox>
-    </Border>
-    <Border Grid.Column="1" HorizontalAlignment="Right">
-      <controls:NumericUpDown
-        Width="80"
-        HorizontalAlignment="Right"
-        FontWeight="Bold"
-        Value="{Binding SelectedFontSize}" />
-    </Border>
+    <controls:NumericUpDown
+      Width="80"
+      HorizontalAlignment="Right"
+      FontWeight="Bold"
+      Value="{Binding SelectedFontSize}" />
   </Grid>
 </UserControl>

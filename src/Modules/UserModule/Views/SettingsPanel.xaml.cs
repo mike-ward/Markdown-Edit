@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Infrastructure;
+using MahApps.Metro.Controls;
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Infrastructure;
-using MahApps.Metro.Controls;
 
 namespace UserModule.Views
 {
@@ -37,23 +38,26 @@ namespace UserModule.Views
         {
             //todo: localize
             var editorSection = SectionHeader("Editor");
-            editorSection.Children.Add(ToggleSwitch("Word Wrap", "Ctrl+W", nameof(ISettings.WordWrap)));
-            editorSection.Children.Add(ToggleSwitch("Auto Save", "Alt+S", nameof(ISettings.AutoSave)));
-            editorSection.Children.Add(ToggleSwitch("Line Numbers", null, nameof(ISettings.ShowLineNumbers)));
-            editorSection.Children.Add(ToggleSwitch("Open Last File", null, nameof(ISettings.OpenLastFile)));
-            editorSection.Children.Add(ToggleSwitch("Format Text on Save", null, nameof(ISettings.FormatTextOnSave)));
-            editorSection.Children.Add(ToggleSwitch("Remember Cursor Position", null, nameof(ISettings.RememberLastPosition)));
-            editorSection.Children.Add(ToggleSwitch("Highlight Current Line", null, nameof(ISettings.HighlightCurrentLine)));
-            editorSection.Children.Add(ToggleSwitch("Show Vertical Scrollbar", null, nameof(ISettings.ShowVerticalScrollbar)));
-            editorSection.Children.Add(ToggleSwitch("Show Tabs", null, nameof(ISettings.ShowTabs)));
-            editorSection.Children.Add(ToggleSwitch("Show Spaces", null, nameof(ISettings.ShowSpaces)));
-            editorSection.Children.Add(ToggleSwitch("Show Line Endings", null, nameof(ISettings.ShowLineEndings)));
-            editorSection.Children.Add(ToggleSwitch("Synchronize Scroll Positions", null, nameof(ISettings.SynchronizeScrollPositions)));
-            editorSection.Children.Add(ToggleSwitch("GitHub Markdown", null, nameof(ISettings.MarkdownEngines)));
-            editorSection.Children.Add(ToggleSwitch("Yes, I Donated!", null, nameof(ISettings.Donated)));
+            var uniformGrid = new UniformGrid { Columns = 2 };
+            editorSection.Children.Add(uniformGrid);
+
+            uniformGrid.Children.Add(ToggleSwitch("Word Wrap", "Ctrl+W", nameof(ISettings.WordWrap)));
+            uniformGrid.Children.Add(ToggleSwitch("Auto Save", "Alt+S", nameof(ISettings.AutoSave)));
+            uniformGrid.Children.Add(ToggleSwitch("Line Numbers", null, nameof(ISettings.ShowLineNumbers)));
+            uniformGrid.Children.Add(ToggleSwitch("Open Last File", null, nameof(ISettings.OpenLastFile)));
+            uniformGrid.Children.Add(ToggleSwitch("Format Text on Save", null, nameof(ISettings.FormatTextOnSave)));
+            uniformGrid.Children.Add(ToggleSwitch("Remember Cursor Position", null, nameof(ISettings.RememberLastPosition)));
+            uniformGrid.Children.Add(ToggleSwitch("Highlight Current Line", null, nameof(ISettings.HighlightCurrentLine)));
+            uniformGrid.Children.Add(ToggleSwitch("Show Vertical Scrollbar", null, nameof(ISettings.ShowVerticalScrollbar)));
+            uniformGrid.Children.Add(ToggleSwitch("Show Tabs", null, nameof(ISettings.ShowTabs)));
+            uniformGrid.Children.Add(ToggleSwitch("Show Spaces", null, nameof(ISettings.ShowSpaces)));
+            uniformGrid.Children.Add(ToggleSwitch("Show Line Endings", null, nameof(ISettings.ShowLineEndings)));
+            uniformGrid.Children.Add(ToggleSwitch("Synchronize Scroll Positions", null, nameof(ISettings.SynchronizeScrollPositions)));
+            uniformGrid.Children.Add(ToggleSwitch("Yes, I Donated!", null, nameof(ISettings.Donated)));
 
             var formatSection = SectionHeader("Format");
-            formatSection.Children.Add(new FontChooser());
+            formatSection.HorizontalAlignment = HorizontalAlignment.Stretch;
+            formatSection.Children.Add(FontChooser());
             formatSection.Children.Add(LineEndings());
             formatSection.Children.Add(Encodings());
 
@@ -61,6 +65,7 @@ namespace UserModule.Views
             spellCheckSection.Children.Add(ToggleSwitch("Spell Checking", "Ctrl+F7", nameof(ISettings.SpellCheckEnable)));
 
             var advancedSection = SectionHeader("Advanced");
+            advancedSection.Children.Add(TextBlock("This space for rent"));
 
             var aboutSection = SectionHeader("About");
             aboutSection.Children.Add(AboutText("Version", Globals.AssemblyVersion));
@@ -94,35 +99,47 @@ namespace UserModule.Views
             return toggle;
         }
 
-        private Grid LineEndings()
+        private UIElement LineEndings()
         {
-            var grid = new Grid();
+            var panel = new Grid();
             var textBlock = TextBlock("Line Endings");
-            grid.Children.Add(textBlock); // todo: localize
-            return grid;
+            panel.Children.Add(textBlock); // todo: localize
+            return panel;
         }
 
-        private Grid Encodings()
+        private UIElement FontChooser()
         {
-            var grid = new Grid();
-            var textBlock = TextBlock("Encoding"); // todo: localize
-            textBlock.Width = 125;
+            var panel = new Grid();
+
+            var textBlock = TextBlock("Font"); // todo: localize
             textBlock.HorizontalAlignment = HorizontalAlignment.Left;
-            grid.Children.Add(textBlock);
+            panel.Children.Add(textBlock);
+            var fontChooser = new FontChooser { HorizontalContentAlignment = HorizontalAlignment.Right };
+            panel.Children.Add(fontChooser);
+            return panel;
+        }
+
+        private UIElement Encodings()
+        {
+            var panel = new Grid();
+
+            var textBlock = TextBlock("Encoding"); // todo: localize
+            textBlock.HorizontalAlignment = HorizontalAlignment.Left;
+            panel.Children.Add(textBlock);
 
             var encodingChooser = new EncodingChooser
             {
-                Width = 150,
-                HorizontalAlignment = HorizontalAlignment.Right
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Width = 150
             };
 
-            grid.Children.Add(encodingChooser);
-            return grid;
+            panel.Children.Add(encodingChooser);
+            return panel;
         }
 
         private readonly Thickness _margin = new Thickness(110, 0, 0, 0);
 
-        private Grid AboutText(string label, string value)
+        private UIElement AboutText(string label, string value)
         {
             var grid = new Grid();
             grid.Children.Add(TextBlock(label));
@@ -134,7 +151,7 @@ namespace UserModule.Views
             return grid;
         }
 
-        private Grid AboutLink(string label, string text, string link)
+        private UIElement AboutLink(string label, string text, string link)
         {
             var grid = new Grid();
             grid.Children.Add(TextBlock(label));

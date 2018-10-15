@@ -15,7 +15,7 @@ namespace UserModule.Views
             Position = Position.Right;
             Theme = FlyoutTheme.Accent;
             IsModal = true;
-            Width = 400;
+            Width = 600;
             Content = panel;
 
             KeyUp += (sender, args) => { if (args.Key == Key.Escape) IsOpen = false; };
