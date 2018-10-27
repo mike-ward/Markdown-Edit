@@ -56,6 +56,9 @@
     <Reference Include="MahApps.Metro.SimpleChildWindow, Version=1.5.0.16, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\MahApps.Metro.SimpleChildWindow.1.5.0\lib\net45\MahApps.Metro.SimpleChildWindow.dll</HintPath>
     </Reference>
+    <Reference Include="Markdig, Version=0.15.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Markdig.0.15.4\lib\net40\Markdig.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -92,15 +95,14 @@
     <Compile Include="..\..\MarkdownEdit\Properties\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Services\GithubFlavoredMarkdownEngine.cs" />
     <Compile Include="Services\AbstractSyntaxTree.cs" />
-    <Compile Include="Services\CommonMarkEngine.cs" />
     <Compile Include="Services\ColorService.cs" />
     <Compile Include="Services\DocumentConverters.cs" />
     <Compile Include="Services\EditService.cs" />
     <Compile Include="Services\FormatMarkdown.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\ImageUploadImgur.cs" />
+    <Compile Include="Services\MarkdigMarkdownEngine.cs" />
     <Compile Include="Services\OpenSaveActions.cs" />
     <Compile Include="Services\Notify.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
