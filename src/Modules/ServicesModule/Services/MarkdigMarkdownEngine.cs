@@ -9,8 +9,9 @@ namespace ServicesModule.Services
         public string ToHtml(string text)
         {
             var pipeline = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
                 .UseEmojiAndSmiley()
+                .UseYamlFrontMatter()
+                .UseAdvancedExtensions()
                 .Build();
 
             return Markdown.ToHtml(text, pipeline);
