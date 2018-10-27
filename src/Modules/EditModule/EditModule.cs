@@ -42,6 +42,7 @@ namespace EditModule
             containerRegistry.Register<IEditCommandHandler, NewCommandHandler>(nameof(NewCommandHandler));
             containerRegistry.Register<IEditCommandHandler, OpenCommandHandler>(nameof(OpenCommandHandler));
             containerRegistry.Register<IEditCommandHandler, SaveCommandHandler>(nameof(SaveCommandHandler));
+            containerRegistry.Register<IEditCommandHandler, SaveAsCommandHandler>(nameof(SaveAsCommandHandler));
 
             containerRegistry.Register<IEditCommandHandler, ConvertSelectionToListCommandHandler>(nameof(ConvertSelectionToListCommandHandler));
             containerRegistry.Register<IEditCommandHandler, CorrectSpellingErrorCommandHandler>(nameof(CorrectSpellingErrorCommandHandler));
