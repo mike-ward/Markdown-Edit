@@ -7,8 +7,6 @@ namespace MarkdownEdit.MarkdownConverters
         public string ConvertToHtml(string markdown)
         {
             var pipeline = new MarkdownPipelineBuilder()
-                .UseEmojiAndSmiley()
-                .UseYamlFrontMatter()
                 .UseAdvancedExtensions()
                 .Build();
 
