@@ -14,8 +14,7 @@ namespace MarkdownEdit.Models
     public static class Markdown
     {
         private static readonly IMarkdownConverter CommonMarkConverter = new CommonMarkConverter();
-        private static readonly IMarkdownConverter GitHubMarkdownConverter = new GitHubMarkdownConverter();
-        //private static readonly IMarkdownConverter GitHubMarkdownConverter = new CMarkGitHub();
+        private static readonly IMarkdownConverter GitHubMarkdownConverter = new MarkdigMarkdownConverter();
         private static readonly IMarkdownConverter CustomMarkdownConverter = new CustomMarkdownConverter();
 
         private const string PandocGithubMarkdownFormatOptions =
