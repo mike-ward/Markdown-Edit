@@ -1,23 +1,12 @@
 <html>
 <head>
 	<title>Markdown Edit Preview</title>
-  <!-- saved from url=(0016)http://localhost -->
 	<!-- Must have base tag with id of "base-tag-id" -->
 	<base id="base-tag-id">
 	<!-- Don't delete this X-UA tag. The browser control behaves like IE8 otherwise -->
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-	<style type="text/css">
-		body { font-family: 'segoe ui', sans-serif; line-height: 1.4; padding-left: 12pt; font-size: 12pt; }
-		code { white-space: pre }
-		ul, ol { padding: 8pt; }
-		h1, h2, h3, h4, h5, h6 { font-family: cambria, serif; }
-		blockquote { padding: 0 12pt; color: #777; border-left: 3pt solid #ddd;  }
-		table{ display: block; width: 100%; overflow: auto; word-break: normal; word-break: keep-all; border-collapse: collapse;  }
-		table th{ font-weight: bold; background-color: #f8f8f8; }
-		table th, #content table td{ padding: 6px 13px; border: 1px solid #ddd; }
-		table tr{ background-color: #fff; border-top: 1px solid #ccc; page-break-inside: avoid; }
-	</style>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
 	<style type="text/css">
 		._sprite{ background-image: url('emoji-sprite.png'); } 
 		._sprite{ background-color: transparent; background-repeat: no-repeat; display: inline-block; zoom:0.39; vertical-align: middle; }
@@ -885,292 +874,853 @@
 		._trollface{ width: 64px; height: 64px; background-position: -75px -27520px; }
 	</style>
 	
-	<!-- 
-    Change code block syntax highlighting styles by commenting out the 
-	  default MDE sytle and uncommenting one of the styles below.
-	  Works only with GitHub Markdown engine
-	-->
-	
-	<!-- Default MDE syntax style -->
 	<style type="text/css">
-		code { font-family: consolas, monospace; background-color: #f7f7f7; padding: .2pt; border-radius: 2pt; line-height: 1.3; }
-		pre { background-color: transparent; }
-		pre code { font-size: 95%; padding: 12pt; display: block; border-radius: 2pt; }
+		/* From https://github.com/sindresorhus/github-markdown-css */
+
+		@font-face {
+			font-family: octicons-link;
+			src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+		}
+
+		body {
+			-ms-text-size-adjust: 100%;
+			-webkit-text-size-adjust: 100%;
+			color: #333;
+			font-family: "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+			font-size: 16px;
+			line-height: 1.6;
+			word-wrap: break-word;
+			margin: 10px;
+		}
+
+			body a {
+				background-color: transparent;
+				-webkit-text-decoration-skip: objects;
+			}
+
+				body a:active,
+				body a:hover {
+					outline-width: 0;
+				}
+
+			body strong {
+				font-weight: inherit;
+			}
+
+			body strong {
+				font-weight: bolder;
+			}
+
+			body h1 {
+				font-size: 2em;
+				margin: 0.67em 0;
+			}
+
+			body img {
+				border-style: none;
+			}
+
+			body svg:not(:root) {
+				overflow: hidden;
+			}
+
+			body code,
+			body kbd,
+			body pre {
+				font-family: monospace, monospace;
+				font-size: 1em;
+			}
+
+			body hr {
+				box-sizing: content-box;
+				height: 0;
+				overflow: visible;
+			}
+
+			body input {
+				font: inherit;
+				margin: 0;
+			}
+
+			body input {
+				overflow: visible;
+			}
+
+			body button:-moz-focusring,
+			body [type="button"]:-moz-focusring,
+			body [type="reset"]:-moz-focusring,
+			body [type="submit"]:-moz-focusring {
+				outline: 1px dotted ButtonText;
+			}
+
+			body [type="checkbox"] {
+				box-sizing: border-box;
+				padding: 0;
+			}
+
+			body table {
+				border-spacing: 0;
+				border-collapse: collapse;
+			}
+
+			body td,
+			body th {
+				padding: 0;
+			}
+
+			body * {
+				box-sizing: border-box;
+			}
+
+			body input {
+				font: 13px/1.4 arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+			}
+
+			body a {
+				color: #4078c0;
+				text-decoration: none;
+			}
+
+				body a:hover,
+				body a:active {
+					text-decoration: underline;
+				}
+
+			body hr {
+				height: 0;
+				margin: 15px 0;
+				overflow: hidden;
+				background: transparent;
+				border: 0;
+				border-bottom: 1px solid #ddd;
+			}
+
+				body hr::before {
+					display: table;
+					content: "";
+				}
+
+				body hr::after {
+					display: table;
+					clear: both;
+					content: "";
+				}
+
+			body h1,
+			body h2,
+			body h3,
+			body h4,
+			body h5,
+			body h6 {
+				margin-top: 0;
+				margin-bottom: 0;
+				line-height: 1.5;
+			}
+
+			body h1 {
+				font-size: 30px;
+			}
+
+			body h2 {
+				font-size: 21px;
+			}
+
+			body h3 {
+				font-size: 16px;
+			}
+
+			body h4 {
+				font-size: 14px;
+			}
+
+			body h5 {
+				font-size: 12px;
+			}
+
+			body h6 {
+				font-size: 11px;
+			}
+
+			body p {
+				margin-top: 0;
+				margin-bottom: 10px;
+			}
+
+			body blockquote {
+				margin: 0;
+			}
+
+			body ul,
+			body ol {
+				padding-left: 0;
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+
+				body ol ol,
+				body ul ol {
+					list-style-type: lower-roman;
+				}
+
+					body ul ul ol,
+					body ul ol ol,
+					body ol ul ol,
+					body ol ol ol {
+						list-style-type: lower-alpha;
+					}
+
+			body dd {
+				margin-left: 0;
+			}
+
+			body code {
+				font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+				font-size: 12px;
+			}
+
+			body pre {
+				margin-top: 0;
+				margin-bottom: 0;
+				font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+			}
+
+			body .pl-0 {
+				padding-left: 0 !important;
+			}
+
+			body .pl-1 {
+				padding-left: 3px !important;
+			}
+
+			body .pl-2 {
+				padding-left: 6px !important;
+			}
+
+			body .pl-3 {
+				padding-left: 12px !important;
+			}
+
+			body .pl-4 {
+				padding-left: 24px !important;
+			}
+
+			body .pl-5 {
+				padding-left: 36px !important;
+			}
+
+			body .pl-6 {
+				padding-left: 48px !important;
+			}
+
+			body .form-select::-ms-expand {
+				opacity: 0;
+			}
+
+			body:before {
+				display: table;
+				content: "";
+			}
+
+			body:after {
+				display: table;
+				clear: both;
+				content: "";
+			}
+
+			body > *:first-child {
+				margin-top: 0 !important;
+			}
+
+			body > *:last-child {
+				margin-bottom: 0 !important;
+			}
+
+			body a:not([href]) {
+				color: inherit;
+				text-decoration: none;
+			}
+
+			body .anchor {
+				display: inline-block;
+				padding-right: 2px;
+				margin-left: -18px;
+			}
+
+				body .anchor:focus {
+					outline: none;
+				}
+
+			body h1,
+			body h2,
+			body h3,
+			body h4,
+			body h5,
+			body h6 {
+				/*margin-top: 1em;*/
+				margin-bottom: 16px;
+				font-weight: bold;
+				line-height: 1.4;
+			}
+
+				body h1 .octicon-link,
+				body h2 .octicon-link,
+				body h3 .octicon-link,
+				body h4 .octicon-link,
+				body h5 .octicon-link,
+				body h6 .octicon-link {
+					color: #000;
+					vertical-align: middle;
+					visibility: hidden;
+				}
+
+				body h1:hover .anchor,
+				body h2:hover .anchor,
+				body h3:hover .anchor,
+				body h4:hover .anchor,
+				body h5:hover .anchor,
+				body h6:hover .anchor {
+					text-decoration: none;
+				}
+
+					body h1:hover .anchor .octicon-link,
+					body h2:hover .anchor .octicon-link,
+					body h3:hover .anchor .octicon-link,
+					body h4:hover .anchor .octicon-link,
+					body h5:hover .anchor .octicon-link,
+					body h6:hover .anchor .octicon-link {
+						visibility: visible;
+					}
+
+			body h1 {
+				padding-bottom: 0.3em;
+				font-size: 2.25em;
+				line-height: 1.2;
+				border-bottom: 1px solid #eee;
+			}
+
+				body h1 .anchor {
+					line-height: 1;
+				}
+
+			body h2 {
+				padding-bottom: 0.3em;
+				font-size: 1.75em;
+				line-height: 1.225;
+				border-bottom: 1px solid #eee;
+			}
+
+				body h2 .anchor {
+					line-height: 1;
+				}
+
+			body h3 {
+				font-size: 1.5em;
+				line-height: 1.43;
+			}
+
+				body h3 .anchor {
+					line-height: 1.2;
+				}
+
+			body h4 {
+				font-size: 1.25em;
+			}
+
+				body h4 .anchor {
+					line-height: 1.2;
+				}
+
+			body h5 {
+				font-size: 1em;
+			}
+
+				body h5 .anchor {
+					line-height: 1.1;
+				}
+
+			body h6 {
+				font-size: 1em;
+				color: #777;
+			}
+
+				body h6 .anchor {
+					line-height: 1.1;
+				}
+
+			body p,
+			body blockquote,
+			body ul,
+			body ol,
+			body dl,
+			body table,
+			body pre {
+				margin-top: 0;
+				margin-bottom: 16px;
+			}
+
+			body hr {
+				height: 4px;
+				padding: 0;
+				margin: 16px 0;
+				background-color: #e7e7e7;
+				border: 0 none;
+			}
+
+			body ul,
+			body ol {
+				padding-left: 2em;
+			}
+
+				body ul ul,
+				body ul ol,
+				body ol ol,
+				body ol ul {
+					margin-top: 0;
+					margin-bottom: 0;
+				}
+
+			body li > p {
+				margin-top: 16px;
+			}
+
+			body dl {
+				padding: 0;
+			}
+
+				body dl dt {
+					padding: 0;
+					margin-top: 16px;
+					font-size: 1em;
+					font-style: italic;
+					font-weight: bold;
+				}
+
+				body dl dd {
+					padding: 0 16px;
+					margin-bottom: 16px;
+				}
+
+			body blockquote {
+				padding: 0 15px;
+				color: #777;
+				border-left: 4px solid #ddd;
+			}
+
+				body blockquote > :first-child {
+					margin-top: 0;
+				}
+
+				body blockquote > :last-child {
+					margin-bottom: 0;
+				}
+
+			body table {
+				display: block;
+				width: 100%;
+				overflow: auto;
+				word-break: normal;
+				word-break: keep-all;
+			}
+
+				body table th {
+					font-weight: bold;
+				}
+
+				body table th,
+				body table td {
+					padding: 6px 13px;
+					border: 1px solid #ddd;
+				}
+
+				body table tr {
+					background-color: #fff;
+					border-top: 1px solid #ccc;
+				}
+
+					body table tr:nth-child(2n) {
+						background-color: #f8f8f8;
+					}
+
+			body img {
+				max-width: 100%;
+				box-sizing: content-box;
+				background-color: #fff;
+			}
+
+			body code {
+				padding: 0;
+				padding-top: 0.2em;
+				padding-bottom: 0.2em;
+				margin: 0;
+				font-size: 85%;
+				background-color: rgba(0,0,0,0.04);
+				border-radius: 3px;
+			}
+
+				body code:before,
+				body code:after {
+					letter-spacing: -0.2em;
+					content: "\00a0";
+				}
+
+			body pre > code {
+				padding: 0;
+				margin: 0;
+				font-size: 100%;
+				word-break: normal;
+				white-space: pre;
+				background: transparent;
+				border: 0;
+			}
+
+			body .highlight {
+				margin-bottom: 16px;
+			}
+
+				body .highlight pre,
+				body pre {
+					padding: 16px;
+					overflow: auto;
+					font-size: 85%;
+					line-height: 1.45;
+					background-color: #f7f7f7;
+					border-radius: 3px;
+				}
+
+				body .highlight pre {
+					margin-bottom: 0;
+					word-break: normal;
+				}
+
+			body pre {
+				word-wrap: normal;
+			}
+
+				body pre code {
+					display: inline;
+					max-width: initial;
+					padding: 0;
+					margin: 0;
+					overflow: initial;
+					line-height: inherit;
+					word-wrap: normal;
+					background-color: transparent;
+					border: 0;
+				}
+
+					body pre code:before,
+					body pre code:after {
+						content: normal;
+					}
+
+			body kbd {
+				display: inline-block;
+				padding: 3px 5px;
+				font-size: 11px;
+				line-height: 10px;
+				color: #555;
+				vertical-align: middle;
+				background-color: #fcfcfc;
+				border: solid 1px #ccc;
+				border-bottom-color: #bbb;
+				border-radius: 3px;
+				box-shadow: inset 0 -1px 0 #bbb;
+			}
+
+			body .pl-c {
+				color: #969896;
+			}
+
+			body .pl-c1,
+			body .pl-s .pl-v {
+				color: #0086b3;
+			}
+
+			body .pl-e,
+			body .pl-en {
+				color: #795da3;
+			}
+
+			body .pl-s .pl-s1,
+			body .pl-smi {
+				color: #333;
+			}
+
+			body .pl-ent {
+				color: #63a35c;
+			}
+
+			body .pl-k {
+				color: #a71d5d;
+			}
+
+			body .pl-pds,
+			body .pl-s,
+			body .pl-s .pl-pse .pl-s1,
+			body .pl-sr,
+			body .pl-sr .pl-cce,
+			body .pl-sr .pl-sra,
+			body .pl-sr .pl-sre {
+				color: #183691;
+			}
+
+			body .pl-v {
+				color: #ed6a43;
+			}
+
+			body .pl-id {
+				color: #b52a1d;
+			}
+
+			body .pl-ii {
+				background-color: #b52a1d;
+				color: #f8f8f8;
+			}
+
+			body .pl-sr .pl-cce {
+				color: #63a35c;
+				font-weight: bold;
+			}
+
+			body .pl-ml {
+				color: #693a17;
+			}
+
+			body .pl-mh,
+			body .pl-mh .pl-en,
+			body .pl-ms {
+				color: #1d3e81;
+				font-weight: bold;
+			}
+
+			body .pl-mq {
+				color: #008080;
+			}
+
+			body .pl-mi {
+				color: #333;
+				font-style: italic;
+			}
+
+			body .pl-mb {
+				color: #333;
+				font-weight: bold;
+			}
+
+			body .pl-md {
+				background-color: #ffecec;
+				color: #bd2c00;
+			}
+
+			body .pl-mi1 {
+				background-color: #eaffea;
+				color: #55a532;
+			}
+
+			body .pl-mdr {
+				color: #795da3;
+				font-weight: bold;
+			}
+
+			body .pl-mo {
+				color: #1d3e81;
+			}
+
+			body kbd {
+				display: inline-block;
+				padding: 3px 5px;
+				font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+				line-height: 10px;
+				color: #555;
+				vertical-align: middle;
+				background-color: #fcfcfc;
+				border: solid 1px #ccc;
+				border-bottom-color: #bbb;
+				border-radius: 3px;
+				box-shadow: inset 0 -1px 0 #bbb;
+			}
+
+			body .full-commit .btn-outline:not(:disabled):hover {
+				color: #4078c0;
+				border: 1px solid #4078c0;
+			}
+
+			body :checked + .radio-label {
+				position: relative;
+				z-index: 1;
+				border-color: #4078c0;
+			}
+
+			body .octicon {
+				display: inline-block;
+				vertical-align: text-top;
+				fill: currentColor;
+			}
+
+			body .task-list-item {
+				list-style-type: none;
+			}
+
+				body .task-list-item + .task-list-item {
+					margin-top: 3px;
+				}
+
+				body .task-list-item input {
+					margin: 0 0.2em 0.25em -1.6em;
+					vertical-align: middle;
+				}
+
+			body hr {
+				border-bottom-color: #eee;
+			}
+
+		/* http://prismjs.com/download.html?themes=prism&languages=markup+css+clike+javascript+asciidoc+aspnet+bash+batch+c+csharp+cpp+coffeescript+ruby+docker+fsharp+go+ini+java+json+julia+less+markdown+objectivec+perl+php+powershell+python+r+jsx+rust+sass+scss+sql+stylus+typescript+yaml */
+		/**
+		 * prism.js default theme for JavaScript, CSS and HTML
+		 * Based on dabblet (http://dabblet.com)
+		 * @author Lea Verou
+		 */
+
+		code[class*="language-"],
+		pre[class*="language-"] {
+			color: black;
+			background: none;
+			text-shadow: 0 1px white;
+			font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+			text-align: left;
+			white-space: pre;
+			word-spacing: normal;
+			word-break: normal;
+			word-wrap: normal;
+			line-height: 1.5;
+			-moz-tab-size: 4;
+			-o-tab-size: 4;
+			tab-size: 4;
+			-webkit-hyphens: none;
+			-moz-hyphens: none;
+			-ms-hyphens: none;
+			hyphens: none;
+		}
+
+			pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+			code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+				text-shadow: none;
+				background: #b3d4fc;
+			}
+
+			pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+			code[class*="language-"]::selection, code[class*="language-"] ::selection {
+				text-shadow: none;
+				background: #b3d4fc;
+			}
+
+		@media print {
+			code[class*="language-"],
+			pre[class*="language-"] {
+				text-shadow: none;
+			}
+		}
+
+		/* Code blocks */
+		pre[class*="language-"] {
+			padding: 1em;
+			margin: .5em 0;
+			overflow: auto;
+		}
+
+		:not(pre) > code[class*="language-"],
+		pre[class*="language-"] {
+			background: #f5f2f0;
+		}
+
+		/* Inline code */
+		:not(pre) > code[class*="language-"] {
+			padding: .1em;
+			border-radius: .3em;
+			white-space: normal;
+		}
+
+		.token.comment,
+		.token.prolog,
+		.token.doctype,
+		.token.cdata {
+			color: slategray;
+		}
+
+		.token.punctuation {
+			color: #999;
+		}
+
+		.namespace {
+			opacity: .7;
+		}
+
+		.token.property,
+		.token.tag,
+		.token.boolean,
+		.token.number,
+		.token.constant,
+		.token.symbol,
+		.token.deleted {
+			color: #905;
+		}
+
+		.token.selector,
+		.token.attr-name,
+		.token.string,
+		.token.char,
+		.token.builtin,
+		.token.inserted {
+			color: #690;
+		}
+
+		.token.operator,
+		.token.entity,
+		.token.url,
+		.language-css .token.string,
+		.style .token.string {
+			color: #a67f59;
+			background: hsla(0, 0%, 100%, .5);
+		}
+
+		.token.atrule,
+		.token.attr-value,
+		.token.keyword {
+			color: #07a;
+		}
+
+		.token.function {
+			color: #DD4A68;
+		}
+
+		.token.regex,
+		.token.important,
+		.token.variable {
+			color: #e90;
+		}
+
+		.token.important,
+		.token.bold {
+			font-weight: bold;
+		}
+
+		.token.italic {
+			font-style: italic;
+		}
+
+		.token.entity {
+			cursor: help;
+		}
 	</style>
-	
-	<!-- pygments -->
-	<!--
-  <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  -->
-  
-  <!-- kate -->
-  <!--
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #dddddd; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { font-weight: bold; } /* Keyword */
-    code > span.dt { color: #800000; } /* DataType */
-    code > span.dv { color: #0000ff; } /* DecVal */
-    code > span.bn { color: #0000ff; } /* BaseN */
-    code > span.fl { color: #800080; } /* Float */
-    code > span.ch { color: #ff00ff; } /* Char */
-    code > span.st { color: #dd0000; } /* String */
-    code > span.co { color: #808080; font-style: italic; } /* Comment */
-    code > span.al { color: #00ff00; font-weight: bold; } /* Alert */
-    code > span.fu { color: #000080; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #ff0000; font-weight: bold; } /* Warning */
-    code > span.cn { color: #000000; } /* Constant */
-    code > span.sc { color: #ff00ff; } /* SpecialChar */
-    code > span.vs { color: #dd0000; } /* VerbatimString */
-    code > span.ss { color: #dd0000; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { } /* Variable */
-    code > span.cf { } /* ControlFlow */
-    code > span.op { } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { font-weight: bold; } /* Preprocessor */
-    code > span.at { } /* Attribute */
-    code > span.do { color: #808080; font-style: italic; } /* Documentation */
-    code > span.an { color: #808080; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #808080; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #808080; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  -->
-  
-  <!-- monochrome -->
-  <!--
-  <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { font-weight: bold; } /* Keyword */
-    code > span.dt { text-decoration: underline; } /* DataType */
-    code > span.co { font-style: italic; } /* Comment */
-    code > span.al { font-weight: bold; } /* Alert */
-    code > span.er { font-weight: bold; } /* Error */
-    code > span.wa { font-style: italic; } /* Warning */
-    code > span.cf { font-weight: bold; } /* ControlFlow */
-    code > span.pp { font-weight: bold; } /* Preprocessor */
-    code > span.do { font-style: italic; } /* Documentation */
-    code > span.an { font-style: italic; } /* Annotation */
-    code > span.cv { font-style: italic; } /* CommentVar */
-    code > span.in { font-style: italic; } /* Information */
-  </style>
-  -->
-  
-  <!-- expresso -->
-  <!--
-  <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; background-color: #2a211c; color: #bdae9d; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #2a211c; color: #bdae9d; border-right: 1px solid #bdae9d; }
-    td.sourceCode { padding-left: 5px; }
-    pre, code { color: #bdae9d; background-color: #2a211c; }
-    code > span.kw { color: #43a8ed; font-weight: bold; } /* Keyword */
-    code > span.dt { text-decoration: underline; } /* DataType */
-    code > span.dv { color: #44aa43; } /* DecVal */
-    code > span.bn { color: #44aa43; } /* BaseN */
-    code > span.fl { color: #44aa43; } /* Float */
-    code > span.ch { color: #049b0a; } /* Char */
-    code > span.st { color: #049b0a; } /* String */
-    code > span.co { color: #0066ff; font-style: italic; } /* Comment */
-    code > span.al { color: #ffff00; } /* Alert */
-    code > span.fu { color: #ff9358; font-weight: bold; } /* Function */
-    code > span.er { color: #ffff00; font-weight: bold; } /* Error */
-    code > span.wa { color: #ffff00; font-weight: bold; } /* Warning */
-    code > span.cn { } /* Constant */
-    code > span.sc { color: #049b0a; } /* SpecialChar */
-    code > span.vs { color: #049b0a; } /* VerbatimString */
-    code > span.ss { color: #049b0a; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { } /* Variable */
-    code > span.cf { color: #43a8ed; font-weight: bold; } /* ControlFlow */
-    code > span.op { } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { font-weight: bold; } /* Preprocessor */
-    code > span.at { } /* Attribute */
-    code > span.do { color: #0066ff; font-style: italic; } /* Documentation */
-    code > span.an { color: #0066ff; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.co { color: #0066ff; font-weight: bold; font-style: italic; } /* Comment */
-    code > span.in { color: #0066ff; font-weight: bold; font-style: italic; } /* Information */
-  </style>  
-  -->
-  
-  <!-- zenburn -->
-  <!--
-  <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; background-color: #303030; color: #cccccc; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; }
-    td.sourceCode { padding-left: 5px; }
-    pre, code { color: #cccccc; background-color: #303030; }
-    code > span.kw { color: #f0dfaf; } /* Keyword */
-    code > span.dt { color: #dfdfbf; } /* DataType */
-    code > span.dv { color: #dcdccc; } /* DecVal */
-    code > span.bn { color: #dca3a3; } /* BaseN */
-    code > span.fl { color: #c0bed1; } /* Float */
-    code > span.ch { color: #dca3a3; } /* Char */
-    code > span.st { color: #cc9393; } /* String */
-    code > span.co { color: #7f9f7f; } /* Comment */
-    code > span.ot { color: #efef8f; } /* Other */
-    code > span.al { color: #ffcfaf; } /* Alert */
-    code > span.fu { color: #efef8f; } /* Function */
-    code > span.er { color: #c3bf9f; } /* Error */
-    code > span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
-    code > span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
-    code > span.sc { color: #dca3a3; } /* SpecialChar */
-    code > span.vs { color: #cc9393; } /* VerbatimString */
-    code > span.ss { color: #cc9393; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { } /* Variable */
-    code > span.cf { color: #f0dfaf; } /* ControlFlow */
-    code > span.op { color: #f0efd0; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
-    code > span.at { } /* Attribute */
-    code > span.do { color: #7f9f7f; } /* Documentation */
-    code > span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
-    code > span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
-    code > span.in { color: #7f9f7f; font-weight: bold; } /* Information */
-  </style>
-  -->
-  
-  <!-- haddock -->
-  <!--
-   <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #0000ff; } /* Keyword */
-    code > span.ch { color: #008080; } /* Char */
-    code > span.st { color: #008080; } /* String */
-    code > span.co { color: #008000; } /* Comment */
-    code > span.ot { color: #ff4000; } /* Other */
-    code > span.al { color: #ff0000; } /* Alert */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #008000; font-weight: bold; } /* Warning */
-    code > span.cn { } /* Constant */
-    code > span.sc { color: #008080; } /* SpecialChar */
-    code > span.vs { color: #008080; } /* VerbatimString */
-    code > span.ss { color: #008080; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { } /* Variable */
-    code > span.cf { color: #0000ff; } /* ControlFlow */
-    code > span.op { } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #ff4000; } /* Preprocessor */
-    code > span.do { color: #008000; } /* Documentation */
-    code > span.an { color: #008000; } /* Annotation */
-    code > span.cv { color: #008000; } /* CommentVar */
-    code > span.at { } /* Attribute */
-    code > span.in { color: #008000; } /* Information */
-  </style>
-  -->
-  
-  <!-- tango -->
-  <!--
-  <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    pre, code { background-color: #f8f8f8; }
-    code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #204a87; } /* DataType */
-    code > span.dv { color: #0000cf; } /* DecVal */
-    code > span.bn { color: #0000cf; } /* BaseN */
-    code > span.fl { color: #0000cf; } /* Float */
-    code > span.ch { color: #4e9a06; } /* Char */
-    code > span.st { color: #4e9a06; } /* String */
-    code > span.co { color: #8f5902; font-style: italic; } /* Comment */
-    code > span.ot { color: #8f5902; } /* Other */
-    code > span.al { color: #ef2929; } /* Alert */
-    code > span.fu { color: #000000; } /* Function */
-    code > span.er { color: #a40000; font-weight: bold; } /* Error */
-    code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #000000; } /* Constant */
-    code > span.sc { color: #000000; } /* SpecialChar */
-    code > span.vs { color: #4e9a06; } /* VerbatimString */
-    code > span.ss { color: #4e9a06; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #000000; } /* Variable */
-    code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-    code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-    code > span.ex { } /* Extension */
-    code > span.at { color: #c4a000; } /* Attribute */
-    code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-    code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-  </style>  
-  -->
   </head>
 <body>
 <!-- Content goes here. The div must have an id of "content" -->
-<div id="content"></div>
+<div id="content"><p>This is a block <span class="math">a \ne 0</span></p>
+</div>
 <!-- Adds some scroll space to the bottom of the doucment -->
 <div style="height: 1pc">&nbsp;</div>
-<!-- Scripts to handle MathJax 
-<script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script async src="http://markdownedit.com/assets/js/mathjax-scripts.js"></script>
--->
+<!-- Scripts to handle MathJax -->
+<script async="" src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_CHTML'></script>
+<script async="" src="http://markdownedit.com/assets/js/mathjax-scripts.js"></script>
 </body>
 </html>
