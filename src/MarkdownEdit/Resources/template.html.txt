@@ -1,11 +1,11 @@
 <html>
 <head>
 	<title>Markdown Edit Preview</title>
+	<meta charset="utf-8">
 	<!-- Must have base tag with id of "base-tag-id" -->
 	<base id="base-tag-id">
 	<!-- Don't delete this X-UA tag. The browser control behaves like IE8 otherwise -->
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<style type="text/css">
 		._sprite{ background-image: url('emoji-sprite.png'); } 
 		._sprite{ background-color: transparent; background-repeat: no-repeat; display: inline-block; zoom:0.39; vertical-align: middle; }
@@ -1718,7 +1718,7 @@
 <!-- Adds some scroll space to the bottom of the doucment -->
 <div style="height: 1pc">&nbsp;</div>
 <!-- Scripts to handle MathJax -->
-<script async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML'></script>
-<script async src="http://markdownedit.com/assets/js/mathjax-scripts.js"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" async src="http://markdownedit.com/assets/js/mathjax-scripts.js"></script>
 </body>
 </html>
