@@ -8,10 +8,29 @@ namespace ServicesModule.Services
         public string Name { get; } = "GitHub Markdown";
         public string ToHtml(string text)
         {
-            var pipeline = new MarkdownPipelineBuilder()
+            var pipelines = new MarkdownPipelineBuilder()
+                .UseAbbreviations()
+                .UseAutoIdentifiers()
+                .UseCitations()
+                .UseCustomContainers()
+                .UseDefinitionLists()
+                .UseEmphasisExtras()
+                .UseFigures()
+                .UseFooters()
+                .UseFootnotes()
+                .UseGridTables()
+                //.UseMathematics()
+                .UseMediaLinks()
+                .UsePipeTables()
+                .UseListExtras()
+                .UseTaskLists()
+                .UseDiagrams()
+                .UseAutoLinks()
                 .UseEmojiAndSmiley()
-                .UseYamlFrontMatter()
-                .UseAdvancedExtensions()
+                .UseYamlFrontMatter();
+
+            var pipeline = pipelines
+                .UseGenericAttributes() // this one has to be last
                 .Build();
 
             return Markdown.ToHtml(text, pipeline);
