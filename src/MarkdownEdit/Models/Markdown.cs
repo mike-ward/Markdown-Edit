@@ -61,7 +61,7 @@ namespace MarkdownEdit.Models
         private static IMarkdownConverter GetMarkdownConverter()
         {
             return IsNullOrWhiteSpace(App.UserSettings.CustomMarkdownConverter)
-                ? (App.UserSettings.GitHubMarkdown ? GitHubMarkdownConverter : CommonMarkConverter)
+                ? GitHubMarkdownConverter
                 : CustomMarkdownConverter;
         }
 
