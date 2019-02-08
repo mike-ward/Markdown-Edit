@@ -19,7 +19,7 @@ namespace ServicesModule.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -96,14 +96,14 @@ namespace ServicesModule.Properties {
         ///   Looks up a localized string similar to &lt;html&gt;
         ///&lt;head&gt;
         ///	&lt;title&gt;Markdown Edit Preview&lt;/title&gt;
-        ///  &lt;!-- saved from url=(0016)http://localhost --&gt;
+        ///	&lt;meta charset=&quot;utf-8&quot;&gt;
         ///	&lt;!-- Must have base tag with id of &quot;base-tag-id&quot; --&gt;
         ///	&lt;base id=&quot;base-tag-id&quot;&gt;
         ///	&lt;!-- Don&apos;t delete this X-UA tag. The browser control behaves like IE8 otherwise --&gt;
         ///	&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=Edge&quot;&gt;
-        ///	&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=utf-8&quot;/&gt;
         ///	&lt;style type=&quot;text/css&quot;&gt;
-        ///		body { font-family: &apos;segoe ui&apos;, sans-serif; line-height: 1.4; padding-left: 12pt; font [rest of string was truncated]&quot;;.
+        ///		._sprite{ background-image: url(&apos;emoji-sprite.png&apos;); } 
+        ///		._sprite{ background-color: transparent; background-repeat: no-repeat; display: inline-block; zoom:0.39; vertical-align: m [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string template_html_txt {
             get {
