@@ -51,8 +51,8 @@
     <Reference Include="DryIoc, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DryIoc.dll.3.0.2\lib\net45\DryIoc.dll</HintPath>
     </Reference>
-    <Reference Include="Jot, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jot.1.4.1\lib\net45\Jot.dll</HintPath>
+    <Reference Include="Jot, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jot.2.0.1\lib\netstandard2.0\Jot.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net47\MahApps.Metro.dll</HintPath>

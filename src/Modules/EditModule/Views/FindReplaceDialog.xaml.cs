@@ -24,8 +24,7 @@ namespace EditModule.Views
             Loaded += ViewModel.OnLoad;
             Closed += ViewModel.OnClose;
             Closed += (sd, ea) => _dialog = null;
-            Closed += (sd, ea) => Globals.Tracker.Configure(this).Persist();
-            Globals.Tracker.Configure(this).Apply();
+            Globals.Tracker.Track(this);
         }
 
         private void Localize(IStrings strings)
@@ -42,7 +41,6 @@ namespace EditModule.Views
             _wholeWordCheckBox.Content = strings.FindReplaceWholeWord;
             _regularExpressonCheckBox.Content = strings.FindReplaceRegularExpression;
             _wildCardsCheckBox.Content = strings.FindReplaceWildCards;
-
         }
 
         private void FindNextClick(object sender, RoutedEventArgs e)

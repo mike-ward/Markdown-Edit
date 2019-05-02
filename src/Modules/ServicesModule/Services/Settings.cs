@@ -1,7 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using Infrastructure;
-using Jot.DefaultInitializer;
 using Prism.Mvvm;
 
 namespace ServicesModule.Services
@@ -10,6 +8,7 @@ namespace ServicesModule.Services
     {
         // Editor
         private FontFamily _font = new FontFamily("Consolas");
+
         private double _fontSize = 16;
         private bool _wordWrap = true;
         private string _currentFileName = string.Empty;
@@ -28,6 +27,7 @@ namespace ServicesModule.Services
 
         // Spell Check
         private bool _spellCheckEnable = true;
+
         private bool _spellCheckIgnoreCodeBlocks = true;
         private bool _spellCheckIgnoreMarkupTags = true;
         private bool _spellCheckIgnoreAllCaps = true;
@@ -39,114 +39,129 @@ namespace ServicesModule.Services
 
         public Settings()
         {
-            Globals.Tracker.Configure(this).Apply();
-            if (Application.Current.MainWindow != null)
-            {
-                Application.Current.MainWindow.Closed += (sd, ea) => Globals.Tracker.Configure(this).Persist();
-            }
+            var tracker = Globals.Tracker;
+
+            tracker.Configure<Settings>()
+                .Properties(s => new
+                {
+                    // === Editor
+                    s.CurrentFileName,
+                    s.Font,
+                    s.FontSize,
+                    s.AutoSave,
+                    s.ShowLineNumbers,
+                    s.OpenLastFile,
+                    s.FormatTextOnSave,
+                    s.RememberLastPosition,
+                    s.HighlightCurrentLine,
+                    s.ShowVerticalScrollbar,
+                    s.ShowSpaces,
+                    s.ShowLineEndings,
+                    s.ShowTabs,
+                    s.SynchronizeScrollPositions,
+                    s.WordWrap,
+                    // === Spell Check
+                    s.SpellCheckEnable,
+                    s.SpellCheckIgnoreAllCaps,
+                    s.SpellCheckIgnoreCodeBlocks,
+                    s.SpellCheckIgnoreMarkupTags,
+                    s.SpellCheckIgnoreWordsWithDigits,
+                    s.SpellCheckDictionary,
+                    // === Preview
+                    s.MarkdownEngines,
+                    // === Other
+                    s.Donated
+                });
+
+            tracker.Track(this);
         }
 
         // === Editor
 
-        [Trackable]
         public string CurrentFileName
         {
             get => _currentFileName;
             set => SetProperty(ref _currentFileName, value);
         }
 
-        [Trackable]
         public FontFamily Font
         {
             get => _font;
             set => SetProperty(ref _font, value);
         }
 
-        [Trackable]
         public double FontSize
         {
             get => _fontSize;
-            set => SetProperty(ref _fontSize,  value);
+            set => SetProperty(ref _fontSize, value);
         }
 
-        [Trackable]
         public bool AutoSave
         {
             get => _autoSave;
             set => SetProperty(ref _autoSave, value);
         }
 
-        [Trackable]
         public bool ShowLineNumbers
         {
             get => _showLineNumbers;
             set => SetProperty(ref _showLineNumbers, value);
         }
 
-        [Trackable]
         public bool OpenLastFile
         {
             get => _openLastFile;
             set => SetProperty(ref _openLastFile, value);
         }
 
-        [Trackable]
         public bool FormatTextOnSave
         {
             get => _formatTextOnSave;
             set => SetProperty(ref _formatTextOnSave, value);
         }
 
-        [Trackable]
         public bool RememberLastPosition
         {
             get => _rememberLastPosition;
             set => SetProperty(ref _rememberLastPosition, value);
         }
 
-        [Trackable]
         public bool HighlightCurrentLine
         {
             get => _highlightCurrentLine;
             set => SetProperty(ref _highlightCurrentLine, value);
         }
 
-        [Trackable]
         public bool ShowVerticalScrollbar
         {
             get => _showVerticalScrollbar;
             set => SetProperty(ref _showVerticalScrollbar, value);
         }
 
-        [Trackable]
         public bool ShowSpaces
         {
             get => _showSpaces;
             set => SetProperty(ref _showSpaces, value);
         }
 
-        [Trackable]
         public bool ShowLineEndings
         {
             get => _showLineEndings;
             set => SetProperty(ref _showLineEndings, value);
         }
 
-        [Trackable]
         public bool ShowTabs
         {
             get => _showTabs;
             set => SetProperty(ref _showTabs, value);
         }
 
-        [Trackable]
         public bool SynchronizeScrollPositions
         {
             get => _synchronizeScrollPositions;
             set => SetProperty(ref _synchronizeScrollPositions, value);
         }
 
-        [Trackable]
         public bool WordWrap
         {
             get => _wordWrap;
@@ -155,42 +170,36 @@ namespace ServicesModule.Services
 
         // === Spell Check
 
-        [Trackable]
         public bool SpellCheckEnable
         {
             get => _spellCheckEnable;
             set => SetProperty(ref _spellCheckEnable, value);
         }
 
-        [Trackable]
         public bool SpellCheckIgnoreCodeBlocks
         {
             get => _spellCheckIgnoreCodeBlocks;
             set => SetProperty(ref _spellCheckIgnoreCodeBlocks, value);
         }
 
-        [Trackable]
         public bool SpellCheckIgnoreMarkupTags
         {
             get => _spellCheckIgnoreMarkupTags;
-            set => SetProperty(ref _spellCheckIgnoreMarkupTags,value);
+            set => SetProperty(ref _spellCheckIgnoreMarkupTags, value);
         }
 
-        [Trackable]
         public bool SpellCheckIgnoreAllCaps
         {
             get => _spellCheckIgnoreAllCaps;
-            set => SetProperty(ref _spellCheckIgnoreAllCaps,value);
+            set => SetProperty(ref _spellCheckIgnoreAllCaps, value);
         }
 
-        [Trackable]
         public bool SpellCheckIgnoreWordsWithDigits
         {
             get => _spellCheckIgnoreWordsWithDigits;
-            set => SetProperty(ref _spellCheckIgnoreWordsWithDigits,value);
+            set => SetProperty(ref _spellCheckIgnoreWordsWithDigits, value);
         }
 
-        [Trackable]
         public string SpellCheckDictionary
         {
             get => _spellCheckDictionary;
@@ -199,7 +208,6 @@ namespace ServicesModule.Services
 
         // === Preview
 
-        [Trackable]
         public MarkdownEngines MarkdownEngines
         {
             get => _markdownEngine;

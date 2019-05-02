@@ -17,8 +17,7 @@ namespace UserModule.Views
             InitializeComponent();
             Loaded += KillPopups;
             Loaded += OnLoaded;
-            SourceInitialized += (sd, ea) =>  Globals.Tracker.Configure(this).Apply();
-            Closed += (sd, ea) => Globals.Tracker.Configure(this).Persist();
+            SourceInitialized += (sd, ea) => Globals.Tracker.Track(this);
             KeyDown += (sd, ea) => { if (ea.Key == Key.F1) Close(); };
         }
 

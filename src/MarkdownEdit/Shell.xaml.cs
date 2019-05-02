@@ -17,7 +17,10 @@ namespace MarkdownEdit
             RegionManager = regionManager;
             InitializeComponent();
             Activated += OnActivated;
-            SourceInitialized += (sd, ea) => Globals.Tracker.Configure(this).Apply();
+            SourceInitialized += (sd, ea) => Globals.Tracker.Track(this);
+
+            Globals.Tracker.Configure<Shell>()
+                .Properties(w => new { w.Width, w.Height, w.WindowState });
         }
 
         private void OnActivated(object sender, EventArgs eventArgs)
@@ -34,9 +37,15 @@ namespace MarkdownEdit
         protected override async void OnClosing(CancelEventArgs e)
         {
             if (_shutdown) return;
+
             e.Cancel = true;
             _shutdown = await ViewModel.AskToSaveIfModified();
-            if (_shutdown) Application.Current.Shutdown();
+
+            if (_shutdown)
+            {
+                Globals.Tracker.PersistAll();
+                Application.Current.Shutdown();
+            }
         }
     }
 }
