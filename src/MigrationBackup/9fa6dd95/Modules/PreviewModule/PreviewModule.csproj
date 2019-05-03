@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{115F8F8C-6530-43AE-ACA6-275BA8FB639A}</ProjectGuid>
+    <ProjectGuid>{569D1B6C-0038-4725-9A5C-461C4408AE81}</ProjectGuid>
     <OutputType>library</OutputType>
-    <RootNamespace>Infrastructure</RootNamespace>
-    <AssemblyName>mde-infrastructure</AssemblyName>
+    <RootNamespace>PreviewModule</RootNamespace>
+    <AssemblyName>mde-preview</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -32,10 +32,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommonServiceLocator.2.0.4\lib\net47\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ControlzEx.3.0.2.4\lib\net462\ControlzEx.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.4.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HtmlAgilityPack.1.11.4\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MahApps.Metro.1.6.5\lib\net47\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -50,34 +76,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\MarkdownEdit\Properties\AssemblyVersion.cs">
-      <Link>AssemblyVersion.cs</Link>
+    <Compile Include="..\..\MarkdownEdit\Properties\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="Constants.cs" />
-    <Compile Include="Events.cs" />
-    <Compile Include="FileExtensions.cs" />
-    <Compile Include="FindReplaceOptions.cs" />
-    <Compile Include="Globals.cs" />
-    <Compile Include="IAbstractSyntaxTree.cs" />
-    <Compile Include="IColorService.cs" />
-    <Compile Include="IDocumentConverters.cs" />
-    <Compile Include="IEditService.cs" />
-    <Compile Include="IFormatMarkdown.cs" />
-    <Compile Include="IHighlight.cs" />
-    <Compile Include="IImageService.cs" />
-    <Compile Include="IImageUpload.cs" />
-    <Compile Include="INotify.cs" />
-    <Compile Include="IOpenSaveActions.cs" />
-    <Compile Include="IMarkdownEngine.cs" />
-    <Compile Include="IPandoc.cs" />
-    <Compile Include="ISettings.cs" />
-    <Compile Include="ISnippetService.cs" />
-    <Compile Include="ISpellCheckBackgroundRenderer.cs" />
-    <Compile Include="ISpellCheckService.cs" />
-    <Compile Include="ISpellCheckUserDictionaryService.cs" />
-    <Compile Include="ITemplateLoader.cs" />
-    <Compile Include="ITheme.cs" />
-    <Compile Include="MarkdownEngines.cs" />
+    <Compile Include="PreviewModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -91,42 +93,32 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="IStrings.cs" />
-    <Compile Include="StreamExtensions.cs" />
-    <Compile Include="StringExtensions.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="ViewModels\PreviewControlViewModel.cs" />
+    <Compile Include="Views\PreviewControl.xaml.cs">
+      <DependentUpon>PreviewControl.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AvalonEdit">
-      <Version>5.0.4</Version>
-    </PackageReference>
-    <PackageReference Include="CommonMark.NET">
-      <Version>0.15.1</Version>
-    </PackageReference>
-    <PackageReference Include="CommonServiceLocator">
-      <Version>2.0.4</Version>
-    </PackageReference>
-    <PackageReference Include="Jot">
-      <Version>2.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="MahApps.Metro">
-      <Version>1.6.5</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="Prism.Core">
-      <Version>7.1.0.431</Version>
-    </PackageReference>
+    <Page Include="Views\PreviewControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj">
+      <Project>{115F8F8C-6530-43AE-ACA6-275BA8FB639A}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
