@@ -1,8 +1,8 @@
 title:            Markdown Edit
 tagline:          A full-featured Markdown Editor For Windows
 description:      A full-featured Markdown Editor for Windows with an emphasis on content and keyboard shortcuts
-canonical:        http://markdownedit.com
-url:              http://markdownedit.com
+canonical:        https://mike-ward.net/Markdown-Edit
+url:              https://mike-ward.net/Markdown-Edit
 download:         https://github.com/mike-ward/Markdown-Edit/releases/download/v1.29.1/MarkdownEditSetup.msi
 portable:         https://github.com/mike-ward/Markdown-Edit/releases/download/v1.29.1/MarkdownEdit.zip
 
