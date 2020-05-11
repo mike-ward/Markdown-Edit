@@ -1,6 +1,6 @@
-<hr>
+---
 This project is no longer maintained. I suggest you use [Visaul Studio Code](https://code.visualstudio.com). Don't let the `it's a code editor` scare you off. It's accessable and very powerful (and cross platform!). There are several quality Markdown extensions that support many features not found in Markdown Edit.
-<hr>
+---
 
 Markdown Edit
 =============
